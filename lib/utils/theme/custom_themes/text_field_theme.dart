@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
+
+class TTextFieldTheme {
+  TTextFieldTheme._();
+
+  static InputDecorationTheme lightTheme = InputDecorationTheme(
+    border: const OutlineInputBorder().copyWith(
+      borderRadius: BorderRadius.circular(
+        TSizes.inputRadius,
+      ),
+      borderSide: const BorderSide(
+        width: 1,
+        color: TColors.neutralLightDark,
+      ),
+    ),
+    enabledBorder: const OutlineInputBorder().copyWith(
+      borderRadius: BorderRadius.circular(
+        TSizes.inputRadius,
+      ),
+      borderSide: const BorderSide(
+        width: 1,
+        color: TColors.neutralLightDark,
+      ),
+    ),
+    focusedBorder: const OutlineInputBorder().copyWith(
+      borderRadius: BorderRadius.circular(
+        TSizes.inputRadius,
+      ),
+      borderSide: const BorderSide(
+        width: 1,
+        color: TColors.primary,
+      ),
+    ),
+    labelStyle: const TextStyle().copyWith(
+      fontSize: TSizes.fontSizeBodyM,
+      color: TColors.neutralDarkDarkest,
+    ),
+    errorBorder: const OutlineInputBorder().copyWith(
+      borderRadius: BorderRadius.circular(
+        TSizes.inputRadius,
+      ),
+      borderSide: const BorderSide(
+        width: 1,
+        color: TColors.error,
+      ),
+    ),
+    focusedErrorBorder: const OutlineInputBorder().copyWith(
+      borderRadius: BorderRadius.circular(
+        TSizes.inputRadius,
+      ),
+      borderSide: const BorderSide(
+        width: 1,
+        color: TColors.error,
+      ),
+    ),
+  );
+}
