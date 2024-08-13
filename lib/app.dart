@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/screens/completing_data.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/on_boarding.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/otp_input/screens/otp_input.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
@@ -17,6 +18,7 @@ class App extends StatelessWidget {
       routes: {
         "/": (context) => const OnBoardingScreen(),
         "/otp-input": (context) => const OtpInputScreen(),
+        "/completing-data": (context) => const CompletingDataScreen()
       },
     );
   }

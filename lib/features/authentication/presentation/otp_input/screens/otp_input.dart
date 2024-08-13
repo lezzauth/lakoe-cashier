@@ -4,8 +4,22 @@ import 'package:pinput/pinput.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 
-class OtpInputScreen extends StatelessWidget {
+class OtpInputScreen extends StatefulWidget {
   const OtpInputScreen({super.key});
+
+  @override
+  State<OtpInputScreen> createState() => _OtpInputScreenState();
+}
+
+class _OtpInputScreenState extends State<OtpInputScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pushNamed(context, "/completing-data");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

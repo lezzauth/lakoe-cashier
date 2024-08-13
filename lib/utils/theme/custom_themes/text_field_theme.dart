@@ -6,6 +6,10 @@ class TTextFieldTheme {
   TTextFieldTheme._();
 
   static InputDecorationTheme lightTheme = InputDecorationTheme(
+    hintStyle: const TextStyle(
+      color: TColors.neutralDarkLightest,
+      fontSize: TSizes.fontSizeBodyM,
+    ),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(
         TSizes.inputRadius,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/checkbox_theme.dart';
+import 'package:point_of_sales_cashier/utils/theme/custom_themes/chip_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/elevated_button_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/text_field_theme.dart';
 
@@ -18,6 +19,7 @@ class TAppTheme {
     elevatedButtonTheme: TElevatedButtonTheme.lightTheme,
     inputDecorationTheme: TTextFieldTheme.lightTheme,
     checkboxTheme: TCheckboxTheme.lightTheme,
+    chipTheme: TChipTheme.lightTheme,
     colorScheme: const ColorScheme.light(
       brightness: Brightness.light,
       primary: TColors.primary,
