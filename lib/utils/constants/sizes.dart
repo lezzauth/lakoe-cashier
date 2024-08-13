@@ -28,4 +28,7 @@ class TSizes {
 
   // Input Sizes
   static const double inputRadius = 12.0;
+
+  // Checkbox Sizes
+  static const double checkBoxRadius = 4.0;
 }

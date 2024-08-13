@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/theme/custom_themes/checkbox_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/elevated_button_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/text_field_theme.dart';
 
@@ -11,18 +12,22 @@ class TAppTheme {
     brightness: Brightness.light,
     useMaterial3: true,
     textTheme: GoogleFonts.interTextTheme(),
-    fontFamily: "Inter",
+    primaryTextTheme: GoogleFonts.interTextTheme(),
     primaryColor: TColors.primary,
     scaffoldBackgroundColor: Colors.white,
     elevatedButtonTheme: TElevatedButtonTheme.lightTheme,
     inputDecorationTheme: TTextFieldTheme.lightTheme,
+    checkboxTheme: TCheckboxTheme.lightTheme,
+    colorScheme: const ColorScheme.light(
+      brightness: Brightness.light,
+      primary: TColors.primary,
+    ),
   );
 
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     useMaterial3: true,
     textTheme: GoogleFonts.interTextTheme(),
-    fontFamily: "Inter",
     primaryColor: TColors.primary,
     scaffoldBackgroundColor: Colors.black,
   );

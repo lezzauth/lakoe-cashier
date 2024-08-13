@@ -67,6 +67,8 @@ class TColors {
 
   static const Color primary = highlightDarkest;
 
+  static const Color foreground = neutralDarkDarkest;
+
   static const Color info = infoDark;
   static const Color success = successDark;
   static const Color warning = warningDark;
