@@ -22,6 +22,7 @@ class TAppTheme {
       brightness: Brightness.light,
       primary: TColors.primary,
     ),
+    fontFamily: GoogleFonts.inter().fontFamily,
   );
 
   static ThemeData darkTheme = ThemeData(

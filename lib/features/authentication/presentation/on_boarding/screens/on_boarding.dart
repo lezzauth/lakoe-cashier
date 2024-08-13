@@ -161,7 +161,9 @@ class OnBoardingScreen extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/otp-input");
+                        },
                         child: const Text(
                           "Lanjutkan",
                         ),
