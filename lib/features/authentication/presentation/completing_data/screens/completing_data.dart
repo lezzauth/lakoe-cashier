@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/completing_data_form.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/bloc/completing_data/completing_data_page_bloc.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/bloc/completing_data/completing_data_page_state.dart';
+import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/completing_data_form_page.dart';
+import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/form_step_indicator.dart';
+import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/pin_input_page.dart';
 
 class CompletingDataScreen extends StatelessWidget {
   const CompletingDataScreen({super.key});
@@ -8,40 +12,41 @@ class CompletingDataScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
-              child: Flex(
-                direction: Axis.horizontal,
-                children: [
-                  Flexible(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: TColors.primary,
+      body: BlocProvider(
+        create: (context) => CompletingDataPageBloc(),
+        child: BlocBuilder<CompletingDataPageBloc, CompletingDataPageState>(
+          builder: (context, state) => SafeArea(
+            child: Column(
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+                  child: Flex(
+                    direction: Axis.horizontal,
+                    children: [
+                      const Flexible(
+                        child: FormStepIndicator(
+                          active: true,
+                        ),
                       ),
-                      height: 8,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 6.28,
-                  ),
-                  Flexible(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: TColors.primary,
+                      const SizedBox(
+                        width: 6.28,
                       ),
-                      height: 8,
-                    ),
+                      Flexible(
+                        child: FormStepIndicator(
+                          active: state.page == CompletingDataPage.pinInput,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                if (state.page == CompletingDataPage.businessForm)
+                  const CompletingDataFormPage(),
+                if (state.page == CompletingDataPage.pinInput)
+                  const PinInputPage(),
+              ],
             ),
-            const CompletingDataForm(),
-          ],
+          ),
         ),
       ),
     );

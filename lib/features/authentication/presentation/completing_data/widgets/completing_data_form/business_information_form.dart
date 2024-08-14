@@ -15,7 +15,7 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 32, bottom: 42, left: 24, right: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
       child: Column(
         children: [
           Column(
@@ -49,6 +49,9 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
                     return InputChip(
                       label: Text(type),
                       selected: type == "Kuliner",
+                      onPressed: () {
+                        //
+                      },
                     );
                   }).toList(),
                 )

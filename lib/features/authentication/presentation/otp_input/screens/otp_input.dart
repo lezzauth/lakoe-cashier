@@ -12,13 +12,25 @@ class OtpInputScreen extends StatefulWidget {
 }
 
 class _OtpInputScreenState extends State<OtpInputScreen> {
+  final TextEditingController _optController = TextEditingController();
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushNamed(context, "/completing-data");
+
+    _optController.addListener(() {
+      if (_optController.text.length == 4) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+          Navigator.pushNamed(context, "/completing-data");
+        });
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    _optController.dispose();
+    super.dispose();
   }
 
   @override
@@ -80,6 +92,8 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
                       defaultPinTheme: defaultPinTheme,
                       focusedPinTheme: focusedPinTheme,
                       length: 4,
+                      autofocus: true,
+                      controller: _optController,
                     ),
                   ],
                 ),
