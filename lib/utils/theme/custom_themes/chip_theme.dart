@@ -31,6 +31,7 @@ class TChipTheme {
     ),
     backgroundColor: Colors.transparent,
     selectedColor: Colors.transparent,
+    showCheckmark: false,
   );
 
   static ChipThemeData darkTheme = const ChipThemeData();

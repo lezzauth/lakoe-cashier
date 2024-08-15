@@ -74,6 +74,23 @@ class TColors {
   static const Color warning = warningDark;
   static const Color error = errorDark;
 
+  static const LinearGradient mainMenuCashierOpenedGradient = LinearGradient(
+    colors: [
+      Color(0xFF3AC0A0),
+      Color(0xFF298267),
+    ],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+  static const LinearGradient mainMenuCashierClosedGradient = LinearGradient(
+    colors: [
+      Color(0xFFFF616D),
+      Color(0xFFED3241),
+    ],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+
   // Figma Colors
   // ===
   // Highlight
