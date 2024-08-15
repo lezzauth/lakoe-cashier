@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -21,10 +24,63 @@ class MainMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isCashierOpened = cashierName != null;
 
-    onCashierOpened() {}
+    onCashierOpened() {
+      if (!isCashierOpened) {
+        return showModalBottomSheet(
+          context: context,
+          showDragHandle: true,
+          isScrollControlled: true,
+          builder: (context) {
+            return Padding(
+              padding: MediaQuery.of(context).viewInsets,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: TextHeading2("Masukan saldo awal"),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 16),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 8.0),
+                          child: const TextField(
+                            decoration: InputDecoration(hintText: "Rp 0"),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 28.0),
+                          child: const TextBodyS(
+                            "Saldo awal adalah jumlah uang tunai yang tersedia di laci kasir sebelum memulai transaksi. Pastikan untuk memasukkan jumlah yang akurat.",
+                            color: TColors.neutralDarkLightest,
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.maxFinite,
+                          child: ElevatedButton(
+                              onPressed: () {},
+                              child: const TextActionL(
+                                "Lanjutkan",
+                                color: TColors.neutralLightLightest,
+                              )),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      }
+    }
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: onCashierOpened,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Container(

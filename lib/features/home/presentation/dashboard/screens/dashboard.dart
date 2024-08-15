@@ -26,8 +26,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Container(
               margin: const EdgeInsets.only(bottom: 12),
               child: const MainMenu(
-                cashierName: "Dimas Kurniawan",
-              ),
+                  // cashierName: "Dimas Kurniawan",
+                  ),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 24),
