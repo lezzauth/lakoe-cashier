@@ -13,4 +13,8 @@ class TIcons {
   static const String graphStatsAscend = "assets/icons/graph-stats-ascend.svg";
   static const String graphStatsDescend =
       "assets/icons/graph-stats-descend.svg";
+  static const String search = "assets/icons/search.svg";
+  static const String bill = "assets/icons/bill.svg";
+  static const String profile = "assets/icons/profile.svg";
+  static const String tableRestaurant = "assets/icons/table-restaurant.svg";
 }

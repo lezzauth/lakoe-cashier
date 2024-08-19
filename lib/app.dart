@@ -3,6 +3,7 @@ import 'package:point_of_sales_cashier/features/authentication/presentation/comp
 import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/on_boarding.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/otp_input/screens/otp_input.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
+import 'package:point_of_sales_cashier/features/products/presentation/screens/explore_product.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 
 class App extends StatelessWidget {
@@ -15,12 +16,13 @@ class App extends StatelessWidget {
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       themeMode: ThemeMode.light,
-      initialRoute: "/home",
+      initialRoute: "/explore-products",
       routes: {
         "/": (context) => const OnBoardingScreen(),
         "/otp-input": (context) => const OtpInputScreen(),
         "/completing-data": (context) => const CompletingDataScreen(),
-        "/home": (context) => const DashboardScreen()
+        "/home": (context) => const DashboardScreen(),
+        "/explore-products": (context) => const ExploreProductScreen()
       },
     );
   }

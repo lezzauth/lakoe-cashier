@@ -13,17 +13,17 @@ class THighlightPrimaryColors {
 class TNeutralLightColors {
   TNeutralLightColors._();
 
-  static const Color dark = Color(0xFFC5C6CC);
-  static const Color medium = Color(0xFFD4D6DD);
-  static const Color light = Color(0xFFE8E9F1);
-  static const Color lighter = Color(0xFFF8F9FE);
+  static const Color darkest = Color(0xFFC5C6CC);
+  static const Color dark = Color(0xFFD4D6DD);
+  static const Color medium = Color(0xFFE8E9F1);
+  static const Color light = Color(0xFFF8F9FE);
   static const Color lightest = Color(0xFFFFFFFF);
 }
 
 class TNeutralDarkColors {
   TNeutralDarkColors._();
 
-  static const Color darkest = Color(0xFF1F2024);
+  static const Color darkest = Color(0xFF1E1E1E);
   static const Color dark = Color(0xFF2F3036);
   static const Color medium = Color(0xFF494A50);
   static const Color light = Color(0xFF71727A);
@@ -74,7 +74,7 @@ class TColors {
   static const Color warning = warningDark;
   static const Color error = errorDark;
 
-  static const LinearGradient mainMenuCashierOpenedGradient = LinearGradient(
+  static const LinearGradient greenGradient = LinearGradient(
     colors: [
       Color(0xFF3AC0A0),
       Color(0xFF298267),
@@ -82,7 +82,7 @@ class TColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
-  static const LinearGradient mainMenuCashierClosedGradient = LinearGradient(
+  static const LinearGradient redGradient = LinearGradient(
     colors: [
       Color(0xFFFF616D),
       Color(0xFFED3241),
@@ -105,7 +105,6 @@ class TColors {
   static const Color neutralLightDark = TNeutralLightColors.dark;
   static const Color neutralLightMedium = TNeutralLightColors.medium;
   static const Color neutralLightLight = TNeutralLightColors.light;
-  static const Color neutralLightLighter = TNeutralLightColors.lighter;
   static const Color neutralLightLightest = TNeutralLightColors.lightest;
 
   // -- Dark

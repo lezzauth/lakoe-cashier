@@ -5,10 +5,13 @@ import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/bloc/completing_data/completing_data_page_state.dart';
+import 'package:point_of_sales_cashier/features/authentication/data/completing_data/arguments.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
+import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
 
 class MainMenu extends StatelessWidget {
   final String? cashierName;
@@ -32,7 +35,7 @@ class MainMenu extends StatelessWidget {
           isScrollControlled: true,
           builder: (context) {
             return Padding(
-              padding: MediaQuery.of(context).viewInsets,
+              padding: TDeviceUtils.getViewInsets(context),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -62,7 +65,22 @@ class MainMenu extends StatelessWidget {
                         SizedBox(
                           width: double.maxFinite,
                           child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  "/completing-data",
+                                  arguments: CompletingDataRouteArguments(
+                                    title: "Masukan PIN kamu",
+                                    description:
+                                        "Jika Anda lupa PIN, hubungi manajer Anda",
+                                    onPinValid: (value) {
+                                      Navigator.popAndPushNamed(
+                                          context, "/explore-products");
+                                    },
+                                    page: CompletingDataPage.pinInput,
+                                  ),
+                                );
+                              },
                               child: const TextActionL(
                                 "Lanjutkan",
                                 color: TColors.neutralLightLightest,
@@ -85,9 +103,8 @@ class MainMenu extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Container(
           decoration: BoxDecoration(
-            gradient: isCashierOpened
-                ? TColors.mainMenuCashierOpenedGradient
-                : TColors.mainMenuCashierClosedGradient,
+            gradient:
+                isCashierOpened ? TColors.greenGradient : TColors.redGradient,
             borderRadius: BorderRadius.circular(
               16.0,
             ),

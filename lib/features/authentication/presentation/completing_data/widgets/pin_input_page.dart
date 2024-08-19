@@ -11,7 +11,17 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 
 class PinInputPage extends StatefulWidget {
-  const PinInputPage({super.key});
+  final Function(String)? onPinValid;
+  final String? title;
+  final String? description;
+  final bool isDefaultBehaviour;
+
+  const PinInputPage(
+      {super.key,
+      this.onPinValid,
+      this.title,
+      this.description,
+      this.isDefaultBehaviour = true});
 
   @override
   State<PinInputPage> createState() => _PinInputPageState();
@@ -19,6 +29,12 @@ class PinInputPage extends StatefulWidget {
 
 class _PinInputPageState extends State<PinInputPage> {
   final TextEditingController _pinController = TextEditingController();
+
+  Future<void> onPinValidate() async {
+    return await Future.delayed(
+      Duration(seconds: 2),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +63,15 @@ class _PinInputPageState extends State<PinInputPage> {
 
     return BlocBuilder<CompletingDataPageBloc, CompletingDataPageState>(
       builder: (context, state) => PopScope(
-        canPop: false,
+        canPop: !widget.isDefaultBehaviour,
         onPopInvoked: (didPop) {
-          context.read<CompletingDataPageBloc>().add(
-                CompletingDataChangePageEvent(
-                  page: CompletingDataPage.businessForm,
-                ),
-              );
+          if (!didPop) {
+            context.read<CompletingDataPageBloc>().add(
+                  CompletingDataChangePageEvent(
+                    page: CompletingDataPage.businessForm,
+                  ),
+                );
+          }
         },
         child: Expanded(
           child: Column(
@@ -71,7 +89,7 @@ class _PinInputPageState extends State<PinInputPage> {
                             Container(
                               margin: const EdgeInsets.only(bottom: 8.0),
                               child: Text(
-                                "Buat kode akses (PIN)",
+                                widget.title ?? "",
                                 style: GoogleFonts.inter(
                                   fontSize: TSizes.fontSizeHeading3,
                                   fontWeight: FontWeight.w700,
@@ -79,7 +97,7 @@ class _PinInputPageState extends State<PinInputPage> {
                               ),
                             ),
                             Text(
-                              "Kode akses ini akan digunakan untuk setiap kali akan melakukan transaksi.",
+                              widget.description ?? "",
                               style: GoogleFonts.inter(
                                 fontSize: TSizes.fontSizeBodyS,
                                 color: TColors.neutralDarkMedium,
@@ -96,6 +114,12 @@ class _PinInputPageState extends State<PinInputPage> {
                         length: 6,
                         useNativeKeyboard: false,
                         controller: _pinController,
+                        onCompleted: (value) async {
+                          await onPinValidate();
+                          if (widget.onPinValid != null) {
+                            widget.onPinValid!(value);
+                          }
+                        },
                       ),
                     ],
                   ),

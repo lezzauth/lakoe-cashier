@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+
+class OrderListButton extends StatelessWidget {
+  const OrderListButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: TColors.greenGradient,
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        padding: EdgeInsets.symmetric(vertical: 11.5, horizontal: 12),
+        child: Wrap(
+          direction: Axis.horizontal,
+          spacing: 8.0,
+          children: [
+            UiIcons(
+              TIcons.bill,
+              height: 32,
+              width: 32,
+            ),
+            TextHeading5(
+              "Daftar\nPesanan",
+              color: TColors.neutralLightLightest,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

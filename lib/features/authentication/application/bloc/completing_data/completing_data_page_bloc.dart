@@ -4,8 +4,11 @@ import 'package:point_of_sales_cashier/features/authentication/application/bloc/
 
 class CompletingDataPageBloc
     extends Bloc<CompletingDataPageEvent, CompletingDataPageState> {
-  CompletingDataPageBloc()
-      : super(CompletingDataPageState(page: CompletingDataPage.businessForm)) {
+  CompletingDataPage? page = CompletingDataPage.businessForm;
+
+  CompletingDataPageBloc({this.page})
+      : super(CompletingDataPageState(
+            page: page ?? CompletingDataPage.businessForm)) {
     on<CompletingDataChangePageEvent>((event, emit) {
       emit(CompletingDataPageState(page: event.page));
     });

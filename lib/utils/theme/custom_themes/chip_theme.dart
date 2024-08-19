@@ -30,7 +30,7 @@ class TChipTheme {
       fontSize: TSizes.fontSizeBodyS,
     ),
     backgroundColor: Colors.transparent,
-    selectedColor: Colors.transparent,
+    selectedColor: TColors.highlightLightest,
     showCheckmark: false,
   );
 
