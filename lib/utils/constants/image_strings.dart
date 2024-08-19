@@ -5,4 +5,5 @@ class TImages {
   static const String bannerWaves = "assets/images/banner-waves.svg";
   static const String tradingNews = "assets/images/trading-news.svg";
   static const String receiptSlip = "assets/images/receipt-slip.svg";
+  static const String contactAvatar = "assets/images/contact-avatar.svg";
 }

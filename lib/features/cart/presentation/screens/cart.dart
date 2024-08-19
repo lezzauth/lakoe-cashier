@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/contact/contact_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/counter.dart';
+import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
@@ -14,6 +16,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/pr
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
+import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -55,6 +58,34 @@ class Cart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    onCustomerOpened() {
+      return showModalBottomSheet(
+        context: context,
+        showDragHandle: true,
+        isScrollControlled: true,
+        useSafeArea: true,
+        builder: (context) {
+          return Padding(
+            padding: TDeviceUtils.getViewInsets(context),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: SearchField(
+                    hintText: "Cari pelanggan...",
+                  ),
+                ),
+                Expanded(
+                  child: ContactList(),
+                )
+              ],
+            ),
+          );
+        },
+      );
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -79,6 +110,7 @@ class Cart extends StatelessWidget {
                             width: 20,
                             color: TColors.primary,
                           ),
+                          onTap: onCustomerOpened,
                         ),
                       ),
                       SizedBox(width: 12.0),
@@ -245,7 +277,7 @@ class Cart extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextHeading3("Total Tagihan"),
+                            TextHeading3("Yang harus dibayar"),
                             TextHeading3("Rp20.000"),
                           ],
                         ),

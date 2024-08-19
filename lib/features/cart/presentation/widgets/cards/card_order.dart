@@ -6,16 +6,23 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 class CardOrder extends StatelessWidget {
-  const CardOrder({super.key, this.icon, this.subTitle = "", this.title = ""});
+  const CardOrder({
+    super.key,
+    this.icon,
+    this.subTitle = "",
+    this.title = "",
+    this.onTap,
+  });
 
   final Widget? icon;
   final String title;
   final String subTitle;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       borderRadius: BorderRadius.circular(12.0),
       child: GestureDetector(
         child: Container(
