@@ -183,7 +183,9 @@ class _ExploreProductScreenState extends State<ExploreProductScreen> {
             height: 48,
             width: double.maxFinite,
             child: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, "/cart");
+              },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Row(

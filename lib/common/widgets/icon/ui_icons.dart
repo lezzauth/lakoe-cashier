@@ -6,6 +6,7 @@ class UiIcons extends StatelessWidget {
   final double height;
   final double width;
   final Function()? onTap;
+  final Color color;
 
   const UiIcons(
     this.assetName, {
@@ -13,16 +14,21 @@ class UiIcons extends StatelessWidget {
     this.height = 24,
     this.width = 24,
     this.onTap,
+    this.color = Colors.black,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
-      child: SvgPicture.asset(
-        assetName,
-        height: height,
-        width: height,
+      child: GestureDetector(
+        child: SvgPicture.asset(
+          assetName,
+          height: height,
+          width: width,
+          fit: BoxFit.scaleDown,
+          colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+        ),
       ),
     );
   }

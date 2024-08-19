@@ -16,5 +16,8 @@ class TIcons {
   static const String search = "assets/icons/search.svg";
   static const String bill = "assets/icons/bill.svg";
   static const String profile = "assets/icons/profile.svg";
+  static const String trash = "assets/icons/trash.svg";
+  static const String add = "assets/icons/add.svg";
+  static const String minus = "assets/icons/minus.svg";
   static const String tableRestaurant = "assets/icons/table-restaurant.svg";
 }

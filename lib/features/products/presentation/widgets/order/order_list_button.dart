@@ -26,6 +26,7 @@ class OrderListButton extends StatelessWidget {
               TIcons.bill,
               height: 32,
               width: 32,
+              color: TColors.neutralLightLightest,
             ),
             TextHeading5(
               "Daftar\nPesanan",

@@ -6,7 +6,14 @@ import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 
 class SearchField extends StatelessWidget {
-  const SearchField({super.key});
+  const SearchField({
+    super.key,
+    this.hintText,
+    this.controller,
+  });
+
+  final String? hintText;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +37,7 @@ class SearchField extends StatelessWidget {
             child: SizedBox(
               height: 22,
               child: TextField(
+                controller: controller,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(
                     borderSide: BorderSide(width: 0, color: Colors.transparent),
@@ -41,7 +49,7 @@ class SearchField extends StatelessWidget {
                     borderSide: BorderSide(width: 0, color: Colors.transparent),
                   ),
                   contentPadding: EdgeInsets.zero,
-                  hintText: "Cari menu disini...",
+                  hintText: hintText,
                   labelStyle: GoogleFonts.inter(fontSize: TSizes.fontSizeBodyL),
                 ),
                 style: GoogleFonts.inter(fontSize: TSizes.fontSizeBodyL),

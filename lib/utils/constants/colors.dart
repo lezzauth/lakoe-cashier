@@ -102,6 +102,7 @@ class TColors {
 
   // Neutral
   // -- Light
+  static const Color neutralLightDarkest = TNeutralLightColors.darkest;
   static const Color neutralLightDark = TNeutralLightColors.dark;
   static const Color neutralLightMedium = TNeutralLightColors.medium;
   static const Color neutralLightLight = TNeutralLightColors.light;

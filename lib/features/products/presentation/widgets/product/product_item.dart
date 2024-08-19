@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/data/services/product/models/product_model.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
+import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
 
 class ProductItem extends StatelessWidget {
   final int? qty;
@@ -24,6 +27,57 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isSelected = qty! > 0;
+    bool isNotesEmpty = (notes == null) || notes!.isEmpty;
+
+    onAddNotes() {
+      return showModalBottomSheet(
+        context: context,
+        showDragHandle: true,
+        isScrollControlled: true,
+        builder: (context) {
+          return Padding(
+            padding: TDeviceUtils.getViewInsets(context),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextHeading2("Tambah catatan"),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 8.0),
+                        child: TextField(
+                          decoration: const InputDecoration(
+                            hintText: "Tuliskan catatan",
+                          ),
+                          maxLines: 4,
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.maxFinite,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: const TextActionL(
+                            "Lanjutkan",
+                            color: TColors.neutralLightLightest,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    }
 
     return InkWell(
       onTap: onTap,
@@ -140,10 +194,11 @@ class ProductItem extends StatelessWidget {
                             ),
                         ],
                       ),
-                      if (isSelected)
+                      if (isSelected && isNotesEmpty)
                         Row(
                           children: [
                             GestureDetector(
+                              onTap: onAddNotes,
                               child: TextHeading5(
                                 "Tambah Catatan",
                                 color: TColors.primary,
