@@ -4,6 +4,7 @@ import 'package:point_of_sales_cashier/features/authentication/presentation/on_b
 import 'package:point_of_sales_cashier/features/authentication/presentation/otp_input/screens/otp_input.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/screens/cart.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
+import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/explore_product.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 
@@ -17,12 +18,13 @@ class App extends StatelessWidget {
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       themeMode: ThemeMode.light,
-      initialRoute: "/cart",
+      initialRoute: "/home",
       routes: {
         "/": (context) => const OnBoardingScreen(),
         "/otp-input": (context) => const OtpInputScreen(),
         "/completing-data": (context) => const CompletingDataScreen(),
         "/home": (context) => const DashboardScreen(),
+        "/home/transaction-date": (context) => const TransactionDateScreen(),
         "/explore-products": (context) => const ExploreProductScreen(),
         "/cart": (context) => const CartScreen(),
       },

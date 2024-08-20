@@ -138,6 +138,7 @@ class MainMenu extends StatelessWidget {
                           ),
                           child: const UiIcons(
                             TIcons.cashier,
+                            color: TColors.neutralLightLightest,
                           ),
                         ),
                         Text(

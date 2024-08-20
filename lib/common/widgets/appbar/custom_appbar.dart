@@ -25,19 +25,14 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     Widget? renderLeading() {
       if (isShowBackButton) {
-        return Container(
+        return UiIcons(
+          TIcons.arrowLeft,
           height: 20,
-          // width: 24,
-          margin: const EdgeInsets.only(right: 20),
-          child: UiIcons(
-            TIcons.arrowLeft,
-            height: 20,
-            width: 20,
-            onTap: () {
-              Navigator.pop(context);
-            },
-            color: TColors.primary,
-          ),
+          width: 20,
+          onTap: () {
+            Navigator.pop(context);
+          },
+          color: TColors.primary,
         );
       }
 
@@ -67,33 +62,44 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       ];
     }
 
-    return SafeArea(
-      child: Container(
-        height: double.maxFinite,
-        width: double.maxFinite,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              child: renderLeading(),
-            ),
-            Expanded(
-              child: Center(
-                child: renderTitle(),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 20),
-              child: Row(
-                children: renderActions() ?? [],
-              ),
-            ),
-          ],
-        ),
-      ),
+    return AppBar(
+      leading: renderLeading(),
+      title: renderTitle(),
+      titleSpacing: 0.0,
+      automaticallyImplyLeading: false,
+      // leadingWidth: 20.0,
+      centerTitle: true,
+      actions: renderActions(),
+      forceMaterialTransparency: true,
     );
+
+    // return SafeArea(
+    //   child: Container(
+    //     height: double.maxFinite,
+    //     width: double.maxFinite,
+    //     padding: const EdgeInsets.symmetric(horizontal: 16),
+    //     child: Row(
+    //       mainAxisSize: MainAxisSize.max,
+    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //       children: [
+    //         Container(
+    //           child: renderLeading(),
+    //         ),
+    //         Expanded(
+    //           child: Center(
+    //             child: renderTitle(),
+    //           ),
+    //         ),
+    //         Container(
+    //           margin: const EdgeInsets.only(left: 20),
+    //           child: Row(
+    //             children: renderActions() ?? [],
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 
   @override

@@ -43,12 +43,14 @@ class StatsBadge extends StatelessWidget {
               TIcons.graphStatsAscend,
               height: 12,
               width: 12,
+              color: TColors.neutralLightLightest,
             ),
           if (type == StatsType.descend)
             const UiIcons(
               TIcons.graphStatsDescend,
               height: 12,
               width: 12,
+              color: TColors.neutralLightLightest,
             ),
           Text(
             value,

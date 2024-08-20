@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 
 class DashboardFilter extends StatefulWidget {
   const DashboardFilter({super.key});
@@ -38,7 +39,29 @@ class _DashboardFilterState extends State<DashboardFilter> {
             height: 32,
             width: 32,
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () async {
+                Navigator.pushNamed(context, "/home/transaction-date");
+                // final picked = await showDateRangePicker(
+                //   context: context,
+                //   lastDate: DateTime(DateTime.now().year + 1),
+                //   firstDate: DateTime(DateTime.now().year),
+                //   builder: (context, child) {
+                //     return Theme(
+                //       data: TAppTheme.lightTheme.copyWith(
+                //         primaryColor: TColors.primary,
+                //         // scaffoldBackgroundColor: TColors.errorMedium,
+                //         dividerColor: TColors.error,
+                //         colorScheme: TAppTheme.lightTheme.colorScheme.copyWith(
+                //           primary: TColors.primary,
+                //           onSecondary: TColors.error,
+                //           secondaryContainer: TColors.highlightLightest,
+                //         ),
+                //       ),
+                //       child: child!,
+                //     );
+                //   },
+                // );
+              },
               style: const ButtonStyle(
                 padding: WidgetStatePropertyAll(
                   EdgeInsets.all(0),

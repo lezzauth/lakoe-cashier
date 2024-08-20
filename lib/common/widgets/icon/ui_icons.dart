@@ -21,6 +21,7 @@ class UiIcons extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.all(Radius.circular(height * width)),
       child: GestureDetector(
         child: SvgPicture.asset(
           assetName,

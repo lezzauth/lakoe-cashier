@@ -26,6 +26,7 @@ class _DashboardDaySelectFilterState extends State<DashboardDaySelectFilter> {
               TIcons.arrowLeft,
               height: 16,
               width: 16,
+              color: TColors.primary,
             ),
           ),
           Text(
@@ -40,6 +41,7 @@ class _DashboardDaySelectFilterState extends State<DashboardDaySelectFilter> {
               TIcons.arrowRight,
               height: 16,
               width: 16,
+              color: TColors.primary,
             ),
           ),
         ],
