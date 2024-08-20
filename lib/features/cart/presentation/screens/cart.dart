@@ -11,12 +11,14 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/cards/card_order.dart';
+import 'package:point_of_sales_cashier/features/cart/presentation/widgets/summary/cart_summary.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -178,150 +180,19 @@ class Cart extends StatelessWidget {
                           print('notes: $notes');
                         },
                       ),
-                      // isShowNoteAction: true,
                     ),
-                    // child: Row(
-                    //   children: [
-                    //     Container(
-                    //       decoration: BoxDecoration(
-                    //         borderRadius: BorderRadius.circular(8.0),
-                    //       ),
-                    //       clipBehavior: Clip.antiAlias,
-                    //       child: Image.network(
-                    //         "https://picsum.photos/200?random=$index",
-                    //         fit: BoxFit.cover,
-                    //         height: 44,
-                    //         width: 44,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                   );
                 },
               ),
               SliverToBoxAdapter(
                 child: Container(
-                  margin: const EdgeInsets.only(top: 28.0),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 16,
-                        ),
-                        decoration: BoxDecoration(
-                          color: TColors.neutralLightLight,
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextBodyM("Total Pesanan"),
-                                TextHeading4("Rp20.000"),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextBodyM("Diskon"),
-                                TextHeading4(
-                                  "Gunakan Poin",
-                                  color: TColors.primary,
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextBodyM("Pajak"),
-                                TextHeading4("Rp20.000"),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Separator(
-                              color: TColors.neutralLightDark,
-                              height: 1,
-                              dashWidth: 5.0,
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextBodyM("Total Tagihan"),
-                                TextHeading4("Rp20.000"),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Separator(
-                          color: TColors.neutralLightDark,
-                          height: 1,
-                          dashWidth: 5.0,
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 16),
-                        decoration: BoxDecoration(
-                          color: TColors.neutralLightLight,
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextHeading3("Yang harus dibayar"),
-                            TextHeading3("Rp20.000"),
-                          ],
-                        ),
-                      ),
-                    ],
+                  margin: const EdgeInsets.symmetric(vertical: 28.0),
+                  child: CartSummary(
+                    tax: 7500,
+                    total: 20000,
                   ),
                 ),
               ),
-              // SliverToBoxAdapter(
-              //   child: Expanded(
-              //     child: ListView.builder(
-              //       itemBuilder: (context, index) {
-              //         return Container(
-              //           padding: const EdgeInsets.symmetric(vertical: 12.0),
-              //           decoration: BoxDecoration(
-              //             border: Border(
-              //               bottom: BorderSide(
-              //                 color: TColors.neutralLightMedium,
-              //                 width: 1,
-              //               ),
-              //             ),
-              //           ),
-              //           child: Row(
-              //             children: [
-              //               Container(
-              //                 decoration: BoxDecoration(
-              //                   borderRadius: BorderRadius.circular(8.0),
-              //                 ),
-              //                 clipBehavior: Clip.antiAlias,
-              //                 child: Image.network(
-              //                   "https://picsum.photos/200?random=$index",
-              //                   fit: BoxFit.cover,
-              //                   height: 44,
-              //                   width: 44,
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //         );
-              //       },
-              //       itemCount: 100,
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -382,91 +253,6 @@ class Cart extends StatelessWidget {
             ],
           ),
         ),
-        // Container(
-        //   margin: const EdgeInsets.only(top: 28.0),
-        //   child: Column(
-        //     children: [
-        //       Container(
-        //         padding: const EdgeInsets.symmetric(
-        //           horizontal: 12,
-        //           vertical: 16,
-        //         ),
-        //         decoration: BoxDecoration(
-        //           color: TColors.neutralLightLight,
-        //           borderRadius: BorderRadius.circular(12.0),
-        //         ),
-        //         child: Column(
-        //           mainAxisSize: MainAxisSize.min,
-        //           children: [
-        //             Row(
-        //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //               children: [
-        //                 TextBodyM("Total Pesanan"),
-        //                 TextHeading4("Rp20.000"),
-        //               ],
-        //             ),
-        //             SizedBox(height: 10),
-        //             Row(
-        //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //               children: [
-        //                 TextBodyM("Diskon"),
-        //                 TextHeading4(
-        //                   "Gunakan Poin",
-        //                   color: TColors.primary,
-        //                 ),
-        //               ],
-        //             ),
-        //             SizedBox(height: 10),
-        //             Row(
-        //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //               children: [
-        //                 TextBodyM("Pajak"),
-        //                 TextHeading4("Rp20.000"),
-        //               ],
-        //             ),
-        //             SizedBox(height: 10),
-        //             Separator(
-        //               color: TColors.neutralLightDark,
-        //               height: 1,
-        //               dashWidth: 5.0,
-        //             ),
-        //             SizedBox(height: 10),
-        //             Row(
-        //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //               children: [
-        //                 TextBodyM("Total Tagihan"),
-        //                 TextHeading4("Rp20.000"),
-        //               ],
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //       Padding(
-        //         padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        //         child: Separator(
-        //           color: TColors.neutralLightDark,
-        //           height: 1,
-        //           dashWidth: 5.0,
-        //         ),
-        //       ),
-        //       Container(
-        //         padding:
-        //             const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-        //         decoration: BoxDecoration(
-        //           color: TColors.neutralLightLight,
-        //           borderRadius: BorderRadius.circular(12.0),
-        //         ),
-        //         child: Row(
-        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //           children: [
-        //             TextHeading3("Total Tagihan"),
-        //             TextHeading3("Rp20.000"),
-        //           ],
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
       ],
     );
   }
