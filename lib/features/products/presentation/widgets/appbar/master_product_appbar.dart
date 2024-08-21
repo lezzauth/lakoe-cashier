@@ -14,7 +14,6 @@ class MasterProductAppbar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return CustomAppbar(
-      isShowBackButton: true,
       search: SearchField(
         hintText: "Cari produk disini...",
       ),

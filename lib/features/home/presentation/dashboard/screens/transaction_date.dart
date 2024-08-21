@@ -29,7 +29,6 @@ class _TransactionDateScreenState extends State<TransactionDateScreen> {
               ),
             )
           ],
-          isShowBackButton: true,
         ),
         body: SafeArea(
           child: CalendarDatePicker2(

@@ -31,7 +31,6 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppbar(
-        isShowBackButton: true,
         title: "Pesanan Baru",
       ),
       body: SafeArea(

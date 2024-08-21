@@ -72,34 +72,11 @@ class DashboardBanner extends StatelessWidget {
                       style: const ButtonStyle(
                         padding: WidgetStatePropertyAll(
                           EdgeInsets.symmetric(
-                            vertical: 9.5,
                             horizontal: 12,
                           ),
                         ),
-                        side: WidgetStatePropertyAll(
-                          BorderSide(
-                            color: TColors.primary,
-                            width: 1.5,
-                          ),
-                        ),
-                        shape: WidgetStatePropertyAll(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(
-                                12.0,
-                              ),
-                            ),
-                          ),
-                        ),
                       ),
-                      child: Text(
-                        "Bagikan",
-                        style: GoogleFonts.inter(
-                          color: TColors.primary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: TSizes.fontSizeActionL,
-                        ),
-                      ),
+                      child: Text("Bagikan"),
                     ),
                   ),
                 )

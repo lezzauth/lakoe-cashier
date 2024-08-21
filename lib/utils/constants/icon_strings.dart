@@ -20,5 +20,6 @@ class TIcons {
   static const String add = "assets/icons/add.svg";
   static const String minus = "assets/icons/minus.svg";
   static const String box = "assets/icons/box.svg";
+  static const String image = "assets/icons/image.svg";
   static const String tableRestaurant = "assets/icons/table-restaurant.svg";
 }

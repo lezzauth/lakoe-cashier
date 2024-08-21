@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 
@@ -58,6 +59,10 @@ class TTextFieldTheme {
         width: 1,
         color: TColors.error,
       ),
+    ),
+    helperStyle: GoogleFonts.inter(
+      fontSize: TSizes.fontSizeBodyS,
+      color: TColors.neutralDarkLightest,
     ),
   );
 }
