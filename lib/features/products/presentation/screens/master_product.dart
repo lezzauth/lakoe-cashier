@@ -102,14 +102,17 @@ class _MasterProductScreenState extends State<MasterProductScreen> {
         height: 48,
         width: 48,
         child: FloatingActionButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
           onPressed: () {
             Navigator.pushNamed(context, "/products/new");
           },
-          child: Icon(
+          elevation: 0,
+          child: const Icon(
             Icons.add,
             size: 24,
           ),
-          elevation: 0,
         ),
       ),
     );

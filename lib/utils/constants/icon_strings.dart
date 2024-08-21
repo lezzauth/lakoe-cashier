@@ -3,6 +3,7 @@ class TIcons {
   static const String dashboardProduct = "assets/icons/product.svg";
   static const String dashboardQROrder = "assets/icons/qr-order.svg";
   static const String dashboardReport = "assets/icons/report.svg";
+  static const String dashboardSettings = "assets/icons/settings.svg";
 
   static const String bell = "assets/icons/bell.svg";
   static const String hamburgerMenu = "assets/icons/hamburger-menu.svg";
@@ -10,6 +11,7 @@ class TIcons {
   static const String calendar = "assets/icons/calendar.svg";
   static const String arrowRight = "assets/icons/arrow-right.svg";
   static const String arrowLeft = "assets/icons/arrow-left.svg";
+  static const String arrowDown = "assets/icons/arrow-down.svg";
   static const String graphStatsAscend = "assets/icons/graph-stats-ascend.svg";
   static const String graphStatsDescend =
       "assets/icons/graph-stats-descend.svg";
@@ -21,5 +23,7 @@ class TIcons {
   static const String minus = "assets/icons/minus.svg";
   static const String box = "assets/icons/box.svg";
   static const String image = "assets/icons/image.svg";
+  static const String contactBook = "assets/icons/contact-book.svg";
+  static const String coinMultiple = "assets/icons/coin-multiple.svg";
   static const String tableRestaurant = "assets/icons/table-restaurant.svg";
 }

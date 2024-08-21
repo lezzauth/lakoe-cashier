@@ -8,4 +8,5 @@ class TImages {
   static const String contactAvatar = "assets/images/contact-avatar.svg";
   static const String searchEmpty = "assets/images/search-empty.svg";
   static const String productEmpty = "assets/images/product-empty.svg";
+  static const String stamp = "assets/images/stamp.png";
 }

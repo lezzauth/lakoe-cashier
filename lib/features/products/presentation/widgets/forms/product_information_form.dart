@@ -231,13 +231,16 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                                 color: TColors.primary,
                               ),
                               style: ButtonStyle(
-                                  padding: WidgetStatePropertyAll(
-                                    EdgeInsets.symmetric(horizontal: 14.0),
-                                  ),
-                                  side: WidgetStatePropertyAll(BorderSide(
+                                padding: WidgetStatePropertyAll(
+                                  EdgeInsets.symmetric(horizontal: 14.0),
+                                ),
+                                side: WidgetStatePropertyAll(
+                                  BorderSide(
                                     width: 1,
                                     color: TColors.primary,
-                                  ))),
+                                  ),
+                                ),
+                              ),
                               icon: UiIcons(
                                 TIcons.add,
                                 height: 12,

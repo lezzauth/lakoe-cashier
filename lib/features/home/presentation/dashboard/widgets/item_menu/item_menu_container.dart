@@ -15,15 +15,9 @@ class ItemMenuContainer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ItemMenu(
-            icon: TIcons.dashboardQROrder,
-            label: "QR Order",
-            color: TColors.highlightLightest,
-            routeName: "/qr-order",
-          ),
-          ItemMenu(
             icon: TIcons.dashboardProduct,
             label: "Produk",
-            color: TColors.wraningLight,
+            color: TColors.warningLight,
             routeName: "/products",
           ),
           ItemMenu(
@@ -37,6 +31,12 @@ class ItemMenuContainer extends StatelessWidget {
             label: "Laporan",
             color: TColors.infoLight,
             routeName: "/reports",
+          ),
+          ItemMenu(
+            icon: TIcons.dashboardSettings,
+            label: "Setting",
+            color: TColors.highlightLightest,
+            routeName: "/setting",
           ),
         ],
       ),

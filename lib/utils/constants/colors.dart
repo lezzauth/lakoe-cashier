@@ -129,7 +129,7 @@ class TColors {
   // -- Warning
   static const Color warningDark = TWarningColors.dark;
   static const Color warningMedium = TWarningColors.medium;
-  static const Color wraningLight = TWarningColors.light;
+  static const Color warningLight = TWarningColors.light;
 
   // -- Error
   static const Color errorDark = TErrorColors.dark;
