@@ -7,6 +7,7 @@ class TTextFieldTheme {
   TTextFieldTheme._();
 
   static InputDecorationTheme lightTheme = InputDecorationTheme(
+    isDense: true,
     hintStyle: const TextStyle(
       color: TColors.neutralDarkLightest,
       fontSize: TSizes.fontSizeBodyM,

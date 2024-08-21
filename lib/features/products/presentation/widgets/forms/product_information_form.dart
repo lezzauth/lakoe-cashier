@@ -7,24 +7,22 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_caption_m.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 class ProductInformationForm extends StatefulWidget {
-  const ProductInformationForm({super.key});
+  const ProductInformationForm({super.key, required this.formKey});
+  final GlobalKey<FormBuilderState> formKey;
 
   @override
   State<ProductInformationForm> createState() => _ProductInformationFormState();
 }
 
 class _ProductInformationFormState extends State<ProductInformationForm> {
-  final _formKey = GlobalKey<FormBuilderState>();
-
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
-      key: _formKey,
+      key: widget.formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -85,7 +83,6 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                             TextFormField(
                               decoration: const InputDecoration(
                                 hintText: "Contoh: Es Teh",
-                                isDense: true,
                               ),
                             ),
                           ],
@@ -106,7 +103,6 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                       FormBuilderTextField(
                         name: "price",
                         decoration: const InputDecoration(
-                          isDense: true,
                           hintText: "0",
                           prefixIcon: Padding(
                             padding: EdgeInsets.only(
@@ -141,7 +137,6 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                       FormBuilderTextField(
                         name: "description",
                         decoration: const InputDecoration(
-                          isDense: true,
                           hintText: "Tuliskan deskripsi produk",
                         ),
                         maxLines: 3,
@@ -178,7 +173,6 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                       FormBuilderTextField(
                         name: "modal",
                         decoration: const InputDecoration(
-                          isDense: true,
                           hintText: "0",
                           prefixIcon: Padding(
                             padding: EdgeInsets.only(

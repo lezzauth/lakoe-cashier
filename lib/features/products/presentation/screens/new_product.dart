@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/wrapper/keep_alive_wrapper.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/product_information_form.dart';
+import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/stock_information_form.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class NewProductScreen extends StatefulWidget {
@@ -14,13 +17,8 @@ class NewProductScreen extends StatefulWidget {
 }
 
 class _NewProductScreenState extends State<NewProductScreen> {
-  String activeContent = "product-info";
-
-  onContentChanged(String value) {
-    setState(() {
-      activeContent = value;
-    });
-  }
+  final _productInformationFormKey = GlobalKey<FormBuilderState>();
+  final _stockInformationFormKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,55 +30,37 @@ class _NewProductScreenState extends State<NewProductScreen> {
           actions: [
             TextButton(
               onPressed: () {},
-              child: TextActionL(
+              child: const TextActionL(
                 "SIMPAN",
                 color: TColors.primary,
               ),
             )
           ],
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(48),
-            child: Container(
-              height: 48,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16.0),
-                child: Container(
-                  height: 48,
-                  padding: const EdgeInsets.all(4.0),
-                  decoration: BoxDecoration(
-                    color: TColors.neutralLightLight,
-                    border:
-                        Border.all(color: TColors.neutralLightMedium, width: 1),
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: Container(
-                    child: TabBar(
-                      tabs: [
-                        TabItem(
-                          title: "Info Produk",
-                          counter: 2,
-                        ),
-                        TabItem(title: "Info Stok"),
-                      ],
-                    ),
-                  ),
-                ),
+          bottom: const TabContainer(
+            tabs: [
+              TabItem(
+                title: "Info Produk",
               ),
-            ),
+              TabItem(title: "Info Stok"),
+            ],
           ),
         ),
-        body: TabBarView(children: [
-          const SingleChildScrollView(
-            padding: EdgeInsets.only(top: 16.0),
-            child: ProductInformationForm(),
-          ),
-          Expanded(
-            child: Container(
-              color: TColors.error,
+        body: TabBarView(
+          children: [
+            SingleChildScrollView(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: ProductInformationForm(
+                formKey: _productInformationFormKey,
+              ),
             ),
-          )
-        ]),
+            SingleChildScrollView(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: StockInformationForm(
+                formKey: _stockInformationFormKey,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
