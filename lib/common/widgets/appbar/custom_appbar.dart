@@ -8,104 +8,96 @@ import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppbar({
     super.key,
-    this.isShowBackButton = false,
-    this.title,
+    this.title = "",
     this.leading,
     this.search,
     this.actions,
+    this.bottom,
+    this.toolbarHeight,
   });
 
-  final bool isShowBackButton;
   final Widget? leading;
-  final String? title;
+  final String title;
   final SearchField? search;
   final List<Widget>? actions;
+  final PreferredSizeWidget? bottom;
+  final double? toolbarHeight;
 
   @override
   Widget build(BuildContext context) {
-    Widget? renderLeading() {
-      if (isShowBackButton) {
-        return IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: UiIcons(
-            TIcons.arrowLeft,
-            height: 20,
-            width: 20,
-            // onTap: () {
-            //   Navigator.pop(context);
-            // },
-            color: TColors.primary,
-          ),
-        );
-      }
-
-      return leading;
-    }
-
-    Widget? renderTitle() {
-      if (search != null) {
-        return search!;
-      }
-
-      return TextHeading3(
-        title ?? "",
-      );
-    }
-
-    // List<Widget>? renderActions() {
-    //   if (actions != null) {
-    //     return actions!;
-    //   }
-
-    //   return [
-    //     const SizedBox(
-    //       height: 20,
-    //       width: 20,
-    //     )
-    //   ];
-    // }
-
-    return AppBar(
-      leading: renderLeading(),
-      title: renderTitle(),
-      titleSpacing: 0.0,
-      automaticallyImplyLeading: false,
-      centerTitle: true,
-      actions: actions,
-      forceMaterialTransparency: true,
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 0.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Stack(
+              children: [
+                if (title.isNotEmpty)
+                  Positioned.fill(
+                    child: Center(
+                      child: TextHeading3(
+                        title,
+                        color: TColors.neutralDarkDarkest,
+                      ),
+                    ),
+                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    leading ??
+                        Transform.translate(
+                          offset: const Offset(0, 0),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const UiIcons(
+                              TIcons.arrowLeft,
+                              height: 20,
+                              width: 20,
+                              color: TColors.primary,
+                            ),
+                          ),
+                        ),
+                    if (search != null)
+                      Expanded(
+                        child: search!,
+                      ),
+                    if (actions != null)
+                      Transform.translate(
+                        offset: const Offset(0, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: actions!,
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+            if (bottom != null) bottom!,
+          ],
+        ),
+      ),
     );
-
-    // return SafeArea(
-    //   child: Container(
-    //     height: double.maxFinite,
-    //     width: double.maxFinite,
-    //     padding: const EdgeInsets.symmetric(horizontal: 16),
-    //     child: Row(
-    //       mainAxisSize: MainAxisSize.max,
-    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //       children: [
-    //         Container(
-    //           child: renderLeading(),
-    //         ),
-    //         Expanded(
-    //           child: Center(
-    //             child: renderTitle(),
-    //           ),
-    //         ),
-    //         Container(
-    //           margin: const EdgeInsets.only(left: 20),
-    //           child: Row(
-    //             children: renderActions() ?? [],
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => _PreferredAppBarSize(
+        toolbarHeight,
+        bottom?.preferredSize.height,
+      );
+}
+
+class _PreferredAppBarSize extends Size {
+  _PreferredAppBarSize(this.toolbarHeight, this.bottomHeight)
+      : super.fromHeight(
+            (toolbarHeight ?? kToolbarHeight) + (bottomHeight ?? 0));
+
+  final double? toolbarHeight;
+  final double? bottomHeight;
 }
