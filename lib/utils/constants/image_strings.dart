@@ -6,4 +6,6 @@ class TImages {
   static const String tradingNews = "assets/images/trading-news.svg";
   static const String receiptSlip = "assets/images/receipt-slip.svg";
   static const String contactAvatar = "assets/images/contact-avatar.svg";
+  static const String searchEmpty = "assets/images/search-empty.svg";
+  static const String productEmpty = "assets/images/product-empty.svg";
 }

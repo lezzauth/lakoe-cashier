@@ -6,6 +6,8 @@ import 'package:point_of_sales_cashier/features/cart/presentation/screens/cart.d
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/explore_product.dart';
+import 'package:point_of_sales_cashier/features/products/presentation/screens/master_product.dart';
+import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 
 class App extends StatelessWidget {
@@ -27,6 +29,8 @@ class App extends StatelessWidget {
         "/home/transaction-date": (context) => const TransactionDateScreen(),
         "/explore-products": (context) => const ExploreProductScreen(),
         "/cart": (context) => const CartScreen(),
+        "/products": (context) => const MasterProductScreen(),
+        "/products/new": (context) => const NewProductScreen(),
       },
     );
   }

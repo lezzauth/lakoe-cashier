@@ -31,6 +31,7 @@ class SearchField extends StatelessWidget {
             TIcons.search,
             height: 20,
             width: 20,
+            color: TColors.neutralDarkLight,
           ),
           const SizedBox(width: 12),
           Flexible(

@@ -25,14 +25,19 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     Widget? renderLeading() {
       if (isShowBackButton) {
-        return UiIcons(
-          TIcons.arrowLeft,
-          height: 20,
-          width: 20,
-          onTap: () {
+        return IconButton(
+          onPressed: () {
             Navigator.pop(context);
           },
-          color: TColors.primary,
+          icon: UiIcons(
+            TIcons.arrowLeft,
+            height: 20,
+            width: 20,
+            // onTap: () {
+            //   Navigator.pop(context);
+            // },
+            color: TColors.primary,
+          ),
         );
       }
 
@@ -49,27 +54,26 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       );
     }
 
-    List<Widget>? renderActions() {
-      if (actions != null) {
-        return actions!;
-      }
+    // List<Widget>? renderActions() {
+    //   if (actions != null) {
+    //     return actions!;
+    //   }
 
-      return [
-        const SizedBox(
-          height: 20,
-          width: 20,
-        )
-      ];
-    }
+    //   return [
+    //     const SizedBox(
+    //       height: 20,
+    //       width: 20,
+    //     )
+    //   ];
+    // }
 
     return AppBar(
       leading: renderLeading(),
       title: renderTitle(),
       titleSpacing: 0.0,
       automaticallyImplyLeading: false,
-      // leadingWidth: 20.0,
       centerTitle: true,
-      actions: renderActions(),
+      actions: actions,
       forceMaterialTransparency: true,
     );
 

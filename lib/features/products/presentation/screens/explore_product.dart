@@ -106,12 +106,6 @@ class _ExploreProductScreenState extends State<ExploreProductScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const TextHeading3("Berlangsung"),
-                            GestureDetector(
-                              child: TextHeading4(
-                                "Lihat semua",
-                                color: TColors.primary,
-                              ),
-                            ),
                           ],
                         ),
                       ),
