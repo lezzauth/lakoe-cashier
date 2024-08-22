@@ -12,11 +12,13 @@ class ProductNoteAction extends StatelessWidget {
     super.key,
     this.notes = "",
     this.onChanged,
+    this.readOnly = false,
   });
 
   final String notes;
   final Function(String notes)? onChanged;
   final TextEditingController _controller = TextEditingController();
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +83,7 @@ class ProductNoteAction extends StatelessWidget {
       children: [
         if (notes.isNotEmpty)
           Text(
-            '"$notes"',
+            '“$notes“',
             style: GoogleFonts.inter(
               fontStyle: FontStyle.italic,
               fontSize: TSizes.fontSizeBodyS,
@@ -90,13 +92,14 @@ class ProductNoteAction extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-        GestureDetector(
-          onTap: onAddNotes,
-          child: TextHeading5(
-            notes.isNotEmpty ? "Ubah" : "Tambah Catatan",
-            color: TColors.primary,
+        if (!readOnly)
+          GestureDetector(
+            onTap: onAddNotes,
+            child: TextHeading5(
+              notes.isNotEmpty ? "Ubah" : "Tambah Catatan",
+              color: TColors.primary,
+            ),
           ),
-        ),
       ],
     );
   }

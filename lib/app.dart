@@ -8,6 +8,7 @@ import 'package:point_of_sales_cashier/features/customers/presentation/screens/m
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/new_customer.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
+import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_detail.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_master.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/explore_product.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/master_product.dart';
@@ -42,6 +43,7 @@ class App extends StatelessWidget {
         "/customers/detail": (context) => const CustomerDetailScreen(),
         // orders
         "/orders": (context) => const OrderMasterScreen(),
+        "/orders/detail": (context) => const OrderDetailScreen(),
       },
     );
   }

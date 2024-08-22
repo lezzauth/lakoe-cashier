@@ -43,7 +43,9 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
                               isWithQR: index % 2 == 0,
                               isPaid: index % 2 == 0,
                               type: index % 2 == 0 ? "dine_in" : "takeaway",
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(context, "/orders/detail");
+                              },
                             );
                           },
                         ),
