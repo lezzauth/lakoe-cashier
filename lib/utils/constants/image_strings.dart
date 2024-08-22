@@ -9,4 +9,5 @@ class TImages {
   static const String searchEmpty = "assets/images/search-empty.svg";
   static const String productEmpty = "assets/images/product-empty.svg";
   static const String stamp = "assets/images/stamp.png";
+  static const String catBox = "assets/images/cat-box.svg";
 }

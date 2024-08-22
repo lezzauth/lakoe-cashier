@@ -25,11 +25,6 @@ class _MasterCustomerScreenState extends State<MasterCustomerScreen> {
         search: SearchField(
           hintText: "Cari pelanggan...",
         ),
-        actions: [
-          SizedBox(
-            width: 16.0,
-          )
-        ],
       ),
       body: Scrollbar(
         child: RefreshIndicator(

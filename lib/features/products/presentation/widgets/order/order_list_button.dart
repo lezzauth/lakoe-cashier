@@ -12,6 +12,9 @@ class OrderListButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, "/orders");
+      },
       child: Container(
         decoration: BoxDecoration(
           gradient: TColors.greenGradient,

@@ -8,6 +8,7 @@ import 'package:point_of_sales_cashier/features/customers/presentation/screens/m
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/new_customer.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
+import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_master.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/explore_product.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/master_product.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
@@ -23,7 +24,7 @@ class App extends StatelessWidget {
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       themeMode: ThemeMode.light,
-      initialRoute: "/home",
+      initialRoute: "/orders",
       routes: {
         "/": (context) => const OnBoardingScreen(),
         "/otp-input": (context) => const OtpInputScreen(),
@@ -32,11 +33,15 @@ class App extends StatelessWidget {
         "/home/transaction-date": (context) => const TransactionDateScreen(),
         "/explore-products": (context) => const ExploreProductScreen(),
         "/cart": (context) => const CartScreen(),
+        // products
         "/products": (context) => const MasterProductScreen(),
         "/products/new": (context) => const NewProductScreen(),
+        // customers
         "/customers": (context) => const MasterCustomerScreen(),
         "/customers/new": (context) => const NewCustomerScreen(),
         "/customers/detail": (context) => const CustomerDetailScreen(),
+        // orders
+        "/orders": (context) => const OrderMasterScreen(),
       },
     );
   }

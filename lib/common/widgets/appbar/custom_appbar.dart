@@ -26,14 +26,17 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Stack(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+              right: actions == null ? 16.0 : 0.0,
+              left: leading == null ? 0.0 : 16.0,
+            ),
+            child: Stack(
               children: [
-                if (title.isNotEmpty)
+                if (title.isNotEmpty && search == null)
                   Positioned.fill(
                     child: Center(
                       child: TextHeading3(
@@ -79,9 +82,9 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ],
             ),
-            if (bottom != null) bottom!,
-          ],
-        ),
+          ),
+          if (bottom != null) bottom!,
+        ],
       ),
     );
   }

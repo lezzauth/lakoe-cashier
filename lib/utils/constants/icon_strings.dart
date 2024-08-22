@@ -9,6 +9,7 @@ class TIcons {
   static const String hamburgerMenu = "assets/icons/hamburger-menu.svg";
   static const String cashier = "assets/icons/cashier.svg";
   static const String calendar = "assets/icons/calendar.svg";
+  static const String filter = "assets/icons/filter.svg";
   static const String arrowRight = "assets/icons/arrow-right.svg";
   static const String arrowLeft = "assets/icons/arrow-left.svg";
   static const String arrowDown = "assets/icons/arrow-down.svg";
@@ -23,6 +24,7 @@ class TIcons {
   static const String minus = "assets/icons/minus.svg";
   static const String box = "assets/icons/box.svg";
   static const String image = "assets/icons/image.svg";
+  static const String qr = "assets/icons/qr.svg";
   static const String contactBook = "assets/icons/contact-book.svg";
   static const String coinMultiple = "assets/icons/coin-multiple.svg";
   static const String tableRestaurant = "assets/icons/table-restaurant.svg";
