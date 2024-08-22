@@ -27,6 +27,8 @@ class TextBodyM extends StatelessWidget {
         fontSize: fontSize,
       ),
       textAlign: textAlign,
+      softWrap: true,
+      maxLines: 2,
     );
   }
 }

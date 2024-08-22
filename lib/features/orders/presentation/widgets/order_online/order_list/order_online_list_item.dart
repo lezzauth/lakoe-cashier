@@ -3,24 +3,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/ghost_order_type_tag.dart';
+import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/tags/ghost_order_online_status_tag.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
-class OrderListItem extends StatelessWidget {
-  final bool isWithQR;
-  final String type;
-  final bool isPaid;
+class OrderOnlineListItem extends StatelessWidget {
+  final String status;
   final Function()? onTap;
 
-  const OrderListItem({
+  const OrderOnlineListItem({
     super.key,
-    this.isWithQR = false,
-    this.type = "dine_in",
-    this.isPaid = false,
+    this.status = "new",
     this.onTap,
   });
 
@@ -72,7 +68,7 @@ class OrderListItem extends StatelessWidget {
                                       color: TColors.neutralDarkDarkest,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                    text: "Akbar",
+                                    text: "Umum",
                                     children: [
                                       TextSpan(
                                         style: GoogleFonts.inter(
@@ -91,20 +87,13 @@ class OrderListItem extends StatelessWidget {
                                 spacing: 4,
                                 children: [
                                   const UiIcons(
-                                    TIcons.tableRestaurant,
+                                    TIcons.whatsapp,
                                     height: 16,
                                     width: 16,
                                     color: TColors.neutralDarkLight,
                                   ),
-                                  if (isWithQR)
-                                    const UiIcons(
-                                      TIcons.qr,
-                                      height: 16,
-                                      width: 16,
-                                      color: TColors.neutralDarkLight,
-                                    ),
                                   TextHeading5(
-                                    "T-10 (Luar)",
+                                    "0821-0987-6543",
                                     color: TColors.neutralDarkLight,
                                   ),
                                 ],
@@ -120,8 +109,8 @@ class OrderListItem extends StatelessWidget {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(bottom: 8),
-                          child: GhostOrderTypeTag(
-                            tag: type,
+                          child: GhostOrderOnlineStatusTag(
+                            status: status,
                           ),
                         ),
                         RichText(
@@ -149,16 +138,6 @@ class OrderListItem extends StatelessWidget {
                   ],
                 ),
               ),
-              if (isPaid)
-                Positioned(
-                  right: 47,
-                  bottom: 0,
-                  child: Image.asset(
-                    TImages.stamp,
-                    width: 80,
-                    height: 53.35,
-                  ),
-                ),
             ],
           ),
         ),

@@ -31,6 +31,18 @@ class TChipTheme {
     ),
     backgroundColor: Colors.transparent,
     selectedColor: TColors.highlightLightest,
+    surfaceTintColor: TColors.error,
+    selectedShadowColor: TColors.errorDark,
+    secondarySelectedColor: TColors.info,
+    color: WidgetStateProperty.resolveWith(
+      (states) {
+        if (states.contains(WidgetState.selected)) {
+          return TColors.highlightLightest;
+        }
+
+        return Colors.transparent;
+      },
+    ),
     showCheckmark: false,
   );
 

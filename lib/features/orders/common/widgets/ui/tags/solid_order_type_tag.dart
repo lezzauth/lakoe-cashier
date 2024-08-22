@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
-class OrderTypeTag extends StatelessWidget {
-  const OrderTypeTag({
+class SolidOrderTypeTag extends StatelessWidget {
+  const SolidOrderTypeTag({
     super.key,
     required this.tag,
   });
@@ -26,22 +26,22 @@ class OrderTypeTag extends StatelessWidget {
     Color getTagBackgroundColor() {
       switch (tag) {
         case "dine_in":
-          return TColors.successLight;
-        case "takeaway":
-          return TColors.warningLight;
-        default:
-          return TColors.successLight;
-      }
-    }
-
-    Color getTagTextColor() {
-      switch (tag) {
-        case "dine_n":
           return TColors.successDark;
         case "takeaway":
           return TColors.warningDark;
         default:
           return TColors.successDark;
+      }
+    }
+
+    Color getTagTextColor() {
+      switch (tag) {
+        case "dine_in":
+          return TColors.neutralLightLightest;
+        case "takeaway":
+          return TColors.neutralDarkDark;
+        default:
+          return TColors.neutralLightLightest;
       }
     }
 

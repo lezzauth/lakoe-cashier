@@ -25,6 +25,7 @@ class TIcons {
   static const String box = "assets/icons/box.svg";
   static const String image = "assets/icons/image.svg";
   static const String qr = "assets/icons/qr.svg";
+  static const String whatsapp = "assets/icons/whatsapp.svg";
   static const String contactBook = "assets/icons/contact-book.svg";
   static const String coinMultiple = "assets/icons/coin-multiple.svg";
   static const String tableRestaurant = "assets/icons/table-restaurant.svg";
