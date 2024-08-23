@@ -10,6 +10,7 @@ import 'package:point_of_sales_cashier/features/home/presentation/dashboard/scre
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_detail.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_master.dart';
+import 'package:point_of_sales_cashier/features/payments/presentation/screens/qris_payment.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/explore_product.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/master_product.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
@@ -44,6 +45,9 @@ class App extends StatelessWidget {
         // orders
         "/orders": (context) => const OrderMasterScreen(),
         "/orders/detail": (context) => const OrderDetailScreen(),
+
+        // payments
+        "/payments/qris": (context) => const QrisPaymentScreen(),
       },
     );
   }

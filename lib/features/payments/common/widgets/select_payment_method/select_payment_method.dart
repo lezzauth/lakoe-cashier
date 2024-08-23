@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/cash/content.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/cash/form.dart';
+import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/qris/content.dart';
+import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/radio.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/radio_group.dart';
 import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
 
@@ -44,7 +47,11 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
                 },
               ),
             ),
-            if (paymentMethod == "cash") CashPaymentForm(),
+            switch (paymentMethod) {
+              "cash" => CashPaymentContent(),
+              "qris" => QrisPaymentContent(),
+              _ => CashPaymentContent()
+            }
           ],
         ),
       ),

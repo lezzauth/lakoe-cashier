@@ -59,10 +59,11 @@ class PaymentMethodRadio extends StatelessWidget {
             border: Border.all(color: getBorderColor(), width: 1),
           ),
           child: switch (value) {
-            "cash" => CashPaymentContent(selected: selected),
-            "debit" => DebitPaymentContent(selected: selected),
-            "bank_transfer" => BankTransferPaymentContent(selected: selected),
-            "qris" => QrisPaymentContent(selected: selected),
+            "cash" => CashPaymentRadioContent(selected: selected),
+            "debit" => DebitPaymentRadioContent(selected: selected),
+            "bank_transfer" =>
+              BankTransferPaymentRadioContent(selected: selected),
+            "qris" => QrisPaymentRadioContent(selected: selected),
             _ => const SizedBox(),
           },
         ),
@@ -71,10 +72,10 @@ class PaymentMethodRadio extends StatelessWidget {
   }
 }
 
-class CashPaymentContent extends StatelessWidget {
+class CashPaymentRadioContent extends StatelessWidget {
   final bool selected;
 
-  const CashPaymentContent({super.key, required this.selected});
+  const CashPaymentRadioContent({super.key, required this.selected});
 
   @override
   Widget build(BuildContext context) {
@@ -98,10 +99,10 @@ class CashPaymentContent extends StatelessWidget {
   }
 }
 
-class DebitPaymentContent extends StatelessWidget {
+class DebitPaymentRadioContent extends StatelessWidget {
   final bool selected;
 
-  const DebitPaymentContent({super.key, required this.selected});
+  const DebitPaymentRadioContent({super.key, required this.selected});
 
   @override
   Widget build(BuildContext context) {
@@ -125,10 +126,10 @@ class DebitPaymentContent extends StatelessWidget {
   }
 }
 
-class BankTransferPaymentContent extends StatelessWidget {
+class BankTransferPaymentRadioContent extends StatelessWidget {
   final bool selected;
 
-  const BankTransferPaymentContent({super.key, required this.selected});
+  const BankTransferPaymentRadioContent({super.key, required this.selected});
 
   @override
   Widget build(BuildContext context) {
@@ -152,10 +153,10 @@ class BankTransferPaymentContent extends StatelessWidget {
   }
 }
 
-class QrisPaymentContent extends StatelessWidget {
+class QrisPaymentRadioContent extends StatelessWidget {
   final bool selected;
 
-  const QrisPaymentContent({super.key, required this.selected});
+  const QrisPaymentRadioContent({super.key, required this.selected});
 
   @override
   Widget build(BuildContext context) {

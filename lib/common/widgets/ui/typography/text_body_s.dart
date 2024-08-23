@@ -7,9 +7,13 @@ class TextBodyS extends StatelessWidget {
   final FontWeight fontWeight;
   final double fontSize = TSizes.fontSizeBodyS;
   final Color? color;
+  final TextAlign? textAlign;
 
   const TextBodyS(this.data,
-      {super.key, this.fontWeight = FontWeight.w400, this.color});
+      {super.key,
+      this.fontWeight = FontWeight.w400,
+      this.color,
+      this.textAlign});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +24,7 @@ class TextBodyS extends StatelessWidget {
         fontWeight: fontWeight,
         fontSize: fontSize,
       ),
+      textAlign: textAlign,
     );
   }
 }
