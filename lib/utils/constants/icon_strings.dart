@@ -29,4 +29,8 @@ class TIcons {
   static const String contactBook = "assets/icons/contact-book.svg";
   static const String coinMultiple = "assets/icons/coin-multiple.svg";
   static const String tableRestaurant = "assets/icons/table-restaurant.svg";
+  static const String moneyBill = "assets/icons/money-bill.svg";
+  static const String moneyBillTransfer =
+      "assets/icons/money-bill-transfer.svg";
+  static const String creditCard = "assets/icons/credit-card.svg";
 }

@@ -16,6 +16,7 @@ import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/so
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/tags/ghost_order_online_status_tag.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/tags/solid_order_online_status_tag.dart';
+import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -34,6 +35,18 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as OrderDetailArgument;
     bool isPaid = false;
+
+    onCompleteOrder() {
+      print('onCompleteOrder');
+      showModalBottomSheet(
+        context: context,
+        showDragHandle: true,
+        isScrollControlled: true,
+        builder: (context) {
+          return const SelectPaymentMethod();
+        },
+      );
+    }
 
     return Scaffold(
       appBar: CustomAppbar(
@@ -172,7 +185,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                     isPaid: isPaid,
                     type: arguments.orderType,
                     onAddMoreItem: () {},
-                    onComplete: () {},
+                    onComplete: onCompleteOrder,
                     onPrint: () {},
                     onShare: () {},
                   ),
@@ -183,7 +196,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                   child: OrderOnlineAction(
                     status: arguments.orderOnlineStatus,
-                    onComplete: () {},
+                    onComplete: onCompleteOrder,
                     onDeclined: () {},
                     onPrint: () {},
                     onProcessed: () {},

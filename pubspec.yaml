@@ -49,6 +49,7 @@ dependencies:
     form_builder_validators: ^11.0.0
     freezed_annotation: ^2.4.4
     json_annotation: ^4.9.0
+    currency_text_input_formatter: ^2.2.3
 
 dev_dependencies:
     flutter_test:
