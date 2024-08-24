@@ -13,6 +13,7 @@ class TImages {
   static const String qrisLogo = "assets/images/qris-logo.svg";
   static const String successConfirmation =
       "assets/images/success-confirmation.png";
+  static const String qrisBackground = "assets/images/qris-background.png";
 
   // banks
   static const String bankBCALogo = "assets/images/bank-bca-logo.svg";

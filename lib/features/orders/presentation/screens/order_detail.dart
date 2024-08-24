@@ -109,6 +109,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                       "Rabu, 28 Agu 2014 - 20:18",
                                       color: TColors.neutralDarkLight,
                                       textAlign: TextAlign.end,
+                                      maxLines: 2,
                                     ),
                                   )
                                 ],

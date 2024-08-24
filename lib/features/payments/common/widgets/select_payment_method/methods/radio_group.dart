@@ -1,18 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/radio.dart';
+import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method_not_available.dart';
 
 class PaymentMethodRadioGroup extends StatelessWidget {
   final String value;
   final ValueChanged<String?> onChanged;
+  final List<String> limitedValues;
 
-  const PaymentMethodRadioGroup({
-    super.key,
-    this.value = "cash",
-    required this.onChanged,
-  });
+  const PaymentMethodRadioGroup(
+      {super.key,
+      this.value = "cash",
+      required this.onChanged,
+      required this.limitedValues});
 
   @override
   Widget build(BuildContext context) {
+    onLimitedPressed() {
+      Navigator.pop(context);
+      showModalBottomSheet(
+        context: context,
+        showDragHandle: true,
+        isScrollControlled: true,
+        builder: (context) {
+          return SelectPaymentMethodNotAvailable();
+        },
+      );
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -30,7 +44,8 @@ class PaymentMethodRadioGroup extends StatelessWidget {
                 value: "qris",
                 groupValue: value,
                 onChanged: onChanged,
-                // enabled: false,
+                limited: limitedValues.contains("qris"),
+                onLimited: onLimitedPressed,
               ),
             ],
           ),
@@ -47,7 +62,8 @@ class PaymentMethodRadioGroup extends StatelessWidget {
               value: "bank_transfer",
               groupValue: value,
               onChanged: onChanged,
-              // enabled: false,
+              limited: limitedValues.contains("bank_transfer"),
+              onLimited: onLimitedPressed,
             ),
           ],
         ),

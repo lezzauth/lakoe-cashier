@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
@@ -7,7 +8,9 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class QrisPaymentScreen extends StatefulWidget {
   const QrisPaymentScreen({super.key});
@@ -112,13 +115,68 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  SizedBox(
-                    height: 352,
-                    width: 295,
-                    child: Container(
-                      color: TColors.neutralLightLight,
-                    ),
-                  ),
+                  Container(
+                      height: 352,
+                      width: 295,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 1,
+                          color: TColors.neutralLightMedium,
+                        ),
+                      ),
+                      child: Stack(
+                        children: [
+                          Image.asset(
+                            TImages.qrisBackground,
+                            height: 352,
+                            width: 295,
+                            fit: BoxFit.fill,
+                          ),
+                          Positioned(
+                            top: 40,
+                            child: Container(
+                              width: 247,
+                              padding: EdgeInsets.only(top: 16),
+                              margin: EdgeInsets.symmetric(horizontal: 24),
+                              child: Center(
+                                child: Text(
+                                  "WARMINDO CAK THO",
+                                  style: GoogleFonts.inter(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            child: QrImageView(
+                              data: '123456789',
+                              version: QrVersions.auto,
+                              size: 247.0,
+                            ),
+                            bottom: 30,
+                            left: 24,
+                            right: 24,
+                          ),
+                          Positioned(
+                            bottom: 16,
+                            child: Container(
+                              width: 247,
+                              margin: EdgeInsets.symmetric(horizontal: 24),
+                              child: Center(
+                                child: Text(
+                                  "Dicetak oleh: 298393",
+                                  style: GoogleFonts.inter(
+                                    fontSize: 10,
+                                    color: TColors.neutralDarkMedium,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )),
                   Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 20,
@@ -137,7 +195,7 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
             Container(
               margin: const EdgeInsets.only(bottom: 20),
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: TextBodyS(
+              child: const TextBodyS(
                 "Jangan tutup atau keluar dari halaman ini sebelum pembayaran berhasil.",
                 color: TColors.neutralDarkLight,
                 textAlign: TextAlign.center,

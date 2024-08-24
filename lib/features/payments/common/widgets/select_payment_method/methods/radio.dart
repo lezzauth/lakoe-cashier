@@ -10,14 +10,16 @@ class PaymentMethodRadio extends StatelessWidget {
   final String value;
   final String groupValue;
   final ValueChanged<String?> onChanged;
-  final bool enabled;
+  final Function()? onLimited;
+  final bool limited;
 
   const PaymentMethodRadio({
     super.key,
     required this.value,
     required this.groupValue,
     required this.onChanged,
-    this.enabled = true,
+    this.onLimited,
+    this.limited = false,
   });
 
   @override
@@ -25,7 +27,7 @@ class PaymentMethodRadio extends StatelessWidget {
     bool selected = value == groupValue;
 
     Color? getCardColor() {
-      if (enabled == false) {
+      if (limited == true) {
         return TColors.neutralLightMedium;
       }
       if (selected) {
@@ -46,7 +48,10 @@ class PaymentMethodRadio extends StatelessWidget {
     return Expanded(
       child: InkWell(
         onTap: () {
-          if (!enabled) return;
+          if (limited) {
+            if (onLimited != null) onLimited!();
+            return;
+          }
           onChanged(value);
         },
         borderRadius: BorderRadius.circular(12.0),

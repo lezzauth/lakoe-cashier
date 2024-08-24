@@ -47,6 +47,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
                     paymentMethod = value!;
                   });
                 },
+                limitedValues: ["qris", "bank_transfer"],
               ),
             ),
             switch (paymentMethod) {
