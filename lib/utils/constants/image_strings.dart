@@ -11,4 +11,16 @@ class TImages {
   static const String stamp = "assets/images/stamp.png";
   static const String catBox = "assets/images/cat-box.svg";
   static const String qrisLogo = "assets/images/qris-logo.svg";
+  static const String successConfirmation =
+      "assets/images/success-confirmation.png";
+
+  // banks
+  static const String bankBCALogo = "assets/images/bank-bca-logo.svg";
+  static const String bankBNILogo = "assets/images/bank-bni-logo.svg";
+  static const String bankBRILogo = "assets/images/bank-bri-logo.svg";
+  static const String bankBSILogo = "assets/images/bank-bsi-logo.svg";
+  static const String bankBTNLogo = "assets/images/bank-btn-logo.svg";
+  static const String bankCIMBLogo = "assets/images/bank-cimb-logo.svg";
+  static const String bankMandiriLogo = "assets/images/bank-mandiri-logo.svg";
+  static const String bankPermataLogo = "assets/images/bank-permata-logo.svg";
 }
