@@ -63,7 +63,7 @@ class _TableNewQrOrderTabState extends State<TableNewQrOrderTab> {
                 child: SizedBox(
                   height: 48,
                   child: OutlinedButton(
-                    onPressed: showDownloadQR,
+                    onPressed: () {},
                     child: const TextActionL(
                       "Edit Brand",
                       color: TColors.primary,
@@ -76,9 +76,7 @@ class _TableNewQrOrderTabState extends State<TableNewQrOrderTab> {
                 child: SizedBox(
                   height: 48,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                    onPressed: showDownloadQR,
                     child: const TextActionL(
                       "Download",
                       color: TColors.neutralLightLightest,

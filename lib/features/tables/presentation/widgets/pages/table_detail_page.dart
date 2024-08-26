@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card_order.dart';
+import 'package:point_of_sales_cashier/features/tables/common/widgets/preview_qr_table.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/preview_qr_table.dart';
+import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
+import 'package:point_of_sales_cashier/utils/helpers/preview_qr_table_helper.dart';
 
 class TableDetailPage extends StatelessWidget {
   const TableDetailPage({super.key});
@@ -73,23 +78,27 @@ class TableDetailPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 12),
-                          child: TextHeading3(
-                            "Tampilan QR Order",
-                            color: TColors.neutralDarkDarkest,
-                          ),
+
+                        TextHeading3(
+                          "Tampilan QR Order",
+                          color: TColors.neutralDarkDarkest,
                         ),
-                        Container(
-                          height: 485.39,
-                          decoration: BoxDecoration(
-                            color: TColors.neutralLightLight,
-                            border: Border.all(
-                              width: 1,
-                              color: TColors.neutralLightDark,
-                            ),
-                          ),
+
+                        PreviewQrTable(
+                          "aowkawiaweijeiaosdkawoeioeie",
+                          color: HexColor("#06B6D4"),
+                          tableNumber: "T-12",
                         ),
+                        // Container(
+                        //   decoration: BoxDecoration(
+                        //     color: TColors.neutralLightLight,
+                        //     border: Border.all(
+                        //       width: 1,
+                        //       color: TColors.neutralLightDark,
+                        //     ),
+                        //   ),
+                        //   child:
+                        // ),
                       ],
                     ),
                   ),
