@@ -14,6 +14,9 @@ class TImages {
   static const String successConfirmation =
       "assets/images/success-confirmation.png";
   static const String qrisBackground = "assets/images/qris-background.png";
+  static const String loyaltyBannerWaves =
+      "assets/images/loyalty-banner-waves.svg";
+  static const String lakoeCoin = "assets/images/lakoe-coin.svg";
 
   // banks
   static const String bankBCALogo = "assets/images/bank-bca-logo.svg";

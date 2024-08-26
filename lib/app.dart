@@ -16,6 +16,7 @@ import 'package:point_of_sales_cashier/features/payments/presentation/screens/su
 import 'package:point_of_sales_cashier/features/products/presentation/screens/explore_product.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/master_product.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
+import 'package:point_of_sales_cashier/features/settings/presentation/screens/settings.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 
 class App extends StatelessWidget {
@@ -28,7 +29,7 @@ class App extends StatelessWidget {
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       themeMode: ThemeMode.light,
-      initialRoute: "/orders",
+      initialRoute: "/settings",
       routes: {
         "/": (context) => const OnBoardingScreen(),
         "/otp-input": (context) => const OtpInputScreen(),
@@ -54,6 +55,9 @@ class App extends StatelessWidget {
             const BankTransferPaymentScreen(),
         "/payments/success_confirmation": (context) =>
             const SuccessConfirmationPaymentScreen(),
+
+        // settings
+        "/settings": (context) => const SettingsScreen(),
       },
     );
   }

@@ -14,6 +14,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.bottom,
     this.toolbarHeight,
+    this.backgroundColor,
   });
 
   final Widget? leading;
@@ -22,6 +23,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final PreferredSizeWidget? bottom;
   final double? toolbarHeight;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,8 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
+          Container(
+            color: backgroundColor,
             padding: EdgeInsets.only(
               right: actions == null ? 16.0 : 0.0,
               left: leading == null ? 0.0 : 16.0,

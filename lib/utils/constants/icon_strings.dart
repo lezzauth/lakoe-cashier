@@ -35,4 +35,13 @@ class TIcons {
   static const String moneyBillTransfer =
       "assets/icons/money-bill-transfer.svg";
   static const String creditCard = "assets/icons/credit-card.svg";
+
+  static const String card = "assets/icons/card.svg";
+  static const String filters = "assets/icons/filters.svg";
+  static const String handMoney = "assets/icons/hand-money.svg";
+  static const String linkCircle = "assets/icons/link-circle.svg";
+  static const String pieChart = "assets/icons/pie-chart.svg";
+  static const String printer = "assets/icons/printer.svg";
+  static const String smartphoneUpdate = "assets/icons/smartphone-update.svg";
+  static const String userId = "assets/icons/user-id.svg";
 }

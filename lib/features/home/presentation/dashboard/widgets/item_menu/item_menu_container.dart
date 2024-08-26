@@ -36,7 +36,7 @@ class ItemMenuContainer extends StatelessWidget {
             icon: TIcons.dashboardSettings,
             label: "Setting",
             color: TColors.highlightLightest,
-            routeName: "/setting",
+            routeName: "/settings",
           ),
         ],
       ),
