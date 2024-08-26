@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 
 class TextHeading4 extends StatelessWidget {
@@ -13,7 +12,7 @@ class TextHeading4 extends StatelessWidget {
     this.data, {
     super.key,
     this.fontWeight = FontWeight.w600,
-    this.color = TColors.neutralDarkDarkest,
+    this.color,
   });
 
   @override

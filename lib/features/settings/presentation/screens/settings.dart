@@ -62,7 +62,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   List<_SettingItem> otherSettingItems = [
     _SettingItem(
       title: "Meja & QR Order",
-      routeName: "/",
+      routeName: "/tables",
       iconSrc: TIcons.tableRestaurant,
       isNewItem: true,
     ),

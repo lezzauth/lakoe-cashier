@@ -11,6 +11,7 @@ class TIcons {
   static const String calendar = "assets/icons/calendar.svg";
   static const String filter = "assets/icons/filter.svg";
   static const String camera = "assets/icons/camera.svg";
+  static const String download = "assets/icons/download.svg";
   static const String arrowRight = "assets/icons/arrow-right.svg";
   static const String arrowLeft = "assets/icons/arrow-left.svg";
   static const String arrowDown = "assets/icons/arrow-down.svg";

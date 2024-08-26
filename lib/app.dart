@@ -17,6 +17,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/screens/ex
 import 'package:point_of_sales_cashier/features/products/presentation/screens/master_product.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/screens/settings.dart';
+import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_master.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 
 class App extends StatelessWidget {
@@ -55,6 +56,9 @@ class App extends StatelessWidget {
             const BankTransferPaymentScreen(),
         "/payments/success_confirmation": (context) =>
             const SuccessConfirmationPaymentScreen(),
+
+        // tables
+        "/tables": (context) => const TableMasterScreen(),
 
         // settings
         "/settings": (context) => const SettingsScreen(),
