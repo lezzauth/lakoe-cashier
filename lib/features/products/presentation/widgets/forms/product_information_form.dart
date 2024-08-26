@@ -259,65 +259,66 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                   child: Row(
                     children: [
                       Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const FormLabel("Satuan Dasar"),
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 8),
-                            child: Wrap(
-                              direction: Axis.horizontal,
-                              spacing: 8,
-                              children: [
-                                InputChip(
-                                  label: TextBodyS("Pcs"),
-                                  onPressed: () {},
-                                ),
-                                InputChip(
-                                  label: TextBodyS("Kilogram"),
-                                  onPressed: () {},
-                                ),
-                                InputChip(
-                                  label: TextBodyS("Box"),
-                                  onPressed: () {},
-                                ),
-                                InputChip(
-                                  label: TextBodyS("Gram"),
-                                  onPressed: () {},
-                                ),
-                                InputChip(
-                                  label: TextBodyS("Liter"),
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 36,
-                            child: OutlinedButton.icon(
-                              onPressed: () {},
-                              label: TextActionM(
-                                "Buat Baru",
-                                color: TColors.primary,
-                              ),
-                              style: ButtonStyle(
-                                  padding: WidgetStatePropertyAll(
-                                    EdgeInsets.symmetric(horizontal: 14.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const FormLabel("Satuan Dasar"),
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 8),
+                              child: Wrap(
+                                direction: Axis.horizontal,
+                                spacing: 8,
+                                children: [
+                                  InputChip(
+                                    label: TextBodyS("Pcs"),
+                                    onPressed: () {},
                                   ),
-                                  side: WidgetStatePropertyAll(BorderSide(
-                                    width: 1,
-                                    color: TColors.primary,
-                                  ))),
-                              icon: UiIcons(
-                                TIcons.add,
-                                height: 12,
-                                width: 12,
-                                color: TColors.primary,
+                                  InputChip(
+                                    label: TextBodyS("Kilogram"),
+                                    onPressed: () {},
+                                  ),
+                                  InputChip(
+                                    label: TextBodyS("Box"),
+                                    onPressed: () {},
+                                  ),
+                                  InputChip(
+                                    label: TextBodyS("Gram"),
+                                    onPressed: () {},
+                                  ),
+                                  InputChip(
+                                    label: TextBodyS("Liter"),
+                                    onPressed: () {},
+                                  ),
+                                ],
                               ),
                             ),
-                          )
-                        ],
-                      ))
+                            SizedBox(
+                              height: 36,
+                              child: OutlinedButton.icon(
+                                onPressed: () {},
+                                label: TextActionM(
+                                  "Buat Baru",
+                                  color: TColors.primary,
+                                ),
+                                style: ButtonStyle(
+                                    padding: WidgetStatePropertyAll(
+                                      EdgeInsets.symmetric(horizontal: 14.0),
+                                    ),
+                                    side: WidgetStatePropertyAll(BorderSide(
+                                      width: 1,
+                                      color: TColors.primary,
+                                    ))),
+                                icon: UiIcons(
+                                  TIcons.add,
+                                  height: 12,
+                                  width: 12,
+                                  color: TColors.primary,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),

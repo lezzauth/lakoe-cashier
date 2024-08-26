@@ -4,6 +4,7 @@ import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/features/tables/presentation/widgets/pages/table_detail_page.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
@@ -86,9 +87,19 @@ class _TableMasterScreenState extends State<TableMasterScreen> {
                   ),
                 ),
                 child: ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      showDragHandle: true,
+                      useSafeArea: true,
+                      builder: (context) {
+                        return TableDetailPage();
+                      },
+                    );
+                  },
                   splashColor: TColors.highlightLightest,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   leading: Container(
                     height: 40,
                     width: 40,
@@ -122,6 +133,23 @@ class _TableMasterScreenState extends State<TableMasterScreen> {
                 ),
               );
             },
+          ),
+        ),
+      ),
+      floatingActionButton: SizedBox(
+        height: 48,
+        width: 48,
+        child: FloatingActionButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          onPressed: () {
+            Navigator.pushNamed(context, "/tables/new");
+          },
+          elevation: 0,
+          child: const Icon(
+            Icons.add,
+            size: 24,
           ),
         ),
       ),

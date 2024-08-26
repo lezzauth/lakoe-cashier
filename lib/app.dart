@@ -18,6 +18,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/screens/ma
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/screens/settings.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_master.dart';
+import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 
 class App extends StatelessWidget {
@@ -59,6 +60,7 @@ class App extends StatelessWidget {
 
         // tables
         "/tables": (context) => const TableMasterScreen(),
+        "/tables/new": (context) => const TableNewScreen(),
 
         // settings
         "/settings": (context) => const SettingsScreen(),

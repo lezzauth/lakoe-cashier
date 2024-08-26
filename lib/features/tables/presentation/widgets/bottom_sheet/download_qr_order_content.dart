@@ -1,0 +1,75 @@
+import 'package:flutter/material.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:point_of_sales_cashier/features/tables/presentation/widgets/tabs/table_new_qr_order_tab.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
+
+class DownloadQrOrderContent extends StatefulWidget {
+  const DownloadQrOrderContent({super.key});
+
+  @override
+  State<DownloadQrOrderContent> createState() => _DownloadQrOrderContentState();
+}
+
+class _DownloadQrOrderContentState extends State<DownloadQrOrderContent> {
+  String _selectedDownload = "current";
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: TDeviceUtils.getViewInsets(context),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.only(bottom: 16),
+              child: const TextHeading2(
+                "Download QR Order",
+                color: TColors.neutralDarkDarkest,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 12,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    child: DownloadItemRadio(
+                      title: "Hanya Meja Nomor T-01",
+                      value: "current",
+                      groupValue: _selectedDownload,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedDownload = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    child: DownloadItemRadio(
+                      title: "Semua Nomor Meja",
+                      value: "all",
+                      groupValue: _selectedDownload,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedDownload = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

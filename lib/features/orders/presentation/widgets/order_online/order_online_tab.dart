@@ -22,77 +22,62 @@ class _OrderOnlineTabState extends State<OrderOnlineTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Scrollbar(
-          child: RefreshIndicator(
-            onRefresh: () async {
-              return await Future.delayed(Duration(seconds: 1));
-            },
-            backgroundColor: TColors.neutralLightLightest,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: OrderOnlineFilter(),
-                ),
-                Expanded(
-                  child: CustomScrollView(
-                    slivers: [
-                      if (_orders.isNotEmpty)
-                        SliverList.builder(
-                          itemBuilder: (context, index) {
-                            return OrderOnlineListItem(
-                              status: "declined",
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  "/orders/detail",
-                                  arguments: OrderDetailArgument(
-                                    id: index.toString(),
-                                    type: "online",
-                                    orderOnlineStatus: "declined",
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      if (_orders.isEmpty)
-                        SliverToBoxAdapter(
-                          child: EmptyList(
-                            image: SvgPicture.asset(
-                              TImages.catBox,
-                              width: 276,
-                              height: 200,
-                            ),
-                            title: "Belum ada pesanan, nih!",
-                            subTitle:
-                                "Hari ini belum ada pesanan masuk. Yuk, bikin pesanan pertama untuk hari ini.",
-                          ),
-                        ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        floatingActionButton: SizedBox(
-          height: 40,
-          child: ElevatedButton(
-            onPressed: () {},
-            style: ButtonStyle(
-              padding: WidgetStatePropertyAll(
-                EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+      body: Scrollbar(
+        child: RefreshIndicator(
+          onRefresh: () async {
+            return await Future.delayed(Duration(seconds: 1));
+          },
+          backgroundColor: TColors.neutralLightLightest,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: OrderOnlineFilter(),
               ),
-            ),
-            child: TextActionL(
-              "Buat Pesanan Baru",
-              color: TColors.neutralLightLightest,
-            ),
+              Expanded(
+                child: CustomScrollView(
+                  slivers: [
+                    if (_orders.isNotEmpty)
+                      SliverList.builder(
+                        itemBuilder: (context, index) {
+                          return OrderOnlineListItem(
+                            status: "declined",
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                "/orders/detail",
+                                arguments: OrderDetailArgument(
+                                  id: index.toString(),
+                                  type: "online",
+                                  orderOnlineStatus: "declined",
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    if (_orders.isEmpty)
+                      SliverToBoxAdapter(
+                        child: EmptyList(
+                          image: SvgPicture.asset(
+                            TImages.catBox,
+                            width: 276,
+                            height: 200,
+                          ),
+                          title: "Belum ada pesanan, nih!",
+                          subTitle:
+                              "Hari ini belum ada pesanan masuk. Yuk, bikin pesanan pertama untuk hari ini.",
+                        ),
+                      ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat);
+      ),
+    );
   }
 }
