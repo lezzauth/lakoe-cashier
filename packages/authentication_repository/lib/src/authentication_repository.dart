@@ -1,6 +1,7 @@
 import 'package:authentication_repository/src/dto/auth.dart';
 import 'package:authentication_repository/src/models/auth.dart';
 import 'package:dio/dio.dart';
+import 'package:token_provider/token_provider.dart';
 
 abstract class AuthenticationRepository {
   Future<RegisterResponse> register(RegisterDto dto);
@@ -11,8 +12,28 @@ abstract class AuthenticationRepository {
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
   String _baseURL = "/auth";
   final Dio _dio;
+  final TokenProvider _tokenProvider;
 
-  AuthenticationRepositoryImpl({required Dio dio}) : _dio = dio;
+  AuthenticationRepositoryImpl(
+      {required Dio dio, required TokenProvider tokenProvider})
+      : _dio = dio,
+        _tokenProvider = tokenProvider {
+    _dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) async {
+        final token = await _tokenProvider.getToken();
+        if (token != null) {
+          options.headers['Authorization'] = 'Bearer $token';
+        }
+        handler.next(options);
+      },
+      onError: (DioException error, handler) async {
+        if (error.response?.statusCode == 401) {
+          // Handle token refresh logic here
+        }
+        handler.next(error);
+      },
+    ));
+  }
 
   @override
   Future<RegisterResponse> register(RegisterDto dto) async {
