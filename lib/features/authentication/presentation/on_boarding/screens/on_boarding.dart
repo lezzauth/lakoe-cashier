@@ -1,178 +1,224 @@
-import 'package:flutter/gestures.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/bloc/on_boarding/on_boarding_page_bloc.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/bloc/on_boarding/on_boarding_page_event.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/bloc/on_boarding/on_boarding_page_state.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth_state.dart';
+import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/widgets/forms/terms_agreement_checkbox.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
+import 'package:point_of_sales_cashier/utils/http/http.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class OnBoardingScreen extends StatelessWidget {
+class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
+
+  @override
+  State<OnBoardingScreen> createState() => _OnBoardingScreenState();
+}
+
+class _OnBoardingScreenState extends State<OnBoardingScreen> {
+  final int maxPage = 3;
+
+  int pageIndex = 0;
+  PageController pageController = PageController();
+
+  final _formKey = GlobalKey<FormBuilderState>();
+
+  onPageUpdate(int index) {
+    setState(() {
+      pageIndex = index;
+    });
+  }
+
+  onDotNavigation(int index) {
+    pageController.jumpToPage(index);
+  }
+
+  onSubmit(BuildContext context) async {
+    if (_formKey.currentState?.saveAndValidate() ?? false) {
+      dynamic value = _formKey.currentState?.value;
+      context
+          .read<AuthCubit>()
+          .requestOTP(RequestOTPDto(phoneNumber: "+62${value["phoneNumber"]}"));
+    } else {
+      const snackBar = SnackBar(
+        content: Text('Validation failed'),
+        showCloseIcon: true,
+      );
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          snackBar,
+        );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => OnBoardingPageBloc(),
-        child: BlocBuilder<OnBoardingPageBloc, OnBoardingPageState>(
-          builder: (context, state) => Column(
-            children: [
-              Expanded(
-                child: PageView(
-                  onPageChanged: (value) {
-                    context.read<OnBoardingPageBloc>().add(
-                          OnBoardingPageUpdatePageIndicator(index: value),
-                        );
-                  },
-                  controller: state.pageController,
-                  children: [
-                    Container(
-                      color: TColors.primary,
-                    ),
-                    Container(
-                      color: TColors.error,
-                    ),
-                    Container(
-                      color: TColors.primary,
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(24.0),
+        create: (context) => AuthCubit(
+          authenticationRepository: AuthenticationRepositoryImpl(dio: dio),
+        ),
+        child: BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthRequestOTPSuccess) {
+              Navigator.pushNamed(context, "/otp-input");
+            } else if (state is AuthRequestOTPFailure) {
+              const snackBar = SnackBar(
+                content: Text('OTP Request Failed'),
+                showCloseIcon: true,
+              );
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  snackBar,
+                );
+            }
+          },
+          child: BlocBuilder<AuthCubit, AuthState>(
+            builder: (context, state) {
+              return FormBuilder(
+                key: _formKey,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      margin: const EdgeInsets.only(
-                        bottom: 24.0,
-                      ),
-                      child: SmoothPageIndicator(
-                        controller: state.pageController,
-                        count: state.maxPage,
-                        onDotClicked: (value) {
-                          context.read<OnBoardingPageBloc>().add(
-                                OnBoardingPageDotNavigationClickEvent(
-                                  index: value,
-                                ),
-                              );
-                        },
-                        effect: const SlideEffect(
-                          activeDotColor: TColors.primary,
-                          dotHeight: 8,
-                          dotWidth: 8,
-                          dotColor: TColors.neutralLightLight,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 24.0),
-                      child: Text(
-                        "Mulailah dari sini...",
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w900,
-                          fontSize: TSizes.fontSizeHeading1,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 24.0),
-                      child: const Row(
+                    Expanded(
+                      child: PageView(
+                        onPageChanged: onPageUpdate,
+                        controller: pageController,
                         children: [
-                          Flexible(
-                            flex: 1,
-                            child: TextField(),
+                          Container(
+                            color: TColors.primary,
                           ),
-                          SizedBox(
-                            width: 8,
+                          Container(
+                            color: TColors.highlightDark,
                           ),
-                          Flexible(
-                            flex: 2,
-                            child: TextField(),
-                          ),
+                          Container(
+                            color: TColors.highlightLight,
+                          )
                         ],
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 24.0),
-                      child: Row(
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            height: 24.0,
-                            width: 16.0,
-                            child: Checkbox(value: true, onChanged: (value) {}),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Flexible(
-                            child: RichText(
-                              text: TextSpan(
-                                text: 'Saya telah membaca dan menyetujui ',
-                                style: GoogleFonts.inter(
-                                  color: Colors.black,
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: 'Syarat & Ketentuan',
-                                    style: const TextStyle(
-                                      color: TColors.primary,
-                                    ),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        // Handle the Syarat & Ketentuan tap here
-                                        print('Syarat & Ketentuan clicked');
-                                        // For example, navigate to another page
-                                        // Navigator.push(context, MaterialPageRoute(builder: (context) => SyaratKetentuanPage()));
-                                      },
-                                  ),
-                                  const TextSpan(
-                                    text: ' dan ',
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                  TextSpan(
-                                    text: 'Kebijakan Privasi',
-                                    style: const TextStyle(
-                                      color: TColors.primary,
-                                    ),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        // Handle the Kebijakan Privasi tap here
-                                        print('Kebijakan Privasi clicked');
-                                        // For example, navigate to another page
-                                        // Navigator.push(context, MaterialPageRoute(builder: (context) => KebijakanPrivasiPage()));
-                                      },
-                                  ),
-                                  const TextSpan(
-                                    text: '.',
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                ],
+                          Container(
+                            margin: const EdgeInsets.only(
+                              bottom: 24.0,
+                            ),
+                            child: SmoothPageIndicator(
+                              controller: pageController,
+                              count: maxPage,
+                              onDotClicked: onDotNavigation,
+                              effect: const SlideEffect(
+                                activeDotColor: TColors.primary,
+                                dotHeight: 8,
+                                dotWidth: 8,
+                                dotColor: TColors.neutralLightLight,
                               ),
                             ),
                           ),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 24.0),
+                            child: Text(
+                              "Mulailah dari sini...",
+                              style: GoogleFonts.inter(
+                                fontWeight: FontWeight.w900,
+                                fontSize: TSizes.fontSizeHeading1,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 24.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 48,
+                                  width: 85,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: TColors.neutralLightDarkest,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Wrap(
+                                      alignment: WrapAlignment.center,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.center,
+                                      spacing: 8,
+                                      direction: Axis.horizontal,
+                                      children: [
+                                        Image.asset(
+                                          TImages.indoFlag,
+                                          height: 16,
+                                          width: 16,
+                                        ),
+                                        const TextBodyM("+62"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: FormBuilderTextField(
+                                    name: "phoneNumber",
+                                    decoration: const InputDecoration(
+                                      hintText: "Masukan nomor WA",
+                                    ),
+                                    keyboardType: TextInputType.phone,
+                                    validator: FormBuilderValidators.startsWith(
+                                            "8")
+                                        .and(FormBuilderValidators.maxLength(12,
+                                            errorText: "Maksimal 12 angka"))
+                                        .and(FormBuilderValidators.minLength(9,
+                                            errorText: "Minimal 9 angka")),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 24.0),
+                            child: FormBuilderField<bool>(
+                              name: "isTermsAgreementAgreed",
+                              builder: (field) {
+                                return TermsAgreementCheckbox(
+                                  value: field.value ?? false,
+                                  onChanged: field.didChange,
+                                  isError: field.hasError,
+                                );
+                              },
+                              validator: FormBuilderValidators.isTrue(),
+                            ),
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                onSubmit(context);
+                              },
+                              child: const Text(
+                                "Lanjutkan",
+                              ),
+                            ),
+                          )
                         ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/otp-input");
-                        },
-                        child: const Text(
-                          "Lanjutkan",
-                        ),
                       ),
                     )
                   ],
                 ),
-              )
-            ],
+              );
+            },
           ),
         ),
       ),

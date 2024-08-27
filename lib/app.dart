@@ -31,7 +31,7 @@ class App extends StatelessWidget {
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       themeMode: ThemeMode.light,
-      initialRoute: "/settings",
+      initialRoute: "/",
       routes: {
         "/": (context) => const OnBoardingScreen(),
         "/otp-input": (context) => const OtpInputScreen(),

@@ -29,4 +29,7 @@ class TImages {
   static const String bankCIMBLogo = "assets/images/bank-cimb-logo.svg";
   static const String bankMandiriLogo = "assets/images/bank-mandiri-logo.svg";
   static const String bankPermataLogo = "assets/images/bank-permata-logo.svg";
+
+  // flags
+  static const String indoFlag = "assets/flags/indo-flag.png";
 }

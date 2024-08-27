@@ -25,6 +25,18 @@ class TCheckboxTheme {
       },
     ),
     visualDensity: VisualDensity.compact,
+    side: WidgetStateBorderSide.resolveWith(
+      (states) {
+        Color? color;
+        if (states.contains(WidgetState.selected)) {
+          color = TColors.primary;
+        } else {
+          color = TColors.neutralLightDarkest;
+        }
+
+        return BorderSide(color: color, width: 1.5);
+      },
+    ),
   );
 
   static CheckboxThemeData darkTheme = CheckboxThemeData();
