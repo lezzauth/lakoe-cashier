@@ -1,0 +1,11 @@
+name: token_provider
+description: Dart package which manages the authentication token.
+publish_to: none
+
+environment:
+  sdk: ">=3.4.4 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_secure_storage: ^9.2.2
