@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 
 class OwnerInformationForm extends StatefulWidget {
@@ -21,10 +23,12 @@ class _OwnerInformationFormState extends State<OwnerInformationForm> {
               const FormLabel(
                 "Nama Pemilik",
               ),
-              TextFormField(
+              FormBuilderTextField(
+                name: "name",
                 decoration: const InputDecoration(
                   hintText: "Masukkan nama pemilik bisnis",
                 ),
+                validator: FormBuilderValidators.required(),
               ),
             ],
           ),
@@ -38,8 +42,10 @@ class _OwnerInformationFormState extends State<OwnerInformationForm> {
                 "Nomor WA",
                 enabled: false,
               ),
-              TextFormField(
+              FormBuilderTextField(
+                name: "phoneNumber",
                 enabled: false,
+                validator: FormBuilderValidators.required(),
               ),
             ],
           ),
@@ -52,10 +58,12 @@ class _OwnerInformationFormState extends State<OwnerInformationForm> {
               const FormLabel(
                 "Email",
               ),
-              TextFormField(
+              FormBuilderTextField(
+                name: "email",
                 decoration: const InputDecoration(
                   hintText: "Contoh: warmindo@gmail.com",
                 ),
+                validator: FormBuilderValidators.email(),
               ),
             ],
           ),

@@ -1,10 +1,12 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth_state.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:token_provider/token_provider.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthenticationRepository authenticationRepository;
+  final TokenProvider _tokenProvider = TokenProvider();
 
   AuthCubit({required this.authenticationRepository}) : super(AuthInitial());
 
@@ -37,12 +39,16 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthVerifyOTPInProgress());
     try {
       final response = await authenticationRepository.verifyOTP(dto);
+
       switch (response.action) {
         case "LOGIN":
           emit(AuthVerifyOTPSuccessAndLogin(token: response.token));
+          _tokenProvider.setToken(response.token);
           break;
         case "REGISTER":
-          emit(AuthVerifyOTPSuccessAndRegister(token: response.token));
+          emit(AuthVerifyOTPSuccessAndRegister(
+              token: response.token, phoneNumber: dto.phoneNumber));
+          _tokenProvider.setToken(response.token);
           break;
         default:
           throw ErrorSummary("unknown action");

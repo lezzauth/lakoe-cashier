@@ -32,6 +32,9 @@ dependencies:
   authentication_repository:
     path: packages/authentication_repository
 
+  token_provider:
+    path: packages/token_provider
+
   flutter:
     sdk: flutter
 

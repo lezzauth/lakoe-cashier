@@ -5,8 +5,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth_state.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/widgets/forms/terms_agreement_checkbox.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -39,7 +39,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     pageController.jumpToPage(index);
   }
 
-  onSubmit(BuildContext context) async {
+  onSubmit(BuildContext context) {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       dynamic value = _formKey.currentState?.value;
       context
@@ -61,165 +61,171 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => AuthCubit(
-          authenticationRepository: AuthenticationRepositoryImpl(dio: dio),
-        ),
-        child: BlocListener<AuthCubit, AuthState>(
-          listener: (context, state) {
-            if (state is AuthRequestOTPSuccess) {
-              Navigator.pushNamed(context, "/otp-input");
-            } else if (state is AuthRequestOTPFailure) {
-              const snackBar = SnackBar(
-                content: Text('OTP Request Failed'),
-                showCloseIcon: true,
+      body: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is AuthRequestOTPSuccess) {
+            Navigator.pushNamed(context, "/otp-input");
+          } else if (state is AuthRequestOTPFailure) {
+            const snackBar = SnackBar(
+              content: Text('OTP Request Failed'),
+              showCloseIcon: true,
+            );
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                snackBar,
               );
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  snackBar,
-                );
-            }
-          },
-          child: BlocBuilder<AuthCubit, AuthState>(
-            builder: (context, state) {
-              return FormBuilder(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: PageView(
-                        onPageChanged: onPageUpdate,
-                        controller: pageController,
-                        children: [
-                          Container(
-                            color: TColors.primary,
-                          ),
-                          Container(
-                            color: TColors.highlightDark,
-                          ),
-                          Container(
-                            color: TColors.highlightLight,
-                          )
-                        ],
-                      ),
+          }
+        },
+        child: BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            return FormBuilder(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: PageView(
+                      onPageChanged: onPageUpdate,
+                      controller: pageController,
+                      children: [
+                        Container(
+                          color: TColors.primary,
+                        ),
+                        Container(
+                          color: TColors.highlightDark,
+                        ),
+                        Container(
+                          color: TColors.highlightLight,
+                        )
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(
-                              bottom: 24.0,
-                            ),
-                            child: SmoothPageIndicator(
-                              controller: pageController,
-                              count: maxPage,
-                              onDotClicked: onDotNavigation,
-                              effect: const SlideEffect(
-                                activeDotColor: TColors.primary,
-                                dotHeight: 8,
-                                dotWidth: 8,
-                                dotColor: TColors.neutralLightLight,
-                              ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(
+                            bottom: 24.0,
+                          ),
+                          child: SmoothPageIndicator(
+                            controller: pageController,
+                            count: maxPage,
+                            onDotClicked: onDotNavigation,
+                            effect: const SlideEffect(
+                              activeDotColor: TColors.primary,
+                              dotHeight: 8,
+                              dotWidth: 8,
+                              dotColor: TColors.neutralLightLight,
                             ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 24.0),
-                            child: Text(
-                              "Mulailah dari sini...",
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w900,
-                                fontSize: TSizes.fontSizeHeading1,
-                              ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 24.0),
+                          child: Text(
+                            "Mulailah dari sini...",
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w900,
+                              fontSize: TSizes.fontSizeHeading1,
                             ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 24.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 48,
-                                  width: 85,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                      color: TColors.neutralLightDarkest,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Wrap(
-                                      alignment: WrapAlignment.center,
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.center,
-                                      spacing: 8,
-                                      direction: Axis.horizontal,
-                                      children: [
-                                        Image.asset(
-                                          TImages.indoFlag,
-                                          height: 16,
-                                          width: 16,
-                                        ),
-                                        const TextBodyM("+62"),
-                                      ],
-                                    ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 24.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 48,
+                                width: 85,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: TColors.neutralLightDarkest,
+                                    width: 1,
                                   ),
                                 ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: FormBuilderTextField(
-                                    name: "phoneNumber",
-                                    decoration: const InputDecoration(
-                                      hintText: "Masukan nomor WA",
-                                    ),
-                                    keyboardType: TextInputType.phone,
-                                    validator: FormBuilderValidators.startsWith(
-                                            "8")
-                                        .and(FormBuilderValidators.maxLength(12,
-                                            errorText: "Maksimal 12 angka"))
-                                        .and(FormBuilderValidators.minLength(9,
-                                            errorText: "Minimal 9 angka")),
+                                child: Center(
+                                  child: Wrap(
+                                    alignment: WrapAlignment.center,
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    spacing: 8,
+                                    direction: Axis.horizontal,
+                                    children: [
+                                      Image.asset(
+                                        TImages.indoFlag,
+                                        height: 16,
+                                        width: 16,
+                                      ),
+                                      const TextBodyM("+62"),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 24.0),
-                            child: FormBuilderField<bool>(
-                              name: "isTermsAgreementAgreed",
-                              builder: (field) {
-                                return TermsAgreementCheckbox(
-                                  value: field.value ?? false,
-                                  onChanged: field.didChange,
-                                  isError: field.hasError,
-                                );
-                              },
-                              validator: FormBuilderValidators.isTrue(),
-                            ),
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                onSubmit(context);
-                              },
-                              child: const Text(
-                                "Lanjutkan",
                               ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
-          ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: FormBuilderTextField(
+                                  name: "phoneNumber",
+                                  decoration: const InputDecoration(
+                                    hintText: "Masukan nomor WA",
+                                  ),
+                                  keyboardType: TextInputType.phone,
+                                  validator:
+                                      FormBuilderValidators.startsWith("8")
+                                          .and(FormBuilderValidators.maxLength(
+                                              12,
+                                              errorText: "Maksimal 12 angka"))
+                                          .and(FormBuilderValidators.minLength(
+                                              9,
+                                              errorText: "Minimal 9 angka")),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 24.0),
+                          child: FormBuilderField<bool>(
+                            name: "isTermsAgreementAgreed",
+                            builder: (field) {
+                              return TermsAgreementCheckbox(
+                                value: field.value ?? false,
+                                onChanged: field.didChange,
+                                isError: field.hasError,
+                              );
+                            },
+                            validator: FormBuilderValidators.isTrue(),
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              onSubmit(context);
+                            },
+                            child: state is AuthRequestOTPInProgress
+                                ? const SizedBox(
+                                    height: 16,
+                                    width: 16,
+                                    child: CircularProgressIndicator(
+                                      color: TColors.neutralLightLightest,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : const Text(
+                                    "Lanjutkan",
+                                  ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

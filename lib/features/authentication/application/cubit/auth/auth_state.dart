@@ -24,6 +24,24 @@ final class AuthRequestOTPFailure extends AuthState {
   AuthRequestOTPFailure({required this.error});
 }
 
+final class AuthRegisterBusinessInformationSuccess extends AuthState {
+  final String name;
+  final String phoneNumber;
+  final String email;
+  final String outletAddress;
+  final String outletName;
+  final String outletType;
+
+  AuthRegisterBusinessInformationSuccess({
+    required this.name,
+    required this.phoneNumber,
+    required this.email,
+    required this.outletAddress,
+    required this.outletName,
+    required this.outletType,
+  });
+}
+
 //
 final class AuthRegisterInProgress extends AuthState {}
 
@@ -43,8 +61,10 @@ final class AuthVerifyOTPInProgress extends AuthState {}
 
 final class AuthVerifyOTPSuccessAndRegister extends AuthState {
   final String token;
+  final String phoneNumber;
 
-  AuthVerifyOTPSuccessAndRegister({required this.token});
+  AuthVerifyOTPSuccessAndRegister(
+      {required this.token, required this.phoneNumber});
 }
 
 final class AuthVerifyOTPSuccessAndLogin extends AuthState {
