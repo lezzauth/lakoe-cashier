@@ -135,7 +135,9 @@ class _ExploreProductScreenState extends State<ExploreProductScreen> {
               SliverToBoxAdapter(
                 child: Container(
                   color: TColors.neutralLightLightest,
-                  child: ProductCategoryFilter(),
+                  child: ProductCategoryFilter(
+                    value: null,
+                  ),
                 ),
               ),
               DecoratedSliver(

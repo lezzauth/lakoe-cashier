@@ -1,5 +1,6 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:cashier_repository/cashier_repository.dart';
+import 'package:category_repository/category_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
@@ -9,6 +10,7 @@ import 'package:point_of_sales_cashier/features/authentication/presentation/on_b
 import 'package:point_of_sales_cashier/features/authentication/presentation/otp_input/screens/otp_input.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/screens/cart.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
+import 'package:point_of_sales_cashier/features/categories/application/cubit/category_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/master_customer.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/new_customer.dart';
@@ -20,8 +22,9 @@ import 'package:point_of_sales_cashier/features/orders/presentation/screens/orde
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/bank_transfer_payment.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/qris_payment.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/success_confirmation_payment.dart';
+import 'package:point_of_sales_cashier/features/products/application/cubit/product_cubit.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/explore_product.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/screens/master_product.dart';
+import 'package:point_of_sales_cashier/features/products/presentation/screens/product_master.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
 import 'package:point_of_sales_cashier/features/redirect/presentation/screens/redirect.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/screens/settings.dart';
@@ -29,6 +32,7 @@ import 'package:point_of_sales_cashier/features/tables/presentation/screens/tabl
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
 import 'package:point_of_sales_cashier/utils/http/http.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
+import 'package:product_repository/product_repository.dart';
 import 'package:token_provider/token_provider.dart';
 
 class App extends StatelessWidget {
@@ -56,7 +60,23 @@ class App extends StatelessWidget {
               tokenProvider: TokenProvider(),
             ),
           ),
-        )
+        ),
+        BlocProvider(
+          create: (context) => CategoryCubit(
+            categoryRepository: CategoryRepositoryImp(
+              dio: dio,
+              tokenProvider: TokenProvider(),
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => ProductCubit(
+            productRepository: ProductRepositoryImp(
+              dio: dio,
+              tokenProvider: TokenProvider(),
+            ),
+          ),
+        ),
       ],
       child: MaterialApp(
         title: "Point of Sales",
@@ -78,7 +98,7 @@ class App extends StatelessWidget {
               const ExploreProductScreen(),
           "/cart": (context) => const CartScreen(),
           // products
-          "/products": (context) => const MasterProductScreen(),
+          "/products": (context) => const ProductMasterScreen(),
           "/products/new": (context) => const NewProductScreen(),
           // customers
           "/customers": (context) => const MasterCustomerScreen(),
