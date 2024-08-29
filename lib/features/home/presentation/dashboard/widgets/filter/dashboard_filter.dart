@@ -40,7 +40,7 @@ class _DashboardFilterState extends State<DashboardFilter> {
             width: 32,
             child: OutlinedButton(
               onPressed: () async {
-                Navigator.pushNamed(context, "/home/transaction-date");
+                Navigator.pushNamed(context, "/cashier/transaction-date");
                 // final picked = await showDateRangePicker(
                 //   context: context,
                 //   lastDate: DateTime(DateTime.now().year + 1),

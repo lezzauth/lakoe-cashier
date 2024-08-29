@@ -40,7 +40,7 @@ class _CompletingDataScreenState extends State<CompletingDataScreen> {
         child: BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is AuthRegisterSuccess) {
-              Navigator.popAndPushNamed(context, "/home");
+              Navigator.popAndPushNamed(context, "/cashier");
             }
           },
           child: BlocBuilder<CompletingDataCubit, CompletingDataState>(

@@ -45,6 +45,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       context
           .read<AuthCubit>()
           .requestOTP(RequestOTPDto(phoneNumber: "+62${value["phoneNumber"]}"));
+      Navigator.pushNamed(context, "/otp-input");
     } else {
       const snackBar = SnackBar(
         content: Text('Validation failed'),
@@ -63,9 +64,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Scaffold(
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state is AuthRequestOTPSuccess) {
-            Navigator.pushNamed(context, "/otp-input");
-          } else if (state is AuthRequestOTPFailure) {
+          if (state is AuthRequestOTPFailure) {
             const snackBar = SnackBar(
               content: Text('OTP Request Failed'),
               showCloseIcon: true,

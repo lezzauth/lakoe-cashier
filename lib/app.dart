@@ -1,4 +1,5 @@
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
@@ -7,9 +8,11 @@ import 'package:point_of_sales_cashier/features/authentication/presentation/comp
 import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/on_boarding.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/otp_input/screens/otp_input.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/screens/cart.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/master_customer.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/new_customer.dart';
+import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/open_cashier_pin.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_detail.dart';
@@ -20,6 +23,7 @@ import 'package:point_of_sales_cashier/features/payments/presentation/screens/su
 import 'package:point_of_sales_cashier/features/products/presentation/screens/explore_product.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/master_product.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
+import 'package:point_of_sales_cashier/features/redirect/presentation/screens/redirect.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/screens/settings.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_master.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
@@ -44,6 +48,14 @@ class App extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CompletingDataCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CashierCubit(
+            cashierRepository: CashierRepositoryImp(
+              dio: dio,
+              tokenProvider: TokenProvider(),
+            ),
+          ),
         )
       ],
       child: MaterialApp(
@@ -53,12 +65,17 @@ class App extends StatelessWidget {
         themeMode: ThemeMode.light,
         initialRoute: "/",
         routes: {
-          "/": (context) => const OnBoardingScreen(),
+          "/": (context) => const RedirectScreen(),
+          "/on-boarding": (context) => const OnBoardingScreen(),
           "/otp-input": (context) => const OtpInputScreen(),
           "/completing-data": (context) => const CompletingDataScreen(),
-          "/home": (context) => const DashboardScreen(),
-          "/home/transaction-date": (context) => const TransactionDateScreen(),
-          "/explore-products": (context) => const ExploreProductScreen(),
+          "/cashier": (context) => const DashboardScreen(),
+          "/cashier/open-cashier-pin": (context) =>
+              const OpenCashierPinScreen(),
+          "/cashier/transaction-date": (context) =>
+              const TransactionDateScreen(),
+          "/cashier/explore-products": (context) =>
+              const ExploreProductScreen(),
           "/cart": (context) => const CartScreen(),
           // products
           "/products": (context) => const MasterProductScreen(),

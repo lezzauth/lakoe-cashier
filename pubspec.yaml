@@ -31,6 +31,10 @@ dependencies:
   # repositories
   authentication_repository:
     path: packages/authentication_repository
+  cashier_repository:
+    path: packages/cashier_repository
+  owner_repository:
+    path: packages/owner_repository
 
   token_provider:
     path: packages/token_provider
@@ -59,6 +63,7 @@ dependencies:
   currency_text_input_formatter: ^2.2.3
   qr_flutter: ^4.1.0
   dio: ^5.6.0
+  flutter_timer_countdown: ^1.0.7
 
 dev_dependencies:
   flutter_test:

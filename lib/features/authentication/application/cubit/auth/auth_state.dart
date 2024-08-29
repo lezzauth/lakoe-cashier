@@ -75,5 +75,20 @@ final class AuthVerifyOTPSuccessAndLogin extends AuthState {
 
 final class AuthVerifyOTPFailure extends AuthState {
   final String error;
-  AuthVerifyOTPFailure({required this.error});
+
+  final String target;
+  final String action;
+
+  AuthVerifyOTPFailure({
+    required this.error,
+    required this.target,
+    required this.action,
+  });
+}
+
+final class AuthReady extends AuthState {
+  final String token;
+  final String outletId;
+
+  AuthReady({required this.token, required this.outletId});
 }

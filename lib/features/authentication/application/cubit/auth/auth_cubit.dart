@@ -15,6 +15,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       final response = await authenticationRepository.register(dto);
       emit(AuthRegisterSuccess(token: response.token));
+      _tokenProvider.setAppToken(response.token);
     } catch (e) {
       emit(AuthRegisterFailure(error: e.toString()));
     }
@@ -36,6 +37,8 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> verifyOTP(VerifyOTPDto dto) async {
+    AuthState currentState = state;
+
     emit(AuthVerifyOTPInProgress());
     try {
       final response = await authenticationRepository.verifyOTP(dto);
@@ -43,18 +46,32 @@ class AuthCubit extends Cubit<AuthState> {
       switch (response.action) {
         case "LOGIN":
           emit(AuthVerifyOTPSuccessAndLogin(token: response.token));
-          _tokenProvider.setToken(response.token);
+          _tokenProvider.setAppToken(response.token);
           break;
         case "REGISTER":
           emit(AuthVerifyOTPSuccessAndRegister(
               token: response.token, phoneNumber: dto.phoneNumber));
-          _tokenProvider.setToken(response.token);
+          _tokenProvider.setAuthToken(response.token);
           break;
         default:
           throw ErrorSummary("unknown action");
       }
     } catch (e) {
-      emit(AuthVerifyOTPFailure(error: e.toString()));
+      switch (currentState) {
+        case AuthRequestOTPSuccess(:final target, :final action):
+        case AuthVerifyOTPFailure(:final target, :final action):
+          emit(AuthVerifyOTPFailure(
+            error: e.toString(),
+            action: action,
+            target: target,
+          ));
+          break;
+        default:
+      }
     }
+  }
+
+  void ready(String token, String outletId) {
+    emit(AuthReady(token: token, outletId: outletId));
   }
 }

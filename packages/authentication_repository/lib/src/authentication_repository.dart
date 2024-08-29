@@ -20,7 +20,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         _tokenProvider = tokenProvider {
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
-        final token = await _tokenProvider.getToken();
+        final token = await _tokenProvider.getAuthToken();
         if (token != null) {
           options.headers['Authorization'] = 'Bearer $token';
         }
