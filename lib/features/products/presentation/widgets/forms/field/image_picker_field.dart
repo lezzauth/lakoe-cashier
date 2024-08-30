@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
@@ -111,22 +112,39 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
 
     return GestureDetector(
       onTap: _pickFile,
-      child: DottedBorder(
-        borderType: BorderType.RRect,
-        radius: const Radius.circular(12),
-        color: !isError ? TColors.primary : TColors.error,
-        dashPattern: const [4],
-        child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          child: Container(
-            decoration: const BoxDecoration(
-              color: TColors.highlightLightest,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          DottedBorder(
+            borderType: BorderType.RRect,
+            radius: const Radius.circular(12),
+            color: !isError ? TColors.primary : TColors.error,
+            dashPattern: const [4],
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: TColors.highlightLightest,
+                ),
+                height: 100,
+                width: 100,
+                child: _buildPreview(),
+              ),
             ),
-            height: 100,
-            width: 100,
-            child: _buildPreview(),
           ),
-        ),
+          if (widget.errorText.isNotEmpty)
+            Container(
+              margin: EdgeInsets.only(top: 4),
+              child: SizedBox(
+                width: 100,
+                child: TextBodyS(
+                  widget.errorText,
+                  color: TColors.error,
+                ),
+              ),
+            )
+        ],
       ),
     );
   }

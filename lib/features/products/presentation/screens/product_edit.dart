@@ -15,14 +15,14 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/fo
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:product_repository/product_repository.dart';
 
-class NewProductScreen extends StatefulWidget {
-  const NewProductScreen({super.key});
+class ProductEditScreen extends StatefulWidget {
+  const ProductEditScreen({super.key});
 
   @override
-  State<NewProductScreen> createState() => _NewProductScreenState();
+  State<ProductEditScreen> createState() => _ProductEditScreenState();
 }
 
-class _NewProductScreenState extends State<NewProductScreen> {
+class _ProductEditScreenState extends State<ProductEditScreen> {
   final _productInformationFormKey = GlobalKey<FormBuilderState>();
   final _stockInformationFormKey = GlobalKey<FormBuilderState>();
 
@@ -34,6 +34,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
       dynamic value = _productInformationFormKey.currentState?.value;
 
       ImagePickerValue images = value["images"] as ImagePickerValue;
+
       context.read<ProductCubit>().create(
         [images.file!],
         CreateProductDto(
@@ -61,6 +62,9 @@ class _NewProductScreenState extends State<NewProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as ProductModel;
+
     return BlocListener<ProductCubit, ProductState>(
       listener: (context, state) {
         if (state is ProductActionSuccess) {
@@ -104,6 +108,15 @@ class _NewProductScreenState extends State<NewProductScreen> {
                     padding: const EdgeInsets.only(top: 16.0),
                     child: ProductInformationForm(
                       formKey: _productInformationFormKey,
+                      initialValue: {
+                        "name": arguments.name,
+                        "price": int.parse(arguments.price),
+                        "description": arguments.description,
+                        "modal": int.parse(arguments.modal),
+                        "categoryId": arguments.categoryId,
+                        "unit": arguments.unit,
+                        "images": ImagePickerValue(url: arguments.images[0])
+                      },
                     ),
                   ),
                   SingleChildScrollView(

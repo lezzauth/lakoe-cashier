@@ -1,6 +1,4 @@
-import 'package:category_repository/category_repository.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -8,12 +6,8 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/categories/application/cubit/category_cubit.dart';
 import 'package:point_of_sales_cashier/features/categories/application/cubit/category_state.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
@@ -21,8 +15,14 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 class ProductInformationForm extends StatefulWidget {
-  const ProductInformationForm({super.key, required this.formKey});
   final GlobalKey<FormBuilderState> formKey;
+  final Map<String, dynamic> initialValue;
+
+  const ProductInformationForm({
+    super.key,
+    required this.formKey,
+    this.initialValue = const <String, dynamic>{},
+  });
 
   @override
   State<ProductInformationForm> createState() => _ProductInformationFormState();
@@ -56,6 +56,7 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
       builder: (context, state) => switch (state) {
         CategoryLoadSuccess(:final categories) => FormBuilder(
             key: widget.formKey,
+            initialValue: widget.initialValue,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -76,6 +77,7 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                                 return ImagePickerField(
                                   value: field.value,
                                   onChanged: field.didChange,
+                                  errorText: field.errorText ?? "",
                                   onError: (errorText) {
                                     widget
                                         .formKey.currentState?.fields["images"]
@@ -83,6 +85,9 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                                   },
                                 );
                               },
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(),
+                              ]),
                             ),
                             const SizedBox(width: 16),
                             Expanded(
@@ -120,7 +125,7 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                                 FormBuilderValidators.positiveNumber()
                               ]),
                               builder: (field) {
-                                return TextField(
+                                return TextFormField(
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [_priceFormatter],
                                   decoration: InputDecoration(
@@ -128,10 +133,14 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                                     errorText: field.errorText,
                                   ),
                                   onChanged: (value) {
-                                    field.didChange(_priceFormatter
-                                        .getUnformattedValue()
-                                        .toInt());
+                                    field.didChange(
+                                      _priceFormatter
+                                          .getUnformattedValue()
+                                          .toInt(),
+                                    );
                                   },
+                                  initialValue:
+                                      _priceFormatter.getFormattedValue(),
                                 );
                               },
                             ),
@@ -222,7 +231,9 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                                   margin: const EdgeInsets.only(bottom: 8),
                                   child: FormBuilderField<int>(
                                     name: "categoryId",
-                                    initialValue: categories[0].id,
+                                    initialValue:
+                                        widget.initialValue["categoryId"] ??
+                                            categories[0].id,
                                     builder: (field) {
                                       return Wrap(
                                         direction: Axis.horizontal,

@@ -10,10 +10,12 @@ class SearchField extends StatelessWidget {
     super.key,
     this.hintText,
     this.controller,
+    this.onChanged,
   });
 
   final String? hintText;
   final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,7 @@ class SearchField extends StatelessWidget {
                   labelStyle: GoogleFonts.inter(fontSize: TSizes.fontSizeBodyL),
                 ),
                 style: GoogleFonts.inter(fontSize: TSizes.fontSizeBodyL),
+                onChanged: onChanged,
               ),
             ),
           )

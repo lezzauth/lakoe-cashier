@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:category_repository/category_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
+import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
@@ -13,6 +18,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/ap
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/filter/product_category_filter.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:product_repository/product_repository.dart';
 
@@ -25,15 +31,17 @@ class ProductMasterScreen extends StatefulWidget {
 
 class _ProductMasterScreenState extends State<ProductMasterScreen> {
   int? _categoryId;
+  String? _search;
+  Timer? _debounce;
 
-  Future<void> onFetchProducts({int? categoryId, String? name}) async {
+  Future<void> onFetchProducts() async {
     AuthState authState = context.read<AuthCubit>().state;
     if (authState is! AuthReady) return;
 
     return context.read<ProductCubit>().findAll(FindAllProductDto(
           outletId: authState.outletId,
-          categoryId: categoryId,
-          name: name,
+          categoryId: _categoryId,
+          name: _search,
         ));
   }
 
@@ -48,7 +56,17 @@ class _ProductMasterScreenState extends State<ProductMasterScreen> {
 
   Future<void> onRefresh() async {
     await onFetchCategories();
-    await onFetchProducts(categoryId: _categoryId);
+    await onFetchProducts();
+  }
+
+  _onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      setState(() {
+        _search = query;
+      });
+      onFetchProducts();
+    });
   }
 
   @override
@@ -61,7 +79,24 @@ class _ProductMasterScreenState extends State<ProductMasterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MasterProductAppbar(),
+      appBar: CustomAppbar(
+        search: SearchField(
+          hintText: "Cari produk disini...",
+          onChanged: _onSearchChanged,
+        ),
+        actions: [
+          const SizedBox(width: 5),
+          IconButton(
+            onPressed: () {},
+            icon: const UiIcons(
+              TIcons.box,
+              height: 20,
+              width: 20,
+              color: TColors.primary,
+            ),
+          )
+        ],
+      ),
       body: Scrollbar(
         child: RefreshIndicator(
           backgroundColor: TColors.neutralLightLightest,
@@ -78,7 +113,7 @@ class _ProductMasterScreenState extends State<ProductMasterScreen> {
                     setState(() {
                       _categoryId = value;
                     });
-                    onFetchProducts(categoryId: value);
+                    onFetchProducts();
                   },
                 ),
               ),
@@ -100,28 +135,38 @@ class _ProductMasterScreenState extends State<ProductMasterScreen> {
                           itemCount: products.length,
                           itemBuilder: (context, index) {
                             ProductModel product = products[index];
-                            return Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 12,
-                                horizontal: 16,
-                              ),
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
+                            return InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  "/products/edit",
+                                  arguments: product,
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                  horizontal: 16,
+                                ),
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
                                       color: TColors.neutralLightMedium,
-                                      width: 1),
+                                      width: 1,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              child: BaseProductItem(
-                                name: product.name,
-                                price: int.parse(product.price),
-                                image: Image.network(
-                                  product.images[0],
-                                  height: 44,
-                                  width: 44,
-                                  fit: BoxFit.cover,
+                                child: BaseProductItem(
+                                  name: product.name,
+                                  price: int.parse(product.price),
+                                  image: Image.network(
+                                    product.images[0],
+                                    height: 44,
+                                    width: 44,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  notes: product.description ?? "",
                                 ),
-                                notes: product.description ?? "",
                               ),
                             );
                           },
@@ -161,74 +206,3 @@ class _ProductMasterScreenState extends State<ProductMasterScreen> {
     );
   }
 }
-
-// Scrollbar(
-//               child: RefreshIndicator(
-//                 backgroundColor: TColors.neutralLightLightest,
-//                 onRefresh: () async {
-//                   return await Future.delayed(const Duration(seconds: 1));
-//                 },
-//                 child: CustomScrollView(
-//                   slivers: [
-//                     SliverToBoxAdapter(
-//                       child: Container(
-//                         color: TColors.neutralLightLightest,
-//                         child: ProductCategoryFilter(
-//                           value: _categoryId,
-//                           onChanged: (value) {
-//                             setState(() {
-//                               _categoryId = value;
-//                             });
-//                             onFetchProducts(categoryId: value);
-//                           },
-//                         ),
-//                       ),
-//                     ),
-//                     if (products.isNotEmpty)
-//                       SliverList.builder(
-//                         itemCount: products.length,
-//                         itemBuilder: (context, index) {
-//                           ProductModel product = products[index];
-//                           return Container(
-//                             padding: const EdgeInsets.symmetric(
-//                               vertical: 12,
-//                               horizontal: 16,
-//                             ),
-//                             decoration: const BoxDecoration(
-//                               border: Border(
-//                                 bottom: BorderSide(
-//                                     color: TColors.neutralLightMedium,
-//                                     width: 1),
-//                               ),
-//                             ),
-//                             child: BaseProductItem(
-//                               name: product.name,
-//                               price: int.parse(product.price),
-//                               image: Image.network(
-//                                 product.images[0],
-//                                 height: 44,
-//                                 width: 44,
-//                                 fit: BoxFit.cover,
-//                               ),
-//                               notes: product.description ?? "",
-//                             ),
-//                           );
-//                         },
-//                       ),
-//                     if (products.isEmpty)
-//                       SliverToBoxAdapter(
-//                         child: EmptyList(
-//                           title: "Belum ada produk, nih!",
-//                           subTitle:
-//                               "Yuk! Masukan produk kamu dan mulai berjualan.",
-//                           image: SvgPicture.asset(
-//                             TImages.productEmpty,
-//                             height: 200,
-//                             width: 276,
-//                           ),
-//                         ),
-//                       ),
-//                   ],
-//                 ),
-//               ),
-//             ),

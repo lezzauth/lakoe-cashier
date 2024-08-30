@@ -3,8 +3,14 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 
 class StockInformationForm extends StatefulWidget {
-  const StockInformationForm({super.key, required this.formKey});
   final GlobalKey<FormBuilderState> formKey;
+  final Map<String, dynamic> initialValue;
+
+  const StockInformationForm({
+    super.key,
+    required this.formKey,
+    this.initialValue = const <String, dynamic>{},
+  });
 
   @override
   State<StockInformationForm> createState() => _StockInformationFormState();
@@ -19,6 +25,7 @@ class _StockInformationFormState extends State<StockInformationForm> {
 
     return FormBuilder(
       key: formKey,
+      initialValue: widget.initialValue,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(

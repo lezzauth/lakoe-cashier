@@ -24,6 +24,7 @@ import 'package:point_of_sales_cashier/features/payments/presentation/screens/qr
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/success_confirmation_payment.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/product_cubit.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/explore_product.dart';
+import 'package:point_of_sales_cashier/features/products/presentation/screens/product_edit.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/product_master.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
 import 'package:point_of_sales_cashier/features/redirect/presentation/screens/redirect.dart';
@@ -100,6 +101,7 @@ class App extends StatelessWidget {
           // products
           "/products": (context) => const ProductMasterScreen(),
           "/products/new": (context) => const NewProductScreen(),
+          "/products/edit": (context) => const ProductEditScreen(),
           // customers
           "/customers": (context) => const MasterCustomerScreen(),
           "/customers/new": (context) => const NewCustomerScreen(),
