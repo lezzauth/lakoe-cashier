@@ -94,3 +94,87 @@ Map<String, dynamic> _$$GetOpenCashierResponseImplToJson(
       'closedAt': instance.closedAt,
       'operator': instance.operator,
     };
+
+_$PreviewOrderItemImpl _$$PreviewOrderItemImplFromJson(
+        Map<String, dynamic> json) =>
+    _$PreviewOrderItemImpl(
+      price: json['price'] as String,
+      quantity: (json['quantity'] as num).toInt(),
+      productId: json['productId'] as String,
+      notes: json['notes'] as String,
+    );
+
+Map<String, dynamic> _$$PreviewOrderItemImplToJson(
+        _$PreviewOrderItemImpl instance) =>
+    <String, dynamic>{
+      'price': instance.price,
+      'quantity': instance.quantity,
+      'productId': instance.productId,
+      'notes': instance.notes,
+    };
+
+_$PreviewOrderChargeImpl _$$PreviewOrderChargeImplFromJson(
+        Map<String, dynamic> json) =>
+    _$PreviewOrderChargeImpl(
+      type: json['type'] as String,
+      amount: json['amount'] as String,
+    );
+
+Map<String, dynamic> _$$PreviewOrderChargeImplToJson(
+        _$PreviewOrderChargeImpl instance) =>
+    <String, dynamic>{
+      'type': instance.type,
+      'amount': instance.amount,
+    };
+
+_$PreviewOrderPriceResponseImpl _$$PreviewOrderPriceResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$PreviewOrderPriceResponseImpl(
+      total: json['total'] as String,
+      orderItems: (json['orderItems'] as List<dynamic>)
+          .map((e) => PreviewOrderItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      charges: (json['charges'] as List<dynamic>)
+          .map((e) => PreviewOrderCharge.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$PreviewOrderPriceResponseImplToJson(
+        _$PreviewOrderPriceResponseImpl instance) =>
+    <String, dynamic>{
+      'total': instance.total,
+      'orderItems': instance.orderItems,
+      'charges': instance.charges,
+    };
+
+_$SaveOrderResponseImpl _$$SaveOrderResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$SaveOrderResponseImpl(
+      id: json['id'] as String,
+      no: json['no'] as String,
+      status: json['status'] as String,
+      price: json['price'] as String,
+      customerId: json['customerId'] as String?,
+      paymentStatus: json['paymentStatus'] as String,
+      customerType: json['customerType'] as String,
+      type: json['type'] as String,
+      source: json['source'] as String,
+      outletId: json['outletId'] as String,
+      tableId: json['tableId'] as String?,
+    );
+
+Map<String, dynamic> _$$SaveOrderResponseImplToJson(
+        _$SaveOrderResponseImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'no': instance.no,
+      'status': instance.status,
+      'price': instance.price,
+      'customerId': instance.customerId,
+      'paymentStatus': instance.paymentStatus,
+      'customerType': instance.customerType,
+      'type': instance.type,
+      'source': instance.source,
+      'outletId': instance.outletId,
+      'tableId': instance.tableId,
+    };

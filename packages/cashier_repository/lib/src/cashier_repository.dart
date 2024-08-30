@@ -7,6 +7,8 @@ abstract class CashierRepository {
   Future<OpenCashierResponse> openCashier(OpenCashierDto dto);
   Future<CashierModel> closeCashier(CloseCashierDto dto);
   Future<GetOpenCashierResponse?> getOpenCashier(String outletId);
+  Future<PreviewOrderPriceResponse> previewOrderPrice(PreviewOrderPriceDto dto);
+  Future<SaveOrderResponse> saveOrder(SaveOrderDto dto);
 }
 
 class CashierRepositoryImp implements CashierRepository {
@@ -53,5 +55,20 @@ class CashierRepositoryImp implements CashierRepository {
     final response = await _dio.get("$_baseURL/open?outletId=$outletId");
     if (response.statusCode == 204) return null;
     return GetOpenCashierResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<PreviewOrderPriceResponse> previewOrderPrice(
+      PreviewOrderPriceDto dto) async {
+    final response =
+        await _dio.post("$_baseURL/price-preview", data: dto.toJson());
+    return PreviewOrderPriceResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<SaveOrderResponse> saveOrder(SaveOrderDto dto) async {
+    final response =
+        await _dio.post("$_baseURL/save-order", data: dto.toJson());
+    return SaveOrderResponse.fromJson(response.data);
   }
 }

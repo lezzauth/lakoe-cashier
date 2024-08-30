@@ -74,3 +74,59 @@ class GetOpenCashierResponse with _$GetOpenCashierResponse, CashierFields {
   factory GetOpenCashierResponse.fromJson(Map<String, Object?> json) =>
       _$GetOpenCashierResponseFromJson(json);
 }
+
+@freezed
+class PreviewOrderItem with _$PreviewOrderItem {
+  const factory PreviewOrderItem({
+    required String price,
+    required int quantity,
+    required String productId,
+    required String notes,
+  }) = _PreviewOrderItem;
+
+  factory PreviewOrderItem.fromJson(Map<String, Object?> json) =>
+      _$PreviewOrderItemFromJson(json);
+}
+
+@freezed
+class PreviewOrderCharge with _$PreviewOrderCharge {
+  const factory PreviewOrderCharge({
+    required String type,
+    required String amount,
+  }) = _PreviewOrderCharge;
+
+  factory PreviewOrderCharge.fromJson(Map<String, Object?> json) =>
+      _$PreviewOrderChargeFromJson(json);
+}
+
+@freezed
+class PreviewOrderPriceResponse with _$PreviewOrderPriceResponse {
+  const factory PreviewOrderPriceResponse({
+    required String total,
+    required List<PreviewOrderItem> orderItems,
+    required List<PreviewOrderCharge> charges,
+  }) = _PreviewOrderPriceResponse;
+
+  factory PreviewOrderPriceResponse.fromJson(Map<String, Object?> json) =>
+      _$PreviewOrderPriceResponseFromJson(json);
+}
+
+@freezed
+class SaveOrderResponse with _$SaveOrderResponse {
+  const factory SaveOrderResponse({
+    required String id,
+    required String no,
+    required String status,
+    required String price,
+    String? customerId,
+    required String paymentStatus,
+    required String customerType,
+    required String type,
+    required String source,
+    required String outletId,
+    String? tableId,
+  }) = _SaveOrderResponse;
+
+  factory SaveOrderResponse.fromJson(Map<String, Object?> json) =>
+      _$SaveOrderResponseFromJson(json);
+}
