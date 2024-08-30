@@ -1,14 +1,21 @@
+import 'dart:developer';
+
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:token_provider/token_provider.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthenticationRepository authenticationRepository;
+  final OwnerRepository ownerRepository;
   final TokenProvider _tokenProvider = TokenProvider();
 
-  AuthCubit({required this.authenticationRepository}) : super(AuthInitial());
+  AuthCubit({
+    required this.authenticationRepository,
+    required this.ownerRepository,
+  }) : super(AuthInitial());
 
   Future<void> register(RegisterDto dto) async {
     emit(AuthRegisterInProgress());
@@ -71,7 +78,18 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void ready(String token, String outletId) {
-    emit(AuthReady(token: token, outletId: outletId));
+  Future<void> initialize() async {
+    emit(AuthLoadInProgress());
+    try {
+      final appToken = await _tokenProvider.getAppToken();
+      if (appToken == null) throw ErrorDescription("no appToken");
+
+      final outlets = await ownerRepository.listOutlets();
+
+      emit(AuthReady(outletId: outlets.first.id));
+    } catch (e, stackTrace) {
+      log('AuthCubit.initialize err: ${e.toString()}', stackTrace: stackTrace);
+      emit(AuthNotReady());
+    }
   }
 }

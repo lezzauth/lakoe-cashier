@@ -1,4 +1,10 @@
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:cashier_repository/cashier_repository.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/contact/contact_list.dart';
@@ -8,8 +14,16 @@ import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
+import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
+import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_state.dart';
+import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
+import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/cards/card_order.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/summary/cart_summary.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
@@ -18,6 +32,8 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:product_repository/product_repository.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -51,10 +67,46 @@ class _CartScreenState extends State<CartScreen> {
   }
 }
 
-class Cart extends StatelessWidget {
+class Cart extends StatefulWidget {
   const Cart({
     super.key,
   });
+
+  @override
+  State<Cart> createState() => _CartState();
+}
+
+class _CartState extends State<Cart> {
+  Timer? _debounce;
+
+  void _onCartQuantityChanged(ProductModel product, int quantity) {
+    context.read<CartCubit>().updateQuantity(product, quantity);
+  }
+
+  void _onCartNotesChanged(ProductModel product, String notes) {
+    context.read<CartCubit>().updateNotes(product, notes);
+  }
+
+  void _onCartSaved() {
+    AuthState authState = context.read<AuthCubit>().state;
+    if (authState is AuthReady) {
+      CartState cartState = context.read<CartCubit>().state;
+      context
+          .read<CartDetailCubit>()
+          .saveOrder(carts: cartState.carts, outletId: authState.outletId);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    AuthState authState = context.read<AuthCubit>().state;
+    if (authState is AuthReady) {
+      CartState cartState = context.read<CartCubit>().state;
+      context.read<CartDetailCubit>().previewOrderPrice(
+          carts: cartState.carts, outletId: authState.outletId);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,172 +138,275 @@ class Cart extends StatelessWidget {
       );
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Expanded(
-          child: CustomScrollView(
-            // mainAxisSize: MainAxisSize.min,
-            slivers: [
-              SliverToBoxAdapter(
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 16),
+    return BlocListener<CartDetailCubit, CartDetailState>(
+      listener: (context, state) {
+        if (state is CartDetailActionSuccess) {
+          context.read<CartCubit>().reset();
+          Navigator.pop(context);
+        }
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: CustomScrollView(
+              // mainAxisSize: MainAxisSize.min,
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: CardOrder(
+                            title: "Pelanggan",
+                            subTitle: "Umum",
+                            icon: const UiIcons(
+                              TIcons.profile,
+                              height: 20,
+                              width: 20,
+                              color: TColors.primary,
+                            ),
+                            onTap: onCustomerOpened,
+                          ),
+                        ),
+                        const SizedBox(width: 12.0),
+                        const Flexible(
+                          flex: 1,
+                          child: CardOrder(
+                            title: "No. Meja",
+                            subTitle: "Bebas",
+                            icon: UiIcons(
+                              TIcons.tableRestaurant,
+                              height: 20,
+                              width: 20,
+                              color: TColors.primary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Flexible(
-                        flex: 1,
-                        child: CardOrder(
-                          title: "Pelanggan",
-                          subTitle: "Umum",
-                          icon: UiIcons(
-                            TIcons.profile,
-                            height: 20,
-                            width: 20,
-                            color: TColors.primary,
-                          ),
-                          onTap: onCustomerOpened,
-                        ),
-                      ),
-                      SizedBox(width: 12.0),
-                      Flexible(
-                        flex: 1,
-                        child: CardOrder(
-                          title: "No. Meja",
-                          subTitle: "Bebas",
-                          icon: UiIcons(
-                            TIcons.tableRestaurant,
-                            height: 20,
-                            width: 20,
-                            color: TColors.primary,
-                          ),
+                      const TextHeading3("Pesanan"),
+                      GestureDetector(
+                        onTap: () {},
+                        child: const TextHeading4(
+                          "Tambah Pesanan",
+                          color: TColors.primary,
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextHeading3("Pesanan"),
-                    GestureDetector(
-                      onTap: () {},
-                      child: TextHeading4(
-                        "Tambah Pesanan",
-                        color: TColors.primary,
-                      ),
+                BlocBuilder<AuthCubit, AuthState>(
+                  builder: (context, authState) =>
+                      BlocListener<CartCubit, CartState>(
+                    listener: (context, state) {
+                      if (!context.mounted) return;
+
+                      if (authState is AuthReady) {
+                        if (state.carts.isEmpty) return;
+
+                        if (_debounce?.isActive ?? false) _debounce?.cancel();
+                        _debounce =
+                            Timer(const Duration(milliseconds: 500), () {
+                          context.read<CartDetailCubit>().previewOrderPrice(
+                                carts: state.carts,
+                                outletId: authState.outletId,
+                              );
+                        });
+                      }
+
+                      if (state.carts.isEmpty) {
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: BlocBuilder<CartCubit, CartState>(
+                      builder: (context, cartState) {
+                        return SliverList.builder(
+                          itemCount: cartState.carts.length,
+                          itemBuilder: (context, index) {
+                            CartModel cart = cartState.carts[index];
+                            return Container(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 12.0),
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: TColors.neutralLightMedium,
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                              child: BaseProductItem(
+                                name: cart.product.name,
+                                price: int.parse(cart.product.price),
+                                image: Image.network(
+                                  cart.product.images[0],
+                                  height: 44,
+                                  width: 44,
+                                  fit: BoxFit.cover,
+                                ),
+                                counter: Counter(
+                                  value: cart.quantity,
+                                  onChanged: (quantity) {
+                                    _onCartQuantityChanged(
+                                        cart.product, quantity);
+                                  },
+                                ),
+                                notes: cart.notes ?? "",
+                                noteAction: ProductNoteAction(
+                                  notes: cart.notes ?? "",
+                                  onChanged: (notes) {
+                                    _onCartNotesChanged(cart.product, notes);
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
                     ),
-                  ],
-                ),
-              ),
-              SliverList.builder(
-                itemCount: 50,
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: TColors.neutralLightMedium,
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                    child: BaseProductItem(
-                      name: "Kopi Hitam $index",
-                      price: (index + 1) * 10000,
-                      image: Image.network(
-                        "https://picsum.photos/200?random=$index",
-                        height: 44,
-                        width: 44,
-                        fit: BoxFit.cover,
-                      ),
-                      counter: Counter(
-                        value: 1,
-                        onChanged: (value) {},
-                      ),
-                      notes: "Gulanya sedikit aja",
-                      noteAction: ProductNoteAction(
-                        onChanged: (notes) {
-                          print('notes: $notes');
-                        },
-                      ),
-                    ),
-                  );
-                },
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 28.0),
-                  child: CartSummary(
-                    tax: 7500,
-                    total: 20000,
                   ),
                 ),
-              ),
-            ],
+                SliverToBoxAdapter(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 28.0),
+                    child: BlocBuilder<CartDetailCubit, CartDetailState>(
+                      builder: (context, state) => switch (state) {
+                        CartDetailLoadSuccess(:final previewOrderPrice) =>
+                          CartDetailToSummary(
+                            previewOrderPrice: previewOrderPrice,
+                          ),
+                        CartDetailLoadFailure(:final error) => Container(
+                            margin: EdgeInsets.symmetric(vertical: 12),
+                            child: Center(
+                              child: TextBodyS(
+                                error,
+                                color: TColors.error,
+                              ),
+                            ),
+                          ),
+                        _ => Container(
+                            margin: EdgeInsets.symmetric(vertical: 12),
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        Container(
-          padding: const EdgeInsets.only(top: 10),
-          child: Row(
-            children: [
-              SizedBox(
-                height: 48.0,
-                child: OutlinedButton(
-                  onPressed: () {},
-                  style: const ButtonStyle(
-                    padding: WidgetStatePropertyAll(
-                      EdgeInsets.symmetric(
-                        // vertical: 15.5,
-                        horizontal: 26,
-                      ),
-                    ),
-                    side: WidgetStatePropertyAll(
-                      BorderSide(
-                        color: TColors.primary,
-                        width: 1.5,
-                      ),
-                    ),
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            12.0,
+          BlocBuilder<CartDetailCubit, CartDetailState>(
+            builder: (context, cartState) => Container(
+              padding: const EdgeInsets.only(top: 10),
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: 48.0,
+                    child: OutlinedButton(
+                      onPressed: cartState is CartDetailActionInProgress
+                          ? null
+                          : _onCartSaved,
+                      style: const ButtonStyle(
+                        padding: WidgetStatePropertyAll(
+                          EdgeInsets.symmetric(
+                            // vertical: 15.5,
+                            horizontal: 26,
                           ),
                         ),
                       ),
+                      child: cartState is CartDetailActionInProgress
+                          ? const SizedBox(
+                              height: 16,
+                              width: 16,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 1,
+                              ),
+                            )
+                          : Text(
+                              "Simpan",
+                              style: GoogleFonts.inter(
+                                color: TColors.primary,
+                                fontWeight: FontWeight.w600,
+                                fontSize: TSizes.fontSizeActionL,
+                              ),
+                            ),
                     ),
                   ),
-                  child: Text(
-                    "Simpan",
-                    style: GoogleFonts.inter(
-                      color: TColors.primary,
-                      fontWeight: FontWeight.w600,
-                      fontSize: TSizes.fontSizeActionL,
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: SizedBox(
+                      height: 48.0,
+                      child: ElevatedButton(
+                        onPressed: cartState is CartDetailActionInProgress
+                            ? null
+                            : () {},
+                        child: cartState is CartDetailActionInProgress
+                            ? const SizedBox(
+                                height: 16,
+                                width: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 1,
+                                  color: TColors.neutralLightLightest,
+                                ),
+                              )
+                            : const TextActionL(
+                                "Bayar & Selesai",
+                                color: TColors.neutralLightLightest,
+                              ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-              const SizedBox(width: 6),
-              Expanded(
-                child: SizedBox(
-                  height: 48.0,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: TextActionL(
-                      "Bayar & Selesai",
-                      color: TColors.neutralLightLightest,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
+    );
+  }
+}
+
+class CartDetailToSummary extends StatelessWidget {
+  final PreviewOrderPriceResponse previewOrderPrice;
+
+  const CartDetailToSummary({super.key, required this.previewOrderPrice});
+
+  double _getTaxes() {
+    PreviewOrderCharge? taxChargeItem = previewOrderPrice.charges
+        .firstWhereOrNull((charge) => charge.type == "TAX");
+    PreviewOrderCharge? serviceFeeChargeItem = previewOrderPrice.charges
+        .firstWhereOrNull((charge) => charge.type == "SERVICE_FEE");
+
+    String tax = taxChargeItem?.amount ?? "0";
+    String serviceFee = serviceFeeChargeItem?.amount ?? "0";
+
+    return double.parse(tax) + double.parse(serviceFee);
+  }
+
+  double _getOrderTotal() {
+    return previewOrderPrice.orderItems.fold(0, (sum, item) {
+      return sum + double.parse(item.price);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CartSummary(
+      tax: _getTaxes(),
+      orderTotal: _getOrderTotal(),
+      total: double.parse(previewOrderPrice.total),
     );
   }
 }

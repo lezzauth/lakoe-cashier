@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
@@ -7,18 +8,44 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
 
-class ProductNoteAction extends StatelessWidget {
-  ProductNoteAction({
+class ProductNoteAction extends StatefulWidget {
+  final String notes;
+  final Function(String notes)? onChanged;
+  final bool readOnly;
+
+  const ProductNoteAction({
     super.key,
     this.notes = "",
     this.onChanged,
     this.readOnly = false,
   });
 
-  final String notes;
-  final Function(String notes)? onChanged;
-  final TextEditingController _controller = TextEditingController();
-  final bool readOnly;
+  @override
+  State<ProductNoteAction> createState() => _ProductNoteActionState();
+}
+
+class _ProductNoteActionState extends State<ProductNoteAction> {
+  final _formKey = GlobalKey<FormBuilderState>();
+
+  _onSubmit() {
+    if (_formKey.currentState?.saveAndValidate() ?? false) {
+      dynamic value = _formKey.currentState?.value;
+      if (widget.onChanged == null) return;
+
+      widget.onChanged!(value["notes"]);
+      Navigator.pop(context);
+    } else {
+      const snackBar = SnackBar(
+        content: Text('Validation failed'),
+        showCloseIcon: true,
+      );
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          snackBar,
+        );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,33 +68,35 @@ class ProductNoteAction extends StatelessWidget {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 8.0),
-                        child: TextField(
-                          decoration: const InputDecoration(
-                            hintText: "Tuliskan catatan",
-                          ),
-                          controller: _controller,
-                          maxLines: 4,
-                        ),
-                      ),
-                      SizedBox(
-                        width: double.maxFinite,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (onChanged != null) {
-                              onChanged!(_controller.text);
-                            }
-                          },
-                          child: const TextActionL(
-                            "Lanjutkan",
-                            color: TColors.neutralLightLightest,
+                  child: FormBuilder(
+                    key: _formKey,
+                    initialValue: {
+                      "notes": widget.notes,
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 8.0),
+                          child: FormBuilderTextField(
+                            name: "notes",
+                            decoration: const InputDecoration(
+                              hintText: "Tuliskan catatan",
+                            ),
+                            maxLines: 4,
                           ),
                         ),
-                      )
-                    ],
+                        SizedBox(
+                          width: double.maxFinite,
+                          child: ElevatedButton(
+                            onPressed: _onSubmit,
+                            child: const TextActionL(
+                              "Lanjutkan",
+                              color: TColors.neutralLightLightest,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -79,11 +108,11 @@ class ProductNoteAction extends StatelessWidget {
 
     return Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (notes.isNotEmpty)
+        if (widget.notes.isNotEmpty)
           Text(
-            '“$notes“',
+            '“${widget.notes}“',
             style: GoogleFonts.inter(
               fontStyle: FontStyle.italic,
               fontSize: TSizes.fontSizeBodyS,
@@ -92,11 +121,11 @@ class ProductNoteAction extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-        if (!readOnly)
+        if (!widget.readOnly)
           GestureDetector(
             onTap: onAddNotes,
             child: TextHeading5(
-              notes.isNotEmpty ? "Ubah" : "Tambah Catatan",
+              widget.notes.isNotEmpty ? "Ubah" : "Tambah Catatan",
               color: TColors.primary,
             ),
           ),

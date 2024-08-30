@@ -4,7 +4,6 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
-import 'package:token_provider/token_provider.dart';
 
 class RedirectScreen extends StatefulWidget {
   const RedirectScreen({super.key});
@@ -14,41 +13,28 @@ class RedirectScreen extends StatefulWidget {
 }
 
 class _RedirectScreenState extends State<RedirectScreen> {
-  final TokenProvider _tokenProvider = TokenProvider();
-
-  Future<void> onAppRedirect() async {
-    if (!context.mounted) return;
-
-    try {
-      final appToken = await _tokenProvider.getAppToken();
-
-      if (appToken == null) {
-        Navigator.of(context).popAndPushNamed("/on-boarding");
-        return;
-      }
-
-      context
-          .read<AuthCubit>()
-          .ready(appToken, "d0ea6025-bfa9-4d91-8ae8-80320b3413b8");
-      Navigator.of(context).popAndPushNamed("/cashier");
-    } catch (e) {
-      Navigator.of(context).popAndPushNamed("/on-boarding");
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    onAppRedirect();
+    context.read<AuthCubit>().initialize();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {},
+      listener: (context, state) async {
+        if (!mounted) return;
+
+        if (state is AuthNotReady) {
+          Navigator.popAndPushNamed(context, "/on-boarding");
+        } else if (state is AuthReady) {
+          await context.read<CashierCubit>().getOpenCashier(state.outletId);
+          Navigator.popAndPushNamed(context, "/cashier");
+        }
+      },
       child: BlocListener<CashierCubit, CashierState>(
         listener: (context, state) {},
-        child: Scaffold(
+        child: const Scaffold(
           body: Center(
             child: CircularProgressIndicator(),
           ),

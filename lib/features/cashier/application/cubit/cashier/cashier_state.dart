@@ -8,9 +8,8 @@ final class CashierOpenInProgress extends CashierState {}
 
 final class CashierOpened extends CashierState {
   final OperatorModel operator;
-  final String token;
 
-  CashierOpened({required this.token, required this.operator});
+  CashierOpened({required this.operator});
 }
 
 final class CashierOpenFailure extends CashierState {
@@ -20,7 +19,7 @@ final class CashierOpenFailure extends CashierState {
 
 final class CashierCloseInProgress extends CashierState {}
 
-final class CashierCloseSuccess extends CashierState {}
+final class CashierClosed extends CashierState {}
 
 final class CashierCloseFailure extends CashierState {
   final String message;

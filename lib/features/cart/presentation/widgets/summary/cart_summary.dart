@@ -11,15 +11,17 @@ class CartSummary extends StatelessWidget {
     super.key,
     required this.total,
     required this.tax,
+    required this.orderTotal,
   });
 
+  final double orderTotal;
   final double total;
   final double tax;
 
   @override
   Widget build(BuildContext context) {
     double discount = 0;
-    double totalBill = (total - discount) + tax;
+    double totalBill = (total - discount);
     return Column(
       children: [
         Container(
@@ -38,7 +40,7 @@ class CartSummary extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const TextBodyM("Total Pesanan"),
-                  TextHeading4(TFormatter.formatToRupiah(total)),
+                  TextHeading4(TFormatter.formatToRupiah(orderTotal)),
                 ],
               ),
               const SizedBox(height: 10),

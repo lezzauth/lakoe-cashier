@@ -12,7 +12,7 @@ class Counter extends StatelessWidget {
     required this.onChanged,
   });
 
-  final Function(int) onChanged;
+  final ValueChanged<int> onChanged;
   final int value;
 
   @override
@@ -44,8 +44,8 @@ class Counter extends StatelessWidget {
                   )
                 : UiIcons(
                     TIcons.minus,
-                    height: 16,
-                    width: 16,
+                    height: 14,
+                    width: 14,
                     color: TColors.primary,
                     onTap: () {
                       onChanged(value - 1);

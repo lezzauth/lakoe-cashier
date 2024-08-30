@@ -70,6 +70,7 @@ dependencies:
   flutter_timer_countdown: ^1.0.7
   equatable: ^2.0.5
   file_picker: ^8.1.2
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:

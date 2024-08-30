@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
@@ -5,17 +7,38 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 
-class SearchField extends StatelessWidget {
+class SearchField extends StatefulWidget {
+  final String? hintText;
+  final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
+  final int debounceTime;
+
   const SearchField({
     super.key,
     this.hintText,
     this.controller,
     this.onChanged,
+    this.debounceTime = 500,
   });
 
-  final String? hintText;
-  final TextEditingController? controller;
-  final ValueChanged<String>? onChanged;
+  @override
+  State<SearchField> createState() => _SearchFieldState();
+}
+
+class _SearchFieldState extends State<SearchField> {
+  Timer? _debounce;
+
+  _onSearchChanged(String query) {
+    if (widget.debounceTime == 0) {
+      if (widget.onChanged != null) widget.onChanged!(query);
+      return;
+    }
+
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(Duration(milliseconds: widget.debounceTime), () {
+      if (widget.onChanged != null) widget.onChanged!(query);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +64,7 @@ class SearchField extends StatelessWidget {
             child: SizedBox(
               height: 22,
               child: TextField(
-                controller: controller,
+                controller: widget.controller,
                 decoration: InputDecoration(
                   isDense: true,
                   border: const OutlineInputBorder(
@@ -54,11 +77,11 @@ class SearchField extends StatelessWidget {
                     borderSide: BorderSide(width: 0, color: Colors.transparent),
                   ),
                   contentPadding: EdgeInsets.zero,
-                  hintText: hintText,
+                  hintText: widget.hintText,
                   labelStyle: GoogleFonts.inter(fontSize: TSizes.fontSizeBodyL),
                 ),
                 style: GoogleFonts.inter(fontSize: TSizes.fontSizeBodyL),
-                onChanged: onChanged,
+                onChanged: _onSearchChanged,
               ),
             ),
           )

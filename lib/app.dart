@@ -3,11 +3,14 @@ import 'package:cashier_repository/cashier_repository.dart';
 import 'package:category_repository/category_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/screens/completing_data.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/on_boarding.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/otp_input/screens/otp_input.dart';
+import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
+import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/screens/cart.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/categories/application/cubit/category_cubit.dart';
@@ -23,7 +26,7 @@ import 'package:point_of_sales_cashier/features/payments/presentation/screens/ba
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/qris_payment.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/success_confirmation_payment.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/product_cubit.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/screens/explore_product.dart';
+import 'package:point_of_sales_cashier/features/cashier/presentation/screens/explore_product.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/product_edit.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/product_master.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
@@ -41,15 +44,20 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TokenProvider tokenProvider = TokenProvider();
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => AuthCubit(
-            authenticationRepository: AuthenticationRepositoryImpl(
-              dio: dio,
-              tokenProvider: TokenProvider(),
-            ),
-          ),
+              authenticationRepository: AuthenticationRepositoryImpl(
+                dio: dio,
+                tokenProvider: tokenProvider,
+              ),
+              ownerRepository: OwnerRepositoryImpl(
+                dio: dio,
+                tokenProvider: tokenProvider,
+              )),
         ),
         BlocProvider(
           create: (context) => CompletingDataCubit(),
@@ -58,7 +66,7 @@ class App extends StatelessWidget {
           create: (context) => CashierCubit(
             cashierRepository: CashierRepositoryImp(
               dio: dio,
-              tokenProvider: TokenProvider(),
+              tokenProvider: tokenProvider,
             ),
           ),
         ),
@@ -66,7 +74,7 @@ class App extends StatelessWidget {
           create: (context) => CategoryCubit(
             categoryRepository: CategoryRepositoryImp(
               dio: dio,
-              tokenProvider: TokenProvider(),
+              tokenProvider: tokenProvider,
             ),
           ),
         ),
@@ -74,7 +82,18 @@ class App extends StatelessWidget {
           create: (context) => ProductCubit(
             productRepository: ProductRepositoryImp(
               dio: dio,
-              tokenProvider: TokenProvider(),
+              tokenProvider: tokenProvider,
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => CartCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CartDetailCubit(
+            cashierRepository: CashierRepositoryImp(
+              dio: dio,
+              tokenProvider: tokenProvider,
             ),
           ),
         ),

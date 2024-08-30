@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +20,7 @@ class CashierCubit extends Cubit<CashierState> {
 
       final cashier = await cashierRepository.getOpenCashier(dto.outletId);
       if (cashier == null) throw ErrorDescription("cashier closed");
-      emit(CashierOpened(token: response.token, operator: cashier.operator));
+      emit(CashierOpened(operator: cashier.operator));
     } catch (e) {
       emit(CashierOpenFailure(message: e.toString()));
     }
@@ -28,14 +30,29 @@ class CashierCubit extends Cubit<CashierState> {
     emit(CashierCloseInProgress());
     try {
       await cashierRepository.closeCashier(dto);
-      emit(CashierCloseSuccess());
+      emit(CashierClosed());
     } catch (e) {
       emit(CashierCloseFailure(message: e.toString()));
     }
   }
 
-  Future<void> getOpenCashier() async {
+  Future<void> getOpenCashier(String outletId) async {
     emit(CashierOpenInProgress());
-    try {} catch (e) {}
+    try {
+      final response = await cashierRepository.getOpenCashier(outletId);
+      if (response == null) {
+        emit(CashierClosed());
+        return;
+      }
+
+      emit(CashierOpened(operator: response.operator));
+    } catch (e, stackTrace) {
+      log(
+        "CashierCubit.getOpenCashier",
+        error: e,
+        stackTrace: stackTrace,
+      );
+      emit(CashierOpenFailure(message: e.toString()));
+    }
   }
 }

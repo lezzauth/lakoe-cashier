@@ -2,6 +2,16 @@ sealed class AuthState {}
 
 final class AuthInitial extends AuthState {}
 
+final class AuthLoadInProgress extends AuthState {}
+
+final class AuthReady extends AuthState {
+  final String outletId;
+
+  AuthReady({required this.outletId});
+}
+
+final class AuthNotReady extends AuthState {}
+
 // OTP
 final class AuthRequestOTPInProgress extends AuthState {}
 
@@ -84,11 +94,4 @@ final class AuthVerifyOTPFailure extends AuthState {
     required this.target,
     required this.action,
   });
-}
-
-final class AuthReady extends AuthState {
-  final String token;
-  final String outletId;
-
-  AuthReady({required this.token, required this.outletId});
 }
