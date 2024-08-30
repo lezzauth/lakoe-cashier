@@ -44,8 +44,8 @@ class OwnerRepositoryImpl implements OwnerRepository {
   @override
   Future<List<OutletModel>> listOutlets() async {
     final profile = await getProfile();
-    final response = await _dio
-        .get<List<dynamic>>("$_baseURL/profile/${profile.id}/outlets");
+    final response =
+        await _dio.get<List<dynamic>>("$_baseURL/${profile.id}/outlets");
 
     return response.data!
         .map((element) => OutletModel.fromJson(element))
