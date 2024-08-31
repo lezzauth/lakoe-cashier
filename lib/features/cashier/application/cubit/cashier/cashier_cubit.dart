@@ -16,7 +16,7 @@ class CashierCubit extends Cubit<CashierState> {
     emit(CashierOpenInProgress());
     try {
       final response = await cashierRepository.openCashier(dto);
-      _tokenProvider.setAppToken(response.token);
+      _tokenProvider.setCashierToken(response.token);
 
       final cashier = await cashierRepository.getOpenCashier(dto.outletId);
       if (cashier == null) throw ErrorDescription("cashier closed");

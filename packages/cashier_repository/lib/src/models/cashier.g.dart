@@ -178,3 +178,25 @@ Map<String, dynamic> _$$SaveOrderResponseImplToJson(
       'outletId': instance.outletId,
       'tableId': instance.tableId,
     };
+
+_$OrderItemResponseImpl _$$OrderItemResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$OrderItemResponseImpl(
+      no: json['no'] as String,
+      price: json['price'] as String,
+      paymentStatus: json['paymentStatus'] as String,
+      customerType: json['customerType'] as String,
+      type: json['type'] as String,
+      source: json['source'] as String,
+    );
+
+Map<String, dynamic> _$$OrderItemResponseImplToJson(
+        _$OrderItemResponseImpl instance) =>
+    <String, dynamic>{
+      'no': instance.no,
+      'price': instance.price,
+      'paymentStatus': instance.paymentStatus,
+      'customerType': instance.customerType,
+      'type': instance.type,
+      'source': instance.source,
+    };

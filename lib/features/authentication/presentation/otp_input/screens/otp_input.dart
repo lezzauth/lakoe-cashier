@@ -63,15 +63,16 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
     );
 
     return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {
+      listener: (context, state) async {
+        if (!mounted) return;
+
         if (state is AuthVerifyOTPSuccessAndRegister) {
           Navigator.pushNamedAndRemoveUntil(context, "/completing-data",
               ModalRoute.withName("/completing-data"));
-          // Navigator.popAndPushNamed(context, "/completing-data");
         } else if (state is AuthVerifyOTPSuccessAndLogin) {
+          await context.read<AuthCubit>().initialize();
           Navigator.pushNamedAndRemoveUntil(
               context, "/cashier", ModalRoute.withName("/cashier"));
-          // Navigator.popAndPushNamed(context, "/cashier");
         }
       },
       child: BlocBuilder<AuthCubit, AuthState>(

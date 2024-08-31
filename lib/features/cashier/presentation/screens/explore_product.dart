@@ -1,3 +1,4 @@
+import 'package:cashier_repository/cashier_repository.dart';
 import 'package:category_repository/category_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubi
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
 import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
 import 'package:point_of_sales_cashier/features/categories/application/cubit/category_cubit.dart';
+import 'package:point_of_sales_cashier/features/orders/application/cubit/order_cubit.dart';
+import 'package:point_of_sales_cashier/features/orders/application/cubit/order_state.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/product_cubit.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/product_state.dart';
 import 'package:point_of_sales_cashier/features/products/common/widgets/appbar/explore_product_appbar.dart';
@@ -54,9 +57,14 @@ class _ExploreProductScreenState extends State<ExploreProductScreen> {
         .findAll(FindAllCategoryDto(outletId: authState.outletId));
   }
 
+  Future<void> onFetchOrders() async {
+    return await context.read<OrderCubit>().findAll(const FindAllOrderDto());
+  }
+
   Future<void> onRefresh() async {
     await onFetchCategories();
     await onFetchProducts();
+    await onFetchOrders();
   }
 
   void _onAddToCart(ProductModel product) {
@@ -81,6 +89,7 @@ class _ExploreProductScreenState extends State<ExploreProductScreen> {
     super.initState();
     onFetchCategories();
     onFetchProducts();
+    onFetchOrders();
   }
 
   @override
@@ -98,8 +107,8 @@ class _ExploreProductScreenState extends State<ExploreProductScreen> {
                   SliverToBoxAdapter(
                     child: Container(
                       color: TColors.neutralLightLight,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 6.0),
                       child: SearchField(
                         hintText: "Cari menu disini…",
                         debounceTime: 500,
@@ -131,22 +140,42 @@ class _ExploreProductScreenState extends State<ExploreProductScreen> {
                             ),
                           ),
                           Flexible(
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Wrap(
-                                direction: Axis.horizontal,
-                                spacing: 8.0,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  OrderListButton(),
-                                  OrderItem(),
-                                  OrderItem(),
-                                  OrderItem(),
-                                  OrderItem(),
-                                  OrderItem(),
-                                  OrderItem(),
-                                ],
-                              ),
+                            child: BlocBuilder<OrderCubit, OrderState>(
+                              builder: (context, state) => switch (state) {
+                                OrderLoadSuccess(:final orders) =>
+                                  SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Wrap(
+                                      direction: Axis.horizontal,
+                                      spacing: 8.0,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.center,
+                                      children: [
+                                        const OrderListButton(),
+                                        ...orders.map(
+                                          (order) => OrderItem(
+                                            no: order.no,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                OrderLoadFailure(:final error) => Center(
+                                    child: TextBodyS(
+                                      error,
+                                      color: TColors.error,
+                                    ),
+                                  ),
+                                _ => const Center(
+                                    child: SizedBox(
+                                      height: 16,
+                                      width: 16,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 1,
+                                      ),
+                                    ),
+                                  ),
+                              },
                             ),
                           ),
                         ],

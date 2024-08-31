@@ -22,7 +22,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       final response = await authenticationRepository.register(dto);
       emit(AuthRegisterSuccess(token: response.token));
-      _tokenProvider.setAppToken(response.token);
+      _tokenProvider.setAuthToken(response.token);
     } catch (e) {
       emit(AuthRegisterFailure(error: e.toString()));
     }
@@ -52,8 +52,8 @@ class AuthCubit extends Cubit<AuthState> {
 
       switch (response.action) {
         case "LOGIN":
+          _tokenProvider.setAuthToken(response.token);
           emit(AuthVerifyOTPSuccessAndLogin(token: response.token));
-          _tokenProvider.setAppToken(response.token);
           break;
         case "REGISTER":
           emit(AuthVerifyOTPSuccessAndRegister(
@@ -81,8 +81,8 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> initialize() async {
     emit(AuthLoadInProgress());
     try {
-      final appToken = await _tokenProvider.getAppToken();
-      if (appToken == null) throw ErrorDescription("no appToken");
+      final authToken = await _tokenProvider.getAuthToken();
+      if (authToken == null) throw ErrorDescription("no authToken");
 
       final outlets = await ownerRepository.listOutlets();
 

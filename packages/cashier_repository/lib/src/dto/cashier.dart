@@ -89,3 +89,33 @@ class PreviewOrderPriceDto with _$PreviewOrderPriceDto {
   factory PreviewOrderPriceDto.fromJson(Map<String, Object?> json) =>
       _$PreviewOrderPriceDtoFromJson(json);
 }
+
+@freezed
+class FindAllOrderDto with _$FindAllOrderDto {
+  const factory FindAllOrderDto({
+    String? type,
+    String? source,
+    String? status,
+    String? search,
+    String? sort,
+  }) = _FindAllOrderDto;
+}
+
+extension QueryStringExtension on FindAllOrderDto {
+  String toQueryString() {
+    final Map<String, dynamic> queryParams = {
+      "type": type,
+      "source": source,
+      "status": status,
+      "search": search,
+      "sort": sort,
+    };
+
+    queryParams.removeWhere((key, value) => value == null);
+
+    return queryParams.entries
+        .map((entry) =>
+            '${entry.key}=${Uri.encodeComponent(entry.value.toString())}')
+        .join('&');
+  }
+}

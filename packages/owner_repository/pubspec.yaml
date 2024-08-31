@@ -12,6 +12,8 @@ dependencies:
   # providers
   token_provider:
     path: ../token_provider
+  dio_provider:
+    path: ../dio_provider
 
   dio: ^5.6.0
   freezed_annotation: ^2.4.4

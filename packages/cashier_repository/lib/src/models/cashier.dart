@@ -130,3 +130,18 @@ class SaveOrderResponse with _$SaveOrderResponse {
   factory SaveOrderResponse.fromJson(Map<String, Object?> json) =>
       _$SaveOrderResponseFromJson(json);
 }
+
+@freezed
+class OrderItemResponse with _$OrderItemResponse {
+  const factory OrderItemResponse({
+    required String no,
+    required String price,
+    required String paymentStatus,
+    required String customerType,
+    required String type,
+    required String source,
+  }) = _OrderItemResponse;
+
+  factory OrderItemResponse.fromJson(Map<String, Object?> json) =>
+      _$OrderItemResponseFromJson(json);
+}

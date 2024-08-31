@@ -1,6 +1,7 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:category_repository/category_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owner_repository/owner_repository.dart';
@@ -20,6 +21,7 @@ import 'package:point_of_sales_cashier/features/customers/presentation/screens/n
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/open_cashier_pin.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
+import 'package:point_of_sales_cashier/features/orders/application/cubit/order_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_detail.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_master.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/bank_transfer_payment.dart';
@@ -34,68 +36,51 @@ import 'package:point_of_sales_cashier/features/redirect/presentation/screens/re
 import 'package:point_of_sales_cashier/features/settings/presentation/screens/settings.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_master.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
-import 'package:point_of_sales_cashier/utils/http/http.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 import 'package:product_repository/product_repository.dart';
-import 'package:token_provider/token_provider.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    TokenProvider tokenProvider = TokenProvider();
+    OwnerRepository ownerRepository = OwnerRepositoryImpl();
+    AuthenticationRepository authenticationRepository =
+        AuthenticationRepositoryImpl();
+    CashierRepository cashierRepository = CashierRepositoryImpl();
+    CategoryRepository categoryRepository = CategoryRepositoryImpl();
+    ProductRepository productRepository = ProductRepositoryImpl();
 
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => AuthCubit(
-              authenticationRepository: AuthenticationRepositoryImpl(
-                dio: dio,
-                tokenProvider: tokenProvider,
-              ),
-              ownerRepository: OwnerRepositoryImpl(
-                dio: dio,
-                tokenProvider: tokenProvider,
-              )),
-        ),
-        BlocProvider(
-          create: (context) => CompletingDataCubit(),
-        ),
-        BlocProvider(
-          create: (context) => CashierCubit(
-            cashierRepository: CashierRepositoryImp(
-              dio: dio,
-              tokenProvider: tokenProvider,
-            ),
+            ownerRepository: ownerRepository,
+            authenticationRepository: authenticationRepository,
           ),
         ),
+        BlocProvider(create: (context) => CompletingDataCubit()),
         BlocProvider(
-          create: (context) => CategoryCubit(
-            categoryRepository: CategoryRepositoryImp(
-              dio: dio,
-              tokenProvider: tokenProvider,
-            ),
-          ),
+          create: (context) =>
+              CashierCubit(cashierRepository: cashierRepository),
         ),
         BlocProvider(
-          create: (context) => ProductCubit(
-            productRepository: ProductRepositoryImp(
-              dio: dio,
-              tokenProvider: tokenProvider,
-            ),
-          ),
+          create: (context) =>
+              CategoryCubit(categoryRepository: categoryRepository),
+        ),
+        BlocProvider(
+          create: (context) =>
+              ProductCubit(productRepository: productRepository),
         ),
         BlocProvider(
           create: (context) => CartCubit(),
         ),
         BlocProvider(
-          create: (context) => CartDetailCubit(
-            cashierRepository: CashierRepositoryImp(
-              dio: dio,
-              tokenProvider: tokenProvider,
-            ),
-          ),
+          create: (context) =>
+              CartDetailCubit(cashierRepository: cashierRepository),
+        ),
+        BlocProvider(
+          create: (context) => OrderCubit(cashierRepository: cashierRepository),
         ),
       ],
       child: MaterialApp(

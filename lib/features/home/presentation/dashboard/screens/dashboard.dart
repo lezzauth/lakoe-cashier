@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/appbar/dashboard_appbar.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/banner/dashboard_banner.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/filter/dashboard_day_select_filter.dart';
@@ -16,6 +20,18 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  Future<void> _onGetOpenCashier() async {
+    AuthState authState = context.read<AuthCubit>().state;
+    if (authState is! AuthReady) return;
+    context.read<CashierCubit>().getOpenCashier(authState.outletId);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _onGetOpenCashier();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

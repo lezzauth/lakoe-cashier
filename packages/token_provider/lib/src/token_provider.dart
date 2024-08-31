@@ -15,15 +15,19 @@ class TokenProvider {
     await _storage.delete(key: 'auth_token');
   }
 
-  Future<String?> getAppToken() async {
-    return await _storage.read(key: 'app_token');
+  Future<String?> getCashierToken() async {
+    return await _storage.read(key: 'cashier_token');
   }
 
-  Future<void> setAppToken(String token) async {
-    await _storage.write(key: 'app_token', value: token);
+  Future<void> setCashierToken(String token) async {
+    await _storage.write(key: 'cashier_token', value: token);
   }
 
-  Future<void> clearAppToken() async {
-    await _storage.delete(key: 'app_token');
+  Future<void> clearCashierToken() async {
+    await _storage.delete(key: 'cashier_token');
+  }
+
+  Future<Map<String, String>> allValues() async {
+    return await _storage.readAll();
   }
 }

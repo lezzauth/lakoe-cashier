@@ -26,6 +26,7 @@ import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_stat
 import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/cards/card_order.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/summary/cart_summary.dart';
+import 'package:point_of_sales_cashier/features/orders/application/cubit/order_cubit.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -142,6 +143,7 @@ class _CartState extends State<Cart> {
       listener: (context, state) {
         if (state is CartDetailActionSuccess) {
           context.read<CartCubit>().reset();
+          context.read<OrderCubit>().refetch();
           Navigator.pop(context);
         }
       },
@@ -209,11 +211,12 @@ class _CartState extends State<Cart> {
                   builder: (context, authState) =>
                       BlocListener<CartCubit, CartState>(
                     listener: (context, state) {
-                      if (!context.mounted) return;
+                      if (state.carts.isEmpty) {
+                        Navigator.pop(context);
+                        return;
+                      }
 
                       if (authState is AuthReady) {
-                        if (state.carts.isEmpty) return;
-
                         if (_debounce?.isActive ?? false) _debounce?.cancel();
                         _debounce =
                             Timer(const Duration(milliseconds: 500), () {
@@ -222,10 +225,6 @@ class _CartState extends State<Cart> {
                                 outletId: authState.outletId,
                               );
                         });
-                      }
-
-                      if (state.carts.isEmpty) {
-                        Navigator.pop(context);
                       }
                     },
                     child: BlocBuilder<CartCubit, CartState>(

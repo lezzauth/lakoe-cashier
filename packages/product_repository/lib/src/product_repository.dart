@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:dio_provider/dio_provider.dart';
 import 'package:product_repository/product_repository.dart';
 import 'package:token_provider/token_provider.dart';
 
@@ -9,31 +10,18 @@ abstract class ProductRepository {
   Future<ProductModel> create(List<File> images, CreateProductDto dto);
 }
 
-class ProductRepositoryImp implements ProductRepository {
+class ProductRepositoryImpl implements ProductRepository {
   String _baseURL = "/products";
-  final Dio _dio;
-  final TokenProvider _tokenProvider;
+  final Dio _dio = DioProvider().dio;
+  final TokenProvider _tokenProvider = TokenProvider();
 
-  ProductRepositoryImp({required Dio dio, required TokenProvider tokenProvider})
-      : _dio = dio,
-        _tokenProvider = tokenProvider {
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) async {
-          final token = await _tokenProvider.getAppToken();
-          if (token != null) {
-            options.headers['Authorization'] = 'Bearer $token';
-          }
-          handler.next(options);
-        },
-        onError: (DioException error, handler) async {
-          if (error.response?.statusCode == 401) {
-            // Handle token refresh logic here
-          }
-          handler.next(error);
-        },
-      ),
-    );
+  ProductRepositoryImpl();
+
+  Future<Options> _getOptions() async {
+    final token = await _tokenProvider.getAuthToken();
+    if (token == null) return Options();
+
+    return Options(headers: {"Authorization": "Bearer $token"});
   }
 
   @override
@@ -47,6 +35,8 @@ class ProductRepositoryImp implements ProductRepository {
 
   @override
   Future<ProductModel> create(List<File> images, CreateProductDto dto) async {
+    final Options options = await _getOptions();
+
     FormData formData = FormData.fromMap({...dto.toJson()});
     for (var image in images) {
       formData.files.add(MapEntry(
@@ -54,7 +44,11 @@ class ProductRepositoryImp implements ProductRepository {
           await MultipartFile.fromFile(image.path,
               filename: image.path.split("/").last)));
     }
-    final response = await _dio.post(_baseURL, data: formData);
+    final response = await _dio.post(
+      _baseURL,
+      data: formData,
+      options: options,
+    );
     return ProductModel.fromJson(response.data);
   }
 }

@@ -22,13 +22,12 @@ class _RedirectScreenState extends State<RedirectScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) async {
+      listener: (context, state) {
         if (!mounted) return;
 
         if (state is AuthNotReady) {
           Navigator.popAndPushNamed(context, "/on-boarding");
         } else if (state is AuthReady) {
-          await context.read<CashierCubit>().getOpenCashier(state.outletId);
           Navigator.popAndPushNamed(context, "/cashier");
         }
       },

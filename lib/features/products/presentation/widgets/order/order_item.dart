@@ -7,8 +7,15 @@ import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 
 class OrderItem extends StatelessWidget {
+  final String no;
+  final String customerName;
+  final String tableName;
+
   const OrderItem({
     super.key,
+    this.customerName = "",
+    this.tableName = "",
+    required this.no,
   });
 
   @override
@@ -20,7 +27,7 @@ class OrderItem extends StatelessWidget {
           color: TColors.neutralLightLightest,
           border: Border.all(color: TColors.neutralLightMedium, width: 1),
         ),
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -35,7 +42,7 @@ class OrderItem extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: "#09281",
+                        text: "#$no",
                         style: GoogleFonts.inter(
                           fontSize: TSizes.fontSizeHeading5,
                           color: TColors.primary,
@@ -53,29 +60,29 @@ class OrderItem extends StatelessWidget {
                   alignment: WrapAlignment.spaceBetween,
                   spacing: 4.0,
                   children: [
-                    UiIcons(
+                    const UiIcons(
                       TIcons.profile,
                       height: 12,
                       width: 12,
                       color: TColors.neutralDarkLightest,
                     ),
-                    TextHeading5("Sinta"),
+                    TextHeading5(customerName.isEmpty ? "Umum" : customerName),
                   ],
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Wrap(
                   direction: Axis.horizontal,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   alignment: WrapAlignment.spaceBetween,
                   spacing: 4.0,
                   children: [
-                    UiIcons(
+                    const UiIcons(
                       TIcons.tableRestaurant,
                       height: 12,
                       width: 12,
                       color: TColors.neutralDarkLightest,
                     ),
-                    TextHeading5("T-21"),
+                    TextHeading5(tableName.isEmpty ? "Bebas" : tableName),
                   ],
                 ),
               ],

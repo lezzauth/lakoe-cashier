@@ -1,8 +1,12 @@
 import 'package:dio/dio.dart';
 
-final dio = Dio(BaseOptions(baseUrl: "https://api.staging.lakoe.id"))
-  ..interceptors.add(InterceptorsWrapper())
-  ..interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+class DioProvider {
+  static final Dio _dio =
+      Dio(BaseOptions(baseUrl: "https://api.staging.lakoe.id"));
+
+  Dio get dio => _dio;
+}
+
 
 
 // class DioHelper {
