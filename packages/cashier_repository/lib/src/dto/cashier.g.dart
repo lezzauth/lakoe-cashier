@@ -65,15 +65,15 @@ Map<String, dynamic> _$$OpenCashierDtoImplToJson(
       'pin': instance.pin,
     };
 
-_$GenerateTokenDtoImpl _$$GenerateTokenDtoImplFromJson(
+_$RegenerateCashierTokenDtoImpl _$$RegenerateCashierTokenDtoImplFromJson(
         Map<String, dynamic> json) =>
-    _$GenerateTokenDtoImpl(
+    _$RegenerateCashierTokenDtoImpl(
       outletId: json['outletId'] as String,
       pin: json['pin'] as String,
     );
 
-Map<String, dynamic> _$$GenerateTokenDtoImplToJson(
-        _$GenerateTokenDtoImpl instance) =>
+Map<String, dynamic> _$$RegenerateCashierTokenDtoImplToJson(
+        _$RegenerateCashierTokenDtoImpl instance) =>
     <String, dynamic>{
       'outletId': instance.outletId,
       'pin': instance.pin,

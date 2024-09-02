@@ -56,14 +56,14 @@ class OpenCashierDto with _$OpenCashierDto {
 
 // Generate Token
 @freezed
-class GenerateTokenDto with _$GenerateTokenDto {
-  const factory GenerateTokenDto({
+class RegenerateCashierTokenDto with _$RegenerateCashierTokenDto {
+  const factory RegenerateCashierTokenDto({
     required String outletId,
     required String pin,
-  }) = _GenerateTokenDto;
+  }) = _RegenerateCashierTokenDto;
 
-  factory GenerateTokenDto.fromJson(Map<String, Object?> json) =>
-      _$GenerateTokenDtoFromJson(json);
+  factory RegenerateCashierTokenDto.fromJson(Map<String, Object?> json) =>
+      _$RegenerateCashierTokenDtoFromJson(json);
 }
 
 // Close Cashier

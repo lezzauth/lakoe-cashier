@@ -22,17 +22,29 @@ class OpenCashierPinScreen extends StatefulWidget {
 class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
   final TextEditingController _pinController = TextEditingController();
 
-  onCompleted(String value, int initialBalance) {
+  onOpenCashierInitial(String value, int initialBalance) {
     AuthState authState = context.read<AuthCubit>().state;
-    if (authState is AuthReady) {
-      context.read<CashierCubit>().openCashier(
-            OpenCashierDto(
-              initialBalance: initialBalance,
-              outletId: authState.outletId,
-              pin: value,
-            ),
-          );
-    }
+    if (authState is! AuthReady) return;
+
+    context.read<CashierCubit>().openCashier(
+          OpenCashierDto(
+            initialBalance: initialBalance,
+            outletId: authState.outletId,
+            pin: value,
+          ),
+        );
+  }
+
+  onOpenCashierReInitial(String value) {
+    AuthState authState = context.read<AuthCubit>().state;
+    if (authState is! AuthReady) return;
+
+    context.read<CashierCubit>().generatetoken(
+          RegenerateCashierTokenDto(
+            outletId: authState.outletId,
+            pin: value,
+          ),
+        );
   }
 
   @override
@@ -79,7 +91,13 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
                         length: 4,
                         controller: _pinController,
                         onCompleted: (value) {
-                          onCompleted(value, arguments.initialBalance);
+                          if (arguments is OpenCashierInitial) {
+                            onOpenCashierInitial(
+                                value, arguments.initialBalance);
+                          }
+                          if (arguments is OpenCashierReInitial) {
+                            onOpenCashierReInitial(value);
+                          }
                         },
                       ),
                     ],

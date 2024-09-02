@@ -707,34 +707,36 @@ abstract class _OpenCashierDto implements OpenCashierDto {
       throw _privateConstructorUsedError;
 }
 
-GenerateTokenDto _$GenerateTokenDtoFromJson(Map<String, dynamic> json) {
-  return _GenerateTokenDto.fromJson(json);
+RegenerateCashierTokenDto _$RegenerateCashierTokenDtoFromJson(
+    Map<String, dynamic> json) {
+  return _RegenerateCashierTokenDto.fromJson(json);
 }
 
 /// @nodoc
-mixin _$GenerateTokenDto {
+mixin _$RegenerateCashierTokenDto {
   String get outletId => throw _privateConstructorUsedError;
   String get pin => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $GenerateTokenDtoCopyWith<GenerateTokenDto> get copyWith =>
+  $RegenerateCashierTokenDtoCopyWith<RegenerateCashierTokenDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GenerateTokenDtoCopyWith<$Res> {
-  factory $GenerateTokenDtoCopyWith(
-          GenerateTokenDto value, $Res Function(GenerateTokenDto) then) =
-      _$GenerateTokenDtoCopyWithImpl<$Res, GenerateTokenDto>;
+abstract class $RegenerateCashierTokenDtoCopyWith<$Res> {
+  factory $RegenerateCashierTokenDtoCopyWith(RegenerateCashierTokenDto value,
+          $Res Function(RegenerateCashierTokenDto) then) =
+      _$RegenerateCashierTokenDtoCopyWithImpl<$Res, RegenerateCashierTokenDto>;
   @useResult
   $Res call({String outletId, String pin});
 }
 
 /// @nodoc
-class _$GenerateTokenDtoCopyWithImpl<$Res, $Val extends GenerateTokenDto>
-    implements $GenerateTokenDtoCopyWith<$Res> {
-  _$GenerateTokenDtoCopyWithImpl(this._value, this._then);
+class _$RegenerateCashierTokenDtoCopyWithImpl<$Res,
+        $Val extends RegenerateCashierTokenDto>
+    implements $RegenerateCashierTokenDtoCopyWith<$Res> {
+  _$RegenerateCashierTokenDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -761,22 +763,25 @@ class _$GenerateTokenDtoCopyWithImpl<$Res, $Val extends GenerateTokenDto>
 }
 
 /// @nodoc
-abstract class _$$GenerateTokenDtoImplCopyWith<$Res>
-    implements $GenerateTokenDtoCopyWith<$Res> {
-  factory _$$GenerateTokenDtoImplCopyWith(_$GenerateTokenDtoImpl value,
-          $Res Function(_$GenerateTokenDtoImpl) then) =
-      __$$GenerateTokenDtoImplCopyWithImpl<$Res>;
+abstract class _$$RegenerateCashierTokenDtoImplCopyWith<$Res>
+    implements $RegenerateCashierTokenDtoCopyWith<$Res> {
+  factory _$$RegenerateCashierTokenDtoImplCopyWith(
+          _$RegenerateCashierTokenDtoImpl value,
+          $Res Function(_$RegenerateCashierTokenDtoImpl) then) =
+      __$$RegenerateCashierTokenDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String outletId, String pin});
 }
 
 /// @nodoc
-class __$$GenerateTokenDtoImplCopyWithImpl<$Res>
-    extends _$GenerateTokenDtoCopyWithImpl<$Res, _$GenerateTokenDtoImpl>
-    implements _$$GenerateTokenDtoImplCopyWith<$Res> {
-  __$$GenerateTokenDtoImplCopyWithImpl(_$GenerateTokenDtoImpl _value,
-      $Res Function(_$GenerateTokenDtoImpl) _then)
+class __$$RegenerateCashierTokenDtoImplCopyWithImpl<$Res>
+    extends _$RegenerateCashierTokenDtoCopyWithImpl<$Res,
+        _$RegenerateCashierTokenDtoImpl>
+    implements _$$RegenerateCashierTokenDtoImplCopyWith<$Res> {
+  __$$RegenerateCashierTokenDtoImplCopyWithImpl(
+      _$RegenerateCashierTokenDtoImpl _value,
+      $Res Function(_$RegenerateCashierTokenDtoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -785,7 +790,7 @@ class __$$GenerateTokenDtoImplCopyWithImpl<$Res>
     Object? outletId = null,
     Object? pin = null,
   }) {
-    return _then(_$GenerateTokenDtoImpl(
+    return _then(_$RegenerateCashierTokenDtoImpl(
       outletId: null == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
@@ -800,11 +805,12 @@ class __$$GenerateTokenDtoImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$GenerateTokenDtoImpl implements _GenerateTokenDto {
-  const _$GenerateTokenDtoImpl({required this.outletId, required this.pin});
+class _$RegenerateCashierTokenDtoImpl implements _RegenerateCashierTokenDto {
+  const _$RegenerateCashierTokenDtoImpl(
+      {required this.outletId, required this.pin});
 
-  factory _$GenerateTokenDtoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$GenerateTokenDtoImplFromJson(json);
+  factory _$RegenerateCashierTokenDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RegenerateCashierTokenDtoImplFromJson(json);
 
   @override
   final String outletId;
@@ -813,14 +819,14 @@ class _$GenerateTokenDtoImpl implements _GenerateTokenDto {
 
   @override
   String toString() {
-    return 'GenerateTokenDto(outletId: $outletId, pin: $pin)';
+    return 'RegenerateCashierTokenDto(outletId: $outletId, pin: $pin)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GenerateTokenDtoImpl &&
+            other is _$RegenerateCashierTokenDtoImpl &&
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
             (identical(other.pin, pin) || other.pin == pin));
@@ -833,25 +839,25 @@ class _$GenerateTokenDtoImpl implements _GenerateTokenDto {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$GenerateTokenDtoImplCopyWith<_$GenerateTokenDtoImpl> get copyWith =>
-      __$$GenerateTokenDtoImplCopyWithImpl<_$GenerateTokenDtoImpl>(
-          this, _$identity);
+  _$$RegenerateCashierTokenDtoImplCopyWith<_$RegenerateCashierTokenDtoImpl>
+      get copyWith => __$$RegenerateCashierTokenDtoImplCopyWithImpl<
+          _$RegenerateCashierTokenDtoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$GenerateTokenDtoImplToJson(
+    return _$$RegenerateCashierTokenDtoImplToJson(
       this,
     );
   }
 }
 
-abstract class _GenerateTokenDto implements GenerateTokenDto {
-  const factory _GenerateTokenDto(
+abstract class _RegenerateCashierTokenDto implements RegenerateCashierTokenDto {
+  const factory _RegenerateCashierTokenDto(
       {required final String outletId,
-      required final String pin}) = _$GenerateTokenDtoImpl;
+      required final String pin}) = _$RegenerateCashierTokenDtoImpl;
 
-  factory _GenerateTokenDto.fromJson(Map<String, dynamic> json) =
-      _$GenerateTokenDtoImpl.fromJson;
+  factory _RegenerateCashierTokenDto.fromJson(Map<String, dynamic> json) =
+      _$RegenerateCashierTokenDtoImpl.fromJson;
 
   @override
   String get outletId;
@@ -859,8 +865,8 @@ abstract class _GenerateTokenDto implements GenerateTokenDto {
   String get pin;
   @override
   @JsonKey(ignore: true)
-  _$$GenerateTokenDtoImplCopyWith<_$GenerateTokenDtoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$RegenerateCashierTokenDtoImplCopyWith<_$RegenerateCashierTokenDtoImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 CloseCashierDto _$CloseCashierDtoFromJson(Map<String, dynamic> json) {

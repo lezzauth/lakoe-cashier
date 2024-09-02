@@ -200,3 +200,15 @@ Map<String, dynamic> _$$OrderItemResponseImplToJson(
       'type': instance.type,
       'source': instance.source,
     };
+
+_$RegenerateCashierTokenResponseImpl
+    _$$RegenerateCashierTokenResponseImplFromJson(Map<String, dynamic> json) =>
+        _$RegenerateCashierTokenResponseImpl(
+          token: json['token'] as String,
+        );
+
+Map<String, dynamic> _$$RegenerateCashierTokenResponseImplToJson(
+        _$RegenerateCashierTokenResponseImpl instance) =>
+    <String, dynamic>{
+      'token': instance.token,
+    };

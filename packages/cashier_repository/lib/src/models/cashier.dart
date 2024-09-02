@@ -145,3 +145,13 @@ class OrderItemResponse with _$OrderItemResponse {
   factory OrderItemResponse.fromJson(Map<String, Object?> json) =>
       _$OrderItemResponseFromJson(json);
 }
+
+@freezed
+class RegenerateCashierTokenResponse with _$RegenerateCashierTokenResponse {
+  const factory RegenerateCashierTokenResponse({
+    required String token,
+  }) = _RegenerateCashierTokenResponse;
+
+  factory RegenerateCashierTokenResponse.fromJson(Map<String, Object?> json) =>
+      _$RegenerateCashierTokenResponseFromJson(json);
+}

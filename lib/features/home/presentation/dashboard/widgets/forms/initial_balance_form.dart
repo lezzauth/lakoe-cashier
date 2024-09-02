@@ -24,7 +24,7 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
 
       Navigator.popAndPushNamed(context, "/cashier/open-cashier-pin",
           arguments:
-              OpenCashierPinArgument(initialBalance: value["initialBalance"]));
+              OpenCashierInitial(initialBalance: value["initialBalance"]));
     } else {
       const snackBar = SnackBar(
         content: Text('Validation failed'),

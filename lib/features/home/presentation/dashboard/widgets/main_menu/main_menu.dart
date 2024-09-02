@@ -10,6 +10,7 @@ import 'package:point_of_sales_cashier/features/authentication/application/bloc/
 import 'package:point_of_sales_cashier/features/authentication/data/completing_data/arguments.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
+import 'package:point_of_sales_cashier/features/home/data/arguments/open_cashier_pin_argument.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/forms/initial_balance_form.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -42,7 +43,11 @@ class MainMenu extends StatelessWidget {
     }
 
     onCashierAlreadyOpened() {
-      Navigator.popAndPushNamed(context, "/cashier/explore-products");
+      Navigator.popAndPushNamed(
+        context,
+        "/cashier/open-cashier-pin",
+        arguments: OpenCashierReInitial(),
+      );
     }
 
     return BlocBuilder<CashierCubit, CashierState>(

@@ -2196,3 +2196,153 @@ abstract class _OrderItemResponse implements OrderItemResponse {
   _$$OrderItemResponseImplCopyWith<_$OrderItemResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+RegenerateCashierTokenResponse _$RegenerateCashierTokenResponseFromJson(
+    Map<String, dynamic> json) {
+  return _RegenerateCashierTokenResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RegenerateCashierTokenResponse {
+  String get token => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RegenerateCashierTokenResponseCopyWith<RegenerateCashierTokenResponse>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RegenerateCashierTokenResponseCopyWith<$Res> {
+  factory $RegenerateCashierTokenResponseCopyWith(
+          RegenerateCashierTokenResponse value,
+          $Res Function(RegenerateCashierTokenResponse) then) =
+      _$RegenerateCashierTokenResponseCopyWithImpl<$Res,
+          RegenerateCashierTokenResponse>;
+  @useResult
+  $Res call({String token});
+}
+
+/// @nodoc
+class _$RegenerateCashierTokenResponseCopyWithImpl<$Res,
+        $Val extends RegenerateCashierTokenResponse>
+    implements $RegenerateCashierTokenResponseCopyWith<$Res> {
+  _$RegenerateCashierTokenResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+  }) {
+    return _then(_value.copyWith(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RegenerateCashierTokenResponseImplCopyWith<$Res>
+    implements $RegenerateCashierTokenResponseCopyWith<$Res> {
+  factory _$$RegenerateCashierTokenResponseImplCopyWith(
+          _$RegenerateCashierTokenResponseImpl value,
+          $Res Function(_$RegenerateCashierTokenResponseImpl) then) =
+      __$$RegenerateCashierTokenResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String token});
+}
+
+/// @nodoc
+class __$$RegenerateCashierTokenResponseImplCopyWithImpl<$Res>
+    extends _$RegenerateCashierTokenResponseCopyWithImpl<$Res,
+        _$RegenerateCashierTokenResponseImpl>
+    implements _$$RegenerateCashierTokenResponseImplCopyWith<$Res> {
+  __$$RegenerateCashierTokenResponseImplCopyWithImpl(
+      _$RegenerateCashierTokenResponseImpl _value,
+      $Res Function(_$RegenerateCashierTokenResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+  }) {
+    return _then(_$RegenerateCashierTokenResponseImpl(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RegenerateCashierTokenResponseImpl
+    implements _RegenerateCashierTokenResponse {
+  const _$RegenerateCashierTokenResponseImpl({required this.token});
+
+  factory _$RegenerateCashierTokenResponseImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$RegenerateCashierTokenResponseImplFromJson(json);
+
+  @override
+  final String token;
+
+  @override
+  String toString() {
+    return 'RegenerateCashierTokenResponse(token: $token)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RegenerateCashierTokenResponseImpl &&
+            (identical(other.token, token) || other.token == token));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, token);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RegenerateCashierTokenResponseImplCopyWith<
+          _$RegenerateCashierTokenResponseImpl>
+      get copyWith => __$$RegenerateCashierTokenResponseImplCopyWithImpl<
+          _$RegenerateCashierTokenResponseImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RegenerateCashierTokenResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RegenerateCashierTokenResponse
+    implements RegenerateCashierTokenResponse {
+  const factory _RegenerateCashierTokenResponse({required final String token}) =
+      _$RegenerateCashierTokenResponseImpl;
+
+  factory _RegenerateCashierTokenResponse.fromJson(Map<String, dynamic> json) =
+      _$RegenerateCashierTokenResponseImpl.fromJson;
+
+  @override
+  String get token;
+  @override
+  @JsonKey(ignore: true)
+  _$$RegenerateCashierTokenResponseImplCopyWith<
+          _$RegenerateCashierTokenResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}

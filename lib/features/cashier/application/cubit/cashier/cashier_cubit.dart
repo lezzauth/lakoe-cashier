@@ -55,4 +55,18 @@ class CashierCubit extends Cubit<CashierState> {
       emit(CashierOpenFailure(message: e.toString()));
     }
   }
+
+  Future<void> generatetoken(RegenerateCashierTokenDto dto) async {
+    emit(CashierOpenInProgress());
+    try {
+      final response = await cashierRepository.regenerateToken(dto);
+      _tokenProvider.setCashierToken(response.token);
+
+      final cashier = await cashierRepository.getOpenCashier(dto.outletId);
+      if (cashier == null) throw ErrorDescription("cashier closed");
+      emit(CashierOpened(operator: cashier.operator));
+    } catch (e) {
+      emit(CashierOpenFailure(message: e.toString()));
+    }
+  }
 }

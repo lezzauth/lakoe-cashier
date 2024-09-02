@@ -9,6 +9,10 @@ abstract class CashierRepository {
   Future<CashierModel> closeCashier(CloseCashierDto dto);
   Future<GetOpenCashierResponse?> getOpenCashier(String outletId);
   Future<PreviewOrderPriceResponse> previewOrderPrice(PreviewOrderPriceDto dto);
+  Future<RegenerateCashierTokenResponse> regenerateToken(
+      RegenerateCashierTokenDto dto);
+
+  // orders
   Future<SaveOrderResponse> saveOrder(SaveOrderDto dto);
   Future<List<OrderItemResponse>> findAllOrder(FindAllOrderDto? dto);
 }
@@ -86,6 +90,21 @@ class CashierRepositoryImpl implements CashierRepository {
     );
     return PreviewOrderPriceResponse.fromJson(response.data);
   }
+
+  @override
+  Future<RegenerateCashierTokenResponse> regenerateToken(
+      RegenerateCashierTokenDto dto) async {
+    final Options options = await _getOptions();
+
+    final response = await _dio.post(
+      "$_baseURL/generate-token",
+      data: dto.toJson(),
+      options: options,
+    );
+    return RegenerateCashierTokenResponse.fromJson(response.data);
+  }
+
+  // orders
 
   @override
   Future<SaveOrderResponse> saveOrder(SaveOrderDto dto) async {
