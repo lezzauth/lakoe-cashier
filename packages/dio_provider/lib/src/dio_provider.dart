@@ -8,7 +8,6 @@ class DioProvider {
     _dio.interceptors.add(LogInterceptor(
       requestBody: true,
       responseBody: true,
-      requestHeader: true,
     ));
     return _dio;
   }

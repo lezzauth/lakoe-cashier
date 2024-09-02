@@ -1965,6 +1965,8 @@ mixin _$OrderItemResponse {
   String get customerType => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   String get source => throw _privateConstructorUsedError;
+  CustomerModel? get customer => throw _privateConstructorUsedError;
+  Object? get table => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1984,7 +1986,11 @@ abstract class $OrderItemResponseCopyWith<$Res> {
       String paymentStatus,
       String customerType,
       String type,
-      String source});
+      String source,
+      CustomerModel? customer,
+      Object? table});
+
+  $CustomerModelCopyWith<$Res>? get customer;
 }
 
 /// @nodoc
@@ -2006,6 +2012,8 @@ class _$OrderItemResponseCopyWithImpl<$Res, $Val extends OrderItemResponse>
     Object? customerType = null,
     Object? type = null,
     Object? source = null,
+    Object? customer = freezed,
+    Object? table = freezed,
   }) {
     return _then(_value.copyWith(
       no: null == no
@@ -2032,7 +2040,24 @@ class _$OrderItemResponseCopyWithImpl<$Res, $Val extends OrderItemResponse>
           ? _value.source
           : source // ignore: cast_nullable_to_non_nullable
               as String,
+      customer: freezed == customer
+          ? _value.customer
+          : customer // ignore: cast_nullable_to_non_nullable
+              as CustomerModel?,
+      table: freezed == table ? _value.table : table,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CustomerModelCopyWith<$Res>? get customer {
+    if (_value.customer == null) {
+      return null;
+    }
+
+    return $CustomerModelCopyWith<$Res>(_value.customer!, (value) {
+      return _then(_value.copyWith(customer: value) as $Val);
+    });
   }
 }
 
@@ -2050,7 +2075,12 @@ abstract class _$$OrderItemResponseImplCopyWith<$Res>
       String paymentStatus,
       String customerType,
       String type,
-      String source});
+      String source,
+      CustomerModel? customer,
+      Object? table});
+
+  @override
+  $CustomerModelCopyWith<$Res>? get customer;
 }
 
 /// @nodoc
@@ -2070,6 +2100,8 @@ class __$$OrderItemResponseImplCopyWithImpl<$Res>
     Object? customerType = null,
     Object? type = null,
     Object? source = null,
+    Object? customer = freezed,
+    Object? table = freezed,
   }) {
     return _then(_$OrderItemResponseImpl(
       no: null == no
@@ -2096,6 +2128,11 @@ class __$$OrderItemResponseImplCopyWithImpl<$Res>
           ? _value.source
           : source // ignore: cast_nullable_to_non_nullable
               as String,
+      customer: freezed == customer
+          ? _value.customer
+          : customer // ignore: cast_nullable_to_non_nullable
+              as CustomerModel?,
+      table: freezed == table ? _value.table : table,
     ));
   }
 }
@@ -2109,7 +2146,9 @@ class _$OrderItemResponseImpl implements _OrderItemResponse {
       required this.paymentStatus,
       required this.customerType,
       required this.type,
-      required this.source});
+      required this.source,
+      this.customer,
+      this.table});
 
   factory _$OrderItemResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$OrderItemResponseImplFromJson(json);
@@ -2126,10 +2165,14 @@ class _$OrderItemResponseImpl implements _OrderItemResponse {
   final String type;
   @override
   final String source;
+  @override
+  final CustomerModel? customer;
+  @override
+  final Object? table;
 
   @override
   String toString() {
-    return 'OrderItemResponse(no: $no, price: $price, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source)';
+    return 'OrderItemResponse(no: $no, price: $price, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, customer: $customer, table: $table)';
   }
 
   @override
@@ -2144,13 +2187,24 @@ class _$OrderItemResponseImpl implements _OrderItemResponse {
             (identical(other.customerType, customerType) ||
                 other.customerType == customerType) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.source, source) || other.source == source));
+            (identical(other.source, source) || other.source == source) &&
+            (identical(other.customer, customer) ||
+                other.customer == customer) &&
+            const DeepCollectionEquality().equals(other.table, table));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, no, price, paymentStatus, customerType, type, source);
+      runtimeType,
+      no,
+      price,
+      paymentStatus,
+      customerType,
+      type,
+      source,
+      customer,
+      const DeepCollectionEquality().hash(table));
 
   @JsonKey(ignore: true)
   @override
@@ -2174,7 +2228,9 @@ abstract class _OrderItemResponse implements OrderItemResponse {
       required final String paymentStatus,
       required final String customerType,
       required final String type,
-      required final String source}) = _$OrderItemResponseImpl;
+      required final String source,
+      final CustomerModel? customer,
+      final Object? table}) = _$OrderItemResponseImpl;
 
   factory _OrderItemResponse.fromJson(Map<String, dynamic> json) =
       _$OrderItemResponseImpl.fromJson;
@@ -2191,6 +2247,10 @@ abstract class _OrderItemResponse implements OrderItemResponse {
   String get type;
   @override
   String get source;
+  @override
+  CustomerModel? get customer;
+  @override
+  Object? get table;
   @override
   @JsonKey(ignore: true)
   _$$OrderItemResponseImplCopyWith<_$OrderItemResponseImpl> get copyWith =>
@@ -2344,5 +2404,389 @@ abstract class _RegenerateCashierTokenResponse
   @JsonKey(ignore: true)
   _$$RegenerateCashierTokenResponseImplCopyWith<
           _$RegenerateCashierTokenResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+CompleteOrderResponse _$CompleteOrderResponseFromJson(
+    Map<String, dynamic> json) {
+  return _CompleteOrderResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CompleteOrderResponse {
+  String get id => throw _privateConstructorUsedError;
+  int get no => throw _privateConstructorUsedError;
+  String get paymentMethod => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  String get paidAmount => throw _privateConstructorUsedError;
+  String get paidFrom => throw _privateConstructorUsedError;
+  String get amount => throw _privateConstructorUsedError;
+  String get change => throw _privateConstructorUsedError;
+  String get orderId => throw _privateConstructorUsedError;
+  String get outletId => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
+  String get updatedAt => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CompleteOrderResponseCopyWith<CompleteOrderResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CompleteOrderResponseCopyWith<$Res> {
+  factory $CompleteOrderResponseCopyWith(CompleteOrderResponse value,
+          $Res Function(CompleteOrderResponse) then) =
+      _$CompleteOrderResponseCopyWithImpl<$Res, CompleteOrderResponse>;
+  @useResult
+  $Res call(
+      {String id,
+      int no,
+      String paymentMethod,
+      String status,
+      String paidAmount,
+      String paidFrom,
+      String amount,
+      String change,
+      String orderId,
+      String outletId,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class _$CompleteOrderResponseCopyWithImpl<$Res,
+        $Val extends CompleteOrderResponse>
+    implements $CompleteOrderResponseCopyWith<$Res> {
+  _$CompleteOrderResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? no = null,
+    Object? paymentMethod = null,
+    Object? status = null,
+    Object? paidAmount = null,
+    Object? paidFrom = null,
+    Object? amount = null,
+    Object? change = null,
+    Object? orderId = null,
+    Object? outletId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as int,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidAmount: null == paidAmount
+          ? _value.paidAmount
+          : paidAmount // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidFrom: null == paidFrom
+          ? _value.paidFrom
+          : paidFrom // ignore: cast_nullable_to_non_nullable
+              as String,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as String,
+      change: null == change
+          ? _value.change
+          : change // ignore: cast_nullable_to_non_nullable
+              as String,
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CompleteOrderResponseImplCopyWith<$Res>
+    implements $CompleteOrderResponseCopyWith<$Res> {
+  factory _$$CompleteOrderResponseImplCopyWith(
+          _$CompleteOrderResponseImpl value,
+          $Res Function(_$CompleteOrderResponseImpl) then) =
+      __$$CompleteOrderResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      int no,
+      String paymentMethod,
+      String status,
+      String paidAmount,
+      String paidFrom,
+      String amount,
+      String change,
+      String orderId,
+      String outletId,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class __$$CompleteOrderResponseImplCopyWithImpl<$Res>
+    extends _$CompleteOrderResponseCopyWithImpl<$Res,
+        _$CompleteOrderResponseImpl>
+    implements _$$CompleteOrderResponseImplCopyWith<$Res> {
+  __$$CompleteOrderResponseImplCopyWithImpl(_$CompleteOrderResponseImpl _value,
+      $Res Function(_$CompleteOrderResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? no = null,
+    Object? paymentMethod = null,
+    Object? status = null,
+    Object? paidAmount = null,
+    Object? paidFrom = null,
+    Object? amount = null,
+    Object? change = null,
+    Object? orderId = null,
+    Object? outletId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_$CompleteOrderResponseImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as int,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidAmount: null == paidAmount
+          ? _value.paidAmount
+          : paidAmount // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidFrom: null == paidFrom
+          ? _value.paidFrom
+          : paidFrom // ignore: cast_nullable_to_non_nullable
+              as String,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as String,
+      change: null == change
+          ? _value.change
+          : change // ignore: cast_nullable_to_non_nullable
+              as String,
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CompleteOrderResponseImpl implements _CompleteOrderResponse {
+  const _$CompleteOrderResponseImpl(
+      {required this.id,
+      required this.no,
+      required this.paymentMethod,
+      required this.status,
+      required this.paidAmount,
+      required this.paidFrom,
+      required this.amount,
+      required this.change,
+      required this.orderId,
+      required this.outletId,
+      required this.createdAt,
+      required this.updatedAt});
+
+  factory _$CompleteOrderResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CompleteOrderResponseImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final int no;
+  @override
+  final String paymentMethod;
+  @override
+  final String status;
+  @override
+  final String paidAmount;
+  @override
+  final String paidFrom;
+  @override
+  final String amount;
+  @override
+  final String change;
+  @override
+  final String orderId;
+  @override
+  final String outletId;
+  @override
+  final String createdAt;
+  @override
+  final String updatedAt;
+
+  @override
+  String toString() {
+    return 'CompleteOrderResponse(id: $id, no: $no, paymentMethod: $paymentMethod, status: $status, paidAmount: $paidAmount, paidFrom: $paidFrom, amount: $amount, change: $change, orderId: $orderId, outletId: $outletId, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CompleteOrderResponseImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.no, no) || other.no == no) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.paidAmount, paidAmount) ||
+                other.paidAmount == paidAmount) &&
+            (identical(other.paidFrom, paidFrom) ||
+                other.paidFrom == paidFrom) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.change, change) || other.change == change) &&
+            (identical(other.orderId, orderId) || other.orderId == orderId) &&
+            (identical(other.outletId, outletId) ||
+                other.outletId == outletId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      no,
+      paymentMethod,
+      status,
+      paidAmount,
+      paidFrom,
+      amount,
+      change,
+      orderId,
+      outletId,
+      createdAt,
+      updatedAt);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CompleteOrderResponseImplCopyWith<_$CompleteOrderResponseImpl>
+      get copyWith => __$$CompleteOrderResponseImplCopyWithImpl<
+          _$CompleteOrderResponseImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CompleteOrderResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CompleteOrderResponse implements CompleteOrderResponse {
+  const factory _CompleteOrderResponse(
+      {required final String id,
+      required final int no,
+      required final String paymentMethod,
+      required final String status,
+      required final String paidAmount,
+      required final String paidFrom,
+      required final String amount,
+      required final String change,
+      required final String orderId,
+      required final String outletId,
+      required final String createdAt,
+      required final String updatedAt}) = _$CompleteOrderResponseImpl;
+
+  factory _CompleteOrderResponse.fromJson(Map<String, dynamic> json) =
+      _$CompleteOrderResponseImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  int get no;
+  @override
+  String get paymentMethod;
+  @override
+  String get status;
+  @override
+  String get paidAmount;
+  @override
+  String get paidFrom;
+  @override
+  String get amount;
+  @override
+  String get change;
+  @override
+  String get orderId;
+  @override
+  String get outletId;
+  @override
+  String get createdAt;
+  @override
+  String get updatedAt;
+  @override
+  @JsonKey(ignore: true)
+  _$$CompleteOrderResponseImplCopyWith<_$CompleteOrderResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

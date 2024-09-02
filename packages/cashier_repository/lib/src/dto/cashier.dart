@@ -101,6 +101,24 @@ class FindAllOrderDto with _$FindAllOrderDto {
   }) = _FindAllOrderDto;
 }
 
+extension CopyWithExtension on FindAllOrderDto {
+  FindAllOrderDto copyWith({
+    String? type,
+    String? source,
+    String? status,
+    String? search,
+    String? sort,
+  }) {
+    return FindAllOrderDto(
+      type: type ?? this.type,
+      source: source ?? this.source,
+      status: status ?? this.status,
+      search: search ?? this.search,
+      sort: sort ?? this.sort,
+    );
+  }
+}
+
 extension QueryStringExtension on FindAllOrderDto {
   String toQueryString() {
     final Map<String, dynamic> queryParams = {

@@ -5,6 +5,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.dart';
 
 class PaymentMethodRadio extends StatelessWidget {
   final String value;
@@ -96,7 +97,7 @@ class CashPaymentRadioContent extends StatelessWidget {
           color: selected ? TColors.primary : TColors.neutralDarkMedium,
         ),
         TextHeading5(
-          "Cash (Tunai)",
+          TPaymentMethodName.cash,
           color: selected ? TColors.primary : TColors.neutralDarkMedium,
         ),
       ],
@@ -122,8 +123,8 @@ class DebitPaymentRadioContent extends StatelessWidget {
           width: 24,
           color: selected ? TColors.primary : TColors.neutralDarkMedium,
         ),
-        const TextHeading5(
-          "Debit/Credit",
+        TextHeading5(
+          TPaymentMethodName.debit,
           color: TColors.neutralDarkMedium,
         ),
       ],
@@ -149,8 +150,8 @@ class BankTransferPaymentRadioContent extends StatelessWidget {
           width: 24,
           color: selected ? TColors.primary : TColors.neutralDarkMedium,
         ),
-        const TextHeading5(
-          "Transfer Bank",
+        TextHeading5(
+          TPaymentMethodName.bankTransfer,
           color: TColors.neutralDarkMedium,
         ),
       ],

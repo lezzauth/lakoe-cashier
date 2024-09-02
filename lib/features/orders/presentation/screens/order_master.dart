@@ -23,25 +23,17 @@ class _OrderMasterScreenState extends State<OrderMasterScreen> {
           search: SearchField(
             hintText: "Cari pesanan disini...",
           ),
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(56),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 8,
-              ),
-              child: TabContainer(
-                tabs: [
-                  TabItem(title: "Outlet"),
-                  TabItem(
-                    title: "Online",
-                    counter: 2,
-                  )
-                ],
-              ),
-            ),
+          bottom: const TabContainer(
+            tabs: [
+              TabItem(title: "Outlet"),
+              TabItem(
+                title: "Online",
+                counter: 2,
+              )
+            ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             OrderOutletTab(),
             OrderOnlineTab(),

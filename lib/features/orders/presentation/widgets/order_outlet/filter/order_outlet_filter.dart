@@ -1,4 +1,6 @@
+import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
@@ -7,7 +9,14 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 class OrderOutletFilter extends StatefulWidget {
-  const OrderOutletFilter({super.key});
+  final FindAllOrderDto value;
+  final ValueChanged<FindAllOrderDto> onChanged;
+
+  const OrderOutletFilter({
+    super.key,
+    required this.value,
+    required this.onChanged,
+  });
 
   @override
   State<OrderOutletFilter> createState() => _OrderOutletFilterState();
@@ -15,6 +24,11 @@ class OrderOutletFilter extends StatefulWidget {
 
 class _OrderOutletFilterState extends State<OrderOutletFilter> {
   bool isFilterUsed = false;
+
+  List<LabelValue<String>> statuses = [
+    const LabelValue(label: "Berlangsung", value: "OPEN"),
+    const LabelValue(label: "Selesai", value: "COMPLETED"),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -42,23 +56,24 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
           direction: Axis.horizontal,
           alignment: WrapAlignment.start,
           spacing: 8.0,
-          children: [
-            InputChip(
-              label: TextHeading5(
-                "Berlangsung",
-                color: TColors.primary,
-              ),
-              selected: true,
-              onPressed: () {},
-            ),
-            InputChip(
-              label: TextBodyS(
-                "Selesai",
-                color: TColors.neutralDarkDarkest,
-              ),
-              onPressed: () {},
-            ),
-          ],
+          children: statuses.map((status) {
+            bool selected = status.value == widget.value.status;
+            return InputChip(
+              label: selected
+                  ? TextHeading5(
+                      status.label,
+                      color: TColors.primary,
+                    )
+                  : TextBodyS(
+                      status.label,
+                      color: TColors.neutralDarkDarkest,
+                    ),
+              selected: selected,
+              onPressed: () {
+                widget.onChanged(widget.value.copyWith(status: status.value));
+              },
+            );
+          }).toList(),
         ),
         InputChip(
           label: Row(

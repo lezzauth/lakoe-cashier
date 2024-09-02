@@ -188,6 +188,10 @@ _$OrderItemResponseImpl _$$OrderItemResponseImplFromJson(
       customerType: json['customerType'] as String,
       type: json['type'] as String,
       source: json['source'] as String,
+      customer: json['customer'] == null
+          ? null
+          : CustomerModel.fromJson(json['customer'] as Map<String, dynamic>),
+      table: json['table'],
     );
 
 Map<String, dynamic> _$$OrderItemResponseImplToJson(
@@ -199,6 +203,8 @@ Map<String, dynamic> _$$OrderItemResponseImplToJson(
       'customerType': instance.customerType,
       'type': instance.type,
       'source': instance.source,
+      'customer': instance.customer,
+      'table': instance.table,
     };
 
 _$RegenerateCashierTokenResponseImpl
@@ -211,4 +217,38 @@ Map<String, dynamic> _$$RegenerateCashierTokenResponseImplToJson(
         _$RegenerateCashierTokenResponseImpl instance) =>
     <String, dynamic>{
       'token': instance.token,
+    };
+
+_$CompleteOrderResponseImpl _$$CompleteOrderResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CompleteOrderResponseImpl(
+      id: json['id'] as String,
+      no: (json['no'] as num).toInt(),
+      paymentMethod: json['paymentMethod'] as String,
+      status: json['status'] as String,
+      paidAmount: json['paidAmount'] as String,
+      paidFrom: json['paidFrom'] as String,
+      amount: json['amount'] as String,
+      change: json['change'] as String,
+      orderId: json['orderId'] as String,
+      outletId: json['outletId'] as String,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
+    );
+
+Map<String, dynamic> _$$CompleteOrderResponseImplToJson(
+        _$CompleteOrderResponseImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'no': instance.no,
+      'paymentMethod': instance.paymentMethod,
+      'status': instance.status,
+      'paidAmount': instance.paidAmount,
+      'paidFrom': instance.paidFrom,
+      'amount': instance.amount,
+      'change': instance.change,
+      'orderId': instance.orderId,
+      'outletId': instance.outletId,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
     };

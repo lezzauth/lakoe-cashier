@@ -14,9 +14,9 @@ class GhostOrderTypeTag extends StatelessWidget {
   Widget build(BuildContext context) {
     String getTagLabel() {
       switch (tag) {
-        case "dine_in":
+        case "DINEIN":
           return "Dine In";
-        case "takeaway":
+        case "TAKEAWAY":
           return "Bungkus";
         default:
           return "Dine In";
@@ -25,9 +25,9 @@ class GhostOrderTypeTag extends StatelessWidget {
 
     Color getTagBackgroundColor() {
       switch (tag) {
-        case "dine_in":
+        case "DINEIN":
           return TColors.successLight;
-        case "takeaway":
+        case "TAKEAWAY":
           return TColors.warningLight;
         default:
           return TColors.successLight;
@@ -36,9 +36,9 @@ class GhostOrderTypeTag extends StatelessWidget {
 
     Color getTagTextColor() {
       switch (tag) {
-        case "dine_in":
+        case "DINEIN":
           return TColors.successDark;
-        case "takeaway":
+        case "TAKEAWAY":
           return TColors.warningDark;
         default:
           return TColors.successDark;

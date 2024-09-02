@@ -1,12 +1,15 @@
+import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
+import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
@@ -20,236 +23,285 @@ class SuccessConfirmationPaymentScreen extends StatefulWidget {
 
 class _SuccessConfirmationPaymentScreenState
     extends State<SuccessConfirmationPaymentScreen> {
+  String _getPaymentMethodName(String paymentMethod) {
+    switch (paymentMethod) {
+      case "CASH":
+        return TPaymentMethodName.cash;
+      case "DEBIT":
+        return TPaymentMethodName.debit;
+      case "BANK":
+        return TPaymentMethodName.bankTransfer;
+      case "QRIS":
+        return TPaymentMethodName.qris;
+
+      default:
+        return "";
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<CartCubit>().reset();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as CompleteOrderResponse;
+
+    return PopScope(
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        margin: const EdgeInsets.only(top: 32, bottom: 28),
+                        child: Center(
+                          child: Image.asset(
+                            TImages.successConfirmation,
+                            width: 276,
+                            height: 200,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        margin: const EdgeInsets.only(bottom: 20),
+                        child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                child: TextHeading1(
+                                  TFormatter.formatToRupiah(
+                                    int.parse(arguments.amount),
+                                  ),
+                                ),
+                              ),
+                              const TextBodyM(
+                                "Yeay! Transaksi berhasil.  🎉",
+                                color: Color(0xFF656F77),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 16,
+                              ),
+                              decoration: BoxDecoration(
+                                color: TColors.neutralLightLight,
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TextReceipt("No. Order"),
+                                      TextReceipt(
+                                        arguments.no.toString(),
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TextReceipt("Tanggal"),
+                                      TextReceipt(
+                                        TFormatter.orderDate(
+                                            arguments.createdAt),
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TextReceipt("Pembayaran"),
+                                      TextReceipt(
+                                        _getPaymentMethodName(
+                                          arguments.paymentMethod,
+                                        ),
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  const Separator(
+                                    color: TColors.neutralLightDark,
+                                    height: 1,
+                                    dashWidth: 5.0,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TextReceipt("Uang Diterima"),
+                                      TextReceipt(
+                                        TFormatter.formatToRupiah(
+                                          int.parse(arguments.paidAmount),
+                                        ),
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TextReceipt("Total Tagihan"),
+                                      TextReceipt(
+                                        TFormatter.formatToRupiah(
+                                          int.parse(arguments.amount),
+                                        ),
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 12.0),
+                              child: Separator(
+                                color: TColors.neutralLightDark,
+                                height: 1,
+                                dashWidth: 5.0,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 16),
+                              decoration: BoxDecoration(
+                                color: TColors.neutralLightLight,
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const TextReceipt("Kembalian"),
+                                  TextReceipt(
+                                    TFormatter.formatToRupiah(int.parse(
+                                      arguments.change,
+                                    )),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        child: TextButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                              shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(12)))),
+                          child: const TextActionL(
+                            "Download Struk",
+                            color: TColors.primary,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      margin: const EdgeInsets.only(top: 32, bottom: 28),
-                      child: Center(
-                        child: Image.asset(
-                          TImages.successConfirmation,
-                          width: 276,
-                          height: 200,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 32),
-                      margin: const EdgeInsets.only(bottom: 20),
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(bottom: 8),
-                              child: TextHeading1(
-                                TFormatter.formatToRupiah(
-                                  20000,
+                      margin: const EdgeInsets.only(bottom: 12),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: SizedBox(
+                              height: 48,
+                              child: OutlinedButton(
+                                onPressed: () {},
+                                style: const ButtonStyle(
+                                  padding: WidgetStatePropertyAll(
+                                    EdgeInsets.symmetric(
+                                      horizontal: 0,
+                                    ),
+                                  ),
+                                ),
+                                child: const TextActionL(
+                                  "Bagikan Struk",
+                                  color: TColors.primary,
                                 ),
                               ),
                             ),
-                            const TextBodyM(
-                              "Yeay! Transaksi berhasil.  🎉",
-                              color: Color(0xFF656F77),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 32),
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 16,
-                            ),
-                            decoration: BoxDecoration(
-                              color: TColors.neutralLightLight,
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const TextReceipt("No. Order"),
-                                    TextReceipt(
-                                      "#2563",
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const TextReceipt("Tanggal"),
-                                    TextReceipt(
-                                      "28 Agu 2024 - 20:18",
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const TextReceipt("Pembayaran"),
-                                    TextReceipt(
-                                      "Cash (Tunai)",
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                const Separator(
-                                  color: TColors.neutralLightDark,
-                                  height: 1,
-                                  dashWidth: 5.0,
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const TextReceipt("Uang Diterima"),
-                                    TextReceipt(
-                                      TFormatter.formatToRupiah(50000),
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const TextReceipt("Total Tagihan"),
-                                    TextReceipt(
-                                      TFormatter.formatToRupiah(20000),
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.0),
-                            child: Separator(
-                              color: TColors.neutralLightDark,
-                              height: 1,
-                              dashWidth: 5.0,
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 16),
-                            decoration: BoxDecoration(
-                              color: TColors.neutralLightLight,
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const TextReceipt("Kembalian"),
-                                TextReceipt(
-                                  TFormatter.formatToRupiah(30000),
-                                  fontWeight: FontWeight.w600,
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: SizedBox(
+                              height: 48,
+                              child: OutlinedButton(
+                                onPressed: () {},
+                                child: const TextActionL(
+                                  "Cetak Struk",
+                                  color: TColors.primary,
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
-                      padding: EdgeInsets.symmetric(horizontal: 32),
-                      child: TextButton(
-                        onPressed: () {},
-                        child: TextActionL(
-                          "Download Struk",
-                          color: TColors.primary,
+                      height: 48,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const TextActionL(
+                          "Buat Order Baru",
+                          color: TColors.neutralLightLightest,
                         ),
-                        style: ButtonStyle(
-                            shape: WidgetStatePropertyAll(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)))),
                       ),
                     )
                   ],
                 ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(bottom: 12),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: 48,
-                            child: OutlinedButton(
-                              onPressed: () {},
-                              child: const TextActionL(
-                                "Bagikan Struk",
-                                color: TColors.primary,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: SizedBox(
-                            height: 48,
-                            child: OutlinedButton(
-                              onPressed: () {},
-                              child: const TextActionL(
-                                "Cetak Struk",
-                                color: TColors.primary,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const TextActionL(
-                        "Buat Order Baru",
-                        color: TColors.neutralLightLightest,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

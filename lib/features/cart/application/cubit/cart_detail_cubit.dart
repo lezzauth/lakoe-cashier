@@ -36,26 +36,57 @@ class CartDetailCubit extends Cubit<CartDetailState> {
     }
   }
 
+  SaveOrderDto _cartsToSaveOrderDto(
+      {required List<CartModel> carts, required String outletId}) {
+    return SaveOrderDto(
+      outletId: outletId,
+      items: carts
+          .map(
+            (cart) => OrderItemDto(
+                quantity: cart.quantity, productId: cart.product.id),
+          )
+          .toList(),
+    );
+  }
+
   Future<void> saveOrder({
     required List<CartModel> carts,
     required String outletId,
   }) async {
     try {
       emit(CartDetailActionInProgress());
-      await cashierRepository.saveOrder(SaveOrderDto(
-        outletId: outletId,
-        items: carts
-            .map(
-              (cart) => OrderItemDto(
-                  quantity: cart.quantity, productId: cart.product.id),
-            )
-            .toList(),
-      ));
+      await cashierRepository
+          .saveOrder(_cartsToSaveOrderDto(carts: carts, outletId: outletId));
       emit(CartDetailActionSuccess());
     } catch (e, stackTrace) {
       log("saveOrder err: ${e.toString()}",
           name: "CartDetailCubit.saveOrder", stackTrace: stackTrace);
       emit(CartDetailActionFailure(e.toString()));
+    }
+  }
+
+  Future<void> saveAndCompleteOrder({
+    required List<CartModel> carts,
+    required String outletId,
+    required int paidAmount,
+    required int change,
+    required String paymentMethod,
+  }) async {
+    try {
+      emit(CartDetailActionInProgress());
+      final response = await cashierRepository.saveAndCompleteOrder(
+        _cartsToSaveOrderDto(carts: carts, outletId: outletId),
+        CompleteOrderDto(
+          paymentMethod: paymentMethod,
+          paidAmount: paidAmount,
+          change: change,
+        ),
+      );
+      emit(CartDetailCompleteActionSuccess(response: response));
+    } catch (e, stackTrace) {
+      log("saveAndCompleteOrder err: ${e.toString()}",
+          name: "CartDetailCubit.saveAndCompleteOrder", stackTrace: stackTrace);
+      emit(CartDetailCompleteActionFailure(e.toString()));
     }
   }
 }

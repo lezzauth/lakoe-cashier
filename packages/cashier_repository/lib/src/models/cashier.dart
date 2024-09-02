@@ -1,3 +1,4 @@
+import 'package:customer_repository/customer_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'cashier.g.dart';
@@ -140,6 +141,8 @@ class OrderItemResponse with _$OrderItemResponse {
     required String customerType,
     required String type,
     required String source,
+    CustomerModel? customer,
+    Object? table,
   }) = _OrderItemResponse;
 
   factory OrderItemResponse.fromJson(Map<String, Object?> json) =>
@@ -154,4 +157,25 @@ class RegenerateCashierTokenResponse with _$RegenerateCashierTokenResponse {
 
   factory RegenerateCashierTokenResponse.fromJson(Map<String, Object?> json) =>
       _$RegenerateCashierTokenResponseFromJson(json);
+}
+
+@freezed
+class CompleteOrderResponse with _$CompleteOrderResponse {
+  const factory CompleteOrderResponse({
+    required String id,
+    required int no,
+    required String paymentMethod,
+    required String status,
+    required String paidAmount,
+    required String paidFrom,
+    required String amount,
+    required String change,
+    required String orderId,
+    required String outletId,
+    required String createdAt,
+    required String updatedAt,
+  }) = _CompleteOrderResponse;
+
+  factory CompleteOrderResponse.fromJson(Map<String, Object?> json) =>
+      _$CompleteOrderResponseFromJson(json);
 }

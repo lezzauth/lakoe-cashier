@@ -10,7 +10,9 @@ import 'package:point_of_sales_cashier/features/payments/common/widgets/select_p
 import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
 
 class SelectPaymentMethod extends StatefulWidget {
-  const SelectPaymentMethod({super.key});
+  final int amount;
+
+  const SelectPaymentMethod({super.key, required this.amount});
 
   @override
   State<SelectPaymentMethod> createState() => _SelectPaymentMethodState();
@@ -51,7 +53,9 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
               ),
             ),
             switch (paymentMethod) {
-              "cash" => CashPaymentContent(),
+              "cash" => CashPaymentContent(
+                  amount: widget.amount,
+                ),
               "qris" => QrisPaymentContent(),
               "debit" => DebitPaymentContent(),
               "bank_transfer" => BankTransferPaymentContent(),

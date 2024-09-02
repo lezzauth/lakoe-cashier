@@ -7,6 +7,14 @@ class TFormatter {
             locale: "id_ID", symbol: "Rp", decimalDigits: 0)
         .format(amount);
   }
+
+  static String orderDate(String isoDate) {
+    DateTime dateTime = DateTime.parse(isoDate).toLocal();
+
+    String formattedDate =
+        DateFormat("dd MMM yyyy - HH:mm", "id_ID").format(dateTime);
+    return formattedDate;
+  }
 }
 
 class CreditCardFormatter extends TextInputFormatter {

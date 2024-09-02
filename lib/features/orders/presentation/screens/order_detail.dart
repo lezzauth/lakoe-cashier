@@ -43,7 +43,9 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         showDragHandle: true,
         isScrollControlled: true,
         builder: (context) {
-          return const SelectPaymentMethod();
+          return SelectPaymentMethod(
+            amount: 0,
+          );
         },
       );
     }

@@ -27,6 +27,8 @@ import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/cards/card_order.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/summary/cart_summary.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_cubit.dart';
+import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
+import 'package:point_of_sales_cashier/features/payments/data/models/payment_method_return_model.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -139,12 +141,54 @@ class _CartState extends State<Cart> {
       );
     }
 
+    Future<void> onCashPaid(CashPaymentMethodReturn data) async {
+      print('onCashPaid');
+      AuthState authState = context.read<AuthCubit>().state;
+      if (authState is! AuthReady) return;
+
+      CartState cartState = context.read<CartCubit>().state;
+
+      await context.read<CartDetailCubit>().saveAndCompleteOrder(
+            carts: cartState.carts,
+            outletId: authState.outletId,
+            paidAmount: data.paidAmount,
+            change: data.change,
+            paymentMethod: "CASH",
+          );
+    }
+
+    Future<void> onCompleteOrder(int amount) async {
+      print('onCompleteOrder');
+      final response = await showModalBottomSheet<PaymentMethodReturnModel>(
+        context: context,
+        showDragHandle: true,
+        isScrollControlled: true,
+        builder: (context) {
+          return SelectPaymentMethod(
+            amount: amount,
+          );
+        },
+      );
+
+      if (response is CashPaymentMethodReturn) {
+        await onCashPaid(response);
+      }
+    }
+
     return BlocListener<CartDetailCubit, CartDetailState>(
       listener: (context, state) {
         if (state is CartDetailActionSuccess) {
           context.read<CartCubit>().reset();
           context.read<OrderCubit>().refetch();
-          Navigator.pop(context);
+        }
+
+        if (state is CartDetailCompleteActionSuccess) {
+          log('CartDetailCompleteActionSuccess');
+          Navigator.popAndPushNamed(
+            context,
+            "/payments/success_confirmation",
+            arguments: state.response,
+          );
         }
       },
       child: Column(
@@ -152,7 +196,6 @@ class _CartState extends State<Cart> {
         children: [
           Expanded(
             child: CustomScrollView(
-              // mainAxisSize: MainAxisSize.min,
               slivers: [
                 SliverToBoxAdapter(
                   child: Container(
@@ -212,6 +255,10 @@ class _CartState extends State<Cart> {
                       BlocListener<CartCubit, CartState>(
                     listener: (context, state) {
                       if (state.carts.isEmpty) {
+                        if (ModalRoute.of(context)!.settings.name != "/carts") {
+                          return;
+                        }
+
                         Navigator.pop(context);
                         return;
                       }
@@ -285,7 +332,7 @@ class _CartState extends State<Cart> {
                             previewOrderPrice: previewOrderPrice,
                           ),
                         CartDetailLoadFailure(:final error) => Container(
-                            margin: EdgeInsets.symmetric(vertical: 12),
+                            margin: const EdgeInsets.symmetric(vertical: 12),
                             child: Center(
                               child: TextBodyS(
                                 error,
@@ -294,8 +341,8 @@ class _CartState extends State<Cart> {
                             ),
                           ),
                         _ => Container(
-                            margin: EdgeInsets.symmetric(vertical: 12),
-                            child: Center(
+                            margin: const EdgeInsets.symmetric(vertical: 12),
+                            child: const Center(
                               child: CircularProgressIndicator(),
                             ),
                           ),
@@ -350,7 +397,12 @@ class _CartState extends State<Cart> {
                       child: ElevatedButton(
                         onPressed: cartState is CartDetailActionInProgress
                             ? null
-                            : () {},
+                            : () {
+                                if (cartState is CartDetailLoadSuccess) {
+                                  onCompleteOrder(int.parse(
+                                      cartState.previewOrderPrice.total));
+                                }
+                              },
                         child: cartState is CartDetailActionInProgress
                             ? const SizedBox(
                                 height: 16,

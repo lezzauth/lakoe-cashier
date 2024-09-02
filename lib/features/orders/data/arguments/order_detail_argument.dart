@@ -9,6 +9,6 @@ class OrderDetailArgument {
     required this.id,
     this.type = "outlet",
     this.orderOnlineStatus = "new",
-    this.orderType = "dine_in",
+    this.orderType = "DINEIN",
   });
 }

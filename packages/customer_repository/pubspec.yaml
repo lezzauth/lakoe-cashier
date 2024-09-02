@@ -1,14 +1,10 @@
-name: cashier_repository
-description: Dart package which manages the owner domain.
+name: customer_repository
+description: Dart package which manages the customer domain.
 publish_to: none
 
 environment:
   sdk: ">=3.4.4 <4.0.0"
 dependencies:
-  # repositories
-  customer_repository:
-    path: ../customer_repository
-
   # providers
   token_provider:
     path: ../token_provider

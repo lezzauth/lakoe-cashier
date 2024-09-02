@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pinput/pinput.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/ghost_order_type_tag.dart';
@@ -15,13 +16,21 @@ class OrderListItem extends StatelessWidget {
   final String type;
   final bool isPaid;
   final Function()? onTap;
+  final String customerName;
+  final String tableName;
+  final String no;
+  final String price;
 
   const OrderListItem({
     super.key,
     this.isWithQR = false,
-    this.type = "dine_in",
+    this.type = "DINEIN",
     this.isPaid = false,
     this.onTap,
+    this.customerName = "",
+    this.tableName = "",
+    this.no = "",
+    required this.price,
   });
 
   @override
@@ -65,6 +74,8 @@ class OrderListItem extends StatelessWidget {
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(bottom: 12),
+                                constraints:
+                                    const BoxConstraints(maxWidth: 150),
                                 child: RichText(
                                   text: TextSpan(
                                     style: GoogleFonts.inter(
@@ -72,7 +83,7 @@ class OrderListItem extends StatelessWidget {
                                       color: TColors.neutralDarkDarkest,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                    text: "Akbar",
+                                    text: customerName,
                                     children: [
                                       TextSpan(
                                         style: GoogleFonts.inter(
@@ -80,10 +91,14 @@ class OrderListItem extends StatelessWidget {
                                           color: TColors.neutralDarkLight,
                                           fontWeight: FontWeight.w400,
                                         ),
-                                        text: " Order #2938",
+                                        text:
+                                            " Order #${no.substring(no.length - 4)}",
                                       ),
                                     ],
                                   ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  textAlign: TextAlign.start,
                                 ),
                               ),
                               Wrap(
@@ -104,7 +119,7 @@ class OrderListItem extends StatelessWidget {
                                       color: TColors.neutralDarkLight,
                                     ),
                                   TextHeading5(
-                                    "T-10 (Luar)",
+                                    tableName.isEmpty ? "-" : tableName,
                                     color: TColors.neutralDarkLight,
                                   ),
                                 ],
@@ -134,7 +149,7 @@ class OrderListItem extends StatelessWidget {
                               children: [
                                 TextSpan(
                                   text: TFormatter.formatToRupiah(
-                                    10000,
+                                    int.parse(price),
                                   ),
                                   style: GoogleFonts.inter(
                                     fontSize: TSizes.fontSizeBodyM,
