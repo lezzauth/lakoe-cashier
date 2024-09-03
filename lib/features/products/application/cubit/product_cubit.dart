@@ -27,11 +27,28 @@ class ProductCubit extends Cubit<ProductState> {
       emit(ProductActionInProgress());
       await productRepository.create(images, dto);
       emit(ProductActionSuccess());
-      if (currentState is ProductLoadSuccess) {
-        await findAll(FindAllProductDto(outletId: currentState.dto.outletId));
-      }
     } catch (e) {
       ProductActionFailure(e.toString());
+    }
+
+    if (currentState is ProductLoadSuccess) {
+      await findAll(FindAllProductDto(outletId: currentState.dto.outletId));
+    }
+  }
+
+  Future<void> update(String id,
+      {List<File>? images, required UpdateProductDto dto}) async {
+    ProductState currentState = state;
+    try {
+      emit(ProductActionInProgress());
+      await productRepository.update(id, dto: dto, images: images);
+      emit(ProductActionSuccess());
+    } catch (e) {
+      ProductActionFailure(e.toString());
+    }
+
+    if (currentState is ProductLoadSuccess) {
+      await findAll(FindAllProductDto(outletId: currentState.dto.outletId));
     }
   }
 }

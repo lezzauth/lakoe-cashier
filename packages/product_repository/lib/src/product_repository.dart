@@ -8,6 +8,11 @@ import 'package:token_provider/token_provider.dart';
 abstract class ProductRepository {
   Future<List<ProductModel>> findAll(FindAllProductDto dto);
   Future<ProductModel> create(List<File> images, CreateProductDto dto);
+  Future<ProductModel> update(
+    String id, {
+    List<File>? images,
+    required UpdateProductDto dto,
+  });
 }
 
 class ProductRepositoryImpl implements ProductRepository {
@@ -46,6 +51,32 @@ class ProductRepositoryImpl implements ProductRepository {
     }
     final response = await _dio.post(
       _baseURL,
+      data: formData,
+      options: options,
+    );
+    return ProductModel.fromJson(response.data);
+  }
+
+  @override
+  Future<ProductModel> update(
+    String id, {
+    List<File>? images,
+    required UpdateProductDto dto,
+  }) async {
+    final Options options = await _getOptions();
+
+    FormData formData = FormData.fromMap({...dto.toJson()});
+    if (images != null) {
+      for (var image in images) {
+        formData.files.add(MapEntry(
+            "images",
+            await MultipartFile.fromFile(image.path,
+                filename: image.path.split("/").last)));
+      }
+    }
+
+    final response = await _dio.patch(
+      "$_baseURL/$id",
       data: formData,
       options: options,
     );

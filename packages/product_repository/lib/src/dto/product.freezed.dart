@@ -184,6 +184,7 @@ mixin _$CreateProductDto {
   String get unit => throw _privateConstructorUsedError;
   String get outletId => throw _privateConstructorUsedError;
   String? get sku => throw _privateConstructorUsedError;
+  int? get stock => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -205,7 +206,8 @@ abstract class $CreateProductDtoCopyWith<$Res> {
       int categoryId,
       String unit,
       String outletId,
-      String? sku});
+      String? sku,
+      int? stock});
 }
 
 /// @nodoc
@@ -229,6 +231,7 @@ class _$CreateProductDtoCopyWithImpl<$Res, $Val extends CreateProductDto>
     Object? unit = null,
     Object? outletId = null,
     Object? sku = freezed,
+    Object? stock = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -263,6 +266,10 @@ class _$CreateProductDtoCopyWithImpl<$Res, $Val extends CreateProductDto>
           ? _value.sku
           : sku // ignore: cast_nullable_to_non_nullable
               as String?,
+      stock: freezed == stock
+          ? _value.stock
+          : stock // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -283,7 +290,8 @@ abstract class _$$CreateProductDtoImplCopyWith<$Res>
       int categoryId,
       String unit,
       String outletId,
-      String? sku});
+      String? sku,
+      int? stock});
 }
 
 /// @nodoc
@@ -305,6 +313,7 @@ class __$$CreateProductDtoImplCopyWithImpl<$Res>
     Object? unit = null,
     Object? outletId = null,
     Object? sku = freezed,
+    Object? stock = freezed,
   }) {
     return _then(_$CreateProductDtoImpl(
       name: null == name
@@ -339,6 +348,10 @@ class __$$CreateProductDtoImplCopyWithImpl<$Res>
           ? _value.sku
           : sku // ignore: cast_nullable_to_non_nullable
               as String?,
+      stock: freezed == stock
+          ? _value.stock
+          : stock // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -354,7 +367,8 @@ class _$CreateProductDtoImpl implements _CreateProductDto {
       required this.categoryId,
       required this.unit,
       required this.outletId,
-      this.sku});
+      this.sku,
+      this.stock});
 
   factory _$CreateProductDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateProductDtoImplFromJson(json);
@@ -375,10 +389,12 @@ class _$CreateProductDtoImpl implements _CreateProductDto {
   final String outletId;
   @override
   final String? sku;
+  @override
+  final int? stock;
 
   @override
   String toString() {
-    return 'CreateProductDto(name: $name, description: $description, price: $price, modal: $modal, categoryId: $categoryId, unit: $unit, outletId: $outletId, sku: $sku)';
+    return 'CreateProductDto(name: $name, description: $description, price: $price, modal: $modal, categoryId: $categoryId, unit: $unit, outletId: $outletId, sku: $sku, stock: $stock)';
   }
 
   @override
@@ -396,13 +412,14 @@ class _$CreateProductDtoImpl implements _CreateProductDto {
             (identical(other.unit, unit) || other.unit == unit) &&
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
-            (identical(other.sku, sku) || other.sku == sku));
+            (identical(other.sku, sku) || other.sku == sku) &&
+            (identical(other.stock, stock) || other.stock == stock));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name, description, price, modal,
-      categoryId, unit, outletId, sku);
+      categoryId, unit, outletId, sku, stock);
 
   @JsonKey(ignore: true)
   @override
@@ -428,7 +445,8 @@ abstract class _CreateProductDto implements CreateProductDto {
       required final int categoryId,
       required final String unit,
       required final String outletId,
-      final String? sku}) = _$CreateProductDtoImpl;
+      final String? sku,
+      final int? stock}) = _$CreateProductDtoImpl;
 
   factory _CreateProductDto.fromJson(Map<String, dynamic> json) =
       _$CreateProductDtoImpl.fromJson;
@@ -450,7 +468,314 @@ abstract class _CreateProductDto implements CreateProductDto {
   @override
   String? get sku;
   @override
+  int? get stock;
+  @override
   @JsonKey(ignore: true)
   _$$CreateProductDtoImplCopyWith<_$CreateProductDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+UpdateProductDto _$UpdateProductDtoFromJson(Map<String, dynamic> json) {
+  return _UpdateProductDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UpdateProductDto {
+  String? get name => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  int? get price => throw _privateConstructorUsedError;
+  int? get modal => throw _privateConstructorUsedError;
+  int? get categoryId => throw _privateConstructorUsedError;
+  String? get unit => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
+  String? get sku => throw _privateConstructorUsedError;
+  int? get stock => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UpdateProductDtoCopyWith<UpdateProductDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UpdateProductDtoCopyWith<$Res> {
+  factory $UpdateProductDtoCopyWith(
+          UpdateProductDto value, $Res Function(UpdateProductDto) then) =
+      _$UpdateProductDtoCopyWithImpl<$Res, UpdateProductDto>;
+  @useResult
+  $Res call(
+      {String? name,
+      String? description,
+      int? price,
+      int? modal,
+      int? categoryId,
+      String? unit,
+      String? outletId,
+      String? sku,
+      int? stock});
+}
+
+/// @nodoc
+class _$UpdateProductDtoCopyWithImpl<$Res, $Val extends UpdateProductDto>
+    implements $UpdateProductDtoCopyWith<$Res> {
+  _$UpdateProductDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? description = freezed,
+    Object? price = freezed,
+    Object? modal = freezed,
+    Object? categoryId = freezed,
+    Object? unit = freezed,
+    Object? outletId = freezed,
+    Object? sku = freezed,
+    Object? stock = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int?,
+      modal: freezed == modal
+          ? _value.modal
+          : modal // ignore: cast_nullable_to_non_nullable
+              as int?,
+      categoryId: freezed == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      unit: freezed == unit
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      outletId: freezed == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sku: freezed == sku
+          ? _value.sku
+          : sku // ignore: cast_nullable_to_non_nullable
+              as String?,
+      stock: freezed == stock
+          ? _value.stock
+          : stock // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$UpdateProductDtoImplCopyWith<$Res>
+    implements $UpdateProductDtoCopyWith<$Res> {
+  factory _$$UpdateProductDtoImplCopyWith(_$UpdateProductDtoImpl value,
+          $Res Function(_$UpdateProductDtoImpl) then) =
+      __$$UpdateProductDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String? name,
+      String? description,
+      int? price,
+      int? modal,
+      int? categoryId,
+      String? unit,
+      String? outletId,
+      String? sku,
+      int? stock});
+}
+
+/// @nodoc
+class __$$UpdateProductDtoImplCopyWithImpl<$Res>
+    extends _$UpdateProductDtoCopyWithImpl<$Res, _$UpdateProductDtoImpl>
+    implements _$$UpdateProductDtoImplCopyWith<$Res> {
+  __$$UpdateProductDtoImplCopyWithImpl(_$UpdateProductDtoImpl _value,
+      $Res Function(_$UpdateProductDtoImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? description = freezed,
+    Object? price = freezed,
+    Object? modal = freezed,
+    Object? categoryId = freezed,
+    Object? unit = freezed,
+    Object? outletId = freezed,
+    Object? sku = freezed,
+    Object? stock = freezed,
+  }) {
+    return _then(_$UpdateProductDtoImpl(
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int?,
+      modal: freezed == modal
+          ? _value.modal
+          : modal // ignore: cast_nullable_to_non_nullable
+              as int?,
+      categoryId: freezed == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      unit: freezed == unit
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      outletId: freezed == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sku: freezed == sku
+          ? _value.sku
+          : sku // ignore: cast_nullable_to_non_nullable
+              as String?,
+      stock: freezed == stock
+          ? _value.stock
+          : stock // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UpdateProductDtoImpl implements _UpdateProductDto {
+  const _$UpdateProductDtoImpl(
+      {this.name,
+      this.description,
+      this.price,
+      this.modal,
+      this.categoryId,
+      this.unit,
+      this.outletId,
+      this.sku,
+      this.stock});
+
+  factory _$UpdateProductDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UpdateProductDtoImplFromJson(json);
+
+  @override
+  final String? name;
+  @override
+  final String? description;
+  @override
+  final int? price;
+  @override
+  final int? modal;
+  @override
+  final int? categoryId;
+  @override
+  final String? unit;
+  @override
+  final String? outletId;
+  @override
+  final String? sku;
+  @override
+  final int? stock;
+
+  @override
+  String toString() {
+    return 'UpdateProductDto(name: $name, description: $description, price: $price, modal: $modal, categoryId: $categoryId, unit: $unit, outletId: $outletId, sku: $sku, stock: $stock)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpdateProductDtoImpl &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.modal, modal) || other.modal == modal) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
+            (identical(other.unit, unit) || other.unit == unit) &&
+            (identical(other.outletId, outletId) ||
+                other.outletId == outletId) &&
+            (identical(other.sku, sku) || other.sku == sku) &&
+            (identical(other.stock, stock) || other.stock == stock));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name, description, price, modal,
+      categoryId, unit, outletId, sku, stock);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdateProductDtoImplCopyWith<_$UpdateProductDtoImpl> get copyWith =>
+      __$$UpdateProductDtoImplCopyWithImpl<_$UpdateProductDtoImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UpdateProductDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UpdateProductDto implements UpdateProductDto {
+  const factory _UpdateProductDto(
+      {final String? name,
+      final String? description,
+      final int? price,
+      final int? modal,
+      final int? categoryId,
+      final String? unit,
+      final String? outletId,
+      final String? sku,
+      final int? stock}) = _$UpdateProductDtoImpl;
+
+  factory _UpdateProductDto.fromJson(Map<String, dynamic> json) =
+      _$UpdateProductDtoImpl.fromJson;
+
+  @override
+  String? get name;
+  @override
+  String? get description;
+  @override
+  int? get price;
+  @override
+  int? get modal;
+  @override
+  int? get categoryId;
+  @override
+  String? get unit;
+  @override
+  String? get outletId;
+  @override
+  String? get sku;
+  @override
+  int? get stock;
+  @override
+  @JsonKey(ignore: true)
+  _$$UpdateProductDtoImplCopyWith<_$UpdateProductDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

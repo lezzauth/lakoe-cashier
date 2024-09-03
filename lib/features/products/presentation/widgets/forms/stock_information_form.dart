@@ -16,11 +16,16 @@ class StockInformationForm extends StatefulWidget {
   State<StockInformationForm> createState() => _StockInformationFormState();
 }
 
-class _StockInformationFormState extends State<StockInformationForm> {
+class _StockInformationFormState extends State<StockInformationForm>
+    with AutomaticKeepAliveClientMixin<StockInformationForm> {
   bool isUseStock = false;
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final formKey = widget.formKey;
 
     return FormBuilder(
@@ -97,7 +102,8 @@ class _StockInformationFormState extends State<StockInformationForm> {
                     FormBuilderTextField(
                       name: "stock",
                       decoration: const InputDecoration(
-                          hintText: "Masukan jumlah stok saat ini"),
+                        hintText: "Masukan jumlah stok saat ini",
+                      ),
                       keyboardType: TextInputType.number,
                     ),
                   ],

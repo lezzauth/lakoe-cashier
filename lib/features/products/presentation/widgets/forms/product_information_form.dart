@@ -28,7 +28,8 @@ class ProductInformationForm extends StatefulWidget {
   State<ProductInformationForm> createState() => _ProductInformationFormState();
 }
 
-class _ProductInformationFormState extends State<ProductInformationForm> {
+class _ProductInformationFormState extends State<ProductInformationForm>
+    with AutomaticKeepAliveClientMixin<ProductInformationForm> {
   final CurrencyTextInputFormatter _priceFormatter =
       CurrencyTextInputFormatter.currency(
     locale: "id_ID",
@@ -51,7 +52,11 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
   ];
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<CategoryCubit, CategoryState>(
       builder: (context, state) => switch (state) {
         CategoryLoadSuccess(:final categories) => FormBuilder(
@@ -118,30 +123,26 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                             const FormLabel(
                               "Harga Jual",
                             ),
-                            FormBuilderField<int>(
+                            FormBuilderTextField(
                               name: "price",
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(),
-                                FormBuilderValidators.positiveNumber()
+                                // FormBuilderValidators.positiveNumber()
                               ]),
-                              builder: (field) {
-                                return TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [_priceFormatter],
-                                  decoration: InputDecoration(
-                                    hintText: 'Rp 0',
-                                    errorText: field.errorText,
-                                  ),
-                                  onChanged: (value) {
-                                    field.didChange(
-                                      _priceFormatter
-                                          .getUnformattedValue()
-                                          .toInt(),
-                                    );
-                                  },
-                                  initialValue:
-                                      _priceFormatter.getFormattedValue(),
-                                );
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [_priceFormatter],
+                              decoration: const InputDecoration(
+                                hintText: 'Rp 0',
+                              ),
+                              initialValue: _priceFormatter.format.format(
+                                  widget.initialValue["price"].runtimeType ==
+                                          String
+                                      ? int.parse(widget.initialValue['price'])
+                                      : 0),
+                              valueTransformer: (value) {
+                                return _priceFormatter
+                                    .getUnformattedValue()
+                                    .toInt();
                               },
                             ),
                           ],
@@ -193,26 +194,26 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                               "Harga Modal",
                               optional: true,
                             ),
-                            FormBuilderField<int>(
+                            FormBuilderTextField(
                               name: "modal",
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(),
-                                FormBuilderValidators.positiveNumber()
+                                // FormBuilderValidators.positiveNumber()
                               ]),
-                              builder: (field) {
-                                return TextField(
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [_modalFormatter],
-                                  decoration: InputDecoration(
-                                    hintText: 'Rp 0',
-                                    errorText: field.errorText,
-                                  ),
-                                  onChanged: (value) {
-                                    field.didChange(_priceFormatter
-                                        .getUnformattedValue()
-                                        .toInt());
-                                  },
-                                );
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [_modalFormatter],
+                              decoration: const InputDecoration(
+                                hintText: 'Rp 0',
+                              ),
+                              initialValue: _modalFormatter.format.format(
+                                  widget.initialValue["modal"].runtimeType ==
+                                          String
+                                      ? int.parse(widget.initialValue['modal'])
+                                      : 0),
+                              valueTransformer: (value) {
+                                return _priceFormatter
+                                    .getUnformattedValue()
+                                    .toInt();
                               },
                             ),
                           ],
@@ -261,12 +262,17 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                                 SizedBox(
                                   height: 36,
                                   child: OutlinedButton.icon(
-                                    onPressed: () {},
-                                    label: TextActionM(
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        "/categories/new",
+                                      );
+                                    },
+                                    label: const TextActionM(
                                       "Buat Baru",
                                       color: TColors.primary,
                                     ),
-                                    style: ButtonStyle(
+                                    style: const ButtonStyle(
                                       padding: WidgetStatePropertyAll(
                                         EdgeInsets.symmetric(horizontal: 14.0),
                                       ),
@@ -277,7 +283,7 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                                         ),
                                       ),
                                     ),
-                                    icon: UiIcons(
+                                    icon: const UiIcons(
                                       TIcons.add,
                                       height: 12,
                                       width: 12,
@@ -303,7 +309,8 @@ class _ProductInformationFormState extends State<ProductInformationForm> {
                                     margin: const EdgeInsets.only(bottom: 8),
                                     child: FormBuilderField<String>(
                                       name: "unit",
-                                      initialValue: "pcs",
+                                      initialValue:
+                                          widget.initialValue["unit"] ?? "pcs",
                                       builder: (field) {
                                         return Wrap(
                                           direction: Axis.horizontal,

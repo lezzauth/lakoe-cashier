@@ -135,6 +135,9 @@ class _ProductMasterScreenState extends State<ProductMasterScreen> {
                           itemCount: products.length,
                           itemBuilder: (context, index) {
                             ProductModel product = products[index];
+                            String? image = product.images.elementAtOrNull(0);
+                            image ??= "https://placehold.co/88/png?text=[...]";
+
                             return InkWell(
                               onTap: () {
                                 Navigator.pushNamed(
@@ -160,7 +163,7 @@ class _ProductMasterScreenState extends State<ProductMasterScreen> {
                                   name: product.name,
                                   price: int.parse(product.price),
                                   image: Image.network(
-                                    product.images[0],
+                                    image,
                                     height: 44,
                                     width: 44,
                                     fit: BoxFit.cover,

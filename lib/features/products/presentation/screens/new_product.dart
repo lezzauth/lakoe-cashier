@@ -30,23 +30,12 @@ class _NewProductScreenState extends State<NewProductScreen> {
     AuthState authState = context.read<AuthCubit>().state;
     if (authState is! AuthReady) return;
 
-    if (_productInformationFormKey.currentState?.saveAndValidate() ?? false) {
-      dynamic value = _productInformationFormKey.currentState?.value;
+    bool isProductInformationValid =
+        _productInformationFormKey.currentState?.saveAndValidate() ?? false;
+    bool isStockInformationValid =
+        _stockInformationFormKey.currentState?.saveAndValidate() ?? false;
 
-      ImagePickerValue images = value["images"] as ImagePickerValue;
-      context.read<ProductCubit>().create(
-        [images.file!],
-        CreateProductDto(
-          name: value["name"],
-          price: value["price"],
-          description: value["description"],
-          modal: value["modal"],
-          categoryId: value["categoryId"],
-          unit: value["unit"],
-          outletId: authState.outletId,
-        ),
-      );
-    } else {
+    if (!isProductInformationValid) {
       const snackBar = SnackBar(
         content: Text('Product information validate error'),
         showCloseIcon: true,
@@ -56,7 +45,44 @@ class _NewProductScreenState extends State<NewProductScreen> {
         ..showSnackBar(
           snackBar,
         );
+
+      return;
     }
+
+    if (!isStockInformationValid) {
+      const snackBar = SnackBar(
+        content: Text('Stock information validate error'),
+        showCloseIcon: true,
+      );
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          snackBar,
+        );
+    }
+
+    dynamic productInformationValue =
+        _productInformationFormKey.currentState?.value;
+    dynamic stockInformationValue =
+        _stockInformationFormKey.currentState?.value;
+
+    ImagePickerValue images =
+        productInformationValue["images"] as ImagePickerValue;
+
+    context.read<ProductCubit>().create(
+      [images.file!],
+      CreateProductDto(
+        name: productInformationValue["name"],
+        price: productInformationValue["price"],
+        description: productInformationValue["description"],
+        modal: productInformationValue["modal"],
+        categoryId: productInformationValue["categoryId"],
+        unit: productInformationValue["unit"],
+        outletId: authState.outletId,
+        sku: stockInformationValue["sku"],
+        stock: int.parse(stockInformationValue["stock"] ?? "0"),
+      ),
+    );
   }
 
   @override
@@ -76,7 +102,8 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 title: "Produk Baru",
                 actions: [
                   TextButton(
-                    onPressed: onSubmit,
+                    onPressed:
+                        state is ProductActionInProgress ? null : onSubmit,
                     child: state is ProductActionInProgress
                         ? const SizedBox(
                             height: 16,

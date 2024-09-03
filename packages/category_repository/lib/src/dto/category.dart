@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'category.g.dart';
 part 'category.freezed.dart';
 
 @freezed
@@ -22,4 +23,27 @@ extension QueryStringExtension on FindAllCategoryDto {
             '${entry.key}=${Uri.encodeComponent(entry.value.toString())}')
         .join('&');
   }
+}
+
+@freezed
+class CreateCategoryDto with _$CreateCategoryDto {
+  const factory CreateCategoryDto({
+    required String outletId,
+    required String name,
+    required String icon,
+  }) = _CreateCategoryDto;
+
+  factory CreateCategoryDto.fromJson(Map<String, Object?> json) =>
+      _$CreateCategoryDtoFromJson(json);
+}
+
+@freezed
+class UpdateCategoryDto with _$UpdateCategoryDto {
+  const factory UpdateCategoryDto({
+    String? name,
+    String? icon,
+  }) = _UpdateCategoryDto;
+
+  factory UpdateCategoryDto.fromJson(Map<String, Object?> json) =>
+      _$UpdateCategoryDtoFromJson(json);
 }

@@ -15,8 +15,9 @@ final class CategoryLoadInProgress extends CategoryState {
 
 final class CategoryLoadSuccess extends CategoryState {
   final List<CategoryModel> categories;
+  final FindAllCategoryDto dto;
 
-  CategoryLoadSuccess(this.categories);
+  CategoryLoadSuccess(this.categories, this.dto);
 
   @override
   List<Object?> get props => [categories];
@@ -29,6 +30,11 @@ final class CategoryLoadFailure extends CategoryState {
 
   @override
   List<Object?> get props => [error];
+}
+
+final class CategoryActionInProgress extends CategoryState {
+  @override
+  List<Object?> get props => [];
 }
 
 final class CategoryActionSuccess extends CategoryState {

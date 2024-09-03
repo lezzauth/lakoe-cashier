@@ -40,8 +40,27 @@ class CreateProductDto with _$CreateProductDto {
     required String unit,
     required String outletId,
     String? sku,
+    int? stock,
   }) = _CreateProductDto;
 
   factory CreateProductDto.fromJson(Map<String, Object?> json) =>
       _$CreateProductDtoFromJson(json);
+}
+
+@freezed
+class UpdateProductDto with _$UpdateProductDto {
+  const factory UpdateProductDto({
+    String? name,
+    String? description,
+    int? price,
+    int? modal,
+    int? categoryId,
+    String? unit,
+    String? outletId,
+    String? sku,
+    int? stock,
+  }) = _UpdateProductDto;
+
+  factory UpdateProductDto.fromJson(Map<String, Object?> json) =>
+      _$UpdateProductDtoFromJson(json);
 }

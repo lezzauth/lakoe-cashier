@@ -15,6 +15,9 @@ import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_deta
 import 'package:point_of_sales_cashier/features/cart/presentation/screens/cart.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/categories/application/cubit/category_cubit.dart';
+import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_edit.dart';
+import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_master.dart';
+import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_new.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/master_customer.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/new_customer.dart';
@@ -106,10 +109,17 @@ class App extends StatelessWidget {
           "/products": (context) => const ProductMasterScreen(),
           "/products/new": (context) => const NewProductScreen(),
           "/products/edit": (context) => const ProductEditScreen(),
+
+          // categories
+          "/categories": (context) => const CategoryMasterScreen(),
+          "/categories/new": (context) => const CategoryNewScreen(),
+          "/categories/edit": (context) => const CategoryEditScreen(),
+
           // customers
           "/customers": (context) => const MasterCustomerScreen(),
           "/customers/new": (context) => const NewCustomerScreen(),
           "/customers/detail": (context) => const CustomerDetailScreen(),
+
           // orders
           "/orders": (context) => const OrderMasterScreen(),
           "/orders/detail": (context) => const OrderDetailScreen(),

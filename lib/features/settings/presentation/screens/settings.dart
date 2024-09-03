@@ -17,7 +17,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   List<_SettingItem> productServiceSettingItems = [
     _SettingItem(
       title: "Kategori",
-      routeName: "/",
+      routeName: "/categories",
       iconSrc: TIcons.box,
     ),
     _SettingItem(

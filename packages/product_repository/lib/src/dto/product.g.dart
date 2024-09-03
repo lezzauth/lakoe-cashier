@@ -17,6 +17,7 @@ _$CreateProductDtoImpl _$$CreateProductDtoImplFromJson(
       unit: json['unit'] as String,
       outletId: json['outletId'] as String,
       sku: json['sku'] as String?,
+      stock: (json['stock'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$CreateProductDtoImplToJson(
@@ -30,4 +31,33 @@ Map<String, dynamic> _$$CreateProductDtoImplToJson(
       'unit': instance.unit,
       'outletId': instance.outletId,
       'sku': instance.sku,
+      'stock': instance.stock,
+    };
+
+_$UpdateProductDtoImpl _$$UpdateProductDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$UpdateProductDtoImpl(
+      name: json['name'] as String?,
+      description: json['description'] as String?,
+      price: (json['price'] as num?)?.toInt(),
+      modal: (json['modal'] as num?)?.toInt(),
+      categoryId: (json['categoryId'] as num?)?.toInt(),
+      unit: json['unit'] as String?,
+      outletId: json['outletId'] as String?,
+      sku: json['sku'] as String?,
+      stock: (json['stock'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$$UpdateProductDtoImplToJson(
+        _$UpdateProductDtoImpl instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'description': instance.description,
+      'price': instance.price,
+      'modal': instance.modal,
+      'categoryId': instance.categoryId,
+      'unit': instance.unit,
+      'outletId': instance.outletId,
+      'sku': instance.sku,
+      'stock': instance.stock,
     };

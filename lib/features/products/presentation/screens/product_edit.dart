@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -26,28 +28,16 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
   final _productInformationFormKey = GlobalKey<FormBuilderState>();
   final _stockInformationFormKey = GlobalKey<FormBuilderState>();
 
-  onSubmit() {
+  onSubmit(String productId) {
     AuthState authState = context.read<AuthCubit>().state;
     if (authState is! AuthReady) return;
 
-    if (_productInformationFormKey.currentState?.saveAndValidate() ?? false) {
-      dynamic value = _productInformationFormKey.currentState?.value;
+    bool isProductInformationValid =
+        _productInformationFormKey.currentState?.saveAndValidate() ?? false;
+    bool isStockInformationValid =
+        _stockInformationFormKey.currentState?.saveAndValidate() ?? false;
 
-      ImagePickerValue images = value["images"] as ImagePickerValue;
-
-      context.read<ProductCubit>().create(
-        [images.file!],
-        CreateProductDto(
-          name: value["name"],
-          price: value["price"],
-          description: value["description"],
-          modal: value["modal"],
-          categoryId: value["categoryId"],
-          unit: value["unit"],
-          outletId: authState.outletId,
-        ),
-      );
-    } else {
+    if (!isProductInformationValid) {
       const snackBar = SnackBar(
         content: Text('Product information validate error'),
         showCloseIcon: true,
@@ -57,7 +47,53 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
         ..showSnackBar(
           snackBar,
         );
+
+      return;
     }
+
+    if (!isStockInformationValid) {
+      const snackBar = SnackBar(
+        content: Text('Stock information validate error'),
+        showCloseIcon: true,
+      );
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          snackBar,
+        );
+
+      return;
+    }
+
+    dynamic productInformationValue =
+        _productInformationFormKey.currentState?.value;
+    dynamic stockInformationValue =
+        _stockInformationFormKey.currentState?.value;
+
+    log("productInformationValue: $productInformationValue");
+    log("stockInformationValue: $stockInformationValue");
+
+    ImagePickerValue images =
+        productInformationValue["images"] as ImagePickerValue;
+
+    String? stock = stockInformationValue["stock"];
+    String? sku = stockInformationValue["sku"];
+
+    context.read<ProductCubit>().update(
+          productId,
+          images: images.file != null ? [images.file!] : null,
+          dto: UpdateProductDto(
+            name: productInformationValue["name"],
+            price: productInformationValue["price"],
+            description: productInformationValue["description"],
+            modal: productInformationValue["modal"],
+            categoryId: productInformationValue["categoryId"],
+            unit: productInformationValue["unit"],
+            outletId: authState.outletId,
+            sku: sku,
+            stock: stock != null ? int.parse(stock) : null,
+          ),
+        );
   }
 
   @override
@@ -77,10 +113,10 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
             length: 2,
             child: Scaffold(
               appBar: CustomAppbar(
-                title: "Produk Baru",
+                title: "Ubah Produk",
                 actions: [
                   TextButton(
-                    onPressed: onSubmit,
+                    onPressed: () => onSubmit(arguments.id),
                     child: state is ProductActionInProgress
                         ? const SizedBox(
                             height: 16,
@@ -110,9 +146,9 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                       formKey: _productInformationFormKey,
                       initialValue: {
                         "name": arguments.name,
-                        "price": int.parse(arguments.price),
+                        "price": arguments.price,
                         "description": arguments.description,
-                        "modal": int.parse(arguments.modal),
+                        "modal": arguments.modal,
                         "categoryId": arguments.categoryId,
                         "unit": arguments.unit,
                         "images": ImagePickerValue(url: arguments.images[0])
@@ -123,6 +159,10 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                     padding: const EdgeInsets.only(top: 16.0),
                     child: StockInformationForm(
                       formKey: _stockInformationFormKey,
+                      initialValue: {
+                        "sku": arguments.sku,
+                        "stock": arguments.stock?.toString(),
+                      },
                     ),
                   ),
                 ],
