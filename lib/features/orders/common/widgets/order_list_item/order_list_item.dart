@@ -18,7 +18,7 @@ class OrderListItem extends StatelessWidget {
   final Function()? onTap;
   final String customerName;
   final String tableName;
-  final String no;
+  final int no;
   final String price;
 
   const OrderListItem({
@@ -29,7 +29,7 @@ class OrderListItem extends StatelessWidget {
     this.onTap,
     this.customerName = "",
     this.tableName = "",
-    this.no = "",
+    this.no = 0,
     required this.price,
   });
 
@@ -91,8 +91,7 @@ class OrderListItem extends StatelessWidget {
                                           color: TColors.neutralDarkLight,
                                           fontWeight: FontWeight.w400,
                                         ),
-                                        text:
-                                            " Order #${no.substring(no.length - 4)}",
+                                        text: " Order #$no",
                                       ),
                                     ],
                                   ),

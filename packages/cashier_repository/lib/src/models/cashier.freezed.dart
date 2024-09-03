@@ -1614,7 +1614,7 @@ SaveOrderResponse _$SaveOrderResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SaveOrderResponse {
   String get id => throw _privateConstructorUsedError;
-  String get no => throw _privateConstructorUsedError;
+  int get no => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   String get price => throw _privateConstructorUsedError;
   String? get customerId => throw _privateConstructorUsedError;
@@ -1639,7 +1639,7 @@ abstract class $SaveOrderResponseCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String no,
+      int no,
       String status,
       String price,
       String? customerId,
@@ -1684,7 +1684,7 @@ class _$SaveOrderResponseCopyWithImpl<$Res, $Val extends SaveOrderResponse>
       no: null == no
           ? _value.no
           : no // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -1735,7 +1735,7 @@ abstract class _$$SaveOrderResponseImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      String no,
+      int no,
       String status,
       String price,
       String? customerId,
@@ -1778,7 +1778,7 @@ class __$$SaveOrderResponseImplCopyWithImpl<$Res>
       no: null == no
           ? _value.no
           : no // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -1841,7 +1841,7 @@ class _$SaveOrderResponseImpl implements _SaveOrderResponse {
   @override
   final String id;
   @override
-  final String no;
+  final int no;
   @override
   final String status;
   @override
@@ -1911,7 +1911,7 @@ class _$SaveOrderResponseImpl implements _SaveOrderResponse {
 abstract class _SaveOrderResponse implements SaveOrderResponse {
   const factory _SaveOrderResponse(
       {required final String id,
-      required final String no,
+      required final int no,
       required final String status,
       required final String price,
       final String? customerId,
@@ -1928,7 +1928,7 @@ abstract class _SaveOrderResponse implements SaveOrderResponse {
   @override
   String get id;
   @override
-  String get no;
+  int get no;
   @override
   String get status;
   @override
@@ -1959,7 +1959,7 @@ OrderItemResponse _$OrderItemResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OrderItemResponse {
-  String get no => throw _privateConstructorUsedError;
+  int get no => throw _privateConstructorUsedError;
   String get price => throw _privateConstructorUsedError;
   String get paymentStatus => throw _privateConstructorUsedError;
   String get customerType => throw _privateConstructorUsedError;
@@ -1981,7 +1981,7 @@ abstract class $OrderItemResponseCopyWith<$Res> {
       _$OrderItemResponseCopyWithImpl<$Res, OrderItemResponse>;
   @useResult
   $Res call(
-      {String no,
+      {int no,
       String price,
       String paymentStatus,
       String customerType,
@@ -2019,7 +2019,7 @@ class _$OrderItemResponseCopyWithImpl<$Res, $Val extends OrderItemResponse>
       no: null == no
           ? _value.no
           : no // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
@@ -2070,7 +2070,7 @@ abstract class _$$OrderItemResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String no,
+      {int no,
       String price,
       String paymentStatus,
       String customerType,
@@ -2107,7 +2107,7 @@ class __$$OrderItemResponseImplCopyWithImpl<$Res>
       no: null == no
           ? _value.no
           : no // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
@@ -2154,7 +2154,7 @@ class _$OrderItemResponseImpl implements _OrderItemResponse {
       _$$OrderItemResponseImplFromJson(json);
 
   @override
-  final String no;
+  final int no;
   @override
   final String price;
   @override
@@ -2223,7 +2223,7 @@ class _$OrderItemResponseImpl implements _OrderItemResponse {
 
 abstract class _OrderItemResponse implements OrderItemResponse {
   const factory _OrderItemResponse(
-      {required final String no,
+      {required final int no,
       required final String price,
       required final String paymentStatus,
       required final String customerType,
@@ -2236,7 +2236,7 @@ abstract class _OrderItemResponse implements OrderItemResponse {
       _$OrderItemResponseImpl.fromJson;
 
   @override
-  String get no;
+  int get no;
   @override
   String get price;
   @override

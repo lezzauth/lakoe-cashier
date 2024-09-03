@@ -196,6 +196,7 @@ SaveOrderDto _$SaveOrderDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SaveOrderDto {
   String get outletId => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
   List<OrderItemDto> get items => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -210,7 +211,7 @@ abstract class $SaveOrderDtoCopyWith<$Res> {
           SaveOrderDto value, $Res Function(SaveOrderDto) then) =
       _$SaveOrderDtoCopyWithImpl<$Res, SaveOrderDto>;
   @useResult
-  $Res call({String outletId, List<OrderItemDto> items});
+  $Res call({String outletId, String type, List<OrderItemDto> items});
 }
 
 /// @nodoc
@@ -227,12 +228,17 @@ class _$SaveOrderDtoCopyWithImpl<$Res, $Val extends SaveOrderDto>
   @override
   $Res call({
     Object? outletId = null,
+    Object? type = null,
     Object? items = null,
   }) {
     return _then(_value.copyWith(
       outletId: null == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
               as String,
       items: null == items
           ? _value.items
@@ -250,7 +256,7 @@ abstract class _$$SaveOrderDtoImplCopyWith<$Res>
       __$$SaveOrderDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String outletId, List<OrderItemDto> items});
+  $Res call({String outletId, String type, List<OrderItemDto> items});
 }
 
 /// @nodoc
@@ -265,12 +271,17 @@ class __$$SaveOrderDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? outletId = null,
+    Object? type = null,
     Object? items = null,
   }) {
     return _then(_$SaveOrderDtoImpl(
       outletId: null == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
               as String,
       items: null == items
           ? _value._items
@@ -284,7 +295,9 @@ class __$$SaveOrderDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SaveOrderDtoImpl implements _SaveOrderDto {
   const _$SaveOrderDtoImpl(
-      {required this.outletId, required final List<OrderItemDto> items})
+      {required this.outletId,
+      required this.type,
+      required final List<OrderItemDto> items})
       : _items = items;
 
   factory _$SaveOrderDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -292,6 +305,8 @@ class _$SaveOrderDtoImpl implements _SaveOrderDto {
 
   @override
   final String outletId;
+  @override
+  final String type;
   final List<OrderItemDto> _items;
   @override
   List<OrderItemDto> get items {
@@ -302,7 +317,7 @@ class _$SaveOrderDtoImpl implements _SaveOrderDto {
 
   @override
   String toString() {
-    return 'SaveOrderDto(outletId: $outletId, items: $items)';
+    return 'SaveOrderDto(outletId: $outletId, type: $type, items: $items)';
   }
 
   @override
@@ -312,13 +327,14 @@ class _$SaveOrderDtoImpl implements _SaveOrderDto {
             other is _$SaveOrderDtoImpl &&
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
+            (identical(other.type, type) || other.type == type) &&
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, outletId, const DeepCollectionEquality().hash(_items));
+      runtimeType, outletId, type, const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
   @override
@@ -337,6 +353,7 @@ class _$SaveOrderDtoImpl implements _SaveOrderDto {
 abstract class _SaveOrderDto implements SaveOrderDto {
   const factory _SaveOrderDto(
       {required final String outletId,
+      required final String type,
       required final List<OrderItemDto> items}) = _$SaveOrderDtoImpl;
 
   factory _SaveOrderDto.fromJson(Map<String, dynamic> json) =
@@ -344,6 +361,8 @@ abstract class _SaveOrderDto implements SaveOrderDto {
 
   @override
   String get outletId;
+  @override
+  String get type;
   @override
   List<OrderItemDto> get items;
   @override
@@ -1033,6 +1052,7 @@ PreviewOrderPriceDto _$PreviewOrderPriceDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PreviewOrderPriceDto {
+  String get type => throw _privateConstructorUsedError;
   String get outletId => throw _privateConstructorUsedError;
   List<OrderItemDto> get items => throw _privateConstructorUsedError;
 
@@ -1048,7 +1068,7 @@ abstract class $PreviewOrderPriceDtoCopyWith<$Res> {
           $Res Function(PreviewOrderPriceDto) then) =
       _$PreviewOrderPriceDtoCopyWithImpl<$Res, PreviewOrderPriceDto>;
   @useResult
-  $Res call({String outletId, List<OrderItemDto> items});
+  $Res call({String type, String outletId, List<OrderItemDto> items});
 }
 
 /// @nodoc
@@ -1065,10 +1085,15 @@ class _$PreviewOrderPriceDtoCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? type = null,
     Object? outletId = null,
     Object? items = null,
   }) {
     return _then(_value.copyWith(
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
       outletId: null == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
@@ -1089,7 +1114,7 @@ abstract class _$$PreviewOrderPriceDtoImplCopyWith<$Res>
       __$$PreviewOrderPriceDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String outletId, List<OrderItemDto> items});
+  $Res call({String type, String outletId, List<OrderItemDto> items});
 }
 
 /// @nodoc
@@ -1103,10 +1128,15 @@ class __$$PreviewOrderPriceDtoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? type = null,
     Object? outletId = null,
     Object? items = null,
   }) {
     return _then(_$PreviewOrderPriceDtoImpl(
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
       outletId: null == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
@@ -1123,12 +1153,16 @@ class __$$PreviewOrderPriceDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PreviewOrderPriceDtoImpl implements _PreviewOrderPriceDto {
   const _$PreviewOrderPriceDtoImpl(
-      {required this.outletId, required final List<OrderItemDto> items})
+      {required this.type,
+      required this.outletId,
+      required final List<OrderItemDto> items})
       : _items = items;
 
   factory _$PreviewOrderPriceDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$PreviewOrderPriceDtoImplFromJson(json);
 
+  @override
+  final String type;
   @override
   final String outletId;
   final List<OrderItemDto> _items;
@@ -1141,7 +1175,7 @@ class _$PreviewOrderPriceDtoImpl implements _PreviewOrderPriceDto {
 
   @override
   String toString() {
-    return 'PreviewOrderPriceDto(outletId: $outletId, items: $items)';
+    return 'PreviewOrderPriceDto(type: $type, outletId: $outletId, items: $items)';
   }
 
   @override
@@ -1149,6 +1183,7 @@ class _$PreviewOrderPriceDtoImpl implements _PreviewOrderPriceDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PreviewOrderPriceDtoImpl &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
             const DeepCollectionEquality().equals(other._items, _items));
@@ -1157,7 +1192,7 @@ class _$PreviewOrderPriceDtoImpl implements _PreviewOrderPriceDto {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, outletId, const DeepCollectionEquality().hash(_items));
+      runtimeType, type, outletId, const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
   @override
@@ -1177,12 +1212,15 @@ class _$PreviewOrderPriceDtoImpl implements _PreviewOrderPriceDto {
 
 abstract class _PreviewOrderPriceDto implements PreviewOrderPriceDto {
   const factory _PreviewOrderPriceDto(
-      {required final String outletId,
+      {required final String type,
+      required final String outletId,
       required final List<OrderItemDto> items}) = _$PreviewOrderPriceDtoImpl;
 
   factory _PreviewOrderPriceDto.fromJson(Map<String, dynamic> json) =
       _$PreviewOrderPriceDtoImpl.fromJson;
 
+  @override
+  String get type;
   @override
   String get outletId;
   @override

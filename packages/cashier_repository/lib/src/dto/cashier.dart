@@ -21,6 +21,7 @@ class OrderItemDto with _$OrderItemDto {
 class SaveOrderDto with _$SaveOrderDto {
   const factory SaveOrderDto({
     required String outletId,
+    required String type,
     required List<OrderItemDto> items,
   }) = _SaveOrderDto;
 
@@ -82,6 +83,7 @@ class CloseCashierDto with _$CloseCashierDto {
 @freezed
 class PreviewOrderPriceDto with _$PreviewOrderPriceDto {
   const factory PreviewOrderPriceDto({
+    required String type,
     required String outletId,
     required List<OrderItemDto> items,
   }) = _PreviewOrderPriceDto;

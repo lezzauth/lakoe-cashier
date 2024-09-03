@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/contact/contact_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/counter.dart';
@@ -17,6 +18,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
@@ -81,6 +83,12 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   Timer? _debounce;
+  String _type = "DINEIN";
+
+  final List<LabelValue> _orderType = [
+    const LabelValue(label: "DineIn", value: "DINEIN"),
+    const LabelValue(label: "Dibungkus", value: "TAKEAWAY"),
+  ];
 
   void _onCartQuantityChanged(ProductModel product, int quantity) {
     context.read<CartCubit>().updateQuantity(product, quantity);
@@ -90,93 +98,110 @@ class _CartState extends State<Cart> {
     context.read<CartCubit>().updateNotes(product, notes);
   }
 
-  void _onCartSaved() {
+  Future<void> _onCartSaved() async {
     AuthState authState = context.read<AuthCubit>().state;
     if (authState is AuthReady) {
       CartState cartState = context.read<CartCubit>().state;
-      context
-          .read<CartDetailCubit>()
-          .saveOrder(carts: cartState.carts, outletId: authState.outletId);
+
+      await context.read<CartDetailCubit>().saveOrder(
+            carts: cartState.carts,
+            outletId: authState.outletId,
+            type: _type,
+          );
     }
+  }
+
+  Future<void> _onPreviewOrderPrice() async {
+    AuthState authState = context.read<AuthCubit>().state;
+    if (authState is AuthReady) {
+      CartState cartState = context.read<CartCubit>().state;
+      await context.read<CartDetailCubit>().previewOrderPrice(
+            type: _type,
+            carts: cartState.carts,
+            outletId: authState.outletId,
+          );
+    }
+  }
+
+  onCustomerOpened() {
+    return showModalBottomSheet(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (context) {
+        return Padding(
+          padding: TDeviceUtils.getViewInsets(context),
+          child: const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: SearchField(
+                  hintText: "Cari pelanggan...",
+                ),
+              ),
+              Expanded(
+                child: ContactList(),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> onCashPaid(CashPaymentMethodReturn data) async {
+    AuthState authState = context.read<AuthCubit>().state;
+    if (authState is! AuthReady) return;
+
+    CartState cartState = context.read<CartCubit>().state;
+
+    await context.read<CartDetailCubit>().saveAndCompleteOrder(
+          carts: cartState.carts,
+          outletId: authState.outletId,
+          paidAmount: data.paidAmount,
+          change: data.change,
+          paymentMethod: "CASH",
+          type: _type,
+        );
+  }
+
+  Future<void> onCompleteOrder(int amount) async {
+    final response = await showModalBottomSheet<PaymentMethodReturnModel>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (context) {
+        return SelectPaymentMethod(
+          amount: amount,
+        );
+      },
+    );
+
+    if (response is CashPaymentMethodReturn) {
+      await onCashPaid(response);
+    }
+  }
+
+  void _onOrderTypeChanged(String type) {
+    setState(() {
+      _type = type;
+    });
+    _onPreviewOrderPrice();
   }
 
   @override
   void initState() {
     super.initState();
-    AuthState authState = context.read<AuthCubit>().state;
-    if (authState is AuthReady) {
-      CartState cartState = context.read<CartCubit>().state;
-      context.read<CartDetailCubit>().previewOrderPrice(
-          carts: cartState.carts, outletId: authState.outletId);
-    }
+    _onPreviewOrderPrice();
   }
 
   @override
   Widget build(BuildContext context) {
-    onCustomerOpened() {
-      return showModalBottomSheet(
-        context: context,
-        showDragHandle: true,
-        isScrollControlled: true,
-        useSafeArea: true,
-        builder: (context) {
-          return Padding(
-            padding: TDeviceUtils.getViewInsets(context),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: SearchField(
-                    hintText: "Cari pelanggan...",
-                  ),
-                ),
-                Expanded(
-                  child: ContactList(),
-                )
-              ],
-            ),
-          );
-        },
-      );
-    }
-
-    Future<void> onCashPaid(CashPaymentMethodReturn data) async {
-      print('onCashPaid');
-      AuthState authState = context.read<AuthCubit>().state;
-      if (authState is! AuthReady) return;
-
-      CartState cartState = context.read<CartCubit>().state;
-
-      await context.read<CartDetailCubit>().saveAndCompleteOrder(
-            carts: cartState.carts,
-            outletId: authState.outletId,
-            paidAmount: data.paidAmount,
-            change: data.change,
-            paymentMethod: "CASH",
-          );
-    }
-
-    Future<void> onCompleteOrder(int amount) async {
-      print('onCompleteOrder');
-      final response = await showModalBottomSheet<PaymentMethodReturnModel>(
-        context: context,
-        showDragHandle: true,
-        isScrollControlled: true,
-        builder: (context) {
-          return SelectPaymentMethod(
-            amount: amount,
-          );
-        },
-      );
-
-      if (response is CashPaymentMethodReturn) {
-        await onCashPaid(response);
-      }
-    }
-
     return BlocListener<CartDetailCubit, CartDetailState>(
       listener: (context, state) {
+        log('CartDetailStateListener: $state');
         if (state is CartDetailActionSuccess) {
           context.read<CartCubit>().reset();
           context.read<OrderCubit>().refetch();
@@ -236,6 +261,36 @@ class _CartState extends State<Cart> {
                   ),
                 ),
                 SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const TextHeading3("Jenis Pesanan"),
+                      SingleChildScrollView(
+                        child: Wrap(
+                          direction: Axis.horizontal,
+                          spacing: 8,
+                          children: _orderType.map((orderType) {
+                            bool selected = _type == orderType.value;
+
+                            return InputChip(
+                              label: !selected
+                                  ? TextBodyS(orderType.label)
+                                  : TextHeading5(
+                                      orderType.label,
+                                      color: TColors.primary,
+                                    ),
+                              selected: selected,
+                              onSelected: (value) {
+                                _onOrderTypeChanged(orderType.value);
+                              },
+                            );
+                          }).toList(),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SliverToBoxAdapter(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -250,76 +305,66 @@ class _CartState extends State<Cart> {
                     ],
                   ),
                 ),
-                BlocBuilder<AuthCubit, AuthState>(
-                  builder: (context, authState) =>
-                      BlocListener<CartCubit, CartState>(
-                    listener: (context, state) {
-                      if (state.carts.isEmpty) {
-                        if (ModalRoute.of(context)!.settings.name != "/carts") {
-                          return;
-                        }
-
-                        Navigator.pop(context);
+                BlocListener<CartCubit, CartState>(
+                  listener: (context, state) {
+                    if (state.carts.isEmpty) {
+                      if (ModalRoute.of(context)!.settings.name != "/cart") {
                         return;
                       }
+                      // TODO: cari cara buat nge handle carts kosong
+                      // Navigator.pop(context);
+                      return;
+                    }
 
-                      if (authState is AuthReady) {
-                        if (_debounce?.isActive ?? false) _debounce?.cancel();
-                        _debounce =
-                            Timer(const Duration(milliseconds: 500), () {
-                          context.read<CartDetailCubit>().previewOrderPrice(
-                                carts: state.carts,
-                                outletId: authState.outletId,
-                              );
-                        });
-                      }
-                    },
-                    child: BlocBuilder<CartCubit, CartState>(
-                      builder: (context, cartState) {
-                        return SliverList.builder(
-                          itemCount: cartState.carts.length,
-                          itemBuilder: (context, index) {
-                            CartModel cart = cartState.carts[index];
-                            return Container(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 12.0),
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: TColors.neutralLightMedium,
-                                    width: 1,
-                                  ),
+                    if (_debounce?.isActive ?? false) _debounce?.cancel();
+                    _debounce = Timer(const Duration(milliseconds: 500), () {
+                      _onPreviewOrderPrice();
+                    });
+                  },
+                  child: BlocBuilder<CartCubit, CartState>(
+                    builder: (context, cartState) {
+                      return SliverList.builder(
+                        itemCount: cartState.carts.length,
+                        itemBuilder: (context, index) {
+                          CartModel cart = cartState.carts[index];
+                          return Container(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: TColors.neutralLightMedium,
+                                  width: 1,
                                 ),
                               ),
-                              child: BaseProductItem(
-                                name: cart.product.name,
-                                price: int.parse(cart.product.price),
-                                image: Image.network(
-                                  cart.product.images[0],
-                                  height: 44,
-                                  width: 44,
-                                  fit: BoxFit.cover,
-                                ),
-                                counter: Counter(
-                                  value: cart.quantity,
-                                  onChanged: (quantity) {
-                                    _onCartQuantityChanged(
-                                        cart.product, quantity);
-                                  },
-                                ),
+                            ),
+                            child: BaseProductItem(
+                              name: cart.product.name,
+                              price: int.parse(cart.product.price),
+                              image: Image.network(
+                                cart.product.images[0],
+                                height: 44,
+                                width: 44,
+                                fit: BoxFit.cover,
+                              ),
+                              counter: Counter(
+                                value: cart.quantity,
+                                onChanged: (quantity) {
+                                  _onCartQuantityChanged(
+                                      cart.product, quantity);
+                                },
+                              ),
+                              notes: cart.notes ?? "",
+                              noteAction: ProductNoteAction(
                                 notes: cart.notes ?? "",
-                                noteAction: ProductNoteAction(
-                                  notes: cart.notes ?? "",
-                                  onChanged: (notes) {
-                                    _onCartNotesChanged(cart.product, notes);
-                                  },
-                                ),
+                                onChanged: (notes) {
+                                  _onCartNotesChanged(cart.product, notes);
+                                },
                               ),
-                            );
-                          },
-                        );
-                      },
-                    ),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
                 SliverToBoxAdapter(

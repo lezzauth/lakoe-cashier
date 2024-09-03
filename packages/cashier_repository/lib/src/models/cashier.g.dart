@@ -151,7 +151,7 @@ _$SaveOrderResponseImpl _$$SaveOrderResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$SaveOrderResponseImpl(
       id: json['id'] as String,
-      no: json['no'] as String,
+      no: (json['no'] as num).toInt(),
       status: json['status'] as String,
       price: json['price'] as String,
       customerId: json['customerId'] as String?,
@@ -182,7 +182,7 @@ Map<String, dynamic> _$$SaveOrderResponseImplToJson(
 _$OrderItemResponseImpl _$$OrderItemResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$OrderItemResponseImpl(
-      no: json['no'] as String,
+      no: (json['no'] as num).toInt(),
       price: json['price'] as String,
       paymentStatus: json['paymentStatus'] as String,
       customerType: json['customerType'] as String,

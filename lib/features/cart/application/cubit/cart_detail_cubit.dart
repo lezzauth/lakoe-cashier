@@ -14,12 +14,14 @@ class CartDetailCubit extends Cubit<CartDetailState> {
   Future<void> previewOrderPrice({
     required List<CartModel> carts,
     required String outletId,
+    required String type,
   }) async {
     try {
       emit(CartDetailLoadInProgress());
       final previewOrderPrice = await cashierRepository.previewOrderPrice(
         PreviewOrderPriceDto(
           outletId: outletId,
+          type: type,
           items: carts
               .map(
                 (cart) => OrderItemDto(
@@ -36,10 +38,14 @@ class CartDetailCubit extends Cubit<CartDetailState> {
     }
   }
 
-  SaveOrderDto _cartsToSaveOrderDto(
-      {required List<CartModel> carts, required String outletId}) {
+  SaveOrderDto _cartsToSaveOrderDto({
+    required List<CartModel> carts,
+    required String outletId,
+    required String type,
+  }) {
     return SaveOrderDto(
       outletId: outletId,
+      type: type,
       items: carts
           .map(
             (cart) => OrderItemDto(
@@ -52,11 +58,15 @@ class CartDetailCubit extends Cubit<CartDetailState> {
   Future<void> saveOrder({
     required List<CartModel> carts,
     required String outletId,
+    required String type,
   }) async {
     try {
       emit(CartDetailActionInProgress());
-      await cashierRepository
-          .saveOrder(_cartsToSaveOrderDto(carts: carts, outletId: outletId));
+      await cashierRepository.saveOrder(_cartsToSaveOrderDto(
+        carts: carts,
+        outletId: outletId,
+        type: type,
+      ));
       emit(CartDetailActionSuccess());
     } catch (e, stackTrace) {
       log("saveOrder err: ${e.toString()}",
@@ -71,11 +81,16 @@ class CartDetailCubit extends Cubit<CartDetailState> {
     required int paidAmount,
     required int change,
     required String paymentMethod,
+    required String type,
   }) async {
     try {
       emit(CartDetailActionInProgress());
       final response = await cashierRepository.saveAndCompleteOrder(
-        _cartsToSaveOrderDto(carts: carts, outletId: outletId),
+        _cartsToSaveOrderDto(
+          carts: carts,
+          outletId: outletId,
+          type: type,
+        ),
         CompleteOrderDto(
           paymentMethod: paymentMethod,
           paidAmount: paidAmount,

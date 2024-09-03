@@ -116,7 +116,7 @@ class PreviewOrderPriceResponse with _$PreviewOrderPriceResponse {
 class SaveOrderResponse with _$SaveOrderResponse {
   const factory SaveOrderResponse({
     required String id,
-    required String no,
+    required int no,
     required String status,
     required String price,
     String? customerId,
@@ -135,7 +135,7 @@ class SaveOrderResponse with _$SaveOrderResponse {
 @freezed
 class OrderItemResponse with _$OrderItemResponse {
   const factory OrderItemResponse({
-    required String no,
+    required int no,
     required String price,
     required String paymentStatus,
     required String customerType,

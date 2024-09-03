@@ -23,6 +23,7 @@ Map<String, dynamic> _$$OrderItemDtoImplToJson(_$OrderItemDtoImpl instance) =>
 _$SaveOrderDtoImpl _$$SaveOrderDtoImplFromJson(Map<String, dynamic> json) =>
     _$SaveOrderDtoImpl(
       outletId: json['outletId'] as String,
+      type: json['type'] as String,
       items: (json['items'] as List<dynamic>)
           .map((e) => OrderItemDto.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -31,6 +32,7 @@ _$SaveOrderDtoImpl _$$SaveOrderDtoImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$SaveOrderDtoImplToJson(_$SaveOrderDtoImpl instance) =>
     <String, dynamic>{
       'outletId': instance.outletId,
+      'type': instance.type,
       'items': instance.items,
     };
 
@@ -96,6 +98,7 @@ Map<String, dynamic> _$$CloseCashierDtoImplToJson(
 _$PreviewOrderPriceDtoImpl _$$PreviewOrderPriceDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$PreviewOrderPriceDtoImpl(
+      type: json['type'] as String,
       outletId: json['outletId'] as String,
       items: (json['items'] as List<dynamic>)
           .map((e) => OrderItemDto.fromJson(e as Map<String, dynamic>))
@@ -105,6 +108,7 @@ _$PreviewOrderPriceDtoImpl _$$PreviewOrderPriceDtoImplFromJson(
 Map<String, dynamic> _$$PreviewOrderPriceDtoImplToJson(
         _$PreviewOrderPriceDtoImpl instance) =>
     <String, dynamic>{
+      'type': instance.type,
       'outletId': instance.outletId,
       'items': instance.items,
     };

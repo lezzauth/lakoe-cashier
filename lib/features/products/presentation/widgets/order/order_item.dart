@@ -7,7 +7,7 @@ import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 
 class OrderItem extends StatelessWidget {
-  final String no;
+  final int no;
   final String customerName;
   final String tableName;
 
