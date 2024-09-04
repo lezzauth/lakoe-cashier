@@ -84,18 +84,6 @@ class _ProductMasterScreenState extends State<ProductMasterScreen> {
           hintText: "Cari produk disini...",
           onChanged: _onSearchChanged,
         ),
-        actions: [
-          const SizedBox(width: 5),
-          IconButton(
-            onPressed: () {},
-            icon: const UiIcons(
-              TIcons.box,
-              height: 20,
-              width: 20,
-              color: TColors.primary,
-            ),
-          )
-        ],
       ),
       body: Scrollbar(
         child: RefreshIndicator(
@@ -115,6 +103,9 @@ class _ProductMasterScreenState extends State<ProductMasterScreen> {
                     });
                     onFetchProducts();
                   },
+                  categories: const [],
+                  errorText: "",
+                  loading: false,
                 ),
               ),
               Expanded(

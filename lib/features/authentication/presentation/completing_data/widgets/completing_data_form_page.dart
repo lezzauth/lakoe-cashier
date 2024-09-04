@@ -48,6 +48,13 @@ class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
     }
   }
 
+  // _onChanged() {
+  //   bool isFormValid = _formKey.currentState?.validate() ?? false;
+  //   setState(() {
+  //     _isFormValid = isFormValid;
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
@@ -84,8 +91,7 @@ class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
               child: ElevatedButton(
-                onPressed:
-                    (_formKey.currentState?.isValid ?? false) ? onSubmit : null,
+                onPressed: onSubmit,
                 child: Text(
                   "Lanjutkan",
                   style: GoogleFonts.inter(),

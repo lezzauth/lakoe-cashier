@@ -6,6 +6,24 @@ part of 'product.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$FindAllProductDtoImpl _$$FindAllProductDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$FindAllProductDtoImpl(
+      outletId: json['outletId'] as String,
+      categoryId: (json['categoryId'] as num?)?.toInt(),
+      name: json['name'] as String?,
+      availability: json['availability'] as String?,
+    );
+
+Map<String, dynamic> _$$FindAllProductDtoImplToJson(
+        _$FindAllProductDtoImpl instance) =>
+    <String, dynamic>{
+      'outletId': instance.outletId,
+      'categoryId': instance.categoryId,
+      'name': instance.name,
+      'availability': instance.availability,
+    };
+
 _$CreateProductDtoImpl _$$CreateProductDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$CreateProductDtoImpl(

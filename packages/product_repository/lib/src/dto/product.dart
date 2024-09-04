@@ -9,16 +9,16 @@ class FindAllProductDto with _$FindAllProductDto {
     required String outletId,
     int? categoryId,
     String? name,
+    String? availability,
   }) = _FindAllProductDto;
+
+  factory FindAllProductDto.fromJson(Map<String, Object?> json) =>
+      _$FindAllProductDtoFromJson(json);
 }
 
 extension QueryStringExtension on FindAllProductDto {
   String toQueryString() {
-    final Map<String, dynamic> queryParams = {
-      "outletId": outletId,
-      "categoryId": categoryId,
-      "name": name,
-    };
+    final Map<String, dynamic> queryParams = toJson();
 
     queryParams.removeWhere((key, value) => value == null);
 

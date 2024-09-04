@@ -14,12 +14,18 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+FindAllProductDto _$FindAllProductDtoFromJson(Map<String, dynamic> json) {
+  return _FindAllProductDto.fromJson(json);
+}
+
 /// @nodoc
 mixin _$FindAllProductDto {
   String get outletId => throw _privateConstructorUsedError;
   int? get categoryId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
+  String? get availability => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $FindAllProductDtoCopyWith<FindAllProductDto> get copyWith =>
       throw _privateConstructorUsedError;
@@ -31,7 +37,8 @@ abstract class $FindAllProductDtoCopyWith<$Res> {
           FindAllProductDto value, $Res Function(FindAllProductDto) then) =
       _$FindAllProductDtoCopyWithImpl<$Res, FindAllProductDto>;
   @useResult
-  $Res call({String outletId, int? categoryId, String? name});
+  $Res call(
+      {String outletId, int? categoryId, String? name, String? availability});
 }
 
 /// @nodoc
@@ -50,6 +57,7 @@ class _$FindAllProductDtoCopyWithImpl<$Res, $Val extends FindAllProductDto>
     Object? outletId = null,
     Object? categoryId = freezed,
     Object? name = freezed,
+    Object? availability = freezed,
   }) {
     return _then(_value.copyWith(
       outletId: null == outletId
@@ -64,6 +72,10 @@ class _$FindAllProductDtoCopyWithImpl<$Res, $Val extends FindAllProductDto>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      availability: freezed == availability
+          ? _value.availability
+          : availability // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -76,7 +88,8 @@ abstract class _$$FindAllProductDtoImplCopyWith<$Res>
       __$$FindAllProductDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String outletId, int? categoryId, String? name});
+  $Res call(
+      {String outletId, int? categoryId, String? name, String? availability});
 }
 
 /// @nodoc
@@ -93,6 +106,7 @@ class __$$FindAllProductDtoImplCopyWithImpl<$Res>
     Object? outletId = null,
     Object? categoryId = freezed,
     Object? name = freezed,
+    Object? availability = freezed,
   }) {
     return _then(_$FindAllProductDtoImpl(
       outletId: null == outletId
@@ -107,15 +121,22 @@ class __$$FindAllProductDtoImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      availability: freezed == availability
+          ? _value.availability
+          : availability // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$FindAllProductDtoImpl implements _FindAllProductDto {
   const _$FindAllProductDtoImpl(
-      {required this.outletId, this.categoryId, this.name});
+      {required this.outletId, this.categoryId, this.name, this.availability});
+
+  factory _$FindAllProductDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FindAllProductDtoImplFromJson(json);
 
   @override
   final String outletId;
@@ -123,10 +144,12 @@ class _$FindAllProductDtoImpl implements _FindAllProductDto {
   final int? categoryId;
   @override
   final String? name;
+  @override
+  final String? availability;
 
   @override
   String toString() {
-    return 'FindAllProductDto(outletId: $outletId, categoryId: $categoryId, name: $name)';
+    return 'FindAllProductDto(outletId: $outletId, categoryId: $categoryId, name: $name, availability: $availability)';
   }
 
   @override
@@ -138,11 +161,15 @@ class _$FindAllProductDtoImpl implements _FindAllProductDto {
                 other.outletId == outletId) &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.availability, availability) ||
+                other.availability == availability));
   }
 
+  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, outletId, categoryId, name);
+  int get hashCode =>
+      Object.hash(runtimeType, outletId, categoryId, name, availability);
 
   @JsonKey(ignore: true)
   @override
@@ -150,13 +177,24 @@ class _$FindAllProductDtoImpl implements _FindAllProductDto {
   _$$FindAllProductDtoImplCopyWith<_$FindAllProductDtoImpl> get copyWith =>
       __$$FindAllProductDtoImplCopyWithImpl<_$FindAllProductDtoImpl>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$FindAllProductDtoImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _FindAllProductDto implements FindAllProductDto {
   const factory _FindAllProductDto(
       {required final String outletId,
       final int? categoryId,
-      final String? name}) = _$FindAllProductDtoImpl;
+      final String? name,
+      final String? availability}) = _$FindAllProductDtoImpl;
+
+  factory _FindAllProductDto.fromJson(Map<String, dynamic> json) =
+      _$FindAllProductDtoImpl.fromJson;
 
   @override
   String get outletId;
@@ -164,6 +202,8 @@ abstract class _FindAllProductDto implements FindAllProductDto {
   int? get categoryId;
   @override
   String? get name;
+  @override
+  String? get availability;
   @override
   @JsonKey(ignore: true)
   _$$FindAllProductDtoImplCopyWith<_$FindAllProductDtoImpl> get copyWith =>
