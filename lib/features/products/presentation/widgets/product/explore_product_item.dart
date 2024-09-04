@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/counter.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
-import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ExploreProductItem extends StatelessWidget {
@@ -34,7 +26,8 @@ class ExploreProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool selected = qty > 0;
-    // bool isNotesEmpty = notes.isEmpty;
+    String? image = product.images.elementAtOrNull(0);
+    image ??= "https://placehold.co/88/png?text=[...]";
 
     return InkWell(
       onTap: onTap,
@@ -56,7 +49,7 @@ class ExploreProductItem extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 8.0),
           child: BaseProductItem(
             image: Image.network(
-              product.images[0],
+              image,
               height: 60,
               width: 60,
               fit: BoxFit.cover,

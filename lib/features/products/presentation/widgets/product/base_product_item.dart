@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class BaseProductItem extends StatelessWidget {
@@ -28,58 +24,6 @@ class BaseProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isNotesEmpty = notes.isEmpty;
-
-    onAddNotes() {
-      return showModalBottomSheet(
-        context: context,
-        showDragHandle: true,
-        isScrollControlled: true,
-        builder: (context) {
-          return Padding(
-            padding: TDeviceUtils.getViewInsets(context),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: TextHeading2("Tambah catatan"),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 8.0),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            hintText: "Tuliskan catatan",
-                          ),
-                          maxLines: 4,
-                        ),
-                      ),
-                      SizedBox(
-                        width: double.maxFinite,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: const TextActionL(
-                            "Lanjutkan",
-                            color: TColors.neutralLightLightest,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      );
-    }
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -100,16 +44,18 @@ class BaseProductItem extends StatelessWidget {
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  Container(
-                    constraints: const BoxConstraints(
-                      maxWidth: 100,
-                    ),
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextHeading4(name),
+                        TextHeading4(
+                          name,
+                          maxLines: 1,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                         TextBodyM(
                           TFormatter.formatToRupiah(price),
                           color: TColors.neutralDarkLight,
@@ -130,18 +76,6 @@ class BaseProductItem extends StatelessWidget {
                 ],
               ),
               if (noteAction != null) noteAction!,
-              // if (isShowNoteAction && isNotesEmpty)
-              //   Row(
-              //     children: [
-              //       GestureDetector(
-              //         onTap: onAddNotes,
-              //         child: const TextHeading5(
-              //           "Tambah Catatan",
-              //           color: TColors.primary,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
             ],
           ),
         ),

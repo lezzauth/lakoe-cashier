@@ -42,7 +42,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   void _onChanged() {
     bool isFormValid = _formKey.currentState?.isValid ?? false;
-    log('_onChanged: $isFormValid | ${_formKey.currentState?.instantValue}');
 
     if ((_formKey.currentState?.instantValue["isTermsAgreementAgreed"] ??
         false)) {

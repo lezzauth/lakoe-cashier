@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/bloc/completing_data/completing_data_page_bloc.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/bloc/completing_data/completing_data_page_event.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/bloc/completing_data/completing_data_page_state.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/completing_data_form/business_information_form.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/completing_data_form/owner_information_form.dart';
@@ -27,7 +23,7 @@ class CompletingDataFormPage extends StatefulWidget {
 class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
   final _formKey = GlobalKey<FormBuilderState>();
 
-  onSubmit(BuildContext context) {
+  onSubmit() {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       dynamic value = _formKey.currentState?.value;
 
@@ -56,6 +52,8 @@ class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
   Widget build(BuildContext context) {
     return FormBuilder(
       key: _formKey,
+      // onChanged: _onChanged,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       initialValue: {
         "phoneNumber": widget.phoneNumber,
         "outletType": "Kuliner"
@@ -86,12 +84,8 @@ class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
               child: ElevatedButton(
-                onPressed: () {
-                  // context.read<CompletingDataPageBloc>().add(
-                  //     CompletingDataChangePageEvent(
-                  //         page: CompletingDataPage.pinInput));
-                  onSubmit(context);
-                },
+                onPressed:
+                    (_formKey.currentState?.isValid ?? false) ? onSubmit : null,
                 child: Text(
                   "Lanjutkan",
                   style: GoogleFonts.inter(),
