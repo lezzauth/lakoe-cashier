@@ -9,7 +9,6 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_state.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_state.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/product_information_form.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/stock_information_form.dart';
@@ -90,8 +89,10 @@ class _NewProductScreenState extends State<NewProductScreen> {
   Widget build(BuildContext context) {
     return BlocListener<ProductMasterCubit, ProductMasterState>(
       listener: (context, state) {
-        if (state is ProductActionSuccess) {
-          Navigator.pop(context);
+        if (state is ProductMasterActionSuccess) {
+          Navigator.pop(
+            context,
+          );
         }
       },
       child: BlocBuilder<ProductMasterCubit, ProductMasterState>(
@@ -103,9 +104,10 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 title: "Produk Baru",
                 actions: [
                   TextButton(
-                    onPressed:
-                        state is ProductActionInProgress ? null : onSubmit,
-                    child: state is ProductActionInProgress
+                    onPressed: state is ProductMasterActionInProgress
+                        ? null
+                        : onSubmit,
+                    child: state is ProductMasterActionInProgress
                         ? const SizedBox(
                             height: 16,
                             width: 16,

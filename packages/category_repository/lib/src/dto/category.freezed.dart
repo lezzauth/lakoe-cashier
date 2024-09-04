@@ -14,10 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+FindAllCategoryDto _$FindAllCategoryDtoFromJson(Map<String, dynamic> json) {
+  return _FindAllCategoryDto.fromJson(json);
+}
+
 /// @nodoc
 mixin _$FindAllCategoryDto {
   String get outletId => throw _privateConstructorUsedError;
+  String? get search => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $FindAllCategoryDtoCopyWith<FindAllCategoryDto> get copyWith =>
       throw _privateConstructorUsedError;
@@ -29,7 +35,7 @@ abstract class $FindAllCategoryDtoCopyWith<$Res> {
           FindAllCategoryDto value, $Res Function(FindAllCategoryDto) then) =
       _$FindAllCategoryDtoCopyWithImpl<$Res, FindAllCategoryDto>;
   @useResult
-  $Res call({String outletId});
+  $Res call({String outletId, String? search});
 }
 
 /// @nodoc
@@ -46,12 +52,17 @@ class _$FindAllCategoryDtoCopyWithImpl<$Res, $Val extends FindAllCategoryDto>
   @override
   $Res call({
     Object? outletId = null,
+    Object? search = freezed,
   }) {
     return _then(_value.copyWith(
       outletId: null == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
               as String,
+      search: freezed == search
+          ? _value.search
+          : search // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -64,7 +75,7 @@ abstract class _$$FindAllCategoryDtoImplCopyWith<$Res>
       __$$FindAllCategoryDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String outletId});
+  $Res call({String outletId, String? search});
 }
 
 /// @nodoc
@@ -79,27 +90,37 @@ class __$$FindAllCategoryDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? outletId = null,
+    Object? search = freezed,
   }) {
     return _then(_$FindAllCategoryDtoImpl(
       outletId: null == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
               as String,
+      search: freezed == search
+          ? _value.search
+          : search // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$FindAllCategoryDtoImpl implements _FindAllCategoryDto {
-  const _$FindAllCategoryDtoImpl({required this.outletId});
+  const _$FindAllCategoryDtoImpl({required this.outletId, this.search});
+
+  factory _$FindAllCategoryDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FindAllCategoryDtoImplFromJson(json);
 
   @override
   final String outletId;
+  @override
+  final String? search;
 
   @override
   String toString() {
-    return 'FindAllCategoryDto(outletId: $outletId)';
+    return 'FindAllCategoryDto(outletId: $outletId, search: $search)';
   }
 
   @override
@@ -108,11 +129,13 @@ class _$FindAllCategoryDtoImpl implements _FindAllCategoryDto {
         (other.runtimeType == runtimeType &&
             other is _$FindAllCategoryDtoImpl &&
             (identical(other.outletId, outletId) ||
-                other.outletId == outletId));
+                other.outletId == outletId) &&
+            (identical(other.search, search) || other.search == search));
   }
 
+  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, outletId);
+  int get hashCode => Object.hash(runtimeType, outletId, search);
 
   @JsonKey(ignore: true)
   @override
@@ -120,14 +143,27 @@ class _$FindAllCategoryDtoImpl implements _FindAllCategoryDto {
   _$$FindAllCategoryDtoImplCopyWith<_$FindAllCategoryDtoImpl> get copyWith =>
       __$$FindAllCategoryDtoImplCopyWithImpl<_$FindAllCategoryDtoImpl>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$FindAllCategoryDtoImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _FindAllCategoryDto implements FindAllCategoryDto {
-  const factory _FindAllCategoryDto({required final String outletId}) =
-      _$FindAllCategoryDtoImpl;
+  const factory _FindAllCategoryDto(
+      {required final String outletId,
+      final String? search}) = _$FindAllCategoryDtoImpl;
+
+  factory _FindAllCategoryDto.fromJson(Map<String, dynamic> json) =
+      _$FindAllCategoryDtoImpl.fromJson;
 
   @override
   String get outletId;
+  @override
+  String? get search;
   @override
   @JsonKey(ignore: true)
   _$$FindAllCategoryDtoImplCopyWith<_$FindAllCategoryDtoImpl> get copyWith =>

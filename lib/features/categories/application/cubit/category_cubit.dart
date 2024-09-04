@@ -3,14 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/features/categories/application/cubit/category_state.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {
-  final CategoryRepository categoryRepository;
+  final CategoryRepository _categoryRepository = CategoryRepositoryImpl();
 
-  CategoryCubit({required this.categoryRepository}) : super(CategoryInitial());
+  CategoryCubit() : super(CategoryInitial());
 
   Future<void> findAll(FindAllCategoryDto dto) async {
     try {
       emit(CategoryLoadInProgress());
-      final categories = await categoryRepository.findAll(dto);
+      final categories = await _categoryRepository.findAll(dto);
       emit(CategoryLoadSuccess(categories, dto));
     } catch (e) {
       emit(CategoryLoadFailure(e.toString()));
@@ -21,7 +21,7 @@ class CategoryCubit extends Cubit<CategoryState> {
     CategoryState currentState = state;
     try {
       emit(CategoryActionInProgress());
-      await categoryRepository.create(dto);
+      await _categoryRepository.create(dto);
       emit(CategoryActionSuccess());
     } catch (e) {
       emit(CategoryActionFailure(e.toString()));
@@ -36,7 +36,7 @@ class CategoryCubit extends Cubit<CategoryState> {
     CategoryState currentState = state;
     try {
       emit(CategoryActionInProgress());
-      await categoryRepository.update(id, dto);
+      await _categoryRepository.update(id, dto);
       emit(CategoryActionSuccess());
     } catch (e) {
       emit(CategoryActionFailure(e.toString()));

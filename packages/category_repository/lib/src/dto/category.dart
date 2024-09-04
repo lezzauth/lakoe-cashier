@@ -7,14 +7,16 @@ part 'category.freezed.dart';
 class FindAllCategoryDto with _$FindAllCategoryDto {
   const factory FindAllCategoryDto({
     required String outletId,
+    String? search,
   }) = _FindAllCategoryDto;
+
+  factory FindAllCategoryDto.fromJson(Map<String, Object?> json) =>
+      _$FindAllCategoryDtoFromJson(json);
 }
 
 extension QueryStringExtension on FindAllCategoryDto {
   String toQueryString() {
-    final Map<String, dynamic> queryParams = {
-      "outletId": outletId,
-    };
+    final Map<String, dynamic> queryParams = toJson();
 
     queryParams.removeWhere((key, value) => value == null);
 

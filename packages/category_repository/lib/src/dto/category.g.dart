@@ -6,6 +6,20 @@ part of 'category.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$FindAllCategoryDtoImpl _$$FindAllCategoryDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$FindAllCategoryDtoImpl(
+      outletId: json['outletId'] as String,
+      search: json['search'] as String?,
+    );
+
+Map<String, dynamic> _$$FindAllCategoryDtoImplToJson(
+        _$FindAllCategoryDtoImpl instance) =>
+    <String, dynamic>{
+      'outletId': instance.outletId,
+      'search': instance.search,
+    };
+
 _$CreateCategoryDtoImpl _$$CreateCategoryDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$CreateCategoryDtoImpl(

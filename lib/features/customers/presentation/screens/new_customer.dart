@@ -6,8 +6,8 @@ import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart'
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_cubit.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_state.dart';
+import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_state.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/widgets/forms/new_customer_form.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
@@ -32,7 +32,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
 
     dynamic value = _formKey.currentState?.value;
 
-    await context.read<CustomerCubit>().create(
+    await context.read<CustomerMasterCubit>().create(
           CreateCustomerDto(
             name: value["name"],
             phoneNumber: value["phoneNumber"],
@@ -51,11 +51,12 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
       appBar: CustomAppbar(
         title: "Pelanggan Baru",
         actions: [
-          BlocBuilder<CustomerCubit, CustomerState>(
+          BlocBuilder<CustomerMasterCubit, CustomerMasterState>(
             builder: (context, state) {
               return TextButton(
-                onPressed: state is CustomerActionInProgress ? null : _onSubmit,
-                child: state is CustomerActionInProgress
+                onPressed:
+                    state is CustomerMasterActionInProgress ? null : _onSubmit,
+                child: state is CustomerMasterActionInProgress
                     ? const SizedBox(
                         height: 16,
                         width: 16,

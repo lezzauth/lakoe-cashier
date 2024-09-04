@@ -36,6 +36,12 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    context.read<OrderMasterCubit>().init();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [

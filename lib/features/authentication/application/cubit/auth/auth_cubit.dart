@@ -8,19 +8,17 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:token_provider/token_provider.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final AuthenticationRepository authenticationRepository;
-  final OwnerRepository ownerRepository;
+  final AuthenticationRepository _authenticationRepository =
+      AuthenticationRepositoryImpl();
+  final OwnerRepository _ownerRepository = OwnerRepositoryImpl();
   final TokenProvider _tokenProvider = TokenProvider();
 
-  AuthCubit({
-    required this.authenticationRepository,
-    required this.ownerRepository,
-  }) : super(AuthInitial());
+  AuthCubit() : super(AuthInitial());
 
   Future<void> register(RegisterDto dto) async {
     emit(AuthRegisterInProgress());
     try {
-      final response = await authenticationRepository.register(dto);
+      final response = await _authenticationRepository.register(dto);
       emit(AuthRegisterSuccess(token: response.token));
       _tokenProvider.setAuthToken(response.token);
     } catch (e) {
@@ -31,7 +29,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> requestOTP(RequestOTPDto dto) async {
     emit(AuthRequestOTPInProgress());
     try {
-      final response = await authenticationRepository.requestOTP(dto);
+      final response = await _authenticationRepository.requestOTP(dto);
       emit(AuthRequestOTPSuccess(
         action: response.action,
         id: response.id,
@@ -48,7 +46,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     emit(AuthVerifyOTPInProgress());
     try {
-      final response = await authenticationRepository.verifyOTP(dto);
+      final response = await _authenticationRepository.verifyOTP(dto);
 
       switch (response.action) {
         case "LOGIN":
@@ -84,8 +82,8 @@ class AuthCubit extends Cubit<AuthState> {
       final authToken = await _tokenProvider.getAuthToken();
       if (authToken == null) throw ErrorDescription("no authToken");
 
-      final outlets = await ownerRepository.listOutlets();
-      final profile = await ownerRepository.getProfile();
+      final outlets = await _ownerRepository.listOutlets();
+      final profile = await _ownerRepository.getProfile();
 
       emit(AuthReady(
         outletId: outlets.first.id,

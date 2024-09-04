@@ -6,10 +6,9 @@ import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_deta
 import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
 
 class CartDetailCubit extends Cubit<CartDetailState> {
-  final CashierRepository cashierRepository;
+  final CashierRepository _cashierRepository = CashierRepositoryImpl();
 
-  CartDetailCubit({required this.cashierRepository})
-      : super(CartDetailInitial());
+  CartDetailCubit() : super(CartDetailInitial());
 
   Future<void> previewOrderPrice({
     required List<CartModel> carts,
@@ -18,7 +17,7 @@ class CartDetailCubit extends Cubit<CartDetailState> {
   }) async {
     try {
       emit(CartDetailLoadInProgress());
-      final previewOrderPrice = await cashierRepository.previewOrderPrice(
+      final previewOrderPrice = await _cashierRepository.previewOrderPrice(
         PreviewOrderPriceDto(
           outletId: outletId,
           type: type,
@@ -67,7 +66,7 @@ class CartDetailCubit extends Cubit<CartDetailState> {
   }) async {
     try {
       emit(CartDetailActionInProgress());
-      await cashierRepository.saveOrder(_cartsToSaveOrderDto(
+      await _cashierRepository.saveOrder(_cartsToSaveOrderDto(
         carts: carts,
         outletId: outletId,
         type: type,
@@ -92,7 +91,7 @@ class CartDetailCubit extends Cubit<CartDetailState> {
   }) async {
     try {
       emit(CartDetailActionInProgress());
-      final response = await cashierRepository.saveAndCompleteOrder(
+      final response = await _cashierRepository.saveAndCompleteOrder(
         _cartsToSaveOrderDto(
           carts: carts,
           outletId: outletId,

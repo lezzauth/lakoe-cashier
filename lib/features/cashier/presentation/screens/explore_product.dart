@@ -29,21 +29,7 @@ class _ExploreProductScreenState extends State<ExploreProductScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) => switch (state) {
-              AuthReady(:final outletId) => MultiBlocProvider(
-                  providers: [
-                    BlocProvider(
-                        create: (context) => CashierOrderCubit()..init()),
-                    BlocProvider(
-                        create: (context) =>
-                            CashierProductCubit()..init(outletId)),
-                    BlocProvider(
-                        create: (context) =>
-                            CashierCategoryCubit()..init(outletId)),
-                    BlocProvider(
-                        create: (context) => CashierProductFilterCubit()),
-                  ],
-                  child: const ExploreProduct(),
-                ),
+              AuthReady() => const ExploreProduct(),
               _ => const Scaffold(
                   body: Center(
                     child: CircularProgressIndicator(),
@@ -78,6 +64,16 @@ class _ExploreProductState extends State<ExploreProduct> {
           categoryId: filterState.categoryId,
           name: filterState.name,
         );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+    context.read<CashierOrderCubit>().init();
+    context.read<CashierProductCubit>().init(authState.outletId);
+    context.read<CashierCategoryCubit>().init(authState.outletId);
   }
 
   @override

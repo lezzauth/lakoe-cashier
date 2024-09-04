@@ -6,8 +6,8 @@ import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart'
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
-import 'package:point_of_sales_cashier/features/categories/application/cubit/category_cubit.dart';
-import 'package:point_of_sales_cashier/features/categories/application/cubit/category_state.dart';
+import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_state.dart';
 import 'package:point_of_sales_cashier/features/categories/presentation/widgets/forms/category_form.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
@@ -31,7 +31,7 @@ class _CategoryEditScreenState extends State<CategoryEditScreen> {
     }
     dynamic value = _formKey.currentState?.value;
 
-    context.read<CategoryCubit>().update(
+    context.read<CategoryMasterCubit>().update(
           categoryId,
           UpdateCategoryDto(
             name: value["name"],
@@ -51,18 +51,19 @@ class _CategoryEditScreenState extends State<CategoryEditScreen> {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as CategoryModel;
 
-    return BlocBuilder<CategoryCubit, CategoryState>(builder: (context, state) {
+    return BlocBuilder<CategoryMasterCubit, CategoryMasterState>(
+        builder: (context, state) {
       return Scaffold(
         appBar: CustomAppbar(
           title: "Ubah Kategori",
           actions: [
             TextButton(
-              onPressed: state is CategoryActionInProgress
+              onPressed: state is CategoryMasterActionInProgress
                   ? null
                   : () {
                       _onSubmit(arguments.id);
                     },
-              child: state is CategoryActionInProgress
+              child: state is CategoryMasterActionInProgress
                   ? const SizedBox(
                       height: 16,
                       width: 16,

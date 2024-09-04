@@ -6,8 +6,8 @@ import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart'
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
-import 'package:point_of_sales_cashier/features/categories/application/cubit/category_cubit.dart';
-import 'package:point_of_sales_cashier/features/categories/application/cubit/category_state.dart';
+import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_state.dart';
 import 'package:point_of_sales_cashier/features/categories/presentation/widgets/forms/category_form.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
@@ -31,45 +31,57 @@ class _CategoryNewScreenState extends State<CategoryNewScreen> {
     }
     dynamic value = _formKey.currentState?.value;
 
-    context.read<CategoryCubit>().create(
+    context.read<CategoryMasterCubit>().create(
           CreateCategoryDto(
             outletId: authState.outletId,
             name: value["name"],
             icon: value["icon"],
           ),
         );
-    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CategoryCubit, CategoryState>(builder: (context, state) {
-      return Scaffold(
-        appBar: CustomAppbar(
-          title: "Buat Kategori",
-          actions: [
-            TextButton(
-              onPressed: state is CategoryActionInProgress ? null : _onSubmit,
-              child: state is CategoryActionInProgress
-                  ? const SizedBox(
-                      height: 16,
-                      width: 16,
-                      child: CircularProgressIndicator(),
-                    )
-                  : const TextActionL(
-                      "SIMPAN",
-                      color: TColors.primary,
-                    ),
-            )
-          ],
-        ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: CategoryForm(
-            formKey: _formKey,
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<CategoryMasterCubit, CategoryMasterState>(
+          listener: (context, state) {
+            if (state is CategoryMasterActionSuccess) {
+              Navigator.pop(context, true);
+            }
+          },
+        )
+      ],
+      child: BlocBuilder<CategoryMasterCubit, CategoryMasterState>(
+          builder: (context, state) {
+        return Scaffold(
+          appBar: CustomAppbar(
+            title: "Buat Kategori",
+            actions: [
+              TextButton(
+                onPressed:
+                    state is CategoryMasterActionInProgress ? null : _onSubmit,
+                child: state is CategoryMasterActionInProgress
+                    ? const SizedBox(
+                        height: 16,
+                        width: 16,
+                        child: CircularProgressIndicator(),
+                      )
+                    : const TextActionL(
+                        "SIMPAN",
+                        color: TColors.primary,
+                      ),
+              )
+            ],
           ),
-        ),
-      );
-    });
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CategoryForm(
+              formKey: _formKey,
+            ),
+          ),
+        );
+      }),
+    );
   }
 }

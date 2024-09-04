@@ -1,11 +1,5 @@
-import 'package:authentication_repository/authentication_repository.dart';
-import 'package:cashier_repository/cashier_repository.dart';
-import 'package:category_repository/category_repository.dart';
-import 'package:customer_repository/customer_repository.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/screens/completing_data.dart';
@@ -13,27 +7,37 @@ import 'package:point_of_sales_cashier/features/authentication/presentation/on_b
 import 'package:point_of_sales_cashier/features/authentication/presentation/otp_input/screens/otp_input.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
+import 'package:point_of_sales_cashier/features/cart/application/cubit/customer/cart_customer_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/screens/cart.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
-import 'package:point_of_sales_cashier/features/categories/application/cubit/category_cubit.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_cubit.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_cubit.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
+import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_edit.dart';
 import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_master.dart';
 import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_new.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_cubit.dart';
+import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/master_customer.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/new_customer.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/open_cashier_pin.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
-import 'package:point_of_sales_cashier/features/orders/application/cubit/order_cubit.dart';
+import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_detail.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_master.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/bank_transfer_payment.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/qris_payment.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/success_confirmation_payment.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_cubit.dart';
+import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/screens/explore_product.dart';
+import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/product_edit.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/product_master.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
@@ -42,52 +46,45 @@ import 'package:point_of_sales_cashier/features/settings/presentation/screens/se
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_master.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
-import 'package:product_repository/product_repository.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    OwnerRepository ownerRepository = OwnerRepositoryImpl();
-    AuthenticationRepository authenticationRepository =
-        AuthenticationRepositoryImpl();
-    CashierRepository cashierRepository = CashierRepositoryImpl();
-    CategoryRepository categoryRepository = CategoryRepositoryImpl();
-    ProductRepository productRepository = ProductRepositoryImpl();
-    CustomerRepository customerRepository = CustomerRepositoryImpl();
-
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => AuthCubit(
-            ownerRepository: ownerRepository,
-            authenticationRepository: authenticationRepository,
-          ),
-        ),
+        BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => CompletingDataCubit()),
-        BlocProvider(
-          create: (context) =>
-              CashierCubit(cashierRepository: cashierRepository),
-        ),
-        BlocProvider(
-          create: (context) =>
-              CategoryCubit(categoryRepository: categoryRepository),
-        ),
-        BlocProvider(
-          create: (context) => CartCubit(),
-        ),
-        BlocProvider(
-          create: (context) =>
-              CartDetailCubit(cashierRepository: cashierRepository),
-        ),
-        BlocProvider(
-          create: (context) => OrderCubit(cashierRepository: cashierRepository),
-        ),
-        BlocProvider(
-          create: (context) =>
-              CustomerCubit(customerRepository: customerRepository),
-        ),
+
+        // Category Master
+        BlocProvider(create: (context) => CategoryMasterCubit()),
+        BlocProvider(create: (context) => CategoryMasterFilterCubit()),
+
+        // Order Master
+        BlocProvider(create: (context) => OrderMasterCubit()),
+        BlocProvider(create: (context) => OrderMasterFilterCubit()),
+
+        // Customer Master
+        BlocProvider(create: (context) => CustomerMasterCubit()),
+        BlocProvider(create: (context) => CustomerMasterFilterCubit()),
+
+        // Product Master
+        BlocProvider(create: (context) => ProductMasterCubit()),
+        BlocProvider(create: (context) => ProductMasterCategoryCubit()),
+        BlocProvider(create: (context) => ProductMasterFilterCubit()),
+
+        // Cashier
+        BlocProvider(create: (context) => CashierCubit()),
+        BlocProvider(create: (context) => CashierOrderCubit()),
+        BlocProvider(create: (context) => CashierProductCubit()),
+        BlocProvider(create: (context) => CashierCategoryCubit()),
+        BlocProvider(create: (context) => CashierProductFilterCubit()),
+
+        // Cart
+        BlocProvider(create: (context) => CartCubit()),
+        BlocProvider(create: (context) => CartDetailCubit()),
+        BlocProvider(create: (context) => CartCustomerCubit()),
       ],
       child: MaterialApp(
         title: "Point of Sales",
