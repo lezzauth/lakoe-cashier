@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:category_repository/category_repository.dart';
 import 'package:collection/collection.dart';
@@ -57,7 +59,9 @@ class _ExploreProductScreenState extends State<ExploreProductScreen> {
   }
 
   Future<void> onFetchOrders() async {
-    return await context.read<OrderCubit>().findAll(const FindAllOrderDto());
+    return await context
+        .read<OrderCubit>()
+        .findAll(const FindAllOrderDto(status: "OPEN"));
   }
 
   Future<void> onRefresh() async {
@@ -150,7 +154,7 @@ class _ExploreProductScreenState extends State<ExploreProductScreen> {
                                       crossAxisAlignment:
                                           WrapCrossAlignment.center,
                                       children: [
-                                        const OrderListButton(),
+                                        OrderListButton(),
                                         ...orders.map(
                                           (order) => OrderItem(
                                             no: order.no,
@@ -167,10 +171,10 @@ class _ExploreProductScreenState extends State<ExploreProductScreen> {
                                   ),
                                 _ => const Center(
                                     child: SizedBox(
-                                      height: 16,
-                                      width: 16,
+                                      height: 32,
+                                      width: 32,
                                       child: CircularProgressIndicator(
-                                        strokeWidth: 1,
+                                        strokeWidth: 2,
                                       ),
                                     ),
                                   ),

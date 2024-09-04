@@ -5,23 +5,27 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 class OrderListButton extends StatelessWidget {
+  final Function()? onPop;
+
   const OrderListButton({
     super.key,
+    this.onPop,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, "/orders");
+      onTap: () async {
+        await Navigator.pushNamed(context, "/orders");
+        if (onPop != null) onPop!();
       },
       child: Container(
         decoration: BoxDecoration(
           gradient: TColors.greenGradient,
           borderRadius: BorderRadius.circular(12.0),
         ),
-        padding: EdgeInsets.symmetric(vertical: 11.5, horizontal: 12),
-        child: Wrap(
+        padding: const EdgeInsets.symmetric(vertical: 11.5, horizontal: 12),
+        child: const Wrap(
           direction: Axis.horizontal,
           spacing: 8.0,
           children: [
