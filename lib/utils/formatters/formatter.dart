@@ -37,3 +37,32 @@ class CreditCardFormatter extends TextInputFormatter {
     );
   }
 }
+
+class PhoneNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String newText = newValue.text;
+
+    // If the new text starts with '+628', replace it with '8'
+    if (newText.startsWith('+628')) {
+      newText = newText.replaceFirst('+628', '8');
+    }
+    // If the new text starts with '08', replace it with '8'
+    else if (newText.startsWith('08')) {
+      newText = newText.replaceFirst('08', '8');
+    }
+
+    // Allow only numbers and ensure the text is numeric after the replacements
+    final regex = RegExp(r'^[0-9]*$');
+    if (!regex.hasMatch(newText)) {
+      return oldValue;
+    }
+
+    // Return the formatted value
+    return TextEditingValue(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
+  }
+}

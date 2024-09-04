@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +13,7 @@ import 'package:point_of_sales_cashier/features/authentication/presentation/on_b
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
-import 'package:point_of_sales_cashier/utils/http/http.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -23,11 +25,10 @@ class OnBoardingScreen extends StatefulWidget {
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   final int maxPage = 3;
-
   int pageIndex = 0;
-  PageController pageController = PageController();
-
   final _formKey = GlobalKey<FormBuilderState>();
+  PageController pageController = PageController();
+  bool _isFormValid = false;
 
   onPageUpdate(int index) {
     setState(() {
@@ -39,7 +40,21 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     pageController.jumpToPage(index);
   }
 
-  onSubmit(BuildContext context) {
+  void _onChanged() {
+    bool isFormValid = _formKey.currentState?.isValid ?? false;
+    log('_onChanged: $isFormValid | ${_formKey.currentState?.instantValue}');
+
+    if ((_formKey.currentState?.instantValue["isTermsAgreementAgreed"] ??
+        false)) {
+      isFormValid = _formKey.currentState?.validate() ?? false;
+    }
+
+    setState(() {
+      _isFormValid = isFormValid;
+    });
+  }
+
+  onSubmit() {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       dynamic value = _formKey.currentState?.value;
       context
@@ -80,6 +95,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           builder: (context, state) {
             return FormBuilder(
               key: _formKey,
+              onChanged: _onChanged,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
                   Expanded(
@@ -171,14 +188,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                     hintText: "Masukan nomor WA",
                                   ),
                                   keyboardType: TextInputType.phone,
-                                  validator:
-                                      FormBuilderValidators.startsWith("8")
-                                          .and(FormBuilderValidators.maxLength(
-                                              12,
-                                              errorText: "Maksimal 12 angka"))
-                                          .and(FormBuilderValidators.minLength(
-                                              9,
-                                              errorText: "Minimal 9 angka")),
+                                  inputFormatters: [PhoneNumberFormatter()],
+                                  validator: FormBuilderValidators.compose([
+                                    FormBuilderValidators.startsWith("8",
+                                        errorText:
+                                            "Nomor dimulai dengan angka 8"),
+                                    FormBuilderValidators.maxLength(12,
+                                        errorText: "Maksimal 12 angka"),
+                                    FormBuilderValidators.minLength(9,
+                                        errorText: "Minimal 9 angka"),
+                                  ]),
                                 ),
                               ),
                             ],
@@ -201,9 +220,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () {
-                              onSubmit(context);
-                            },
+                            onPressed: _isFormValid ? onSubmit : null,
                             child: state is AuthRequestOTPInProgress
                                 ? const SizedBox(
                                     height: 16,
