@@ -179,6 +179,18 @@ Map<String, dynamic> _$$SaveOrderResponseImplToJson(
       'tableId': instance.tableId,
     };
 
+_$OrderItemCustomerImpl _$$OrderItemCustomerImplFromJson(
+        Map<String, dynamic> json) =>
+    _$OrderItemCustomerImpl(
+      name: json['name'] as String,
+    );
+
+Map<String, dynamic> _$$OrderItemCustomerImplToJson(
+        _$OrderItemCustomerImpl instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+    };
+
 _$OrderItemResponseImpl _$$OrderItemResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$OrderItemResponseImpl(
@@ -190,7 +202,8 @@ _$OrderItemResponseImpl _$$OrderItemResponseImplFromJson(
       source: json['source'] as String,
       customer: json['customer'] == null
           ? null
-          : CustomerModel.fromJson(json['customer'] as Map<String, dynamic>),
+          : OrderItemCustomer.fromJson(
+              json['customer'] as Map<String, dynamic>),
       table: json['table'],
     );
 

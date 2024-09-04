@@ -23,6 +23,7 @@ class SaveOrderDto with _$SaveOrderDto {
     required String outletId,
     required String type,
     required List<OrderItemDto> items,
+    String? customerId,
   }) = _SaveOrderDto;
 
   factory SaveOrderDto.fromJson(Map<String, Object?> json) =>
@@ -36,6 +37,7 @@ class CompleteOrderDto with _$CompleteOrderDto {
     required String paymentMethod,
     required int paidAmount,
     required int change,
+    String? customerId,
   }) = _CompleteOrderDto;
 
   factory CompleteOrderDto.fromJson(Map<String, Object?> json) =>

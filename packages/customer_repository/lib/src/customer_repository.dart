@@ -4,16 +4,17 @@ import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:token_provider/token_provider.dart';
 
-abstract class CashierRepository {
+abstract class CustomerRepository {
   Future<List<CustomerModel>> findAll(FindAllCustomerDto dto);
+  Future<CustomerModel> create(CreateCustomerDto dto);
 }
 
-class CashierRepositoryImpl implements CashierRepository {
+class CustomerRepositoryImpl implements CustomerRepository {
   String _baseURL = "/customers";
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
 
-  CashierRepositoryImpl() {
+  CustomerRepositoryImpl() {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onError: (DioException error, handler) async {
@@ -38,11 +39,23 @@ class CashierRepositoryImpl implements CashierRepository {
     final options = await _getOptions();
 
     final response = await _dio.get<List<dynamic>>(
-        "$_baseURL&${dto.toQueryString()}",
+        "$_baseURL?${dto.toQueryString()}",
         options: options);
 
     return response.data!
         .map((response) => CustomerModel.fromJson(response))
         .toList();
+  }
+
+  @override
+  Future<CustomerModel> create(CreateCustomerDto dto) async {
+    final options = await _getOptions();
+    final response = await _dio.post(
+      "$_baseURL",
+      data: dto.toJson(),
+      options: options,
+    );
+
+    return CustomerModel.fromJson(response.data);
   }
 }

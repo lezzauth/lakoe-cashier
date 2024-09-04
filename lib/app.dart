@@ -1,6 +1,7 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:category_repository/category_repository.dart';
+import 'package:customer_repository/customer_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,7 @@ import 'package:point_of_sales_cashier/features/categories/application/cubit/cat
 import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_edit.dart';
 import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_master.dart';
 import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_new.dart';
+import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/master_customer.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/new_customer.dart';
@@ -53,6 +55,7 @@ class App extends StatelessWidget {
     CashierRepository cashierRepository = CashierRepositoryImpl();
     CategoryRepository categoryRepository = CategoryRepositoryImpl();
     ProductRepository productRepository = ProductRepositoryImpl();
+    CustomerRepository customerRepository = CustomerRepositoryImpl();
 
     return MultiBlocProvider(
       providers: [
@@ -84,6 +87,10 @@ class App extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => OrderCubit(cashierRepository: cashierRepository),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CustomerCubit(customerRepository: customerRepository),
         ),
       ],
       child: MaterialApp(

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'customer.g.dart';
 part 'customer.freezed.dart';
 
 @freezed
@@ -22,4 +23,18 @@ extension QueryStringExtension on FindAllCustomerDto {
             '${entry.key}=${Uri.encodeComponent(entry.value.toString())}')
         .join('&');
   }
+}
+
+@freezed
+class CreateCustomerDto with _$CreateCustomerDto {
+  const factory CreateCustomerDto({
+    required String name,
+    required String phoneNumber,
+    required String outletId,
+    String? email,
+    String? address,
+  }) = _CreateCustomerDto;
+
+  factory CreateCustomerDto.fromJson(Map<String, Object?> json) =>
+      _$CreateCustomerDtoFromJson(json);
 }

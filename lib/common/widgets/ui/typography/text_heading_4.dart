@@ -7,12 +7,18 @@ class TextHeading4 extends StatelessWidget {
   final FontWeight fontWeight;
   final double fontSize = TSizes.fontSizeHeading4;
   final Color? color;
+  final TextOverflow? overflow;
+  final bool? softWrap;
+  final int? maxLines;
 
   const TextHeading4(
     this.data, {
     super.key,
     this.fontWeight = FontWeight.w600,
     this.color,
+    this.overflow,
+    this.softWrap,
+    this.maxLines,
   });
 
   @override
@@ -24,6 +30,9 @@ class TextHeading4 extends StatelessWidget {
         fontWeight: fontWeight,
         fontSize: fontSize,
       ),
+      softWrap: softWrap,
+      overflow: overflow,
+      maxLines: maxLines,
     );
   }
 }

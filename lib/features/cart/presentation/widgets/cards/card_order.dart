@@ -32,38 +32,47 @@ class CardOrder extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(8.0),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisSize: MainAxisSize.max,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 32,
-                    width: 32,
-                    decoration: BoxDecoration(
-                      color: TColors.highlightLightest,
-                      borderRadius: BorderRadius.circular(32.0),
+              Expanded(
+                child: Row(
+                  // mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 32,
+                      width: 32,
+                      decoration: BoxDecoration(
+                        color: TColors.highlightLightest,
+                        borderRadius: BorderRadius.circular(32.0),
+                      ),
+                      margin: const EdgeInsets.only(right: 8.0),
+                      child: Center(
+                        child: icon,
+                      ),
                     ),
-                    margin: EdgeInsets.only(right: 8.0),
-                    child: Center(
-                      child: icon,
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextBodyXS(title, color: TColors.neutralDarkLightest),
+                          TextHeading4(
+                            subTitle,
+                            maxLines: 1,
+                            softWrap: false,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextBodyXS(title, color: TColors.neutralDarkLightest),
-                      TextHeading4(subTitle)
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
               Container(
                 margin: const EdgeInsets.only(left: 8.0),
-                child: UiIcons(
+                child: const UiIcons(
                   TIcons.arrowRight,
                   height: 12,
                   width: 12,

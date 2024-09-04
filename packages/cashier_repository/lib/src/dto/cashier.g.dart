@@ -27,6 +27,7 @@ _$SaveOrderDtoImpl _$$SaveOrderDtoImplFromJson(Map<String, dynamic> json) =>
       items: (json['items'] as List<dynamic>)
           .map((e) => OrderItemDto.fromJson(e as Map<String, dynamic>))
           .toList(),
+      customerId: json['customerId'] as String?,
     );
 
 Map<String, dynamic> _$$SaveOrderDtoImplToJson(_$SaveOrderDtoImpl instance) =>
@@ -34,6 +35,7 @@ Map<String, dynamic> _$$SaveOrderDtoImplToJson(_$SaveOrderDtoImpl instance) =>
       'outletId': instance.outletId,
       'type': instance.type,
       'items': instance.items,
+      'customerId': instance.customerId,
     };
 
 _$CompleteOrderDtoImpl _$$CompleteOrderDtoImplFromJson(
@@ -42,6 +44,7 @@ _$CompleteOrderDtoImpl _$$CompleteOrderDtoImplFromJson(
       paymentMethod: json['paymentMethod'] as String,
       paidAmount: (json['paidAmount'] as num).toInt(),
       change: (json['change'] as num).toInt(),
+      customerId: json['customerId'] as String?,
     );
 
 Map<String, dynamic> _$$CompleteOrderDtoImplToJson(
@@ -50,6 +53,7 @@ Map<String, dynamic> _$$CompleteOrderDtoImplToJson(
       'paymentMethod': instance.paymentMethod,
       'paidAmount': instance.paidAmount,
       'change': instance.change,
+      'customerId': instance.customerId,
     };
 
 _$OpenCashierDtoImpl _$$OpenCashierDtoImplFromJson(Map<String, dynamic> json) =>

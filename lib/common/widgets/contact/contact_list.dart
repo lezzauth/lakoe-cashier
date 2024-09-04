@@ -1,12 +1,15 @@
-import 'package:contacts_service/contacts_service.dart';
+import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_cubit.dart';
+import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
 
 class ContactList extends StatefulWidget {
   const ContactList({super.key});
@@ -16,59 +19,57 @@ class ContactList extends StatefulWidget {
 }
 
 class _ContactListState extends State<ContactList> {
-  List<Contact> _contacts = [
-    Contact(displayName: "Umum", phones: [
-      Item(label: "-", value: "-"),
-    ]),
-  ];
+  Future<void> _onFetchCustomers() async {
+    AuthState authState = context.read<AuthCubit>().state;
+    if (authState is! AuthReady) return;
 
-  Future<void> getContacts() async {
-    try {
-      var contacts = await THelper.getContacts();
-      if (contacts != null) {
-        setState(() {
-          _contacts = [
-            Contact(displayName: "Umum", phones: [
-              Item(label: "-", value: "-"),
-            ]),
-            ...contacts
-          ];
-        });
-      }
-      print('aowekoek');
-    } catch (e) {
-      print('getContacts');
-      print(e);
-      // Fluttertoast.showToast(msg: "Cannot get contacts permission");
-    }
+    return await context.read<CustomerCubit>().findAll(
+          FindAllCustomerDto(ownerId: authState.profile.id),
+        );
   }
 
   @override
   void initState() {
     super.initState();
-    getContacts();
+    _onFetchCustomers();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: _contacts.length,
-      itemBuilder: (context, index) {
-        Contact contact = _contacts.elementAt(index);
+    return BlocBuilder<CustomerCubit, CustomerState>(
+        builder: (context, state) => switch (state) {
+              CustomerLoadSuccess(:final customers) => ListView.builder(
+                  itemCount: customers.length,
+                  itemBuilder: (context, index) {
+                    CustomerModel customer = customers.elementAt(index);
 
-        return ListTile(
-          leading: SvgPicture.asset(
-            TImages.contactAvatar,
-            height: 40,
-            width: 40,
-          ),
-          title: TextHeading4(contact.displayName ?? ""),
-          subtitle: TextBodyS(
-            contact.phones!.isNotEmpty ? contact.phones!.first.value! : '-',
-            color: TColors.neutralDarkLight,
-          ),
-        );
-      },
-    );
+                    return ListTile(
+                      leading: SvgPicture.asset(
+                        TImages.contactAvatar,
+                        height: 40,
+                        width: 40,
+                      ),
+                      title: TextHeading4(customer.name),
+                      subtitle: TextBodyS(
+                        customer.phoneNumber,
+                        color: TColors.neutralDarkLight,
+                      ),
+                      onTap: () {
+                        Navigator.pop(
+                            context, customer.id == "-" ? null : customer);
+                      },
+                    );
+                  },
+                ),
+              CustomerLoadFailure(:final error) => Center(
+                  child: TextBodyS(
+                    error,
+                    color: TColors.error,
+                  ),
+                ),
+              _ => Center(
+                  child: CircularProgressIndicator(),
+                ),
+            });
   }
 }

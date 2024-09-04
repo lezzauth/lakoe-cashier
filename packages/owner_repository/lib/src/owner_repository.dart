@@ -48,7 +48,6 @@ class OwnerRepositoryImpl implements OwnerRepository {
   @override
   Future<List<OutletModel>> listOutlets() async {
     final Options options = await _getOptions();
-
     final profile = await getProfile();
 
     final response = await _dio.get<List<dynamic>>(

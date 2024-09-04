@@ -9,6 +9,8 @@ class CustomerModel with _$CustomerModel {
     required String id,
     required String name,
     required String phoneNumber,
+    String? email,
+    String? address,
   }) = _CustomerModel;
 
   factory CustomerModel.fromJson(Map<String, Object?> json) =>

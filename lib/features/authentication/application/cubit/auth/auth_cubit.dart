@@ -85,8 +85,12 @@ class AuthCubit extends Cubit<AuthState> {
       if (authToken == null) throw ErrorDescription("no authToken");
 
       final outlets = await ownerRepository.listOutlets();
+      final profile = await ownerRepository.getProfile();
 
-      emit(AuthReady(outletId: outlets.first.id));
+      emit(AuthReady(
+        outletId: outlets.first.id,
+        profile: profile,
+      ));
     } catch (e, stackTrace) {
       log('AuthCubit.initialize err: ${e.toString()}', stackTrace: stackTrace);
       emit(AuthNotReady());

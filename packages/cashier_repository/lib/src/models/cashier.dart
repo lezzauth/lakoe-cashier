@@ -133,6 +133,16 @@ class SaveOrderResponse with _$SaveOrderResponse {
 }
 
 @freezed
+class OrderItemCustomer with _$OrderItemCustomer {
+  const factory OrderItemCustomer({
+    required String name,
+  }) = _OrderItemCustomer;
+
+  factory OrderItemCustomer.fromJson(Map<String, Object?> json) =>
+      _$OrderItemCustomerFromJson(json);
+}
+
+@freezed
 class OrderItemResponse with _$OrderItemResponse {
   const factory OrderItemResponse({
     required int no,
@@ -141,7 +151,7 @@ class OrderItemResponse with _$OrderItemResponse {
     required String customerType,
     required String type,
     required String source,
-    CustomerModel? customer,
+    OrderItemCustomer? customer,
     Object? table,
   }) = _OrderItemResponse;
 

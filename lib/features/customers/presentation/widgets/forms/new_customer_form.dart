@@ -1,6 +1,7 @@
-import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -15,6 +16,19 @@ class NewCustomerForm extends StatefulWidget {
 }
 
 class _NewCustomerFormState extends State<NewCustomerForm> {
+  Future<void> _onSelectContact() async {
+    if (await Permission.contacts.request().isGranted) {
+      final contact = await FlutterContacts.openExternalPick();
+
+      if (contact != null) {
+        widget.formKey.currentState?.patchValue({
+          "name": contact.displayName,
+          "phoneNumber": contact.phones.first.number,
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
@@ -39,20 +53,7 @@ class _NewCustomerFormState extends State<NewCustomerForm> {
                         decoration: InputDecoration(
                           hintText: "Masukan nama pelanggan",
                           suffixIcon: UiIcons(
-                            onTap: () async {
-                              try {
-                                var contact = await ContactsService
-                                    .openDeviceContactPicker();
-                                if (contact != null) {
-                                  widget.formKey.currentState?.patchValue({
-                                    "name": contact.displayName,
-                                    "phoneNumber": contact.phones!.first.value,
-                                  });
-                                }
-                              } catch (e) {
-                                print('e: ${e.toString()}');
-                              }
-                            },
+                            onTap: _onSelectContact,
                             TIcons.contactBook,
                             height: 24,
                             width: 24,

@@ -42,14 +42,18 @@ class CartDetailCubit extends Cubit<CartDetailState> {
     required List<CartModel> carts,
     required String outletId,
     required String type,
+    String? customerId,
   }) {
     return SaveOrderDto(
       outletId: outletId,
       type: type,
+      customerId: customerId,
       items: carts
           .map(
             (cart) => OrderItemDto(
-                quantity: cart.quantity, productId: cart.product.id),
+              quantity: cart.quantity,
+              productId: cart.product.id,
+            ),
           )
           .toList(),
     );
@@ -59,6 +63,7 @@ class CartDetailCubit extends Cubit<CartDetailState> {
     required List<CartModel> carts,
     required String outletId,
     required String type,
+    String? customerId,
   }) async {
     try {
       emit(CartDetailActionInProgress());
@@ -66,6 +71,7 @@ class CartDetailCubit extends Cubit<CartDetailState> {
         carts: carts,
         outletId: outletId,
         type: type,
+        customerId: customerId,
       ));
       emit(CartDetailActionSuccess());
     } catch (e, stackTrace) {
@@ -82,6 +88,7 @@ class CartDetailCubit extends Cubit<CartDetailState> {
     required int change,
     required String paymentMethod,
     required String type,
+    String? customerId,
   }) async {
     try {
       emit(CartDetailActionInProgress());
@@ -90,6 +97,7 @@ class CartDetailCubit extends Cubit<CartDetailState> {
           carts: carts,
           outletId: outletId,
           type: type,
+          customerId: customerId,
         ),
         CompleteOrderDto(
           paymentMethod: paymentMethod,
