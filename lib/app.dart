@@ -75,10 +75,6 @@ class App extends StatelessWidget {
               CategoryCubit(categoryRepository: categoryRepository),
         ),
         BlocProvider(
-          create: (context) =>
-              ProductCubit(productRepository: productRepository),
-        ),
-        BlocProvider(
           create: (context) => CartCubit(),
         ),
         BlocProvider(

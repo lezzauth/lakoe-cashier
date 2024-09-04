@@ -7,7 +7,8 @@ import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_cubit.dart';
+import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_state.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/product_state.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/product_information_form.dart';
@@ -69,7 +70,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
     ImagePickerValue images =
         productInformationValue["images"] as ImagePickerValue;
 
-    context.read<ProductCubit>().create(
+    context.read<ProductMasterCubit>().create(
       [images.file!],
       CreateProductDto(
         name: productInformationValue["name"],
@@ -87,13 +88,13 @@ class _NewProductScreenState extends State<NewProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ProductCubit, ProductState>(
+    return BlocListener<ProductMasterCubit, ProductMasterState>(
       listener: (context, state) {
         if (state is ProductActionSuccess) {
           Navigator.pop(context);
         }
       },
-      child: BlocBuilder<ProductCubit, ProductState>(
+      child: BlocBuilder<ProductMasterCubit, ProductMasterState>(
         builder: (context, state) {
           return DefaultTabController(
             length: 2,

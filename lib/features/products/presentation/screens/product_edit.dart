@@ -9,7 +9,8 @@ import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_cubit.dart';
+import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_state.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/product_state.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/product_information_form.dart';
@@ -79,7 +80,7 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
     String? stock = stockInformationValue["stock"];
     String? sku = stockInformationValue["sku"];
 
-    context.read<ProductCubit>().update(
+    context.read<ProductMasterCubit>().update(
           productId,
           images: images.file != null ? [images.file!] : null,
           dto: UpdateProductDto(
@@ -101,13 +102,13 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as ProductModel;
 
-    return BlocListener<ProductCubit, ProductState>(
+    return BlocListener<ProductMasterCubit, ProductMasterState>(
       listener: (context, state) {
-        if (state is ProductActionSuccess) {
+        if (state is ProductMasterActionSuccess) {
           Navigator.pop(context);
         }
       },
-      child: BlocBuilder<ProductCubit, ProductState>(
+      child: BlocBuilder<ProductMasterCubit, ProductMasterState>(
         builder: (context, state) {
           return DefaultTabController(
             length: 2,

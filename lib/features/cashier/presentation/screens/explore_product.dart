@@ -1,32 +1,21 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
-import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/appbar/explore_product_appbar.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/button/cart_count_floating_action_button.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/open_order_list.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/product_list.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/filter/product_category_filter.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/order/order_item.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/order/order_list_button.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/explore_product_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:product_repository/product_repository.dart';
 
 class ExploreProductScreen extends StatefulWidget {
   const ExploreProductScreen({super.key});
@@ -73,14 +62,18 @@ class ExploreProduct extends StatefulWidget {
 
 class _ExploreProductState extends State<ExploreProduct> {
   Future<void> onRefresh() async {
+    if (!mounted) return;
+
     AuthReady authState = context.read<AuthCubit>().state as AuthReady;
 
     CashierProductFilterState filterState =
         context.read<CashierProductFilterCubit>().state;
 
-    context.read<CashierOrderCubit>().findAll();
-    context.read<CashierCategoryCubit>().findAll(outletId: authState.outletId);
-    context.read<CashierProductCubit>().findAll(
+    await context.read<CashierOrderCubit>().findAll();
+    await context
+        .read<CashierCategoryCubit>()
+        .findAll(outletId: authState.outletId);
+    await context.read<CashierProductCubit>().findAll(
           outletId: authState.outletId,
           categoryId: filterState.categoryId,
           name: filterState.name,
