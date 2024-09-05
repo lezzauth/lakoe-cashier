@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:async';
 
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,6 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/payments/data/models/payment_method_return_model.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
@@ -25,9 +24,16 @@ class CashPaymentForm extends StatefulWidget {
 
 class _CashPaymentFormState extends State<CashPaymentForm> {
   final _formKey = GlobalKey<FormBuilderState>();
-  final List<int> _presets = [20000, 30000, 50000];
-
-  int? _selectedPreset;
+  final List<int> _presets = [
+    500,
+    1000,
+    2000,
+    5000,
+    10000,
+    20000,
+    50000,
+    100000
+  ];
 
   int _paidAmount = 0;
 
@@ -39,15 +45,7 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
   );
 
   int _getPaidAmount() {
-    int paidAmount = 0;
-
-    if (_selectedPreset == null) {
-      paidAmount = _paidAmount;
-    } else {
-      paidAmount = _selectedPreset!;
-    }
-
-    return paidAmount;
+    return _paidAmount;
   }
 
   int _getChange() {
@@ -57,10 +55,31 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
     return change;
   }
 
+  bool _showTextAmount = false;
+  double _textAmountOpacity = 0.0;
+  int _selectedPreset = 0;
+  Timer? _debounce;
+
+  void _onPresetSelected(int amount) {
+    setState(() {
+      _showTextAmount = true;
+      _selectedPreset = amount;
+      _textAmountOpacity = 1.0;
+      _paidAmount += amount;
+    });
+    _formKey.currentState?.fields["paidAmount"]?.didChange(
+        _paidAmountFormatter.formatString((_paidAmount).toString()));
+
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(seconds: 1), () {
+      setState(() {
+        _textAmountOpacity = 0.0; // Fade out the text
+      });
+    });
+  }
+
   void _onSubmit() {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
-      // dynamic value = _formKey.currentState?.value;
-
       Navigator.pop(
         context,
         CashPaymentMethodReturn(
@@ -88,7 +107,6 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
       onChanged: () {
         setState(() {
           _paidAmount = _paidAmountFormatter.getUnformattedValue().toInt();
-          _selectedPreset = null;
         });
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -104,64 +122,80 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 12),
-                  child: FormBuilderTextField(
-                    name: "paidAmount",
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [_paidAmountFormatter],
-                    decoration: InputDecoration(
-                      hintText: 'Rp Uang yang diterima',
-                      suffixIcon: _paidAmount > 0
-                          ? IconButton(
-                              onPressed: () {
-                                _formKey.currentState!.fields["paidAmount"]
-                                    ?.reset();
-                                setState(() {
-                                  _paidAmount = 0;
-                                });
-                              },
-                              icon: const Icon(
-                                Icons.close,
-                                size: 22,
-                                color: TColors.neutralDarkLightest,
-                              ),
-                              visualDensity: VisualDensity.compact,
-                            )
-                          : null,
-                    ),
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.transform((value) {
-                        return _paidAmountFormatter
-                            .getUnformattedValue()
-                            .toString();
-                      }, FormBuilderValidators.numeric()),
-                    ]),
-                    valueTransformer: (value) {
-                      return _paidAmountFormatter.getUnformattedValue();
-                    },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FormBuilderTextField(
+                        name: "paidAmount",
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [_paidAmountFormatter],
+                        decoration: InputDecoration(
+                          hintText: 'Rp Uang yang diterima',
+                          suffixIcon: _paidAmount > 0
+                              ? IconButton(
+                                  onPressed: () {
+                                    _formKey.currentState!.fields["paidAmount"]
+                                        ?.reset();
+                                    setState(() {
+                                      _paidAmount = 0;
+                                    });
+                                  },
+                                  icon: const Icon(
+                                    Icons.close,
+                                    size: 22,
+                                    color: TColors.neutralDarkLightest,
+                                  ),
+                                  visualDensity: VisualDensity.compact,
+                                )
+                              : null,
+                        ),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.transform((value) {
+                            return _paidAmountFormatter
+                                .getUnformattedValue()
+                                .toString();
+                          }, FormBuilderValidators.numeric()),
+                        ]),
+                        valueTransformer: (value) {
+                          return _paidAmountFormatter.getUnformattedValue();
+                        },
+                      ),
+                      if (_showTextAmount)
+                        AnimatedOpacity(
+                          opacity: _textAmountOpacity,
+                          duration: const Duration(milliseconds: 200),
+                          onEnd: () {
+                            setState(() {
+                              _showTextAmount = false;
+                            });
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 4),
+                            child: TextBodyS(
+                              "Uang sebanyak ${TFormatter.formatToRupiah(_selectedPreset)} telah ditambahkan.",
+                              color: TColors.neutralDarkLightest,
+                            ),
+                          ),
+                        )
+                    ],
                   ),
                 ),
                 Wrap(
                   direction: Axis.horizontal,
                   spacing: 8,
+                  runSpacing: 8,
                   children: _presets.map((preset) {
-                    bool selected = _selectedPreset == preset;
-                    return InputChip(
-                      label: !selected
-                          ? TextBodyS(
-                              TFormatter.formatToRupiah(preset),
-                            )
-                          : TextHeading5(
-                              TFormatter.formatToRupiah(preset),
-                              color: TColors.primary,
-                            ),
-                      selected: selected,
-                      onPressed: () {
-                        _formKey.currentState!.fields["paidAmount"]?.reset();
-                        setState(() {
-                          _selectedPreset = preset;
-                          _paidAmount = 0;
-                        });
-                      },
+                    return SizedBox(
+                      height: 32,
+                      child: InputChip(
+                        label: TextBodyS(
+                          "+ ${TFormatter.formatToRupiah(preset)}",
+                        ),
+                        selected: false,
+                        onPressed: () {
+                          _onPresetSelected(preset);
+                        },
+                      ),
                     );
                   }).toList(),
                 ),
