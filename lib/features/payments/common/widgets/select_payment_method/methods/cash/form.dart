@@ -72,6 +72,7 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
 
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(seconds: 1), () {
+      if (!mounted) return;
       setState(() {
         _textAmountOpacity = 0.0; // Fade out the text
       });
