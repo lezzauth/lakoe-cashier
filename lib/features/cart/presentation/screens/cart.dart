@@ -311,6 +311,11 @@ class _CartScreenState extends State<CartScreen> {
                                 itemCount: cartState.carts.length,
                                 itemBuilder: (context, index) {
                                   CartModel cart = cartState.carts[index];
+                                  String? image =
+                                      cart.product.images.elementAtOrNull(0);
+                                  image ??=
+                                      "https://placehold.co/88/png?text=[...]";
+
                                   return Container(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 12.0),
@@ -326,7 +331,7 @@ class _CartScreenState extends State<CartScreen> {
                                       name: cart.product.name,
                                       price: int.parse(cart.product.price),
                                       image: Image.network(
-                                        cart.product.images[0],
+                                        image,
                                         height: 44,
                                         width: 44,
                                         fit: BoxFit.cover,
