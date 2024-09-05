@@ -63,6 +63,23 @@ class _ProductMasterState extends State<ProductMaster> {
         );
   }
 
+  Future<void> _onGoToEditScreen(ProductModel product) async {
+    bool? updateProduct =
+        await Navigator.pushNamed(context, "/products/edit", arguments: product)
+            as bool?;
+
+    if (updateProduct != true) return;
+    onRefresh();
+  }
+
+  Future<void> _onGoToCreateScreen() async {
+    bool? newProduct =
+        await Navigator.pushNamed(context, "/products/new") as bool?;
+
+    if (newProduct != true) return;
+    onRefresh();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -159,11 +176,7 @@ class _ProductMasterState extends State<ProductMaster> {
 
                               return InkWell(
                                 onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    "/products/edit",
-                                    arguments: product,
-                                  );
+                                  _onGoToEditScreen(product);
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
@@ -215,11 +228,8 @@ class _ProductMasterState extends State<ProductMaster> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
-            onPressed: () async {
-              bool? newProduct =
-                  await Navigator.pushNamed(context, "/products/new") as bool?;
-              if (newProduct != true) return;
-              onRefresh();
+            onPressed: () {
+              _onGoToCreateScreen();
             },
             elevation: 0,
             child: const Icon(

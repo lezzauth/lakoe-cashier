@@ -136,10 +136,8 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                         decoration: const InputDecoration(
                           hintText: 'Rp 0',
                         ),
-                        initialValue: _priceFormatter.format.format(
-                            widget.initialValue["price"].runtimeType == String
-                                ? int.parse(widget.initialValue['price'])
-                                : 0),
+                        initialValue: _priceFormatter
+                            .formatString(widget.initialValue["price"] ?? "0"),
                         valueTransformer: (value) {
                           return _priceFormatter.getUnformattedValue().toInt();
                         },
@@ -200,12 +198,10 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                         decoration: const InputDecoration(
                           hintText: 'Rp 0',
                         ),
-                        initialValue: _modalFormatter.format.format(
-                            widget.initialValue["modal"].runtimeType == String
-                                ? int.parse(widget.initialValue['modal'])
-                                : 0),
+                        initialValue: _modalFormatter
+                            .formatString(widget.initialValue["modal"] ?? ""),
                         valueTransformer: (value) {
-                          return _priceFormatter.getUnformattedValue().toInt();
+                          return _modalFormatter.getUnformattedValue().toInt();
                         },
                       ),
                     ],

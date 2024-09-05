@@ -109,41 +109,97 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
   @override
   Widget build(BuildContext context) {
     bool isError = widget.errorText.isNotEmpty;
+    bool isEmptyValue = widget.value?.file == null && widget.value?.url == null;
 
     return GestureDetector(
       onTap: _pickFile,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          DottedBorder(
-            borderType: BorderType.RRect,
-            radius: const Radius.circular(12),
-            color: !isError ? TColors.primary : TColors.error,
-            dashPattern: const [4],
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(12)),
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: TColors.highlightLightest,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (isEmptyValue)
+                DottedBorder(
+                  borderType: BorderType.RRect,
+                  radius: const Radius.circular(12),
+                  color: !isError ? TColors.primary : TColors.error,
+                  dashPattern: const [4],
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: TColors.highlightLightest,
+                      ),
+                      height: 100,
+                      width: 100,
+                      child: _buildPreview(),
+                    ),
+                  ),
                 ),
-                height: 100,
-                width: 100,
-                child: _buildPreview(),
+              if (!isEmptyValue) ...[
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: TColors.highlightLightest,
+                    ),
+                    height: 100,
+                    width: 100,
+                    child: _buildPreview(),
+                  ),
+                ),
+              ],
+              if (widget.errorText.isNotEmpty)
+                Container(
+                  margin: const EdgeInsets.only(top: 4),
+                  child: SizedBox(
+                    width: 100,
+                    child: TextBodyS(
+                      widget.errorText,
+                      color: TColors.error,
+                    ),
+                  ),
+                )
+            ],
+          ),
+          if (!isEmptyValue)
+            Positioned(
+              top: -5,
+              right: -5,
+              child: GestureDetector(
+                onTap: () {
+                  if (widget.onChanged != null) {
+                    widget.onChanged!(ImagePickerValue());
+                    setState(() {
+                      _selectedFile = null;
+                    });
+                  }
+                },
+                child: Container(
+                  height: 24,
+                  width: 24,
+                  decoration: BoxDecoration(
+                      color: TColors.neutralLightLightest,
+                      border: Border.all(
+                        width: 1,
+                        color: TColors.error,
+                      ),
+                      borderRadius: BorderRadius.circular(24)),
+                  child: Container(
+                    height: 12,
+                    width: 12,
+                    alignment: Alignment.center,
+                    child: const UiIcons(
+                      TIcons.close,
+                      height: 12,
+                      width: 12,
+                      color: TColors.error,
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
-          if (widget.errorText.isNotEmpty)
-            Container(
-              margin: EdgeInsets.only(top: 4),
-              child: SizedBox(
-                width: 100,
-                child: TextBodyS(
-                  widget.errorText,
-                  color: TColors.error,
-                ),
-              ),
-            )
         ],
       ),
     );

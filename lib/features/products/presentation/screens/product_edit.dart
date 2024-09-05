@@ -105,7 +105,7 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
     return BlocListener<ProductMasterCubit, ProductMasterState>(
       listener: (context, state) {
         if (state is ProductMasterActionSuccess) {
-          Navigator.pop(context);
+          Navigator.pop(context, true);
         }
       },
       child: BlocBuilder<ProductMasterCubit, ProductMasterState>(

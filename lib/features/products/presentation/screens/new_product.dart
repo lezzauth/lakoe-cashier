@@ -43,7 +43,7 @@ class _NewProductScreenState extends State<NewProductScreen>
   }
 
   void changeTabIndex(int index) {
-    _tabController?.animateTo(index); // Or use _tabController?.index = index;
+    _tabController?.animateTo(index);
   }
 
   onSubmit() {
@@ -65,7 +65,6 @@ class _NewProductScreenState extends State<NewProductScreen>
         ..showSnackBar(
           snackBar,
         );
-
       changeTabIndex(0);
 
       return;
