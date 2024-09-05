@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
@@ -7,20 +8,40 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
-class CustomerDetailScreen extends StatefulWidget {
+class CustomerDetailScreen extends StatelessWidget {
   const CustomerDetailScreen({super.key});
 
   @override
-  State<CustomerDetailScreen> createState() => _CustomerDetailScreenState();
+  Widget build(BuildContext context) {
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) => switch (state) {
+        AuthReady() => const CustomerDetail(),
+        _ => const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+      },
+    );
+  }
 }
 
-class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
+class CustomerDetail extends StatefulWidget {
+  const CustomerDetail({super.key});
+
+  @override
+  State<CustomerDetail> createState() => _CustomerDetailState();
+}
+
+class _CustomerDetailState extends State<CustomerDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

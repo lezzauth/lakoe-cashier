@@ -13,6 +13,7 @@ import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashie
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
 import 'package:point_of_sales_cashier/features/home/data/arguments/open_cashier_pin_argument.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class FinalBalanceForm extends StatefulWidget {
   const FinalBalanceForm({super.key});
@@ -85,7 +86,8 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
                   child: FormBuilderTextField(
                     name: "finalBalance",
                     keyboardType: TextInputType.number,
-                    validator: FormBuilderValidators.required(),
+                    validator: FormBuilderValidators.required(
+                        errorText: ErrorTextStrings.required()),
                     inputFormatters: [_finalBalance],
                     decoration: const InputDecoration(
                       hintText: 'Rp 0',

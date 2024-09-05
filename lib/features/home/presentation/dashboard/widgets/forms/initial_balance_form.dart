@@ -7,6 +7,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/features/home/data/arguments/open_cashier_pin_argument.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class InitialBalanceForm extends StatefulWidget {
   const InitialBalanceForm({super.key});
@@ -65,7 +66,8 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
                   margin: const EdgeInsets.only(bottom: 8.0),
                   child: FormBuilderField<int>(
                       name: "initialBalance",
-                      validator: FormBuilderValidators.required(),
+                      validator: FormBuilderValidators.required(
+                          errorText: ErrorTextStrings.required()),
                       builder: (field) {
                         return TextField(
                           keyboardType: TextInputType.number,
