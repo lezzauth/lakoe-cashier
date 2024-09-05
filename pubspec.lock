@@ -672,7 +672,7 @@ packages:
     source: path
     version: "0.0.0"
   outlet_repository:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "packages/outlet_repository"
       relative: true

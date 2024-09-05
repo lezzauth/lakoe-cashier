@@ -12,7 +12,7 @@ class TFormatter {
     DateTime dateTime = DateTime.parse(isoDate).toLocal();
 
     String formattedDate =
-        DateFormat("${withDay ? "EEEE, " : ""} dd MMM yyyy - HH:mm", "id_ID")
+        DateFormat("${withDay ? "EEEE, " : ""}dd MMM yyyy - HH:mm", "id_ID")
             .format(dateTime);
     return formattedDate;
   }

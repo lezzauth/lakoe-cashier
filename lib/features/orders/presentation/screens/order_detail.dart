@@ -752,7 +752,7 @@ class CustomerAndTableInformation extends StatelessWidget {
             flex: 1,
             child: CardOrder(
               title: "Meja",
-              subTitle: "T-10 (Luar)",
+              subTitle: "Bebas",
               icon: UiIcons(
                 TIcons.tableRestaurant,
                 height: 20,
