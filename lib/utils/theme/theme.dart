@@ -7,6 +7,7 @@ import 'package:point_of_sales_cashier/utils/theme/custom_themes/elevated_button
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/outlined_button_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/switch_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/tab_bar_theme.dart';
+import 'package:point_of_sales_cashier/utils/theme/custom_themes/text_button_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/text_field_theme.dart';
 
 class TAppTheme {
@@ -32,6 +33,7 @@ class TAppTheme {
     tabBarTheme: TTabBarTheme.lightTheme,
     outlinedButtonTheme: TOutlinedButtonTheme.lightTheme,
     switchTheme: TSwitchTheme.lightTheme,
+    textButtonTheme: TTextButtonTheme.lightTheme,
   );
 
   static ThemeData darkTheme = ThemeData(

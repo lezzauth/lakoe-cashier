@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class TabContainer extends StatelessWidget implements PreferredSizeWidget {
-  const TabContainer({super.key, required this.tabs});
+  const TabContainer({super.key, required this.tabs, this.controller});
 
   final List<Widget> tabs;
+  final TabController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class TabContainer extends StatelessWidget implements PreferredSizeWidget {
             borderRadius: BorderRadius.circular(16.0),
           ),
           child: TabBar(
+            controller: controller,
             tabs: tabs,
           ),
         ),

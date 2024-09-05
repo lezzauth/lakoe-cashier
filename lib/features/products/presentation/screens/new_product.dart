@@ -13,6 +13,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/fo
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/product_information_form.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/stock_information_form.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:product_repository/product_repository.dart';
 
 class NewProductScreen extends StatefulWidget {
@@ -22,9 +23,28 @@ class NewProductScreen extends StatefulWidget {
   State<NewProductScreen> createState() => _NewProductScreenState();
 }
 
-class _NewProductScreenState extends State<NewProductScreen> {
+class _NewProductScreenState extends State<NewProductScreen>
+    with SingleTickerProviderStateMixin {
   final _productInformationFormKey = GlobalKey<FormBuilderState>();
   final _stockInformationFormKey = GlobalKey<FormBuilderState>();
+
+  TabController? _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController?.dispose();
+    super.dispose();
+  }
+
+  void changeTabIndex(int index) {
+    _tabController?.animateTo(index); // Or use _tabController?.index = index;
+  }
 
   onSubmit() {
     AuthState authState = context.read<AuthCubit>().state;
@@ -36,8 +56,8 @@ class _NewProductScreenState extends State<NewProductScreen> {
         _stockInformationFormKey.currentState?.saveAndValidate() ?? false;
 
     if (!isProductInformationValid) {
-      const snackBar = SnackBar(
-        content: Text('Product information validate error'),
+      SnackBar snackBar = SnackBar(
+        content: Text(ErrorTextStrings.formInvalid()),
         showCloseIcon: true,
       );
       ScaffoldMessenger.of(context)
@@ -45,13 +65,15 @@ class _NewProductScreenState extends State<NewProductScreen> {
         ..showSnackBar(
           snackBar,
         );
+
+      changeTabIndex(0);
 
       return;
     }
 
     if (!isStockInformationValid) {
-      const snackBar = SnackBar(
-        content: Text('Stock information validate error'),
+      SnackBar snackBar = SnackBar(
+        content: Text(ErrorTextStrings.formInvalid()),
         showCloseIcon: true,
       );
       ScaffoldMessenger.of(context)
@@ -59,6 +81,9 @@ class _NewProductScreenState extends State<NewProductScreen> {
         ..showSnackBar(
           snackBar,
         );
+      changeTabIndex(1);
+
+      return;
     }
 
     dynamic productInformationValue =
@@ -79,8 +104,11 @@ class _NewProductScreenState extends State<NewProductScreen> {
         categoryId: productInformationValue["categoryId"],
         unit: productInformationValue["unit"],
         outletId: authState.outletId,
-        sku: stockInformationValue["sku"],
-        stock: int.parse(stockInformationValue["stock"] ?? "0"),
+        sku:
+            stockInformationValue == null ? null : stockInformationValue["sku"],
+        stock: stockInformationValue == null
+            ? null
+            : int.parse(stockInformationValue["stock"] ?? "0"),
       ),
     );
   }
@@ -90,60 +118,56 @@ class _NewProductScreenState extends State<NewProductScreen> {
     return BlocListener<ProductMasterCubit, ProductMasterState>(
       listener: (context, state) {
         if (state is ProductMasterActionSuccess) {
-          Navigator.pop(
-            context,
-          );
+          Navigator.pop(context, true);
         }
       },
       child: BlocBuilder<ProductMasterCubit, ProductMasterState>(
         builder: (context, state) {
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              appBar: CustomAppbar(
-                title: "Produk Baru",
-                actions: [
-                  TextButton(
-                    onPressed: state is ProductMasterActionInProgress
-                        ? null
-                        : onSubmit,
-                    child: state is ProductMasterActionInProgress
-                        ? const SizedBox(
-                            height: 16,
-                            width: 16,
-                            child: CircularProgressIndicator(),
-                          )
-                        : const TextActionL(
-                            "SIMPAN",
-                            color: TColors.primary,
-                          ),
-                  )
+          bool isFormValid = state is! ProductMasterActionInProgress;
+          return Scaffold(
+            appBar: CustomAppbar(
+              title: "Produk Baru",
+              actions: [
+                TextButton(
+                  onPressed: isFormValid ? onSubmit : null,
+                  child: state is ProductMasterActionInProgress
+                      ? const SizedBox(
+                          height: 16,
+                          width: 16,
+                          child: CircularProgressIndicator(),
+                        )
+                      : const TextActionL(
+                          "SIMPAN",
+                          color: TColors.primary,
+                        ),
+                )
+              ],
+              bottom: TabContainer(
+                controller: _tabController,
+                tabs: const [
+                  TabItem(
+                    title: "Info Produk",
+                  ),
+                  TabItem(title: "Info Stok"),
                 ],
-                bottom: const TabContainer(
-                  tabs: [
-                    TabItem(
-                      title: "Info Produk",
-                    ),
-                    TabItem(title: "Info Stok"),
-                  ],
+              ),
+            ),
+            body: TabBarView(
+              controller: _tabController,
+              children: [
+                SingleChildScrollView(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: ProductInformationForm(
+                    formKey: _productInformationFormKey,
+                  ),
                 ),
-              ),
-              body: TabBarView(
-                children: [
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: ProductInformationForm(
-                      formKey: _productInformationFormKey,
-                    ),
+                SingleChildScrollView(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: StockInformationForm(
+                    formKey: _stockInformationFormKey,
                   ),
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: StockInformationForm(
-                      formKey: _stockInformationFormKey,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },

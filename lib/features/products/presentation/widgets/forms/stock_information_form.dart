@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class StockInformationForm extends StatefulWidget {
   final GlobalKey<FormBuilderState> formKey;
   final Map<String, dynamic> initialValue;
+  final Function()? onChanged;
 
   const StockInformationForm({
     super.key,
     required this.formKey,
     this.initialValue = const <String, dynamic>{},
+    this.onChanged,
   });
 
   @override
@@ -31,6 +35,8 @@ class _StockInformationFormState extends State<StockInformationForm>
     return FormBuilder(
       key: formKey,
       initialValue: widget.initialValue,
+      onChanged: widget.onChanged,
+      autovalidateMode: AutovalidateMode.always,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
@@ -46,6 +52,8 @@ class _StockInformationFormState extends State<StockInformationForm>
                     name: "sku",
                     decoration:
                         const InputDecoration(hintText: "Buat kode produk"),
+                    validator: FormBuilderValidators.required(
+                        errorText: ErrorTextStrings.required()),
                   ),
                 ],
               ),
@@ -105,6 +113,8 @@ class _StockInformationFormState extends State<StockInformationForm>
                         hintText: "Masukan jumlah stok saat ini",
                       ),
                       keyboardType: TextInputType.number,
+                      validator: FormBuilderValidators.required(
+                          errorText: ErrorTextStrings.required()),
                     ),
                   ],
                 ),

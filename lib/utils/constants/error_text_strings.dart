@@ -30,4 +30,8 @@ class ErrorTextStrings {
   static String url({String? name}) {
     return "Masukkan URL yang valid.";
   }
+
+  static String formInvalid() {
+    return "Form tidak valid.";
+  }
 }

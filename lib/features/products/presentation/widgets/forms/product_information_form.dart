@@ -1,6 +1,5 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
@@ -8,21 +7,22 @@ import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_cubit.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_state.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/category_field.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 class ProductInformationForm extends StatefulWidget {
   final GlobalKey<FormBuilderState> formKey;
   final Map<String, dynamic> initialValue;
+  final Function()? onChanged;
 
   const ProductInformationForm({
     super.key,
     required this.formKey,
     this.initialValue = const <String, dynamic>{},
+    this.onChanged,
   });
 
   @override
@@ -61,6 +61,8 @@ class _ProductInformationFormState extends State<ProductInformationForm>
     return FormBuilder(
       key: widget.formKey,
       initialValue: widget.initialValue,
+      onChanged: widget.onChanged,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -89,7 +91,8 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                           );
                         },
                         validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
+                          FormBuilderValidators.required(
+                              errorText: ErrorTextStrings.required()),
                         ]),
                       ),
                       const SizedBox(width: 16),
@@ -104,7 +107,8 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                               decoration: const InputDecoration(
                                 hintText: "Contoh: Es Teh",
                               ),
-                              validator: FormBuilderValidators.required(),
+                              validator: FormBuilderValidators.required(
+                                  errorText: ErrorTextStrings.required()),
                             ),
                           ],
                         ),
@@ -124,8 +128,8 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                       FormBuilderTextField(
                         name: "price",
                         validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
-                          // FormBuilderValidators.positiveNumber()
+                          FormBuilderValidators.required(
+                              errorText: ErrorTextStrings.required()),
                         ]),
                         keyboardType: TextInputType.number,
                         inputFormatters: [_priceFormatter],
@@ -191,10 +195,6 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                       ),
                       FormBuilderTextField(
                         name: "modal",
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
-                          // FormBuilderValidators.positiveNumber()
-                        ]),
                         keyboardType: TextInputType.number,
                         inputFormatters: [_modalFormatter],
                         decoration: const InputDecoration(
