@@ -92,6 +92,7 @@ class App extends StatelessWidget {
         darkTheme: TAppTheme.darkTheme,
         themeMode: ThemeMode.light,
         initialRoute: "/",
+        debugShowCheckedModeBanner: false,
         routes: {
           "/": (context) => const RedirectScreen(),
           "/on-boarding": (context) => const OnBoardingScreen(),

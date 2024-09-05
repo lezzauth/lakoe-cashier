@@ -5,6 +5,7 @@ import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class BusinessInformationForm extends StatefulWidget {
   const BusinessInformationForm({super.key});
@@ -34,7 +35,8 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
                 decoration: const InputDecoration(
                   hintText: "Contoh: Warung Madura",
                 ),
-                validator: FormBuilderValidators.required(),
+                validator: FormBuilderValidators.required(
+                    errorText: ErrorTextStrings.required()),
               ),
             ],
           ),
@@ -73,7 +75,8 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
                       }).toList(),
                     );
                   },
-                  validator: FormBuilderValidators.required(),
+                  validator: FormBuilderValidators.required(
+                      errorText: ErrorTextStrings.required()),
                 )
               ],
             ),
@@ -93,7 +96,8 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
                   hintText: "Cari alamat usaha",
                 ),
                 maxLines: 2,
-                validator: FormBuilderValidators.required(),
+                validator: FormBuilderValidators.required(
+                    errorText: ErrorTextStrings.required()),
               ),
             ],
           ),

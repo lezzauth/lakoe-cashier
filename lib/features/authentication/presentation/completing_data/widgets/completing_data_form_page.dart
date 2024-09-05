@@ -23,6 +23,8 @@ class CompletingDataFormPage extends StatefulWidget {
 class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
   final _formKey = GlobalKey<FormBuilderState>();
 
+  bool _isFormValid = false;
+
   onSubmit() {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       dynamic value = _formKey.currentState?.value;
@@ -48,18 +50,16 @@ class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
     }
   }
 
-  // _onChanged() {
-  //   bool isFormValid = _formKey.currentState?.validate() ?? false;
-  //   setState(() {
-  //     _isFormValid = isFormValid;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
       key: _formKey,
-      // onChanged: _onChanged,
+      onChanged: () {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          _isFormValid = _formKey.currentState?.isValid ?? false;
+          setState(() {});
+        });
+      },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       initialValue: {
         "phoneNumber": widget.phoneNumber,
@@ -91,7 +91,7 @@ class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
               child: ElevatedButton(
-                onPressed: onSubmit,
+                onPressed: _isFormValid ? onSubmit : null,
                 child: Text(
                   "Lanjutkan",
                   style: GoogleFonts.inter(),

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +9,7 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/widgets/forms/terms_agreement_checkbox.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
@@ -38,19 +37,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   onDotNavigation(int index) {
     pageController.jumpToPage(index);
-  }
-
-  void _onChanged() {
-    bool isFormValid = _formKey.currentState?.isValid ?? false;
-
-    if ((_formKey.currentState?.instantValue["isTermsAgreementAgreed"] ??
-        false)) {
-      isFormValid = _formKey.currentState?.validate() ?? false;
-    }
-
-    setState(() {
-      _isFormValid = isFormValid;
-    });
   }
 
   onSubmit() {
@@ -94,7 +80,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           builder: (context, state) {
             return FormBuilder(
               key: _formKey,
-              onChanged: _onChanged,
+              onChanged: () {
+                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                  _isFormValid = _formKey.currentState?.isValid ?? false;
+                  setState(() {});
+                });
+              },
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
@@ -193,9 +184,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                         errorText:
                                             "Nomor dimulai dengan angka 8"),
                                     FormBuilderValidators.maxLength(12,
-                                        errorText: "Maksimal 12 angka"),
+                                        errorText: ErrorTextStrings.maxLength(
+                                            maxLength: 12, isNumber: true)),
                                     FormBuilderValidators.minLength(9,
-                                        errorText: "Minimal 9 angka"),
+                                        errorText: ErrorTextStrings.minLength(
+                                            minLength: 9, isNumber: true)),
                                   ]),
                                 ),
                               ),
