@@ -145,6 +145,7 @@ class OrderItemCustomer with _$OrderItemCustomer {
 @freezed
 class OrderItemResponse with _$OrderItemResponse {
   const factory OrderItemResponse({
+    required String id,
     required int no,
     required String price,
     required String paymentStatus,

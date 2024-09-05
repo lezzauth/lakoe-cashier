@@ -18,6 +18,10 @@ abstract class CashierRepository {
     SaveOrderDto saveOrderDto,
     CompleteOrderDto completeOrderDto,
   );
+  Future<CompleteOrderResponse> completeOrder(
+    String id,
+    CompleteOrderDto dto,
+  );
   Future<List<OrderItemResponse>> findAllOrder(FindAllOrderDto? dto);
 }
 
@@ -133,6 +137,21 @@ class CashierRepositoryImpl implements CashierRepository {
     final response = await _dio.post(
       "$_baseURL/orders/${saveOrderResponse.id}/complete",
       data: completeOrderDto.toJson(),
+      options: options,
+    );
+    return CompleteOrderResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CompleteOrderResponse> completeOrder(
+    String id,
+    CompleteOrderDto dto,
+  ) async {
+    final Options options = await _getOptions();
+
+    final response = await _dio.post(
+      "$_baseURL/orders/${id}/complete",
+      data: dto.toJson(),
       options: options,
     );
     return CompleteOrderResponse.fromJson(response.data);

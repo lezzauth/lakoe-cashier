@@ -41,6 +41,8 @@ dependencies:
     path: packages/product_repository
   customer_repository:
     path: packages/customer_repository
+  order_repository:
+    path: packages/order_repository
 
   token_provider:
     path: packages/token_provider

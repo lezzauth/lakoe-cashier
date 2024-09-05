@@ -194,6 +194,7 @@ Map<String, dynamic> _$$OrderItemCustomerImplToJson(
 _$OrderItemResponseImpl _$$OrderItemResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$OrderItemResponseImpl(
+      id: json['id'] as String,
       no: (json['no'] as num).toInt(),
       price: json['price'] as String,
       paymentStatus: json['paymentStatus'] as String,
@@ -210,6 +211,7 @@ _$OrderItemResponseImpl _$$OrderItemResponseImplFromJson(
 Map<String, dynamic> _$$OrderItemResponseImplToJson(
         _$OrderItemResponseImpl instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'no': instance.no,
       'price': instance.price,
       'paymentStatus': instance.paymentStatus,

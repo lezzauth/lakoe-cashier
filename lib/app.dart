@@ -27,6 +27,7 @@ import 'package:point_of_sales_cashier/features/customers/presentation/screens/n
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/open_cashier_pin.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
+import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_detail.dart';
@@ -64,6 +65,9 @@ class App extends StatelessWidget {
         // Order Master
         BlocProvider(create: (context) => OrderMasterCubit()),
         BlocProvider(create: (context) => OrderMasterFilterCubit()),
+
+        // Order Detail
+        BlocProvider(create: (context) => OrderDetailCubit()),
 
         // Customer Master
         BlocProvider(create: (context) => CustomerMasterCubit()),

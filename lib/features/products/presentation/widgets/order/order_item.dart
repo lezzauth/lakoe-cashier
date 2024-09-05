@@ -10,17 +10,20 @@ class OrderItem extends StatelessWidget {
   final int no;
   final String customerName;
   final String tableName;
+  final Function()? onTap;
 
   const OrderItem({
     super.key,
     this.customerName = "",
     this.tableName = "",
+    this.onTap,
     required this.no,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),

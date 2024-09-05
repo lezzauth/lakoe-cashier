@@ -10,12 +10,14 @@ import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 class OrderSummary extends StatelessWidget {
   final double total;
   final double tax;
+  final double orderTotal;
   final bool isPaid;
   final Function()? onDiscountChanged;
 
   const OrderSummary({
     super.key,
     required this.total,
+    required this.orderTotal,
     required this.tax,
     this.onDiscountChanged,
     this.isPaid = false,
@@ -24,7 +26,7 @@ class OrderSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double discount = 0;
-    double totalBill = (total - discount) + tax;
+    double totalBill = (total - discount);
     return Stack(
       children: [
         Column(
@@ -45,23 +47,23 @@ class OrderSummary extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const TextBodyM("Total Pesanan"),
-                      TextHeading4(TFormatter.formatToRupiah(total)),
+                      TextHeading4(TFormatter.formatToRupiah(orderTotal)),
                     ],
                   ),
                   const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const TextBodyM("Diskon"),
-                      GestureDetector(
-                        child: const TextHeading4(
-                          "Gunakan Poin",
-                          color: TColors.primary,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     const TextBodyM("Diskon"),
+                  //     GestureDetector(
+                  //       child: const TextHeading4(
+                  //         "Gunakan Poin",
+                  //         color: TColors.primary,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

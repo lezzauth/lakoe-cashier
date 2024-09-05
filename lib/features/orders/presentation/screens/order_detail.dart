@@ -1,215 +1,340 @@
+import 'package:cashier_repository/cashier_repository.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_xs.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
+import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
+import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_state.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card_order.dart';
 
 import 'package:point_of_sales_cashier/features/orders/common/widgets/summary/order_summary.dart';
-import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/ghost_order_type_tag.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/solid_order_type_tag.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/tags/ghost_order_online_status_tag.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/tags/solid_order_online_status_tag.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
+import 'package:point_of_sales_cashier/features/payments/data/models/payment_method_return_model.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
-class OrderDetailScreen extends StatefulWidget {
+class OrderDetailScreen extends StatelessWidget {
   const OrderDetailScreen({super.key});
 
   @override
-  State<OrderDetailScreen> createState() => _OrderDetailScreenState();
+  Widget build(BuildContext context) {
+    return const OrderDetail();
+  }
 }
 
-class _OrderDetailScreenState extends State<OrderDetailScreen> {
+class OrderDetail extends StatefulWidget {
+  const OrderDetail({super.key});
+
+  @override
+  State<OrderDetail> createState() => _OrderDetailState();
+}
+
+class _OrderDetailState extends State<OrderDetail> {
+  Future<void> _onRefresh() async {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        final arguments =
+            ModalRoute.of(context)!.settings.arguments as OrderDetailArgument;
+        await context.read<OrderDetailCubit>().findOne(arguments.id);
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _onRefresh();
+  }
+
+  Future<void> onCashPaid({
+    required CashPaymentMethodReturn data,
+    required OrderModel order,
+  }) async {
+    await context.read<OrderDetailCubit>().completeOrder(
+          order.id,
+          CompleteOrderDto(
+            paymentMethod: "CASH",
+            paidAmount: data.paidAmount,
+            change: data.change,
+            customerId: order.customerId,
+          ),
+        );
+  }
+
+  Future<void> _onCompleteOrder({
+    required int amount,
+    required OrderModel order,
+  }) async {
+    final data = await showModalBottomSheet<PaymentMethodReturnModel>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (context) {
+        return SelectPaymentMethod(
+          amount: amount,
+        );
+      },
+    );
+
+    if (data is CashPaymentMethodReturn) {
+      await onCashPaid(data: data, order: order);
+    }
+  }
+
+  double _getOrderTotal(OrderModel order) {
+    return order.items.fold(0, (sum, item) {
+      return sum + double.parse(item.price);
+    });
+  }
+
+  double _getTaxTotal(OrderModel order) {
+    OrderCharge? taxChargeItem =
+        order.charges.firstWhereOrNull((charge) => charge.type == "TAX");
+    OrderCharge? serviceFeeChargeItem = order.charges
+        .firstWhereOrNull((charge) => charge.type == "SERVICE_FEE");
+
+    String tax = taxChargeItem?.amount ?? "0";
+    String serviceFee = serviceFeeChargeItem?.amount ?? "0";
+
+    return double.parse(tax) + double.parse(serviceFee);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)!.settings.arguments as OrderDetailArgument;
-    bool isPaid = false;
-
-    onCompleteOrder() {
-      print('onCompleteOrder');
-      showModalBottomSheet(
-        context: context,
-        showDragHandle: true,
-        isScrollControlled: true,
-        builder: (context) {
-          return SelectPaymentMethod(
-            amount: 0,
-          );
-        },
-      );
-    }
-
-    return Scaffold(
-      appBar: CustomAppbar(
-        title: "Order #362${arguments.id}",
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const UiIcons(
-              TIcons.bill,
-              color: TColors.primary,
-              height: 20,
-              width: 20,
-            ),
-          )
-        ],
-      ),
-      body: Scrollbar(
-        child: RefreshIndicator(
-          onRefresh: () async {
-            return await Future.delayed(Duration(seconds: 1));
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<OrderDetailCubit, OrderDetailState>(
+          listener: (context, state) {
+            if (state is OrderDetailActionSuccess) {
+              Navigator.popAndPushNamed(
+                context,
+                "/payments/success_confirmation",
+                arguments: state.response,
+              );
+            }
           },
-          backgroundColor: TColors.neutralLightLightest,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+        ),
+      ],
+      child: BlocBuilder<OrderDetailCubit, OrderDetailState>(
+          builder: (context, state) => switch (state) {
+                OrderDetailLoadSuccess(:final order) => Scaffold(
+                    appBar: CustomAppbar(
+                      title: "Order #${order.no}",
+                      actions: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: const UiIcons(
+                            TIcons.bill,
+                            color: TColors.primary,
+                            height: 20,
+                            width: 20,
+                          ),
+                        )
+                      ],
+                    ),
+                    body: Scrollbar(
+                      child: RefreshIndicator(
+                        onRefresh: _onRefresh,
+                        backgroundColor: TColors.neutralLightLightest,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              padding: const EdgeInsets.all(12),
-                              margin: const EdgeInsets.only(bottom: 13),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  width: 1,
-                                  color: TColors.neutralLightMedium,
-                                ),
-                                color: TColors.neutralLightLight,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  switch (arguments.type) {
-                                    "online" => SolidOrderOnlineStatusTag(
-                                        status: arguments.orderOnlineStatus,
+                            Expanded(
+                              child: CustomScrollView(
+                                slivers: [
+                                  SliverToBoxAdapter(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.all(12),
+                                            margin: const EdgeInsets.only(
+                                                bottom: 13),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                width: 1,
+                                                color:
+                                                    TColors.neutralLightMedium,
+                                              ),
+                                              color: TColors.neutralLightLight,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                switch (order.source) {
+                                                  "QRONLINE" =>
+                                                    SolidOrderOnlineStatusTag(
+                                                      status: order.type,
+                                                    ),
+                                                  _ => SolidOrderTypeTag(
+                                                      tag: order.type,
+                                                    )
+                                                },
+                                                Expanded(
+                                                  child: TextBodyM(
+                                                    TFormatter.orderDate(
+                                                      order.createdAt,
+                                                      withDay: true,
+                                                    ),
+                                                    color: TColors
+                                                        .neutralDarkLight,
+                                                    textAlign: TextAlign.end,
+                                                    maxLines: 2,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          switch (order.source) {
+                                            "QRONLINE" =>
+                                              const ContactWhatsapp(),
+                                            _ => CustomerAndTableInformation(
+                                                customer: order.customer,
+                                              ),
+                                          },
+                                          Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 8.0),
+                                            child: const TextHeading3(
+                                              "Pesanan",
+                                              color: TColors.neutralDarkDarkest,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    _ => SolidOrderTypeTag(
-                                        tag: arguments.orderType)
-                                  },
-                                  Expanded(
-                                    child: const TextBodyM(
-                                      "Rabu, 28 Agu 2014 - 20:18",
-                                      color: TColors.neutralDarkLight,
-                                      textAlign: TextAlign.end,
-                                      maxLines: 2,
                                     ),
-                                  )
+                                  ),
+                                  SliverList.builder(
+                                    itemCount: order.items.length,
+                                    itemBuilder: (context, index) {
+                                      OrderItem orderItem =
+                                          order.items.elementAt(index);
+                                      OrderItemProduct product =
+                                          orderItem.product;
+                                      String? image =
+                                          product.images.elementAtOrNull(0);
+                                      image ??=
+                                          "https://placehold.co/88/png?text=[...]";
+
+                                      return Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 12.0,
+                                          horizontal: 16.0,
+                                        ),
+                                        decoration: const BoxDecoration(
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              width: 1,
+                                              color: TColors.neutralLightMedium,
+                                            ),
+                                          ),
+                                        ),
+                                        child: BaseProductItem(
+                                          image: Image.network(
+                                            image,
+                                            height: 44,
+                                            width: 44,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          name: product.name,
+                                          price: int.parse(product.price),
+                                          noteAction: ProductNoteAction(
+                                            notes: orderItem.notes ?? "",
+                                            readOnly: true,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  SliverToBoxAdapter(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: OrderSummary(
+                                        orderTotal: _getOrderTotal(order),
+                                        tax: _getTaxTotal(order),
+                                        total: double.parse(order.price),
+                                        isPaid: order.paymentStatus == "PAID",
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                            switch (arguments.type) {
-                              "online" => const ContactWhatsapp(),
-                              _ => const CustomerAndTableInformation(),
-                            },
-                            Container(
-                              margin: const EdgeInsets.only(bottom: 8.0),
-                              child: TextHeading3(
-                                "Pesanan",
-                                color: TColors.neutralDarkDarkest,
+                            if (order.source == "CASHIER")
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 16),
+                                child: OrderOutletAction(
+                                  isPaid: order.paymentStatus == "PAID",
+                                  type: order.type,
+                                  onAddMoreItem: () {},
+                                  onComplete: () {
+                                    _onCompleteOrder(
+                                      amount: int.parse(order.price),
+                                      order: order,
+                                    );
+                                  },
+                                  onPrint: () {},
+                                  onShare: () {},
+                                ),
                               ),
-                            ),
+                            if (order.source == "QRONLINE")
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 16),
+                                child: OrderOnlineAction(
+                                  status: order.type,
+                                  onComplete: () {},
+                                  onDeclined: () {},
+                                  onPrint: () {},
+                                  onProcessed: () {},
+                                  onShare: () {},
+                                ),
+                              ),
                           ],
                         ),
                       ),
                     ),
-                    SliverList.builder(
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12.0,
-                            horizontal: 16.0,
-                          ),
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                width: 1,
-                                color: TColors.neutralLightMedium,
-                              ),
-                            ),
-                          ),
-                          child: BaseProductItem(
-                            image: Image.network(
-                              "https://picsum.photos/200/300?random=$index",
-                              height: 44,
-                              width: 44,
-                              fit: BoxFit.cover,
-                            ),
-                            name: "Makanan ${index + 1}",
-                            price: 20000,
-                            noteAction: ProductNoteAction(
-                              notes: index == 0
-                                  ? "Ini adl isi dari sebuah catatan Ini adl isi dari sebuah catatan"
-                                  : "",
-                              readOnly: true,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: OrderSummary(
-                          total: 20000,
-                          tax: 0,
-                          isPaid: isPaid,
-                        ),
+                  ),
+                OrderDetailLoadFailure(:final error) => Scaffold(
+                    body: Center(
+                      child: TextBodyS(
+                        error,
+                        color: TColors.error,
                       ),
                     ),
-                  ],
-                ),
-              ),
-              if (arguments.type == "outlet")
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                  child: OrderOutletAction(
-                    isPaid: isPaid,
-                    type: arguments.orderType,
-                    onAddMoreItem: () {},
-                    onComplete: onCompleteOrder,
-                    onPrint: () {},
-                    onShare: () {},
                   ),
-                ),
-              if (arguments.type == "online")
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                  child: OrderOnlineAction(
-                    status: arguments.orderOnlineStatus,
-                    onComplete: onCompleteOrder,
-                    onDeclined: () {},
-                    onPrint: () {},
-                    onProcessed: () {},
-                    onShare: () {},
+                _ => const Scaffold(
+                    body: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
-                ),
-            ],
-          ),
-        ),
-      ),
+              }),
     );
   }
 }
@@ -597,7 +722,10 @@ class ContactWhatsapp extends StatelessWidget {
 class CustomerAndTableInformation extends StatelessWidget {
   const CustomerAndTableInformation({
     super.key,
+    this.customer,
   });
+
+  final OrderCustomer? customer;
 
   @override
   Widget build(BuildContext context) {
@@ -610,8 +738,8 @@ class CustomerAndTableInformation extends StatelessWidget {
             flex: 1,
             child: CardOrder(
               title: "Pelanggan",
-              subTitle: "Umum",
-              icon: UiIcons(
+              subTitle: customer == null ? "Umum" : customer!.name,
+              icon: const UiIcons(
                 TIcons.profile,
                 height: 20,
                 width: 20,
@@ -619,7 +747,7 @@ class CustomerAndTableInformation extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: 12.0),
+          const SizedBox(width: 12.0),
           Flexible(
             flex: 1,
             child: CardOrder(

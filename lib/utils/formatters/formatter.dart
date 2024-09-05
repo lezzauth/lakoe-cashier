@@ -8,11 +8,12 @@ class TFormatter {
         .format(amount);
   }
 
-  static String orderDate(String isoDate) {
+  static String orderDate(String isoDate, {bool withDay = false}) {
     DateTime dateTime = DateTime.parse(isoDate).toLocal();
 
     String formattedDate =
-        DateFormat("dd MMM yyyy - HH:mm", "id_ID").format(dateTime);
+        DateFormat("${withDay ? "EEEE, " : ""} dd MMM yyyy - HH:mm", "id_ID")
+            .format(dateTime);
     return formattedDate;
   }
 }

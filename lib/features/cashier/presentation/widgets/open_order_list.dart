@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_state.dart';
+import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/order/order_item.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/order/order_list_button.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -24,10 +25,24 @@ class CashierOpenOrderList extends StatelessWidget {
               spacing: 8.0,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                const OrderListButton(),
+                OrderListButton(
+                  onTap: () async {
+                    await Navigator.pushNamed(context, "/orders");
+                    context.read<CashierOrderCubit>().findAll();
+                  },
+                ),
                 ...orders.map(
                   (order) => OrderItem(
                     no: order.no,
+                    customerName: order.customer?.name ?? "Umum",
+                    onTap: () async {
+                      await Navigator.pushNamed(
+                        context,
+                        "/orders/detail",
+                        arguments: OrderDetailArgument(id: order.id),
+                      );
+                      context.read<CashierOrderCubit>().findAll();
+                    },
                   ),
                 ),
               ],

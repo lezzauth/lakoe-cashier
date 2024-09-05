@@ -50,8 +50,6 @@ class _OrderOnlineTabState extends State<OrderOnlineTab> {
                                 "/orders/detail",
                                 arguments: OrderDetailArgument(
                                   id: index.toString(),
-                                  type: "online",
-                                  orderOnlineStatus: "declined",
                                 ),
                               );
                             },

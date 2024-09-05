@@ -2097,6 +2097,7 @@ OrderItemResponse _$OrderItemResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OrderItemResponse {
+  String get id => throw _privateConstructorUsedError;
   int get no => throw _privateConstructorUsedError;
   String get price => throw _privateConstructorUsedError;
   String get paymentStatus => throw _privateConstructorUsedError;
@@ -2119,7 +2120,8 @@ abstract class $OrderItemResponseCopyWith<$Res> {
       _$OrderItemResponseCopyWithImpl<$Res, OrderItemResponse>;
   @useResult
   $Res call(
-      {int no,
+      {String id,
+      int no,
       String price,
       String paymentStatus,
       String customerType,
@@ -2144,6 +2146,7 @@ class _$OrderItemResponseCopyWithImpl<$Res, $Val extends OrderItemResponse>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? no = null,
     Object? price = null,
     Object? paymentStatus = null,
@@ -2154,6 +2157,10 @@ class _$OrderItemResponseCopyWithImpl<$Res, $Val extends OrderItemResponse>
     Object? table = freezed,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       no: null == no
           ? _value.no
           : no // ignore: cast_nullable_to_non_nullable
@@ -2208,7 +2215,8 @@ abstract class _$$OrderItemResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int no,
+      {String id,
+      int no,
       String price,
       String paymentStatus,
       String customerType,
@@ -2232,6 +2240,7 @@ class __$$OrderItemResponseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? no = null,
     Object? price = null,
     Object? paymentStatus = null,
@@ -2242,6 +2251,10 @@ class __$$OrderItemResponseImplCopyWithImpl<$Res>
     Object? table = freezed,
   }) {
     return _then(_$OrderItemResponseImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       no: null == no
           ? _value.no
           : no // ignore: cast_nullable_to_non_nullable
@@ -2279,7 +2292,8 @@ class __$$OrderItemResponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OrderItemResponseImpl implements _OrderItemResponse {
   const _$OrderItemResponseImpl(
-      {required this.no,
+      {required this.id,
+      required this.no,
       required this.price,
       required this.paymentStatus,
       required this.customerType,
@@ -2291,6 +2305,8 @@ class _$OrderItemResponseImpl implements _OrderItemResponse {
   factory _$OrderItemResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$OrderItemResponseImplFromJson(json);
 
+  @override
+  final String id;
   @override
   final int no;
   @override
@@ -2310,7 +2326,7 @@ class _$OrderItemResponseImpl implements _OrderItemResponse {
 
   @override
   String toString() {
-    return 'OrderItemResponse(no: $no, price: $price, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, customer: $customer, table: $table)';
+    return 'OrderItemResponse(id: $id, no: $no, price: $price, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, customer: $customer, table: $table)';
   }
 
   @override
@@ -2318,6 +2334,7 @@ class _$OrderItemResponseImpl implements _OrderItemResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OrderItemResponseImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.no, no) || other.no == no) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.paymentStatus, paymentStatus) ||
@@ -2335,6 +2352,7 @@ class _$OrderItemResponseImpl implements _OrderItemResponse {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      id,
       no,
       price,
       paymentStatus,
@@ -2361,7 +2379,8 @@ class _$OrderItemResponseImpl implements _OrderItemResponse {
 
 abstract class _OrderItemResponse implements OrderItemResponse {
   const factory _OrderItemResponse(
-      {required final int no,
+      {required final String id,
+      required final int no,
       required final String price,
       required final String paymentStatus,
       required final String customerType,
@@ -2373,6 +2392,8 @@ abstract class _OrderItemResponse implements OrderItemResponse {
   factory _OrderItemResponse.fromJson(Map<String, dynamic> json) =
       _$OrderItemResponseImpl.fromJson;
 
+  @override
+  String get id;
   @override
   int get no;
   @override

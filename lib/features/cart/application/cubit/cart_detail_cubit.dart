@@ -52,6 +52,7 @@ class CartDetailCubit extends Cubit<CartDetailState> {
             (cart) => OrderItemDto(
               quantity: cart.quantity,
               productId: cart.product.id,
+              notes: cart.notes ?? "",
             ),
           )
           .toList(),
