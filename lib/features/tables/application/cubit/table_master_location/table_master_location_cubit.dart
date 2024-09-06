@@ -14,7 +14,7 @@ class TableMasterLocationCubit extends Cubit<TableMasterLocationState> {
       final locations = await _tableLocationRepository.findAll(dto);
       emit(TableMasterLocationLoadSuccess(locations: locations));
     } catch (e) {
-      emit(TableMasterLocationFailure(e.toString()));
+      emit(TableMasterLocationLoadFailure(e.toString()));
     }
   }
 }

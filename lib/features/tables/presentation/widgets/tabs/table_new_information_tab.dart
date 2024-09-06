@@ -6,8 +6,8 @@ class TableNewInformationTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.only(top: 16),
+    return const SingleChildScrollView(
+      padding: EdgeInsets.only(top: 16),
       child: TableInformationForm(),
     );
   }

@@ -10,12 +10,12 @@ import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 class TableLocationFilter extends StatefulWidget {
   final String? value;
-  final ValueChanged<String>? onChanged;
+  final ValueChanged<String?> onChanged;
 
   const TableLocationFilter({
     super.key,
     this.value,
-    this.onChanged,
+    required this.onChanged,
   });
 
   @override
@@ -37,12 +37,16 @@ class _TableLocationFilterState extends State<TableLocationFilter> {
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           ChoiceChip(
-            label: TextHeading5(
-              "Semua",
-              color: TColors.primary,
-            ),
-            selected: true,
-            onSelected: (value) {},
+            label: isSelectAll
+                ? const TextHeading5(
+                    "Semua",
+                    color: TColors.primary,
+                  )
+                : const TextBodyS("Semua"),
+            selected: isSelectAll,
+            onSelected: (value) {
+              widget.onChanged(null);
+            },
           ),
 
           BlocBuilder<TableMasterLocationCubit, TableMasterLocationState>(
@@ -51,14 +55,22 @@ class _TableLocationFilterState extends State<TableLocationFilter> {
                   direction: Axis.horizontal,
                   spacing: 8,
                   children: locations.map((location) {
+                    bool selected = location.id == widget.value;
                     return ChoiceChip(
-                      label: TextBodyS(location.name),
-                      selected: false,
-                      onSelected: (value) {},
+                      label: selected
+                          ? TextHeading5(
+                              location.name,
+                              color: TColors.primary,
+                            )
+                          : TextBodyS(location.name),
+                      selected: selected,
+                      onSelected: (value) {
+                        widget.onChanged(location.id);
+                      },
                     );
                   }).toList(),
                 ),
-              TableMasterLocationFailure() => const SizedBox(
+              TableMasterLocationLoadFailure() => const SizedBox(
                   height: 16,
                   width: 16,
                   child: UiIcons(

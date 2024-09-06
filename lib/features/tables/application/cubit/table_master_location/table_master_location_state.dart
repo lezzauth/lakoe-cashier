@@ -22,10 +22,10 @@ final class TableMasterLocationLoadSuccess extends TableMasterLocationState {
   List<Object?> get props => [locations];
 }
 
-final class TableMasterLocationFailure extends TableMasterLocationState {
+final class TableMasterLocationLoadFailure extends TableMasterLocationState {
   final String error;
 
-  TableMasterLocationFailure(this.error);
+  TableMasterLocationLoadFailure(this.error);
 
   @override
   List<Object?> get props => [error];

@@ -8,12 +8,13 @@ import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card
 import 'package:point_of_sales_cashier/features/tables/common/widgets/preview_qr_table.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/preview_qr_table.dart';
 import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
-import 'package:point_of_sales_cashier/utils/helpers/preview_qr_table_helper.dart';
+import 'package:table_repository/table_repository.dart';
 
 class TableDetailPage extends StatelessWidget {
-  const TableDetailPage({super.key});
+  const TableDetailPage({super.key, required this.table});
+
+  final TableModel table;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class TableDetailPage extends StatelessWidget {
                     margin: const EdgeInsets.only(bottom: 16),
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextHeading2(
-                      "Detail Meja T-01",
+                      "Detail Meja ${table.no}",
                       color: TColors.neutralDarkDarkest,
                     ),
                   ),
@@ -52,8 +53,8 @@ class TableDetailPage extends StatelessWidget {
                                 flex: 1,
                                 child: CardOrder(
                                   title: "Kapasitas",
-                                  subTitle: "4 Orang",
-                                  icon: UiIcons(
+                                  subTitle: "${table.capacity} Orang",
+                                  icon: const UiIcons(
                                     TIcons.profile,
                                     height: 20,
                                     width: 20,
@@ -61,7 +62,7 @@ class TableDetailPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 12.0),
+                              const SizedBox(width: 12.0),
                               Flexible(
                                 flex: 1,
                                 child: CardOrder(
@@ -79,15 +80,15 @@ class TableDetailPage extends StatelessWidget {
                           ),
                         ),
 
-                        TextHeading3(
+                        const TextHeading3(
                           "Tampilan QR Order",
                           color: TColors.neutralDarkDarkest,
                         ),
 
                         PreviewQrTable(
-                          "aowkawiaweijeiaosdkawoeioeie",
-                          color: HexColor("#06B6D4"),
-                          tableNumber: "T-12",
+                          table.id,
+                          // color: HexColor("#06B6D4"),
+                          tableNumber: table.no,
                         ),
                         // Container(
                         //   decoration: BoxDecoration(
