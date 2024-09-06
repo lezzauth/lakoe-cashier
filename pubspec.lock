@@ -1000,6 +1000,13 @@ packages:
       relative: true
     source: path
     version: "0.0.0"
+  table_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/table_repository"
+      relative: true
+    source: path
+    version: "0.0.0"
   term_glyph:
     dependency: transitive
     description:
