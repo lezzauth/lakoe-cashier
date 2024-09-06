@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:customer_repository/customer_repository.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -261,48 +262,80 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                           ),
                           SliverToBoxAdapter(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const TextHeading3("Jenis Pesanan"),
-                                SingleChildScrollView(
-                                  child: Wrap(
-                                    direction: Axis.horizontal,
-                                    spacing: 8,
-                                    children: _orderType.map((orderType) {
-                                      bool selected = _type == orderType.value;
-
-                                      return InputChip(
-                                        label: !selected
-                                            ? TextBodyS(orderType.label)
-                                            : TextHeading5(
-                                                orderType.label,
-                                                color: TColors.primary,
-                                              ),
-                                        selected: selected,
-                                        onSelected: (value) {
-                                          _onOrderTypeChanged(orderType.value);
-                                        },
-                                      );
-                                    }).toList(),
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 12),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(bottom: 8),
+                                    child: const TextHeading3("Jenis Pesanan"),
                                   ),
-                                )
-                              ],
+                                  SingleChildScrollView(
+                                    child: Wrap(
+                                      direction: Axis.horizontal,
+                                      spacing: 8,
+                                      children: _orderType.map((orderType) {
+                                        bool selected =
+                                            _type == orderType.value;
+
+                                        return InputChip(
+                                          label: Wrap(
+                                            direction: Axis.horizontal,
+                                            alignment: WrapAlignment.center,
+                                            spacing: 8,
+                                            children: [
+                                              UiIcons(
+                                                orderType.value == "DINEIN"
+                                                    ? TIcons.tableRestaurant
+                                                    : TIcons.bag,
+                                                height: 16,
+                                                width: 16,
+                                                color: selected
+                                                    ? TColors.primary
+                                                    : TColors
+                                                        .neutralDarkDarkest,
+                                              ),
+                                              !selected
+                                                  ? TextBodyS(orderType.label)
+                                                  : TextHeading5(
+                                                      orderType.label,
+                                                      color: TColors.primary,
+                                                    )
+                                            ],
+                                          ),
+                                          selected: selected,
+                                          onSelected: (value) {
+                                            _onOrderTypeChanged(
+                                                orderType.value);
+                                          },
+                                        );
+                                      }).toList(),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           SliverToBoxAdapter(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const TextHeading3("Pesanan"),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: const TextHeading4(
-                                    "Tambah Pesanan",
-                                    color: TColors.primary,
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 8),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const TextHeading3("Pesanan"),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const TextHeading4(
+                                      "Tambah Pesanan",
+                                      color: TColors.primary,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           BlocBuilder<CartCubit, CartState>(
