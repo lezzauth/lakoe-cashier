@@ -47,7 +47,6 @@ import 'package:point_of_sales_cashier/features/products/presentation/screens/ne
 import 'package:point_of_sales_cashier/features/redirect/presentation/screens/redirect.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/screens/settings.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_master.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
@@ -69,7 +68,6 @@ class App extends StatelessWidget {
 
         // Order Master
         BlocProvider(create: (context) => OrderMasterCubit()),
-        BlocProvider(create: (context) => OrderMasterFilterCubit()),
 
         // Order Detail
         BlocProvider(create: (context) => OrderDetailCubit()),

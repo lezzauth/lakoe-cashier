@@ -1047,7 +1047,18 @@ OrderTable _$OrderTableFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OrderTable {
+  String get id => throw _privateConstructorUsedError;
+  String get no => throw _privateConstructorUsedError;
+  int get capacity => throw _privateConstructorUsedError;
+  String get outletId => throw _privateConstructorUsedError;
+  String get outletRoomId => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
+  String get updatedAt => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OrderTableCopyWith<OrderTable> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1055,6 +1066,15 @@ abstract class $OrderTableCopyWith<$Res> {
   factory $OrderTableCopyWith(
           OrderTable value, $Res Function(OrderTable) then) =
       _$OrderTableCopyWithImpl<$Res, OrderTable>;
+  @useResult
+  $Res call(
+      {String id,
+      String no,
+      int capacity,
+      String outletId,
+      String outletRoomId,
+      String createdAt,
+      String updatedAt});
 }
 
 /// @nodoc
@@ -1066,13 +1086,67 @@ class _$OrderTableCopyWithImpl<$Res, $Val extends OrderTable>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? no = null,
+    Object? capacity = null,
+    Object? outletId = null,
+    Object? outletRoomId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as String,
+      capacity: null == capacity
+          ? _value.capacity
+          : capacity // ignore: cast_nullable_to_non_nullable
+              as int,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletRoomId: null == outletRoomId
+          ? _value.outletRoomId
+          : outletRoomId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$OrderTableImplCopyWith<$Res> {
+abstract class _$$OrderTableImplCopyWith<$Res>
+    implements $OrderTableCopyWith<$Res> {
   factory _$$OrderTableImplCopyWith(
           _$OrderTableImpl value, $Res Function(_$OrderTableImpl) then) =
       __$$OrderTableImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String no,
+      int capacity,
+      String outletId,
+      String outletRoomId,
+      String createdAt,
+      String updatedAt});
 }
 
 /// @nodoc
@@ -1082,30 +1156,115 @@ class __$$OrderTableImplCopyWithImpl<$Res>
   __$$OrderTableImplCopyWithImpl(
       _$OrderTableImpl _value, $Res Function(_$OrderTableImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? no = null,
+    Object? capacity = null,
+    Object? outletId = null,
+    Object? outletRoomId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_$OrderTableImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as String,
+      capacity: null == capacity
+          ? _value.capacity
+          : capacity // ignore: cast_nullable_to_non_nullable
+              as int,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletRoomId: null == outletRoomId
+          ? _value.outletRoomId
+          : outletRoomId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$OrderTableImpl implements _OrderTable {
-  const _$OrderTableImpl();
+  const _$OrderTableImpl(
+      {required this.id,
+      required this.no,
+      required this.capacity,
+      required this.outletId,
+      required this.outletRoomId,
+      required this.createdAt,
+      required this.updatedAt});
 
   factory _$OrderTableImpl.fromJson(Map<String, dynamic> json) =>
       _$$OrderTableImplFromJson(json);
 
   @override
+  final String id;
+  @override
+  final String no;
+  @override
+  final int capacity;
+  @override
+  final String outletId;
+  @override
+  final String outletRoomId;
+  @override
+  final String createdAt;
+  @override
+  final String updatedAt;
+
+  @override
   String toString() {
-    return 'OrderTable()';
+    return 'OrderTable(id: $id, no: $no, capacity: $capacity, outletId: $outletId, outletRoomId: $outletRoomId, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$OrderTableImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$OrderTableImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.no, no) || other.no == no) &&
+            (identical(other.capacity, capacity) ||
+                other.capacity == capacity) &&
+            (identical(other.outletId, outletId) ||
+                other.outletId == outletId) &&
+            (identical(other.outletRoomId, outletRoomId) ||
+                other.outletRoomId == outletRoomId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, id, no, capacity, outletId,
+      outletRoomId, createdAt, updatedAt);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OrderTableImplCopyWith<_$OrderTableImpl> get copyWith =>
+      __$$OrderTableImplCopyWithImpl<_$OrderTableImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1116,10 +1275,36 @@ class _$OrderTableImpl implements _OrderTable {
 }
 
 abstract class _OrderTable implements OrderTable {
-  const factory _OrderTable() = _$OrderTableImpl;
+  const factory _OrderTable(
+      {required final String id,
+      required final String no,
+      required final int capacity,
+      required final String outletId,
+      required final String outletRoomId,
+      required final String createdAt,
+      required final String updatedAt}) = _$OrderTableImpl;
 
   factory _OrderTable.fromJson(Map<String, dynamic> json) =
       _$OrderTableImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get no;
+  @override
+  int get capacity;
+  @override
+  String get outletId;
+  @override
+  String get outletRoomId;
+  @override
+  String get createdAt;
+  @override
+  String get updatedAt;
+  @override
+  @JsonKey(ignore: true)
+  _$$OrderTableImplCopyWith<_$OrderTableImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 OrderModel _$OrderModelFromJson(Map<String, dynamic> json) {

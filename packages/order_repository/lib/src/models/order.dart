@@ -67,7 +67,15 @@ class OrderCustomer with _$OrderCustomer {
 
 @freezed
 class OrderTable with _$OrderTable {
-  const factory OrderTable() = _OrderTable;
+  const factory OrderTable({
+    required String id,
+    required String no,
+    required int capacity,
+    required String outletId,
+    required String outletRoomId,
+    required String createdAt,
+    required String updatedAt,
+  }) = _OrderTable;
 
   factory OrderTable.fromJson(Map<String, Object?> json) =>
       _$OrderTableFromJson(json);

@@ -143,6 +143,16 @@ class OrderItemCustomer with _$OrderItemCustomer {
 }
 
 @freezed
+class OrderItemTable with _$OrderItemTable {
+  const factory OrderItemTable({
+    required String no,
+  }) = _OrderItemTable;
+
+  factory OrderItemTable.fromJson(Map<String, Object?> json) =>
+      _$OrderItemTableFromJson(json);
+}
+
+@freezed
 class OrderItemResponse with _$OrderItemResponse {
   const factory OrderItemResponse({
     required String id,
@@ -153,7 +163,7 @@ class OrderItemResponse with _$OrderItemResponse {
     required String type,
     required String source,
     OrderItemCustomer? customer,
-    Object? table,
+    OrderItemTable? table,
   }) = _OrderItemResponse;
 
   factory OrderItemResponse.fromJson(Map<String, Object?> json) =>

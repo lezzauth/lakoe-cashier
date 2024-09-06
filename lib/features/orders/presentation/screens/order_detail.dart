@@ -215,6 +215,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                               const ContactWhatsapp(),
                                             _ => CustomerAndTableInformation(
                                                 customer: order.customer,
+                                                table: order.table,
                                               ),
                                           },
                                           Container(
@@ -723,9 +724,11 @@ class CustomerAndTableInformation extends StatelessWidget {
   const CustomerAndTableInformation({
     super.key,
     this.customer,
+    this.table,
   });
 
   final OrderCustomer? customer;
+  final OrderTable? table;
 
   @override
   Widget build(BuildContext context) {
@@ -752,8 +755,8 @@ class CustomerAndTableInformation extends StatelessWidget {
             flex: 1,
             child: CardOrder(
               title: "Meja",
-              subTitle: "Bebas",
-              icon: UiIcons(
+              subTitle: table == null ? "Bebas" : table!.no,
+              icon: const UiIcons(
                 TIcons.tableRestaurant,
                 height: 20,
                 width: 20,

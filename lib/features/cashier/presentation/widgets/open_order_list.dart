@@ -35,6 +35,7 @@ class CashierOpenOrderList extends StatelessWidget {
                   (order) => OrderItem(
                     no: order.no,
                     customerName: order.customer?.name ?? "Umum",
+                    tableName: order.table?.no ?? "Bebas",
                     onTap: () async {
                       await Navigator.pushNamed(
                         context,

@@ -199,6 +199,7 @@ mixin _$SaveOrderDto {
   String get type => throw _privateConstructorUsedError;
   List<OrderItemDto> get items => throw _privateConstructorUsedError;
   String? get customerId => throw _privateConstructorUsedError;
+  String? get tableId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -216,7 +217,8 @@ abstract class $SaveOrderDtoCopyWith<$Res> {
       {String outletId,
       String type,
       List<OrderItemDto> items,
-      String? customerId});
+      String? customerId,
+      String? tableId});
 }
 
 /// @nodoc
@@ -236,6 +238,7 @@ class _$SaveOrderDtoCopyWithImpl<$Res, $Val extends SaveOrderDto>
     Object? type = null,
     Object? items = null,
     Object? customerId = freezed,
+    Object? tableId = freezed,
   }) {
     return _then(_value.copyWith(
       outletId: null == outletId
@@ -254,6 +257,10 @@ class _$SaveOrderDtoCopyWithImpl<$Res, $Val extends SaveOrderDto>
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
+      tableId: freezed == tableId
+          ? _value.tableId
+          : tableId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -270,7 +277,8 @@ abstract class _$$SaveOrderDtoImplCopyWith<$Res>
       {String outletId,
       String type,
       List<OrderItemDto> items,
-      String? customerId});
+      String? customerId,
+      String? tableId});
 }
 
 /// @nodoc
@@ -288,6 +296,7 @@ class __$$SaveOrderDtoImplCopyWithImpl<$Res>
     Object? type = null,
     Object? items = null,
     Object? customerId = freezed,
+    Object? tableId = freezed,
   }) {
     return _then(_$SaveOrderDtoImpl(
       outletId: null == outletId
@@ -306,6 +315,10 @@ class __$$SaveOrderDtoImplCopyWithImpl<$Res>
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
+      tableId: freezed == tableId
+          ? _value.tableId
+          : tableId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -317,7 +330,8 @@ class _$SaveOrderDtoImpl implements _SaveOrderDto {
       {required this.outletId,
       required this.type,
       required final List<OrderItemDto> items,
-      this.customerId})
+      this.customerId,
+      this.tableId})
       : _items = items;
 
   factory _$SaveOrderDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -337,10 +351,12 @@ class _$SaveOrderDtoImpl implements _SaveOrderDto {
 
   @override
   final String? customerId;
+  @override
+  final String? tableId;
 
   @override
   String toString() {
-    return 'SaveOrderDto(outletId: $outletId, type: $type, items: $items, customerId: $customerId)';
+    return 'SaveOrderDto(outletId: $outletId, type: $type, items: $items, customerId: $customerId, tableId: $tableId)';
   }
 
   @override
@@ -353,13 +369,14 @@ class _$SaveOrderDtoImpl implements _SaveOrderDto {
             (identical(other.type, type) || other.type == type) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
             (identical(other.customerId, customerId) ||
-                other.customerId == customerId));
+                other.customerId == customerId) &&
+            (identical(other.tableId, tableId) || other.tableId == tableId));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, outletId, type,
-      const DeepCollectionEquality().hash(_items), customerId);
+      const DeepCollectionEquality().hash(_items), customerId, tableId);
 
   @JsonKey(ignore: true)
   @override
@@ -380,7 +397,8 @@ abstract class _SaveOrderDto implements SaveOrderDto {
       {required final String outletId,
       required final String type,
       required final List<OrderItemDto> items,
-      final String? customerId}) = _$SaveOrderDtoImpl;
+      final String? customerId,
+      final String? tableId}) = _$SaveOrderDtoImpl;
 
   factory _SaveOrderDto.fromJson(Map<String, dynamic> json) =
       _$SaveOrderDtoImpl.fromJson;
@@ -393,6 +411,8 @@ abstract class _SaveOrderDto implements SaveOrderDto {
   List<OrderItemDto> get items;
   @override
   String? get customerId;
+  @override
+  String? get tableId;
   @override
   @JsonKey(ignore: true)
   _$$SaveOrderDtoImplCopyWith<_$SaveOrderDtoImpl> get copyWith =>
@@ -409,6 +429,7 @@ mixin _$CompleteOrderDto {
   int get paidAmount => throw _privateConstructorUsedError;
   int get change => throw _privateConstructorUsedError;
   String? get customerId => throw _privateConstructorUsedError;
+  String? get redeemCoinAmount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -423,7 +444,11 @@ abstract class $CompleteOrderDtoCopyWith<$Res> {
       _$CompleteOrderDtoCopyWithImpl<$Res, CompleteOrderDto>;
   @useResult
   $Res call(
-      {String paymentMethod, int paidAmount, int change, String? customerId});
+      {String paymentMethod,
+      int paidAmount,
+      int change,
+      String? customerId,
+      String? redeemCoinAmount});
 }
 
 /// @nodoc
@@ -443,6 +468,7 @@ class _$CompleteOrderDtoCopyWithImpl<$Res, $Val extends CompleteOrderDto>
     Object? paidAmount = null,
     Object? change = null,
     Object? customerId = freezed,
+    Object? redeemCoinAmount = freezed,
   }) {
     return _then(_value.copyWith(
       paymentMethod: null == paymentMethod
@@ -461,6 +487,10 @@ class _$CompleteOrderDtoCopyWithImpl<$Res, $Val extends CompleteOrderDto>
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
+      redeemCoinAmount: freezed == redeemCoinAmount
+          ? _value.redeemCoinAmount
+          : redeemCoinAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -474,7 +504,11 @@ abstract class _$$CompleteOrderDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String paymentMethod, int paidAmount, int change, String? customerId});
+      {String paymentMethod,
+      int paidAmount,
+      int change,
+      String? customerId,
+      String? redeemCoinAmount});
 }
 
 /// @nodoc
@@ -492,6 +526,7 @@ class __$$CompleteOrderDtoImplCopyWithImpl<$Res>
     Object? paidAmount = null,
     Object? change = null,
     Object? customerId = freezed,
+    Object? redeemCoinAmount = freezed,
   }) {
     return _then(_$CompleteOrderDtoImpl(
       paymentMethod: null == paymentMethod
@@ -510,6 +545,10 @@ class __$$CompleteOrderDtoImplCopyWithImpl<$Res>
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
+      redeemCoinAmount: freezed == redeemCoinAmount
+          ? _value.redeemCoinAmount
+          : redeemCoinAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -521,7 +560,8 @@ class _$CompleteOrderDtoImpl implements _CompleteOrderDto {
       {required this.paymentMethod,
       required this.paidAmount,
       required this.change,
-      this.customerId});
+      this.customerId,
+      this.redeemCoinAmount});
 
   factory _$CompleteOrderDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CompleteOrderDtoImplFromJson(json);
@@ -534,10 +574,12 @@ class _$CompleteOrderDtoImpl implements _CompleteOrderDto {
   final int change;
   @override
   final String? customerId;
+  @override
+  final String? redeemCoinAmount;
 
   @override
   String toString() {
-    return 'CompleteOrderDto(paymentMethod: $paymentMethod, paidAmount: $paidAmount, change: $change, customerId: $customerId)';
+    return 'CompleteOrderDto(paymentMethod: $paymentMethod, paidAmount: $paidAmount, change: $change, customerId: $customerId, redeemCoinAmount: $redeemCoinAmount)';
   }
 
   @override
@@ -551,13 +593,15 @@ class _$CompleteOrderDtoImpl implements _CompleteOrderDto {
                 other.paidAmount == paidAmount) &&
             (identical(other.change, change) || other.change == change) &&
             (identical(other.customerId, customerId) ||
-                other.customerId == customerId));
+                other.customerId == customerId) &&
+            (identical(other.redeemCoinAmount, redeemCoinAmount) ||
+                other.redeemCoinAmount == redeemCoinAmount));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, paymentMethod, paidAmount, change, customerId);
+  int get hashCode => Object.hash(runtimeType, paymentMethod, paidAmount,
+      change, customerId, redeemCoinAmount);
 
   @JsonKey(ignore: true)
   @override
@@ -579,7 +623,8 @@ abstract class _CompleteOrderDto implements CompleteOrderDto {
       {required final String paymentMethod,
       required final int paidAmount,
       required final int change,
-      final String? customerId}) = _$CompleteOrderDtoImpl;
+      final String? customerId,
+      final String? redeemCoinAmount}) = _$CompleteOrderDtoImpl;
 
   factory _CompleteOrderDto.fromJson(Map<String, dynamic> json) =
       _$CompleteOrderDtoImpl.fromJson;
@@ -592,6 +637,8 @@ abstract class _CompleteOrderDto implements CompleteOrderDto {
   int get change;
   @override
   String? get customerId;
+  @override
+  String? get redeemCoinAmount;
   @override
   @JsonKey(ignore: true)
   _$$CompleteOrderDtoImplCopyWith<_$CompleteOrderDtoImpl> get copyWith =>

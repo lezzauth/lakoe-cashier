@@ -95,10 +95,26 @@ Map<String, dynamic> _$$OrderCustomerImplToJson(_$OrderCustomerImpl instance) =>
     };
 
 _$OrderTableImpl _$$OrderTableImplFromJson(Map<String, dynamic> json) =>
-    _$OrderTableImpl();
+    _$OrderTableImpl(
+      id: json['id'] as String,
+      no: json['no'] as String,
+      capacity: (json['capacity'] as num).toInt(),
+      outletId: json['outletId'] as String,
+      outletRoomId: json['outletRoomId'] as String,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
+    );
 
 Map<String, dynamic> _$$OrderTableImplToJson(_$OrderTableImpl instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'id': instance.id,
+      'no': instance.no,
+      'capacity': instance.capacity,
+      'outletId': instance.outletId,
+      'outletRoomId': instance.outletRoomId,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+    };
 
 _$OrderModelImpl _$$OrderModelImplFromJson(Map<String, dynamic> json) =>
     _$OrderModelImpl(

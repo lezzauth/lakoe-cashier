@@ -14,8 +14,20 @@ class TableMasterCubit extends Cubit<TableMasterState> {
   Future<void> findAll(FindAllTableDto dto) async {
     try {
       emit(TableMasterLoadInProgress());
+      List<TableModel> initTables = [
+        const TableModel(
+          id: "-",
+          no: "Bebas",
+          capacity: 0,
+          outletId: "",
+          outletRoomId: "",
+          createdAt: "",
+          updatedAt: "",
+        )
+      ];
       final tables = await _tableRepository.findAll(dto);
-      emit(TableMasterLoadSuccess(tables: tables));
+      initTables.addAll(tables);
+      emit(TableMasterLoadSuccess(tables: initTables));
     } catch (e) {
       emit(TableMasterLoadFailure(e.toString()));
     }

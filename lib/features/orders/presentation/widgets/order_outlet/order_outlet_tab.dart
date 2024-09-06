@@ -110,6 +110,7 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
                                           price: order.price,
                                           customerName:
                                               order.customer?.name ?? "Umum",
+                                          tableName: order.table?.no ?? "-",
                                         );
                                       },
                                     ),

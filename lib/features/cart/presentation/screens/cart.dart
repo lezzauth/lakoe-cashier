@@ -26,6 +26,7 @@ import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_deta
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
 import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/bottom_sheet/customer_list.dart';
+import 'package:point_of_sales_cashier/features/cart/presentation/widgets/bottom_sheet/table_list.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/cards/card_order.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/summary/cart_summary.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
@@ -36,8 +37,8 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/pr
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
-import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
 import 'package:product_repository/product_repository.dart';
+import 'package:table_repository/table_repository.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -50,6 +51,7 @@ class _CartScreenState extends State<CartScreen> {
   Timer? _debounce;
   String _type = "DINEIN";
   CustomerModel? _selectedCustomer;
+  TableModel? _selectedTable;
 
   final List<LabelValue> _orderType = [
     const LabelValue(label: "DineIn", value: "DINEIN"),
@@ -74,6 +76,7 @@ class _CartScreenState extends State<CartScreen> {
             outletId: authState.outletId,
             type: _type,
             customerId: _selectedCustomer?.id,
+            tableId: _selectedTable?.id,
           );
       Navigator.pop(context);
     }
@@ -91,7 +94,7 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
-  Future<void> onCustomerOpened() async {
+  Future<void> _onCustomerOpened() async {
     CustomerModel? selectedCustomer =
         await showModalBottomSheet<CustomerModel?>(
       context: context,
@@ -105,6 +108,23 @@ class _CartScreenState extends State<CartScreen> {
     );
     setState(() {
       _selectedCustomer = selectedCustomer;
+    });
+  }
+
+  Future<void> _onTableOpened() async {
+    TableModel? selectedTable = await showModalBottomSheet<TableModel?>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      useSafeArea: true,
+      useRootNavigator: true,
+      builder: (context) {
+        return const TableList();
+      },
+    );
+    log('_onTableOpened: $selectedTable');
+    setState(() {
+      _selectedTable = selectedTable;
     });
   }
 
@@ -122,6 +142,7 @@ class _CartScreenState extends State<CartScreen> {
           paymentMethod: "CASH",
           type: _type,
           customerId: _selectedCustomer?.id,
+          tableId: _selectedTable?.id,
         );
   }
 
@@ -237,21 +258,24 @@ class _CartScreenState extends State<CartScreen> {
                                         width: 20,
                                         color: TColors.primary,
                                       ),
-                                      onTap: onCustomerOpened,
+                                      onTap: _onCustomerOpened,
                                     ),
                                   ),
                                   const SizedBox(width: 12.0),
-                                  const Flexible(
+                                  Flexible(
                                     flex: 1,
                                     child: CardOrder(
                                       title: "No. Meja",
-                                      subTitle: "Bebas",
-                                      icon: UiIcons(
+                                      subTitle: _selectedTable == null
+                                          ? "Bebas"
+                                          : _selectedTable!.no,
+                                      icon: const UiIcons(
                                         TIcons.tableRestaurant,
                                         height: 20,
                                         width: 20,
                                         color: TColors.primary,
                                       ),
+                                      onTap: _onTableOpened,
                                     ),
                                   ),
                                 ],
