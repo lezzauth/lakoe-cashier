@@ -98,18 +98,25 @@ class _MasterCustomerState extends State<MasterCustomer> {
                                   CustomerModel customer =
                                       customers.elementAt(index);
 
-                                  return CustomerContactItem(
-                                    name: customer.name,
-                                    phoneNumber: customer.phoneNumber,
-                                    onTap: () {
-                                      if (customer.id == "-") return;
-
-                                      Navigator.pushNamed(
-                                        context,
-                                        "/customers/detail",
-                                        arguments: customer,
-                                      );
-                                    },
+                                  return Container(
+                                    decoration: const BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                      width: 1,
+                                      color: TColors.neutralLightMedium,
+                                    ))),
+                                    child: CustomerContactItem(
+                                      customer: customer,
+                                      onTap: customer.id == "-"
+                                          ? null
+                                          : () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                "/customers/detail",
+                                                arguments: customer,
+                                              );
+                                            },
+                                    ),
                                   );
                                 },
                               )

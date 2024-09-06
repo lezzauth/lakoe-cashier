@@ -121,11 +121,10 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        const UiIcons(
-                                          TIcons.coinMultiple,
-                                          height: 16,
-                                          width: 16,
-                                          color: TColors.primary,
+                                        SvgPicture.asset(
+                                          TImages.lakoeCoin,
+                                          height: 20,
+                                          width: 20,
                                         ),
                                         const SizedBox(width: 4),
                                         TextHeading4(

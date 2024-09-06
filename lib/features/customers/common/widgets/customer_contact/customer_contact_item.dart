@@ -1,3 +1,4 @@
+import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
@@ -10,17 +11,17 @@ import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 class CustomerContactItem extends StatelessWidget {
   const CustomerContactItem({
     super.key,
-    required this.name,
-    this.phoneNumber,
+    required this.customer,
     this.onTap,
   });
 
-  final String name;
-  final String? phoneNumber;
+  final CustomerModel customer;
   final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
+    bool isGuest = customer.id == "-";
+
     return ListTile(
       onTap: onTap,
       leading: SvgPicture.asset(
@@ -28,17 +29,19 @@ class CustomerContactItem extends StatelessWidget {
         height: 40,
         width: 40,
       ),
-      title: TextHeading4(name),
+      title: TextHeading4(customer.name),
       subtitle: TextBodyS(
-        phoneNumber ?? '-',
+        customer.phoneNumber.isEmpty ? '-' : customer.phoneNumber,
         color: TColors.neutralDarkLight,
       ),
-      trailing: UiIcons(
-        TIcons.arrowRight,
-        height: 12,
-        width: 12,
-        color: TColors.neutralDarkLightest,
-      ),
+      trailing: isGuest
+          ? null
+          : const UiIcons(
+              TIcons.arrowRight,
+              height: 12,
+              width: 12,
+              color: TColors.neutralDarkLightest,
+            ),
     );
   }
 }

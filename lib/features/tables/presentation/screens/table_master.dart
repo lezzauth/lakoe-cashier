@@ -144,6 +144,18 @@ class _TableMasterState extends State<TableMaster> {
                           itemCount: tables.length,
                           itemBuilder: (context, index) {
                             TableModel table = tables.elementAt(index);
+
+                            bool isFreeTable = table.id == "-";
+
+                            String title = table.no;
+                            String subtitle =
+                                "${table.capacity} Orang • Indoor";
+
+                            if (isFreeTable) {
+                              title = "Bebas";
+                              subtitle = "-";
+                            }
+
                             return Container(
                               decoration: const BoxDecoration(
                                 border: Border(
@@ -154,9 +166,11 @@ class _TableMasterState extends State<TableMaster> {
                                 ),
                               ),
                               child: ListTile(
-                                onTap: () {
-                                  _onGoToDetail(table);
-                                },
+                                onTap: isFreeTable
+                                    ? null
+                                    : () {
+                                        _onGoToDetail(table);
+                                      },
                                 splashColor: TColors.highlightLightest,
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 16),
@@ -177,19 +191,21 @@ class _TableMasterState extends State<TableMaster> {
                                   ),
                                 ),
                                 title: TextHeading4(
-                                  table.no,
+                                  title,
                                   color: TColors.neutralDarkDarkest,
                                 ),
                                 subtitle: TextBodyS(
-                                  "${table.capacity} Orang • Indoor",
+                                  subtitle,
                                   color: TColors.neutralDarkLight,
                                 ),
-                                trailing: const UiIcons(
-                                  TIcons.arrowRight,
-                                  color: TColors.neutralDarkLightest,
-                                  height: 12,
-                                  width: 12,
-                                ),
+                                trailing: isFreeTable
+                                    ? null
+                                    : const UiIcons(
+                                        TIcons.arrowRight,
+                                        color: TColors.neutralDarkLightest,
+                                        height: 12,
+                                        width: 12,
+                                      ),
                               ),
                             );
                           },
