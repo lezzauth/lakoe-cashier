@@ -6,6 +6,20 @@ part of 'customer.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$FindAllCustomerDtoImpl _$$FindAllCustomerDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$FindAllCustomerDtoImpl(
+      ownerId: json['ownerId'] as String,
+      search: json['search'] as String?,
+    );
+
+Map<String, dynamic> _$$FindAllCustomerDtoImplToJson(
+        _$FindAllCustomerDtoImpl instance) =>
+    <String, dynamic>{
+      'ownerId': instance.ownerId,
+      'search': instance.search,
+    };
+
 _$CreateCustomerDtoImpl _$$CreateCustomerDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$CreateCustomerDtoImpl(

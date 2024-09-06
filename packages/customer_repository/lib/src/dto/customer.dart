@@ -7,14 +7,16 @@ part 'customer.freezed.dart';
 class FindAllCustomerDto with _$FindAllCustomerDto {
   const factory FindAllCustomerDto({
     required String ownerId,
+    String? search,
   }) = _FindAllCustomerDto;
+
+  factory FindAllCustomerDto.fromJson(Map<String, Object?> json) =>
+      _$FindAllCustomerDtoFromJson(json);
 }
 
 extension QueryStringExtension on FindAllCustomerDto {
   String toQueryString() {
-    final Map<String, dynamic> queryParams = {
-      "ownerId": ownerId,
-    };
+    final Map<String, dynamic> queryParams = toJson();
 
     queryParams.removeWhere((key, value) => value == null);
 

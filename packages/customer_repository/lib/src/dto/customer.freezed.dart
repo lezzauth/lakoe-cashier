@@ -14,10 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+FindAllCustomerDto _$FindAllCustomerDtoFromJson(Map<String, dynamic> json) {
+  return _FindAllCustomerDto.fromJson(json);
+}
+
 /// @nodoc
 mixin _$FindAllCustomerDto {
   String get ownerId => throw _privateConstructorUsedError;
+  String? get search => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $FindAllCustomerDtoCopyWith<FindAllCustomerDto> get copyWith =>
       throw _privateConstructorUsedError;
@@ -29,7 +35,7 @@ abstract class $FindAllCustomerDtoCopyWith<$Res> {
           FindAllCustomerDto value, $Res Function(FindAllCustomerDto) then) =
       _$FindAllCustomerDtoCopyWithImpl<$Res, FindAllCustomerDto>;
   @useResult
-  $Res call({String ownerId});
+  $Res call({String ownerId, String? search});
 }
 
 /// @nodoc
@@ -46,12 +52,17 @@ class _$FindAllCustomerDtoCopyWithImpl<$Res, $Val extends FindAllCustomerDto>
   @override
   $Res call({
     Object? ownerId = null,
+    Object? search = freezed,
   }) {
     return _then(_value.copyWith(
       ownerId: null == ownerId
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
+      search: freezed == search
+          ? _value.search
+          : search // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -64,7 +75,7 @@ abstract class _$$FindAllCustomerDtoImplCopyWith<$Res>
       __$$FindAllCustomerDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String ownerId});
+  $Res call({String ownerId, String? search});
 }
 
 /// @nodoc
@@ -79,27 +90,37 @@ class __$$FindAllCustomerDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? ownerId = null,
+    Object? search = freezed,
   }) {
     return _then(_$FindAllCustomerDtoImpl(
       ownerId: null == ownerId
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
+      search: freezed == search
+          ? _value.search
+          : search // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$FindAllCustomerDtoImpl implements _FindAllCustomerDto {
-  const _$FindAllCustomerDtoImpl({required this.ownerId});
+  const _$FindAllCustomerDtoImpl({required this.ownerId, this.search});
+
+  factory _$FindAllCustomerDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FindAllCustomerDtoImplFromJson(json);
 
   @override
   final String ownerId;
+  @override
+  final String? search;
 
   @override
   String toString() {
-    return 'FindAllCustomerDto(ownerId: $ownerId)';
+    return 'FindAllCustomerDto(ownerId: $ownerId, search: $search)';
   }
 
   @override
@@ -107,11 +128,13 @@ class _$FindAllCustomerDtoImpl implements _FindAllCustomerDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FindAllCustomerDtoImpl &&
-            (identical(other.ownerId, ownerId) || other.ownerId == ownerId));
+            (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
+            (identical(other.search, search) || other.search == search));
   }
 
+  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, ownerId);
+  int get hashCode => Object.hash(runtimeType, ownerId, search);
 
   @JsonKey(ignore: true)
   @override
@@ -119,14 +142,27 @@ class _$FindAllCustomerDtoImpl implements _FindAllCustomerDto {
   _$$FindAllCustomerDtoImplCopyWith<_$FindAllCustomerDtoImpl> get copyWith =>
       __$$FindAllCustomerDtoImplCopyWithImpl<_$FindAllCustomerDtoImpl>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$FindAllCustomerDtoImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _FindAllCustomerDto implements FindAllCustomerDto {
-  const factory _FindAllCustomerDto({required final String ownerId}) =
-      _$FindAllCustomerDtoImpl;
+  const factory _FindAllCustomerDto(
+      {required final String ownerId,
+      final String? search}) = _$FindAllCustomerDtoImpl;
+
+  factory _FindAllCustomerDto.fromJson(Map<String, dynamic> json) =
+      _$FindAllCustomerDtoImpl.fromJson;
 
   @override
   String get ownerId;
+  @override
+  String? get search;
   @override
   @JsonKey(ignore: true)
   _$$FindAllCustomerDtoImplCopyWith<_$FindAllCustomerDtoImpl> get copyWith =>

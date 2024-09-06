@@ -100,10 +100,7 @@ class _CartScreenState extends State<CartScreen> {
       useSafeArea: true,
       useRootNavigator: true,
       builder: (context) {
-        return Padding(
-          padding: TDeviceUtils.getViewInsets(context),
-          child: const CartCustomerList(),
-        );
+        return const CartCustomerList();
       },
     );
     setState(() {
