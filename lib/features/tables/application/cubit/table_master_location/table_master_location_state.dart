@@ -30,3 +30,27 @@ final class TableMasterLocationLoadFailure extends TableMasterLocationState {
   @override
   List<Object?> get props => [error];
 }
+
+final class TableMasterLocationActionInProgress
+    extends TableMasterLocationState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class TableMasterLocationActionSuccess extends TableMasterLocationState {
+  final TableLocationModel response;
+
+  TableMasterLocationActionSuccess({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}
+
+final class TableMasterLocationActionFailure extends TableMasterLocationState {
+  final String error;
+
+  TableMasterLocationActionFailure(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}

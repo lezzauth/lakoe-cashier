@@ -6,6 +6,7 @@ import 'package:token_provider/token_provider.dart';
 
 abstract class TableLocationRepository {
   Future<List<TableLocationModel>> findAll(FindAllTableLocationDto dto);
+  Future<TableLocationModel> create(CreateTableLocationDto dto);
 }
 
 class TableLocationRepositoryImpl implements TableLocationRepository {
@@ -33,5 +34,14 @@ class TableLocationRepositoryImpl implements TableLocationRepository {
     return response.data!
         .map((item) => TableLocationModel.fromJson(item))
         .toList();
+  }
+
+  @override
+  Future<TableLocationModel> create(CreateTableLocationDto dto) async {
+    final options = await _getOptions();
+    final response =
+        await _dio.post("$_baseURL", data: dto.toJson(), options: options);
+
+    return TableLocationModel.fromJson(response.data);
   }
 }

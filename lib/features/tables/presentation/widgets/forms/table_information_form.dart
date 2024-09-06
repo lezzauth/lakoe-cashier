@@ -90,7 +90,7 @@ class _TableInformationFormState extends State<TableInformationForm> {
                               margin: const EdgeInsets.only(bottom: 8),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const FormLabel("Lokasi"),
                                   LocationField(

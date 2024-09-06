@@ -25,3 +25,14 @@ extension QueryStringExtension on FindAllTableLocationDto {
         .join('&');
   }
 }
+
+@freezed
+class CreateTableLocationDto with _$CreateTableLocationDto {
+  const factory CreateTableLocationDto({
+    required String name,
+    required String outletId,
+  }) = _CreateTableLocationDto;
+
+  factory CreateTableLocationDto.fromJson(Map<String, Object?> json) =>
+      _$CreateTableLocationDtoFromJson(json);
+}

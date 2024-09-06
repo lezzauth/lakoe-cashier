@@ -17,4 +17,14 @@ class TableMasterLocationCubit extends Cubit<TableMasterLocationState> {
       emit(TableMasterLocationLoadFailure(e.toString()));
     }
   }
+
+  Future<void> create(CreateTableLocationDto dto) async {
+    try {
+      emit(TableMasterLocationActionInProgress());
+      final response = await _tableLocationRepository.create(dto);
+      emit(TableMasterLocationActionSuccess(response: response));
+    } catch (e) {
+      emit(TableMasterLocationActionFailure(e.toString()));
+    }
+  }
 }

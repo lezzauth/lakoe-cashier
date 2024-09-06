@@ -157,3 +157,165 @@ abstract class _FindAllTableLocationDto implements FindAllTableLocationDto {
   _$$FindAllTableLocationDtoImplCopyWith<_$FindAllTableLocationDtoImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+CreateTableLocationDto _$CreateTableLocationDtoFromJson(
+    Map<String, dynamic> json) {
+  return _CreateTableLocationDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CreateTableLocationDto {
+  String get name => throw _privateConstructorUsedError;
+  String get outletId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CreateTableLocationDtoCopyWith<CreateTableLocationDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreateTableLocationDtoCopyWith<$Res> {
+  factory $CreateTableLocationDtoCopyWith(CreateTableLocationDto value,
+          $Res Function(CreateTableLocationDto) then) =
+      _$CreateTableLocationDtoCopyWithImpl<$Res, CreateTableLocationDto>;
+  @useResult
+  $Res call({String name, String outletId});
+}
+
+/// @nodoc
+class _$CreateTableLocationDtoCopyWithImpl<$Res,
+        $Val extends CreateTableLocationDto>
+    implements $CreateTableLocationDtoCopyWith<$Res> {
+  _$CreateTableLocationDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? outletId = null,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CreateTableLocationDtoImplCopyWith<$Res>
+    implements $CreateTableLocationDtoCopyWith<$Res> {
+  factory _$$CreateTableLocationDtoImplCopyWith(
+          _$CreateTableLocationDtoImpl value,
+          $Res Function(_$CreateTableLocationDtoImpl) then) =
+      __$$CreateTableLocationDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name, String outletId});
+}
+
+/// @nodoc
+class __$$CreateTableLocationDtoImplCopyWithImpl<$Res>
+    extends _$CreateTableLocationDtoCopyWithImpl<$Res,
+        _$CreateTableLocationDtoImpl>
+    implements _$$CreateTableLocationDtoImplCopyWith<$Res> {
+  __$$CreateTableLocationDtoImplCopyWithImpl(
+      _$CreateTableLocationDtoImpl _value,
+      $Res Function(_$CreateTableLocationDtoImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? outletId = null,
+  }) {
+    return _then(_$CreateTableLocationDtoImpl(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CreateTableLocationDtoImpl implements _CreateTableLocationDto {
+  const _$CreateTableLocationDtoImpl(
+      {required this.name, required this.outletId});
+
+  factory _$CreateTableLocationDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CreateTableLocationDtoImplFromJson(json);
+
+  @override
+  final String name;
+  @override
+  final String outletId;
+
+  @override
+  String toString() {
+    return 'CreateTableLocationDto(name: $name, outletId: $outletId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CreateTableLocationDtoImpl &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.outletId, outletId) ||
+                other.outletId == outletId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name, outletId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CreateTableLocationDtoImplCopyWith<_$CreateTableLocationDtoImpl>
+      get copyWith => __$$CreateTableLocationDtoImplCopyWithImpl<
+          _$CreateTableLocationDtoImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CreateTableLocationDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CreateTableLocationDto implements CreateTableLocationDto {
+  const factory _CreateTableLocationDto(
+      {required final String name,
+      required final String outletId}) = _$CreateTableLocationDtoImpl;
+
+  factory _CreateTableLocationDto.fromJson(Map<String, dynamic> json) =
+      _$CreateTableLocationDtoImpl.fromJson;
+
+  @override
+  String get name;
+  @override
+  String get outletId;
+  @override
+  @JsonKey(ignore: true)
+  _$$CreateTableLocationDtoImplCopyWith<_$CreateTableLocationDtoImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
