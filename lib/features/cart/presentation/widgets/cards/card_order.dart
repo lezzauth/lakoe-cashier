@@ -12,12 +12,14 @@ class CardOrder extends StatelessWidget {
     this.subTitle = "",
     this.title = "",
     this.onTap,
+    this.trailing,
   });
 
   final Widget? icon;
   final String title;
   final String subTitle;
   final Function()? onTap;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -70,15 +72,17 @@ class CardOrder extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 8.0),
-                child: const UiIcons(
-                  TIcons.arrowRight,
-                  height: 12,
-                  width: 12,
-                  color: TColors.neutralLightDarkest,
+              if (trailing == null)
+                Container(
+                  margin: const EdgeInsets.only(left: 8.0),
+                  child: const UiIcons(
+                    TIcons.arrowRight,
+                    height: 12,
+                    width: 12,
+                    color: TColors.neutralLightDarkest,
+                  ),
                 ),
-              )
+              if (trailing != null) trailing!,
             ],
           ),
         ),

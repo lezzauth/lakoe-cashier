@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
@@ -36,6 +37,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/pr
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:product_repository/product_repository.dart';
 import 'package:table_repository/table_repository.dart';
@@ -124,6 +126,9 @@ class _CartScreenState extends State<CartScreen> {
     );
     setState(() {
       _selectedTable = selectedTable;
+      if (selectedTable != null) {
+        _type = "DINEIN";
+      }
     });
   }
 
@@ -165,6 +170,9 @@ class _CartScreenState extends State<CartScreen> {
   void _onOrderTypeChanged(String type) {
     setState(() {
       _type = type;
+      if (type == "TAKEAWAY") {
+        _selectedTable = null;
+      }
     });
     _onPreviewOrderPrice();
   }
@@ -258,6 +266,13 @@ class _CartScreenState extends State<CartScreen> {
                                         color: TColors.primary,
                                       ),
                                       onTap: _onCustomerOpened,
+                                      trailing: _selectedCustomer == null
+                                          ? null
+                                          : SvgPicture.asset(
+                                              TImages.lakoeCoin,
+                                              height: 24,
+                                              width: 24,
+                                            ),
                                     ),
                                   ),
                                   const SizedBox(width: 12.0),
