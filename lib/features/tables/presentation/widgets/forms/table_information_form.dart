@@ -26,6 +26,7 @@ class _TableInformationFormState extends State<TableInformationForm> {
     return FormBuilder(
       key: widget.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      initialValue: widget.initialValue,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,

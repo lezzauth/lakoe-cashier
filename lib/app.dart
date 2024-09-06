@@ -47,6 +47,7 @@ import 'package:point_of_sales_cashier/features/redirect/presentation/screens/re
 import 'package:point_of_sales_cashier/features/settings/presentation/screens/settings.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
+import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_edit.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_master.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
@@ -149,6 +150,7 @@ class App extends StatelessWidget {
           // tables
           "/tables": (context) => const TableMasterScreen(),
           "/tables/new": (context) => const TableNewScreen(),
+          "/tables/edit": (context) => const TableEditScreen(),
 
           // settings
           "/settings": (context) => const SettingsScreen(),

@@ -59,17 +59,20 @@ class _TableMasterState extends State<TableMaster> {
   }
 
   Future<void> _onGoToDetail(TableModel table) async {
-    showModalBottomSheet(
+    bool? editedProduct = await showModalBottomSheet<bool?>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
       useSafeArea: true,
+      useRootNavigator: true,
       builder: (context) {
         return TableDetailPage(
           table: table,
         );
       },
     );
+    if (editedProduct != true) return;
+    _onRefresh();
   }
 
   Future<void> _onGoToCreateScreen() async {

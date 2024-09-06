@@ -1,10 +1,14 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card_order.dart';
+import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
+import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_state.dart';
 import 'package:point_of_sales_cashier/features/tables/common/widgets/preview_qr_table.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -65,16 +69,37 @@ class TableDetailPage extends StatelessWidget {
                               const SizedBox(width: 12.0),
                               Flexible(
                                 flex: 1,
-                                child: CardOrder(
-                                  title: "Lokasi",
-                                  subTitle: "Indoor",
-                                  icon: UiIcons(
-                                    TIcons.map,
-                                    height: 24,
-                                    width: 24,
-                                    color: TColors.primary,
-                                  ),
-                                ),
+                                child: BlocBuilder<TableMasterLocationCubit,
+                                        TableMasterLocationState>(
+                                    builder: (context, state) =>
+                                        switch (state) {
+                                          TableMasterLocationLoadSuccess(
+                                            :final locations
+                                          ) =>
+                                            CardOrder(
+                                              title: "Lokasi",
+                                              subTitle: locations
+                                                      .firstWhereOrNull(
+                                                          (item) =>
+                                                              item.id ==
+                                                              table
+                                                                  .outletRoomId)
+                                                      ?.name ??
+                                                  "-",
+                                              icon: const UiIcons(
+                                                TIcons.map,
+                                                height: 24,
+                                                width: 24,
+                                                color: TColors.primary,
+                                              ),
+                                            ),
+                                          _ => const SizedBox(
+                                              height: 32,
+                                              width: 32,
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ),
+                                        }),
                               ),
                             ],
                           ),
@@ -130,7 +155,15 @@ class TableDetailPage extends StatelessWidget {
                   child: SizedBox(
                     height: 48,
                     child: OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        bool? editedProduct = await Navigator.pushNamed(
+                          context,
+                          "/tables/edit",
+                          arguments: table,
+                        ) as bool?;
+                        if (editedProduct != true) return;
+                        Navigator.pop(context, true);
+                      },
                       child: const TextActionL(
                         "Ubah Meja",
                         color: TColors.primary,

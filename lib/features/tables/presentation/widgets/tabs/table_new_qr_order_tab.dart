@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/features/tables/common/widgets/preview_qr_table.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/bottom_sheet/download_qr_order_content.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
+import 'package:table_repository/table_repository.dart';
 
 class TableNewQrOrderTab extends StatefulWidget {
-  const TableNewQrOrderTab({super.key});
+  const TableNewQrOrderTab({super.key, this.table});
+
+  final TableModel? table;
 
   @override
   State<TableNewQrOrderTab> createState() => _TableNewQrOrderTabState();
@@ -41,16 +44,11 @@ class _TableNewQrOrderTabState extends State<TableNewQrOrderTab> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  height: 485.39,
-                  decoration: BoxDecoration(
-                    color: TColors.neutralLightLight,
-                    border: Border.all(
-                      width: 1,
-                      color: TColors.neutralLightDark,
-                    ),
-                  ),
-                ),
+                PreviewQrTable(
+                  widget.table?.id ?? DateTime.timestamp().toString(),
+                  // color: HexColor("#06B6D4"),
+                  tableNumber: widget.table?.no ?? "Example",
+                )
               ],
             ),
           ),
