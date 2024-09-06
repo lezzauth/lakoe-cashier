@@ -103,7 +103,7 @@ class _CartScreenState extends State<CartScreen> {
       useSafeArea: true,
       useRootNavigator: true,
       builder: (context) {
-        return const CartCustomerList();
+        return CartCustomerList(value: _selectedCustomer);
       },
     );
     setState(() {
@@ -119,10 +119,9 @@ class _CartScreenState extends State<CartScreen> {
       useSafeArea: true,
       useRootNavigator: true,
       builder: (context) {
-        return const TableList();
+        return TableList(value: _selectedTable);
       },
     );
-    log('_onTableOpened: $selectedTable');
     setState(() {
       _selectedTable = selectedTable;
     });

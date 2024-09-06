@@ -44,17 +44,17 @@ class CartSummary extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const TextBodyM("Diskon"),
-                  TextHeading4(
-                    "Gunakan Poin",
-                    color: TColors.primary,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     const TextBodyM("Diskon"),
+              //     TextHeading4(
+              //       "Gunakan Poin",
+              //       color: TColors.primary,
+              //     ),
+              //   ],
+              // ),
+              // const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

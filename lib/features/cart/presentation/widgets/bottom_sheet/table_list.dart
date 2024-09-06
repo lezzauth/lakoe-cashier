@@ -18,7 +18,9 @@ import 'package:table_location_repository/table_location_repository.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableList extends StatelessWidget {
-  const TableList({super.key});
+  const TableList({super.key, this.value});
+
+  final TableModel? value;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class TableList extends StatelessWidget {
       ],
       child: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) => switch (state) {
-          AuthReady() => const TableListContent(),
+          AuthReady() => TableListContent(value: value),
           _ => const Center(
               child: CircularProgressIndicator(),
             ),
@@ -41,7 +43,9 @@ class TableList extends StatelessWidget {
 }
 
 class TableListContent extends StatefulWidget {
-  const TableListContent({super.key});
+  const TableListContent({super.key, this.value});
+
+  final TableModel? value;
 
   @override
   State<TableListContent> createState() => _TableListContentState();
@@ -113,6 +117,8 @@ class _TableListContentState extends State<TableListContent> {
                       String title = table.no;
                       String subtitle = "${table.capacity} Orang • Indoor";
 
+                      bool selected = table.id == (widget.value?.id ?? "-");
+
                       if (isFreeTable) {
                         title = "Bebas";
                         subtitle = "-";
@@ -155,6 +161,19 @@ class _TableListContentState extends State<TableListContent> {
                               isFreeTable ? null : table,
                             );
                           },
+                          trailing: selected
+                              ? const UiIcons(
+                                  TIcons.check,
+                                  height: 16,
+                                  width: 16,
+                                  color: TColors.primary,
+                                )
+                              : const UiIcons(
+                                  TIcons.arrowRight,
+                                  height: 12,
+                                  width: 12,
+                                  color: TColors.neutralDarkLightest,
+                                ),
                         ),
                       );
                     },
