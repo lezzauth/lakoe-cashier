@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 class CustomerMasterFilterState extends Equatable {
-  final String? name;
+  final String? search;
 
-  const CustomerMasterFilterState({this.name});
+  const CustomerMasterFilterState({this.search});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [search];
 }

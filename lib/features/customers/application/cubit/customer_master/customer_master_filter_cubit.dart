@@ -5,10 +5,10 @@ class CustomerMasterFilterCubit extends Cubit<CustomerMasterFilterState> {
   CustomerMasterFilterCubit() : super(const CustomerMasterFilterState());
 
   void setFilter({
-    String? name,
+    String? search,
   }) {
     emit(CustomerMasterFilterState(
-      name: name ?? state.name,
+      search: search ?? state.search,
     ));
   }
 

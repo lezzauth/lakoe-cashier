@@ -24,15 +24,18 @@ class MasterCustomerScreen extends StatefulWidget {
 class _MasterCustomerScreenState extends State<MasterCustomerScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
-      builder: (context, state) => switch (state) {
-        AuthReady() => const MasterCustomer(),
-        _ => const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
+    return BlocProvider(
+      create: (context) => CustomerMasterFilterCubit(),
+      child: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) => switch (state) {
+          AuthReady() => const MasterCustomer(),
+          _ => const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
-          ),
-      },
+        },
+      ),
     );
   }
 }
@@ -67,7 +70,10 @@ class _MasterCustomerState extends State<MasterCustomer> {
       listeners: [
         BlocListener<CustomerMasterFilterCubit, CustomerMasterFilterState>(
           listener: (context, state) {
-            //
+            AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+
+            context.read<CustomerMasterCubit>().findAll(FindAllCustomerDto(
+                ownerId: authState.profile.id, search: state.search));
           },
         ),
         BlocListener<CustomerMasterCubit, CustomerMasterState>(
@@ -79,9 +85,15 @@ class _MasterCustomerState extends State<MasterCustomer> {
         )
       ],
       child: Scaffold(
-        appBar: const CustomAppbar(
+        appBar: CustomAppbar(
           search: SearchField(
             hintText: "Cari pelanggan...",
+            debounceTime: 500,
+            onChanged: (value) {
+              context
+                  .read<CustomerMasterFilterCubit>()
+                  .setFilter(search: value);
+            },
           ),
         ),
         body: Scrollbar(

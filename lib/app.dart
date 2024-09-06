@@ -22,7 +22,6 @@ import 'package:point_of_sales_cashier/features/categories/presentation/screens/
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/master_customer.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/new_customer.dart';
@@ -74,7 +73,6 @@ class App extends StatelessWidget {
 
         // Customer Master
         BlocProvider(create: (context) => CustomerMasterCubit()),
-        BlocProvider(create: (context) => CustomerMasterFilterCubit()),
 
         // Customer Detail
         BlocProvider(create: (context) => CustomerDetailCubit()),
