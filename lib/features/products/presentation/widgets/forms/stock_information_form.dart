@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class StockInformationForm extends StatefulWidget {
   final GlobalKey<FormBuilderState> formKey;
@@ -23,6 +25,11 @@ class StockInformationForm extends StatefulWidget {
 class _StockInformationFormState extends State<StockInformationForm>
     with AutomaticKeepAliveClientMixin<StockInformationForm> {
   bool isUseStock = false;
+
+  final List<LabelValue> _availability = [
+    const LabelValue(label: "Tersedia", value: "AVAILABLE"),
+    const LabelValue(label: "Tidak Tersedia", value: "UNAVAILABLE"),
+  ];
 
   @override
   bool get wantKeepAlive => true;
@@ -52,8 +59,6 @@ class _StockInformationFormState extends State<StockInformationForm>
                     name: "sku",
                     decoration:
                         const InputDecoration(hintText: "Buat kode produk"),
-                    validator: FormBuilderValidators.required(
-                        errorText: ErrorTextStrings.required()),
                   ),
                 ],
               ),
@@ -113,12 +118,56 @@ class _StockInformationFormState extends State<StockInformationForm>
                         hintText: "Masukan jumlah stok saat ini",
                       ),
                       keyboardType: TextInputType.number,
-                      validator: FormBuilderValidators.required(
-                          errorText: ErrorTextStrings.required()),
                     ),
                   ],
                 ),
               ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const FormLabel("Status Produk"),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 8),
+                          child: FormBuilderField<String>(
+                            name: "availability",
+                            initialValue: widget.initialValue["availability"] ??
+                                "AVAILABLE",
+                            builder: (field) {
+                              return Wrap(
+                                direction: Axis.horizontal,
+                                spacing: 8,
+                                children: [
+                                  ..._availability.map((item) {
+                                    bool selected = item.value == field.value;
+                                    return InputChip(
+                                      label: !selected
+                                          ? TextBodyS(item.label)
+                                          : TextHeading5(
+                                              item.label,
+                                              color: TColors.primary,
+                                            ),
+                                      selected: selected,
+                                      onPressed: () {
+                                        field.didChange(item.value);
+                                      },
+                                    );
+                                  }),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),

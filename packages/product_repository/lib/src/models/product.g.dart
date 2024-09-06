@@ -20,6 +20,7 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
       images:
           (json['images'] as List<dynamic>).map((e) => e as String).toList(),
       outletId: json['outletId'] as String,
+      availability: json['availability'] as String,
     );
 
 Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
@@ -35,4 +36,5 @@ Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
       'stock': instance.stock,
       'images': instance.images,
       'outletId': instance.outletId,
+      'availability': instance.availability,
     };

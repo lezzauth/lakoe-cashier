@@ -65,7 +65,7 @@ class ProductRepositoryImpl implements ProductRepository {
   }) async {
     final Options options = await _getOptions();
 
-    FormData formData = FormData.fromMap({...dto.toJson()});
+    FormData formData = FormData.fromMap({...dto.toJsonFilter()});
     if (images != null) {
       for (var image in images) {
         formData.files.add(MapEntry(

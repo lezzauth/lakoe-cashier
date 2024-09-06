@@ -70,7 +70,8 @@ class _NewProductScreenState extends State<NewProductScreen>
       return;
     }
 
-    if (!isStockInformationValid) {
+    if (!isStockInformationValid &&
+        _stockInformationFormKey.currentState != null) {
       SnackBar snackBar = SnackBar(
         content: Text(ErrorTextStrings.formInvalid()),
         showCloseIcon: true,
@@ -92,6 +93,10 @@ class _NewProductScreenState extends State<NewProductScreen>
 
     ImagePickerValue images =
         productInformationValue["images"] as ImagePickerValue;
+    String? stock =
+        stockInformationValue != null ? stockInformationValue["stock"] : null;
+    String? sku =
+        stockInformationValue != null ? stockInformationValue["sku"] : null;
 
     context.read<ProductMasterCubit>().create(
       [images.file!],
@@ -103,11 +108,8 @@ class _NewProductScreenState extends State<NewProductScreen>
         categoryId: productInformationValue["categoryId"],
         unit: productInformationValue["unit"],
         outletId: authState.outletId,
-        sku:
-            stockInformationValue == null ? null : stockInformationValue["sku"],
-        stock: stockInformationValue == null
-            ? null
-            : int.parse(stockInformationValue["stock"] ?? "0"),
+        sku: sku,
+        stock: stock != null ? int.parse(stock) : null,
       ),
     );
   }

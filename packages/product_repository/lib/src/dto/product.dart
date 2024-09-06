@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'product.g.dart';
@@ -63,4 +65,12 @@ class UpdateProductDto with _$UpdateProductDto {
 
   factory UpdateProductDto.fromJson(Map<String, Object?> json) =>
       _$UpdateProductDtoFromJson(json);
+}
+
+extension ToJsonFilterExtension on UpdateProductDto {
+  Map<String, dynamic> toJsonFilter() {
+    final Map<String, dynamic> json = toJson();
+    json.removeWhere((key, value) => value == null);
+    return json;
+  }
 }

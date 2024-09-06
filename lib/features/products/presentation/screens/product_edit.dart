@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -16,6 +14,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/fo
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/product_information_form.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/stock_information_form.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ProductEditScreen extends StatefulWidget {
@@ -39,8 +38,8 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
         _stockInformationFormKey.currentState?.saveAndValidate() ?? false;
 
     if (!isProductInformationValid) {
-      const snackBar = SnackBar(
-        content: Text('Product information validate error'),
+      SnackBar snackBar = SnackBar(
+        content: Text(ErrorTextStrings.formInvalid()),
         showCloseIcon: true,
       );
       ScaffoldMessenger.of(context)
@@ -52,9 +51,10 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
       return;
     }
 
-    if (!isStockInformationValid) {
-      const snackBar = SnackBar(
-        content: Text('Stock information validate error'),
+    if (!isStockInformationValid &&
+        _stockInformationFormKey.currentState != null) {
+      SnackBar snackBar = SnackBar(
+        content: Text(ErrorTextStrings.formInvalid()),
         showCloseIcon: true,
       );
       ScaffoldMessenger.of(context)
@@ -71,14 +71,13 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
     dynamic stockInformationValue =
         _stockInformationFormKey.currentState?.value;
 
-    log("productInformationValue: $productInformationValue");
-    log("stockInformationValue: $stockInformationValue");
-
     ImagePickerValue images =
         productInformationValue["images"] as ImagePickerValue;
 
-    String? stock = stockInformationValue["stock"];
-    String? sku = stockInformationValue["sku"];
+    String? stock =
+        stockInformationValue != null ? stockInformationValue["stock"] : null;
+    String? sku =
+        stockInformationValue != null ? stockInformationValue["sku"] : null;
 
     context.read<ProductMasterCubit>().update(
           productId,
@@ -163,6 +162,7 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                       initialValue: {
                         "sku": arguments.sku,
                         "stock": arguments.stock?.toString(),
+                        "availability": arguments.availability,
                       },
                     ),
                   ),

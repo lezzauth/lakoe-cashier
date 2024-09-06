@@ -17,6 +17,7 @@ class ProductModel with _$ProductModel {
     int? stock,
     required List<String> images,
     required String outletId,
+    required String availability,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, Object?> json) =>

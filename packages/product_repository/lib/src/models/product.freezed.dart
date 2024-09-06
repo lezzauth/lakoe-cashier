@@ -31,6 +31,7 @@ mixin _$ProductModel {
   int? get stock => throw _privateConstructorUsedError;
   List<String> get images => throw _privateConstructorUsedError;
   String get outletId => throw _privateConstructorUsedError;
+  String get availability => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,7 +56,8 @@ abstract class $ProductModelCopyWith<$Res> {
       int categoryId,
       int? stock,
       List<String> images,
-      String outletId});
+      String outletId,
+      String availability});
 }
 
 /// @nodoc
@@ -82,6 +84,7 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
     Object? stock = freezed,
     Object? images = null,
     Object? outletId = null,
+    Object? availability = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -128,6 +131,10 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
               as String,
+      availability: null == availability
+          ? _value.availability
+          : availability // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -151,7 +158,8 @@ abstract class _$$ProductModelImplCopyWith<$Res>
       int categoryId,
       int? stock,
       List<String> images,
-      String outletId});
+      String outletId,
+      String availability});
 }
 
 /// @nodoc
@@ -176,6 +184,7 @@ class __$$ProductModelImplCopyWithImpl<$Res>
     Object? stock = freezed,
     Object? images = null,
     Object? outletId = null,
+    Object? availability = null,
   }) {
     return _then(_$ProductModelImpl(
       id: null == id
@@ -222,6 +231,10 @@ class __$$ProductModelImplCopyWithImpl<$Res>
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
               as String,
+      availability: null == availability
+          ? _value.availability
+          : availability // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -240,7 +253,8 @@ class _$ProductModelImpl implements _ProductModel {
       required this.categoryId,
       this.stock,
       required final List<String> images,
-      required this.outletId})
+      required this.outletId,
+      required this.availability})
       : _images = images;
 
   factory _$ProductModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -274,10 +288,12 @@ class _$ProductModelImpl implements _ProductModel {
 
   @override
   final String outletId;
+  @override
+  final String availability;
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, name: $name, sku: $sku, price: $price, modal: $modal, description: $description, unit: $unit, categoryId: $categoryId, stock: $stock, images: $images, outletId: $outletId)';
+    return 'ProductModel(id: $id, name: $name, sku: $sku, price: $price, modal: $modal, description: $description, unit: $unit, categoryId: $categoryId, stock: $stock, images: $images, outletId: $outletId, availability: $availability)';
   }
 
   @override
@@ -298,7 +314,9 @@ class _$ProductModelImpl implements _ProductModel {
             (identical(other.stock, stock) || other.stock == stock) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
             (identical(other.outletId, outletId) ||
-                other.outletId == outletId));
+                other.outletId == outletId) &&
+            (identical(other.availability, availability) ||
+                other.availability == availability));
   }
 
   @JsonKey(ignore: true)
@@ -315,7 +333,8 @@ class _$ProductModelImpl implements _ProductModel {
       categoryId,
       stock,
       const DeepCollectionEquality().hash(_images),
-      outletId);
+      outletId,
+      availability);
 
   @JsonKey(ignore: true)
   @override
@@ -343,7 +362,8 @@ abstract class _ProductModel implements ProductModel {
       required final int categoryId,
       final int? stock,
       required final List<String> images,
-      required final String outletId}) = _$ProductModelImpl;
+      required final String outletId,
+      required final String availability}) = _$ProductModelImpl;
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
       _$ProductModelImpl.fromJson;
@@ -370,6 +390,8 @@ abstract class _ProductModel implements ProductModel {
   List<String> get images;
   @override
   String get outletId;
+  @override
+  String get availability;
   @override
   @JsonKey(ignore: true)
   _$$ProductModelImplCopyWith<_$ProductModelImpl> get copyWith =>
