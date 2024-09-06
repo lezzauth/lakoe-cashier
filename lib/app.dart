@@ -46,6 +46,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/screens/pr
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
 import 'package:point_of_sales_cashier/features/redirect/presentation/screens/redirect.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/screens/settings.dart';
+import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_master.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
@@ -95,6 +96,9 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => CartCubit()),
         BlocProvider(create: (context) => CartDetailCubit()),
         BlocProvider(create: (context) => CartCustomerCubit()),
+
+        // Table Master
+        BlocProvider(create: (context) => TableMasterLocationCubit()),
       ],
       child: MaterialApp(
         title: "Point of Sales",

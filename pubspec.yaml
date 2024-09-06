@@ -45,6 +45,8 @@ dependencies:
     path: packages/order_repository
   outlet_repository:
     path: packages/outlet_repository
+  table_location_repository:
+    path: packages/table_location_repository
 
   token_provider:
     path: packages/token_provider

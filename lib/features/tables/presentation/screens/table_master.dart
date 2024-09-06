@@ -1,21 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
+import 'package:point_of_sales_cashier/features/tables/presentation/widgets/filter/table_location_filter.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/pages/table_detail_page.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:table_location_repository/table_location_repository.dart';
 
-class TableMasterScreen extends StatefulWidget {
+class TableMasterScreen extends StatelessWidget {
   const TableMasterScreen({super.key});
 
   @override
-  State<TableMasterScreen> createState() => _TableMasterScreenState();
+  Widget build(BuildContext context) {
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) => switch (state) {
+        AuthReady() => const TableMaster(),
+        _ => const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+      },
+    );
+  }
 }
 
-class _TableMasterScreenState extends State<TableMasterScreen> {
+class TableMaster extends StatefulWidget {
+  const TableMaster({super.key});
+
+  @override
+  State<TableMaster> createState() => _TableMasterState();
+}
+
+class _TableMasterState extends State<TableMaster> {
+  Future<void> _onRefresh() async {
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+
+    await context
+        .read<TableMasterLocationCubit>()
+        .findAll(FindAllTableLocationDto(outletId: authState.outletId));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _onRefresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,47 +71,17 @@ class _TableMasterScreenState extends State<TableMasterScreen> {
           )
         ],
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(48),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Wrap(
-              spacing: 8.0,
-              children: [
-                ChoiceChip(
-                  label: TextHeading5(
-                    "Semua",
-                    color: TColors.primary,
-                  ),
-                  selected: true,
-                  onSelected: (value) {},
-                ),
-                ChoiceChip(
-                  label: TextBodyS("Indoor"),
-                  selected: false,
-                  onSelected: (value) {},
-                ),
-                ChoiceChip(
-                  label: TextBodyS("Outdoor"),
-                  selected: false,
-                  onSelected: (value) {},
-                ),
-                ChoiceChip(
-                  label: TextBodyS("Lantai 2"),
-                  selected: false,
-                  onSelected: (value) {},
-                ),
-              ],
-            ),
+          preferredSize: const Size.fromHeight(48),
+          child: SizedBox(
+            width: double.infinity,
+            child: TableLocationFilter(),
           ),
         ),
       ),
       body: Scrollbar(
         child: RefreshIndicator(
           backgroundColor: TColors.neutralLightLightest,
-          onRefresh: () async {
-            return await Future.delayed(Duration(seconds: 1));
-          },
+          onRefresh: _onRefresh,
           child: ListView.builder(
             itemBuilder: (context, index) {
               return Container(

@@ -112,7 +112,9 @@ class _TableInformationFormState extends State<TableInformationForm> {
                         name: "capacity",
                         decoration: const InputDecoration(
                           hintText: "Jumlah kapasitas meja",
+                          suffixText: "Orang",
                         ),
+                        keyboardType: TextInputType.number,
                       ),
                     ],
                   ),
