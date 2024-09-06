@@ -136,8 +136,11 @@ class _MasterCustomerState extends State<MasterCustomer> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
-            onPressed: () {
-              Navigator.pushNamed(context, "/customers/new");
+            onPressed: () async {
+              bool? newCustomer =
+                  await Navigator.pushNamed(context, "/customers/new") as bool?;
+              if (newCustomer != true) return;
+              _onRefresh();
             },
             elevation: 0,
             child: const Icon(

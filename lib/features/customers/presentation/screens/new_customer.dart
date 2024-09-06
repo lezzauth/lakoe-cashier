@@ -42,7 +42,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
           ),
         );
 
-    Navigator.pop(context);
+    Navigator.pop(context, true);
   }
 
   @override
