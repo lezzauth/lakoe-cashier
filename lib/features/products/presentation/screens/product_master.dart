@@ -26,11 +26,14 @@ class ProductMasterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
-      builder: (context, state) => switch (state) {
-        AuthReady() => const ProductMaster(),
-        _ => const Scaffold(body: Center(child: CircularProgressIndicator())),
-      },
+    return BlocProvider(
+      create: (context) => ProductMasterFilterCubit(),
+      child: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) => switch (state) {
+          AuthReady() => const ProductMaster(),
+          _ => const Scaffold(body: Center(child: CircularProgressIndicator())),
+        },
+      ),
     );
   }
 }

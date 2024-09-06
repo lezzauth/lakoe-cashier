@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
@@ -28,15 +27,19 @@ class ExploreProductScreen extends StatefulWidget {
 class _ExploreProductScreenState extends State<ExploreProductScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
+    return BlocProvider(
+      create: (context) => CashierProductFilterCubit(),
+      child: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) => switch (state) {
-              AuthReady() => const ExploreProduct(),
-              _ => const Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-            });
+          AuthReady() => const ExploreProduct(),
+          _ => const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+        },
+      ),
+    );
   }
 }
 

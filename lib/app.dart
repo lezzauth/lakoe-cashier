@@ -13,14 +13,11 @@ import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashie
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_edit.dart';
 import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_master.dart';
 import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_new.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/master_customer.dart';
@@ -38,7 +35,6 @@ import 'package:point_of_sales_cashier/features/payments/presentation/screens/su
 import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/screens/explore_product.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/product_edit.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/product_master.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
@@ -63,7 +59,6 @@ class App extends StatelessWidget {
 
         // Category Master
         BlocProvider(create: (context) => CategoryMasterCubit()),
-        BlocProvider(create: (context) => CategoryMasterFilterCubit()),
 
         // Order Master
         BlocProvider(create: (context) => OrderMasterCubit()),
@@ -76,19 +71,16 @@ class App extends StatelessWidget {
 
         // Customer Detail
         BlocProvider(create: (context) => CustomerDetailCubit()),
-        BlocProvider(create: (context) => CustomerDetailFilterCubit()),
 
         // Product Master
         BlocProvider(create: (context) => ProductMasterCubit()),
         BlocProvider(create: (context) => ProductMasterCategoryCubit()),
-        BlocProvider(create: (context) => ProductMasterFilterCubit()),
 
         // Cashier
         BlocProvider(create: (context) => CashierCubit()),
         BlocProvider(create: (context) => CashierOrderCubit()),
         BlocProvider(create: (context) => CashierProductCubit()),
         BlocProvider(create: (context) => CashierCategoryCubit()),
-        BlocProvider(create: (context) => CashierProductFilterCubit()),
 
         // Cart
         BlocProvider(create: (context) => CartCubit()),

@@ -22,15 +22,18 @@ class CategoryMasterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
-      builder: (context, state) => switch (state) {
-        AuthReady() => const CategoryMaster(),
-        _ => const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
+    return BlocProvider(
+      create: (context) => CategoryMasterFilterCubit(),
+      child: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) => switch (state) {
+          AuthReady() => const CategoryMaster(),
+          _ => const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
-          ),
-      },
+        },
+      ),
     );
   }
 }

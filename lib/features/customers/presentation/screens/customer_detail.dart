@@ -13,6 +13,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_cubit.dart';
+import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_state.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -26,15 +27,18 @@ class CustomerDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
-      builder: (context, state) => switch (state) {
-        AuthReady() => const CustomerDetail(),
-        _ => const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
+    return BlocProvider(
+      create: (context) => CustomerDetailFilterCubit(),
+      child: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) => switch (state) {
+          AuthReady() => const CustomerDetail(),
+          _ => const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
-          ),
-      },
+        },
+      ),
     );
   }
 }
