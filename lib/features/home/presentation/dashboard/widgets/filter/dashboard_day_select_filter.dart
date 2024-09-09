@@ -31,7 +31,7 @@ class _DashboardDaySelectFilterState extends State<DashboardDaySelectFilter> {
       String formattedTo = DateFormat("dd MMM yyyy", "id_ID").format(parsedTo);
 
       if (filter.preset == "TODAY") {
-        return DateFormat("EEEE, dd MMM yyyy", "id_ID").format(parsedFrom);
+        return DateFormat("EEEE, dd MMMM yyyy", "id_ID").format(parsedFrom);
       }
       if (filter.preset == "THISMONTH") {
         return DateFormat("MMMM yyyy", "id_ID").format(parsedFrom);
@@ -78,9 +78,9 @@ class _DashboardDaySelectFilterState extends State<DashboardDaySelectFilter> {
 
     if (filter.preset == "TODAY") {
       if (action == "next") {
-        modifiedBaseDate = baseDate.toLocal().add(const Duration(days: 1));
+        modifiedBaseDate = baseDate.add(const Duration(days: 1));
       } else {
-        modifiedBaseDate = baseDate.toLocal().subtract(const Duration(days: 1));
+        modifiedBaseDate = baseDate.subtract(const Duration(days: 1));
       }
 
       fromTo = THelper.getStartEndDay(modifiedBaseDate);
@@ -88,9 +88,9 @@ class _DashboardDaySelectFilterState extends State<DashboardDaySelectFilter> {
 
     if (filter.preset == "THISWEEK") {
       if (action == "next") {
-        modifiedBaseDate = baseDate.toLocal().add(const Duration(days: 7));
+        modifiedBaseDate = baseDate.add(const Duration(days: 7));
       } else {
-        modifiedBaseDate = baseDate.toLocal().subtract(const Duration(days: 7));
+        modifiedBaseDate = baseDate.subtract(const Duration(days: 7));
       }
 
       fromTo = THelper.getStartEndWeek(modifiedBaseDate);
@@ -106,13 +106,33 @@ class _DashboardDaySelectFilterState extends State<DashboardDaySelectFilter> {
       fromTo = THelper.getStartEndMonth(modifiedBaseDate);
     }
 
+    if (filter.preset == "RANGE") {
+      if (action == "next") {
+        modifiedBaseDate =
+            baseDate.toLocal().add(Duration(days: (filter.duration ?? 1) + 1));
+      } else {
+        modifiedBaseDate = baseDate
+            .toLocal()
+            .subtract(Duration(days: (filter.duration ?? 1) + 1));
+      }
+
+      DateTime to =
+          modifiedBaseDate.add(Duration(days: (filter.duration ?? 1)));
+      to = DateTime(to.year, to.month, to.day, 23, 59, 59, 999);
+
+      fromTo = [
+        modifiedBaseDate,
+        to,
+      ];
+    }
+
     from = fromTo.elementAt(0);
     to = fromTo.elementAt(1);
 
     context.read<CashierReportFilterCubit>().setFilter(
           template: null,
-          from: from.toUtc().toIso8601String(),
-          to: to.toUtc().toIso8601String(),
+          from: from,
+          to: to,
         );
   }
 

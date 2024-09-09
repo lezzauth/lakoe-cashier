@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:outlet_repository/outlet_repository.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_cubit.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_state.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/summary/stats_badge.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -19,6 +22,15 @@ class SalesSummary extends StatelessWidget {
     if (sales.diff! > 0) return StatsType.ascend;
 
     return StatsType.neutral;
+  }
+
+  String getComparisonText(CashierReportFilterState filter) {
+    if (filter.template == "TODAY") return "Kemarin";
+    if (filter.template == "THISWEEK") return "Minggu sebelumnya";
+    if (filter.template == "THISMONTH") return "Bulan sebelumnya";
+    if (filter.duration != null) return "${filter.duration} hari sebelumnya";
+
+    return "";
   }
 
   @override
@@ -63,21 +75,27 @@ class SalesSummary extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Wrap(
-                        direction: Axis.horizontal,
-                        spacing: 8.0,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          StatsBadge(
-                              type: getType(), value: "${sales.diff ?? 0}%"),
-                          Text(
-                            "vs Kemarin",
-                            style: GoogleFonts.inter(
-                              color: TColors.neutralDarkLightest,
-                              fontSize: TSizes.fontSizeBodyM,
-                            ),
-                          )
-                        ],
+                      BlocBuilder<CashierReportFilterCubit,
+                          CashierReportFilterState>(
+                        builder: (context, state) {
+                          return Wrap(
+                            direction: Axis.horizontal,
+                            spacing: 8.0,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              StatsBadge(
+                                  type: getType(),
+                                  value: "${sales.diff ?? 0}%"),
+                              Text(
+                                "vs ${getComparisonText(state)}",
+                                style: GoogleFonts.inter(
+                                  color: TColors.neutralDarkLightest,
+                                  fontSize: TSizes.fontSizeBodyM,
+                                ),
+                              )
+                            ],
+                          );
+                        },
                       ),
                     ],
                   ),

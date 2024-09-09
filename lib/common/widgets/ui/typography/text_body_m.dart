@@ -9,13 +9,17 @@ class TextBodyM extends StatelessWidget {
   final Color? color;
   final TextAlign? textAlign;
   final int? maxLines;
+  final TextOverflow? overflow;
 
-  const TextBodyM(this.data,
-      {super.key,
-      this.fontWeight = FontWeight.w400,
-      this.color,
-      this.textAlign = TextAlign.start,
-      this.maxLines});
+  const TextBodyM(
+    this.data, {
+    super.key,
+    this.fontWeight = FontWeight.w400,
+    this.color,
+    this.textAlign = TextAlign.start,
+    this.maxLines,
+    this.overflow,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +33,7 @@ class TextBodyM extends StatelessWidget {
       textAlign: textAlign,
       softWrap: true,
       maxLines: maxLines,
+      overflow: overflow,
     );
   }
 }

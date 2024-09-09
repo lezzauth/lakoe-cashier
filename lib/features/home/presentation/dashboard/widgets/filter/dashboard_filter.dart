@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
+import 'package:point_of_sales_cashier/common/widgets/form/date_range_picker.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
@@ -22,6 +25,34 @@ class _DashboardFilterState extends State<DashboardFilter> {
     const LabelValue(label: "Minggu ini", value: "THISWEEK"),
     const LabelValue(label: "Bulan ini", value: "THISMONTH"),
   ];
+
+  Future<void> _onPickDateRange(CashierReportFilterState filter) async {
+    log('_onPickDateRange: $filter');
+    List<DateTime>? ranges = await showModalBottomSheet<List<DateTime>?>(
+      context: context,
+      showDragHandle: true,
+      builder: (context) {
+        return DateRangePicker(
+          from: filter.from == null
+              ? null
+              : DateTime.parse(filter.from!).toLocal(),
+          to: filter.to == null ? null : DateTime.parse(filter.to!).toLocal(),
+        );
+      },
+    );
+    if (ranges == null) return;
+
+    DateTime from = ranges.elementAt(0);
+    DateTime to = ranges.elementAt(1);
+
+    context.read<CashierReportFilterCubit>().setFilter(
+          template: null,
+          from: from,
+          to: to,
+          preset: "RANGE",
+          duration: from.difference(to).inDays.abs(),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +104,8 @@ class _DashboardFilterState extends State<DashboardFilter> {
                 ),
                 selected: isDateRangeSelected,
                 onSelected: (value) {
-                  Navigator.pushNamed(context, "/cashier/transaction-date");
+                  _onPickDateRange(state);
+                  // Navigator.pushNamed(context, "/cashier/transaction-date");
                 },
               ),
             ),
