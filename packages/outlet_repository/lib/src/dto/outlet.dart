@@ -21,8 +21,7 @@ extension QueryStringExtension on DetailCustomerOutletDto {
     queryParams.removeWhere((key, value) => value == null);
 
     return queryParams.entries
-        .map((entry) =>
-            '${entry.key}=${Uri.encodeComponent(entry.value.toString())}')
+        .map((entry) => '${entry.key}=${entry.value.toString()}')
         .join('&');
   }
 }

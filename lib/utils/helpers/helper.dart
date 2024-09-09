@@ -3,6 +3,7 @@ import 'package:point_of_sales_cashier/utils/constants/bank_name_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 
 class THelper {
+  THelper._();
   static String getBankImage(String bankName) {
     switch (bankName) {
       case "bca":
@@ -47,6 +48,64 @@ class THelper {
       default:
         return TBankName.bca;
     }
+  }
+
+  static bool isSameDay(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
+  }
+
+  static List<DateTime> getStartEndDay(DateTime now) {
+    DateTime startOfDay = DateTime(now.year, now.month, now.day);
+    DateTime endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59, 999);
+
+    return [startOfDay, endOfDay];
+  }
+
+  static List<DateTime> getStartEndWeek(DateTime now) {
+    int currentWeekday = now.weekday;
+
+    DateTime startOfWeek = now.subtract(Duration(days: currentWeekday - 1));
+    DateTime endOfWeek = now.add(Duration(days: 7 - currentWeekday));
+
+    return [startOfWeek, endOfWeek];
+  }
+
+  static List<DateTime> getStartEndMonth(DateTime now) {
+    DateTime startOfMonth = DateTime(now.year, now.month, 1);
+    DateTime endOfMonth = DateTime(now.year, now.month + 1, 1)
+        .subtract(const Duration(milliseconds: 1));
+
+    return [startOfMonth, endOfMonth];
+  }
+
+  static DateTime addOrSubtractMonth(DateTime baseDate, String action) {
+    int newMonth = baseDate.month;
+    int newYear = baseDate.year;
+
+    if (action == "add") {
+      newMonth = baseDate.month + 1;
+      if (newMonth > 12) {
+        newMonth = 1; // Wrap around to January
+        newYear++;
+      }
+    } else if (action == "subtract") {
+      newMonth = baseDate.month - 1;
+      if (newMonth < 1) {
+        newMonth = 12; // Wrap around to December
+        newYear--;
+      }
+    }
+
+    // Ensure the day is valid for the new month
+    int lastDayOfNewMonth =
+        DateTime(newYear, newMonth + 1, 0).day; // Get last day of the new month
+    int newDay =
+        baseDate.day > lastDayOfNewMonth ? lastDayOfNewMonth : baseDate.day;
+
+    return DateTime(newYear, newMonth, newDay, baseDate.hour, baseDate.minute,
+        baseDate.second);
   }
 }
 

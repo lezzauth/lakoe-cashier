@@ -25,13 +25,15 @@ class _DashboardFilterState extends State<DashboardFilter> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          BlocBuilder<CashierReportFilterCubit, CashierReportFilterState>(
-              builder: (context, state) {
-            return Wrap(
+    return BlocBuilder<CashierReportFilterCubit, CashierReportFilterState>(
+        builder: (context, state) {
+      bool isDateRangeSelected = state.template == null && state.preset != null;
+
+      return SingleChildScrollView(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Wrap(
               spacing: 8.0,
               children: _templates.map((template) {
                 bool selected = state.template == template.value;
@@ -50,64 +52,88 @@ class _DashboardFilterState extends State<DashboardFilter> {
                   },
                 );
               }).toList(),
-            );
-          }),
-          SizedBox(
-            height: 32,
-            width: 32,
-            child: OutlinedButton(
-              onPressed: () async {
-                Navigator.pushNamed(context, "/cashier/transaction-date");
-                // final picked = await showDateRangePicker(
-                //   context: context,
-                //   lastDate: DateTime(DateTime.now().year + 1),
-                //   firstDate: DateTime(DateTime.now().year),
-                //   builder: (context, child) {
-                //     return Theme(
-                //       data: TAppTheme.lightTheme.copyWith(
-                //         primaryColor: TColors.primary,
-                //         // scaffoldBackgroundColor: TColors.errorMedium,
-                //         dividerColor: TColors.error,
-                //         colorScheme: TAppTheme.lightTheme.colorScheme.copyWith(
-                //           primary: TColors.primary,
-                //           onSecondary: TColors.error,
-                //           secondaryContainer: TColors.highlightLightest,
-                //         ),
-                //       ),
-                //       child: child!,
-                //     );
-                //   },
-                // );
-              },
-              style: const ButtonStyle(
-                padding: WidgetStatePropertyAll(
-                  EdgeInsets.all(0),
-                ),
-                side: WidgetStatePropertyAll(
-                  BorderSide(
-                    color: TColors.neutralLightDark,
-                    width: 0.5,
+            ),
+            SizedBox(
+              height: 32,
+              width: 32,
+              child: InputChip(
+                padding: EdgeInsets.zero,
+                label: Container(
+                  height: 16,
+                  width: 16,
+                  alignment: Alignment.center,
+                  child: UiIcons(
+                    TIcons.calendar,
+                    height: 16,
+                    width: 16,
+                    color: isDateRangeSelected
+                        ? TColors.primary
+                        : TColors.neutralDarkDarkest,
                   ),
                 ),
-                shape: WidgetStatePropertyAll(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(
-                        12.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              child: const UiIcons(
-                TIcons.calendar,
-                height: 16,
-                width: 16,
+                selected: isDateRangeSelected,
+                onSelected: (value) {
+                  Navigator.pushNamed(context, "/cashier/transaction-date");
+                },
               ),
             ),
-          ),
-        ],
-      ),
-    );
+            // SizedBox(
+            //   height: 32,
+            //   width: 32,
+            //   child: OutlinedButton(
+            //     onPressed: () async {
+            //       Navigator.pushNamed(context, "/cashier/transaction-date");
+            //       // final picked = await showDateRangePicker(
+            //       //   context: context,
+            //       //   lastDate: DateTime(DateTime.now().year + 1),
+            //       //   firstDate: DateTime(DateTime.now().year),
+            //       //   builder: (context, child) {
+            //       //     return Theme(
+            //       //       data: TAppTheme.lightTheme.copyWith(
+            //       //         primaryColor: TColors.primary,
+            //       //         // scaffoldBackgroundColor: TColors.errorMedium,
+            //       //         dividerColor: TColors.error,
+            //       //         colorScheme: TAppTheme.lightTheme.colorScheme.copyWith(
+            //       //           primary: TColors.primary,
+            //       //           onSecondary: TColors.error,
+            //       //           secondaryContainer: TColors.highlightLightest,
+            //       //         ),
+            //       //       ),
+            //       //       child: child!,
+            //       //     );
+            //       //   },
+            //       // );
+            //     },
+            //     style: const ButtonStyle(
+            //       padding: WidgetStatePropertyAll(
+            //         EdgeInsets.all(0),
+            //       ),
+            //       side: WidgetStatePropertyAll(
+            //         BorderSide(
+            //           color: TColors.neutralLightDark,
+            //           width: 0.5,
+            //         ),
+            //       ),
+            //       shape: WidgetStatePropertyAll(
+            //         RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.all(
+            //             Radius.circular(
+            //               12.0,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     child: const UiIcons(
+            //       TIcons.calendar,
+            //       height: 16,
+            //       width: 16,
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
+      );
+    });
   }
 }

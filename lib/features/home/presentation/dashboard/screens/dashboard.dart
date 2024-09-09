@@ -103,7 +103,7 @@ class _DashboardState extends State<Dashboard> {
                 child: const DashboardFilter(),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 margin: const EdgeInsets.only(bottom: 12),
                 child: const DashboardDaySelectFilter(),
               ),
@@ -117,7 +117,7 @@ class _DashboardState extends State<Dashboard> {
                                 IncomeSummary(
                                   income: report.income,
                                 ),
-                                SizedBox(height: 12),
+                                const SizedBox(height: 12),
                                 SalesSummary(sales: report.sales),
                               ],
                             ),
