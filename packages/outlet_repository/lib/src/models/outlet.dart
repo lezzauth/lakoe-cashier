@@ -134,3 +134,63 @@ class DetailCustomerOutletResponse with _$DetailCustomerOutletResponse {
   factory DetailCustomerOutletResponse.fromJson(Map<String, Object?> json) =>
       _$DetailCustomerOutletResponseFromJson(json);
 }
+
+// Outlet Report
+
+@freezed
+class OutletReportModel with _$OutletReportModel {
+  const factory OutletReportModel({
+    required OutletReportIncomeModel income,
+    required OutletReportSalesModel sales,
+    required OutletReportTimeWindow timeWindow,
+  }) = _OutletReportModel;
+
+  factory OutletReportModel.fromJson(Map<String, Object?> json) =>
+      _$OutletReportModelFromJson(json);
+}
+
+@freezed
+class OutletReportIncomeModel with _$OutletReportIncomeModel {
+  const factory OutletReportIncomeModel({
+    required String current,
+    required String past,
+    int? diff,
+  }) = _OutletReportIncomeModel;
+
+  factory OutletReportIncomeModel.fromJson(Map<String, Object?> json) =>
+      _$OutletReportIncomeModelFromJson(json);
+}
+
+@freezed
+class OutletReportSalesModel with _$OutletReportSalesModel {
+  const factory OutletReportSalesModel({
+    required int current,
+    required int past,
+    int? diff,
+  }) = _OutletReportSalesModel;
+
+  factory OutletReportSalesModel.fromJson(Map<String, Object?> json) =>
+      _$OutletReportSalesModelFromJson(json);
+}
+
+@freezed
+class OutletReportTimeWindow with _$OutletReportTimeWindow {
+  const factory OutletReportTimeWindow({
+    required TimeRange current,
+    required TimeRange past,
+  }) = _OutletReportTimeWindow;
+
+  factory OutletReportTimeWindow.fromJson(Map<String, dynamic> json) =>
+      _$OutletReportTimeWindowFromJson(json);
+}
+
+@freezed
+class TimeRange with _$TimeRange {
+  const factory TimeRange({
+    required String start,
+    required String end,
+  }) = _TimeRange;
+
+  factory TimeRange.fromJson(Map<String, dynamic> json) =>
+      _$TimeRangeFromJson(json);
+}

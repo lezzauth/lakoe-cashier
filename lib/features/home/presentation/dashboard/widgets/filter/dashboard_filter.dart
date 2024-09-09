@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_cubit.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 
 class DashboardFilter extends StatefulWidget {
   const DashboardFilter({super.key});
@@ -12,29 +17,41 @@ class DashboardFilter extends StatefulWidget {
 }
 
 class _DashboardFilterState extends State<DashboardFilter> {
+  final List<LabelValue> _templates = [
+    const LabelValue(label: "Hari ini", value: "TODAY"),
+    const LabelValue(label: "Minggu ini", value: "THISWEEK"),
+    const LabelValue(label: "Bulan ini", value: "THISMONTH"),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Wrap(
-            spacing: 8.0,
-            children: [
-              InputChip(
-                label: const Text("Hari ini"),
-                onPressed: () {},
-              ),
-              InputChip(
-                label: const Text("Minggu ini"),
-                onPressed: () {},
-              ),
-              InputChip(
-                label: const Text("Bulan ini"),
-                onPressed: () {},
-              ),
-            ],
-          ),
+          BlocBuilder<CashierReportFilterCubit, CashierReportFilterState>(
+              builder: (context, state) {
+            return Wrap(
+              spacing: 8.0,
+              children: _templates.map((template) {
+                bool selected = state.template == template.value;
+                return InputChip(
+                  label: selected
+                      ? TextHeading5(
+                          template.label,
+                          color: TColors.primary,
+                        )
+                      : TextBodyS(template.label),
+                  selected: selected,
+                  onSelected: (value) {
+                    context
+                        .read<CashierReportFilterCubit>()
+                        .setFilter(template: template.value);
+                  },
+                );
+              }).toList(),
+            );
+          }),
           SizedBox(
             height: 32,
             width: 32,

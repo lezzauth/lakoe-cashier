@@ -202,3 +202,80 @@ Map<String, dynamic> _$$DetailCustomerOutletResponseImplToJson(
       'customer': instance.customer,
       'summary': instance.summary,
     };
+
+_$OutletReportModelImpl _$$OutletReportModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$OutletReportModelImpl(
+      income: OutletReportIncomeModel.fromJson(
+          json['income'] as Map<String, dynamic>),
+      sales: OutletReportSalesModel.fromJson(
+          json['sales'] as Map<String, dynamic>),
+      timeWindow: OutletReportTimeWindow.fromJson(
+          json['timeWindow'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$OutletReportModelImplToJson(
+        _$OutletReportModelImpl instance) =>
+    <String, dynamic>{
+      'income': instance.income,
+      'sales': instance.sales,
+      'timeWindow': instance.timeWindow,
+    };
+
+_$OutletReportIncomeModelImpl _$$OutletReportIncomeModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$OutletReportIncomeModelImpl(
+      current: json['current'] as String,
+      past: json['past'] as String,
+      diff: (json['diff'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$$OutletReportIncomeModelImplToJson(
+        _$OutletReportIncomeModelImpl instance) =>
+    <String, dynamic>{
+      'current': instance.current,
+      'past': instance.past,
+      'diff': instance.diff,
+    };
+
+_$OutletReportSalesModelImpl _$$OutletReportSalesModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$OutletReportSalesModelImpl(
+      current: (json['current'] as num).toInt(),
+      past: (json['past'] as num).toInt(),
+      diff: (json['diff'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$$OutletReportSalesModelImplToJson(
+        _$OutletReportSalesModelImpl instance) =>
+    <String, dynamic>{
+      'current': instance.current,
+      'past': instance.past,
+      'diff': instance.diff,
+    };
+
+_$OutletReportTimeWindowImpl _$$OutletReportTimeWindowImplFromJson(
+        Map<String, dynamic> json) =>
+    _$OutletReportTimeWindowImpl(
+      current: TimeRange.fromJson(json['current'] as Map<String, dynamic>),
+      past: TimeRange.fromJson(json['past'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$OutletReportTimeWindowImplToJson(
+        _$OutletReportTimeWindowImpl instance) =>
+    <String, dynamic>{
+      'current': instance.current,
+      'past': instance.past,
+    };
+
+_$TimeRangeImpl _$$TimeRangeImplFromJson(Map<String, dynamic> json) =>
+    _$TimeRangeImpl(
+      start: json['start'] as String,
+      end: json['end'] as String,
+    );
+
+Map<String, dynamic> _$$TimeRangeImplToJson(_$TimeRangeImpl instance) =>
+    <String, dynamic>{
+      'start': instance.start,
+      'end': instance.end,
+    };

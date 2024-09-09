@@ -2264,3 +2264,913 @@ abstract class _DetailCustomerOutletResponse
           _$DetailCustomerOutletResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+OutletReportModel _$OutletReportModelFromJson(Map<String, dynamic> json) {
+  return _OutletReportModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OutletReportModel {
+  OutletReportIncomeModel get income => throw _privateConstructorUsedError;
+  OutletReportSalesModel get sales => throw _privateConstructorUsedError;
+  OutletReportTimeWindow get timeWindow => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OutletReportModelCopyWith<OutletReportModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OutletReportModelCopyWith<$Res> {
+  factory $OutletReportModelCopyWith(
+          OutletReportModel value, $Res Function(OutletReportModel) then) =
+      _$OutletReportModelCopyWithImpl<$Res, OutletReportModel>;
+  @useResult
+  $Res call(
+      {OutletReportIncomeModel income,
+      OutletReportSalesModel sales,
+      OutletReportTimeWindow timeWindow});
+
+  $OutletReportIncomeModelCopyWith<$Res> get income;
+  $OutletReportSalesModelCopyWith<$Res> get sales;
+  $OutletReportTimeWindowCopyWith<$Res> get timeWindow;
+}
+
+/// @nodoc
+class _$OutletReportModelCopyWithImpl<$Res, $Val extends OutletReportModel>
+    implements $OutletReportModelCopyWith<$Res> {
+  _$OutletReportModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? income = null,
+    Object? sales = null,
+    Object? timeWindow = null,
+  }) {
+    return _then(_value.copyWith(
+      income: null == income
+          ? _value.income
+          : income // ignore: cast_nullable_to_non_nullable
+              as OutletReportIncomeModel,
+      sales: null == sales
+          ? _value.sales
+          : sales // ignore: cast_nullable_to_non_nullable
+              as OutletReportSalesModel,
+      timeWindow: null == timeWindow
+          ? _value.timeWindow
+          : timeWindow // ignore: cast_nullable_to_non_nullable
+              as OutletReportTimeWindow,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OutletReportIncomeModelCopyWith<$Res> get income {
+    return $OutletReportIncomeModelCopyWith<$Res>(_value.income, (value) {
+      return _then(_value.copyWith(income: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OutletReportSalesModelCopyWith<$Res> get sales {
+    return $OutletReportSalesModelCopyWith<$Res>(_value.sales, (value) {
+      return _then(_value.copyWith(sales: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OutletReportTimeWindowCopyWith<$Res> get timeWindow {
+    return $OutletReportTimeWindowCopyWith<$Res>(_value.timeWindow, (value) {
+      return _then(_value.copyWith(timeWindow: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$OutletReportModelImplCopyWith<$Res>
+    implements $OutletReportModelCopyWith<$Res> {
+  factory _$$OutletReportModelImplCopyWith(_$OutletReportModelImpl value,
+          $Res Function(_$OutletReportModelImpl) then) =
+      __$$OutletReportModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {OutletReportIncomeModel income,
+      OutletReportSalesModel sales,
+      OutletReportTimeWindow timeWindow});
+
+  @override
+  $OutletReportIncomeModelCopyWith<$Res> get income;
+  @override
+  $OutletReportSalesModelCopyWith<$Res> get sales;
+  @override
+  $OutletReportTimeWindowCopyWith<$Res> get timeWindow;
+}
+
+/// @nodoc
+class __$$OutletReportModelImplCopyWithImpl<$Res>
+    extends _$OutletReportModelCopyWithImpl<$Res, _$OutletReportModelImpl>
+    implements _$$OutletReportModelImplCopyWith<$Res> {
+  __$$OutletReportModelImplCopyWithImpl(_$OutletReportModelImpl _value,
+      $Res Function(_$OutletReportModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? income = null,
+    Object? sales = null,
+    Object? timeWindow = null,
+  }) {
+    return _then(_$OutletReportModelImpl(
+      income: null == income
+          ? _value.income
+          : income // ignore: cast_nullable_to_non_nullable
+              as OutletReportIncomeModel,
+      sales: null == sales
+          ? _value.sales
+          : sales // ignore: cast_nullable_to_non_nullable
+              as OutletReportSalesModel,
+      timeWindow: null == timeWindow
+          ? _value.timeWindow
+          : timeWindow // ignore: cast_nullable_to_non_nullable
+              as OutletReportTimeWindow,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OutletReportModelImpl implements _OutletReportModel {
+  const _$OutletReportModelImpl(
+      {required this.income, required this.sales, required this.timeWindow});
+
+  factory _$OutletReportModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OutletReportModelImplFromJson(json);
+
+  @override
+  final OutletReportIncomeModel income;
+  @override
+  final OutletReportSalesModel sales;
+  @override
+  final OutletReportTimeWindow timeWindow;
+
+  @override
+  String toString() {
+    return 'OutletReportModel(income: $income, sales: $sales, timeWindow: $timeWindow)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OutletReportModelImpl &&
+            (identical(other.income, income) || other.income == income) &&
+            (identical(other.sales, sales) || other.sales == sales) &&
+            (identical(other.timeWindow, timeWindow) ||
+                other.timeWindow == timeWindow));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, income, sales, timeWindow);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OutletReportModelImplCopyWith<_$OutletReportModelImpl> get copyWith =>
+      __$$OutletReportModelImplCopyWithImpl<_$OutletReportModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OutletReportModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OutletReportModel implements OutletReportModel {
+  const factory _OutletReportModel(
+          {required final OutletReportIncomeModel income,
+          required final OutletReportSalesModel sales,
+          required final OutletReportTimeWindow timeWindow}) =
+      _$OutletReportModelImpl;
+
+  factory _OutletReportModel.fromJson(Map<String, dynamic> json) =
+      _$OutletReportModelImpl.fromJson;
+
+  @override
+  OutletReportIncomeModel get income;
+  @override
+  OutletReportSalesModel get sales;
+  @override
+  OutletReportTimeWindow get timeWindow;
+  @override
+  @JsonKey(ignore: true)
+  _$$OutletReportModelImplCopyWith<_$OutletReportModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+OutletReportIncomeModel _$OutletReportIncomeModelFromJson(
+    Map<String, dynamic> json) {
+  return _OutletReportIncomeModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OutletReportIncomeModel {
+  String get current => throw _privateConstructorUsedError;
+  String get past => throw _privateConstructorUsedError;
+  int? get diff => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OutletReportIncomeModelCopyWith<OutletReportIncomeModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OutletReportIncomeModelCopyWith<$Res> {
+  factory $OutletReportIncomeModelCopyWith(OutletReportIncomeModel value,
+          $Res Function(OutletReportIncomeModel) then) =
+      _$OutletReportIncomeModelCopyWithImpl<$Res, OutletReportIncomeModel>;
+  @useResult
+  $Res call({String current, String past, int? diff});
+}
+
+/// @nodoc
+class _$OutletReportIncomeModelCopyWithImpl<$Res,
+        $Val extends OutletReportIncomeModel>
+    implements $OutletReportIncomeModelCopyWith<$Res> {
+  _$OutletReportIncomeModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? current = null,
+    Object? past = null,
+    Object? diff = freezed,
+  }) {
+    return _then(_value.copyWith(
+      current: null == current
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as String,
+      past: null == past
+          ? _value.past
+          : past // ignore: cast_nullable_to_non_nullable
+              as String,
+      diff: freezed == diff
+          ? _value.diff
+          : diff // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$OutletReportIncomeModelImplCopyWith<$Res>
+    implements $OutletReportIncomeModelCopyWith<$Res> {
+  factory _$$OutletReportIncomeModelImplCopyWith(
+          _$OutletReportIncomeModelImpl value,
+          $Res Function(_$OutletReportIncomeModelImpl) then) =
+      __$$OutletReportIncomeModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String current, String past, int? diff});
+}
+
+/// @nodoc
+class __$$OutletReportIncomeModelImplCopyWithImpl<$Res>
+    extends _$OutletReportIncomeModelCopyWithImpl<$Res,
+        _$OutletReportIncomeModelImpl>
+    implements _$$OutletReportIncomeModelImplCopyWith<$Res> {
+  __$$OutletReportIncomeModelImplCopyWithImpl(
+      _$OutletReportIncomeModelImpl _value,
+      $Res Function(_$OutletReportIncomeModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? current = null,
+    Object? past = null,
+    Object? diff = freezed,
+  }) {
+    return _then(_$OutletReportIncomeModelImpl(
+      current: null == current
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as String,
+      past: null == past
+          ? _value.past
+          : past // ignore: cast_nullable_to_non_nullable
+              as String,
+      diff: freezed == diff
+          ? _value.diff
+          : diff // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OutletReportIncomeModelImpl implements _OutletReportIncomeModel {
+  const _$OutletReportIncomeModelImpl(
+      {required this.current, required this.past, this.diff});
+
+  factory _$OutletReportIncomeModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OutletReportIncomeModelImplFromJson(json);
+
+  @override
+  final String current;
+  @override
+  final String past;
+  @override
+  final int? diff;
+
+  @override
+  String toString() {
+    return 'OutletReportIncomeModel(current: $current, past: $past, diff: $diff)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OutletReportIncomeModelImpl &&
+            (identical(other.current, current) || other.current == current) &&
+            (identical(other.past, past) || other.past == past) &&
+            (identical(other.diff, diff) || other.diff == diff));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, current, past, diff);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OutletReportIncomeModelImplCopyWith<_$OutletReportIncomeModelImpl>
+      get copyWith => __$$OutletReportIncomeModelImplCopyWithImpl<
+          _$OutletReportIncomeModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OutletReportIncomeModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OutletReportIncomeModel implements OutletReportIncomeModel {
+  const factory _OutletReportIncomeModel(
+      {required final String current,
+      required final String past,
+      final int? diff}) = _$OutletReportIncomeModelImpl;
+
+  factory _OutletReportIncomeModel.fromJson(Map<String, dynamic> json) =
+      _$OutletReportIncomeModelImpl.fromJson;
+
+  @override
+  String get current;
+  @override
+  String get past;
+  @override
+  int? get diff;
+  @override
+  @JsonKey(ignore: true)
+  _$$OutletReportIncomeModelImplCopyWith<_$OutletReportIncomeModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+OutletReportSalesModel _$OutletReportSalesModelFromJson(
+    Map<String, dynamic> json) {
+  return _OutletReportSalesModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OutletReportSalesModel {
+  int get current => throw _privateConstructorUsedError;
+  int get past => throw _privateConstructorUsedError;
+  int? get diff => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OutletReportSalesModelCopyWith<OutletReportSalesModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OutletReportSalesModelCopyWith<$Res> {
+  factory $OutletReportSalesModelCopyWith(OutletReportSalesModel value,
+          $Res Function(OutletReportSalesModel) then) =
+      _$OutletReportSalesModelCopyWithImpl<$Res, OutletReportSalesModel>;
+  @useResult
+  $Res call({int current, int past, int? diff});
+}
+
+/// @nodoc
+class _$OutletReportSalesModelCopyWithImpl<$Res,
+        $Val extends OutletReportSalesModel>
+    implements $OutletReportSalesModelCopyWith<$Res> {
+  _$OutletReportSalesModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? current = null,
+    Object? past = null,
+    Object? diff = freezed,
+  }) {
+    return _then(_value.copyWith(
+      current: null == current
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as int,
+      past: null == past
+          ? _value.past
+          : past // ignore: cast_nullable_to_non_nullable
+              as int,
+      diff: freezed == diff
+          ? _value.diff
+          : diff // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$OutletReportSalesModelImplCopyWith<$Res>
+    implements $OutletReportSalesModelCopyWith<$Res> {
+  factory _$$OutletReportSalesModelImplCopyWith(
+          _$OutletReportSalesModelImpl value,
+          $Res Function(_$OutletReportSalesModelImpl) then) =
+      __$$OutletReportSalesModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int current, int past, int? diff});
+}
+
+/// @nodoc
+class __$$OutletReportSalesModelImplCopyWithImpl<$Res>
+    extends _$OutletReportSalesModelCopyWithImpl<$Res,
+        _$OutletReportSalesModelImpl>
+    implements _$$OutletReportSalesModelImplCopyWith<$Res> {
+  __$$OutletReportSalesModelImplCopyWithImpl(
+      _$OutletReportSalesModelImpl _value,
+      $Res Function(_$OutletReportSalesModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? current = null,
+    Object? past = null,
+    Object? diff = freezed,
+  }) {
+    return _then(_$OutletReportSalesModelImpl(
+      current: null == current
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as int,
+      past: null == past
+          ? _value.past
+          : past // ignore: cast_nullable_to_non_nullable
+              as int,
+      diff: freezed == diff
+          ? _value.diff
+          : diff // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OutletReportSalesModelImpl implements _OutletReportSalesModel {
+  const _$OutletReportSalesModelImpl(
+      {required this.current, required this.past, this.diff});
+
+  factory _$OutletReportSalesModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OutletReportSalesModelImplFromJson(json);
+
+  @override
+  final int current;
+  @override
+  final int past;
+  @override
+  final int? diff;
+
+  @override
+  String toString() {
+    return 'OutletReportSalesModel(current: $current, past: $past, diff: $diff)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OutletReportSalesModelImpl &&
+            (identical(other.current, current) || other.current == current) &&
+            (identical(other.past, past) || other.past == past) &&
+            (identical(other.diff, diff) || other.diff == diff));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, current, past, diff);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OutletReportSalesModelImplCopyWith<_$OutletReportSalesModelImpl>
+      get copyWith => __$$OutletReportSalesModelImplCopyWithImpl<
+          _$OutletReportSalesModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OutletReportSalesModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OutletReportSalesModel implements OutletReportSalesModel {
+  const factory _OutletReportSalesModel(
+      {required final int current,
+      required final int past,
+      final int? diff}) = _$OutletReportSalesModelImpl;
+
+  factory _OutletReportSalesModel.fromJson(Map<String, dynamic> json) =
+      _$OutletReportSalesModelImpl.fromJson;
+
+  @override
+  int get current;
+  @override
+  int get past;
+  @override
+  int? get diff;
+  @override
+  @JsonKey(ignore: true)
+  _$$OutletReportSalesModelImplCopyWith<_$OutletReportSalesModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+OutletReportTimeWindow _$OutletReportTimeWindowFromJson(
+    Map<String, dynamic> json) {
+  return _OutletReportTimeWindow.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OutletReportTimeWindow {
+  TimeRange get current => throw _privateConstructorUsedError;
+  TimeRange get past => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OutletReportTimeWindowCopyWith<OutletReportTimeWindow> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OutletReportTimeWindowCopyWith<$Res> {
+  factory $OutletReportTimeWindowCopyWith(OutletReportTimeWindow value,
+          $Res Function(OutletReportTimeWindow) then) =
+      _$OutletReportTimeWindowCopyWithImpl<$Res, OutletReportTimeWindow>;
+  @useResult
+  $Res call({TimeRange current, TimeRange past});
+
+  $TimeRangeCopyWith<$Res> get current;
+  $TimeRangeCopyWith<$Res> get past;
+}
+
+/// @nodoc
+class _$OutletReportTimeWindowCopyWithImpl<$Res,
+        $Val extends OutletReportTimeWindow>
+    implements $OutletReportTimeWindowCopyWith<$Res> {
+  _$OutletReportTimeWindowCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? current = null,
+    Object? past = null,
+  }) {
+    return _then(_value.copyWith(
+      current: null == current
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as TimeRange,
+      past: null == past
+          ? _value.past
+          : past // ignore: cast_nullable_to_non_nullable
+              as TimeRange,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $TimeRangeCopyWith<$Res> get current {
+    return $TimeRangeCopyWith<$Res>(_value.current, (value) {
+      return _then(_value.copyWith(current: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $TimeRangeCopyWith<$Res> get past {
+    return $TimeRangeCopyWith<$Res>(_value.past, (value) {
+      return _then(_value.copyWith(past: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$OutletReportTimeWindowImplCopyWith<$Res>
+    implements $OutletReportTimeWindowCopyWith<$Res> {
+  factory _$$OutletReportTimeWindowImplCopyWith(
+          _$OutletReportTimeWindowImpl value,
+          $Res Function(_$OutletReportTimeWindowImpl) then) =
+      __$$OutletReportTimeWindowImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({TimeRange current, TimeRange past});
+
+  @override
+  $TimeRangeCopyWith<$Res> get current;
+  @override
+  $TimeRangeCopyWith<$Res> get past;
+}
+
+/// @nodoc
+class __$$OutletReportTimeWindowImplCopyWithImpl<$Res>
+    extends _$OutletReportTimeWindowCopyWithImpl<$Res,
+        _$OutletReportTimeWindowImpl>
+    implements _$$OutletReportTimeWindowImplCopyWith<$Res> {
+  __$$OutletReportTimeWindowImplCopyWithImpl(
+      _$OutletReportTimeWindowImpl _value,
+      $Res Function(_$OutletReportTimeWindowImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? current = null,
+    Object? past = null,
+  }) {
+    return _then(_$OutletReportTimeWindowImpl(
+      current: null == current
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as TimeRange,
+      past: null == past
+          ? _value.past
+          : past // ignore: cast_nullable_to_non_nullable
+              as TimeRange,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OutletReportTimeWindowImpl implements _OutletReportTimeWindow {
+  const _$OutletReportTimeWindowImpl(
+      {required this.current, required this.past});
+
+  factory _$OutletReportTimeWindowImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OutletReportTimeWindowImplFromJson(json);
+
+  @override
+  final TimeRange current;
+  @override
+  final TimeRange past;
+
+  @override
+  String toString() {
+    return 'OutletReportTimeWindow(current: $current, past: $past)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OutletReportTimeWindowImpl &&
+            (identical(other.current, current) || other.current == current) &&
+            (identical(other.past, past) || other.past == past));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, current, past);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OutletReportTimeWindowImplCopyWith<_$OutletReportTimeWindowImpl>
+      get copyWith => __$$OutletReportTimeWindowImplCopyWithImpl<
+          _$OutletReportTimeWindowImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OutletReportTimeWindowImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OutletReportTimeWindow implements OutletReportTimeWindow {
+  const factory _OutletReportTimeWindow(
+      {required final TimeRange current,
+      required final TimeRange past}) = _$OutletReportTimeWindowImpl;
+
+  factory _OutletReportTimeWindow.fromJson(Map<String, dynamic> json) =
+      _$OutletReportTimeWindowImpl.fromJson;
+
+  @override
+  TimeRange get current;
+  @override
+  TimeRange get past;
+  @override
+  @JsonKey(ignore: true)
+  _$$OutletReportTimeWindowImplCopyWith<_$OutletReportTimeWindowImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+TimeRange _$TimeRangeFromJson(Map<String, dynamic> json) {
+  return _TimeRange.fromJson(json);
+}
+
+/// @nodoc
+mixin _$TimeRange {
+  String get start => throw _privateConstructorUsedError;
+  String get end => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TimeRangeCopyWith<TimeRange> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TimeRangeCopyWith<$Res> {
+  factory $TimeRangeCopyWith(TimeRange value, $Res Function(TimeRange) then) =
+      _$TimeRangeCopyWithImpl<$Res, TimeRange>;
+  @useResult
+  $Res call({String start, String end});
+}
+
+/// @nodoc
+class _$TimeRangeCopyWithImpl<$Res, $Val extends TimeRange>
+    implements $TimeRangeCopyWith<$Res> {
+  _$TimeRangeCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? start = null,
+    Object? end = null,
+  }) {
+    return _then(_value.copyWith(
+      start: null == start
+          ? _value.start
+          : start // ignore: cast_nullable_to_non_nullable
+              as String,
+      end: null == end
+          ? _value.end
+          : end // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$TimeRangeImplCopyWith<$Res>
+    implements $TimeRangeCopyWith<$Res> {
+  factory _$$TimeRangeImplCopyWith(
+          _$TimeRangeImpl value, $Res Function(_$TimeRangeImpl) then) =
+      __$$TimeRangeImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String start, String end});
+}
+
+/// @nodoc
+class __$$TimeRangeImplCopyWithImpl<$Res>
+    extends _$TimeRangeCopyWithImpl<$Res, _$TimeRangeImpl>
+    implements _$$TimeRangeImplCopyWith<$Res> {
+  __$$TimeRangeImplCopyWithImpl(
+      _$TimeRangeImpl _value, $Res Function(_$TimeRangeImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? start = null,
+    Object? end = null,
+  }) {
+    return _then(_$TimeRangeImpl(
+      start: null == start
+          ? _value.start
+          : start // ignore: cast_nullable_to_non_nullable
+              as String,
+      end: null == end
+          ? _value.end
+          : end // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TimeRangeImpl implements _TimeRange {
+  const _$TimeRangeImpl({required this.start, required this.end});
+
+  factory _$TimeRangeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TimeRangeImplFromJson(json);
+
+  @override
+  final String start;
+  @override
+  final String end;
+
+  @override
+  String toString() {
+    return 'TimeRange(start: $start, end: $end)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TimeRangeImpl &&
+            (identical(other.start, start) || other.start == start) &&
+            (identical(other.end, end) || other.end == end));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, start, end);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TimeRangeImplCopyWith<_$TimeRangeImpl> get copyWith =>
+      __$$TimeRangeImplCopyWithImpl<_$TimeRangeImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TimeRangeImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _TimeRange implements TimeRange {
+  const factory _TimeRange(
+      {required final String start,
+      required final String end}) = _$TimeRangeImpl;
+
+  factory _TimeRange.fromJson(Map<String, dynamic> json) =
+      _$TimeRangeImpl.fromJson;
+
+  @override
+  String get start;
+  @override
+  String get end;
+  @override
+  @JsonKey(ignore: true)
+  _$$TimeRangeImplCopyWith<_$TimeRangeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

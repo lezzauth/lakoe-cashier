@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:outlet_repository/outlet_repository.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_cubit.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_cubit.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_state.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_state.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/appbar/dashboard_appbar.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/banner/dashboard_banner.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/filter/dashboard_day_select_filter.dart';
@@ -11,72 +17,123 @@ import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widg
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/main_menu/main_menu.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/summary/income_summary.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/summary/sales_summary.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
-class DashboardScreen extends StatefulWidget {
+class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CashierReportCubit()),
+        BlocProvider(create: (context) => CashierReportFilterCubit()),
+      ],
+      child: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) => switch (state) {
+          AuthReady() => const Dashboard(),
+          _ => const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+        },
+      ),
+    );
+  }
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
-  Future<void> _onGetOpenCashier() async {
-    AuthState authState = context.read<AuthCubit>().state;
-    if (authState is! AuthReady) return;
-    context.read<CashierCubit>().getOpenCashier(authState.outletId);
+class Dashboard extends StatefulWidget {
+  const Dashboard({super.key});
+
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  Future<void> _onInit() async {
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+    await context.read<CashierCubit>().getOpenCashier(authState.outletId);
+    await context.read<CashierReportCubit>().init(authState.outletId);
   }
 
   @override
   void initState() {
     super.initState();
-    _onGetOpenCashier();
+    _onInit();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const DashboardAppbar(),
-      body: SafeArea(
-        child: ListView(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              child: const MainMenu(
-                  // cashierName: "Dimas Kurniawan",
-                  ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              margin: const EdgeInsets.only(bottom: 12),
-              child: const ItemMenuContainer(),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              margin: const EdgeInsets.only(bottom: 12),
-              child: const DashboardBanner(),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              margin: const EdgeInsets.only(bottom: 12),
-              child: const DashboardFilter(),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              margin: const EdgeInsets.only(bottom: 12),
-              child: const DashboardDaySelectFilter(),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              margin: const EdgeInsets.only(bottom: 12),
-              child: Column(
-                children: [
-                  IncomeSummary(),
-                  SizedBox(height: 12),
-                  SalesSummary(),
-                ],
+    return BlocListener<CashierReportFilterCubit, CashierReportFilterState>(
+      listener: (context, state) {
+        AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+        context.read<CashierReportCubit>().getReport(
+            outletId: authState.outletId,
+            dto: GetOutletReportDto(
+              from: state.from,
+              template: state.template,
+              to: state.to,
+            ));
+      },
+      child: Scaffold(
+        appBar: const DashboardAppbar(),
+        body: SafeArea(
+          child: ListView(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(bottom: 12),
+                child: const MainMenu(
+                    // cashierName: "Dimas Kurniawan",
+                    ),
               ),
-            ),
-          ],
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                margin: const EdgeInsets.only(bottom: 12),
+                child: const ItemMenuContainer(),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                margin: const EdgeInsets.only(bottom: 12),
+                child: const DashboardBanner(),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                margin: const EdgeInsets.only(bottom: 12),
+                child: const DashboardFilter(),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                margin: const EdgeInsets.only(bottom: 12),
+                child: const DashboardDaySelectFilter(),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                margin: const EdgeInsets.only(bottom: 12),
+                child: BlocBuilder<CashierReportCubit, CashierReportState>(
+                    builder: (context, state) => switch (state) {
+                          CashierReportLoadSuccess(:final report) => Column(
+                              children: [
+                                IncomeSummary(
+                                  income: report.income,
+                                ),
+                                SizedBox(height: 12),
+                                SalesSummary(sales: report.sales),
+                              ],
+                            ),
+                          CashierReportLoadFailure(:final error) => Center(
+                              child: TextBodyS(
+                                error,
+                                color: TColors.error,
+                              ),
+                            ),
+                          _ => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                        }),
+              ),
+            ],
+          ),
         ),
       ),
     );

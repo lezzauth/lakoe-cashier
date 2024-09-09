@@ -5,7 +5,7 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 
-enum StatsType { ascend, descend }
+enum StatsType { ascend, descend, neutral }
 
 class StatsBadge extends StatelessWidget {
   final StatsType type;
@@ -19,6 +19,7 @@ class StatsBadge extends StatelessWidget {
 
   Color getColor() {
     if (type == StatsType.ascend) return TColors.successDark;
+    if (type == StatsType.neutral) return TColors.neutralDarkLight;
     return TColors.errorDark;
   }
 

@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/summary/stats_badge.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class IncomeSummary extends StatelessWidget {
-  const IncomeSummary({super.key});
+  const IncomeSummary({super.key, required this.income});
+
+  final OutletReportIncomeModel income;
+
+  StatsType getType() {
+    if (income.diff == null) return StatsType.neutral;
+    if (income.diff! == 0) return StatsType.neutral;
+    if (income.diff!.isNegative) return StatsType.descend;
+    if (income.diff! > 0) return StatsType.ascend;
+
+    return StatsType.neutral;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +69,10 @@ class IncomeSummary extends StatelessWidget {
                         spacing: 8.0,
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          const StatsBadge(
-                              type: StatsType.ascend, value: "100%"),
+                          StatsBadge(
+                            type: getType(),
+                            value: "${income.diff ?? 0}%",
+                          ),
                           Text(
                             "vs Kemarin",
                             style: GoogleFonts.inter(
@@ -71,7 +86,7 @@ class IncomeSummary extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Rp10.000",
+                  TFormatter.formatToRupiah(int.parse(income.current)),
                   style: GoogleFonts.inter(
                     color: TColors.infoMedium,
                     fontSize: TSizes.fontSizeHeading1,
