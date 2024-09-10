@@ -9,7 +9,6 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
-import 'package:point_of_sales_cashier/utils/http/http.dart';
 
 class OtpInputScreen extends StatefulWidget {
   const OtpInputScreen({super.key});
@@ -80,6 +79,7 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
           return Scaffold(
             body: SafeArea(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Expanded(
                     child: Container(
@@ -154,7 +154,7 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 55.0),
+                    padding: const EdgeInsets.only(bottom: 55.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
