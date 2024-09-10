@@ -1,20 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:order_repository/order_repository.dart';
 
 part 'cashier.g.dart';
 part 'cashier.freezed.dart';
-
-// common
-@freezed
-class OrderItemDto with _$OrderItemDto {
-  const factory OrderItemDto({
-    @Default("") String notes,
-    required int quantity,
-    required String productId,
-  }) = _OrderItemDto;
-
-  factory OrderItemDto.fromJson(Map<String, Object?> json) =>
-      _$OrderItemDtoFromJson(json);
-}
 
 // Save Order
 @freezed
@@ -84,18 +72,6 @@ class CloseCashierDto with _$CloseCashierDto {
 }
 
 // Preview Order Price
-@freezed
-class PreviewOrderPriceDto with _$PreviewOrderPriceDto {
-  const factory PreviewOrderPriceDto({
-    required String type,
-    required String outletId,
-    required List<OrderItemDto> items,
-  }) = _PreviewOrderPriceDto;
-
-  factory PreviewOrderPriceDto.fromJson(Map<String, Object?> json) =>
-      _$PreviewOrderPriceDtoFromJson(json);
-}
-
 @freezed
 class FindAllOrderDto with _$FindAllOrderDto {
   const factory FindAllOrderDto({

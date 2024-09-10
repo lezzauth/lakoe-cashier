@@ -140,8 +140,8 @@ class DetailCustomerOutletResponse with _$DetailCustomerOutletResponse {
 @freezed
 class OutletReportModel with _$OutletReportModel {
   const factory OutletReportModel({
-    required OutletReportIncomeModel income,
-    required OutletReportSalesModel sales,
+    required OutletReportTotalSaleModel total_sales,
+    required OutletReportTotalTransactionModel total_transactions,
     required OutletReportTimeWindow timeWindow,
   }) = _OutletReportModel;
 
@@ -150,27 +150,29 @@ class OutletReportModel with _$OutletReportModel {
 }
 
 @freezed
-class OutletReportIncomeModel with _$OutletReportIncomeModel {
-  const factory OutletReportIncomeModel({
+class OutletReportTotalSaleModel with _$OutletReportTotalSaleModel {
+  const factory OutletReportTotalSaleModel({
     required String current,
     required String past,
     int? diff,
-  }) = _OutletReportIncomeModel;
+  }) = _OutletReportTotalSaleModel;
 
-  factory OutletReportIncomeModel.fromJson(Map<String, Object?> json) =>
-      _$OutletReportIncomeModelFromJson(json);
+  factory OutletReportTotalSaleModel.fromJson(Map<String, Object?> json) =>
+      _$OutletReportTotalSaleModelFromJson(json);
 }
 
 @freezed
-class OutletReportSalesModel with _$OutletReportSalesModel {
-  const factory OutletReportSalesModel({
+class OutletReportTotalTransactionModel
+    with _$OutletReportTotalTransactionModel {
+  const factory OutletReportTotalTransactionModel({
     required int current,
     required int past,
     int? diff,
-  }) = _OutletReportSalesModel;
+  }) = _OutletReportTotalTransactionModel;
 
-  factory OutletReportSalesModel.fromJson(Map<String, Object?> json) =>
-      _$OutletReportSalesModelFromJson(json);
+  factory OutletReportTotalTransactionModel.fromJson(
+          Map<String, Object?> json) =>
+      _$OutletReportTotalTransactionModelFromJson(json);
 }
 
 @freezed

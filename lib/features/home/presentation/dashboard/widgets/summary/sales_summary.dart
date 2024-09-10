@@ -9,25 +9,26 @@ import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widg
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class SalesSummary extends StatelessWidget {
-  const SalesSummary({super.key, required this.sales});
+  const SalesSummary({super.key, required this.totalSales});
 
-  final OutletReportSalesModel sales;
+  final OutletReportTotalSaleModel totalSales;
 
   StatsType getType() {
-    if (sales.diff == null) return StatsType.neutral;
-    if (sales.diff! == 0) return StatsType.neutral;
-    if (sales.diff!.isNegative) return StatsType.descend;
-    if (sales.diff! > 0) return StatsType.ascend;
+    if (totalSales.diff == null) return StatsType.neutral;
+    if (totalSales.diff! == 0) return StatsType.neutral;
+    if (totalSales.diff!.isNegative) return StatsType.descend;
+    if (totalSales.diff! > 0) return StatsType.ascend;
 
     return StatsType.neutral;
   }
 
   String getComparisonText(CashierReportFilterState filter) {
-    if (filter.template == "TODAY") return "Kemarin";
-    if (filter.template == "THISWEEK") return "Minggu sebelumnya";
-    if (filter.template == "THISMONTH") return "Bulan sebelumnya";
+    if (filter.preset == "TODAY") return "Kemarin";
+    if (filter.preset == "THISWEEK") return "Minggu sebelumnya";
+    if (filter.preset == "THISMONTH") return "Bulan sebelumnya";
     if (filter.duration != null) return "${filter.duration} hari sebelumnya";
 
     return "";
@@ -49,7 +50,7 @@ class SalesSummary extends StatelessWidget {
             top: 0,
             right: 0,
             child: SvgPicture.asset(
-              TImages.receiptSlip,
+              TImages.tradingNews,
             ),
           ),
           Container(
@@ -67,7 +68,7 @@ class SalesSummary extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.only(bottom: 8),
                         child: Text(
-                          "Penjualan",
+                          "Pendapatan",
                           style: GoogleFonts.inter(
                             color: TColors.neutralDarkDarkest,
                             fontSize: TSizes.fontSizeHeading3,
@@ -84,8 +85,9 @@ class SalesSummary extends StatelessWidget {
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
                               StatsBadge(
-                                  type: getType(),
-                                  value: "${sales.diff ?? 0}%"),
+                                type: getType(),
+                                value: "${totalSales.diff ?? 0}%",
+                              ),
                               Text(
                                 "vs ${getComparisonText(state)}",
                                 style: GoogleFonts.inter(
@@ -101,7 +103,7 @@ class SalesSummary extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "${sales.diff ?? 0}",
+                  TFormatter.formatToRupiah(int.parse(totalSales.current)),
                   style: GoogleFonts.inter(
                     color: TColors.infoMedium,
                     fontSize: TSizes.fontSizeHeading1,

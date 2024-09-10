@@ -107,3 +107,39 @@ class OrderModel with _$OrderModel {
   factory OrderModel.fromJson(Map<String, Object?> json) =>
       _$OrderModelFromJson(json);
 }
+
+@freezed
+class PreviewOrderItem with _$PreviewOrderItem {
+  const factory PreviewOrderItem({
+    required String price,
+    required int quantity,
+    required String productId,
+    required String notes,
+  }) = _PreviewOrderItem;
+
+  factory PreviewOrderItem.fromJson(Map<String, Object?> json) =>
+      _$PreviewOrderItemFromJson(json);
+}
+
+@freezed
+class PreviewOrderCharge with _$PreviewOrderCharge {
+  const factory PreviewOrderCharge({
+    required String type,
+    required String amount,
+  }) = _PreviewOrderCharge;
+
+  factory PreviewOrderCharge.fromJson(Map<String, Object?> json) =>
+      _$PreviewOrderChargeFromJson(json);
+}
+
+@freezed
+class PreviewOrderPriceResponse with _$PreviewOrderPriceResponse {
+  const factory PreviewOrderPriceResponse({
+    required String total,
+    required List<PreviewOrderItem> orderItems,
+    required List<PreviewOrderCharge> charges,
+  }) = _PreviewOrderPriceResponse;
+
+  factory PreviewOrderPriceResponse.fromJson(Map<String, Object?> json) =>
+      _$PreviewOrderPriceResponseFromJson(json);
+}

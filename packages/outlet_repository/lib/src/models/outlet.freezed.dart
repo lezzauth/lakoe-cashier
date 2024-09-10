@@ -2271,8 +2271,10 @@ OutletReportModel _$OutletReportModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OutletReportModel {
-  OutletReportIncomeModel get income => throw _privateConstructorUsedError;
-  OutletReportSalesModel get sales => throw _privateConstructorUsedError;
+  OutletReportTotalSaleModel get total_sales =>
+      throw _privateConstructorUsedError;
+  OutletReportTotalTransactionModel get total_transactions =>
+      throw _privateConstructorUsedError;
   OutletReportTimeWindow get timeWindow => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -2288,12 +2290,12 @@ abstract class $OutletReportModelCopyWith<$Res> {
       _$OutletReportModelCopyWithImpl<$Res, OutletReportModel>;
   @useResult
   $Res call(
-      {OutletReportIncomeModel income,
-      OutletReportSalesModel sales,
+      {OutletReportTotalSaleModel total_sales,
+      OutletReportTotalTransactionModel total_transactions,
       OutletReportTimeWindow timeWindow});
 
-  $OutletReportIncomeModelCopyWith<$Res> get income;
-  $OutletReportSalesModelCopyWith<$Res> get sales;
+  $OutletReportTotalSaleModelCopyWith<$Res> get total_sales;
+  $OutletReportTotalTransactionModelCopyWith<$Res> get total_transactions;
   $OutletReportTimeWindowCopyWith<$Res> get timeWindow;
 }
 
@@ -2310,19 +2312,19 @@ class _$OutletReportModelCopyWithImpl<$Res, $Val extends OutletReportModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? income = null,
-    Object? sales = null,
+    Object? total_sales = null,
+    Object? total_transactions = null,
     Object? timeWindow = null,
   }) {
     return _then(_value.copyWith(
-      income: null == income
-          ? _value.income
-          : income // ignore: cast_nullable_to_non_nullable
-              as OutletReportIncomeModel,
-      sales: null == sales
-          ? _value.sales
-          : sales // ignore: cast_nullable_to_non_nullable
-              as OutletReportSalesModel,
+      total_sales: null == total_sales
+          ? _value.total_sales
+          : total_sales // ignore: cast_nullable_to_non_nullable
+              as OutletReportTotalSaleModel,
+      total_transactions: null == total_transactions
+          ? _value.total_transactions
+          : total_transactions // ignore: cast_nullable_to_non_nullable
+              as OutletReportTotalTransactionModel,
       timeWindow: null == timeWindow
           ? _value.timeWindow
           : timeWindow // ignore: cast_nullable_to_non_nullable
@@ -2332,17 +2334,19 @@ class _$OutletReportModelCopyWithImpl<$Res, $Val extends OutletReportModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $OutletReportIncomeModelCopyWith<$Res> get income {
-    return $OutletReportIncomeModelCopyWith<$Res>(_value.income, (value) {
-      return _then(_value.copyWith(income: value) as $Val);
+  $OutletReportTotalSaleModelCopyWith<$Res> get total_sales {
+    return $OutletReportTotalSaleModelCopyWith<$Res>(_value.total_sales,
+        (value) {
+      return _then(_value.copyWith(total_sales: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $OutletReportSalesModelCopyWith<$Res> get sales {
-    return $OutletReportSalesModelCopyWith<$Res>(_value.sales, (value) {
-      return _then(_value.copyWith(sales: value) as $Val);
+  $OutletReportTotalTransactionModelCopyWith<$Res> get total_transactions {
+    return $OutletReportTotalTransactionModelCopyWith<$Res>(
+        _value.total_transactions, (value) {
+      return _then(_value.copyWith(total_transactions: value) as $Val);
     });
   }
 
@@ -2364,14 +2368,14 @@ abstract class _$$OutletReportModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {OutletReportIncomeModel income,
-      OutletReportSalesModel sales,
+      {OutletReportTotalSaleModel total_sales,
+      OutletReportTotalTransactionModel total_transactions,
       OutletReportTimeWindow timeWindow});
 
   @override
-  $OutletReportIncomeModelCopyWith<$Res> get income;
+  $OutletReportTotalSaleModelCopyWith<$Res> get total_sales;
   @override
-  $OutletReportSalesModelCopyWith<$Res> get sales;
+  $OutletReportTotalTransactionModelCopyWith<$Res> get total_transactions;
   @override
   $OutletReportTimeWindowCopyWith<$Res> get timeWindow;
 }
@@ -2387,19 +2391,19 @@ class __$$OutletReportModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? income = null,
-    Object? sales = null,
+    Object? total_sales = null,
+    Object? total_transactions = null,
     Object? timeWindow = null,
   }) {
     return _then(_$OutletReportModelImpl(
-      income: null == income
-          ? _value.income
-          : income // ignore: cast_nullable_to_non_nullable
-              as OutletReportIncomeModel,
-      sales: null == sales
-          ? _value.sales
-          : sales // ignore: cast_nullable_to_non_nullable
-              as OutletReportSalesModel,
+      total_sales: null == total_sales
+          ? _value.total_sales
+          : total_sales // ignore: cast_nullable_to_non_nullable
+              as OutletReportTotalSaleModel,
+      total_transactions: null == total_transactions
+          ? _value.total_transactions
+          : total_transactions // ignore: cast_nullable_to_non_nullable
+              as OutletReportTotalTransactionModel,
       timeWindow: null == timeWindow
           ? _value.timeWindow
           : timeWindow // ignore: cast_nullable_to_non_nullable
@@ -2412,21 +2416,23 @@ class __$$OutletReportModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OutletReportModelImpl implements _OutletReportModel {
   const _$OutletReportModelImpl(
-      {required this.income, required this.sales, required this.timeWindow});
+      {required this.total_sales,
+      required this.total_transactions,
+      required this.timeWindow});
 
   factory _$OutletReportModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$OutletReportModelImplFromJson(json);
 
   @override
-  final OutletReportIncomeModel income;
+  final OutletReportTotalSaleModel total_sales;
   @override
-  final OutletReportSalesModel sales;
+  final OutletReportTotalTransactionModel total_transactions;
   @override
   final OutletReportTimeWindow timeWindow;
 
   @override
   String toString() {
-    return 'OutletReportModel(income: $income, sales: $sales, timeWindow: $timeWindow)';
+    return 'OutletReportModel(total_sales: $total_sales, total_transactions: $total_transactions, timeWindow: $timeWindow)';
   }
 
   @override
@@ -2434,15 +2440,18 @@ class _$OutletReportModelImpl implements _OutletReportModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OutletReportModelImpl &&
-            (identical(other.income, income) || other.income == income) &&
-            (identical(other.sales, sales) || other.sales == sales) &&
+            (identical(other.total_sales, total_sales) ||
+                other.total_sales == total_sales) &&
+            (identical(other.total_transactions, total_transactions) ||
+                other.total_transactions == total_transactions) &&
             (identical(other.timeWindow, timeWindow) ||
                 other.timeWindow == timeWindow));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, income, sales, timeWindow);
+  int get hashCode =>
+      Object.hash(runtimeType, total_sales, total_transactions, timeWindow);
 
   @JsonKey(ignore: true)
   @override
@@ -2461,8 +2470,8 @@ class _$OutletReportModelImpl implements _OutletReportModel {
 
 abstract class _OutletReportModel implements OutletReportModel {
   const factory _OutletReportModel(
-          {required final OutletReportIncomeModel income,
-          required final OutletReportSalesModel sales,
+          {required final OutletReportTotalSaleModel total_sales,
+          required final OutletReportTotalTransactionModel total_transactions,
           required final OutletReportTimeWindow timeWindow}) =
       _$OutletReportModelImpl;
 
@@ -2470,9 +2479,9 @@ abstract class _OutletReportModel implements OutletReportModel {
       _$OutletReportModelImpl.fromJson;
 
   @override
-  OutletReportIncomeModel get income;
+  OutletReportTotalSaleModel get total_sales;
   @override
-  OutletReportSalesModel get sales;
+  OutletReportTotalTransactionModel get total_transactions;
   @override
   OutletReportTimeWindow get timeWindow;
   @override
@@ -2481,37 +2490,38 @@ abstract class _OutletReportModel implements OutletReportModel {
       throw _privateConstructorUsedError;
 }
 
-OutletReportIncomeModel _$OutletReportIncomeModelFromJson(
+OutletReportTotalSaleModel _$OutletReportTotalSaleModelFromJson(
     Map<String, dynamic> json) {
-  return _OutletReportIncomeModel.fromJson(json);
+  return _OutletReportTotalSaleModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$OutletReportIncomeModel {
+mixin _$OutletReportTotalSaleModel {
   String get current => throw _privateConstructorUsedError;
   String get past => throw _privateConstructorUsedError;
   int? get diff => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $OutletReportIncomeModelCopyWith<OutletReportIncomeModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  $OutletReportTotalSaleModelCopyWith<OutletReportTotalSaleModel>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $OutletReportIncomeModelCopyWith<$Res> {
-  factory $OutletReportIncomeModelCopyWith(OutletReportIncomeModel value,
-          $Res Function(OutletReportIncomeModel) then) =
-      _$OutletReportIncomeModelCopyWithImpl<$Res, OutletReportIncomeModel>;
+abstract class $OutletReportTotalSaleModelCopyWith<$Res> {
+  factory $OutletReportTotalSaleModelCopyWith(OutletReportTotalSaleModel value,
+          $Res Function(OutletReportTotalSaleModel) then) =
+      _$OutletReportTotalSaleModelCopyWithImpl<$Res,
+          OutletReportTotalSaleModel>;
   @useResult
   $Res call({String current, String past, int? diff});
 }
 
 /// @nodoc
-class _$OutletReportIncomeModelCopyWithImpl<$Res,
-        $Val extends OutletReportIncomeModel>
-    implements $OutletReportIncomeModelCopyWith<$Res> {
-  _$OutletReportIncomeModelCopyWithImpl(this._value, this._then);
+class _$OutletReportTotalSaleModelCopyWithImpl<$Res,
+        $Val extends OutletReportTotalSaleModel>
+    implements $OutletReportTotalSaleModelCopyWith<$Res> {
+  _$OutletReportTotalSaleModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -2543,25 +2553,25 @@ class _$OutletReportIncomeModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$OutletReportIncomeModelImplCopyWith<$Res>
-    implements $OutletReportIncomeModelCopyWith<$Res> {
-  factory _$$OutletReportIncomeModelImplCopyWith(
-          _$OutletReportIncomeModelImpl value,
-          $Res Function(_$OutletReportIncomeModelImpl) then) =
-      __$$OutletReportIncomeModelImplCopyWithImpl<$Res>;
+abstract class _$$OutletReportTotalSaleModelImplCopyWith<$Res>
+    implements $OutletReportTotalSaleModelCopyWith<$Res> {
+  factory _$$OutletReportTotalSaleModelImplCopyWith(
+          _$OutletReportTotalSaleModelImpl value,
+          $Res Function(_$OutletReportTotalSaleModelImpl) then) =
+      __$$OutletReportTotalSaleModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String current, String past, int? diff});
 }
 
 /// @nodoc
-class __$$OutletReportIncomeModelImplCopyWithImpl<$Res>
-    extends _$OutletReportIncomeModelCopyWithImpl<$Res,
-        _$OutletReportIncomeModelImpl>
-    implements _$$OutletReportIncomeModelImplCopyWith<$Res> {
-  __$$OutletReportIncomeModelImplCopyWithImpl(
-      _$OutletReportIncomeModelImpl _value,
-      $Res Function(_$OutletReportIncomeModelImpl) _then)
+class __$$OutletReportTotalSaleModelImplCopyWithImpl<$Res>
+    extends _$OutletReportTotalSaleModelCopyWithImpl<$Res,
+        _$OutletReportTotalSaleModelImpl>
+    implements _$$OutletReportTotalSaleModelImplCopyWith<$Res> {
+  __$$OutletReportTotalSaleModelImplCopyWithImpl(
+      _$OutletReportTotalSaleModelImpl _value,
+      $Res Function(_$OutletReportTotalSaleModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2571,7 +2581,7 @@ class __$$OutletReportIncomeModelImplCopyWithImpl<$Res>
     Object? past = null,
     Object? diff = freezed,
   }) {
-    return _then(_$OutletReportIncomeModelImpl(
+    return _then(_$OutletReportTotalSaleModelImpl(
       current: null == current
           ? _value.current
           : current // ignore: cast_nullable_to_non_nullable
@@ -2590,12 +2600,13 @@ class __$$OutletReportIncomeModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$OutletReportIncomeModelImpl implements _OutletReportIncomeModel {
-  const _$OutletReportIncomeModelImpl(
+class _$OutletReportTotalSaleModelImpl implements _OutletReportTotalSaleModel {
+  const _$OutletReportTotalSaleModelImpl(
       {required this.current, required this.past, this.diff});
 
-  factory _$OutletReportIncomeModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$OutletReportIncomeModelImplFromJson(json);
+  factory _$OutletReportTotalSaleModelImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$OutletReportTotalSaleModelImplFromJson(json);
 
   @override
   final String current;
@@ -2606,14 +2617,14 @@ class _$OutletReportIncomeModelImpl implements _OutletReportIncomeModel {
 
   @override
   String toString() {
-    return 'OutletReportIncomeModel(current: $current, past: $past, diff: $diff)';
+    return 'OutletReportTotalSaleModel(current: $current, past: $past, diff: $diff)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OutletReportIncomeModelImpl &&
+            other is _$OutletReportTotalSaleModelImpl &&
             (identical(other.current, current) || other.current == current) &&
             (identical(other.past, past) || other.past == past) &&
             (identical(other.diff, diff) || other.diff == diff));
@@ -2626,26 +2637,27 @@ class _$OutletReportIncomeModelImpl implements _OutletReportIncomeModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$OutletReportIncomeModelImplCopyWith<_$OutletReportIncomeModelImpl>
-      get copyWith => __$$OutletReportIncomeModelImplCopyWithImpl<
-          _$OutletReportIncomeModelImpl>(this, _$identity);
+  _$$OutletReportTotalSaleModelImplCopyWith<_$OutletReportTotalSaleModelImpl>
+      get copyWith => __$$OutletReportTotalSaleModelImplCopyWithImpl<
+          _$OutletReportTotalSaleModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$OutletReportIncomeModelImplToJson(
+    return _$$OutletReportTotalSaleModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _OutletReportIncomeModel implements OutletReportIncomeModel {
-  const factory _OutletReportIncomeModel(
+abstract class _OutletReportTotalSaleModel
+    implements OutletReportTotalSaleModel {
+  const factory _OutletReportTotalSaleModel(
       {required final String current,
       required final String past,
-      final int? diff}) = _$OutletReportIncomeModelImpl;
+      final int? diff}) = _$OutletReportTotalSaleModelImpl;
 
-  factory _OutletReportIncomeModel.fromJson(Map<String, dynamic> json) =
-      _$OutletReportIncomeModelImpl.fromJson;
+  factory _OutletReportTotalSaleModel.fromJson(Map<String, dynamic> json) =
+      _$OutletReportTotalSaleModelImpl.fromJson;
 
   @override
   String get current;
@@ -2655,41 +2667,43 @@ abstract class _OutletReportIncomeModel implements OutletReportIncomeModel {
   int? get diff;
   @override
   @JsonKey(ignore: true)
-  _$$OutletReportIncomeModelImplCopyWith<_$OutletReportIncomeModelImpl>
+  _$$OutletReportTotalSaleModelImplCopyWith<_$OutletReportTotalSaleModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
-OutletReportSalesModel _$OutletReportSalesModelFromJson(
+OutletReportTotalTransactionModel _$OutletReportTotalTransactionModelFromJson(
     Map<String, dynamic> json) {
-  return _OutletReportSalesModel.fromJson(json);
+  return _OutletReportTotalTransactionModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$OutletReportSalesModel {
+mixin _$OutletReportTotalTransactionModel {
   int get current => throw _privateConstructorUsedError;
   int get past => throw _privateConstructorUsedError;
   int? get diff => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $OutletReportSalesModelCopyWith<OutletReportSalesModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  $OutletReportTotalTransactionModelCopyWith<OutletReportTotalTransactionModel>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $OutletReportSalesModelCopyWith<$Res> {
-  factory $OutletReportSalesModelCopyWith(OutletReportSalesModel value,
-          $Res Function(OutletReportSalesModel) then) =
-      _$OutletReportSalesModelCopyWithImpl<$Res, OutletReportSalesModel>;
+abstract class $OutletReportTotalTransactionModelCopyWith<$Res> {
+  factory $OutletReportTotalTransactionModelCopyWith(
+          OutletReportTotalTransactionModel value,
+          $Res Function(OutletReportTotalTransactionModel) then) =
+      _$OutletReportTotalTransactionModelCopyWithImpl<$Res,
+          OutletReportTotalTransactionModel>;
   @useResult
   $Res call({int current, int past, int? diff});
 }
 
 /// @nodoc
-class _$OutletReportSalesModelCopyWithImpl<$Res,
-        $Val extends OutletReportSalesModel>
-    implements $OutletReportSalesModelCopyWith<$Res> {
-  _$OutletReportSalesModelCopyWithImpl(this._value, this._then);
+class _$OutletReportTotalTransactionModelCopyWithImpl<$Res,
+        $Val extends OutletReportTotalTransactionModel>
+    implements $OutletReportTotalTransactionModelCopyWith<$Res> {
+  _$OutletReportTotalTransactionModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -2721,25 +2735,25 @@ class _$OutletReportSalesModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$OutletReportSalesModelImplCopyWith<$Res>
-    implements $OutletReportSalesModelCopyWith<$Res> {
-  factory _$$OutletReportSalesModelImplCopyWith(
-          _$OutletReportSalesModelImpl value,
-          $Res Function(_$OutletReportSalesModelImpl) then) =
-      __$$OutletReportSalesModelImplCopyWithImpl<$Res>;
+abstract class _$$OutletReportTotalTransactionModelImplCopyWith<$Res>
+    implements $OutletReportTotalTransactionModelCopyWith<$Res> {
+  factory _$$OutletReportTotalTransactionModelImplCopyWith(
+          _$OutletReportTotalTransactionModelImpl value,
+          $Res Function(_$OutletReportTotalTransactionModelImpl) then) =
+      __$$OutletReportTotalTransactionModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int current, int past, int? diff});
 }
 
 /// @nodoc
-class __$$OutletReportSalesModelImplCopyWithImpl<$Res>
-    extends _$OutletReportSalesModelCopyWithImpl<$Res,
-        _$OutletReportSalesModelImpl>
-    implements _$$OutletReportSalesModelImplCopyWith<$Res> {
-  __$$OutletReportSalesModelImplCopyWithImpl(
-      _$OutletReportSalesModelImpl _value,
-      $Res Function(_$OutletReportSalesModelImpl) _then)
+class __$$OutletReportTotalTransactionModelImplCopyWithImpl<$Res>
+    extends _$OutletReportTotalTransactionModelCopyWithImpl<$Res,
+        _$OutletReportTotalTransactionModelImpl>
+    implements _$$OutletReportTotalTransactionModelImplCopyWith<$Res> {
+  __$$OutletReportTotalTransactionModelImplCopyWithImpl(
+      _$OutletReportTotalTransactionModelImpl _value,
+      $Res Function(_$OutletReportTotalTransactionModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2749,7 +2763,7 @@ class __$$OutletReportSalesModelImplCopyWithImpl<$Res>
     Object? past = null,
     Object? diff = freezed,
   }) {
-    return _then(_$OutletReportSalesModelImpl(
+    return _then(_$OutletReportTotalTransactionModelImpl(
       current: null == current
           ? _value.current
           : current // ignore: cast_nullable_to_non_nullable
@@ -2768,12 +2782,14 @@ class __$$OutletReportSalesModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$OutletReportSalesModelImpl implements _OutletReportSalesModel {
-  const _$OutletReportSalesModelImpl(
+class _$OutletReportTotalTransactionModelImpl
+    implements _OutletReportTotalTransactionModel {
+  const _$OutletReportTotalTransactionModelImpl(
       {required this.current, required this.past, this.diff});
 
-  factory _$OutletReportSalesModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$OutletReportSalesModelImplFromJson(json);
+  factory _$OutletReportTotalTransactionModelImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$OutletReportTotalTransactionModelImplFromJson(json);
 
   @override
   final int current;
@@ -2784,14 +2800,14 @@ class _$OutletReportSalesModelImpl implements _OutletReportSalesModel {
 
   @override
   String toString() {
-    return 'OutletReportSalesModel(current: $current, past: $past, diff: $diff)';
+    return 'OutletReportTotalTransactionModel(current: $current, past: $past, diff: $diff)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OutletReportSalesModelImpl &&
+            other is _$OutletReportTotalTransactionModelImpl &&
             (identical(other.current, current) || other.current == current) &&
             (identical(other.past, past) || other.past == past) &&
             (identical(other.diff, diff) || other.diff == diff));
@@ -2804,26 +2820,29 @@ class _$OutletReportSalesModelImpl implements _OutletReportSalesModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$OutletReportSalesModelImplCopyWith<_$OutletReportSalesModelImpl>
-      get copyWith => __$$OutletReportSalesModelImplCopyWithImpl<
-          _$OutletReportSalesModelImpl>(this, _$identity);
+  _$$OutletReportTotalTransactionModelImplCopyWith<
+          _$OutletReportTotalTransactionModelImpl>
+      get copyWith => __$$OutletReportTotalTransactionModelImplCopyWithImpl<
+          _$OutletReportTotalTransactionModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$OutletReportSalesModelImplToJson(
+    return _$$OutletReportTotalTransactionModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _OutletReportSalesModel implements OutletReportSalesModel {
-  const factory _OutletReportSalesModel(
+abstract class _OutletReportTotalTransactionModel
+    implements OutletReportTotalTransactionModel {
+  const factory _OutletReportTotalTransactionModel(
       {required final int current,
       required final int past,
-      final int? diff}) = _$OutletReportSalesModelImpl;
+      final int? diff}) = _$OutletReportTotalTransactionModelImpl;
 
-  factory _OutletReportSalesModel.fromJson(Map<String, dynamic> json) =
-      _$OutletReportSalesModelImpl.fromJson;
+  factory _OutletReportTotalTransactionModel.fromJson(
+          Map<String, dynamic> json) =
+      _$OutletReportTotalTransactionModelImpl.fromJson;
 
   @override
   int get current;
@@ -2833,7 +2852,8 @@ abstract class _OutletReportSalesModel implements OutletReportSalesModel {
   int? get diff;
   @override
   @JsonKey(ignore: true)
-  _$$OutletReportSalesModelImplCopyWith<_$OutletReportSalesModelImpl>
+  _$$OutletReportTotalTransactionModelImplCopyWith<
+          _$OutletReportTotalTransactionModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 

@@ -206,10 +206,10 @@ Map<String, dynamic> _$$DetailCustomerOutletResponseImplToJson(
 _$OutletReportModelImpl _$$OutletReportModelImplFromJson(
         Map<String, dynamic> json) =>
     _$OutletReportModelImpl(
-      income: OutletReportIncomeModel.fromJson(
-          json['income'] as Map<String, dynamic>),
-      sales: OutletReportSalesModel.fromJson(
-          json['sales'] as Map<String, dynamic>),
+      total_sales: OutletReportTotalSaleModel.fromJson(
+          json['total_sales'] as Map<String, dynamic>),
+      total_transactions: OutletReportTotalTransactionModel.fromJson(
+          json['total_transactions'] as Map<String, dynamic>),
       timeWindow: OutletReportTimeWindow.fromJson(
           json['timeWindow'] as Map<String, dynamic>),
     );
@@ -217,37 +217,38 @@ _$OutletReportModelImpl _$$OutletReportModelImplFromJson(
 Map<String, dynamic> _$$OutletReportModelImplToJson(
         _$OutletReportModelImpl instance) =>
     <String, dynamic>{
-      'income': instance.income,
-      'sales': instance.sales,
+      'total_sales': instance.total_sales,
+      'total_transactions': instance.total_transactions,
       'timeWindow': instance.timeWindow,
     };
 
-_$OutletReportIncomeModelImpl _$$OutletReportIncomeModelImplFromJson(
+_$OutletReportTotalSaleModelImpl _$$OutletReportTotalSaleModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$OutletReportIncomeModelImpl(
+    _$OutletReportTotalSaleModelImpl(
       current: json['current'] as String,
       past: json['past'] as String,
       diff: (json['diff'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$$OutletReportIncomeModelImplToJson(
-        _$OutletReportIncomeModelImpl instance) =>
+Map<String, dynamic> _$$OutletReportTotalSaleModelImplToJson(
+        _$OutletReportTotalSaleModelImpl instance) =>
     <String, dynamic>{
       'current': instance.current,
       'past': instance.past,
       'diff': instance.diff,
     };
 
-_$OutletReportSalesModelImpl _$$OutletReportSalesModelImplFromJson(
-        Map<String, dynamic> json) =>
-    _$OutletReportSalesModelImpl(
-      current: (json['current'] as num).toInt(),
-      past: (json['past'] as num).toInt(),
-      diff: (json['diff'] as num?)?.toInt(),
-    );
+_$OutletReportTotalTransactionModelImpl
+    _$$OutletReportTotalTransactionModelImplFromJson(
+            Map<String, dynamic> json) =>
+        _$OutletReportTotalTransactionModelImpl(
+          current: (json['current'] as num).toInt(),
+          past: (json['past'] as num).toInt(),
+          diff: (json['diff'] as num?)?.toInt(),
+        );
 
-Map<String, dynamic> _$$OutletReportSalesModelImplToJson(
-        _$OutletReportSalesModelImpl instance) =>
+Map<String, dynamic> _$$OutletReportTotalTransactionModelImplToJson(
+        _$OutletReportTotalTransactionModelImpl instance) =>
     <String, dynamic>{
       'current': instance.current,
       'past': instance.past,

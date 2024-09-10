@@ -1,15 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:cashier_repository/cashier_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:customer_repository/customer_repository.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/counter.dart';

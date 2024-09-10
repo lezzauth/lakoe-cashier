@@ -8,6 +8,8 @@ dependencies:
   # repositories
   customer_repository:
     path: ../customer_repository
+  order_repository:
+    path: ../order_repository
 
   # providers
   token_provider:

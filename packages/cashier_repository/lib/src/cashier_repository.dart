@@ -8,7 +8,6 @@ abstract class CashierRepository {
   Future<OpenCashierResponse> openCashier(OpenCashierDto dto);
   Future<CashierModel> closeCashier(CloseCashierDto dto);
   Future<GetOpenCashierResponse?> getOpenCashier(String outletId);
-  Future<PreviewOrderPriceResponse> previewOrderPrice(PreviewOrderPriceDto dto);
   Future<RegenerateCashierTokenResponse> regenerateToken(
       RegenerateCashierTokenDto dto);
 
@@ -84,19 +83,6 @@ class CashierRepositoryImpl implements CashierRepository {
     );
     if (response.statusCode == 204) return null;
     return GetOpenCashierResponse.fromJson(response.data);
-  }
-
-  @override
-  Future<PreviewOrderPriceResponse> previewOrderPrice(
-      PreviewOrderPriceDto dto) async {
-    final Options options = await _getOptions();
-
-    final response = await _dio.post(
-      "$_baseURL/price-preview",
-      data: dto.toJson(),
-      options: options,
-    );
-    return PreviewOrderPriceResponse.fromJson(response.data);
   }
 
   @override

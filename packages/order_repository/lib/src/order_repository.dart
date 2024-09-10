@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
+import 'package:order_repository/src/dto/order.dart';
 import 'package:order_repository/src/models/order.dart';
 import 'package:token_provider/token_provider.dart';
 
 abstract class OrderRepository {
   Future<OrderModel> findOne(String id);
+  Future<PreviewOrderPriceResponse> previewOrderPrice(PreviewOrderPriceDto dto);
 }
 
 class OrderRepositoryImpl implements OrderRepository {
@@ -38,5 +40,18 @@ class OrderRepositoryImpl implements OrderRepository {
     final response = await _dio.get("$_baseURL/$id", options: options);
 
     return OrderModel.fromJson(response.data);
+  }
+
+  @override
+  Future<PreviewOrderPriceResponse> previewOrderPrice(
+      PreviewOrderPriceDto dto) async {
+    final Options options = await _getOptions();
+
+    final response = await _dio.post(
+      "$_baseURL/price-preview",
+      data: dto.toJson(),
+      options: options,
+    );
+    return PreviewOrderPriceResponse.fromJson(response.data);
   }
 }

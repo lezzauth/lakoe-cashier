@@ -15,8 +15,8 @@ import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widg
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/filter/dashboard_filter.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/item_menu/item_menu_container.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/main_menu/main_menu.dart';
-import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/summary/income_summary.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/summary/sales_summary.dart';
+import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/summary/transaction_summary.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -114,11 +114,13 @@ class _DashboardState extends State<Dashboard> {
                     builder: (context, state) => switch (state) {
                           CashierReportLoadSuccess(:final report) => Column(
                               children: [
-                                IncomeSummary(
-                                  income: report.income,
+                                SalesSummary(
+                                  totalSales: report.total_sales,
                                 ),
                                 const SizedBox(height: 12),
-                                SalesSummary(sales: report.sales),
+                                TransactionSummary(
+                                  totalTransactions: report.total_transactions,
+                                ),
                               ],
                             ),
                           CashierReportLoadFailure(:final error) => Center(

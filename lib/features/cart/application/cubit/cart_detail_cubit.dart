@@ -2,11 +2,13 @@ import 'dart:developer';
 
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_state.dart';
 import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
 
 class CartDetailCubit extends Cubit<CartDetailState> {
   final CashierRepository _cashierRepository = CashierRepositoryImpl();
+  final OrderRepository _orderRepository = OrderRepositoryImpl();
 
   CartDetailCubit() : super(CartDetailInitial());
 
@@ -17,7 +19,7 @@ class CartDetailCubit extends Cubit<CartDetailState> {
   }) async {
     try {
       emit(CartDetailLoadInProgress());
-      final previewOrderPrice = await _cashierRepository.previewOrderPrice(
+      final previewOrderPrice = await _orderRepository.previewOrderPrice(
         PreviewOrderPriceDto(
           outletId: outletId,
           type: type,

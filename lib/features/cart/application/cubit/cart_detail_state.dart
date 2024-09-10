@@ -1,5 +1,6 @@
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:order_repository/order_repository.dart';
 
 sealed class CartDetailState extends Equatable {}
 

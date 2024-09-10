@@ -7,7 +7,9 @@ import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
 class CloseCashierButton extends StatefulWidget {
   const CloseCashierButton({
     super.key,
+    required this.label,
   });
+  final String label;
 
   @override
   State<CloseCashierButton> createState() => _CloseCashierButtonState();
@@ -48,8 +50,8 @@ class _CloseCashierButtonState extends State<CloseCashierButton> {
           ),
           backgroundColor: const WidgetStatePropertyAll(TColors.errorLight),
         ),
-        child: const TextActionL(
-          "Selesai & Tutup",
+        child: TextActionL(
+          widget.label,
           color: TColors.error,
         ),
       ),
