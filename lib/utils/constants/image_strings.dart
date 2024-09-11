@@ -32,4 +32,16 @@ class TImages {
 
   // flags
   static const String indoFlag = "assets/flags/indo-flag.png";
+
+  // access-confirmation
+  static const String bluetoothPermission =
+      "assets/images/access-permission/bluetooth-permission.png";
+  static const String cameraPermission =
+      "assets/images/access-permission/camera-permission.png";
+  static const String contactPermission =
+      "assets/images/access-permission/contact-permission.png";
+  static const String locationPermission =
+      "assets/images/access-permission/location-permission.png";
+  static const String storagePermission =
+      "assets/images/access-permission/storage-permission.png";
 }

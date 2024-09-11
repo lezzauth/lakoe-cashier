@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/theme/custom_themes/bottom_sheet_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/checkbox_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/chip_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/elevated_button_theme.dart';
@@ -34,6 +35,7 @@ class TAppTheme {
     outlinedButtonTheme: TOutlinedButtonTheme.lightTheme,
     switchTheme: TSwitchTheme.lightTheme,
     textButtonTheme: TTextButtonTheme.lightTheme,
+    bottomSheetTheme: TBottomSheetTheme.lightTheme,
   );
 
   static ThemeData darkTheme = ThemeData(
