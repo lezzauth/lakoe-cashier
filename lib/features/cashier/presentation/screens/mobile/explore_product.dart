@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_state.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
+import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/appbar/explore_product_appbar.dart';
@@ -14,22 +18,41 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/fi
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class ExploreProductMobile extends StatefulWidget {
-  const ExploreProductMobile({super.key, required this.onRefresh});
-
-  final Future<void> Function() onRefresh;
+  const ExploreProductMobile({
+    super.key,
+  });
 
   @override
   State<ExploreProductMobile> createState() => _ExploreProductMobileState();
 }
 
 class _ExploreProductMobileState extends State<ExploreProductMobile> {
+  Future<void> _onRefresh() async {
+    if (!mounted) return;
+
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+
+    CashierProductFilterState filterState =
+        context.read<CashierProductFilterCubit>().state;
+
+    await context.read<CashierOrderCubit>().findAll();
+    await context
+        .read<CashierCategoryCubit>()
+        .findAll(outletId: authState.outletId);
+    await context.read<CashierProductCubit>().findAll(
+          outletId: authState.outletId,
+          categoryId: filterState.categoryId,
+          name: filterState.name,
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const ExploreProductAppbar(),
       body: Scrollbar(
         child: RefreshIndicator(
-          onRefresh: widget.onRefresh,
+          onRefresh: _onRefresh,
           backgroundColor: TColors.neutralLightLightest,
           child: CustomScrollView(
             slivers: [

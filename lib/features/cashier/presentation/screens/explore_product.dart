@@ -54,25 +54,6 @@ class ExploreProduct extends StatefulWidget {
 }
 
 class _ExploreProductState extends State<ExploreProduct> {
-  Future<void> onRefresh() async {
-    if (!mounted) return;
-
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
-    CashierProductFilterState filterState =
-        context.read<CashierProductFilterCubit>().state;
-
-    await context.read<CashierOrderCubit>().findAll();
-    await context
-        .read<CashierCategoryCubit>()
-        .findAll(outletId: authState.outletId);
-    await context.read<CashierProductCubit>().findAll(
-          outletId: authState.outletId,
-          categoryId: filterState.categoryId,
-          name: filterState.name,
-        );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -100,8 +81,8 @@ class _ExploreProductState extends State<ExploreProduct> {
           ),
         ],
         child: ResponsiveLayout(
-          mobile: ExploreProductMobile(onRefresh: onRefresh),
-          tablet: ExploreProductTablet(onRefresh: onRefresh),
+          mobile: ExploreProductMobile(),
+          tablet: ExploreProductTablet(),
         ),
       );
     });

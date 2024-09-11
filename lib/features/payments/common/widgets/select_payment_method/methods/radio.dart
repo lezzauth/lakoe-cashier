@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -64,14 +65,24 @@ class PaymentMethodRadio extends StatelessWidget {
             color: getCardColor(),
             border: Border.all(color: getBorderColor(), width: 1),
           ),
-          child: switch (value) {
-            "cash" => CashPaymentRadioContent(selected: selected),
-            "debit" => DebitPaymentRadioContent(selected: selected),
-            "bank_transfer" =>
-              BankTransferPaymentRadioContent(selected: selected),
-            "qris" => QrisPaymentRadioContent(selected: selected),
-            _ => const SizedBox(),
-          },
+          child: ResponsiveLayout(
+            mobile: switch (value) {
+              "CASH" => CashPaymentRadioContent(selected: selected),
+              "DEBIT" => DebitPaymentRadioContent(selected: selected),
+              "BANK" => BankTransferPaymentRadioContent(selected: selected),
+              "QRIS" => QrisPaymentRadioContent(selected: selected),
+              _ => const SizedBox(),
+            },
+            tablet: Center(
+              child: switch (value) {
+                "CASH" => CashPaymentRadioContent(selected: selected),
+                "DEBIT" => DebitPaymentRadioContent(selected: selected),
+                "BANK" => BankTransferPaymentRadioContent(selected: selected),
+                "QRIS" => QrisPaymentRadioContent(selected: selected),
+                _ => const SizedBox(),
+              },
+            ),
+          ),
         ),
       ),
     );
@@ -85,10 +96,8 @@ class CashPaymentRadioContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 12,
-      direction: Axis.horizontal,
-      crossAxisAlignment: WrapCrossAlignment.center,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         UiIcons(
           TIcons.moneyBill,
@@ -96,10 +105,15 @@ class CashPaymentRadioContent extends StatelessWidget {
           width: 24,
           color: selected ? TColors.primary : TColors.neutralDarkMedium,
         ),
-        TextHeading5(
-          TPaymentMethodName.cash,
-          color: selected ? TColors.primary : TColors.neutralDarkMedium,
-        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: TextHeading5(
+            TPaymentMethodName.cash,
+            color: selected ? TColors.primary : TColors.neutralDarkMedium,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )
       ],
     );
   }
@@ -112,10 +126,8 @@ class DebitPaymentRadioContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 12,
-      direction: Axis.horizontal,
-      crossAxisAlignment: WrapCrossAlignment.center,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         UiIcons(
           TIcons.creditCard,
@@ -123,10 +135,15 @@ class DebitPaymentRadioContent extends StatelessWidget {
           width: 24,
           color: selected ? TColors.primary : TColors.neutralDarkMedium,
         ),
-        TextHeading5(
-          TPaymentMethodName.debit,
-          color: TColors.neutralDarkMedium,
-        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: TextHeading5(
+            TPaymentMethodName.debit,
+            color: selected ? TColors.primary : TColors.neutralDarkMedium,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )
       ],
     );
   }
@@ -139,10 +156,8 @@ class BankTransferPaymentRadioContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 12,
-      direction: Axis.horizontal,
-      crossAxisAlignment: WrapCrossAlignment.center,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         UiIcons(
           TIcons.moneyBillTransfer,
@@ -150,10 +165,15 @@ class BankTransferPaymentRadioContent extends StatelessWidget {
           width: 24,
           color: selected ? TColors.primary : TColors.neutralDarkMedium,
         ),
-        TextHeading5(
-          TPaymentMethodName.bankTransfer,
-          color: TColors.neutralDarkMedium,
-        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: TextHeading5(
+            TPaymentMethodName.bankTransfer,
+            color: selected ? TColors.primary : TColors.neutralDarkMedium,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )
       ],
     );
   }

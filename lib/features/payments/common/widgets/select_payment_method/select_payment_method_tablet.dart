@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_cubit.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_filter_state.dart';
@@ -9,10 +10,9 @@ import 'package:point_of_sales_cashier/features/payments/common/widgets/select_p
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/cash/content.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/debit/content.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/qris/content.dart';
-import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
 
-class SelectPaymentMethod extends StatefulWidget {
-  const SelectPaymentMethod({
+class SelectPaymentMethodTablet extends StatefulWidget {
+  const SelectPaymentMethodTablet({
     super.key,
     required this.amount,
     required this.onPaymentCash,
@@ -22,10 +22,11 @@ class SelectPaymentMethod extends StatefulWidget {
   final ValueChanged<PaymentCash> onPaymentCash;
 
   @override
-  State<SelectPaymentMethod> createState() => _SelectPaymentMethodState();
+  State<SelectPaymentMethodTablet> createState() =>
+      _SelectPaymentMethodTabletState();
 }
 
-class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
+class _SelectPaymentMethodTabletState extends State<SelectPaymentMethodTablet> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -43,23 +44,17 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
             },
           )
         ],
-        child: Padding(
-          padding: TDeviceUtils.getViewInsets(context),
-          child: Column(
+        child: Scaffold(
+          appBar: const CustomAppbar(
+            title: "",
+            leading: TextHeading1("Pembayaran"),
+          ),
+          body: Column(
             children: [
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 8.0),
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: const TextHeading2("Metode pembayaran"),
-                        )
-                      ],
-                    ),
                     Expanded(
                       child:
                           BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
@@ -74,7 +69,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
                           _ => const SizedBox(),
                         },
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),

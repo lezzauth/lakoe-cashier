@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:point_of_sales_cashier/utils/constants/dimensions.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class ResponsiveLayout extends StatelessWidget {
   const ResponsiveLayout({
@@ -13,14 +13,8 @@ class ResponsiveLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth < TDimensions.mobileWidth) {
-          return mobile;
-        }
+    if (ResponsiveBreakpoints.of(context).smallerThan(TABLET)) return mobile;
 
-        return tablet;
-      },
-    );
+    return tablet;
   }
 }

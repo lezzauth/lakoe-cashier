@@ -289,7 +289,11 @@ class _SuccessConfirmationPaymentScreenState
                       height: 48,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            "/cashier/explore-products",
+                            (route) => false,
+                          );
                         },
                         child: const TextActionL(
                           "Buat Order Baru",

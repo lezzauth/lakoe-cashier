@@ -1,140 +1,70 @@
 import 'dart:async';
-import 'dart:developer';
 
-import 'package:collection/collection.dart';
-import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:order_repository/order_repository.dart';
-import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/counter.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
+import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_cubit.dart';
+import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
-import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/bottom_sheet/customer_list.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/bottom_sheet/table_list.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/cards/card_order.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/summary/cart_summary.dart';
+import 'package:point_of_sales_cashier/features/cart/presentation/widgets/content/cart_content.dart';
+import 'package:point_of_sales_cashier/features/cart/presentation/widgets/drawer/cart_tablet_drawer.dart';
+import 'package:point_of_sales_cashier/features/cart/presentation/widgets/footer/cart_footer.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
+import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
-import 'package:point_of_sales_cashier/features/payments/data/models/payment_method_return_model.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
-import 'package:product_repository/product_repository.dart';
-import 'package:table_repository/table_repository.dart';
 
-class CartScreen extends StatefulWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
   @override
-  State<CartScreen> createState() => _CartScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => CartDetailFilterCubit(),
+      child: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) => switch (state) {
+          AuthReady() => const Cart(),
+          _ => const Scaffold(body: Center(child: CircularProgressIndicator())),
+        },
+      ),
+    );
+  }
 }
 
-class _CartScreenState extends State<CartScreen> {
-  Timer? _debounce;
-  String _type = "DINEIN";
-  CustomerModel? _selectedCustomer;
-  TableModel? _selectedTable;
+class Cart extends StatefulWidget {
+  const Cart({super.key});
 
-  final List<LabelValue> _orderType = [
-    const LabelValue(label: "DineIn", value: "DINEIN"),
-    const LabelValue(label: "Dibungkus", value: "TAKEAWAY"),
-  ];
+  @override
+  State<Cart> createState() => _CartState();
+}
 
-  void _onCartQuantityChanged(ProductModel product, int quantity) {
-    context.read<CartCubit>().updateQuantity(product, quantity);
-  }
-
-  void _onCartNotesChanged(ProductModel product, String notes) {
-    context.read<CartCubit>().updateNotes(product, notes);
-  }
-
+class _CartState extends State<Cart> {
   Future<void> _onCartSaved() async {
-    AuthState authState = context.read<AuthCubit>().state;
-    if (authState is AuthReady) {
-      CartState cartState = context.read<CartCubit>().state;
-
-      await context.read<CartDetailCubit>().saveOrder(
-            carts: cartState.carts,
-            outletId: authState.outletId,
-            type: _type,
-            customerId: _selectedCustomer?.id,
-            tableId: _selectedTable?.id,
-          );
-      Navigator.pop(context);
-    }
-  }
-
-  Future<void> _onPreviewOrderPrice() async {
-    AuthState authState = context.read<AuthCubit>().state;
-    if (authState is AuthReady) {
-      CartState cartState = context.read<CartCubit>().state;
-      await context.read<CartDetailCubit>().previewOrderPrice(
-            type: _type,
-            carts: cartState.carts,
-            outletId: authState.outletId,
-          );
-    }
-  }
-
-  Future<void> _onCustomerOpened() async {
-    CustomerModel? selectedCustomer =
-        await showModalBottomSheet<CustomerModel?>(
-      context: context,
-      showDragHandle: true,
-      isScrollControlled: true,
-      useSafeArea: true,
-      useRootNavigator: true,
-      builder: (context) {
-        return CartCustomerList(value: _selectedCustomer);
-      },
-    );
-    setState(() {
-      _selectedCustomer = selectedCustomer;
-    });
-  }
-
-  Future<void> _onTableOpened() async {
-    TableModel? selectedTable = await showModalBottomSheet<TableModel?>(
-      context: context,
-      showDragHandle: true,
-      isScrollControlled: true,
-      useSafeArea: true,
-      useRootNavigator: true,
-      builder: (context) {
-        return TableList(value: _selectedTable);
-      },
-    );
-    setState(() {
-      _selectedTable = selectedTable;
-      if (selectedTable != null) {
-        _type = "DINEIN";
-      }
-    });
-  }
-
-  Future<void> onCashPaid(CashPaymentMethodReturn data) async {
-    AuthState authState = context.read<AuthCubit>().state;
-    if (authState is! AuthReady) return;
-
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     CartState cartState = context.read<CartCubit>().state;
+    CartDetailFilterState filterState =
+        context.read<CartDetailFilterCubit>().state;
+
+    await context.read<CartDetailCubit>().saveOrder(
+          carts: cartState.carts,
+          outletId: authState.outletId,
+          type: filterState.type,
+          customerId: filterState.customer?.id,
+          tableId: filterState.table?.id,
+        );
+    Navigator.pop(context);
+  }
+
+  Future<void> _onCashPaid(PaymentCash data) async {
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+    CartState cartState = context.read<CartCubit>().state;
+    CartDetailFilterState filterState =
+        context.read<CartDetailFilterCubit>().state;
 
     await context.read<CartDetailCubit>().saveAndCompleteOrder(
           carts: cartState.carts,
@@ -142,47 +72,25 @@ class _CartScreenState extends State<CartScreen> {
           paidAmount: data.paidAmount,
           change: data.change,
           paymentMethod: "CASH",
-          type: _type,
-          customerId: _selectedCustomer?.id,
-          tableId: _selectedTable?.id,
+          type: filterState.type,
+          customerId: filterState.customer?.id,
+          tableId: filterState.table?.id,
         );
   }
 
   Future<void> onCompleteOrder(int amount) async {
-    final response = await showModalBottomSheet<PaymentMethodReturnModel>(
+    await showModalBottomSheet(
       context: context,
       showDragHandle: true,
       isScrollControlled: true,
+      useSafeArea: true,
       builder: (context) {
         return SelectPaymentMethod(
           amount: amount,
+          onPaymentCash: _onCashPaid,
         );
       },
     );
-
-    if (response is CashPaymentMethodReturn) {
-      await onCashPaid(response);
-    }
-  }
-
-  void _onOrderTypeChanged(String type) {
-    setState(() {
-      _type = type;
-      if (type == "TAKEAWAY") {
-        _selectedTable = null;
-      }
-    });
-    _onPreviewOrderPrice();
-  }
-
-  Future<void> _onRefresh() async {
-    await _onPreviewOrderPrice();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _onPreviewOrderPrice();
   }
 
   @override
@@ -191,14 +99,12 @@ class _CartScreenState extends State<CartScreen> {
       listeners: [
         BlocListener<CartDetailCubit, CartDetailState>(
           listener: (context, state) {
-            log('CartDetailStateListener: $state');
             if (state is CartDetailActionSuccess) {
               context.read<CartCubit>().reset();
               context.read<CashierOrderCubit>().findAll();
             }
 
             if (state is CartDetailCompleteActionSuccess) {
-              log('CartDetailCompleteActionSuccess');
               Navigator.popAndPushNamed(
                 context,
                 "/payments/success_confirmation",
@@ -207,373 +113,34 @@ class _CartScreenState extends State<CartScreen> {
             }
           },
         ),
-        BlocListener<CartCubit, CartState>(
-          listener: (context, state) {
-            if (state.carts.isEmpty) {
-              if (ModalRoute.of(context)!.settings.name != "/cart") {
-                return;
-              }
-              // TODO: cari cara buat nge handle carts kosong
-              // Navigator.pop(context);
-              return;
-            }
-
-            if (_debounce?.isActive ?? false) _debounce?.cancel();
-            _debounce = Timer(const Duration(milliseconds: 500), () {
-              _onPreviewOrderPrice();
-            });
-          },
-        ),
       ],
       child: Scaffold(
-        appBar: const CustomAppbar(
-          title: "Pesanan Baru",
-        ),
-        body: SafeArea(
-          child: Scrollbar(
-            child: RefreshIndicator(
-              onRefresh: _onRefresh,
-              backgroundColor: TColors.neutralLightLightest,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: CustomScrollView(
-                        slivers: [
-                          SliverToBoxAdapter(
-                            child: Container(
-                              margin: const EdgeInsets.only(bottom: 16),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    flex: 1,
-                                    child: CardOrder(
-                                      title: "Pelanggan",
-                                      subTitle: _selectedCustomer == null
-                                          ? "Umum"
-                                          : _selectedCustomer!.name,
-                                      icon: const UiIcons(
-                                        TIcons.profile,
-                                        height: 20,
-                                        width: 20,
-                                        color: TColors.primary,
-                                      ),
-                                      onTap: _onCustomerOpened,
-                                      trailing: _selectedCustomer == null
-                                          ? null
-                                          : SvgPicture.asset(
-                                              TImages.lakoeCoin,
-                                              height: 24,
-                                              width: 24,
-                                            ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12.0),
-                                  Flexible(
-                                    flex: 1,
-                                    child: CardOrder(
-                                      title: "No. Meja",
-                                      subTitle: _selectedTable == null
-                                          ? "Bebas"
-                                          : _selectedTable!.no,
-                                      icon: const UiIcons(
-                                        TIcons.tableRestaurant,
-                                        height: 20,
-                                        width: 20,
-                                        color: TColors.primary,
-                                      ),
-                                      onTap: _onTableOpened,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SliverToBoxAdapter(
-                            child: Container(
-                              margin: const EdgeInsets.only(bottom: 12),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(bottom: 8),
-                                    child: const TextHeading3("Jenis Pesanan"),
-                                  ),
-                                  SingleChildScrollView(
-                                    child: Wrap(
-                                      direction: Axis.horizontal,
-                                      spacing: 8,
-                                      children: _orderType.map((orderType) {
-                                        bool selected =
-                                            _type == orderType.value;
-
-                                        return InputChip(
-                                          label: Wrap(
-                                            direction: Axis.horizontal,
-                                            alignment: WrapAlignment.center,
-                                            spacing: 8,
-                                            children: [
-                                              UiIcons(
-                                                orderType.value == "DINEIN"
-                                                    ? TIcons.tableRestaurant
-                                                    : TIcons.bag,
-                                                height: 16,
-                                                width: 16,
-                                                color: selected
-                                                    ? TColors.primary
-                                                    : TColors
-                                                        .neutralDarkDarkest,
-                                              ),
-                                              !selected
-                                                  ? TextBodyS(orderType.label)
-                                                  : TextHeading5(
-                                                      orderType.label,
-                                                      color: TColors.primary,
-                                                    )
-                                            ],
-                                          ),
-                                          selected: selected,
-                                          onSelected: (value) {
-                                            _onOrderTypeChanged(
-                                                orderType.value);
-                                          },
-                                        );
-                                      }).toList(),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          SliverToBoxAdapter(
-                            child: Container(
-                              margin: const EdgeInsets.only(bottom: 8),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const TextHeading3("Pesanan"),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const TextHeading4(
-                                      "Tambah Pesanan",
-                                      color: TColors.primary,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          BlocBuilder<CartCubit, CartState>(
-                            builder: (context, cartState) {
-                              return SliverList.builder(
-                                itemCount: cartState.carts.length,
-                                itemBuilder: (context, index) {
-                                  CartModel cart = cartState.carts[index];
-                                  String? image =
-                                      cart.product.images.elementAtOrNull(0);
-                                  image ??=
-                                      "https://placehold.co/88/png?text=[...]";
-
-                                  return Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 12.0),
-                                    decoration: const BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: TColors.neutralLightMedium,
-                                          width: 1,
-                                        ),
-                                      ),
-                                    ),
-                                    child: BaseProductItem(
-                                      name: cart.product.name,
-                                      price: int.parse(cart.product.price),
-                                      image: Image.network(
-                                        image,
-                                        height: 44,
-                                        width: 44,
-                                        fit: BoxFit.cover,
-                                      ),
-                                      counter: Counter(
-                                        value: cart.quantity,
-                                        onChanged: (quantity) {
-                                          _onCartQuantityChanged(
-                                              cart.product, quantity);
-                                        },
-                                      ),
-                                      notes: cart.notes ?? "",
-                                      noteAction: ProductNoteAction(
-                                        notes: cart.notes ?? "",
-                                        onChanged: (notes) {
-                                          _onCartNotesChanged(
-                                              cart.product, notes);
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                          SliverToBoxAdapter(
-                            child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(vertical: 28.0),
-                              child:
-                                  BlocBuilder<CartDetailCubit, CartDetailState>(
-                                builder: (context, state) => switch (state) {
-                                  CartDetailLoadSuccess(
-                                    :final previewOrderPrice
-                                  ) =>
-                                    CartDetailToSummary(
-                                      previewOrderPrice: previewOrderPrice,
-                                    ),
-                                  CartDetailLoadFailure(:final error) =>
-                                    Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 12),
-                                      child: Center(
-                                        child: TextBodyS(
-                                          error,
-                                          color: TColors.error,
-                                        ),
-                                      ),
-                                    ),
-                                  _ => Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 12),
-                                      child: const Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                    ),
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    BlocBuilder<CartDetailCubit, CartDetailState>(
-                      builder: (context, cartState) => Container(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              height: 48.0,
-                              child: OutlinedButton(
-                                onPressed:
-                                    cartState is CartDetailActionInProgress
-                                        ? null
-                                        : _onCartSaved,
-                                style: const ButtonStyle(
-                                  padding: WidgetStatePropertyAll(
-                                    EdgeInsets.symmetric(
-                                      // vertical: 15.5,
-                                      horizontal: 26,
-                                    ),
-                                  ),
-                                ),
-                                child: cartState is CartDetailActionInProgress
-                                    ? const SizedBox(
-                                        height: 16,
-                                        width: 16,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 1,
-                                        ),
-                                      )
-                                    : Text(
-                                        "Simpan",
-                                        style: GoogleFonts.inter(
-                                          color: TColors.primary,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: TSizes.fontSizeActionL,
-                                        ),
-                                      ),
-                              ),
-                            ),
-                            const SizedBox(width: 6),
-                            Expanded(
-                              child: SizedBox(
-                                height: 48.0,
-                                child: ElevatedButton(
-                                  onPressed: cartState
-                                          is CartDetailActionInProgress
-                                      ? null
-                                      : () {
-                                          if (cartState
-                                              is CartDetailLoadSuccess) {
-                                            onCompleteOrder(int.parse(cartState
-                                                .previewOrderPrice.total));
-                                          }
-                                        },
-                                  child: cartState is CartDetailActionInProgress
-                                      ? const SizedBox(
-                                          height: 16,
-                                          width: 16,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 1,
-                                            color: TColors.neutralLightLightest,
-                                          ),
-                                        )
-                                      : const TextActionL(
-                                          "Bayar & Selesai",
-                                          color: TColors.neutralLightLightest,
-                                        ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: CustomAppbar(
+            title: "Pesanan Baru",
           ),
         ),
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Expanded(
+              child: CartContent(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              child: CartFooter(
+                onCompleted: onCompleteOrder,
+                onSaved: _onCartSaved,
+              ),
+            ),
+          ],
+        ),
+        endDrawer: const ResponsiveLayout(
+          mobile: SizedBox(),
+          tablet: CartTabletDrawer(),
+        ),
       ),
-    );
-  }
-}
-
-class CartDetailToSummary extends StatelessWidget {
-  final PreviewOrderPriceResponse previewOrderPrice;
-
-  const CartDetailToSummary({super.key, required this.previewOrderPrice});
-
-  double _getTaxes() {
-    PreviewOrderCharge? taxChargeItem = previewOrderPrice.charges
-        .firstWhereOrNull((charge) => charge.type == "TAX");
-    PreviewOrderCharge? serviceFeeChargeItem = previewOrderPrice.charges
-        .firstWhereOrNull((charge) => charge.type == "SERVICE_FEE");
-
-    String tax = taxChargeItem?.amount ?? "0";
-    String serviceFee = serviceFeeChargeItem?.amount ?? "0";
-
-    return double.parse(tax) + double.parse(serviceFee);
-  }
-
-  double _getOrderTotal() {
-    return previewOrderPrice.orderItems.fold(0, (sum, item) {
-      return sum + double.parse(item.price);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return CartSummary(
-      tax: _getTaxes(),
-      orderTotal: _getOrderTotal(),
-      total: double.parse(previewOrderPrice.total),
     );
   }
 }

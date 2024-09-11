@@ -13,6 +13,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_xs
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
+import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_state.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card_order.dart';
@@ -21,6 +22,7 @@ import 'package:point_of_sales_cashier/features/orders/common/widgets/summary/or
 import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/solid_order_type_tag.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/tags/solid_order_online_status_tag.dart';
+import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
 import 'package:point_of_sales_cashier/features/payments/data/models/payment_method_return_model.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
@@ -28,6 +30,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/pr
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:product_repository/product_repository.dart';
 
 class OrderDetailScreen extends StatelessWidget {
   const OrderDetailScreen({super.key});
@@ -62,8 +65,8 @@ class _OrderDetailState extends State<OrderDetail> {
     _onRefresh();
   }
 
-  Future<void> onCashPaid({
-    required CashPaymentMethodReturn data,
+  Future<void> _onCashPaid({
+    required PaymentCash data,
     required OrderModel order,
   }) async {
     await context.read<OrderDetailCubit>().completeOrder(
@@ -81,20 +84,24 @@ class _OrderDetailState extends State<OrderDetail> {
     required int amount,
     required OrderModel order,
   }) async {
-    final data = await showModalBottomSheet<PaymentMethodReturnModel>(
+    await showModalBottomSheet<PaymentMethodReturnModel>(
       context: context,
       showDragHandle: true,
       isScrollControlled: true,
+      useSafeArea: true,
       builder: (context) {
         return SelectPaymentMethod(
           amount: amount,
+          onPaymentCash: (value) {
+            _onCashPaid(data: value, order: order);
+          },
         );
       },
     );
 
-    if (data is CashPaymentMethodReturn) {
-      await onCashPaid(data: data, order: order);
-    }
+    // if (data is CashPaymentMethodReturn) {
+    //   await onCashPaid(data: data, order: order);
+    // }
   }
 
   double _getOrderTotal(OrderModel order) {

@@ -47,6 +47,7 @@ import 'package:point_of_sales_cashier/features/tables/presentation/screens/tabl
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_master.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -105,6 +106,14 @@ class App extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: const [Locale("id"), Locale('en')],
+        builder: (context, child) => ResponsiveBreakpoints.builder(
+          child: child!,
+          breakpoints: [
+            const Breakpoint(start: 0, end: 450, name: MOBILE),
+            const Breakpoint(start: 451, end: 800, name: TABLET),
+            const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+          ],
+        ),
         routes: {
           "/": (context) => const RedirectScreen(),
           "/on-boarding": (context) => const OnBoardingScreen(),

@@ -7,11 +7,12 @@ class PaymentMethodRadioGroup extends StatelessWidget {
   final ValueChanged<String?> onChanged;
   final List<String> limitedValues;
 
-  const PaymentMethodRadioGroup(
-      {super.key,
-      this.value = "cash",
-      required this.onChanged,
-      required this.limitedValues});
+  const PaymentMethodRadioGroup({
+    super.key,
+    this.value = "CASH",
+    required this.onChanged,
+    required this.limitedValues,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class PaymentMethodRadioGroup extends StatelessWidget {
         showDragHandle: true,
         isScrollControlled: true,
         builder: (context) {
-          return SelectPaymentMethodNotAvailable();
+          return const SelectPaymentMethodNotAvailable();
         },
       );
     }
@@ -35,16 +36,16 @@ class PaymentMethodRadioGroup extends StatelessWidget {
           child: Row(
             children: [
               PaymentMethodRadio(
-                value: "cash",
+                value: "CASH",
                 groupValue: value,
                 onChanged: onChanged,
               ),
               const SizedBox(width: 12),
               PaymentMethodRadio(
-                value: "qris",
+                value: "QRIS",
                 groupValue: value,
                 onChanged: onChanged,
-                limited: limitedValues.contains("qris"),
+                limited: limitedValues.contains("QRIS"),
                 onLimited: onLimitedPressed,
               ),
             ],
@@ -53,16 +54,16 @@ class PaymentMethodRadioGroup extends StatelessWidget {
         Row(
           children: [
             PaymentMethodRadio(
-              value: "debit",
+              value: "DEBIT",
               groupValue: value,
               onChanged: onChanged,
             ),
             const SizedBox(width: 12),
             PaymentMethodRadio(
-              value: "bank_transfer",
+              value: "BANK",
               groupValue: value,
               onChanged: onChanged,
-              limited: limitedValues.contains("bank_transfer"),
+              limited: limitedValues.contains("BANK"),
               onLimited: onLimitedPressed,
             ),
           ],

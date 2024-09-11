@@ -3,9 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/payments/data/models/bank_account_model.dart';
-import 'package:point_of_sales_cashier/utils/constants/bank_name_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
 
 class BankAccountRadio extends StatelessWidget {
@@ -42,22 +40,25 @@ class BankAccountRadio extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    THelper.getBankImage(account.bankName),
-                    height: 32,
-                    width: 32,
-                  ),
-                  const SizedBox(width: 12),
-                  Column(
+                child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  THelper.getBankImage(account.bankName),
+                  height: 32,
+                  width: 32,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       TextHeading4(
                         THelper.getBankName(account.bankName),
                         color: TColors.neutralDarkDarkest,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       TextBodyS(
                         "${account.number} • A/n ${account.name}",
@@ -65,9 +66,9 @@ class BankAccountRadio extends StatelessWidget {
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              ],
+            )),
             SizedBox(
               height: 16,
               width: 16,
