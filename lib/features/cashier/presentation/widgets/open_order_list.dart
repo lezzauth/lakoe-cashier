@@ -28,6 +28,8 @@ class CashierOpenOrderList extends StatelessWidget {
                 OrderListButton(
                   onTap: () async {
                     await Navigator.pushNamed(context, "/orders");
+
+                    if (!context.mounted) return;
                     context.read<CashierOrderCubit>().findAll();
                   },
                 ),
@@ -42,6 +44,8 @@ class CashierOpenOrderList extends StatelessWidget {
                         "/orders/detail",
                         arguments: OrderDetailArgument(id: order.id),
                       );
+
+                      if (!context.mounted) return;
                       context.read<CashierOrderCubit>().findAll();
                     },
                   ),
