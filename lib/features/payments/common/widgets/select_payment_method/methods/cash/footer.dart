@@ -65,7 +65,7 @@ class CashPaymentFooter extends StatelessWidget {
                     height: 48,
                     child: ElevatedButton(
                       onPressed: onSubmitted,
-                      child: const TextActionL("Selesaikan"),
+                      child: const TextActionL("Bayar & Selesaikan"),
                     ),
                   ),
                 ),

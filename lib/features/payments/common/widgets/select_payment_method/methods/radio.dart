@@ -7,6 +7,7 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class PaymentMethodRadio extends StatelessWidget {
   final String value;
@@ -96,8 +97,12 @@ class CashPaymentRadioContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment:
+          isMobile ? MainAxisAlignment.start : MainAxisAlignment.center,
       children: [
         UiIcons(
           TIcons.moneyBill,
@@ -106,7 +111,8 @@ class CashPaymentRadioContent extends StatelessWidget {
           color: selected ? TColors.primary : TColors.neutralDarkMedium,
         ),
         const SizedBox(width: 12),
-        Expanded(
+        Flexible(
+          fit: FlexFit.loose,
           child: TextHeading5(
             TPaymentMethodName.cash,
             color: selected ? TColors.primary : TColors.neutralDarkMedium,
@@ -126,8 +132,12 @@ class DebitPaymentRadioContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment:
+          isMobile ? MainAxisAlignment.start : MainAxisAlignment.center,
       children: [
         UiIcons(
           TIcons.creditCard,
@@ -136,7 +146,8 @@ class DebitPaymentRadioContent extends StatelessWidget {
           color: selected ? TColors.primary : TColors.neutralDarkMedium,
         ),
         const SizedBox(width: 12),
-        Expanded(
+        Flexible(
+          fit: FlexFit.loose,
           child: TextHeading5(
             TPaymentMethodName.debit,
             color: selected ? TColors.primary : TColors.neutralDarkMedium,
@@ -156,8 +167,12 @@ class BankTransferPaymentRadioContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment:
+          isMobile ? MainAxisAlignment.start : MainAxisAlignment.center,
       children: [
         UiIcons(
           TIcons.moneyBillTransfer,
@@ -166,7 +181,8 @@ class BankTransferPaymentRadioContent extends StatelessWidget {
           color: selected ? TColors.primary : TColors.neutralDarkMedium,
         ),
         const SizedBox(width: 12),
-        Expanded(
+        Flexible(
+          fit: FlexFit.loose,
           child: TextHeading5(
             TPaymentMethodName.bankTransfer,
             color: selected ? TColors.primary : TColors.neutralDarkMedium,
