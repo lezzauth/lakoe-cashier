@@ -8,12 +8,16 @@ class TextHeading3 extends StatelessWidget {
   final FontWeight fontWeight;
   final double fontSize = TSizes.fontSizeHeading3;
   final Color? color;
+  final int? maxLines;
+  final TextOverflow? overflow;
 
   const TextHeading3(
     this.data, {
     super.key,
     this.fontWeight = FontWeight.w700,
     this.color = TColors.neutralDarkDarkest,
+    this.maxLines,
+    this.overflow,
   });
 
   @override
@@ -25,6 +29,8 @@ class TextHeading3 extends StatelessWidget {
         fontWeight: fontWeight,
         fontSize: fontSize,
       ),
+      maxLines: maxLines,
+      overflow: overflow,
     );
   }
 }

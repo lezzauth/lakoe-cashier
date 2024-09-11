@@ -21,6 +21,7 @@ import 'package:point_of_sales_cashier/features/cashier/application/cubit/produc
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/appbar/explore_product_appbar.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/drawer/explore_product_drawer_tablet.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/open_order_list.dart';
+import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/product_grid.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/product_list.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/filter/product_category_filter.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -120,29 +121,6 @@ class _ExploreProductTabletContentState
                         SliverToBoxAdapter(
                           child: Container(
                             color: TColors.neutralLightLight,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0,
-                              vertical: 6.0,
-                            ),
-                            child: BlocBuilder<CashierProductFilterCubit,
-                                CashierProductFilterState>(
-                              builder: (context, state) {
-                                return SearchField(
-                                  hintText: "Cari menu disini…",
-                                  debounceTime: 500,
-                                  onChanged: (value) {
-                                    context
-                                        .read<CashierProductFilterCubit>()
-                                        .setFilter(name: value);
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        SliverToBoxAdapter(
-                          child: Container(
-                            color: TColors.neutralLightLight,
                             padding: const EdgeInsets.symmetric(vertical: 6),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -167,30 +145,52 @@ class _ExploreProductTabletContentState
                         ),
                         SliverToBoxAdapter(
                           child: Container(
-                            color: TColors.neutralLightLightest,
+                            color: TColors.neutralLightLight,
                             child: BlocBuilder<CashierProductFilterCubit,
                                 CashierProductFilterState>(
                               builder: (context, filterState) {
                                 return BlocBuilder<CashierCategoryCubit,
                                     CashierCategoryState>(
                                   builder: (context, state) {
-                                    return ProductCategoryFilter(
-                                      value: filterState.categoryId,
-                                      onChanged: (value) {
-                                        context
-                                            .read<CashierProductFilterCubit>()
-                                            .setFilter(categoryId: value);
-                                      },
-                                      categories:
-                                          state is CashierCategoryLoadSuccess
-                                              ? state.categories
-                                              : [],
-                                      errorText:
-                                          state is CashierCategoryLoadFailure
-                                              ? state.error
-                                              : "",
-                                      loading: state
-                                          is CashierCategoryLoadInProgress,
+                                    return Row(
+                                      children: [
+                                        Expanded(
+                                          child: ProductCategoryFilter(
+                                            value: filterState.categoryId,
+                                            onChanged: (value) {
+                                              context
+                                                  .read<
+                                                      CashierProductFilterCubit>()
+                                                  .setFilter(categoryId: value);
+                                            },
+                                            categories: state
+                                                    is CashierCategoryLoadSuccess
+                                                ? state.categories
+                                                : [],
+                                            errorText: state
+                                                    is CashierCategoryLoadFailure
+                                                ? state.error
+                                                : "",
+                                            loading: state
+                                                is CashierCategoryLoadInProgress,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 360,
+                                          padding:
+                                              const EdgeInsets.only(right: 24),
+                                          child: SearchField(
+                                            hintText: "Cari menu disini…",
+                                            debounceTime: 500,
+                                            onChanged: (value) {
+                                              context
+                                                  .read<
+                                                      CashierProductFilterCubit>()
+                                                  .setFilter(name: value);
+                                            },
+                                          ),
+                                        ),
+                                      ],
                                     );
                                   },
                                 );
@@ -198,17 +198,11 @@ class _ExploreProductTabletContentState
                             ),
                           ),
                         ),
-                        const CashierProductList(),
-                        const SliverToBoxAdapter(
-                          child: SizedBox(height: 80),
-                        ),
+                        const ProductGrid(),
                       ],
                     ),
                   ),
                 ),
-
-                // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-                // floatingActionButton: const CartCountFloatingAction(),
               ),
             ),
             BlocBuilder<CartCubit, CartState>(
