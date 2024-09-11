@@ -33,7 +33,7 @@ class OrderListButton extends StatelessWidget {
               color: TColors.neutralLightLightest,
             ),
             TextHeading5(
-              "Daftar\nPesanan",
+              "Semua\nPesanan",
               color: TColors.neutralLightLightest,
             )
           ],

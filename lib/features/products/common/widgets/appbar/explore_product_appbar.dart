@@ -27,7 +27,7 @@ class ExploreProductAppbar extends StatelessWidget
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const CloseCashierButton(
-                    label: "Selesai & Tutup",
+                    label: "Tutup",
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,

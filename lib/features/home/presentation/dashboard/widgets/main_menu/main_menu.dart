@@ -93,7 +93,7 @@ class MainMenu extends StatelessWidget {
                               bottom: 12,
                             ),
                             child: const UiIcons(
-                              TIcons.cashier,
+                              TIcons.lock,
                               color: TColors.neutralLightLightest,
                             ),
                           ),
