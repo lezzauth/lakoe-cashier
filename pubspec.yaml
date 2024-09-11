@@ -117,6 +117,7 @@ flutter:
     - assets/icons/
     - assets/icons/categories/
     - assets/images/
+    - assets/images/access-permission/
     - assets/logos/
     - assets/flags/
 
