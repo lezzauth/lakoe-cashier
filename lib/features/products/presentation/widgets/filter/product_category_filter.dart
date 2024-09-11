@@ -39,7 +39,7 @@ class _ProductCategoryFilterState extends State<ProductCategoryFilter> {
         scrollDirection: Axis.horizontal,
         physics: null,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Wrap(
             direction: Axis.horizontal,
             spacing: 8.0,

@@ -25,6 +25,7 @@ class OrderListButton extends StatelessWidget {
         child: const Wrap(
           direction: Axis.horizontal,
           spacing: 8.0,
+          alignment: WrapAlignment.center,
           children: [
             UiIcons(
               TIcons.bill,
