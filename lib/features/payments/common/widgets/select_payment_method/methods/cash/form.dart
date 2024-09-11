@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
@@ -12,7 +11,6 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_cubit.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
@@ -27,18 +25,27 @@ class CashPaymentForm extends StatefulWidget {
 }
 
 class _CashPaymentFormState extends State<CashPaymentForm> {
-  final List<int> _presets = [
-    500,
-    1000,
-    2000,
-    5000,
-    10000,
-    20000,
-    50000,
-    100000
-  ];
-
   int _paidAmount = 0;
+
+  List<int> _getPreset() {
+    if (widget.amount <= 5000) {
+      return [1000, 2000, 5000];
+    }
+
+    if (widget.amount > 5000 && widget.amount <= 20000) {
+      return [5000, 10000, 20000];
+    }
+
+    if (widget.amount > 20000 && widget.amount <= 50000) {
+      return [20000, 30000, 50000];
+    }
+
+    if (widget.amount > 50000 && widget.amount <= 100000) {
+      return [50000, 70000, 100000];
+    }
+
+    return [100000, 150000, 200000];
+  }
 
   final CurrencyTextInputFormatter _paidAmountFormatter =
       CurrencyTextInputFormatter.currency(
@@ -80,36 +87,6 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
         _textAmountOpacity = 0.0; // Fade out the text
       });
     });
-  }
-
-  void _onSubmit() {
-    bool isFormValid = widget.formKey.currentState?.saveAndValidate() ?? false;
-    if (!isFormValid) {
-      const snackBar = SnackBar(
-        content: Text('Validation failed'),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
-
-      return;
-    }
-
-    context.read<PaymentCubit>().setCashPayment(
-          paidAmount: _getPaidAmount(),
-          change: _getChange(),
-        );
-
-    // Navigator.pop(
-    //   context,
-    //   CashPaymentMethodReturn(
-    //     paidAmount: _getPaidAmount(),
-    //     change: _getChange(),
-    //   ),
-    // );
   }
 
   @override
@@ -196,7 +173,7 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
                 direction: Axis.horizontal,
                 spacing: 8,
                 runSpacing: 8,
-                children: _presets.map((preset) {
+                children: _getPreset().map((preset) {
                   return SizedBox(
                     height: 32,
                     child: InputChip(
