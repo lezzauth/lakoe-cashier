@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/date_range_picker.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -70,11 +70,11 @@ class _DashboardFilterState extends State<DashboardFilter> {
                 bool selected = state.template == template.value;
                 return InputChip(
                   label: selected
-                      ? TextHeading5(
+                      ? TextHeading4(
                           template.label,
                           color: TColors.primary,
                         )
-                      : TextBodyS(template.label),
+                      : TextBodyM(template.label),
                   selected: selected,
                   onSelected: (value) {
                     context
