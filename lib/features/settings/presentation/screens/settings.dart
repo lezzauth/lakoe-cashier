@@ -86,10 +86,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-      statusBarColor: Colors.white,
-    ));
-
     return Scaffold(
       appBar: const CustomAppbar(
         title: "Pengaturan",
