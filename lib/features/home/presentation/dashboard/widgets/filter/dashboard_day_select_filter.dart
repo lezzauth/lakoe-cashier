@@ -161,6 +161,7 @@ class _DashboardDaySelectFilterState extends State<DashboardDaySelectFilter> {
                 style: GoogleFonts.inter(
                   color: TColors.neutralDarkDarkest,
                   fontSize: TSizes.fontSizeBodyM,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               IconButton(
