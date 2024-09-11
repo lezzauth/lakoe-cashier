@@ -6,24 +6,46 @@ import 'package:table_repository/table_repository.dart';
 class CartDetailFilterCubit extends Cubit<CartDetailFilterState> {
   CartDetailFilterCubit() : super(const CartDetailFilterState(type: "DINEIN"));
 
-  void setFilter({
-    String? type = "DINEIN",
-    CustomerModel? customer,
+  void setType({
+    String type = "DINEIN",
+  }) {
+    TableModel? modifiedTable = state.table;
+    if (type == "TAKEAWAY") {
+      modifiedTable = null;
+    }
+
+    emit(
+      CartDetailFilterState(
+        type: type,
+        table: modifiedTable,
+        customer: state.customer,
+      ),
+    );
+  }
+
+  void setCustomer({CustomerModel? customer}) {
+    emit(
+      CartDetailFilterState(
+        customer: customer,
+        table: state.table,
+        type: state.type,
+      ),
+    );
+  }
+
+  void setTable({
     TableModel? table,
   }) {
-    String? modifiedType = type;
-    TableModel? modifiedTable = table;
+    String modifiedType = state.type;
+
     if (table != null) {
       modifiedType = "DINEIN";
     }
-    if (type == "TAKEAWAY") {
-      table = null;
-    }
 
     emit(CartDetailFilterState(
-      customer: customer ?? state.customer,
-      table: modifiedTable ?? state.table,
-      type: modifiedType ?? state.type,
+      customer: state.customer,
+      table: table,
+      type: modifiedType,
     ));
   }
 
