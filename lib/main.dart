@@ -8,8 +8,8 @@ void main() async {
   await initializeDateFormatting("id_ID", null);
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle.dark.copyWith(
-      statusBarColor: Colors.transparent,
-      systemNavigationBarColor: TColors.neutralLightLight,
+      statusBarColor: TColors.neutralLightLightest,
+      systemNavigationBarColor: TColors.neutralLightLightest,
     ),
   );
   runApp(const App());
