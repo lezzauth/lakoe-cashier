@@ -62,17 +62,15 @@ class _CartContentState extends State<CartContent> {
   }
 
   Future<void> _onCustomerChanged(CustomerModel? customer) async {
-    context.read<CartDetailFilterCubit>().setFilter(customer: customer);
+    context.read<CartDetailFilterCubit>().setCustomer(customer: customer);
   }
 
   Future<void> _onTableChanged(TableModel? table) async {
-    context
-        .read<CartDetailFilterCubit>()
-        .setFilter(table: table, type: table != null ? "DINEIN" : null);
+    context.read<CartDetailFilterCubit>().setTable(table: table);
   }
 
   void _onOrderTypeChanged(String type) {
-    context.read<CartDetailFilterCubit>().setFilter(type: type);
+    context.read<CartDetailFilterCubit>().setType(type: type);
   }
 
   Future<void> _onRefresh() async {
