@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:point_of_sales_cashier/common/widgets/access_permission/contact_denied_permission.dart';
+import 'package:point_of_sales_cashier/common/widgets/access_permission/contact_permission.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -17,7 +19,30 @@ class NewCustomerForm extends StatefulWidget {
 
 class _NewCustomerFormState extends State<NewCustomerForm> {
   Future<void> _onSelectContact() async {
-    if (await Permission.contacts.request().isGranted) {
+    if (!context.mounted) return;
+
+    if (await Permission.contacts.isPermanentlyDenied) {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return const ContactDeniedPermission();
+        },
+      );
+
+      return;
+    }
+
+    if (!(await Permission.contacts.isGranted)) {
+      await showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return const ContactPermission();
+        },
+      );
+    }
+
+    if (await Permission.contacts.isGranted) {
       final contact = await FlutterContacts.openExternalPick();
 
       if (contact != null) {
