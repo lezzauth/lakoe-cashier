@@ -51,10 +51,8 @@ class LockCashierButtonState extends State<LockCashierButton> {
           backgroundColor:
               const WidgetStatePropertyAll(TColors.neutralDarkDarkest),
         ),
-        child: Wrap(
-          direction: Axis.horizontal,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 4,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const UiIcons(
               TIcons.homeLock,
@@ -64,9 +62,12 @@ class LockCashierButtonState extends State<LockCashierButton> {
             ),
             ResponsiveLayout(
               mobile: const SizedBox(),
-              tablet: TextActionL(
-                widget.label,
-                color: TColors.neutralLightLightest,
+              tablet: Container(
+                margin: const EdgeInsets.only(left: 4),
+                child: TextActionL(
+                  widget.label,
+                  color: TColors.neutralLightLightest,
+                ),
               ),
             ),
           ],
