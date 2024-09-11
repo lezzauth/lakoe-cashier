@@ -22,7 +22,6 @@ import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/app
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/drawer/explore_product_drawer_tablet.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/open_order_list.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/product_grid.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/product_list.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/filter/product_category_filter.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
@@ -103,137 +102,142 @@ class _ExploreProductTabletContentState
           context.read<CartDetailFilterCubit>().clearFilter();
         }
       },
-      child: Scaffold(
-        key: _scaffoldKey,
-        endDrawer: const ExploreProductDrawerTablet(),
-        body: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Scaffold(
-                appBar: const ExploreProductAppbar(),
-                body: Scrollbar(
-                  child: RefreshIndicator(
-                    onRefresh: _onRefresh,
-                    backgroundColor: TColors.neutralLightLightest,
-                    child: CustomScrollView(
-                      slivers: [
-                        SliverToBoxAdapter(
-                          child: Container(
-                            color: TColors.neutralLightLight,
-                            padding: const EdgeInsets.symmetric(vertical: 6),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(bottom: 12.0),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16),
-                                  child: const Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      TextHeading3("Berlangsung"),
-                                    ],
-                                  ),
-                                ),
-                                const CashierOpenOrderList(),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SliverToBoxAdapter(
-                          child: Container(
-                            color: TColors.neutralLightLight,
-                            child: BlocBuilder<CashierProductFilterCubit,
-                                CashierProductFilterState>(
-                              builder: (context, filterState) {
-                                return BlocBuilder<CashierCategoryCubit,
-                                    CashierCategoryState>(
-                                  builder: (context, state) {
-                                    return Row(
+      child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: TColors.neutralLightLightest,
+          endDrawer: const ExploreProductDrawerTablet(),
+          body: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Scaffold(
+                  appBar: const ExploreProductAppbar(),
+                  body: Scrollbar(
+                    child: RefreshIndicator(
+                      onRefresh: _onRefresh,
+                      backgroundColor: TColors.neutralLightLightest,
+                      child: CustomScrollView(
+                        slivers: [
+                          SliverToBoxAdapter(
+                            child: Container(
+                              color: TColors.neutralLightLight,
+                              padding: const EdgeInsets.symmetric(vertical: 6),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(bottom: 12.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Expanded(
-                                          child: ProductCategoryFilter(
-                                            value: filterState.categoryId,
-                                            onChanged: (value) {
-                                              context
-                                                  .read<
-                                                      CashierProductFilterCubit>()
-                                                  .setFilter(categoryId: value);
-                                            },
-                                            categories: state
-                                                    is CashierCategoryLoadSuccess
-                                                ? state.categories
-                                                : [],
-                                            errorText: state
-                                                    is CashierCategoryLoadFailure
-                                                ? state.error
-                                                : "",
-                                            loading: state
-                                                is CashierCategoryLoadInProgress,
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 360,
-                                          padding:
-                                              const EdgeInsets.only(right: 24),
-                                          child: SearchField(
-                                            hintText: "Cari menu disini…",
-                                            debounceTime: 500,
-                                            onChanged: (value) {
-                                              context
-                                                  .read<
-                                                      CashierProductFilterCubit>()
-                                                  .setFilter(name: value);
-                                            },
-                                          ),
-                                        ),
+                                        TextHeading3("Berlangsung"),
                                       ],
-                                    );
-                                  },
-                                );
-                              },
+                                    ),
+                                  ),
+                                  const CashierOpenOrderList(),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        const ProductGrid(),
-                      ],
+                          SliverToBoxAdapter(
+                            child: Container(
+                              color: TColors.neutralLightLight,
+                              child: BlocBuilder<CashierProductFilterCubit,
+                                  CashierProductFilterState>(
+                                builder: (context, filterState) {
+                                  return BlocBuilder<CashierCategoryCubit,
+                                      CashierCategoryState>(
+                                    builder: (context, state) {
+                                      return Row(
+                                        children: [
+                                          Expanded(
+                                            child: ProductCategoryFilter(
+                                              value: filterState.categoryId,
+                                              onChanged: (value) {
+                                                context
+                                                    .read<
+                                                        CashierProductFilterCubit>()
+                                                    .setFilter(
+                                                        categoryId: value);
+                                              },
+                                              categories: state
+                                                      is CashierCategoryLoadSuccess
+                                                  ? state.categories
+                                                  : [],
+                                              errorText: state
+                                                      is CashierCategoryLoadFailure
+                                                  ? state.error
+                                                  : "",
+                                              loading: state
+                                                  is CashierCategoryLoadInProgress,
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 360,
+                                            padding: const EdgeInsets.only(
+                                                right: 24, left: 12),
+                                            child: SearchField(
+                                              hintText: "Cari menu disini…",
+                                              debounceTime: 500,
+                                              onChanged: (value) {
+                                                context
+                                                    .read<
+                                                        CashierProductFilterCubit>()
+                                                    .setFilter(name: value);
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          const ProductGrid()
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            BlocBuilder<CartCubit, CartState>(
-              builder: (context, state) {
-                return Visibility(
-                  visible: state.carts.isNotEmpty,
-                  child: SizedBox(
-                    width: 500,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Expanded(
-                          child: CartContentTablet(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 16),
-                          child: CartFooter(
-                            onCompleted: (value) {
-                              _scaffoldKey.currentState!.openEndDrawer();
-                            },
-                            onSaved: _onCartSaved,
+              BlocBuilder<CartCubit, CartState>(
+                builder: (context, state) {
+                  return Visibility(
+                    visible: state.carts.isNotEmpty,
+                    child: SizedBox(
+                      width: 500,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Expanded(
+                            child: CartContentTablet(),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 16),
+                            child: CartFooter(
+                              onCompleted: (value) {
+                                _scaffoldKey.currentState!.openEndDrawer();
+                              },
+                              onSaved: _onCartSaved,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
-          ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

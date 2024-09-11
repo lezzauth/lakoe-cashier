@@ -6,6 +6,7 @@ class TIcons {
   static const String dashboardSettings = "assets/icons/settings.svg";
 
   static const String bell = "assets/icons/bell.svg";
+  static const String homeLock = "assets/icons/home-lock.svg";
   static const String warning = "assets/icons/warning.svg";
   static const String check = "assets/icons/check.svg";
   static const String bag = "assets/icons/bag.svg";

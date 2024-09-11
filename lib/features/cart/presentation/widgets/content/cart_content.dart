@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/counter.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
@@ -19,6 +17,7 @@ import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_deta
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
 import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/customer_and_table_select.dart';
+import 'package:point_of_sales_cashier/features/cart/presentation/widgets/order_type_chip.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/summary/preview_order_price.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
@@ -161,30 +160,11 @@ class _CartContentState extends State<CartContent> {
                                       bool selected =
                                           filter.type == orderType.value;
 
-                                      return InputChip(
-                                        label: Wrap(
-                                          direction: Axis.horizontal,
-                                          alignment: WrapAlignment.center,
-                                          spacing: 8,
-                                          children: [
-                                            UiIcons(
-                                              orderType.value == "DINEIN"
-                                                  ? TIcons.tableRestaurant
-                                                  : TIcons.bag,
-                                              height: 16,
-                                              width: 16,
-                                              color: selected
-                                                  ? TColors.primary
-                                                  : TColors.neutralDarkDarkest,
-                                            ),
-                                            !selected
-                                                ? TextBodyS(orderType.label)
-                                                : TextHeading5(
-                                                    orderType.label,
-                                                    color: TColors.primary,
-                                                  )
-                                          ],
-                                        ),
+                                      return OrderTypeChip(
+                                        label: orderType.label,
+                                        icon: orderType.value == "DINEIN"
+                                            ? TIcons.tableRestaurant
+                                            : TIcons.bag,
                                         selected: selected,
                                         onSelected: (value) {
                                           _onOrderTypeChanged(orderType.value);
@@ -205,14 +185,17 @@ class _CartContentState extends State<CartContent> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const TextHeading3("Pesanan"),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const TextHeading4(
-                                  "Tambah Pesanan",
-                                  color: TColors.primary,
+                              ResponsiveLayout(
+                                mobile: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const TextHeading4(
+                                    "Tambah Pesanan",
+                                    color: TColors.primary,
+                                  ),
                                 ),
+                                tablet: const SizedBox(),
                               ),
                             ],
                           ),

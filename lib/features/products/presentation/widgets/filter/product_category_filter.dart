@@ -1,8 +1,12 @@
 import 'package:category_repository/category_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class ProductCategoryFilter extends StatefulWidget {
   final int? value;
@@ -51,13 +55,8 @@ class _ProductCategoryFilterState extends State<ProductCategoryFilter> {
       child: Wrap(
         spacing: 8.0,
         children: [
-          ChoiceChip(
-            label: !isAllCategorySelected
-                ? const TextBodyS("Semua")
-                : const TextHeading5(
-                    "Semua",
-                    color: TColors.primary,
-                  ),
+          FilterChip(
+            label: "Semua",
             selected: isAllCategorySelected,
             onSelected: (value) {
               if (widget.onChanged == null) return;
@@ -67,13 +66,8 @@ class _ProductCategoryFilterState extends State<ProductCategoryFilter> {
           ...widget.categories.map(
             (category) {
               bool selected = widget.value == category.id;
-              return ChoiceChip(
-                label: !selected
-                    ? TextBodyS(category.name)
-                    : TextHeading5(
-                        category.name,
-                        color: TColors.primary,
-                      ),
+              return FilterChip(
+                label: category.name,
                 selected: selected,
                 onSelected: (value) {
                   if (widget.onChanged == null) return;
@@ -83,6 +77,49 @@ class _ProductCategoryFilterState extends State<ProductCategoryFilter> {
             },
           )
         ],
+      ),
+    );
+  }
+}
+
+class FilterChip extends StatelessWidget {
+  const FilterChip({
+    super.key,
+    this.selected = false,
+    this.onSelected,
+    required this.label,
+  });
+
+  final bool selected;
+  final Function(bool)? onSelected;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
+
+    return SizedBox(
+      height: 46,
+      child: ChoiceChip(
+        label: ResponsiveLayout(
+          mobile: !selected
+              ? TextBodyS(label)
+              : TextHeading5(
+                  label,
+                  color: TColors.primary,
+                ),
+          tablet: !selected
+              ? TextBodyL(label)
+              : TextHeading3(
+                  label,
+                  color: TColors.primary,
+                ),
+        ),
+        selected: selected,
+        onSelected: onSelected,
+        padding: isMobile
+            ? null
+            : const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
@@ -13,7 +12,6 @@ import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_deta
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/content/cart_content.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/drawer/cart_tablet_drawer.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/footer/cart_footer.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
@@ -135,10 +133,6 @@ class _CartState extends State<Cart> {
               ),
             ),
           ],
-        ),
-        endDrawer: const ResponsiveLayout(
-          mobile: SizedBox(),
-          tablet: CartTabletDrawer(),
         ),
       ),
     );
