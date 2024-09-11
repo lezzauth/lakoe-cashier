@@ -51,6 +51,7 @@ class _ExploreProductMobileState extends State<ExploreProductMobile> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: TColors.neutralLightLight,
+      systemNavigationBarColor: TColors.neutralLightLight,
     ));
     return Scaffold(
       appBar: const ExploreProductAppbar(),
