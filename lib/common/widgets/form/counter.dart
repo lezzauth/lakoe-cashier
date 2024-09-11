@@ -44,8 +44,8 @@ class Counter extends StatelessWidget {
                   )
                 : UiIcons(
                     TIcons.minus,
-                    height: 14,
-                    width: 14,
+                    height: 16,
+                    width: 16,
                     color: TColors.primary,
                     onTap: () {
                       onChanged(value - 1);
