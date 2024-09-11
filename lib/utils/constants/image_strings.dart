@@ -12,6 +12,10 @@ class TImages {
   static const String stamp = "assets/images/stamp.png";
   static const String catBox = "assets/images/cat-box.svg";
   static const String qrisLogo = "assets/images/qris-logo.svg";
+  static const String liteLogo = "assets/images/lite-logo.png";
+  static const String growLogo = "assets/images/grow-logo.png";
+  static const String proLogo = "assets/images/pro-logo.png";
+  static const String defaultAvatar = "assets/images/default-avatar.png";
   static const String successConfirmation =
       "assets/images/success-confirmation.png";
   static const String qrisBackground = "assets/images/qris-background.png";
