@@ -69,6 +69,9 @@ class _QrisPaymentContentState extends State<QrisPaymentContent> {
           ),
         ),
         QrisPaymentFooter(
+          onCanceled: () {
+            Navigator.pop(context);
+          },
           onSubmitted: () {},
         ),
       ],

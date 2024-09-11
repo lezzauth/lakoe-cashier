@@ -99,6 +99,9 @@ class _BankTransferPaymentContentState
             ),
           ),
           BankTransferPaymentFooter(
+            onCanceled: () {
+              Navigator.pop(context);
+            },
             onSubmitted: _onSubmitted,
           )
         ],

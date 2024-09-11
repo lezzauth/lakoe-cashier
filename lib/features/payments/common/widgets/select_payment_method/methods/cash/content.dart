@@ -90,6 +90,9 @@ class _CashPaymentContentState extends State<CashPaymentContent> {
             ),
           ),
           CashPaymentFooter(
+            onCanceled: () {
+              Navigator.pop(context);
+            },
             onSubmitted: _onSubmitted,
           )
         ],

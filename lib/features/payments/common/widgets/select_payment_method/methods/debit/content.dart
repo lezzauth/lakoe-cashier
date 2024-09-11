@@ -55,6 +55,9 @@ class DebitPaymentContentState extends State<DebitPaymentContent> {
             ),
           ),
           DebitPaymentFooter(
+            onCanceled: () {
+              Navigator.pop(context);
+            },
             onSubmitted: () {
               //
             },
