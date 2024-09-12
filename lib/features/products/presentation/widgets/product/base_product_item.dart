@@ -56,6 +56,7 @@ class BaseProductItem extends StatelessWidget {
                           softWrap: false,
                           overflow: TextOverflow.ellipsis,
                         ),
+                        const SizedBox(height: 2.0),
                         TextBodyM(
                           TFormatter.formatToRupiah(price),
                           color: TColors.neutralDarkLight,
@@ -63,6 +64,7 @@ class BaseProductItem extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(width: 4.0),
                   if (counter != null) counter!,
                 ],
               ),

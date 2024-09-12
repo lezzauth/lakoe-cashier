@@ -42,7 +42,7 @@ class SelectPaymentMethodNotAvailable extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(bottom: 4),
                         child: TextHeading3(
-                          "QRIS Dinamis",
+                          "Metode Pembayaran",
                           color: TColors.neutralDarkDark,
                         ),
                       ),

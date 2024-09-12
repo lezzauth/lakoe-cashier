@@ -24,7 +24,7 @@ class CartCountFloatingAction extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: SizedBox(
-              height: 48,
+              height: 52,
               width: double.maxFinite,
               child: FloatingActionButton(
                 onPressed: () {
@@ -32,7 +32,7 @@ class CartCountFloatingAction extends StatelessWidget {
                 },
                 elevation: 0,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

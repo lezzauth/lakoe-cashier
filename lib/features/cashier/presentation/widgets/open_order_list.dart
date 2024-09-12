@@ -7,6 +7,7 @@ import 'package:point_of_sales_cashier/features/orders/data/arguments/order_deta
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/order/order_item.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/order/order_list_button.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CashierOpenOrderList extends StatelessWidget {
   const CashierOpenOrderList({
@@ -59,12 +60,34 @@ class CashierOpenOrderList extends StatelessWidget {
               color: TColors.error,
             ),
           ),
-        _ => const Center(
-            child: SizedBox(
-              height: 32,
-              width: 32,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
+        _ => SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: null,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Wrap(
+                direction: Axis.horizontal,
+                spacing: 8.0,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: List.generate(
+                  5,
+                  (index) {
+                    return Shimmer.fromColors(
+                      baseColor: const Color(0xFFE8E9F1),
+                      highlightColor: const Color(0xFFF8F9FE),
+                      child: Container(
+                        height: 55,
+                        width: 123,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                          color: TColors.neutralLightLightest,
+                          border: Border.all(
+                              color: TColors.neutralLightMedium, width: 1),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),

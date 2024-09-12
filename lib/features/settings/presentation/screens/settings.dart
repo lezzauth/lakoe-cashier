@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/widgets/banner/loyalty_program_banner.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/widgets/section/section_card.dart';
@@ -33,7 +34,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   ];
   List<_SettingItem> paymentReceiptSettingItems = [
     _SettingItem(
-      title: "QRIS Dinamis",
+      title: "Metode Pembayaran",
       routeName: "/",
       iconSrc: TIcons.dashboardQROrder,
     ),
