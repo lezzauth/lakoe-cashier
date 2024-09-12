@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
@@ -48,100 +49,102 @@ class _ExploreProductMobileState extends State<ExploreProductMobile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const ExploreProductAppbar(),
-      body: Scrollbar(
-        child: RefreshIndicator(
-          onRefresh: _onRefresh,
-          backgroundColor: TColors.neutralLightLightest,
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Container(
-                  color: TColors.neutralLightLight,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 6.0,
-                  ),
-                  child: BlocBuilder<CashierProductFilterCubit,
-                      CashierProductFilterState>(
-                    builder: (context, state) {
-                      return SearchField(
-                        hintText: "Cari menu disini…",
-                        debounceTime: 500,
-                        onChanged: (value) {
-                          context
-                              .read<CashierProductFilterCubit>()
-                              .setFilter(name: value);
-                        },
-                      );
-                    },
+    return SafeArea(
+      child: Scaffold(
+        appBar: const ExploreProductAppbar(),
+        body: Scrollbar(
+          child: RefreshIndicator(
+            onRefresh: _onRefresh,
+            backgroundColor: TColors.neutralLightLightest,
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Container(
+                    color: TColors.neutralLightLight,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 6.0,
+                    ),
+                    child: BlocBuilder<CashierProductFilterCubit,
+                        CashierProductFilterState>(
+                      builder: (context, state) {
+                        return SearchField(
+                          hintText: "Cari menu disini…",
+                          debounceTime: 500,
+                          onChanged: (value) {
+                            context
+                                .read<CashierProductFilterCubit>()
+                                .setFilter(name: value);
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  color: TColors.neutralLightLight,
-                  padding: const EdgeInsets.symmetric(vertical: 6),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 12.0),
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextHeading3("Berlangsung"),
-                          ],
+                SliverToBoxAdapter(
+                  child: Container(
+                    color: TColors.neutralLightLight,
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 12.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextHeading3("Berlangsung"),
+                            ],
+                          ),
                         ),
-                      ),
-                      const CashierOpenOrderList(),
-                    ],
+                        const CashierOpenOrderList(),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  color: TColors.neutralLightLightest,
-                  child: BlocBuilder<CashierProductFilterCubit,
-                      CashierProductFilterState>(
-                    builder: (context, filterState) {
-                      return BlocBuilder<CashierCategoryCubit,
-                          CashierCategoryState>(
-                        builder: (context, state) {
-                          return ProductCategoryFilter(
-                            value: filterState.categoryId,
-                            onChanged: (value) {
-                              context
-                                  .read<CashierProductFilterCubit>()
-                                  .setFilter(categoryId: value);
-                            },
-                            categories: state is CashierCategoryLoadSuccess
-                                ? state.categories
-                                : [],
-                            errorText: state is CashierCategoryLoadFailure
-                                ? state.error
-                                : "",
-                            loading: state is CashierCategoryLoadInProgress,
-                          );
-                        },
-                      );
-                    },
+                SliverToBoxAdapter(
+                  child: Container(
+                    color: TColors.neutralLightLightest,
+                    child: BlocBuilder<CashierProductFilterCubit,
+                        CashierProductFilterState>(
+                      builder: (context, filterState) {
+                        return BlocBuilder<CashierCategoryCubit,
+                            CashierCategoryState>(
+                          builder: (context, state) {
+                            return ProductCategoryFilter(
+                              value: filterState.categoryId,
+                              onChanged: (value) {
+                                context
+                                    .read<CashierProductFilterCubit>()
+                                    .setFilter(categoryId: value);
+                              },
+                              categories: state is CashierCategoryLoadSuccess
+                                  ? state.categories
+                                  : [],
+                              errorText: state is CashierCategoryLoadFailure
+                                  ? state.error
+                                  : "",
+                              loading: state is CashierCategoryLoadInProgress,
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-              const CashierProductList(),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 80),
-              ),
-            ],
+                const CashierProductList(),
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 80),
+                ),
+              ],
+            ),
           ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: const CartCountFloatingAction(),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: const CartCountFloatingAction(),
     );
   }
 }

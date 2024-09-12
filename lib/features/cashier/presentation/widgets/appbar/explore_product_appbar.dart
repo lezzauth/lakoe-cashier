@@ -31,7 +31,7 @@ class ExploreProductAppbar extends StatelessWidget
                 children: [
                   const ResponsiveLayout(
                     mobile: CloseCashierButton(
-                      label: "Selesai & Tutup",
+                      label: "Tutup",
                     ),
                     tablet: CloseCashierButton(
                       label: "Tutup Kasir",

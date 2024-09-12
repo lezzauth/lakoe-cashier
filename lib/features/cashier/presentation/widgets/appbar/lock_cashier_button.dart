@@ -39,7 +39,7 @@ class LockCashierButtonState extends State<LockCashierButton> {
         style: ButtonStyle(
           padding: WidgetStatePropertyAll(
             EdgeInsets.symmetric(
-              horizontal: isMobile ? 0 : 16,
+              horizontal: isMobile ? 8 : 16,
               vertical: 0,
             ),
           ),
