@@ -28,6 +28,7 @@ class TAppTheme {
     colorScheme: const ColorScheme.light(
       brightness: Brightness.light,
       primary: TColors.primary,
+      error: TColors.error,
     ),
     fontFamily: GoogleFonts.inter().fontFamily,
     canvasColor: Colors.transparent,
