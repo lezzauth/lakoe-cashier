@@ -18,7 +18,7 @@ class TTextFieldTheme {
       ),
       borderSide: const BorderSide(
         width: 1,
-        color: TColors.neutralLightDark,
+        color: TColors.neutralLightDarkest,
       ),
     ),
     enabledBorder: const OutlineInputBorder().copyWith(
@@ -27,7 +27,7 @@ class TTextFieldTheme {
       ),
       borderSide: const BorderSide(
         width: 1,
-        color: TColors.neutralLightDark,
+        color: TColors.neutralLightDarkest,
       ),
     ),
     focusedBorder: const OutlineInputBorder().copyWith(

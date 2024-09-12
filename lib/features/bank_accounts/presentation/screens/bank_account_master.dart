@@ -103,17 +103,24 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
         floatingActionButton: SizedBox(
           height: 48,
           width: 48,
-          child: FloatingActionButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            onPressed: _onGoToCreateScreen,
-            elevation: 0,
-            child: const Icon(
-              Icons.add,
-              size: 24,
-            ),
-          ),
+          child: BlocBuilder<BankAccountMasterCubit, BankAccountMasterState>(
+              builder: (context, state) => switch (state) {
+                    BankAccountMasterLoadSuccess(:final bankAccounts) =>
+                      bankAccounts.length < 3
+                          ? FloatingActionButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              onPressed: _onGoToCreateScreen,
+                              elevation: 0,
+                              child: const Icon(
+                                Icons.add,
+                                size: 24,
+                              ),
+                            )
+                          : const SizedBox(),
+                    _ => const SizedBox(),
+                  }),
         ),
       ),
     );

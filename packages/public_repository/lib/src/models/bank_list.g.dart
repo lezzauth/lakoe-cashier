@@ -23,3 +23,37 @@ Map<String, dynamic> _$$BankListModelImplToJson(_$BankListModelImpl instance) =>
       'name': instance.name,
       'code': instance.code,
     };
+
+_$GetBankAccountResponseImpl _$$GetBankAccountResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$GetBankAccountResponseImpl(
+      status: json['status'] as bool,
+      msg: json['msg'] as String,
+      data: BankAccountModel.fromJson(json['data'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$GetBankAccountResponseImplToJson(
+        _$GetBankAccountResponseImpl instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'msg': instance.msg,
+      'data': instance.data,
+    };
+
+_$BankAccountModelImpl _$$BankAccountModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$BankAccountModelImpl(
+      bankCode: json['bankcode'] as String,
+      bankName: json['bankname'] as String,
+      accountNumber: json['accountnumber'] as String,
+      accountName: json['accountname'] as String,
+    );
+
+Map<String, dynamic> _$$BankAccountModelImplToJson(
+        _$BankAccountModelImpl instance) =>
+    <String, dynamic>{
+      'bankcode': instance.bankCode,
+      'bankname': instance.bankName,
+      'accountnumber': instance.accountNumber,
+      'accountname': instance.accountName,
+    };

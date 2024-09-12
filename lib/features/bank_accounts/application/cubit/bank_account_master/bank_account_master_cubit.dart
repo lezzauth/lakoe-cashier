@@ -23,4 +23,18 @@ class BankAccountMasterCubit extends Cubit<BankAccountMasterState> {
       emit(BankAccountMasterLoadFailure(e.toString()));
     }
   }
+
+  Future<void> create({
+    required String ownerId,
+    required CreateOwnerBankDto dto,
+  }) async {
+    try {
+      emit(BankAccountMasterActionInProgress());
+      final response =
+          await _ownerRepository.bank.create(ownerId: ownerId, dto: dto);
+      emit(BankAccountMasterActionSuccess(response: response));
+    } catch (e) {
+      emit(BankAccountMasterActionFailure(e.toString()));
+    }
+  }
 }
