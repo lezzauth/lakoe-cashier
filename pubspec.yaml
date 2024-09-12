@@ -49,6 +49,8 @@ dependencies:
     path: packages/table_repository
   table_location_repository:
     path: packages/table_location_repository
+  public_repository:
+    path: packages/public_repository
 
   token_provider:
     path: packages/token_provider
