@@ -33,7 +33,7 @@ class EmptyList extends StatelessWidget {
                     width: 276,
                   ),
               Container(
-                margin: EdgeInsets.only(top: 28.0),
+                margin: const EdgeInsets.only(top: 28.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
