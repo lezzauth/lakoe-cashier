@@ -5,8 +5,8 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/category_field.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -252,8 +252,8 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                                             unit["id"] == field.value;
                                         return InputChip(
                                           label: !selected
-                                              ? TextBodyS(unit["name"]!)
-                                              : TextHeading5(
+                                              ? TextBodyM(unit["name"]!)
+                                              : TextHeading4(
                                                   unit["name"]!,
                                                   color: TColors.primary,
                                                 ),

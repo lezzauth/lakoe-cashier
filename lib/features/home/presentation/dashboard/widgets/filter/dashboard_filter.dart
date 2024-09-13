@@ -34,9 +34,11 @@ class _DashboardFilterState extends State<DashboardFilter> {
       builder: (context) {
         return DateRangePicker(
           from: filter.from == null
-              ? null
+              ? DateTime.now()
               : DateTime.parse(filter.from!).toLocal(),
-          to: filter.to == null ? null : DateTime.parse(filter.to!).toLocal(),
+          to: filter.to == null
+              ? DateTime.now()
+              : DateTime.parse(filter.to!).toLocal(),
         );
       },
     );

@@ -177,7 +177,7 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
                   return SizedBox(
                     height: 32,
                     child: InputChip(
-                      label: TextBodyS(
+                      label: TextBodyM(
                         "+ ${TFormatter.formatToRupiah(preset)}",
                       ),
                       selected: false,
