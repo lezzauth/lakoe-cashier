@@ -1,0 +1,97 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:owner_repository/owner_repository.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
+import 'package:point_of_sales_cashier/features/bank_accounts/presentation/widgets/bank_account_item.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
+
+class BankAccountList extends StatefulWidget {
+  const BankAccountList({
+    super.key,
+    this.onEdit,
+  });
+
+  final Function(OwnerBankModel bankAccount, bool isUpdated)? onEdit;
+
+  @override
+  State<BankAccountList> createState() => _BankAccountListState();
+}
+
+class _BankAccountListState extends State<BankAccountList> {
+  Future<void> _onGoToEditScreen(OwnerBankModel bankAccount) async {
+    bool? isUpdated = await Navigator.pushNamed(
+      context,
+      "/bank_accounts/detail",
+      arguments: bankAccount,
+    ) as bool?;
+    if (widget.onEdit == null) return;
+
+    widget.onEdit!(bankAccount, isUpdated ?? false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<BankAccountMasterCubit, BankAccountMasterState>(
+      builder: (context, state) => switch (state) {
+        BankAccountMasterLoadSuccess(:final bankAccounts) => bankAccounts
+                .isNotEmpty
+            ? ListView.builder(
+                itemCount: bankAccounts.length,
+                itemBuilder: (context, index) {
+                  OwnerBankModel bankAccount = bankAccounts.elementAt(index);
+                  bool isLastElement = bankAccounts.last == bankAccount;
+
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        BankAccountItem(
+                          bankAccount: bankAccount,
+                          onTap: () {
+                            _onGoToEditScreen(bankAccount);
+                          },
+                        ),
+                        if (bankAccounts.length >= 3 && isLastElement)
+                          Container(
+                            margin: const EdgeInsets.only(top: 12),
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
+                            child: TextBodyM(
+                              "Kamu hanya bisa menyimpan 3 nomor rekening",
+                              color: HexColor("#656F77"),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                      ],
+                    ),
+                  );
+                },
+              )
+            : EmptyList(
+                title: "Belum ada norek tersimpan, nih!",
+                subTitle:
+                    "Kamu bisa menyimpan 3 nomor rekening kamu untuk kebutuhan operasional.",
+                image: SvgPicture.asset(
+                  TImages.bankAccountEmpty,
+                  width: 252,
+                  height: 181.74,
+                ),
+              ),
+        BankAccountMasterLoadFailure(:final error) => Center(
+            child: TextBodyS(
+              error,
+              color: TColors.error,
+            ),
+          ),
+        _ => const Center(child: CircularProgressIndicator()),
+      },
+    );
+  }
+}

@@ -16,6 +16,16 @@ class TFormatter {
             .format(dateTime);
     return formattedDate;
   }
+
+  static String censoredText(String text) {
+    List<String> splittedText = text.split(" ");
+    splittedText = splittedText.map((split) {
+      return split.replaceRange(
+          1, split.length, List.filled(split.length - 1, "*").join());
+    }).toList();
+
+    return splittedText.join(" ");
+  }
 }
 
 class CreditCardFormatter extends TextInputFormatter {

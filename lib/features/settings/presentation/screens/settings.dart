@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/features/settings/presentation/widgets/banner/loyalty_program_banner.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/widgets/section/section_card.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/widgets/section/section_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -40,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ),
     _SettingItem(
       title: "Rekening Bank",
-      routeName: "/",
+      routeName: "/bank_accounts",
       iconSrc: TIcons.card,
     ),
     _SettingItem(
@@ -90,6 +88,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: const CustomAppbar(
         title: "Pengaturan",
         backgroundColor: TColors.neutralLightLightest,
+        actions: [],
       ),
       backgroundColor: TColors.neutralLightLight,
       body: SingleChildScrollView(
@@ -98,10 +97,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              child: const LoyaltyProgramBanner(),
-            ),
+            // Container(
+            //   margin: const EdgeInsets.only(bottom: 12),
+            //   child: const LoyaltyProgramBanner(),
+            // ),
             Container(
               margin: const EdgeInsets.only(bottom: 12),
               child: SettingSectionCard(

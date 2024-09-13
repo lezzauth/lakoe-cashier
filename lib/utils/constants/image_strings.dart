@@ -24,6 +24,9 @@ class TImages {
   static const String lakoeCoin = "assets/images/lakoe-coin.svg";
   static const String lakoeQrIcon = "assets/images/lakoe-qr-icon.svg";
 
+  // empty list
+  static const String bankAccountEmpty = "assets/images/bank-account-empty.svg";
+
   // banks
   static const String bankBCALogo = "assets/images/bank-bca-logo.svg";
   static const String bankBNILogo = "assets/images/bank-bni-logo.svg";
