@@ -75,7 +75,7 @@ class BankAccountItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: TextBodyS(
-                            "${bankAccount.accountNumber} • A/n ${bankAccount.accountName}",
+                            "${bankAccount.accountNumber} • ${bankAccount.accountName}",
                             color: TColors.neutralDarkLightest,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,

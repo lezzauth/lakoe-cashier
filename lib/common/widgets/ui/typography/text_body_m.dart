@@ -14,7 +14,7 @@ class TextBodyM extends StatelessWidget {
   const TextBodyM(
     this.data, {
     super.key,
-    this.fontWeight = FontWeight.w500,
+    this.fontWeight = FontWeight.w400,
     this.color,
     this.textAlign = TextAlign.start,
     this.maxLines,
