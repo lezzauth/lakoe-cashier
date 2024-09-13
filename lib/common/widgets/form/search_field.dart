@@ -62,7 +62,7 @@ class _SearchFieldState extends State<SearchField> {
           const SizedBox(width: 12),
           Flexible(
             child: SizedBox(
-              height: 22,
+              // height: 22,
               child: TextField(
                 controller: widget.controller,
                 decoration: InputDecoration(
@@ -78,6 +78,9 @@ class _SearchFieldState extends State<SearchField> {
                   ),
                   contentPadding: EdgeInsets.zero,
                   hintText: widget.hintText,
+                  hintStyle: GoogleFonts.inter(
+                      fontSize: TSizes.fontSizeBodyL,
+                      color: TColors.neutralDarkLight),
                   labelStyle: GoogleFonts.inter(fontSize: TSizes.fontSizeBodyL),
                 ),
                 style: GoogleFonts.inter(fontSize: TSizes.fontSizeBodyL),

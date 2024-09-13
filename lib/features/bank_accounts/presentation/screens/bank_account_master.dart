@@ -96,11 +96,14 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
               },
             ),
           ),
-          body: Scrollbar(
-            child: RefreshIndicator(
-              onRefresh: _onRefresh,
-              backgroundColor: TColors.neutralLightLightest,
-              child: const BankAccountList(),
+          body: Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Scrollbar(
+              child: RefreshIndicator(
+                onRefresh: _onRefresh,
+                backgroundColor: TColors.neutralLightLightest,
+                child: const BankAccountList(),
+              ),
             ),
           ),
           floatingActionButton: SizedBox(

@@ -63,9 +63,9 @@ class _BankAccountListState extends State<BankAccountList> {
                           Container(
                             margin: const EdgeInsets.only(top: 12),
                             padding: const EdgeInsets.symmetric(horizontal: 24),
-                            child: TextBodyM(
-                              "Kamu hanya bisa menyimpan 3 nomor rekening",
-                              color: HexColor("#656F77"),
+                            child: const TextBodyM(
+                              "Kamu hanya bisa menyimpan sebanyak 3 rekening bank",
+                              color: TColors.neutralDarkLightest,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -75,7 +75,7 @@ class _BankAccountListState extends State<BankAccountList> {
                 },
               )
             : EmptyList(
-                title: "Belum ada norek tersimpan, nih!",
+                title: "Belum ada bank tersimpan, nih!",
                 subTitle:
                     "Kamu bisa menyimpan 3 nomor rekening kamu untuk kebutuhan operasional.",
                 image: SvgPicture.asset(
