@@ -9,6 +9,7 @@ class TextBodyS extends StatelessWidget {
   final Color? color;
   final TextAlign? textAlign;
   final int? maxLines;
+  final TextOverflow? overflow;
 
   const TextBodyS(
     this.data, {
@@ -17,6 +18,7 @@ class TextBodyS extends StatelessWidget {
     this.color,
     this.textAlign,
     this.maxLines,
+    this.overflow,
   });
 
   @override
@@ -31,6 +33,7 @@ class TextBodyS extends StatelessWidget {
       textAlign: textAlign,
       maxLines: maxLines,
       softWrap: true,
+      overflow: overflow,
     );
   }
 }

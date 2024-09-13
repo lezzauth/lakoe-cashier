@@ -31,6 +31,10 @@ class ErrorTextStrings {
     return "Masukkan URL yang valid.";
   }
 
+  static String numeric({String? name}) {
+    return "Nilai harus berupa angka.";
+  }
+
   static String formInvalid() {
     return "Form tidak valid.";
   }

@@ -9,3 +9,17 @@ class LabelValue<T> with _$LabelValue {
     required T value,
   }) = _LabelValue;
 }
+
+class BankVerifyArgument {
+  final String bankName;
+  final String accountNumber;
+  final String accountName;
+  final String name;
+
+  BankVerifyArgument({
+    required this.accountName,
+    required this.accountNumber,
+    required this.bankName,
+    required this.name,
+  });
+}

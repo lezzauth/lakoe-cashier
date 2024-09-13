@@ -2,9 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:owner_repository/src/models/owner.dart';
+import 'package:owner_repository/src/owner_bank_repository.dart';
 import 'package:token_provider/token_provider.dart';
 
 abstract class OwnerRepository {
+  OwnerBankRepository get bank;
   Future<List<OutletModel>> listOutlets();
   Future<OwnerProfileModel> getProfile();
 }
@@ -13,6 +15,9 @@ class OwnerRepositoryImpl implements OwnerRepository {
   String _baseURL = "/owners";
   Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
+
+  @override
+  final OwnerBankRepository bank = OwnerBankRepositoryImpl();
 
   OwnerRepositoryImpl() {
     _dio.interceptors.add(
