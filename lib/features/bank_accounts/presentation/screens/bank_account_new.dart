@@ -37,19 +37,7 @@ class _BankAccountNewScreenState extends State<BankAccountNewScreen> {
       },
     );
 
-    if (result == null) {
-      const SnackBar snackBar = SnackBar(
-        content: Text("Data rekening bank tidak valid"),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
-
-      return;
-    }
+    if (result == null) return;
 
     AuthReady authState = context.read<AuthCubit>().state as AuthReady;
 
@@ -65,18 +53,21 @@ class _BankAccountNewScreenState extends State<BankAccountNewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<BankAccountMasterCubit, BankAccountMasterState>(
+    return BlocConsumer<BankAccountMasterCubit, BankAccountMasterState>(
       listener: (context, state) {
         if (state is BankAccountMasterActionSuccess) {
           Navigator.pop(context, true);
         }
       },
-      child: Scaffold(
+      builder: (context, state) => Scaffold(
         appBar: const CustomAppbar(
           title: "Rekening Bank Baru",
           actions: [],
         ),
-        body: BankAccountForm(onSubmitted: _onSubmitted),
+        body: BankAccountForm(
+          onSubmitted: _onSubmitted,
+          isLoading: state is BankAccountMasterActionInProgress,
+        ),
       ),
     );
   }

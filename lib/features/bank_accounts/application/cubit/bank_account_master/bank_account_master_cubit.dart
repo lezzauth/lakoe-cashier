@@ -37,4 +37,19 @@ class BankAccountMasterCubit extends Cubit<BankAccountMasterState> {
       emit(BankAccountMasterActionFailure(e.toString()));
     }
   }
+
+  Future<void> update({
+    required String ownerId,
+    required String bankId,
+    required UpdateOwnerBankDto dto,
+  }) async {
+    try {
+      emit(BankAccountMasterActionInProgress());
+      final response = await _ownerRepository.bank
+          .update(ownerId: ownerId, bankId: bankId, dto: dto);
+      emit(BankAccountMasterActionSuccess(response: response));
+    } catch (e) {
+      emit(BankAccountMasterActionFailure(e.toString()));
+    }
+  }
 }

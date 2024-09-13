@@ -62,65 +62,69 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<BankAccountMasterFilterCubit,
-            BankAccountMasterFilterState>(
-          listener: (context, state) {
-            AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<BankAccountMasterFilterCubit,
+              BankAccountMasterFilterState>(
+            listener: (context, state) {
+              AuthReady authState =
+                  context.read<AuthCubit>().state as AuthReady;
 
-            context
-                .read<BankAccountMasterCubit>()
-                .findAll(ownerId: authState.profile.id);
-          },
-        ),
-        BlocListener<BankAccountMasterCubit, BankAccountMasterState>(
-          listener: (context, state) {
-            if (state is BankAccountMasterActionSuccess) {
-              _onRefresh();
-            }
-          },
-        )
-      ],
-      child: Scaffold(
-        appBar: CustomAppbar(
-          search: SearchField(
-            hintText: "Cari nomor rekening disini...",
-            onChanged: (value) {
               context
-                  .read<BankAccountMasterFilterCubit>()
-                  .setFilter(search: value);
+                  .read<BankAccountMasterCubit>()
+                  .findAll(ownerId: authState.profile.id);
             },
           ),
-        ),
-        body: Scrollbar(
-          child: RefreshIndicator(
-            onRefresh: _onRefresh,
-            backgroundColor: TColors.neutralLightLightest,
-            child: const BankAccountList(),
+          BlocListener<BankAccountMasterCubit, BankAccountMasterState>(
+            listener: (context, state) {
+              if (state is BankAccountMasterActionSuccess) {
+                _onRefresh();
+              }
+            },
+          )
+        ],
+        child: Scaffold(
+          appBar: CustomAppbar(
+            search: SearchField(
+              hintText: "Cari nomor rekening disini...",
+              onChanged: (value) {
+                context
+                    .read<BankAccountMasterFilterCubit>()
+                    .setFilter(search: value);
+              },
+            ),
           ),
-        ),
-        floatingActionButton: SizedBox(
-          height: 48,
-          width: 48,
-          child: BlocBuilder<BankAccountMasterCubit, BankAccountMasterState>(
-              builder: (context, state) => switch (state) {
-                    BankAccountMasterLoadSuccess(:final bankAccounts) =>
-                      bankAccounts.length < 3
-                          ? FloatingActionButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              onPressed: _onGoToCreateScreen,
-                              elevation: 0,
-                              child: const Icon(
-                                Icons.add,
-                                size: 24,
-                              ),
-                            )
-                          : const SizedBox(),
-                    _ => const SizedBox(),
-                  }),
+          body: Scrollbar(
+            child: RefreshIndicator(
+              onRefresh: _onRefresh,
+              backgroundColor: TColors.neutralLightLightest,
+              child: const BankAccountList(),
+            ),
+          ),
+          floatingActionButton: SizedBox(
+            height: 48,
+            width: 48,
+            child: BlocBuilder<BankAccountMasterCubit, BankAccountMasterState>(
+                builder: (context, state) => switch (state) {
+                      BankAccountMasterLoadSuccess(:final bankAccounts) =>
+                        bankAccounts.length < 3
+                            ? FloatingActionButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                onPressed: _onGoToCreateScreen,
+                                elevation: 0,
+                                child: const Icon(
+                                  Icons.add,
+                                  size: 24,
+                                ),
+                              )
+                            : const SizedBox(),
+                      _ => const SizedBox(),
+                    }),
+          ),
         ),
       ),
     );

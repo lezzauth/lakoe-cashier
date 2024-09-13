@@ -149,9 +149,10 @@ class _BankAccountFormState extends State<BankAccountForm> {
                             ),
                             SizedBox(
                               height: 28,
-                              child: FormBuilderField(
+                              child: FormBuilderField<bool>(
                                 name: "isPrimary",
-                                initialValue: false,
+                                initialValue:
+                                    widget.initialValue["isPrimary"] ?? false,
                                 builder: (FormFieldState<bool> field) {
                                   return Switch(
                                     value: field.value ?? false,
