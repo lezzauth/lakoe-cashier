@@ -55,54 +55,58 @@ class _BankTransferPaymentContentState
   Widget build(BuildContext context) {
     return FormBuilder(
       key: _formKey,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: Stack(
+        alignment: AlignmentDirectional.topCenter,
         children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
-                    builder: (context, state) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 8.0),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 12.0),
-                        child: PaymentMethodRadioGroup(
-                          value: state.paymentMethod,
-                          onChanged: (value) {
-                            context
-                                .read<PaymentFilterCubit>()
-                                .setPaymentMethod(paymentMethod: value!);
-                          },
-                          limitedValues: const [],
-                        ),
-                      );
-                    },
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 20),
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: const TextHeading3("Pilih rekening bank"),
+          SingleChildScrollView(
+            padding: const EdgeInsets.only(bottom: 80),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
+                  builder: (context, state) {
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 8.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 12.0),
+                      child: PaymentMethodRadioGroup(
+                        value: state.paymentMethod,
+                        onChanged: (value) {
+                          context
+                              .read<PaymentFilterCubit>()
+                              .setPaymentMethod(paymentMethod: value!);
+                        },
+                        limitedValues: const [],
                       ),
-                      BankTransferPaymentForm(
-                        accounts: accounts,
-                      )
-                    ],
-                  )
-                ],
-              ),
+                    );
+                  },
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: const TextHeading3("Pilih rekening bank"),
+                    ),
+                    BankTransferPaymentForm(
+                      accounts: accounts,
+                    )
+                  ],
+                )
+              ],
             ),
           ),
-          BankTransferPaymentFooter(
-            onCanceled: () {
-              Navigator.pop(context);
-            },
-            onSubmitted: _onSubmitted,
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: BankTransferPaymentFooter(
+              onCanceled: () {
+                Navigator.pop(context);
+              },
+              onSubmitted: _onSubmitted,
+            ),
           )
         ],
       ),

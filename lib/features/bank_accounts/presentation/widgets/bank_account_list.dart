@@ -10,7 +10,6 @@ import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/widgets/bank_account_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
 
 class BankAccountList extends StatefulWidget {
   const BankAccountList({

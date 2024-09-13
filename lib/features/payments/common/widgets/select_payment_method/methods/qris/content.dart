@@ -17,62 +17,68 @@ class QrisPaymentContent extends StatefulWidget {
 class _QrisPaymentContentState extends State<QrisPaymentContent> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    return Stack(
+      alignment: AlignmentDirectional.topCenter,
       children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
-                  builder: (context, state) {
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 8.0),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 12.0),
-                      child: PaymentMethodRadioGroup(
-                        value: state.paymentMethod,
-                        onChanged: (value) {
-                          context
-                              .read<PaymentFilterCubit>()
-                              .setPaymentMethod(paymentMethod: value!);
-                        },
-                        limitedValues: const [],
-                      ),
-                    );
-                  },
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ListTileTheme(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                        horizontalTitleGap: 0,
-                        child: CheckboxListTile(
-                          value: false,
-                          onChanged: (value) {},
-                          controlAffinity: ListTileControlAffinity.leading,
-                          title: const TextBodyS(
-                            "Cetak QRIS secara otomatis",
-                            color: TColors.neutralDarkDarkest,
-                          ),
-                          dense: true,
-                          enableFeedback: false,
+        SingleChildScrollView(
+          padding: const EdgeInsets.only(bottom: 80),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
+                builder: (context, state) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                      vertical: 12.0,
+                    ),
+                    child: PaymentMethodRadioGroup(
+                      value: state.paymentMethod,
+                      onChanged: (value) {
+                        context
+                            .read<PaymentFilterCubit>()
+                            .setPaymentMethod(paymentMethod: value!);
+                      },
+                      limitedValues: const [],
+                    ),
+                  );
+                },
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ListTileTheme(
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 16),
+                      horizontalTitleGap: 0,
+                      child: CheckboxListTile(
+                        value: false,
+                        onChanged: (value) {},
+                        controlAffinity: ListTileControlAffinity.leading,
+                        title: const TextBodyS(
+                          "Cetak QRIS secara otomatis",
+                          color: TColors.neutralDarkDarkest,
                         ),
+                        dense: true,
+                        enableFeedback: false,
                       ),
-                    )
-                  ],
-                ),
-              ],
-            ),
+                    ),
+                  )
+                ],
+              ),
+            ],
           ),
         ),
-        QrisPaymentFooter(
-          onCanceled: () {
-            Navigator.pop(context);
-          },
-          onSubmitted: () {},
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: QrisPaymentFooter(
+            onCanceled: () {
+              Navigator.pop(context);
+            },
+            onSubmitted: () {},
+          ),
         ),
       ],
     );
