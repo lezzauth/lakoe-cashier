@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
@@ -217,7 +218,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.center,
                                                   children: [
-                                                    TextBodyS("Urutkan"),
+                                                    TextBodyM("Urutkan"),
                                                     SizedBox(width: 8),
                                                     UiIcons(
                                                       TIcons.arrowDown,
@@ -235,7 +236,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.center,
                                                   children: [
-                                                    TextBodyS("Semua Tanggal"),
+                                                    TextBodyM("Semua Tanggal"),
                                                     SizedBox(width: 8),
                                                     UiIcons(
                                                       TIcons.arrowDown,
