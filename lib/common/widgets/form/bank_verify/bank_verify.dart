@@ -80,6 +80,7 @@ class _BankVerifyContentState extends State<BankVerifyContent> {
           final result = await showModalBottomSheet<BankVerifyArgument?>(
             context: context,
             isScrollControlled: true,
+            barrierColor: Colors.transparent,
             builder: (context) {
               return BankVerifyConfirmation(
                 accountName: state.account.accountName,
