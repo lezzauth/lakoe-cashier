@@ -8,7 +8,7 @@ void main() async {
   await initializeDateFormatting("id_ID", null);
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle.dark.copyWith(
-      statusBarColor: TColors.neutralLightLightest,
+      statusBarColor: Colors.transparent,
       systemNavigationBarColor: TColors.neutralLightLightest,
     ),
   );
