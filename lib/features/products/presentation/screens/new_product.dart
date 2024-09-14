@@ -47,6 +47,7 @@ class _NewProductScreenState extends State<NewProductScreen>
   }
 
   onSubmit() {
+    FocusScope.of(context).unfocus();
     AuthState authState = context.read<AuthCubit>().state;
     if (authState is! AuthReady) return;
 
