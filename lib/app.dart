@@ -23,6 +23,8 @@ import 'package:point_of_sales_cashier/features/categories/application/cubit/cat
 import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_edit.dart';
 import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_master.dart';
 import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_new.dart';
+import 'package:point_of_sales_cashier/features/charges/application/cubit/charge_master/charge_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/charges/presentation/screens/charge_master.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
@@ -51,6 +53,7 @@ import 'package:point_of_sales_cashier/features/tables/application/cubit/table_m
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_edit.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_master.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
+import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_master/tax_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/taxes/presentation/screens/tax_master.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -102,6 +105,12 @@ class App extends StatelessWidget {
         // Bank Account Master
         BlocProvider(create: (context) => BankAccountMasterCubit()),
         BlocProvider(create: (context) => BankListCubit()),
+
+        // Tax Master
+        BlocProvider(create: (context) => TaxMasterCubit()),
+
+        // Charge Master
+        BlocProvider(create: (context) => ChargeMasterCubit()),
       ],
       child: MaterialApp(
         title: "Point of Sales",
@@ -177,7 +186,10 @@ class App extends StatelessWidget {
           "/bank_accounts/detail": (context) => const BankAccountDetailScreen(),
 
           // taxes
-          "/tax": (context) => const TaxMasterScreen(),
+          "/taxes": (context) => const TaxMasterScreen(),
+
+          // charges
+          "/charges": (context) => const ChargeMasterScreen()
         },
       ),
     );
