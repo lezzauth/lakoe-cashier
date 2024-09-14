@@ -37,7 +37,7 @@ class _CartContentState extends State<CartContent> {
   Timer? _debounce;
 
   final List<LabelValue> _orderType = [
-    const LabelValue(label: "Dine-In", value: "DINEIN"),
+    const LabelValue(label: "Dine In", value: "DINEIN"),
     const LabelValue(label: "Dibungkus", value: "TAKEAWAY"),
   ];
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/widgets/section/section_card.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/widgets/section/section_item.dart';
@@ -13,22 +14,36 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (ModalRoute.of(context)?.isCurrent == true) {
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: TColors.neutralLightLightest,
+      ));
+    } else {
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ));
+    }
+  }
+
   List<_SettingItem> productServiceSettingItems = [
-    _SettingItem(
-      title: "Kategori",
-      routeName: "/categories",
-      iconSrc: TIcons.box,
-    ),
-    _SettingItem(
-      title: "Satuan Produk",
-      routeName: "/products",
-      iconSrc: TIcons.filters,
-    ),
-    _SettingItem(
-      title: "Supplier",
-      routeName: "/",
-      iconSrc: TIcons.userId,
-    ),
+    // _SettingItem(
+    //   title: "Kategori",
+    //   routeName: "/categories",
+    //   iconSrc: TIcons.box,
+    // ),
+    // _SettingItem(
+    //   title: "Satuan Produk",
+    //   routeName: "/products",
+    //   iconSrc: TIcons.filters,
+    // ),
+    // _SettingItem(
+    //   title: "Supplier",
+    //   routeName: "/",
+    //   iconSrc: TIcons.userId,
+    // ),
   ];
   List<_SettingItem> paymentReceiptSettingItems = [
     _SettingItem(
@@ -60,6 +75,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   List<_SettingItem> employeeSettingItems = [];
   List<_SettingItem> otherSettingItems = [
     _SettingItem(
+      title: "Kategori",
+      routeName: "/categories",
+      iconSrc: TIcons.box,
+    ),
+    _SettingItem(
       title: "Meja & QR Order",
       routeName: "/tables",
       iconSrc: TIcons.tableRestaurant,
@@ -70,11 +90,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       routeName: "/",
       iconSrc: TIcons.printer,
     ),
-    _SettingItem(
-      title: "Singkronisasi Data",
-      routeName: "/",
-      iconSrc: TIcons.smartphoneUpdate,
-    ),
+    // _SettingItem(
+    //   title: "Singkronisasi Data",
+    //   routeName: "/",
+    //   iconSrc: TIcons.smartphoneUpdate,
+    // ),
     _SettingItem(
       title: "Integrasi",
       routeName: "/",
@@ -101,11 +121,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
             //   margin: const EdgeInsets.only(bottom: 12),
             //   child: const LoyaltyProgramBanner(),
             // ),
+            // Container(
+            //   margin: const EdgeInsets.only(bottom: 12),
+            //   child: SettingSectionCard(
+            //     title: "Produk & Service",
+            //     children: productServiceSettingItems
+            //         .map(
+            //           (item) => SettingSectionItem(
+            //             iconSrc: item.iconSrc,
+            //             title: item.title,
+            //             routeName: item.routeName,
+            //           ),
+            //         )
+            //         .toList(),
+            //   ),
+            // ),
             Container(
               margin: const EdgeInsets.only(bottom: 12),
               child: SettingSectionCard(
-                title: "Produk & Service",
-                children: productServiceSettingItems
+                title: "Karyawan",
+                description: "Manajemen, Hak akses atau PIN",
+                children: employeeSettingItems
                     .map(
                       (item) => SettingSectionItem(
                         iconSrc: item.iconSrc,
@@ -131,22 +167,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     .toList(),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              child: SettingSectionCard(
-                title: "Karyawan",
-                description: "Manajemen, Hak akses atau PIN",
-                children: employeeSettingItems
-                    .map(
-                      (item) => SettingSectionItem(
-                        iconSrc: item.iconSrc,
-                        title: item.title,
-                        routeName: item.routeName,
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
+
             Container(
               margin: const EdgeInsets.only(bottom: 12),
               child: SettingSectionCard(

@@ -17,7 +17,7 @@ class DashboardAppbar extends StatelessWidget implements PreferredSizeWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SvgPicture.asset(
-              TImages.lightAppLogo,
+              TImages.primaryLogoLakoe,
               height: 20,
               width: 77.1,
             ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/features/categories/presentation/widgets/forms/field/category_icon_picker.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class CategoryForm extends StatefulWidget {
   final GlobalKey<FormBuilderState> formKey;
@@ -57,6 +59,10 @@ class _CategoryFormState extends State<CategoryForm> {
                   decoration: const InputDecoration(
                     hintText: "Buat nama kategori",
                   ),
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(
+                        errorText: ErrorTextStrings.required()),
+                  ]),
                 ),
               ],
             ),
@@ -76,7 +82,7 @@ class _CategoryFormState extends State<CategoryForm> {
                   initialValue: widget.initialValue["icon"],
                   builder: (field) {
                     return GridView.extent(
-                      maxCrossAxisExtent: 80,
+                      maxCrossAxisExtent: 100,
                       shrinkWrap: true,
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 8,

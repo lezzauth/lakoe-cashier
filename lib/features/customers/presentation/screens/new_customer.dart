@@ -22,6 +22,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
 
   Future<void> _onSubmit() async {
+    FocusScope.of(context).unfocus();
     if (!mounted) return;
 
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;

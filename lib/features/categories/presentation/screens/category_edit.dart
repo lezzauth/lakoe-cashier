@@ -22,6 +22,7 @@ class _CategoryEditScreenState extends State<CategoryEditScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
 
   Future<void> _onSubmit(int categoryId) async {
+    FocusScope.of(context).unfocus();
     AuthState authState = context.read<AuthCubit>().state;
     if (authState is! AuthReady) return;
 

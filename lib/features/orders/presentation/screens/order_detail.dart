@@ -12,8 +12,6 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_xs.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_state.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card_order.dart';
@@ -30,7 +28,6 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/pr
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
-import 'package:product_repository/product_repository.dart';
 
 class OrderDetailScreen extends StatelessWidget {
   const OrderDetailScreen({super.key});
@@ -148,9 +145,9 @@ class _OrderDetailState extends State<OrderDetail> {
                           onPressed: () {},
                           icon: const UiIcons(
                             TIcons.bill,
-                            color: TColors.primary,
-                            height: 20,
-                            width: 20,
+                            color: TColors.neutralDarkDark,
+                            height: 24,
+                            width: 24,
                           ),
                         )
                       ],
@@ -175,7 +172,8 @@ class _OrderDetailState extends State<OrderDetail> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            padding: const EdgeInsets.all(12),
+                                            padding: const EdgeInsets.fromLTRB(
+                                                8, 8, 12, 8),
                                             margin: const EdgeInsets.only(
                                                 bottom: 13),
                                             decoration: BoxDecoration(
@@ -203,7 +201,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                                     )
                                                 },
                                                 Expanded(
-                                                  child: TextBodyM(
+                                                  child: TextHeading4(
                                                     TFormatter.orderDate(
                                                       order.createdAt,
                                                       withDay: true,
@@ -670,7 +668,7 @@ class ContactWhatsapp extends StatelessWidget {
                   borderRadius: BorderRadius.circular(32.0),
                 ),
                 margin: const EdgeInsets.only(right: 8.0),
-                child: Center(
+                child: const Center(
                   child: UiIcons(
                     TIcons.profile,
                     height: 20,
@@ -679,7 +677,7 @@ class ContactWhatsapp extends StatelessWidget {
                   ),
                 ),
               ),
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -694,7 +692,7 @@ class ContactWhatsapp extends StatelessWidget {
             height: 32,
             child: ElevatedButton(
                 onPressed: () {},
-                style: ButtonStyle(
+                style: const ButtonStyle(
                   padding: WidgetStatePropertyAll(
                     EdgeInsets.symmetric(
                       vertical: 0,
@@ -705,7 +703,7 @@ class ContactWhatsapp extends StatelessWidget {
                     Color(0xFF60D669),
                   ),
                 ),
-                child: Wrap(
+                child: const Wrap(
                   spacing: 8,
                   children: [
                     UiIcons(

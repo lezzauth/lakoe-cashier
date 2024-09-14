@@ -40,6 +40,7 @@ class _TableEditState extends State<TableEdit> {
   final _formKey = GlobalKey<FormBuilderState>();
 
   Future<void> _onSubmit(String tableId) async {
+    FocusScope.of(context).unfocus();
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
