@@ -164,6 +164,7 @@ class _CreateTableLocationFormState extends State<CreateTableLocationForm> {
   final _formKey = GlobalKey<FormBuilderState>();
 
   Future<void> _onSubmit() async {
+    FocusScope.of(context).unfocus();
     AuthReady authState = context.read<AuthCubit>().state as AuthReady;
 
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;

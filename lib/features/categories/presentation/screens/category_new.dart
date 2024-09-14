@@ -22,6 +22,7 @@ class _CategoryNewScreenState extends State<CategoryNewScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
 
   Future<void> _onSubmit() async {
+    FocusScope.of(context).unfocus();
     AuthState authState = context.read<AuthCubit>().state;
     if (authState is! AuthReady) return;
 
