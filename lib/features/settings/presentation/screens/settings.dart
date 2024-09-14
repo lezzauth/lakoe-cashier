@@ -43,12 +43,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ),
     _SettingItem(
       title: "Pajak",
-      routeName: "/tax",
+      routeName: "/taxes",
       iconSrc: TIcons.pieChart,
     ),
     _SettingItem(
       title: "Biaya Lainnya",
-      routeName: "/",
+      routeName: "/charges",
       iconSrc: TIcons.handMoney,
     ),
     _SettingItem(

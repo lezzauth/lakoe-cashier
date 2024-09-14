@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:outlet_repository/outlet_repository.dart';
+import 'package:owner_repository/src/charge_repository.dart';
 import 'package:owner_repository/src/models/owner.dart';
 import 'package:owner_repository/src/owner_bank_repository.dart';
 import 'package:owner_repository/src/tax_repository.dart';
@@ -9,6 +10,7 @@ import 'package:token_provider/token_provider.dart';
 abstract class OwnerRepository {
   OwnerBankRepository get bank;
   TaxRepository get tax;
+  ChargeRepository get charge;
   Future<List<OutletModel>> listOutlets();
   Future<OwnerProfileModel> getProfile();
 }
@@ -23,6 +25,9 @@ class OwnerRepositoryImpl implements OwnerRepository {
 
   @override
   TaxRepository get tax => TaxRepositoryImpl();
+
+  @override
+  ChargeRepository get charge => ChargeRepositoryImpl();
 
   OwnerRepositoryImpl() {
     _dio.interceptors.add(
