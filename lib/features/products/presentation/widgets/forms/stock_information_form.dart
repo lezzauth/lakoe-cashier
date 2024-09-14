@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class StockInformationForm extends StatefulWidget {
@@ -146,8 +146,8 @@ class _StockInformationFormState extends State<StockInformationForm>
                                     bool selected = item.value == field.value;
                                     return InputChip(
                                       label: !selected
-                                          ? TextBodyS(item.label)
-                                          : TextHeading5(
+                                          ? TextBodyM(item.label)
+                                          : TextHeading4(
                                               item.label,
                                               color: TColors.primary,
                                             ),

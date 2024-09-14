@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_cubit.dart';
@@ -52,8 +53,8 @@ class CategoryField extends StatelessWidget {
                     bool selected = field.value == category.id;
                     return InputChip(
                       label: !selected
-                          ? TextBodyS(category.name)
-                          : TextHeading5(
+                          ? TextBodyM(category.name)
+                          : TextHeading4(
                               category.name,
                               color: TColors.primary,
                             ),

@@ -23,45 +23,48 @@ class DebitPaymentContentState extends State<DebitPaymentContent> {
   Widget build(BuildContext context) {
     return FormBuilder(
       key: _formKey,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: Stack(
+        alignment: AlignmentDirectional.topCenter,
         children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
-                    builder: (context, state) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 8.0),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 12.0),
-                        child: PaymentMethodRadioGroup(
-                          value: state.paymentMethod,
-                          onChanged: (value) {
-                            context
-                                .read<PaymentFilterCubit>()
-                                .setPaymentMethod(paymentMethod: value!);
-                          },
-                          limitedValues: const [],
-                        ),
-                      );
-                    },
-                  ),
-                  DebitPaymentForm(),
-                ],
-              ),
+          SingleChildScrollView(
+            padding: const EdgeInsets.only(bottom: 80),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
+                  builder: (context, state) {
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 8.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 12.0),
+                      child: PaymentMethodRadioGroup(
+                        value: state.paymentMethod,
+                        onChanged: (value) {
+                          context
+                              .read<PaymentFilterCubit>()
+                              .setPaymentMethod(paymentMethod: value!);
+                        },
+                        limitedValues: const [],
+                      ),
+                    );
+                  },
+                ),
+                const DebitPaymentForm(),
+              ],
             ),
           ),
-          DebitPaymentFooter(
-            onCanceled: () {
-              Navigator.pop(context);
-            },
-            onSubmitted: () {
-              //
-            },
-          )
+          Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: DebitPaymentFooter(
+                onCanceled: () {
+                  Navigator.pop(context);
+                },
+                onSubmitted: () {
+                  //
+                },
+              )),
         ],
       ),
     );
