@@ -35,7 +35,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
             height: 56,
             color: backgroundColor,
             padding: EdgeInsets.only(
-              right: (actions == null && search != null) ? 16.0 : 0.0,
+              right: (actions == null && search != null) ? 20.0 : 0.0,
               left: leading == null ? 0.0 : 16.0,
             ),
             child: Stack(
