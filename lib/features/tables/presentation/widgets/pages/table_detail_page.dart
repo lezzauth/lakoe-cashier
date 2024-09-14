@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
@@ -12,7 +11,6 @@ import 'package:point_of_sales_cashier/features/tables/application/cubit/table_m
 import 'package:point_of_sales_cashier/features/tables/common/widgets/preview_qr_table.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableDetailPage extends StatelessWidget {
@@ -43,17 +41,16 @@ class TableDetailPage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(bottom: 20),
+                          margin: const EdgeInsets.only(bottom: 20),
                           child: Row(
                             children: [
-                              Flexible(
+                              Expanded(
                                 flex: 1,
                                 child: CardOrder(
                                   title: "Kapasitas",
@@ -67,7 +64,7 @@ class TableDetailPage extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 12.0),
-                              Flexible(
+                              Expanded(
                                 flex: 1,
                                 child: BlocBuilder<TableMasterLocationCubit,
                                         TableMasterLocationState>(
@@ -88,8 +85,8 @@ class TableDetailPage extends StatelessWidget {
                                                   "-",
                                               icon: const UiIcons(
                                                 TIcons.map,
-                                                height: 24,
-                                                width: 24,
+                                                height: 16,
+                                                width: 16,
                                                 color: TColors.primary,
                                               ),
                                             ),
@@ -104,27 +101,16 @@ class TableDetailPage extends StatelessWidget {
                             ],
                           ),
                         ),
-
                         const TextHeading3(
                           "Tampilan QR Order",
                           color: TColors.neutralDarkDarkest,
                         ),
-
+                        const SizedBox(height: 12.0),
                         PreviewQrTable(
                           table.id,
                           // color: HexColor("#06B6D4"),
                           tableNumber: table.no,
                         ),
-                        // Container(
-                        //   decoration: BoxDecoration(
-                        //     color: TColors.neutralLightLight,
-                        //     border: Border.all(
-                        //       width: 1,
-                        //       color: TColors.neutralLightDark,
-                        //     ),
-                        //   ),
-                        //   child:
-                        // ),
                       ],
                     ),
                   ),
