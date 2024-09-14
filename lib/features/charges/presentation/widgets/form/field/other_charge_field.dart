@@ -10,7 +10,7 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
-class OtherChargeField extends StatelessWidget {
+class OtherChargeField extends StatefulWidget {
   const OtherChargeField({
     super.key,
     required this.id,
@@ -21,6 +21,21 @@ class OtherChargeField extends StatelessWidget {
   final String id;
   final VoidCallback? onDelete;
   final Map<String, dynamic> initialValue;
+
+  @override
+  State<OtherChargeField> createState() => _OtherChargeFieldState();
+}
+
+class _OtherChargeFieldState extends State<OtherChargeField> {
+  String? _unit;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _unit = widget.initialValue["unit"] ?? "static";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +53,7 @@ class OtherChargeField extends StatelessWidget {
                 children: [
                   const FormLabel("Biaya"),
                   GestureDetector(
-                    onTap: onDelete,
+                    onTap: widget.onDelete,
                     child: const TextHeading4(
                       "Hapus",
                       color: TColors.error,
@@ -47,9 +62,10 @@ class OtherChargeField extends StatelessWidget {
                 ],
               ),
               FormBuilderTextField(
-                name: "name_$id",
-                initialValue: initialValue["name"],
-                decoration: const InputDecoration(hintText: "Tulis nama pajak"),
+                name: "name_${widget.id}",
+                initialValue: widget.initialValue["name"],
+                decoration:
+                    const InputDecoration(hintText: "Tulis biaya lainnya"),
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(
                       errorText: ErrorTextStrings.required())
@@ -76,8 +92,8 @@ class OtherChargeField extends StatelessWidget {
                         canvasColor: Colors.white,
                       ),
                       child: FormBuilderDropdown<String>(
-                        name: "unit_$id",
-                        initialValue: initialValue["unit"] ?? "static",
+                        name: "unit_${widget.id}",
+                        initialValue: widget.initialValue["unit"] ?? "static",
                         items: const [
                           DropdownMenuItem<String>(
                             value: "static",
@@ -95,16 +111,21 @@ class OtherChargeField extends StatelessWidget {
                           width: 12,
                           color: TColors.neutralDarkLightest,
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                            _unit = value;
+                          });
+                        },
                       ),
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: FormBuilderTextField(
-                      name: "value_$id",
-                      initialValue: initialValue["value"],
-                      decoration: const InputDecoration(
-                        suffixText: "%",
+                      name: "value_${widget.id}",
+                      initialValue: widget.initialValue["value"],
+                      decoration: InputDecoration(
+                        suffixText: _unit == "percentage" ? "%" : null,
                         hintText: "0",
                       ),
                       keyboardType:
