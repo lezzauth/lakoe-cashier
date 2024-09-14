@@ -114,6 +114,7 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
     return GestureDetector(
       onTap: _pickFile,
       child: Stack(
+        clipBehavior: Clip.none,
         children: [
           Column(
             mainAxisSize: MainAxisSize.min,
