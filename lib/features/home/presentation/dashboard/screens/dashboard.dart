@@ -18,6 +18,7 @@ import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widg
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/summary/sales_summary.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/summary/transaction_summary.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -81,15 +82,9 @@ class _DashboardState extends State<Dashboard> {
         body: SafeArea(
           child: ListView(
             children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 12),
-                child: const MainMenu(
-                    // cashierName: "Dimas Kurniawan",
-                    ),
-              ),
+              const MainMenu(),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
-                margin: const EdgeInsets.only(bottom: 12),
                 child: const ItemMenuContainer(),
               ),
               Container(
@@ -129,8 +124,36 @@ class _DashboardState extends State<Dashboard> {
                                 color: TColors.error,
                               ),
                             ),
-                          _ => const Center(
-                              child: CircularProgressIndicator(),
+                          _ => Shimmer.fromColors(
+                              baseColor: const Color(0xFFE8E9F1),
+                              highlightColor: const Color(0xFFF8F9FE),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 127,
+                                    width: double.maxFinite,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      color: TColors.neutralLightLightest,
+                                      border: Border.all(
+                                          color: TColors.neutralLightMedium,
+                                          width: 1),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Container(
+                                    height: 127,
+                                    width: double.maxFinite,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      color: TColors.neutralLightLightest,
+                                      border: Border.all(
+                                          color: TColors.neutralLightMedium,
+                                          width: 1),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                         }),
               ),

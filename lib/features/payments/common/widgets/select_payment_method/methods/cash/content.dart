@@ -55,46 +55,50 @@ class _CashPaymentContentState extends State<CashPaymentContent> {
     return FormBuilder(
       key: _formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: Stack(
+        alignment: AlignmentDirectional.topCenter,
         children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
-                    builder: (context, state) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 8.0),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 12.0),
-                        child: PaymentMethodRadioGroup(
-                          value: state.paymentMethod,
-                          onChanged: (value) {
-                            context
-                                .read<PaymentFilterCubit>()
-                                .setPaymentMethod(paymentMethod: value!);
-                          },
-                          limitedValues: const [],
-                        ),
-                      );
-                    },
-                  ),
-                  CashPaymentForm(
-                    formKey: _formKey,
-                    amount: widget.amount,
-                  ),
-                ],
-              ),
+          SingleChildScrollView(
+            padding: const EdgeInsets.only(bottom: 80),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
+                  builder: (context, state) {
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 8.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 12.0),
+                      child: PaymentMethodRadioGroup(
+                        value: state.paymentMethod,
+                        onChanged: (value) {
+                          context
+                              .read<PaymentFilterCubit>()
+                              .setPaymentMethod(paymentMethod: value!);
+                        },
+                        limitedValues: const [],
+                      ),
+                    );
+                  },
+                ),
+                CashPaymentForm(
+                  formKey: _formKey,
+                  amount: widget.amount,
+                ),
+              ],
             ),
           ),
-          CashPaymentFooter(
-            onCanceled: () {
-              Navigator.pop(context);
-            },
-            onSubmitted: _onSubmitted,
-          )
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: CashPaymentFooter(
+              onCanceled: () {
+                Navigator.pop(context);
+              },
+              onSubmitted: _onSubmitted,
+            ),
+          ),
         ],
       ),
     );

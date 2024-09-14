@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
@@ -62,11 +62,11 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
 
                         return InputChip(
                           label: selected
-                              ? TextHeading5(
+                              ? TextHeading4(
                                   type,
                                   color: TColors.primary,
                                 )
-                              : TextBodyS(type),
+                              : TextBodyM(type),
                           selected: selected,
                           onPressed: () {
                             field.didChange(type);

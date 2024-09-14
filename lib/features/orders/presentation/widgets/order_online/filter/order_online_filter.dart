@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_outlet/filter/order_outlet_advanced_filter.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 class OrderOnlineFilter extends StatefulWidget {
   const OrderOnlineFilter({super.key});
@@ -40,11 +37,11 @@ class _OrderOnlineFilterState extends State<OrderOnlineFilter> {
 
               return InputChip(
                 label: selected
-                    ? TextHeading5(
+                    ? TextHeading4(
                         filter.label,
                         color: TColors.primary,
                       )
-                    : TextBodyS(
+                    : TextBodyM(
                         filter.label,
                         color: TColors.neutralDarkDarkest,
                       ),

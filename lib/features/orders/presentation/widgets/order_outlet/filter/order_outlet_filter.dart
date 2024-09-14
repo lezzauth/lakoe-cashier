@@ -2,8 +2,8 @@ import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_outlet/filter/order_outlet_advanced_filter.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -60,11 +60,11 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
             bool selected = status.value == widget.value.status;
             return InputChip(
               label: selected
-                  ? TextHeading5(
+                  ? TextHeading4(
                       status.label,
                       color: TColors.primary,
                     )
-                  : TextBodyS(
+                  : TextBodyM(
                       status.label,
                       color: TColors.neutralDarkDarkest,
                     ),
@@ -78,14 +78,14 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
         InputChip(
           label: Row(
             children: [
-              UiIcons(
+              const UiIcons(
                 TIcons.filter,
                 color: TColors.primary,
                 width: 16,
                 height: 16,
               ),
               const SizedBox(width: 4),
-              TextBodyS(
+              const TextBodyM(
                 "Filter",
                 color: TColors.neutralDarkDarkest,
               ),

@@ -45,38 +45,32 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
         ],
         child: Padding(
           padding: TDeviceUtils.getViewInsets(context),
-          child: Column(
+          child: Wrap(
             children: [
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 8.0),
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: const TextHeading2("Metode pembayaran"),
-                        )
-                      ],
-                    ),
-                    Expanded(
-                      child:
-                          BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
-                        builder: (context, state) =>
-                            switch (state.paymentMethod) {
-                          "CASH" => CashPaymentContent(
-                              amount: widget.amount,
-                            ),
-                          "QRIS" => const QrisPaymentContent(),
-                          "DEBIT" => const DebitPaymentContent(),
-                          "BANK" => const BankTransferPaymentContent(),
-                          _ => const SizedBox(),
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: const TextHeading2("Metode pembayaran"),
+                      )
+                    ],
+                  ),
+                  BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
+                    builder: (context, state) => switch (state.paymentMethod) {
+                      "CASH" => CashPaymentContent(
+                          amount: widget.amount,
+                        ),
+                      "QRIS" => const QrisPaymentContent(),
+                      "DEBIT" => const DebitPaymentContent(),
+                      "BANK" => const BankTransferPaymentContent(),
+                      _ => const SizedBox(),
+                    },
+                  ),
+                ],
               ),
             ],
           ),
