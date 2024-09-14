@@ -8,6 +8,7 @@ class TextHeading4 extends StatelessWidget {
   final double fontSize = TSizes.fontSizeHeading4;
   final Color? color;
   final TextOverflow? overflow;
+  final TextAlign? textAlign;
   final bool? softWrap;
   final int? maxLines;
 
@@ -19,6 +20,7 @@ class TextHeading4 extends StatelessWidget {
     this.overflow,
     this.softWrap,
     this.maxLines,
+    this.textAlign,
   });
 
   @override
@@ -30,6 +32,7 @@ class TextHeading4 extends StatelessWidget {
         fontWeight: fontWeight,
         fontSize: fontSize,
       ),
+      textAlign: textAlign,
       softWrap: softWrap,
       overflow: overflow,
       maxLines: maxLines,
