@@ -7,12 +7,14 @@ class FormLabel extends StatelessWidget {
   final String data;
   final bool enabled;
   final bool optional;
+  final String sub;
 
   const FormLabel(
     this.data, {
     super.key,
     this.enabled = true,
     this.optional = false,
+    this.sub = "",
   });
 
   @override
@@ -33,6 +35,15 @@ class FormLabel extends StatelessWidget {
             if (optional)
               TextSpan(
                 text: " (opsional)",
+                style: GoogleFonts.inter(
+                  color: TColors.neutralDarkLight,
+                  fontSize: TSizes.fontSizeBodyS,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            if (sub.isNotEmpty)
+              TextSpan(
+                text: " $sub",
                 style: GoogleFonts.inter(
                   color: TColors.neutralDarkLight,
                   fontSize: TSizes.fontSizeBodyS,
