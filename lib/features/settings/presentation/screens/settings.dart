@@ -20,10 +20,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (ModalRoute.of(context)?.isCurrent == true) {
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: TColors.neutralLightLightest,
+        systemNavigationBarColor: TColors.neutralLightLight,
       ));
     } else {
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
+        systemNavigationBarColor: TColors.neutralLightLightest,
       ));
     }
   }
