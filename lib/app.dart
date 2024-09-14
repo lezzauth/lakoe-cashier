@@ -51,6 +51,7 @@ import 'package:point_of_sales_cashier/features/tables/application/cubit/table_m
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_edit.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_master.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
+import 'package:point_of_sales_cashier/features/taxes/presentation/screens/tax_master.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -174,6 +175,9 @@ class App extends StatelessWidget {
           "/bank_accounts": (context) => const BankAccountMasterScreen(),
           "/bank_accounts/new": (context) => const BankAccountNewScreen(),
           "/bank_accounts/detail": (context) => const BankAccountDetailScreen(),
+
+          // taxes
+          "/tax": (context) => const TaxMasterScreen(),
         },
       ),
     );
