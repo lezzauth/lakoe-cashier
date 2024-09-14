@@ -29,6 +29,7 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
   final _stockInformationFormKey = GlobalKey<FormBuilderState>();
 
   onSubmit(String productId) {
+    FocusScope.of(context).unfocus();
     AuthState authState = context.read<AuthCubit>().state;
     if (authState is! AuthReady) return;
 

@@ -87,18 +87,16 @@ class _DashboardFilterState extends State<DashboardFilter> {
               }).toList(),
             ),
             SizedBox(
-              height: 32,
-              width: 32,
+              height: 34,
+              width: 34,
               child: InputChip(
                 padding: EdgeInsets.zero,
                 label: Container(
-                  height: 16,
-                  width: 16,
                   alignment: Alignment.center,
                   child: UiIcons(
                     TIcons.calendar,
-                    height: 16,
-                    width: 16,
+                    height: 20,
+                    width: 20,
                     color: isDateRangeSelected
                         ? TColors.primary
                         : TColors.neutralDarkDarkest,

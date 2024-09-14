@@ -20,8 +20,6 @@ class CategoryIconPicker extends StatelessWidget {
     return GestureDetector(
       onTap: onSelected,
       child: Container(
-        // height: 80,
-        // width: 80,
         decoration: BoxDecoration(
           border: Border.all(
             width: 1,
@@ -33,13 +31,13 @@ class CategoryIconPicker extends StatelessWidget {
           color: selected ? TColors.highlightLightest : Colors.transparent,
         ),
         child: Container(
-          height: 24,
-          width: 24,
+          height: 32,
+          width: 32,
           alignment: Alignment.center,
           child: SvgPicture.asset(
             TCategoryIconFormatter.getIcon(icon),
-            height: 24,
-            width: 24,
+            height: 32,
+            width: 32,
             colorFilter: const ColorFilter.mode(
               TColors.primary,
               BlendMode.srcIn,

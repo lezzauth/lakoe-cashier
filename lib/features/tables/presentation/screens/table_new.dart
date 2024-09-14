@@ -42,6 +42,7 @@ class _TableNewState extends State<TableNew> {
   final _formKey = GlobalKey<FormBuilderState>();
 
   Future<void> _onSubmit() async {
+    FocusScope.of(context).unfocus();
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {

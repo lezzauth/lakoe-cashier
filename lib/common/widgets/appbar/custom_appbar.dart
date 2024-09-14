@@ -32,12 +32,14 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
+            height: 56,
             color: backgroundColor,
             padding: EdgeInsets.only(
-              right: (actions == null && search != null) ? 16.0 : 0.0,
-              left: leading == null ? 0.0 : 16.0,
+              right: (actions == null && search != null) ? 20.0 : 4.0,
+              left: leading == null ? 4.0 : 16.0,
             ),
             child: Stack(
+              alignment: AlignmentDirectional.center,
               children: [
                 if (title.isNotEmpty && search == null)
                   Positioned.fill(

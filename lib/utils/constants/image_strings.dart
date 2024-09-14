@@ -1,6 +1,7 @@
 class TImages {
-  static const String lightAppLogo = "assets/logos/logo-lakoe-light.svg";
+  static const String primaryLogoLakoe = "assets/logos/primary-logo-lakoe.svg";
   static const String lakoeLetterLogo = "assets/logos/lakoe-letter-logo.png";
+  static const String lakoeLetterQR = "assets/logos/lakoe-letter-qr.png";
 
   static const String mainMenuWaves = "assets/images/main-menu-waves.svg";
   static const String bannerWaves = "assets/images/banner-waves.svg";
