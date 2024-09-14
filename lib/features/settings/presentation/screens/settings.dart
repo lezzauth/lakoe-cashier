@@ -58,7 +58,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ),
     _SettingItem(
       title: "Pajak",
-      routeName: "/",
+      routeName: "/tax",
       iconSrc: TIcons.pieChart,
     ),
     _SettingItem(
