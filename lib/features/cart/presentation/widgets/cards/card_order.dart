@@ -74,7 +74,7 @@ class CardOrder extends StatelessWidget {
               ),
               if (trailing == null)
                 Container(
-                  margin: const EdgeInsets.only(left: 8.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 4.0),
                   child: const UiIcons(
                     TIcons.arrowRight,
                     height: 12,
@@ -82,7 +82,11 @@ class CardOrder extends StatelessWidget {
                     color: TColors.neutralLightDarkest,
                   ),
                 ),
-              if (trailing != null) trailing!,
+              if (trailing != null)
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: trailing!,
+                ),
             ],
           ),
         ),

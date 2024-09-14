@@ -81,7 +81,7 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
             children: [
               RichText(
                 text: TextSpan(
-                    text: "Dine-in",
+                    text: "Dine In",
                     style: GoogleFonts.inter(
                       fontSize: TSizes.fontSizeHeading3,
                       color: TColors.neutralDarkDarkest,
