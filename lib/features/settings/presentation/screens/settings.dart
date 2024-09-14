@@ -48,7 +48,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   List<_SettingItem> paymentReceiptSettingItems = [
     _SettingItem(
       title: "Metode Pembayaran",
-      routeName: "/",
+      routeName: "/payment_method",
       iconSrc: TIcons.dashboardQROrder,
     ),
     _SettingItem(
