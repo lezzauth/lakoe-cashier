@@ -37,6 +37,7 @@ import 'package:point_of_sales_cashier/features/orders/application/cubit/order_d
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_detail.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_master.dart';
+import 'package:point_of_sales_cashier/features/payment_method/presentation/screens/payment_method_master.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/bank_transfer_payment.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/qris_payment.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/success_confirmation_payment.dart';
@@ -179,6 +180,9 @@ class App extends StatelessWidget {
 
           // settings
           "/settings": (context) => const SettingsScreen(),
+
+          // payment method
+          "/payment_method": (context) => const PaymentMethodMasterScreen(),
 
           // bank accounts
           "/bank_accounts": (context) => const BankAccountMasterScreen(),
