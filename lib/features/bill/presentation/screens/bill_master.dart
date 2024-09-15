@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_small.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
+import 'package:point_of_sales_cashier/features/bill/presentation/widgets/bill_view.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_price.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/section/section_heading.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/section/section_list_item.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/section/section_price_info.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 
 class BillMasterScreen extends StatelessWidget {
   const BillMasterScreen({super.key});
@@ -31,23 +26,6 @@ class BillMaster extends StatefulWidget {
 }
 
 class _BillMasterState extends State<BillMaster> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (ModalRoute.of(context)?.isCurrent == true) {
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: TColors.primary,
-        // systemNavigationBarColor: TColors.neutralLightLight,
-        systemNavigationBarColor: TColors.primary,
-      ));
-    } else {
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        systemNavigationBarColor: TColors.neutralLightLightest,
-      ));
-    }
-  }
-
   List<_BillPriceItem> listBillPriceItem = [
     _BillPriceItem(label: "Subtotal", price: "Rp20.000"),
     _BillPriceItem(label: "Pajak", price: "5%"),
@@ -63,90 +41,37 @@ class _BillMasterState extends State<BillMaster> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-              child: Center(
-                child: Container(
-                  width: double.infinity,
-                  color: TColors.neutralLightLightest,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
-                    runSpacing: 4.0,
-                    children: [
-                      const BillSectionHeading(
-                        outletName: "Warmindo Cak Tho",
-                        outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
-                        orderNumber: "2563",
-                      ),
-                      const SectionBillInformation(
-                        cashierName: "Dimas",
-                        noBill: "GS731",
-                        orderType: "DineIn",
-                        noTable: "T-12",
-                        dateTime: "28/12/2024 - 20:18",
-                      ),
-                      const BillSectionListItem(),
-                      BillPriceInfo(
-                        paymentMetod: 'Cash (Tunai)',
-                        totalPrice: "Rp20.000",
-                        moneyReceived: "Rp50.000",
-                        changeMoney: "Rp30.000",
-                        children: listBillPriceItem
-                            .map(
-                              (item) => BillListPrice(
-                                label: item.label,
-                                price: item.price,
-                              ),
-                            )
-                            .toList(),
-                      ),
-                      const Expanded(
-                        child: TextSmall(
-                          "Close Bill: 28/12/2024 - 21:37",
-                          isBold: true,
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 2),
-                        child: Separator(
-                          color: TColors.neutralDarkDarkest,
-                          height: 0.5,
-                          dashWidth: 4.0,
-                        ),
-                      ),
-                      const BillGreeting(
-                        greeting: "Terimakasih\nDitunggu kembali kedatangannya",
-                      ),
-                      const SizedBox(height: 50),
-                      const SizedBox(
-                        width: double.infinity,
-                        child: TextSmall(
-                          "Supported by",
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Expanded(
-                        child: SvgPicture.asset(
-                          TImages.primaryLogoLakoe,
-                          height: 12,
-                          // ignore: deprecated_member_use
-                          color: TColors.neutralDarkDarkest,
-                        ),
-                      ),
-                    ],
+          BillView(
+            outletName: "Warmindo Cak Tho",
+            outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
+            orderNumber: "2563",
+            cashierName: "Dimas",
+            noBill: "GS731",
+            orderType: "DineIn",
+            noTable: "T-12",
+            dateTime: "28/12/2024 - 20:18",
+            paymentMetod: 'Cash (Tunai)',
+            totalPrice: "Rp20.000",
+            moneyReceived: "Rp50.000",
+            changeMoney: "Rp30.000",
+            closeBill: "Close Bill: 28/12/2024 - 21:37",
+            greeting: "Terimakasih\nDitunggu kembali kedatangannya",
+            children: listBillPriceItem
+                .map(
+                  (item) => BillListPrice(
+                    label: item.label,
+                    price: item.price,
                   ),
-                ),
-              ),
-            ),
+                )
+                .toList(),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             child: BillAction(
               onTestPrint: () {},
-              onChangeFooter: () {},
+              onChangeFooter: () {
+                Navigator.pushNamed(context, "/bill/edit");
+              },
             ),
           ),
         ],
@@ -321,7 +246,7 @@ class BillAction extends StatelessWidget {
             child: OutlinedButton(
               onPressed: onChangeFooter,
               child: const TextActionL(
-                "Ubah Ucapan",
+                "Ubah Catatan",
                 color: TColors.primary,
               ),
             ),

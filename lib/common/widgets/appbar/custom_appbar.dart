@@ -37,7 +37,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
             height: 56,
             color: backgroundColor,
             padding: EdgeInsets.only(
-              right: (actions == null && search != null) ? 20.0 : 4.0,
+              right: (actions == null && search != null) ? 20.0 : 8.0,
               left: leading == null ? 4.0 : 16.0,
             ),
             child: Stack(
@@ -66,8 +66,8 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                                 },
                             icon: const UiIcons(
                               TIcons.arrowLeft,
-                              height: 20,
-                              width: 20,
+                              height: 16,
+                              width: 16,
                               color: TColors.primary,
                             ),
                           ),
