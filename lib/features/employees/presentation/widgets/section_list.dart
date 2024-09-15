@@ -3,17 +3,17 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
-class PaymentSectionItem extends StatelessWidget {
+class AccessRightsSectionItem extends StatelessWidget {
   final String title;
   final String subTitle;
-  final bool isActive;
+  final bool isAction;
   final bool lastItem;
 
-  const PaymentSectionItem({
+  const AccessRightsSectionItem({
     super.key,
     required this.title,
     required this.subTitle,
-    this.isActive = false,
+    this.isAction = false,
     this.lastItem = false,
   });
 
@@ -52,7 +52,7 @@ class PaymentSectionItem extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Switch(
-              value: isActive,
+              value: isAction,
               onChanged: (value) {},
             )
           ],

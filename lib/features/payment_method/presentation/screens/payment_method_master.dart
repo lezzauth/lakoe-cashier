@@ -29,12 +29,12 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
     _PaymentItem(
       title: "Tunai/Cash",
       subTitle: "Pembayaran secara langsung",
-      isAction: true,
+      isActive: true,
     ),
     _PaymentItem(
       title: "Transfer Bank",
       subTitle: "Memerlukan bukti transfer",
-      isAction: true,
+      isActive: true,
       lastItem: true,
     ),
   ];
@@ -42,17 +42,17 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
     _PaymentItem(
       title: "QRIS",
       subTitle: "Maks. 0.4% per transaksi",
-      isAction: true,
+      isActive: true,
     ),
     _PaymentItem(
       title: "E-Wallet",
       subTitle: "Rp4.000 per transaksi",
-      isAction: false,
+      isActive: false,
     ),
     _PaymentItem(
       title: "Debit / Credit",
       subTitle: "1.5% per transaksi",
-      isAction: false,
+      isActive: false,
       lastItem: true,
     ),
   ];
@@ -100,7 +100,7 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
                     (item) => PaymentSectionItem(
                       title: item.title,
                       subTitle: item.subTitle,
-                      isAction: item.isAction,
+                      isActive: item.isActive,
                       lastItem: item.lastItem,
                     ),
                   )
@@ -113,7 +113,7 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
                     (item) => PaymentSectionItem(
                       title: item.title,
                       subTitle: item.subTitle,
-                      isAction: item.isAction,
+                      isActive: item.isActive,
                       lastItem: item.lastItem,
                     ),
                   )
@@ -129,13 +129,13 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
 class _PaymentItem {
   final String title;
   final String subTitle;
-  final bool isAction;
+  final bool isActive;
   final bool lastItem;
 
   _PaymentItem({
     required this.title,
     required this.subTitle,
-    this.isAction = false,
+    this.isActive = false,
     this.lastItem = false,
   });
 }
