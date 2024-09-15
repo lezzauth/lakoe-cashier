@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 
-class TextBodyM extends StatelessWidget {
+class TextLarge extends StatelessWidget {
   final String data;
   final FontWeight fontWeight;
-  final double fontSize = TSizes.fontSizeBodyS;
+  final double fontSize = TSizes.fontSizeHeading4;
   final Color? color;
   final TextAlign? textAlign;
   final int? maxLines;
   final TextOverflow? overflow;
 
-  const TextBodyM(
+  const TextLarge(
     this.data, {
     super.key,
-    this.fontWeight = FontWeight.w400,
-    this.color,
+    this.fontWeight = FontWeight.w700,
+    this.color = TColors.neutralDarkDarkest,
     this.textAlign = TextAlign.start,
     this.maxLines,
     this.overflow,
@@ -25,7 +26,7 @@ class TextBodyM extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       data,
-      style: GoogleFonts.inter(
+      style: GoogleFonts.kosugi(
         color: color,
         fontWeight: fontWeight,
         fontSize: fontSize,

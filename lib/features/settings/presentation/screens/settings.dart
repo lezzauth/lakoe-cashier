@@ -70,7 +70,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ),
     _SettingItem(
       title: "Struk (Bill)",
-      routeName: "/",
+      routeName: "/bill",
       iconSrc: TIcons.bill,
     ),
   ];
