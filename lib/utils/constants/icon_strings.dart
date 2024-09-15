@@ -54,4 +54,6 @@ class TIcons {
   static const String printer = "assets/icons/printer.svg";
   static const String smartphoneUpdate = "assets/icons/smartphone-update.svg";
   static const String userId = "assets/icons/user-id.svg";
+  static const String eye = "assets/icons/eye.svg";
+  static const String eyeClose = "assets/icons/eye-close.svg";
 }
