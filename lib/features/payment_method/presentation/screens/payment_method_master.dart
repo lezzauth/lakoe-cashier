@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/features/payment_method/presentation/widgets/section/section_card.dart';
 import 'package:point_of_sales_cashier/features/payment_method/presentation/widgets/section/section_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 class PaymentMethodMasterScreen extends StatelessWidget {
   const PaymentMethodMasterScreen({super.key});
@@ -76,12 +78,11 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
     return Scaffold(
       appBar: CustomAppbar(
         title: "Metode Pembayaran",
-        actions: [
+        handleBackButton: () => _showPopup(context),
+        actions: const [
           TextButton(
-            onPressed: () {
-              _showPopup(context);
-            },
-            child: const TextActionL(
+            onPressed: null,
+            child: TextActionL(
               "SIMPAN",
               color: TColors.primary,
             ),
@@ -188,7 +189,7 @@ class _PopupContentState extends State<PopupContent> {
             ),
             const SizedBox(height: 8),
             const TextBodyM(
-              'Kamu telah melakukan perubahan pengaturan metode pembayaran. Apa kamu yakin mau membatalkannya?',
+              'Kamu telah melakukan perubahan pengaturan metode pembayaran. Mau disimpan atau diabaikan?',
             ),
             const SizedBox(height: 20),
             Row(
@@ -200,9 +201,10 @@ class _PopupContentState extends State<PopupContent> {
                     child: OutlinedButton(
                       onPressed: () {
                         Navigator.pop(context);
+                        Navigator.pop(context);
                       },
                       child: const TextActionL(
-                        "Ya, Batalkan",
+                        "Abaikan",
                       ),
                     ),
                   ),
@@ -216,7 +218,7 @@ class _PopupContentState extends State<PopupContent> {
                         Navigator.pop(context);
                       },
                       child: const TextActionL(
-                        "Tidak",
+                        "Simpan",
                       ),
                     ),
                   ),
