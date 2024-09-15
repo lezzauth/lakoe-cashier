@@ -7,7 +7,6 @@ import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart'
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_xs.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
@@ -404,7 +403,7 @@ class OrderOutlineOnProgressAction extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: 12),
         Expanded(
           child: SizedBox(
             height: 48,
@@ -448,7 +447,7 @@ class OrderOutlinePaidAction extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: 12),
         Expanded(
           child: SizedBox(
             height: 48,
@@ -547,7 +546,7 @@ class OrderOnlineNewAction extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: 12),
         Expanded(
           child: SizedBox(
             height: 48,
@@ -620,7 +619,7 @@ class OrderOnlineDoneAction extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: 12),
         Expanded(
           child: SizedBox(
             height: 48,
