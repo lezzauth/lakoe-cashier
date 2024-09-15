@@ -15,6 +15,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.bottom,
     this.toolbarHeight,
     this.backgroundColor,
+    this.handleBackButton,
   });
 
   final Widget? leading;
@@ -24,6 +25,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final PreferredSizeWidget? bottom;
   final double? toolbarHeight;
   final Color? backgroundColor;
+  final Function()? handleBackButton;
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +60,10 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                         Transform.translate(
                           offset: const Offset(0, 0),
                           child: IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                            onPressed: handleBackButton ??
+                                () {
+                                  Navigator.pop(context);
+                                },
                             icon: const UiIcons(
                               TIcons.arrowLeft,
                               height: 20,
