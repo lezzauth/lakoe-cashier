@@ -140,18 +140,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // ),
             Container(
               margin: const EdgeInsets.only(bottom: 12),
-              child: SettingSectionCard(
-                title: "Karyawan",
-                description: "Manajemen, Hak akses atau PIN",
-                children: employeeSettingItems
-                    .map(
-                      (item) => SettingSectionItem(
-                        iconSrc: item.iconSrc,
-                        title: item.title,
-                        routeName: item.routeName,
-                      ),
-                    )
-                    .toList(),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, "/employee");
+                },
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                splashColor: TColors.neutralLightLight,
+                highlightColor: TColors.neutralLightLight,
+                child: SettingSectionCard(
+                  title: "Karyawan",
+                  description: "Manajemen, Hak akses atau PIN",
+                  children: employeeSettingItems
+                      .map(
+                        (item) => SettingSectionItem(
+                          iconSrc: item.iconSrc,
+                          title: item.title,
+                          routeName: item.routeName,
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
             ),
             Container(
