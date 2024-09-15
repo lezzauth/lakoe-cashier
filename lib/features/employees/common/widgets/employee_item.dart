@@ -1,4 +1,3 @@
-import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
@@ -8,20 +7,20 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 
-class CustomerContactItem extends StatelessWidget {
-  const CustomerContactItem({
+class EmployeeItem extends StatelessWidget {
+  const EmployeeItem({
     super.key,
-    required this.customer,
+    required this.name,
+    required this.role,
     this.onTap,
   });
 
-  final CustomerModel customer;
+  final String name;
+  final String role;
   final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    bool isGuest = customer.id == "-";
-
     return ListTile(
       onTap: onTap,
       leading: SvgPicture.asset(
@@ -29,19 +28,17 @@ class CustomerContactItem extends StatelessWidget {
         height: 40,
         width: 40,
       ),
-      title: TextHeading4(customer.name),
+      title: TextHeading4(name),
       subtitle: TextBodyS(
-        customer.phoneNumber.isEmpty ? '-' : customer.phoneNumber,
+        role,
         color: TColors.neutralDarkLight,
       ),
-      trailing: isGuest
-          ? null
-          : const UiIcons(
-              TIcons.arrowRight,
-              height: 16,
-              width: 16,
-              color: TColors.neutralDarkLightest,
-            ),
+      trailing: const UiIcons(
+        TIcons.arrowRight,
+        height: 16,
+        width: 16,
+        color: TColors.neutralDarkLightest,
+      ),
     );
   }
 }
