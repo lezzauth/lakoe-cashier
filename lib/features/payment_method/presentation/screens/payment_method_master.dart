@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/features/payment_method/presentation/widgets/section/section_card.dart';
 import 'package:point_of_sales_cashier/features/payment_method/presentation/widgets/section/section_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 class PaymentMethodMasterScreen extends StatelessWidget {
   const PaymentMethodMasterScreen({super.key});
