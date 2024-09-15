@@ -32,6 +32,7 @@ import 'package:point_of_sales_cashier/features/customers/application/cubit/cust
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/master_customer.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/new_customer.dart';
+import 'package:point_of_sales_cashier/features/employees/presentation/screens/detail_employee.dart';
 import 'package:point_of_sales_cashier/features/employees/presentation/screens/master_employee.dart';
 import 'package:point_of_sales_cashier/features/employees/presentation/screens/new_employee.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/open_cashier_pin.dart';
@@ -195,6 +196,7 @@ class App extends StatelessWidget {
           // employee
           "/employee": (context) => const MasterEmployeScreen(),
           "/employee/new": (context) => const NewEmployeeScreen(),
+          "/employee/detail": (context) => const DetailEmployeeScreen(),
 
           // bank accounts
           "/bank_accounts": (context) => const BankAccountMasterScreen(),

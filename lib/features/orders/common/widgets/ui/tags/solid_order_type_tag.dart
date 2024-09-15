@@ -46,7 +46,7 @@ class SolidOrderTypeTag extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4.0),
         color: getTagBackgroundColor(),

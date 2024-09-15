@@ -43,7 +43,12 @@ class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
               child: EmployeeItem(
                 name: listItemEmployee[index].name,
                 role: listItemEmployee[index].role,
-                onTap: null,
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    "/employee/detail",
+                  );
+                },
               ),
             );
           },
