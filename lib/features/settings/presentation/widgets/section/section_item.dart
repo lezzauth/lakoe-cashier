@@ -20,44 +20,39 @@ class SettingSectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, routeName);
-        },
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-        splashColor: TColors.neutralLightLight,
-        highlightColor: TColors.neutralLightLight,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          child: Wrap(
-            direction: Axis.horizontal,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: 12,
-            children: [
-              UiIcons(
-                iconSrc,
-                height: 20,
-                width: 12,
-                color: TColors.neutralDarkDark,
-              ),
-              TextHeading4(title),
-              if (isNewItem)
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24),
-                    color: TColors.successDark,
-                  ),
-                  child: const TextCaptionM(
-                    "BARU",
-                    color: TColors.neutralLightLightest,
-                  ),
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, routeName);
+      },
+      splashColor: TColors.neutralLightLight,
+      highlightColor: TColors.neutralLightLight,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        child: Wrap(
+          direction: Axis.horizontal,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 12,
+          children: [
+            UiIcons(
+              iconSrc,
+              height: 20,
+              width: 12,
+              color: TColors.neutralDarkDark,
+            ),
+            TextHeading4(title),
+            if (isNewItem)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24),
+                  color: TColors.successDark,
                 ),
-            ],
-          ),
+                child: const TextCaptionM(
+                  "BARU",
+                  color: TColors.neutralLightLightest,
+                ),
+              ),
+          ],
         ),
       ),
     );
