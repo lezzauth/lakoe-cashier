@@ -29,42 +29,46 @@ class DashboardAppbar extends StatelessWidget implements PreferredSizeWidget {
                   TIcons.bell,
                   color: TColors.neutralDarkDarkest,
                 ),
-                // UiIcons(TIcons.hamburgerMenu),
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: const ShapeDecoration(
-                    color: Color(0xFFD3D5DD),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16),
-                        bottomLeft: Radius.circular(16),
-                        bottomRight: Radius.circular(4),
+                InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () => Navigator.pushNamed(context, "/account"),
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    decoration: const ShapeDecoration(
+                      color: Color(0xFFD3D5DD),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(16),
+                          topRight: Radius.circular(16),
+                          bottomLeft: Radius.circular(16),
+                          bottomRight: Radius.circular(4),
+                        ),
                       ),
                     ),
-                  ),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 1,
-                        top: 1,
-                        child: Image.asset(
-                          TImages.defaultAvatar,
-                          width: 30,
-                          height: 30,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          left: 1,
+                          top: 1,
+                          child: Image.asset(
+                            TImages.defaultAvatar,
+                            width: 30,
+                            height: 30,
+                          ),
                         ),
-                      ),
-                      Positioned(
-                        left: 20,
-                        top: 20,
-                        child: Image.asset(
-                          TImages.liteLogo,
-                          width: 12,
-                          height: 12,
+                        Positioned(
+                          left: 20,
+                          top: 20,
+                          child: Image.asset(
+                            TImages.liteLogo,
+                            width: 12,
+                            height: 12,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],

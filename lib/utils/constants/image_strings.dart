@@ -28,6 +28,19 @@ class TImages {
   // empty list
   static const String bankAccountEmpty = "assets/images/bank-account-empty.svg";
 
+  // hero
+  static const String liteLevel = "assets/images/hero/lite.svg";
+  static const String growLevel = "assets/images/hero/grow.svg";
+  static const String proLevel = "assets/images/hero/pro.svg";
+
+  // logo package level
+  static const String liteLogoPackage =
+      "assets/logos/package/lite-logo-level.png";
+  static const String growLogoPackage =
+      "assets/logos/package/grow-logo-level.png";
+  static const String proLogoPackage =
+      "assets/logos/package/pro-logo-level.png";
+
   // banks
   static const String bankBCALogo = "assets/images/bank-bca-logo.svg";
   static const String bankBNILogo = "assets/images/bank-bni-logo.svg";
