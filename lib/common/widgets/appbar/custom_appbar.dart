@@ -16,6 +16,8 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.toolbarHeight,
     this.backgroundColor,
     this.handleBackButton,
+    this.isLightMode = false,
+    this.flexibleSpace,
   });
 
   final Widget? leading;
@@ -26,6 +28,8 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final double? toolbarHeight;
   final Color? backgroundColor;
   final Function()? handleBackButton;
+  final bool? isLightMode;
+  final Widget? flexibleSpace;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +52,9 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                     child: Center(
                       child: TextHeading3(
                         title,
-                        color: TColors.neutralDarkDarkest,
+                        color: isLightMode == false
+                            ? TColors.neutralDarkDarkest
+                            : TColors.neutralLightLightest,
                       ),
                     ),
                   ),
@@ -64,11 +70,13 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                                 () {
                                   Navigator.pop(context);
                                 },
-                            icon: const UiIcons(
+                            icon: UiIcons(
                               TIcons.arrowLeft,
                               height: 16,
                               width: 16,
-                              color: TColors.primary,
+                              color: isLightMode == false
+                                  ? TColors.primary
+                                  : TColors.neutralLightLightest,
                             ),
                           ),
                         ),
