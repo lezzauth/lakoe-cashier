@@ -11,6 +11,7 @@ import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_detail.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_master.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_new.dart';
+import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_edit.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_master.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
@@ -187,6 +188,7 @@ class App extends StatelessWidget {
 
           // bill
           "/bill": (context) => const BillMasterScreen(),
+          "/bill/edit": (context) => const BillEditScreen(),
 
           // bank accounts
           "/bank_accounts": (context) => const BankAccountMasterScreen(),
