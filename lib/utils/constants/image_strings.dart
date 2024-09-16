@@ -1,10 +1,13 @@
 class TImages {
   static const String primaryLogoLakoe = "assets/logos/primary-logo-lakoe.svg";
-  static const String lakoeLetterLogo = "assets/logos/lakoe-letter-logo.png";
-  static const String lakoeLetterQR = "assets/logos/lakoe-letter-qr.png";
+  static const String lakoeLetterWhite = "assets/logos/lakoe-letter-white.png";
+  static const String lakoeLetterPrimary =
+      "assets/logos/lakoe-letter-primary.png";
+  static const String lakoeLogoQRIS = "assets/logos/lakoe-logo-qris.png";
 
   static const String mainMenuWaves = "assets/images/main-menu-waves.svg";
   static const String bannerWaves = "assets/images/banner-waves.svg";
+  static const String balanceWaves = "assets/images/balance-waves.svg";
   static const String tradingNews = "assets/images/trading-news.svg";
   static const String receiptSlip = "assets/images/receipt-slip.svg";
   static const String contactAvatar = "assets/images/contact-avatar.svg";

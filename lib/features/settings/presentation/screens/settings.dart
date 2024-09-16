@@ -100,7 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _SettingItem(
       title: "Integrasi",
       routeName: "/",
-      iconSrc: TIcons.linkCircle,
+      iconSrc: TIcons.linkSquare,
     ),
   ];
 
