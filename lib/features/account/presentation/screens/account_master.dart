@@ -1,0 +1,376 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/features/account/presentation/widgets/appbar/account_appbar.dart';
+import 'package:point_of_sales_cashier/features/account/presentation/widgets/section/section_card.dart';
+import 'package:point_of_sales_cashier/features/account/presentation/widgets/section/section_item.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+
+class AccountMasterScreen extends StatefulWidget {
+  const AccountMasterScreen({super.key});
+
+  @override
+  State<AccountMasterScreen> createState() => _AccountMasterScreenState();
+}
+
+class _AccountMasterScreenState extends State<AccountMasterScreen>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: TColors.neutralLightLight,
+      statusBarIconBrightness: Brightness.light,
+    ));
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: TColors.neutralLightLightest,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+    super.dispose();
+  }
+
+  List<_OtherItem> otherSettingItems = [
+    _OtherItem(
+      title: "Kasih Rating",
+      routeName: "/",
+      iconSrc: TIcons.star,
+      textTrailing: "Versi 3.20.0",
+    ),
+    _OtherItem(
+      title: "Syarat & Ketentuan",
+      routeName: "/",
+      iconSrc: TIcons.document,
+    ),
+    _OtherItem(
+      title: "Kebijakan Privasi",
+      routeName: "/",
+      iconSrc: TIcons.shieldKeyhole,
+    ),
+    _OtherItem(
+      title: "Atur Akun",
+      routeName: "/",
+      iconSrc: TIcons.linkSquare,
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: TColors.neutralLightLight,
+      extendBodyBehindAppBar: true,
+      appBar: const AccountAppbar(
+        title: "Profil & Akun",
+      ),
+      body: Stack(
+        children: [
+          Positioned(
+            child: SvgPicture.asset(
+              TImages.liteLevel,
+              width: MediaQuery.of(context).size.width,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 120),
+                  const ProfileCard(),
+                  const SizedBox(height: 12),
+                  const BalanceCard(),
+                  const SizedBox(height: 12),
+                  const OutletCard(),
+                  const SizedBox(height: 12),
+                  OtherCard(
+                    children: otherSettingItems
+                        .map(
+                          (item) => AccountOtherSectionItem(
+                            iconSrc: item.iconSrc,
+                            title: item.title,
+                            routeName: item.routeName,
+                            isNewItem: item.isNewItem,
+                            textTrailing: item.textTrailing,
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ProfileCard extends StatelessWidget {
+  const ProfileCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 36),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(
+            bottom: -36,
+            left: 0,
+            right: 0,
+            child: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(16),
+                  bottomRight: Radius.circular(16),
+                ),
+                color: TColors.highlightLightest,
+              ),
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const TextBodyM(
+                    "Paket aktif kamu saat ini",
+                    color: TColors.neutralDarkDarkest,
+                  ),
+                  const SizedBox(width: 8.0),
+                  Image.asset(
+                    TImages.liteLogoPackage,
+                    height: 24,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+              color: TColors.neutralLightLightest,
+            ),
+            padding: const EdgeInsets.symmetric(
+              vertical: 16.0,
+              horizontal: 20.0,
+            ),
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: TColors.neutralLightDark,
+                      width: 1.0,
+                    ),
+                  ),
+                  child: const CircleAvatar(
+                    backgroundImage: AssetImage(TImages.defaultAvatar),
+                    radius: 46 / 2,
+                    backgroundColor: TColors.neutralLightLight,
+                  ),
+                ),
+                const SizedBox(width: 16.0),
+                const Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextHeading3(
+                        "Tauhid",
+                        color: TColors.neutralDarkDark,
+                      ),
+                      SizedBox(height: 4.0),
+                      TextBodyS(
+                        "62812-3456-7890",
+                        color: TColors.neutralDarkLight,
+                      ),
+                    ],
+                  ),
+                ),
+                const UiIcons(
+                  TIcons.arrowRight,
+                  height: 20,
+                  width: 20,
+                  color: TColors.primary,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BalanceCard extends StatelessWidget {
+  const BalanceCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.0),
+        gradient: const LinearGradient(
+          begin: Alignment(1.00, 0.00),
+          end: Alignment(-1, 0),
+          colors: [Color(0xFFFF606C), Color(0xFFFD6D00)],
+        ),
+      ),
+      clipBehavior: Clip.hardEdge,
+      child: Stack(
+        children: [
+          Positioned(
+            child: Positioned(
+              top: 0,
+              right: 0,
+              child: SvgPicture.asset(
+                TImages.balanceWaves,
+              ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 16.0,
+              horizontal: 20.0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    UiIcons(
+                      TIcons.wallet,
+                      height: 12,
+                      width: 12,
+                      color: TColors.neutralLightMedium,
+                    ),
+                    SizedBox(width: 4),
+                    TextHeading5(
+                      "Saldo",
+                      color: TColors.neutralLightMedium,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 4),
+                TextHeading2(
+                  "Rp580.000",
+                  color: TColors.neutralLightLightest,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class OutletCard extends StatelessWidget {
+  const OutletCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      clipBehavior: Clip.antiAlias,
+      decoration: ShapeDecoration(
+        color: TColors.neutralLightLightest,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(
+            width: 1,
+            color: TColors.neutralLightMedium,
+          ),
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: TColors.neutralLightMedium,
+                width: 1.0,
+              ),
+            ),
+            child: CircleAvatar(
+              radius: 44 / 2,
+              backgroundColor: TColors.neutralLightLight,
+              child: Image.asset(
+                TImages.lakoeLetterPrimary,
+                height: 24,
+                width: 24,
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          const Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextHeading3(
+                  "Warmindo Cak Tho",
+                  color: TColors.neutralDarkDark,
+                ),
+                SizedBox(height: 2),
+                TextBodyS(
+                  "Tebet, Jakarta Selatan",
+                  color: TColors.neutralDarkLightest,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class OtherCard extends StatelessWidget {
+  final List<Widget> children;
+  const OtherCard({super.key, required this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: AccountOtherSectionCard(
+        title: "Lainnya",
+        children: children,
+      ),
+    );
+  }
+}
+
+class _OtherItem {
+  final String title;
+  final String routeName;
+  final String iconSrc;
+  final String? textTrailing;
+  final bool isNewItem;
+
+  _OtherItem({
+    required this.title,
+    required this.routeName,
+    required this.iconSrc,
+    this.textTrailing,
+    this.isNewItem = false,
+  });
+}

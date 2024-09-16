@@ -24,8 +24,8 @@ class SettingSectionItem extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(context, routeName);
       },
-      splashColor: TColors.highlightLightest,
-      highlightColor: TColors.highlightLight,
+      splashColor: TColors.neutralLightLight,
+      highlightColor: TColors.neutralLightLight,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         child: Wrap(

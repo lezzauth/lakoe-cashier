@@ -5,8 +5,8 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
-class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppbar({
+class AccountAppbar extends StatelessWidget implements PreferredSizeWidget {
+  const AccountAppbar({
     super.key,
     this.title = "",
     this.leading,
@@ -48,8 +48,10 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 if (title.isNotEmpty && search == null)
                   Positioned.fill(
                     child: Center(
-                      child: TextHeading3(title,
-                          color: TColors.neutralDarkDarkest),
+                      child: TextHeading3(
+                        title,
+                        color: TColors.neutralLightLightest,
+                      ),
                     ),
                   ),
                 Row(
@@ -64,8 +66,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                                 () {
                                   Navigator.pop(context);
                                 },
-                            icon: const UiIcons(TIcons.arrowLeft,
-                                height: 16, width: 16, color: TColors.primary),
+                            icon: const UiIcons(
+                              TIcons.arrowLeft,
+                              height: 16,
+                              width: 16,
+                              color: TColors.neutralLightLightest,
+                            ),
                           ),
                         ),
                     if (search != null)

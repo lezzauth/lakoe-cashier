@@ -20,10 +20,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (ModalRoute.of(context)?.isCurrent == true) {
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: TColors.neutralLightLightest,
+        systemNavigationBarColor: TColors.neutralLightLight,
       ));
     } else {
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
+        systemNavigationBarColor: TColors.neutralLightLightest,
       ));
     }
   }
@@ -48,7 +50,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   List<_SettingItem> paymentReceiptSettingItems = [
     _SettingItem(
       title: "Metode Pembayaran",
-      routeName: "/",
+      routeName: "/payment_method",
       iconSrc: TIcons.dashboardQROrder,
     ),
     _SettingItem(
@@ -68,7 +70,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ),
     _SettingItem(
       title: "Struk (Bill)",
-      routeName: "/",
+      routeName: "/bill",
       iconSrc: TIcons.bill,
     ),
   ];
@@ -98,7 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _SettingItem(
       title: "Integrasi",
       routeName: "/",
-      iconSrc: TIcons.linkCircle,
+      iconSrc: TIcons.linkSquare,
     ),
   ];
 
@@ -138,18 +140,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // ),
             Container(
               margin: const EdgeInsets.only(bottom: 12),
-              child: SettingSectionCard(
-                title: "Karyawan",
-                description: "Manajemen, Hak akses atau PIN",
-                children: employeeSettingItems
-                    .map(
-                      (item) => SettingSectionItem(
-                        iconSrc: item.iconSrc,
-                        title: item.title,
-                        routeName: item.routeName,
-                      ),
-                    )
-                    .toList(),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, "/employee");
+                },
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                splashColor: TColors.neutralLightLight,
+                highlightColor: TColors.neutralLightLight,
+                child: SettingSectionCard(
+                  title: "Karyawan",
+                  description: "Manajemen, Hak akses atau PIN",
+                  children: employeeSettingItems
+                      .map(
+                        (item) => SettingSectionItem(
+                          iconSrc: item.iconSrc,
+                          title: item.title,
+                          routeName: item.routeName,
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
             ),
             Container(
