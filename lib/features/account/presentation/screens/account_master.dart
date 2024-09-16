@@ -232,12 +232,10 @@ class BalanceCard extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-            child: Positioned(
-              top: 0,
-              right: 0,
-              child: SvgPicture.asset(
-                TImages.balanceWaves,
-              ),
+            top: 0,
+            right: 0,
+            child: SvgPicture.asset(
+              TImages.balanceWaves,
             ),
           ),
           const Padding(
