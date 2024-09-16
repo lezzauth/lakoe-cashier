@@ -36,6 +36,7 @@ _$CreateProductDtoImpl _$$CreateProductDtoImplFromJson(
       outletId: json['outletId'] as String,
       sku: json['sku'] as String?,
       stock: (json['stock'] as num?)?.toInt(),
+      availability: json['availability'] as String?,
     );
 
 Map<String, dynamic> _$$CreateProductDtoImplToJson(
@@ -50,6 +51,7 @@ Map<String, dynamic> _$$CreateProductDtoImplToJson(
       'outletId': instance.outletId,
       'sku': instance.sku,
       'stock': instance.stock,
+      'availability': instance.availability,
     };
 
 _$UpdateProductDtoImpl _$$UpdateProductDtoImplFromJson(
@@ -64,6 +66,7 @@ _$UpdateProductDtoImpl _$$UpdateProductDtoImplFromJson(
       outletId: json['outletId'] as String?,
       sku: json['sku'] as String?,
       stock: (json['stock'] as num?)?.toInt(),
+      availability: json['availability'] as String?,
     );
 
 Map<String, dynamic> _$$UpdateProductDtoImplToJson(
@@ -78,4 +81,5 @@ Map<String, dynamic> _$$UpdateProductDtoImplToJson(
       'outletId': instance.outletId,
       'sku': instance.sku,
       'stock': instance.stock,
+      'availability': instance.availability,
     };
