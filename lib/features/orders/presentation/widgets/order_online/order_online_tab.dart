@@ -66,7 +66,7 @@ class _OrderOnlineTabState extends State<OrderOnlineTab> {
                           ),
                           title: "Belum ada pesanan, nih!",
                           subTitle:
-                              "Hari ini belum ada pesanan masuk. Yuk, bikin pesanan pertama untuk hari ini.",
+                              "Saat ini belum ada pesanan masuk. Yuk, bikin pesanan pertama untuk hari ini.",
                         ),
                       ),
                   ],

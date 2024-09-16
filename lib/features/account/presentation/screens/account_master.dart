@@ -4,8 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/widgets/appbar/account_appbar.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/widgets/section/section_card.dart';
@@ -129,7 +131,7 @@ class ProfileCard extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Positioned(
-            bottom: -36,
+            bottom: -40,
             left: 0,
             right: 0,
             child: Container(
@@ -232,12 +234,10 @@ class BalanceCard extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-            child: Positioned(
-              top: 0,
-              right: 0,
-              child: SvgPicture.asset(
-                TImages.balanceWaves,
-              ),
+            top: 0,
+            right: 0,
+            child: SvgPicture.asset(
+              TImages.balanceWaves,
             ),
           ),
           const Padding(
@@ -252,19 +252,19 @@ class BalanceCard extends StatelessWidget {
                   children: [
                     UiIcons(
                       TIcons.wallet,
-                      height: 12,
-                      width: 12,
-                      color: TColors.neutralLightMedium,
+                      height: 16,
+                      width: 16,
+                      color: TColors.neutralLightLight,
                     ),
-                    SizedBox(width: 4),
-                    TextHeading5(
+                    SizedBox(width: 6),
+                    TextHeading4(
                       "Saldo",
-                      color: TColors.neutralLightMedium,
+                      color: TColors.neutralLightLight,
                     ),
                   ],
                 ),
                 SizedBox(height: 4),
-                TextHeading2(
+                TextHeading1(
                   "Rp580.000",
                   color: TColors.neutralLightLightest,
                 ),

@@ -109,6 +109,14 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
+                                Text(
+                                  "62812-****-*890 [hardcode]",
+                                  style: GoogleFonts.inter(
+                                    fontSize: TSizes.fontSizeBodyS,
+                                    color: TColors.neutralDarkMedium,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ],
                             ),
                           ),
