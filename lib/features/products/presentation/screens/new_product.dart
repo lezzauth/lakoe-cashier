@@ -5,6 +5,7 @@ import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart'
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_cubit.dart';
@@ -111,6 +112,7 @@ class _NewProductScreenState extends State<NewProductScreen>
         outletId: authState.outletId,
         sku: sku,
         stock: stock != null ? int.parse(stock) : null,
+        availability: stockInformationValue?["availability"],
       ),
     );
   }
@@ -126,50 +128,53 @@ class _NewProductScreenState extends State<NewProductScreen>
       child: BlocBuilder<ProductMasterCubit, ProductMasterState>(
         builder: (context, state) {
           bool isFormValid = state is! ProductMasterActionInProgress;
-          return Scaffold(
-            appBar: CustomAppbar(
-              title: "Produk Baru",
-              actions: [
-                TextButton(
-                  onPressed: isFormValid ? onSubmit : null,
-                  child: state is ProductMasterActionInProgress
-                      ? const SizedBox(
-                          height: 16,
-                          width: 16,
-                          child: CircularProgressIndicator(),
-                        )
-                      : const TextActionL(
-                          "SIMPAN",
-                          color: TColors.primary,
-                        ),
-                )
-              ],
-              bottom: TabContainer(
+          return ErrorWrapper(
+            actionError: state is ProductMasterActionFailure,
+            child: Scaffold(
+              appBar: CustomAppbar(
+                title: "Produk Baru",
+                actions: [
+                  TextButton(
+                    onPressed: isFormValid ? onSubmit : null,
+                    child: state is ProductMasterActionInProgress
+                        ? const SizedBox(
+                            height: 16,
+                            width: 16,
+                            child: CircularProgressIndicator(),
+                          )
+                        : const TextActionL(
+                            "SIMPAN",
+                            color: TColors.primary,
+                          ),
+                  )
+                ],
+                bottom: TabContainer(
+                  controller: _tabController,
+                  tabs: const [
+                    TabItem(
+                      title: "Info Produk",
+                    ),
+                    TabItem(title: "Info Stok"),
+                  ],
+                ),
+              ),
+              body: TabBarView(
                 controller: _tabController,
-                tabs: const [
-                  TabItem(
-                    title: "Info Produk",
+                children: [
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: ProductInformationForm(
+                      formKey: _productInformationFormKey,
+                    ),
                   ),
-                  TabItem(title: "Info Stok"),
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: StockInformationForm(
+                      formKey: _stockInformationFormKey,
+                    ),
+                  ),
                 ],
               ),
-            ),
-            body: TabBarView(
-              controller: _tabController,
-              children: [
-                SingleChildScrollView(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: ProductInformationForm(
-                    formKey: _productInformationFormKey,
-                  ),
-                ),
-                SingleChildScrollView(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: StockInformationForm(
-                    formKey: _stockInformationFormKey,
-                  ),
-                ),
-              ],
             ),
           );
         },
