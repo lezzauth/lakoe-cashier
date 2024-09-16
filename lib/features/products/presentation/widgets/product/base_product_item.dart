@@ -11,6 +11,7 @@ class BaseProductItem extends StatelessWidget {
   final int price;
   final Widget? noteAction;
   final Widget? counter;
+  final Widget? tag;
 
   const BaseProductItem({
     super.key,
@@ -20,6 +21,7 @@ class BaseProductItem extends StatelessWidget {
     this.price = 0,
     this.noteAction,
     this.counter,
+    this.tag,
   });
 
   @override
@@ -66,6 +68,7 @@ class BaseProductItem extends StatelessWidget {
                   ),
                   const SizedBox(width: 4.0),
                   if (counter != null) counter!,
+                  if (tag != null) tag!,
                 ],
               ),
               Row(

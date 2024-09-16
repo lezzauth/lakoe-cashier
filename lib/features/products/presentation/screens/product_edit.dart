@@ -93,6 +93,7 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
             outletId: authState.outletId,
             sku: sku,
             stock: stock != null ? int.parse(stock) : null,
+            availability: stockInformationValue?["availability"],
           ),
         );
   }
