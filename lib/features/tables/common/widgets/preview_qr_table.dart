@@ -51,7 +51,7 @@ class PreviewQrTable extends StatelessWidget {
                         alignment: WrapAlignment.spaceBetween,
                         children: [
                           Image.asset(
-                            TImages.lakoeLetterLogo,
+                            TImages.lakoeLetterWhite,
                             height: 60,
                             width: 60,
                           ),
@@ -106,7 +106,7 @@ class PreviewQrTable extends StatelessWidget {
                       color: TColors.neutralLightLightest,
                       padding: const EdgeInsets.all(4.0),
                       child: Image.asset(
-                        TImages.lakoeLetterQR, // Change with logo merchant
+                        TImages.lakoeLogoQRIS, // Change with logo merchant
                         scale: 4,
                       ),
                     ),

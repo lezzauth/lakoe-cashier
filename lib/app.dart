@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
+import 'package:point_of_sales_cashier/features/account/presentation/screens/account_master.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/screens/completing_data.dart';
@@ -11,6 +12,8 @@ import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_detail.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_master.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_new.dart';
+import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_edit.dart';
+import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_master.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/customer/cart_customer_cubit.dart';
@@ -30,6 +33,9 @@ import 'package:point_of_sales_cashier/features/customers/application/cubit/cust
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/master_customer.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/new_customer.dart';
+import 'package:point_of_sales_cashier/features/employees/presentation/screens/detail_employee.dart';
+import 'package:point_of_sales_cashier/features/employees/presentation/screens/master_employee.dart';
+import 'package:point_of_sales_cashier/features/employees/presentation/screens/new_employee.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/open_cashier_pin.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
@@ -37,6 +43,7 @@ import 'package:point_of_sales_cashier/features/orders/application/cubit/order_d
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_detail.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_master.dart';
+import 'package:point_of_sales_cashier/features/payment_method/presentation/screens/payment_method_master.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/bank_transfer_payment.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/qris_payment.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/success_confirmation_payment.dart';
@@ -180,6 +187,18 @@ class App extends StatelessWidget {
           // settings
           "/settings": (context) => const SettingsScreen(),
 
+          // payment method
+          "/payment_method": (context) => const PaymentMethodMasterScreen(),
+
+          // bill
+          "/bill": (context) => const BillMasterScreen(),
+          "/bill/edit": (context) => const BillEditScreen(),
+
+          // employee
+          "/employee": (context) => const MasterEmployeScreen(),
+          "/employee/new": (context) => const NewEmployeeScreen(),
+          "/employee/detail": (context) => const DetailEmployeeScreen(),
+
           // bank accounts
           "/bank_accounts": (context) => const BankAccountMasterScreen(),
           "/bank_accounts/new": (context) => const BankAccountNewScreen(),
@@ -189,7 +208,10 @@ class App extends StatelessWidget {
           "/taxes": (context) => const TaxMasterScreen(),
 
           // charges
-          "/charges": (context) => const ChargeMasterScreen()
+          "/charges": (context) => const ChargeMasterScreen(),
+
+          // Profile & Account
+          "/account": (context) => const AccountMasterScreen(),
         },
       ),
     );

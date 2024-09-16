@@ -49,9 +49,15 @@ class TIcons {
   static const String card = "assets/icons/card.svg";
   static const String filters = "assets/icons/filters.svg";
   static const String handMoney = "assets/icons/hand-money.svg";
-  static const String linkCircle = "assets/icons/link-circle.svg";
+  static const String linkSquare = "assets/icons/link-square.svg";
   static const String pieChart = "assets/icons/pie-chart.svg";
   static const String printer = "assets/icons/printer.svg";
   static const String smartphoneUpdate = "assets/icons/smartphone-update.svg";
   static const String userId = "assets/icons/user-id.svg";
+  static const String eye = "assets/icons/eye.svg";
+  static const String eyeClose = "assets/icons/eye-close.svg";
+  static const String wallet = "assets/icons/wallet.svg";
+  static const String document = "assets/icons/document.svg";
+  static const String star = "assets/icons/star.svg";
+  static const String shieldKeyhole = "assets/icons/shield-keyhole.svg";
 }

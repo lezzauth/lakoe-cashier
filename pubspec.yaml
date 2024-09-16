@@ -120,7 +120,9 @@ flutter:
     - assets/icons/categories/
     - assets/images/
     - assets/images/access-permission/
+    - assets/images/hero/
     - assets/logos/
+    - assets/logos/package/
     - assets/flags/
 
   # An image asset can refer to one or more resolution-specific "variants", see
