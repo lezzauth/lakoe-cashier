@@ -127,7 +127,7 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
                                         ),
                                         title: "Belum ada pesanan, nih!",
                                         subTitle:
-                                            "Hari ini belum ada pesanan masuk. Yuk, bikin pesanan pertama untuk hari ini.",
+                                            "Saat ini belum ada pesanan masuk. Yuk, bikin pesanan pertama untuk hari ini.",
                                       ),
                                     ),
                                 ],
