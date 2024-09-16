@@ -21,32 +21,33 @@ class TermsAgreementCheckbox extends StatelessWidget {
     onPrivacyPressed() {}
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          height: 24.0,
-          width: 16.0,
-          child: Checkbox(
-            value: value,
-            onChanged: onChanged,
-            isError: isError,
-            side: WidgetStateBorderSide.resolveWith(
-              (states) {
-                if (states.contains(WidgetState.error)) {
-                  return const BorderSide(
-                    color: TColors.error,
-                    width: 3,
-                    strokeAlign: 1,
-                  );
-                }
-                return null;
-              },
+          height: 20.0,
+          width: 20.0,
+          child: Transform.scale(
+            scale: 1.2,
+            child: Checkbox(
+              value: value,
+              onChanged: onChanged,
+              isError: isError,
+              side: WidgetStateBorderSide.resolveWith(
+                (states) {
+                  if (states.contains(WidgetState.error)) {
+                    return const BorderSide(
+                      color: TColors.error,
+                      width: 1.5,
+                      strokeAlign: 1,
+                    );
+                  }
+                  return null;
+                },
+              ),
             ),
           ),
         ),
-        const SizedBox(
-          width: 8,
-        ),
+        const SizedBox(width: 12),
         Flexible(
           child: RichText(
             text: TextSpan(

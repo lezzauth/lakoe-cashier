@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/widgets/forms/terms_agreement_checkbox.dart';
@@ -146,6 +147,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                 height: 48,
                                 width: 85,
                                 decoration: BoxDecoration(
+                                  color: TColors.neutralLightLight,
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
                                     color: TColors.neutralLightDarkest,
@@ -162,10 +164,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                     children: [
                                       Image.asset(
                                         TImages.indoFlag,
-                                        height: 16,
-                                        width: 16,
+                                        height: 20,
+                                        width: 20,
                                       ),
-                                      const TextBodyM("+62"),
+                                      const TextHeading4("+62"),
                                     ],
                                   ),
                                 ),
