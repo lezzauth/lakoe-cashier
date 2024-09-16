@@ -225,6 +225,7 @@ mixin _$CreateProductDto {
   String get outletId => throw _privateConstructorUsedError;
   String? get sku => throw _privateConstructorUsedError;
   int? get stock => throw _privateConstructorUsedError;
+  String? get availability => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -247,7 +248,8 @@ abstract class $CreateProductDtoCopyWith<$Res> {
       String unit,
       String outletId,
       String? sku,
-      int? stock});
+      int? stock,
+      String? availability});
 }
 
 /// @nodoc
@@ -272,6 +274,7 @@ class _$CreateProductDtoCopyWithImpl<$Res, $Val extends CreateProductDto>
     Object? outletId = null,
     Object? sku = freezed,
     Object? stock = freezed,
+    Object? availability = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -310,6 +313,10 @@ class _$CreateProductDtoCopyWithImpl<$Res, $Val extends CreateProductDto>
           ? _value.stock
           : stock // ignore: cast_nullable_to_non_nullable
               as int?,
+      availability: freezed == availability
+          ? _value.availability
+          : availability // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -331,7 +338,8 @@ abstract class _$$CreateProductDtoImplCopyWith<$Res>
       String unit,
       String outletId,
       String? sku,
-      int? stock});
+      int? stock,
+      String? availability});
 }
 
 /// @nodoc
@@ -354,6 +362,7 @@ class __$$CreateProductDtoImplCopyWithImpl<$Res>
     Object? outletId = null,
     Object? sku = freezed,
     Object? stock = freezed,
+    Object? availability = freezed,
   }) {
     return _then(_$CreateProductDtoImpl(
       name: null == name
@@ -392,6 +401,10 @@ class __$$CreateProductDtoImplCopyWithImpl<$Res>
           ? _value.stock
           : stock // ignore: cast_nullable_to_non_nullable
               as int?,
+      availability: freezed == availability
+          ? _value.availability
+          : availability // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -408,7 +421,8 @@ class _$CreateProductDtoImpl implements _CreateProductDto {
       required this.unit,
       required this.outletId,
       this.sku,
-      this.stock});
+      this.stock,
+      this.availability});
 
   factory _$CreateProductDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateProductDtoImplFromJson(json);
@@ -431,10 +445,12 @@ class _$CreateProductDtoImpl implements _CreateProductDto {
   final String? sku;
   @override
   final int? stock;
+  @override
+  final String? availability;
 
   @override
   String toString() {
-    return 'CreateProductDto(name: $name, description: $description, price: $price, modal: $modal, categoryId: $categoryId, unit: $unit, outletId: $outletId, sku: $sku, stock: $stock)';
+    return 'CreateProductDto(name: $name, description: $description, price: $price, modal: $modal, categoryId: $categoryId, unit: $unit, outletId: $outletId, sku: $sku, stock: $stock, availability: $availability)';
   }
 
   @override
@@ -453,13 +469,15 @@ class _$CreateProductDtoImpl implements _CreateProductDto {
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
             (identical(other.sku, sku) || other.sku == sku) &&
-            (identical(other.stock, stock) || other.stock == stock));
+            (identical(other.stock, stock) || other.stock == stock) &&
+            (identical(other.availability, availability) ||
+                other.availability == availability));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name, description, price, modal,
-      categoryId, unit, outletId, sku, stock);
+      categoryId, unit, outletId, sku, stock, availability);
 
   @JsonKey(ignore: true)
   @override
@@ -486,7 +504,8 @@ abstract class _CreateProductDto implements CreateProductDto {
       required final String unit,
       required final String outletId,
       final String? sku,
-      final int? stock}) = _$CreateProductDtoImpl;
+      final int? stock,
+      final String? availability}) = _$CreateProductDtoImpl;
 
   factory _CreateProductDto.fromJson(Map<String, dynamic> json) =
       _$CreateProductDtoImpl.fromJson;
@@ -510,6 +529,8 @@ abstract class _CreateProductDto implements CreateProductDto {
   @override
   int? get stock;
   @override
+  String? get availability;
+  @override
   @JsonKey(ignore: true)
   _$$CreateProductDtoImplCopyWith<_$CreateProductDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -530,6 +551,7 @@ mixin _$UpdateProductDto {
   String? get outletId => throw _privateConstructorUsedError;
   String? get sku => throw _privateConstructorUsedError;
   int? get stock => throw _privateConstructorUsedError;
+  String? get availability => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -552,7 +574,8 @@ abstract class $UpdateProductDtoCopyWith<$Res> {
       String? unit,
       String? outletId,
       String? sku,
-      int? stock});
+      int? stock,
+      String? availability});
 }
 
 /// @nodoc
@@ -577,6 +600,7 @@ class _$UpdateProductDtoCopyWithImpl<$Res, $Val extends UpdateProductDto>
     Object? outletId = freezed,
     Object? sku = freezed,
     Object? stock = freezed,
+    Object? availability = freezed,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
@@ -615,6 +639,10 @@ class _$UpdateProductDtoCopyWithImpl<$Res, $Val extends UpdateProductDto>
           ? _value.stock
           : stock // ignore: cast_nullable_to_non_nullable
               as int?,
+      availability: freezed == availability
+          ? _value.availability
+          : availability // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -636,7 +664,8 @@ abstract class _$$UpdateProductDtoImplCopyWith<$Res>
       String? unit,
       String? outletId,
       String? sku,
-      int? stock});
+      int? stock,
+      String? availability});
 }
 
 /// @nodoc
@@ -659,6 +688,7 @@ class __$$UpdateProductDtoImplCopyWithImpl<$Res>
     Object? outletId = freezed,
     Object? sku = freezed,
     Object? stock = freezed,
+    Object? availability = freezed,
   }) {
     return _then(_$UpdateProductDtoImpl(
       name: freezed == name
@@ -697,6 +727,10 @@ class __$$UpdateProductDtoImplCopyWithImpl<$Res>
           ? _value.stock
           : stock // ignore: cast_nullable_to_non_nullable
               as int?,
+      availability: freezed == availability
+          ? _value.availability
+          : availability // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -713,7 +747,8 @@ class _$UpdateProductDtoImpl implements _UpdateProductDto {
       this.unit,
       this.outletId,
       this.sku,
-      this.stock});
+      this.stock,
+      this.availability});
 
   factory _$UpdateProductDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$UpdateProductDtoImplFromJson(json);
@@ -736,10 +771,12 @@ class _$UpdateProductDtoImpl implements _UpdateProductDto {
   final String? sku;
   @override
   final int? stock;
+  @override
+  final String? availability;
 
   @override
   String toString() {
-    return 'UpdateProductDto(name: $name, description: $description, price: $price, modal: $modal, categoryId: $categoryId, unit: $unit, outletId: $outletId, sku: $sku, stock: $stock)';
+    return 'UpdateProductDto(name: $name, description: $description, price: $price, modal: $modal, categoryId: $categoryId, unit: $unit, outletId: $outletId, sku: $sku, stock: $stock, availability: $availability)';
   }
 
   @override
@@ -758,13 +795,15 @@ class _$UpdateProductDtoImpl implements _UpdateProductDto {
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
             (identical(other.sku, sku) || other.sku == sku) &&
-            (identical(other.stock, stock) || other.stock == stock));
+            (identical(other.stock, stock) || other.stock == stock) &&
+            (identical(other.availability, availability) ||
+                other.availability == availability));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name, description, price, modal,
-      categoryId, unit, outletId, sku, stock);
+      categoryId, unit, outletId, sku, stock, availability);
 
   @JsonKey(ignore: true)
   @override
@@ -791,7 +830,8 @@ abstract class _UpdateProductDto implements UpdateProductDto {
       final String? unit,
       final String? outletId,
       final String? sku,
-      final int? stock}) = _$UpdateProductDtoImpl;
+      final int? stock,
+      final String? availability}) = _$UpdateProductDtoImpl;
 
   factory _UpdateProductDto.fromJson(Map<String, dynamic> json) =
       _$UpdateProductDtoImpl.fromJson;
@@ -814,6 +854,8 @@ abstract class _UpdateProductDto implements UpdateProductDto {
   String? get sku;
   @override
   int? get stock;
+  @override
+  String? get availability;
   @override
   @JsonKey(ignore: true)
   _$$UpdateProductDtoImplCopyWith<_$UpdateProductDtoImpl> get copyWith =>

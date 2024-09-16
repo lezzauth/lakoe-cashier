@@ -43,6 +43,7 @@ class CreateProductDto with _$CreateProductDto {
     required String outletId,
     String? sku,
     int? stock,
+    String? availability,
   }) = _CreateProductDto;
 
   factory CreateProductDto.fromJson(Map<String, Object?> json) =>
@@ -61,6 +62,7 @@ class UpdateProductDto with _$UpdateProductDto {
     String? outletId,
     String? sku,
     int? stock,
+    String? availability,
   }) = _UpdateProductDto;
 
   factory UpdateProductDto.fromJson(Map<String, Object?> json) =>
