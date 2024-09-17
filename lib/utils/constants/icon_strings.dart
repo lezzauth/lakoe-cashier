@@ -60,4 +60,9 @@ class TIcons {
   static const String document = "assets/icons/document.svg";
   static const String star = "assets/icons/star.svg";
   static const String shieldKeyhole = "assets/icons/shield-keyhole.svg";
+  static const String roundGraph = "assets/icons/round-graph.svg";
+  static const String pieChartOutline = "assets/icons/pie-chart-outline.svg";
+  static const String billCheckedOutline =
+      "assets/icons/bill-check-outline.svg";
+  static const String cardTransfer = "assets/icons/card-transfer.svg";
 }
