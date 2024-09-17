@@ -56,6 +56,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/screens/ne
 import 'package:point_of_sales_cashier/features/redirect/presentation/screens/redirect.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/screens/report_best_seller.dart';
+import 'package:point_of_sales_cashier/features/reports/presentation/screens/report_best_seller_detail.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/screens/report_master.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/screens/settings.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_cubit.dart';
@@ -222,6 +223,8 @@ class App extends StatelessWidget {
           // reports
           "/reports": (context) => const ReportMasterScreen(),
           "/reports/best_seller": (context) => const ReportBestSellerScreen(),
+          "/reports/best_seller/detail": (context) =>
+              const ReportBestSellerDetailScreen(),
         },
       ),
     );
