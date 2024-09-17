@@ -54,6 +54,10 @@ import 'package:point_of_sales_cashier/features/products/presentation/screens/pr
 import 'package:point_of_sales_cashier/features/products/presentation/screens/product_master.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
 import 'package:point_of_sales_cashier/features/redirect/presentation/screens/redirect.dart';
+import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/reports/presentation/screens/report_best_seller.dart';
+import 'package:point_of_sales_cashier/features/reports/presentation/screens/report_best_seller_detail.dart';
+import 'package:point_of_sales_cashier/features/reports/presentation/screens/report_master.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/screens/settings.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
@@ -118,6 +122,9 @@ class App extends StatelessWidget {
 
         // Charge Master
         BlocProvider(create: (context) => ChargeMasterCubit()),
+
+        // Report Master
+        BlocProvider(create: (context) => ReportMasterCubit()),
       ],
       child: MaterialApp(
         title: "Point of Sales",
@@ -212,6 +219,12 @@ class App extends StatelessWidget {
 
           // Profile & Account
           "/account": (context) => const AccountMasterScreen(),
+
+          // reports
+          "/reports": (context) => const ReportMasterScreen(),
+          "/reports/best_seller": (context) => const ReportBestSellerScreen(),
+          "/reports/best_seller/detail": (context) =>
+              const ReportBestSellerDetailScreen(),
         },
       ),
     );

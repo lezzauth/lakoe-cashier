@@ -106,56 +106,57 @@ class _DashboardState extends State<Dashboard> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 margin: const EdgeInsets.only(bottom: 12),
                 child: BlocBuilder<CashierReportCubit, CashierReportState>(
-                    builder: (context, state) => switch (state) {
-                          CashierReportLoadSuccess(:final report) => Column(
-                              children: [
-                                SalesSummary(
-                                  totalSales: report.total_sales,
-                                ),
-                                const SizedBox(height: 12),
-                                TransactionSummary(
-                                  totalTransactions: report.total_transactions,
-                                ),
-                              ],
-                            ),
-                          CashierReportLoadFailure(:final error) => Center(
-                              child: TextBodyS(
-                                error,
-                                color: TColors.error,
+                  builder: (context, state) => switch (state) {
+                    CashierReportLoadSuccess(:final report) => Column(
+                        children: [
+                          SalesSummary(
+                            totalSales: report.total_sales,
+                          ),
+                          const SizedBox(height: 12),
+                          TransactionSummary(
+                            totalTransactions: report.total_transactions,
+                          ),
+                        ],
+                      ),
+                    CashierReportLoadFailure(:final error) => Center(
+                        child: TextBodyS(
+                          error,
+                          color: TColors.error,
+                        ),
+                      ),
+                    _ => Shimmer.fromColors(
+                        baseColor: const Color(0xFFE8E9F1),
+                        highlightColor: const Color(0xFFF8F9FE),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 127,
+                              width: double.maxFinite,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16.0),
+                                color: TColors.neutralLightLightest,
+                                border: Border.all(
+                                    color: TColors.neutralLightMedium,
+                                    width: 1),
                               ),
                             ),
-                          _ => Shimmer.fromColors(
-                              baseColor: const Color(0xFFE8E9F1),
-                              highlightColor: const Color(0xFFF8F9FE),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: 127,
-                                    width: double.maxFinite,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                      color: TColors.neutralLightLightest,
-                                      border: Border.all(
-                                          color: TColors.neutralLightMedium,
-                                          width: 1),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Container(
-                                    height: 127,
-                                    width: double.maxFinite,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                      color: TColors.neutralLightLightest,
-                                      border: Border.all(
-                                          color: TColors.neutralLightMedium,
-                                          width: 1),
-                                    ),
-                                  ),
-                                ],
+                            const SizedBox(height: 12),
+                            Container(
+                              height: 127,
+                              width: double.maxFinite,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16.0),
+                                color: TColors.neutralLightLightest,
+                                border: Border.all(
+                                    color: TColors.neutralLightMedium,
+                                    width: 1),
                               ),
                             ),
-                        }),
+                          ],
+                        ),
+                      ),
+                  },
+                ),
               ),
             ],
           ),
