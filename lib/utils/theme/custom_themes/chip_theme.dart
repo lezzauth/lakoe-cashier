@@ -11,14 +11,14 @@ class TChipTheme {
       if (states.contains(WidgetState.selected)) {
         return const BorderSide(
           color: TColors.primary,
-          width: 0.5,
+          width: 1,
           style: BorderStyle.solid,
         );
       }
 
       return const BorderSide(
         color: TColors.neutralLightDark,
-        width: 0.5,
+        width: 1,
         style: BorderStyle.solid,
       );
     }),
@@ -27,7 +27,7 @@ class TChipTheme {
     ),
     labelStyle: GoogleFonts.inter(
       color: TColors.neutralDarkDarkest,
-      fontSize: TSizes.fontSizeBodyS,
+      fontSize: TSizes.fontSizeBodyM,
     ),
     backgroundColor: Colors.transparent,
     selectedColor: TColors.highlightLightest,

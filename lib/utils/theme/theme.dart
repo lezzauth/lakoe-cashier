@@ -6,6 +6,7 @@ import 'package:point_of_sales_cashier/utils/theme/custom_themes/checkbox_theme.
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/chip_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/elevated_button_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/outlined_button_theme.dart';
+import 'package:point_of_sales_cashier/utils/theme/custom_themes/radio_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/switch_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/tab_bar_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/text_button_theme.dart';
@@ -24,6 +25,7 @@ class TAppTheme {
     elevatedButtonTheme: TElevatedButtonTheme.lightTheme,
     inputDecorationTheme: TTextFieldTheme.lightTheme,
     checkboxTheme: TCheckboxTheme.lightTheme,
+    radioTheme: TRadioTheme.lightTheme,
     chipTheme: TChipTheme.lightTheme,
     colorScheme: const ColorScheme.light(
       brightness: Brightness.light,
