@@ -106,9 +106,8 @@ class _ProductNoteActionState extends State<ProductNoteAction> {
       );
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Wrap(
+      spacing: 8,
       children: [
         if (widget.notes.isNotEmpty)
           Text(
