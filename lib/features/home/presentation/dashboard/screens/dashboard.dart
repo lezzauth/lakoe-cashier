@@ -71,7 +71,7 @@ class _DashboardState extends State<Dashboard> {
         AuthReady authState = context.read<AuthCubit>().state as AuthReady;
         context.read<CashierReportCubit>().getReport(
             outletId: authState.outletId,
-            dto: GetOutletReportDto(
+            dto: GetOutletSalesDto(
               from: state.from,
               template: state.template,
               to: state.to,

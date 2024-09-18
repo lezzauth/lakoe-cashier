@@ -449,8 +449,8 @@ class TransactionTypeTag extends StatelessWidget {
       switch (tag) {
         case "CASH":
           return "Cash";
-        case "QRIS":
-          return "QRIS";
+        case "QR_CODE":
+          return "QR_CODE";
         case "DEBIT":
           return "Debit";
         default:
@@ -462,7 +462,7 @@ class TransactionTypeTag extends StatelessWidget {
       switch (tag) {
         case "CASH":
           return TColors.successLight;
-        case "QRIS":
+        case "QR_CODE":
           return TColors.infoLight;
         case "DEBIT":
           return TColors.warningLight;
@@ -475,7 +475,7 @@ class TransactionTypeTag extends StatelessWidget {
       switch (tag) {
         case "CASH":
           return TColors.successMedium;
-        case "QRIS":
+        case "QR_CODE":
           return TColors.infoMedium;
         case "DEBIT":
           return TColors.warningDark;
