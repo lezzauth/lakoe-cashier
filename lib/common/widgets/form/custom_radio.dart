@@ -24,17 +24,30 @@ class _CustomRadioState extends State<CustomRadio> {
 
     return InkWell(
       onTap: () => widget.onChanged(widget.value),
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       child: Container(
-        width: 26,
-        height: 26,
+        width: 24,
+        height: 24,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: selected ? TColors.primary : TColors.neutralLightMedium,
         ),
-        child: Icon(
-          Icons.circle,
-          size: selected ? 10 : 26,
-          color: TColors.neutralLightLightest,
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 200),
+          transitionBuilder: (child, animation) => ScaleTransition(
+            scale: animation,
+            child: child,
+          ),
+          child: selected
+              ? const Icon(Icons.circle,
+                  size: 10,
+                  color: TColors.neutralLightLightest,
+                  key: const ValueKey(true))
+              : const Icon(Icons.circle,
+                  size: 24,
+                  color: TColors.neutralLightLightest,
+                  key: ValueKey(false)),
         ),
       ),
     );

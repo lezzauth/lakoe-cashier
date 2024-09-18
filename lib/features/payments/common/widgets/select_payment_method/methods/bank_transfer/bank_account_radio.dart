@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/form/custom_radio.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/payments/data/models/bank_account_model.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -60,8 +61,9 @@ class BankAccountRadio extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      TextBodyS(
-                        "${account.number} • A/n ${account.name}",
+                      const SizedBox(height: 2),
+                      TextBodyM(
+                        "${account.number} • ${account.name}",
                         color: TColors.neutralDarkLightest,
                       ),
                     ],
@@ -69,14 +71,10 @@ class BankAccountRadio extends StatelessWidget {
                 ),
               ],
             )),
-            SizedBox(
-              height: 16,
-              width: 16,
-              child: Radio<String>(
-                groupValue: groupValue,
-                value: value,
-                onChanged: onChanged,
-              ),
+            CustomRadio(
+              value: value,
+              groupValue: groupValue,
+              onChanged: onChanged,
             ),
           ],
         ),

@@ -100,29 +100,15 @@ class _BankSelectListState extends State<BankSelectList> {
                       BankListModel bank =
                           _getFilteredBanks(banks).elementAt(index);
 
-                      return Container(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              width: 1,
-                              color: TColors.neutralLightMedium,
-                            ),
-                          ),
-                        ),
-                        child: BankRadioTile<String?>(
-                          value: bank.name,
-                          title: TextHeading4(
-                            bank.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          groupValue: _value,
-                          onChanged: (value) {
-                            setState(() {
-                              _value = value;
-                            });
-                          },
-                        ),
+                      return BankRadioTile<String?>(
+                        value: bank.name,
+                        title: bank.name,
+                        groupValue: _value,
+                        onChanged: (value) {
+                          setState(() {
+                            _value = value;
+                          });
+                        },
                       );
                     },
                   ),
@@ -137,14 +123,25 @@ class _BankSelectListState extends State<BankSelectList> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 12,
+            ),
+            decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  color: TColors.neutralLightMedium,
+                  width: 1.0,
+                ),
+              ),
+            ),
             child: SizedBox(
               height: 48,
               child: ElevatedButton(
                 onPressed: () {
                   widget.onChanged(_value);
                 },
-                child: const TextActionL("Pilih"),
+                child: const TextActionL("Lanjutkan"),
               ),
             ),
           ),
