@@ -21,6 +21,8 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
           (json['images'] as List<dynamic>).map((e) => e as String).toList(),
       outletId: json['outletId'] as String,
       availability: json['availability'] as String,
+      profit: json['profit'] as String,
+      favoriteCustomerId: json['favoriteCustomerId'] as String?,
     );
 
 Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
@@ -37,4 +39,44 @@ Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
       'images': instance.images,
       'outletId': instance.outletId,
       'availability': instance.availability,
+      'profit': instance.profit,
+      'favoriteCustomerId': instance.favoriteCustomerId,
+    };
+
+_$ProductOrderModelImpl _$$ProductOrderModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ProductOrderModelImpl(
+      orderId: json['orderId'] as String,
+      customerName: json['customerName'] as String,
+      createdAt: json['createdAt'] as String,
+      paymentMethod: json['paymentMethod'] as String,
+      itemTotal: (json['itemTotal'] as num).toInt(),
+      price: json['price'] as String,
+    );
+
+Map<String, dynamic> _$$ProductOrderModelImplToJson(
+        _$ProductOrderModelImpl instance) =>
+    <String, dynamic>{
+      'orderId': instance.orderId,
+      'customerName': instance.customerName,
+      'createdAt': instance.createdAt,
+      'paymentMethod': instance.paymentMethod,
+      'itemTotal': instance.itemTotal,
+      'price': instance.price,
+    };
+
+_$ListOrderByProductResponseImpl _$$ListOrderByProductResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ListOrderByProductResponseImpl(
+      nextCursor: json['nextCursor'] as String?,
+      data: (json['data'] as List<dynamic>)
+          .map((e) => ProductOrderModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$ListOrderByProductResponseImplToJson(
+        _$ListOrderByProductResponseImpl instance) =>
+    <String, dynamic>{
+      'nextCursor': instance.nextCursor,
+      'data': instance.data,
     };

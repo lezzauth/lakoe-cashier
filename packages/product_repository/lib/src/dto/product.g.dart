@@ -24,6 +24,22 @@ Map<String, dynamic> _$$FindAllProductDtoImplToJson(
       'availability': instance.availability,
     };
 
+_$ListOrderByProductDtoImpl _$$ListOrderByProductDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ListOrderByProductDtoImpl(
+      cursor: json['cursor'] as String?,
+      from: json['from'] as String?,
+      to: json['to'] as String?,
+    );
+
+Map<String, dynamic> _$$ListOrderByProductDtoImplToJson(
+        _$ListOrderByProductDtoImpl instance) =>
+    <String, dynamic>{
+      'cursor': instance.cursor,
+      'from': instance.from,
+      'to': instance.to,
+    };
+
 _$CreateProductDtoImpl _$$CreateProductDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$CreateProductDtoImpl(

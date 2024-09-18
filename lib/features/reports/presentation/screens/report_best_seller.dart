@@ -4,6 +4,7 @@ import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_state.dart';
+import 'package:point_of_sales_cashier/features/reports/data/arguments.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/list_tile/best_seller_product_tile.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
@@ -64,7 +65,10 @@ class ReportBestSeller extends StatelessWidget {
                     Navigator.pushNamed(
                       context,
                       "/reports/best_seller/detail",
-                      arguments: product,
+                      arguments: ReportProductSalesArguments(
+                        rank: index + 1,
+                        product: product,
+                      ),
                     );
                   },
                 ),

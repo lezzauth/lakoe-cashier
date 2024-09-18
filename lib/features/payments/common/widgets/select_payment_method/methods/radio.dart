@@ -70,7 +70,8 @@ class PaymentMethodRadio extends StatelessWidget {
             mobile: switch (value) {
               "CASH" => CashPaymentRadioContent(selected: selected),
               "DEBIT" => DebitPaymentRadioContent(selected: selected),
-              "BANK" => BankTransferPaymentRadioContent(selected: selected),
+              "BANK_TRANSFER" =>
+                BankTransferPaymentRadioContent(selected: selected),
               "QR_CODE" => QrisPaymentRadioContent(selected: selected),
               _ => const SizedBox(),
             },
@@ -78,7 +79,8 @@ class PaymentMethodRadio extends StatelessWidget {
               child: switch (value) {
                 "CASH" => CashPaymentRadioContent(selected: selected),
                 "DEBIT" => DebitPaymentRadioContent(selected: selected),
-                "BANK" => BankTransferPaymentRadioContent(selected: selected),
+                "BANK_TRANSFER" =>
+                  BankTransferPaymentRadioContent(selected: selected),
                 "QR_CODE" => QrisPaymentRadioContent(selected: selected),
                 _ => const SizedBox(),
               },

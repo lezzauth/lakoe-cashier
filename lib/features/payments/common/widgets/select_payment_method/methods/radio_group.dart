@@ -60,10 +60,10 @@ class PaymentMethodRadioGroup extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             PaymentMethodRadio(
-              value: "BANK",
+              value: "BANK_TRANSFER",
               groupValue: value,
               onChanged: onChanged,
-              limited: limitedValues.contains("BANK"),
+              limited: limitedValues.contains("BANK_TRANSFER"),
               onLimited: onLimitedPressed,
             ),
           ],
