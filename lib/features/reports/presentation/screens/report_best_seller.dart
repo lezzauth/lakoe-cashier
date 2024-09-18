@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_state.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/list_tile/best_seller_product_tile.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
@@ -11,9 +12,11 @@ class ReportBestSellerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
+    return BlocBuilder<ReportMasterCubit, ReportMasterState>(
       builder: (context, state) => switch (state) {
-        AuthReady() => const ReportBestSeller(),
+        ReportMasterLoadSuccess(:final report) => ReportBestSeller(
+            bestSalesProduct: report.bestSalesProduct,
+          ),
         _ => const Scaffold(body: Center(child: CircularProgressIndicator())),
       },
     );
@@ -21,7 +24,9 @@ class ReportBestSellerScreen extends StatelessWidget {
 }
 
 class ReportBestSeller extends StatelessWidget {
-  const ReportBestSeller({super.key});
+  const ReportBestSeller({super.key, required this.bestSalesProduct});
+
+  final List<OutletReportBestSalesProductModel> bestSalesProduct;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +41,11 @@ class ReportBestSeller extends StatelessWidget {
             return await Future.delayed(const Duration(milliseconds: 200));
           },
           child: ListView.builder(
+            itemCount: bestSalesProduct.length,
             itemBuilder: (context, index) {
+              OutletReportBestSalesProductModel product =
+                  bestSalesProduct.elementAt(index);
+
               return Container(
                 decoration: const BoxDecoration(
                   border: Border(
@@ -47,12 +56,16 @@ class ReportBestSeller extends StatelessWidget {
                   ),
                 ),
                 child: BestSellerProductTile(
-                  imageSrc: "https://picsum.photos/100?random=$index",
-                  sold: 89,
-                  name: "Produk ${index + 1}",
+                  imageSrc: product.images[0],
+                  sold: product.soldCount,
+                  name: product.name,
                   rank: index + 1,
                   onTap: () {
-                    Navigator.pushNamed(context, "/reports/best_seller/detail");
+                    Navigator.pushNamed(
+                      context,
+                      "/reports/best_seller/detail",
+                      arguments: product,
+                    );
                   },
                 ),
               );

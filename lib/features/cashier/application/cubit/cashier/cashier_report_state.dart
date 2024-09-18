@@ -14,7 +14,7 @@ final class CashierReportLoadInProgress extends CashierReportState {
 }
 
 final class CashierReportLoadSuccess extends CashierReportState {
-  final OutletReportModel report;
+  final OutletSalesModel report;
 
   CashierReportLoadSuccess({required this.report});
 
