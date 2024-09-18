@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:outlet_repository/outlet_repository.dart';
 
 sealed class ReportMasterState extends Equatable {}
 
@@ -13,8 +14,12 @@ final class ReportMasterLoadInProgress extends ReportMasterState {
 }
 
 final class ReportMasterLoadSuccess extends ReportMasterState {
+  final OutletReportModel report;
+
+  ReportMasterLoadSuccess({required this.report});
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [report];
 }
 
 final class ReportMasterLoadFailure extends ReportMasterState {
@@ -23,5 +28,5 @@ final class ReportMasterLoadFailure extends ReportMasterState {
   ReportMasterLoadFailure(this.error);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [error];
 }

@@ -9,7 +9,36 @@ import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class SalesTotalCard extends StatelessWidget {
-  const SalesTotalCard({super.key});
+  const SalesTotalCard({
+    super.key,
+    this.template = "TODAY",
+    this.duration,
+    this.totalSalesDiff,
+    required this.totalSales,
+  });
+
+  final String? template;
+  final int? duration;
+  final String totalSales;
+  final int? totalSalesDiff;
+
+  StatsType getType() {
+    if (totalSalesDiff == null) return StatsType.neutral;
+    if (totalSalesDiff! == 0) return StatsType.neutral;
+    if (totalSalesDiff!.isNegative) return StatsType.descend;
+    if (totalSalesDiff! > 0) return StatsType.ascend;
+
+    return StatsType.neutral;
+  }
+
+  String getComparisonText() {
+    if (template == "TODAY") return "Kemarin";
+    if (template == "THISWEEK") return "Minggu sebelumnya";
+    if (template == "THISMONTH") return "Bulan sebelumnya";
+    if (duration != null) return "$duration hari sebelumnya";
+
+    return "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +65,7 @@ class SalesTotalCard extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(bottom: 4),
                 child: TextHeading1(
-                  TFormatter.formatToRupiah(100000000),
+                  TFormatter.formatToRupiah(int.parse(totalSales)),
                   color: TColors.neutralLightLightest,
                 ),
               ),
@@ -44,11 +73,14 @@ class SalesTotalCard extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 8),
                 child: Row(
                   children: [
-                    const StatsBadge(type: StatsType.descend, value: "20%"),
+                    StatsBadge(
+                      type: getType(),
+                      value: "${totalSalesDiff ?? 0}%",
+                    ),
                     Container(
                       margin: const EdgeInsets.only(left: 8),
-                      child: const TextBodyM(
-                        "vs Kemarin",
+                      child: TextBodyM(
+                        "vs ${getComparisonText()}",
                         color: TColors.neutralDarkLightest,
                       ),
                     ),

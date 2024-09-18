@@ -203,9 +203,9 @@ Map<String, dynamic> _$$DetailCustomerOutletResponseImplToJson(
       'summary': instance.summary,
     };
 
-_$OutletReportModelImpl _$$OutletReportModelImplFromJson(
+_$OutletSalesModelImpl _$$OutletSalesModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$OutletReportModelImpl(
+    _$OutletSalesModelImpl(
       total_sales: OutletReportTotalSaleModel.fromJson(
           json['total_sales'] as Map<String, dynamic>),
       total_transactions: OutletReportTotalTransactionModel.fromJson(
@@ -214,8 +214,8 @@ _$OutletReportModelImpl _$$OutletReportModelImplFromJson(
           json['timeWindow'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$OutletReportModelImplToJson(
-        _$OutletReportModelImpl instance) =>
+Map<String, dynamic> _$$OutletSalesModelImplToJson(
+        _$OutletSalesModelImpl instance) =>
     <String, dynamic>{
       'total_sales': instance.total_sales,
       'total_transactions': instance.total_transactions,
@@ -279,4 +279,54 @@ Map<String, dynamic> _$$TimeRangeImplToJson(_$TimeRangeImpl instance) =>
     <String, dynamic>{
       'start': instance.start,
       'end': instance.end,
+    };
+
+_$OutletReportModelImpl _$$OutletReportModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$OutletReportModelImpl(
+      totalSales: json['totalSales'] as String,
+      averageSales: json['averageSales'] as String,
+      totalProductSold: (json['totalProductSold'] as num).toInt(),
+      totalTransaction: (json['totalTransaction'] as num).toInt(),
+      totalProfit: json['totalProfit'] as String,
+      totalPastSales: json['totalPastSales'] as String,
+      totalSalesDiff: (json['totalSalesDiff'] as num?)?.toInt(),
+      bestSalesProduct: (json['bestSalesProduct'] as List<dynamic>)
+          .map((e) => OutletReportBestSalesProductModel.fromJson(
+              e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$OutletReportModelImplToJson(
+        _$OutletReportModelImpl instance) =>
+    <String, dynamic>{
+      'totalSales': instance.totalSales,
+      'averageSales': instance.averageSales,
+      'totalProductSold': instance.totalProductSold,
+      'totalTransaction': instance.totalTransaction,
+      'totalProfit': instance.totalProfit,
+      'totalPastSales': instance.totalPastSales,
+      'totalSalesDiff': instance.totalSalesDiff,
+      'bestSalesProduct': instance.bestSalesProduct,
+    };
+
+_$OutletReportBestSalesProductModelImpl
+    _$$OutletReportBestSalesProductModelImplFromJson(
+            Map<String, dynamic> json) =>
+        _$OutletReportBestSalesProductModelImpl(
+          id: json['id'] as String,
+          name: json['name'] as String,
+          images: (json['images'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList(),
+          soldCount: (json['soldCount'] as num).toInt(),
+        );
+
+Map<String, dynamic> _$$OutletReportBestSalesProductModelImplToJson(
+        _$OutletReportBestSalesProductModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'images': instance.images,
+      'soldCount': instance.soldCount,
     };
