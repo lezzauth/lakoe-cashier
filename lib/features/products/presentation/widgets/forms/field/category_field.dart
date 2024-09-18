@@ -48,6 +48,7 @@ class CategoryField extends StatelessWidget {
               return Wrap(
                 direction: Axis.horizontal,
                 spacing: 8,
+                runSpacing: -4,
                 children: [
                   ...categories.map((category) {
                     bool selected = field.value == category.id;
@@ -64,10 +65,10 @@ class CategoryField extends StatelessWidget {
                       },
                     );
                   }),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 8),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
                     child: SizedBox(
-                      height: 32,
+                      height: 33,
                       child: OutlinedButton.icon(
                         onPressed: () {
                           _onCreateCategory(context);
