@@ -29,13 +29,8 @@ class ExploreProductAppbar extends StatelessWidget
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const ResponsiveLayout(
-                    mobile: CloseCashierButton(
-                      label: "Tutup",
-                    ),
-                    tablet: CloseCashierButton(
-                      label: "Tutup Kasir",
-                    ),
+                  const CloseCashierButton(
+                    label: "Tutup Kasir",
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
