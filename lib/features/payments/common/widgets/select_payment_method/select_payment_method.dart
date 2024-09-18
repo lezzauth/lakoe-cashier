@@ -64,7 +64,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
                       "CASH" => CashPaymentContent(
                           amount: widget.amount,
                         ),
-                      "QRIS" => const QrisPaymentContent(),
+                      "QR_CODE" => const QrisPaymentContent(),
                       "DEBIT" => const DebitPaymentContent(),
                       "BANK" => const BankTransferPaymentContent(),
                       _ => const SizedBox(),
