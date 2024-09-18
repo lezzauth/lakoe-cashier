@@ -346,3 +346,177 @@ abstract class _GetOutletReportDto implements GetOutletReportDto {
   _$$GetOutletReportDtoImplCopyWith<_$GetOutletReportDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+GetOutletSalesDto _$GetOutletSalesDtoFromJson(Map<String, dynamic> json) {
+  return _GetOutletSalesDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$GetOutletSalesDto {
+  String? get from => throw _privateConstructorUsedError;
+  String? get to => throw _privateConstructorUsedError;
+  String? get template => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GetOutletSalesDtoCopyWith<GetOutletSalesDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GetOutletSalesDtoCopyWith<$Res> {
+  factory $GetOutletSalesDtoCopyWith(
+          GetOutletSalesDto value, $Res Function(GetOutletSalesDto) then) =
+      _$GetOutletSalesDtoCopyWithImpl<$Res, GetOutletSalesDto>;
+  @useResult
+  $Res call({String? from, String? to, String? template});
+}
+
+/// @nodoc
+class _$GetOutletSalesDtoCopyWithImpl<$Res, $Val extends GetOutletSalesDto>
+    implements $GetOutletSalesDtoCopyWith<$Res> {
+  _$GetOutletSalesDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? from = freezed,
+    Object? to = freezed,
+    Object? template = freezed,
+  }) {
+    return _then(_value.copyWith(
+      from: freezed == from
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
+              as String?,
+      to: freezed == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String?,
+      template: freezed == template
+          ? _value.template
+          : template // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$GetOutletSalesDtoImplCopyWith<$Res>
+    implements $GetOutletSalesDtoCopyWith<$Res> {
+  factory _$$GetOutletSalesDtoImplCopyWith(_$GetOutletSalesDtoImpl value,
+          $Res Function(_$GetOutletSalesDtoImpl) then) =
+      __$$GetOutletSalesDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? from, String? to, String? template});
+}
+
+/// @nodoc
+class __$$GetOutletSalesDtoImplCopyWithImpl<$Res>
+    extends _$GetOutletSalesDtoCopyWithImpl<$Res, _$GetOutletSalesDtoImpl>
+    implements _$$GetOutletSalesDtoImplCopyWith<$Res> {
+  __$$GetOutletSalesDtoImplCopyWithImpl(_$GetOutletSalesDtoImpl _value,
+      $Res Function(_$GetOutletSalesDtoImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? from = freezed,
+    Object? to = freezed,
+    Object? template = freezed,
+  }) {
+    return _then(_$GetOutletSalesDtoImpl(
+      from: freezed == from
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
+              as String?,
+      to: freezed == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String?,
+      template: freezed == template
+          ? _value.template
+          : template // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$GetOutletSalesDtoImpl implements _GetOutletSalesDto {
+  const _$GetOutletSalesDtoImpl({this.from, this.to, this.template = "TODAY"});
+
+  factory _$GetOutletSalesDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GetOutletSalesDtoImplFromJson(json);
+
+  @override
+  final String? from;
+  @override
+  final String? to;
+  @override
+  @JsonKey()
+  final String? template;
+
+  @override
+  String toString() {
+    return 'GetOutletSalesDto(from: $from, to: $to, template: $template)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetOutletSalesDtoImpl &&
+            (identical(other.from, from) || other.from == from) &&
+            (identical(other.to, to) || other.to == to) &&
+            (identical(other.template, template) ||
+                other.template == template));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, from, to, template);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetOutletSalesDtoImplCopyWith<_$GetOutletSalesDtoImpl> get copyWith =>
+      __$$GetOutletSalesDtoImplCopyWithImpl<_$GetOutletSalesDtoImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GetOutletSalesDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _GetOutletSalesDto implements GetOutletSalesDto {
+  const factory _GetOutletSalesDto(
+      {final String? from,
+      final String? to,
+      final String? template}) = _$GetOutletSalesDtoImpl;
+
+  factory _GetOutletSalesDto.fromJson(Map<String, dynamic> json) =
+      _$GetOutletSalesDtoImpl.fromJson;
+
+  @override
+  String? get from;
+  @override
+  String? get to;
+  @override
+  String? get template;
+  @override
+  @JsonKey(ignore: true)
+  _$$GetOutletSalesDtoImplCopyWith<_$GetOutletSalesDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

@@ -35,3 +35,19 @@ Map<String, dynamic> _$$GetOutletReportDtoImplToJson(
       'to': instance.to,
       'template': instance.template,
     };
+
+_$GetOutletSalesDtoImpl _$$GetOutletSalesDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$GetOutletSalesDtoImpl(
+      from: json['from'] as String?,
+      to: json['to'] as String?,
+      template: json['template'] as String? ?? "TODAY",
+    );
+
+Map<String, dynamic> _$$GetOutletSalesDtoImplToJson(
+        _$GetOutletSalesDtoImpl instance) =>
+    <String, dynamic>{
+      'from': instance.from,
+      'to': instance.to,
+      'template': instance.template,
+    };
