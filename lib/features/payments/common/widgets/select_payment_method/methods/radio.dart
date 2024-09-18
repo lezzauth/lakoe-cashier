@@ -71,7 +71,7 @@ class PaymentMethodRadio extends StatelessWidget {
               "CASH" => CashPaymentRadioContent(selected: selected),
               "DEBIT" => DebitPaymentRadioContent(selected: selected),
               "BANK" => BankTransferPaymentRadioContent(selected: selected),
-              "QRIS" => QrisPaymentRadioContent(selected: selected),
+              "QR_CODE" => QrisPaymentRadioContent(selected: selected),
               _ => const SizedBox(),
             },
             tablet: Center(
@@ -79,7 +79,7 @@ class PaymentMethodRadio extends StatelessWidget {
                 "CASH" => CashPaymentRadioContent(selected: selected),
                 "DEBIT" => DebitPaymentRadioContent(selected: selected),
                 "BANK" => BankTransferPaymentRadioContent(selected: selected),
-                "QRIS" => QrisPaymentRadioContent(selected: selected),
+                "QR_CODE" => QrisPaymentRadioContent(selected: selected),
                 _ => const SizedBox(),
               },
             ),

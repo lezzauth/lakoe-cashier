@@ -50,3 +50,28 @@ extension GetOutletReportDtoQueryStringExtension on GetOutletReportDto {
         .join('&');
   }
 }
+
+@freezed
+class GetOutletSalesDto with _$GetOutletSalesDto {
+  const factory GetOutletSalesDto({
+    String? from,
+    String? to,
+    @Default("TODAY") String? template,
+  }) = _GetOutletSalesDto;
+
+  factory GetOutletSalesDto.fromJson(Map<String, Object?> json) =>
+      _$GetOutletSalesDtoFromJson(json);
+}
+
+extension GetOutletSalesDtoQueryStringExtension on GetOutletSalesDto {
+  String toQueryString() {
+    final Map<String, dynamic> queryParams = toJson();
+
+    queryParams.removeWhere((key, value) => value == null);
+
+    return queryParams.entries
+        .map((entry) =>
+            '${entry.key}=${Uri.encodeComponent(entry.value.toString())}')
+        .join('&');
+  }
+}
