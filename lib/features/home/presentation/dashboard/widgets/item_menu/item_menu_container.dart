@@ -23,13 +23,13 @@ class ItemMenuContainer extends StatelessWidget {
           ItemMenu(
             icon: TIcons.dashboardCustomer,
             label: "Pelanggan",
-            color: TColors.errorLight,
+            color: TColors.infoLight,
             routeName: "/customers",
           ),
           ItemMenu(
             icon: TIcons.dashboardReport,
             label: "Laporan",
-            color: TColors.infoLight,
+            color: TColors.errorLight,
             routeName: "/reports",
           ),
           ItemMenu(
