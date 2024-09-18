@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/features/orders/common/widgets/order_list_item/order_list_item.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_online/filter/order_online_filter.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_online/order_list/order_online_list_item.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_outlet/filter/order_outlet_filter.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 
@@ -25,7 +22,7 @@ class _OrderOnlineTabState extends State<OrderOnlineTab> {
       body: Scrollbar(
         child: RefreshIndicator(
           onRefresh: () async {
-            return await Future.delayed(Duration(seconds: 1));
+            return await Future.delayed(const Duration(seconds: 1));
           },
           backgroundColor: TColors.neutralLightLightest,
           child: Column(
@@ -66,7 +63,7 @@ class _OrderOnlineTabState extends State<OrderOnlineTab> {
                           ),
                           title: "Belum ada pesanan, nih!",
                           subTitle:
-                              "Saat ini belum ada pesanan masuk. Yuk, bikin pesanan pertama untuk hari ini.",
+                              "Saat ini belum ada pesanan masuk dari toko online kamu.",
                         ),
                       ),
                   ],

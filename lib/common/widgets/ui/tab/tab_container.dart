@@ -9,13 +9,12 @@ class TabContainer extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 48,
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16.0),
         child: Container(
-          height: 48,
+          height: 48.0,
           padding: const EdgeInsets.all(4.0),
           decoration: BoxDecoration(
             color: TColors.neutralLightLight,

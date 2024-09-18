@@ -51,11 +51,14 @@ class OrderMaster extends StatelessWidget {
           ],
         ),
       ),
-      body: const TabBarView(
-        children: [
-          OrderOutletTab(),
-          OrderOnlineTab(),
-        ],
+      body: const Padding(
+        padding: EdgeInsets.only(top: 4.0),
+        child: TabBarView(
+          children: [
+            OrderOutletTab(),
+            OrderOnlineTab(),
+          ],
+        ),
       ),
     );
   }
