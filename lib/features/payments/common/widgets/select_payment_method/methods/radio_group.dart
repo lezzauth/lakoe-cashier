@@ -42,10 +42,10 @@ class PaymentMethodRadioGroup extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               PaymentMethodRadio(
-                value: "QRIS",
+                value: "QR_CODE",
                 groupValue: value,
                 onChanged: onChanged,
-                limited: limitedValues.contains("QRIS"),
+                limited: limitedValues.contains("QR_CODE"),
                 onLimited: onLimitedPressed,
               ),
             ],

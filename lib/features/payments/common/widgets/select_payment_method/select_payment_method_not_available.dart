@@ -40,8 +40,8 @@ class SelectPaymentMethodNotAvailable extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(bottom: 4),
-                        child: TextHeading3(
+                        margin: const EdgeInsets.only(bottom: 4),
+                        child: const TextHeading3(
                           "Metode Pembayaran",
                           color: TColors.neutralDarkDark,
                         ),

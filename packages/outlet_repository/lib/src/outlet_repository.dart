@@ -10,9 +10,9 @@ abstract class OutletRepository {
     required String customerId,
     DetailCustomerOutletDto? dto,
   });
-  Future<OutletReportModel> getOutletReport({
+  Future<OutletReportModel> getOutletSales({
     required String outletId,
-    GetOutletReportDto? dto,
+    GetOutletSalesDto? dto,
   });
 }
 
@@ -56,11 +56,11 @@ class OutletRepositoryImpl implements OutletRepository {
   }
 
   @override
-  Future<OutletReportModel> getOutletReport(
-      {required String outletId, GetOutletReportDto? dto}) async {
+  Future<OutletReportModel> getOutletSales(
+      {required String outletId, GetOutletSalesDto? dto}) async {
     final options = await _getOptions();
     final response = await _dio.get(
-      "$_baseURL/$outletId/reports?${dto == null ? "" : dto.toQueryString()}",
+      "$_baseURL/$outletId/sales?${dto == null ? "" : dto.toQueryString()}",
       options: options,
     );
     return OutletReportModel.fromJson(response.data);
