@@ -50,8 +50,6 @@ class _ProductInformationFormState extends State<ProductInformationForm>
     {"id": "box", "name": "Box"},
     {"id": "gram", "name": "Gram"},
     {"id": "liter", "name": "Liter"},
-    {"id": "liter", "name": "Liter"},
-    {"id": "liter", "name": "Liter"},
   ];
 
   @override
@@ -210,7 +208,7 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 16.0),
+                  margin: const EdgeInsets.only(bottom: 8.0),
                   child: Row(
                     children: [
                       Expanded(
@@ -230,7 +228,7 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 16.0),
+                  margin: const EdgeInsets.only(bottom: 8.0),
                   child: Row(
                     children: [
                       Expanded(
