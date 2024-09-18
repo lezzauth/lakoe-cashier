@@ -50,6 +50,8 @@ class _ProductInformationFormState extends State<ProductInformationForm>
     {"id": "box", "name": "Box"},
     {"id": "gram", "name": "Gram"},
     {"id": "liter", "name": "Liter"},
+    {"id": "liter", "name": "Liter"},
+    {"id": "liter", "name": "Liter"},
   ];
 
   @override
@@ -246,6 +248,7 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                                   return Wrap(
                                     direction: Axis.horizontal,
                                     spacing: 8,
+                                    runSpacing: -4,
                                     children: [
                                       ..._units.map((unit) {
                                         bool selected =
@@ -263,28 +266,32 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                                           },
                                         );
                                       }),
-                                      SizedBox(
-                                        height: 36,
-                                        child: OutlinedButton.icon(
-                                          onPressed: () {},
-                                          label: const TextActionM(
-                                            "Buat Baru",
-                                            color: TColors.primary,
-                                          ),
-                                          style: const ButtonStyle(
-                                              padding: WidgetStatePropertyAll(
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 14.0)),
-                                              side: WidgetStatePropertyAll(
-                                                  BorderSide(
-                                                width: 1,
-                                                color: TColors.primary,
-                                              ))),
-                                          icon: const UiIcons(
-                                            TIcons.add,
-                                            height: 12,
-                                            width: 12,
-                                            color: TColors.primary,
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 8.0),
+                                        child: SizedBox(
+                                          height: 33,
+                                          child: OutlinedButton.icon(
+                                            onPressed: () {},
+                                            label: const TextActionM(
+                                              "Buat Baru",
+                                              color: TColors.primary,
+                                            ),
+                                            style: const ButtonStyle(
+                                                padding: WidgetStatePropertyAll(
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 14.0)),
+                                                side: WidgetStatePropertyAll(
+                                                    BorderSide(
+                                                  width: 1,
+                                                  color: TColors.primary,
+                                                ))),
+                                            icon: const UiIcons(
+                                              TIcons.add,
+                                              height: 12,
+                                              width: 12,
+                                              color: TColors.primary,
+                                            ),
                                           ),
                                         ),
                                       )
