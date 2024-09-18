@@ -210,6 +210,182 @@ abstract class _FindAllProductDto implements FindAllProductDto {
       throw _privateConstructorUsedError;
 }
 
+ListOrderByProductDto _$ListOrderByProductDtoFromJson(
+    Map<String, dynamic> json) {
+  return _ListOrderByProductDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ListOrderByProductDto {
+  String? get cursor => throw _privateConstructorUsedError;
+  String? get from => throw _privateConstructorUsedError;
+  String? get to => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ListOrderByProductDtoCopyWith<ListOrderByProductDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ListOrderByProductDtoCopyWith<$Res> {
+  factory $ListOrderByProductDtoCopyWith(ListOrderByProductDto value,
+          $Res Function(ListOrderByProductDto) then) =
+      _$ListOrderByProductDtoCopyWithImpl<$Res, ListOrderByProductDto>;
+  @useResult
+  $Res call({String? cursor, String? from, String? to});
+}
+
+/// @nodoc
+class _$ListOrderByProductDtoCopyWithImpl<$Res,
+        $Val extends ListOrderByProductDto>
+    implements $ListOrderByProductDtoCopyWith<$Res> {
+  _$ListOrderByProductDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cursor = freezed,
+    Object? from = freezed,
+    Object? to = freezed,
+  }) {
+    return _then(_value.copyWith(
+      cursor: freezed == cursor
+          ? _value.cursor
+          : cursor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      from: freezed == from
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
+              as String?,
+      to: freezed == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ListOrderByProductDtoImplCopyWith<$Res>
+    implements $ListOrderByProductDtoCopyWith<$Res> {
+  factory _$$ListOrderByProductDtoImplCopyWith(
+          _$ListOrderByProductDtoImpl value,
+          $Res Function(_$ListOrderByProductDtoImpl) then) =
+      __$$ListOrderByProductDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? cursor, String? from, String? to});
+}
+
+/// @nodoc
+class __$$ListOrderByProductDtoImplCopyWithImpl<$Res>
+    extends _$ListOrderByProductDtoCopyWithImpl<$Res,
+        _$ListOrderByProductDtoImpl>
+    implements _$$ListOrderByProductDtoImplCopyWith<$Res> {
+  __$$ListOrderByProductDtoImplCopyWithImpl(_$ListOrderByProductDtoImpl _value,
+      $Res Function(_$ListOrderByProductDtoImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cursor = freezed,
+    Object? from = freezed,
+    Object? to = freezed,
+  }) {
+    return _then(_$ListOrderByProductDtoImpl(
+      cursor: freezed == cursor
+          ? _value.cursor
+          : cursor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      from: freezed == from
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
+              as String?,
+      to: freezed == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ListOrderByProductDtoImpl implements _ListOrderByProductDto {
+  const _$ListOrderByProductDtoImpl({this.cursor, this.from, this.to});
+
+  factory _$ListOrderByProductDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ListOrderByProductDtoImplFromJson(json);
+
+  @override
+  final String? cursor;
+  @override
+  final String? from;
+  @override
+  final String? to;
+
+  @override
+  String toString() {
+    return 'ListOrderByProductDto(cursor: $cursor, from: $from, to: $to)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ListOrderByProductDtoImpl &&
+            (identical(other.cursor, cursor) || other.cursor == cursor) &&
+            (identical(other.from, from) || other.from == from) &&
+            (identical(other.to, to) || other.to == to));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, cursor, from, to);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ListOrderByProductDtoImplCopyWith<_$ListOrderByProductDtoImpl>
+      get copyWith => __$$ListOrderByProductDtoImplCopyWithImpl<
+          _$ListOrderByProductDtoImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ListOrderByProductDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ListOrderByProductDto implements ListOrderByProductDto {
+  const factory _ListOrderByProductDto(
+      {final String? cursor,
+      final String? from,
+      final String? to}) = _$ListOrderByProductDtoImpl;
+
+  factory _ListOrderByProductDto.fromJson(Map<String, dynamic> json) =
+      _$ListOrderByProductDtoImpl.fromJson;
+
+  @override
+  String? get cursor;
+  @override
+  String? get from;
+  @override
+  String? get to;
+  @override
+  @JsonKey(ignore: true)
+  _$$ListOrderByProductDtoImplCopyWith<_$ListOrderByProductDtoImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
 CreateProductDto _$CreateProductDtoFromJson(Map<String, dynamic> json) {
   return _CreateProductDto.fromJson(json);
 }

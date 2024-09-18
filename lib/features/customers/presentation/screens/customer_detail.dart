@@ -450,9 +450,11 @@ class TransactionTypeTag extends StatelessWidget {
         case "CASH":
           return "Cash";
         case "QR_CODE":
-          return "QR_CODE";
+          return "QRIS";
         case "DEBIT":
           return "Debit";
+        case "BANK_TRANSFER":
+          return "Bank Transfer";
         default:
           return "Cash";
       }
@@ -466,6 +468,8 @@ class TransactionTypeTag extends StatelessWidget {
           return TColors.infoLight;
         case "DEBIT":
           return TColors.warningLight;
+        case "BANK_TRANSFER":
+          return TColors.neutralLightMedium;
         default:
           return TColors.successLight;
       }
@@ -479,6 +483,8 @@ class TransactionTypeTag extends StatelessWidget {
           return TColors.infoMedium;
         case "DEBIT":
           return TColors.warningDark;
+        case "BANK_TRANSFER":
+          return TColors.neutralDarkDark;
         default:
           return TColors.successMedium;
       }

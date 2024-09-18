@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'product.g.dart';
@@ -19,6 +17,31 @@ class FindAllProductDto with _$FindAllProductDto {
 }
 
 extension QueryStringExtension on FindAllProductDto {
+  String toQueryString() {
+    final Map<String, dynamic> queryParams = toJson();
+
+    queryParams.removeWhere((key, value) => value == null);
+
+    return queryParams.entries
+        .map((entry) =>
+            '${entry.key}=${Uri.encodeComponent(entry.value.toString())}')
+        .join('&');
+  }
+}
+
+@freezed
+class ListOrderByProductDto with _$ListOrderByProductDto {
+  const factory ListOrderByProductDto({
+    String? cursor,
+    String? from,
+    String? to,
+  }) = _ListOrderByProductDto;
+
+  factory ListOrderByProductDto.fromJson(Map<String, Object?> json) =>
+      _$ListOrderByProductDtoFromJson(json);
+}
+
+extension ListOrderByProductDtoQueryStringExtension on ListOrderByProductDto {
   String toQueryString() {
     final Map<String, dynamic> queryParams = toJson();
 

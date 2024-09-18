@@ -14,6 +14,7 @@ import 'package:point_of_sales_cashier/features/reports/application/cubit/report
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_filter_state.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_state.dart';
+import 'package:point_of_sales_cashier/features/reports/data/arguments.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/cards/product_transaction_report_card.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/cards/report_card.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/cards/sales_total_card.dart';
@@ -244,7 +245,10 @@ class _ReportMasterState extends State<ReportMaster> {
                               Navigator.pushNamed(
                                 context,
                                 "/reports/best_seller/detail",
-                                arguments: product,
+                                arguments: ReportProductSalesArguments(
+                                  rank: index + 1,
+                                  product: product,
+                                ),
                               );
                             },
                           );

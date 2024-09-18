@@ -18,8 +18,36 @@ class ProductModel with _$ProductModel {
     required List<String> images,
     required String outletId,
     required String availability,
+    required String profit,
+    String? favoriteCustomerId,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, Object?> json) =>
       _$ProductModelFromJson(json);
+}
+
+@freezed
+class ProductOrderModel with _$ProductOrderModel {
+  const factory ProductOrderModel({
+    required String orderId,
+    required String customerName,
+    required String createdAt,
+    required String paymentMethod,
+    required int itemTotal,
+    required String price,
+  }) = _ProductOrderModel;
+
+  factory ProductOrderModel.fromJson(Map<String, Object?> json) =>
+      _$ProductOrderModelFromJson(json);
+}
+
+@freezed
+class ListOrderByProductResponse with _$ListOrderByProductResponse {
+  const factory ListOrderByProductResponse({
+    String? nextCursor,
+    required List<ProductOrderModel> data,
+  }) = _ListOrderByProductResponse;
+
+  factory ListOrderByProductResponse.fromJson(Map<String, Object?> json) =>
+      _$ListOrderByProductResponseFromJson(json);
 }

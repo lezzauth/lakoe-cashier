@@ -7,12 +7,17 @@ import 'package:token_provider/token_provider.dart';
 
 abstract class ProductRepository {
   Future<List<ProductModel>> findAll(FindAllProductDto dto);
+  Future<ProductModel> findOne(String id);
   Future<ProductModel> create(List<File> images, CreateProductDto dto);
   Future<ProductModel> update(
     String id, {
     List<File>? images,
     required UpdateProductDto dto,
   });
+  Future<ListOrderByProductResponse> listOrderByProduct(
+    String id,
+    ListOrderByProductDto dto,
+  );
 }
 
 class ProductRepositoryImpl implements ProductRepository {
@@ -36,6 +41,17 @@ class ProductRepositoryImpl implements ProductRepository {
     return response.data!
         .map((element) => ProductModel.fromJson(element))
         .toList();
+  }
+
+  @override
+  Future<ProductModel> findOne(String id) async {
+    final Options options = await _getOptions();
+    final response = await _dio.get(
+      "$_baseURL/$id",
+      options: options,
+    );
+
+    return ProductModel.fromJson(response.data);
   }
 
   @override
@@ -81,5 +97,19 @@ class ProductRepositoryImpl implements ProductRepository {
       options: options,
     );
     return ProductModel.fromJson(response.data);
+  }
+
+  @override
+  Future<ListOrderByProductResponse> listOrderByProduct(
+    String id,
+    ListOrderByProductDto dto,
+  ) async {
+    final Options options = await _getOptions();
+    final response = await _dio.get(
+      "$_baseURL/$id/orders?${dto.toQueryString()}",
+      options: options,
+    );
+
+    return ListOrderByProductResponse.fromJson(response.data);
   }
 }
