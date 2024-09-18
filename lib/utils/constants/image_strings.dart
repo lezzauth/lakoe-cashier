@@ -27,6 +27,8 @@ class TImages {
       "assets/images/loyalty-banner-waves.svg";
   static const String lakoeCoin = "assets/images/lakoe-coin.svg";
   static const String lakoeQrIcon = "assets/images/lakoe-qr-icon.svg";
+  static const String placeholderBannerNotification =
+      "assets/images/placeholder-banner-notification.png";
 
   // empty list
   static const String bankAccountEmpty = "assets/images/bank-account-empty.svg";
@@ -43,6 +45,9 @@ class TImages {
       "assets/logos/package/grow-logo-level.png";
   static const String proLogoPackage =
       "assets/logos/package/pro-logo-level.png";
+  static const String liteIcon = "assets/logos/package/icon-lite.png";
+  static const String growIcon = "assets/logos/package/icon-grow.png";
+  static const String proIcon = "assets/logos/package/icon-pro.png";
 
   // banks
   static const String bankBCALogo = "assets/images/bank-bca-logo.svg";

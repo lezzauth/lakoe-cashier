@@ -45,6 +45,8 @@ class TIcons {
   static const String billChecked = "assets/icons/bill-check.svg";
   static const String grid = "assets/icons/grid.svg";
   static const String scanner = "assets/icons/scanner.svg";
+  static const String cardIn = "assets/icons/card-in.svg";
+  static const String billCross = "assets/icons/bill-cross.svg";
 
   static const String card = "assets/icons/card.svg";
   static const String filters = "assets/icons/filters.svg";
