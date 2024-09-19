@@ -66,7 +66,7 @@ class _SuccessConfirmationPaymentContentState
         return TPaymentMethodName.cash;
       case "DEBIT":
         return TPaymentMethodName.debit;
-      case "BANK":
+      case "BANK_TRANSFER":
         return TPaymentMethodName.bankTransfer;
       case "QR_CODE":
         return TPaymentMethodName.qris;

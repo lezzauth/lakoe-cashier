@@ -66,7 +66,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
                         ),
                       "QR_CODE" => const QrisPaymentContent(),
                       "DEBIT" => const DebitPaymentContent(),
-                      "BANK" => const BankTransferPaymentContent(),
+                      "BANK_TRANSFER" => const BankTransferPaymentContent(),
                       _ => const SizedBox(),
                     },
                   ),

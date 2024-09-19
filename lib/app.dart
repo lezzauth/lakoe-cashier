@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/account_master.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
@@ -56,8 +57,9 @@ import 'package:point_of_sales_cashier/features/products/presentation/screens/pr
 import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
 import 'package:point_of_sales_cashier/features/redirect/presentation/screens/redirect.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/reports/data/arguments.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/screens/report_best_seller.dart';
-import 'package:point_of_sales_cashier/features/reports/presentation/screens/report_best_seller_detail.dart';
+import 'package:point_of_sales_cashier/features/reports/presentation/screens/report_product_sales.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/screens/report_master.dart';
 import 'package:point_of_sales_cashier/features/settings/presentation/screens/settings.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_cubit.dart';
@@ -224,8 +226,10 @@ class App extends StatelessWidget {
           // reports
           "/reports": (context) => const ReportMasterScreen(),
           "/reports/best_seller": (context) => const ReportBestSellerScreen(),
-          "/reports/best_seller/detail": (context) =>
-              const ReportBestSellerDetailScreen(),
+          "/reports/best_seller/detail": (context) => ReportProductSalesScreen(
+                arguments: ModalRoute.of(context)!.settings.arguments
+                    as ReportProductSalesArguments,
+              ),
 
           // Notifications
           "/notifications": (context) => const NotificationMasterScreen(),

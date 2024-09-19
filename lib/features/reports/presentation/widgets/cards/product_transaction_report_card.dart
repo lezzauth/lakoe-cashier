@@ -6,7 +6,14 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 class ProductTransactionReportCard extends StatelessWidget {
-  const ProductTransactionReportCard({super.key});
+  const ProductTransactionReportCard({
+    super.key,
+    required this.totalProductSold,
+    required this.totalTransaction,
+  });
+
+  final int totalProductSold;
+  final int totalTransaction;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +40,8 @@ class ProductTransactionReportCard extends StatelessWidget {
                   color: TColors.neutralDarkLightest,
                 ),
               ),
-              const TextHeading2(
-                "27",
+              TextHeading2(
+                "$totalProductSold",
                 color: TColors.neutralDarkDark,
               )
             ],
@@ -63,8 +70,8 @@ class ProductTransactionReportCard extends StatelessWidget {
                   color: TColors.neutralDarkLightest,
                 ),
               ),
-              const TextHeading2(
-                "16",
+              TextHeading2(
+                "$totalTransaction",
                 color: TColors.neutralDarkDark,
               )
             ],
