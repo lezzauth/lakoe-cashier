@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
@@ -11,13 +13,13 @@ import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 class SalesTotalCard extends StatelessWidget {
   const SalesTotalCard({
     super.key,
-    this.template = "TODAY",
+    this.preset = "TODAY",
     this.duration,
     this.totalSalesDiff,
     required this.totalSales,
   });
 
-  final String? template;
+  final String? preset;
   final int? duration;
   final String totalSales;
   final int? totalSalesDiff;
@@ -32,9 +34,9 @@ class SalesTotalCard extends StatelessWidget {
   }
 
   String getComparisonText() {
-    if (template == "TODAY") return "Kemarin";
-    if (template == "THISWEEK") return "Minggu sebelumnya";
-    if (template == "THISMONTH") return "Bulan sebelumnya";
+    if (preset == "TODAY") return "Kemarin";
+    if (preset == "THISWEEK") return "Minggu sebelumnya";
+    if (preset == "THISMONTH") return "Bulan sebelumnya";
     if (duration != null) return "$duration hari sebelumnya";
 
     return "";
@@ -42,6 +44,7 @@ class SalesTotalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('SalesTotalCard: $preset');
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
