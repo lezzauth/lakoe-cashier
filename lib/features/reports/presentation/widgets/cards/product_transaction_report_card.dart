@@ -43,6 +43,8 @@ class ProductTransactionReportCard extends StatelessWidget {
               TextHeading2(
                 "$totalProductSold",
                 color: TColors.neutralDarkDark,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               )
             ],
           ),
@@ -73,6 +75,8 @@ class ProductTransactionReportCard extends StatelessWidget {
               TextHeading2(
                 "$totalTransaction",
                 color: TColors.neutralDarkDark,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               )
             ],
           ),

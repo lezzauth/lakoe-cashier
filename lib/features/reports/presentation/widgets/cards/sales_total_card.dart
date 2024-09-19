@@ -55,42 +55,48 @@ class SalesTotalCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 4),
-                child: const TextHeading5(
-                  "Total Penjualan",
-                  color: TColors.neutralDarkLightest,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 4),
+                  child: const TextHeading5(
+                    "Total Penjualan",
+                    color: TColors.neutralDarkLightest,
+                  ),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(bottom: 4),
-                child: TextHeading1(
-                  TFormatter.formatToRupiah(int.parse(totalSales)),
-                  color: TColors.neutralLightLightest,
+                Container(
+                  margin: const EdgeInsets.only(bottom: 4),
+                  child: TextHeading1(
+                    TFormatter.formatToRupiah(int.parse(totalSales)),
+                    color: TColors.neutralLightLightest,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(top: 8),
-                child: Row(
-                  children: [
-                    StatsBadge(
-                      type: getType(),
-                      value: "${totalSalesDiff ?? 0}%",
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 8),
-                      child: TextBodyM(
-                        "vs ${getComparisonText()}",
-                        color: TColors.neutralDarkLightest,
+                Container(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Row(
+                    children: [
+                      StatsBadge(
+                        type: getType(),
+                        value: "${totalSalesDiff ?? 0}%",
                       ),
-                    ),
-                  ],
+                      Container(
+                        margin: const EdgeInsets.only(left: 8),
+                        child: TextBodyM(
+                          "vs ${getComparisonText()}",
+                          color: TColors.neutralDarkLightest,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Container(
             height: 40,
