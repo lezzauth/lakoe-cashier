@@ -26,6 +26,7 @@ class TIcons {
       "assets/icons/graph-stats-descend.svg";
   static const String search = "assets/icons/search.svg";
   static const String bill = "assets/icons/bill.svg";
+  static const String billAlt = "assets/icons/bill-alt.svg";
   static const String profile = "assets/icons/profile.svg";
   static const String trash = "assets/icons/trash.svg";
   static const String add = "assets/icons/add.svg";
@@ -67,4 +68,8 @@ class TIcons {
   static const String billCheckedOutline =
       "assets/icons/bill-check-outline.svg";
   static const String cardTransfer = "assets/icons/card-transfer.svg";
+  static const String letterOutline = "assets/icons/letter-outline.svg";
+  static const String passwordOutline = "assets/icons/password-outline.svg";
+  static const String smartphoneOutline = "assets/icons/smartphone-outline.svg";
+  static const String userOutline = "assets/icons/user-outline.svg";
 }

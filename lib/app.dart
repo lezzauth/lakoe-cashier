@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
+import 'package:point_of_sales_cashier/features/account/presentation/screens/account_edit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/account_master.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_cubit.dart';
@@ -222,6 +223,7 @@ class App extends StatelessWidget {
 
           // Profile & Account
           "/account": (context) => const AccountMasterScreen(),
+          "/account/edit": (context) => const AccountEditScreen(),
 
           // reports
           "/reports": (context) => const ReportMasterScreen(),
