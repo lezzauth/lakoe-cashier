@@ -93,7 +93,6 @@ class _DashboardState extends State<Dashboard> {
                 child: const DashboardBanner(),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
                 margin: const EdgeInsets.only(bottom: 12),
                 child: const DashboardFilter(),
               ),
