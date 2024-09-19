@@ -92,10 +92,8 @@ class _DatePresetRangeFilterState extends State<DatePresetRangeFilter> {
                     : TextBodyM(template.label),
                 selected: selected,
                 onSelected: (value) {
-                  // context
-                  //     .read<CashierReportFilterCubit>()
-                  //     .setFilter(template: template.value);
-                  widget.onChanged(template: template.value);
+                  widget.onChanged(
+                      template: template.value, preset: template.value);
                 },
               );
             }).toList(),
