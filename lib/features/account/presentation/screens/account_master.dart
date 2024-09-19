@@ -5,10 +5,8 @@ import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/widgets/appbar/account_appbar.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/widgets/section/section_card.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/widgets/section/section_item.dart';
@@ -46,6 +44,11 @@ class _AccountMasterScreenState extends State<AccountMasterScreen>
   }
 
   List<_OtherItem> otherSettingItems = [
+    _OtherItem(
+      title: "Paket & Riwayat",
+      routeName: "/",
+      iconSrc: TIcons.billAlt,
+    ),
     _OtherItem(
       title: "Kasih Rating",
       routeName: "/",
@@ -92,8 +95,8 @@ class _AccountMasterScreenState extends State<AccountMasterScreen>
                 children: [
                   const SizedBox(height: 120),
                   const ProfileCard(),
-                  const SizedBox(height: 12),
-                  const BalanceCard(),
+                  // const SizedBox(height: 12),
+                  // const BalanceCard(),
                   const SizedBox(height: 12),
                   const OutletCard(),
                   const SizedBox(height: 12),
@@ -159,55 +162,58 @@ class ProfileCard extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16.0),
-              color: TColors.neutralLightLightest,
-            ),
-            padding: const EdgeInsets.symmetric(
-              vertical: 16.0,
-              horizontal: 20.0,
-            ),
-            child: Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: TColors.neutralLightDark,
-                      width: 1.0,
+          InkWell(
+            onTap: () => Navigator.pushNamed(context, "/account/edit"),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.0),
+                color: TColors.neutralLightLightest,
+              ),
+              padding: const EdgeInsets.symmetric(
+                vertical: 16.0,
+                horizontal: 20.0,
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: TColors.neutralLightDark,
+                        width: 1.0,
+                      ),
+                    ),
+                    child: const CircleAvatar(
+                      backgroundImage: AssetImage(TImages.defaultAvatar),
+                      radius: 46 / 2,
+                      backgroundColor: TColors.neutralLightLight,
                     ),
                   ),
-                  child: const CircleAvatar(
-                    backgroundImage: AssetImage(TImages.defaultAvatar),
-                    radius: 46 / 2,
-                    backgroundColor: TColors.neutralLightLight,
+                  const SizedBox(width: 16.0),
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextHeading3(
+                          "Tauhid",
+                          color: TColors.neutralDarkDark,
+                        ),
+                        SizedBox(height: 4.0),
+                        TextBodyS(
+                          "62812-3456-7890",
+                          color: TColors.neutralDarkLight,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(width: 16.0),
-                const Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextHeading3(
-                        "Tauhid",
-                        color: TColors.neutralDarkDark,
-                      ),
-                      SizedBox(height: 4.0),
-                      TextBodyS(
-                        "62812-3456-7890",
-                        color: TColors.neutralDarkLight,
-                      ),
-                    ],
+                  const UiIcons(
+                    TIcons.arrowRight,
+                    height: 20,
+                    width: 20,
+                    color: TColors.primary,
                   ),
-                ),
-                const UiIcons(
-                  TIcons.arrowRight,
-                  height: 20,
-                  width: 20,
-                  color: TColors.primary,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
