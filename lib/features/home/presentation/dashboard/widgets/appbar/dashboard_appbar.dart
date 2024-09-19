@@ -25,7 +25,8 @@ class DashboardAppbar extends StatelessWidget implements PreferredSizeWidget {
               spacing: 20.0,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                const UiIcons(
+                UiIcons(
+                  onTap: () => Navigator.pushNamed(context, "/notifications"),
                   TIcons.bell,
                   color: TColors.neutralDarkDarkest,
                 ),
