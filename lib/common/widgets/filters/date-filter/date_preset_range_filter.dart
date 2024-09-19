@@ -75,30 +75,41 @@ class _DatePresetRangeFilterState extends State<DatePresetRangeFilter> {
   Widget build(BuildContext context) {
     bool isDateRangeSelected = widget.template == null && widget.preset != null;
 
-    return SingleChildScrollView(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Wrap(
-            spacing: 8.0,
-            children: _templates.map((template) {
-              bool selected = widget.template == template.value;
-              return InputChip(
-                label: selected
-                    ? TextHeading4(
-                        template.label,
-                        color: TColors.primary,
-                      )
-                    : TextBodyM(template.label),
-                selected: selected,
-                onSelected: (value) {
-                  widget.onChanged(
-                      template: template.value, preset: template.value);
-                },
-              );
-            }).toList(),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            clipBehavior: Clip.none,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Wrap(
+                spacing: 8.0,
+                children: _templates.map((template) {
+                  bool selected = widget.template == template.value;
+                  return InputChip(
+                    label: selected
+                        ? TextHeading4(
+                            template.label,
+                            color: TColors.primary,
+                          )
+                        : TextBodyM(template.label),
+                    selected: selected,
+                    onSelected: (value) {
+                      widget.onChanged(
+                          template: template.value, preset: template.value);
+                    },
+                  );
+                }).toList(),
+              ),
+            ),
           ),
-          SizedBox(
+        ),
+        Container(
+          color: Colors.white,
+          padding: const EdgeInsets.only(right: 20, left: 8, top: 4, bottom: 4),
+          child: SizedBox(
             height: 34,
             width: 34,
             child: InputChip(
@@ -117,12 +128,11 @@ class _DatePresetRangeFilterState extends State<DatePresetRangeFilter> {
               selected: isDateRangeSelected,
               onSelected: (value) {
                 _onPickDateRange();
-                // Navigator.pushNamed(context, "/cashier/transaction-date");
               },
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

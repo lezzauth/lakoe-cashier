@@ -62,31 +62,43 @@ class _DashboardFilterState extends State<DashboardFilter> {
         builder: (context, state) {
       bool isDateRangeSelected = state.template == null && state.preset != null;
 
-      return SingleChildScrollView(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Wrap(
-              spacing: 8.0,
-              children: _templates.map((template) {
-                bool selected = state.template == template.value;
-                return InputChip(
-                  label: selected
-                      ? TextHeading4(
-                          template.label,
-                          color: TColors.primary,
-                        )
-                      : TextBodyM(template.label),
-                  selected: selected,
-                  onSelected: (value) {
-                    context
-                        .read<CashierReportFilterCubit>()
-                        .setFilter(template: template.value);
-                  },
-                );
-              }).toList(),
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24),
+                child: Wrap(
+                  spacing: 8.0,
+                  children: _templates.map((template) {
+                    bool selected = state.template == template.value;
+                    return InputChip(
+                      label: selected
+                          ? TextHeading4(
+                              template.label,
+                              color: TColors.primary,
+                            )
+                          : TextBodyM(template.label),
+                      selected: selected,
+                      onSelected: (value) {
+                        context
+                            .read<CashierReportFilterCubit>()
+                            .setFilter(template: template.value);
+                      },
+                    );
+                  }).toList(),
+                ),
+              ),
             ),
-            SizedBox(
+          ),
+
+          Container(
+            color: Colors.white,
+            padding:
+                const EdgeInsets.only(right: 24, left: 8, top: 4, bottom: 4),
+            child: SizedBox(
               height: 34,
               width: 34,
               child: InputChip(
@@ -109,62 +121,62 @@ class _DashboardFilterState extends State<DashboardFilter> {
                 },
               ),
             ),
-            // SizedBox(
-            //   height: 32,
-            //   width: 32,
-            //   child: OutlinedButton(
-            //     onPressed: () async {
-            //       Navigator.pushNamed(context, "/cashier/transaction-date");
-            //       // final picked = await showDateRangePicker(
-            //       //   context: context,
-            //       //   lastDate: DateTime(DateTime.now().year + 1),
-            //       //   firstDate: DateTime(DateTime.now().year),
-            //       //   builder: (context, child) {
-            //       //     return Theme(
-            //       //       data: TAppTheme.lightTheme.copyWith(
-            //       //         primaryColor: TColors.primary,
-            //       //         // scaffoldBackgroundColor: TColors.errorMedium,
-            //       //         dividerColor: TColors.error,
-            //       //         colorScheme: TAppTheme.lightTheme.colorScheme.copyWith(
-            //       //           primary: TColors.primary,
-            //       //           onSecondary: TColors.error,
-            //       //           secondaryContainer: TColors.highlightLightest,
-            //       //         ),
-            //       //       ),
-            //       //       child: child!,
-            //       //     );
-            //       //   },
-            //       // );
-            //     },
-            //     style: const ButtonStyle(
-            //       padding: WidgetStatePropertyAll(
-            //         EdgeInsets.all(0),
-            //       ),
-            //       side: WidgetStatePropertyAll(
-            //         BorderSide(
-            //           color: TColors.neutralLightDark,
-            //           width: 0.5,
-            //         ),
-            //       ),
-            //       shape: WidgetStatePropertyAll(
-            //         RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.all(
-            //             Radius.circular(
-            //               12.0,
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //     child: const UiIcons(
-            //       TIcons.calendar,
-            //       height: 16,
-            //       width: 16,
-            //     ),
-            //   ),
-            // ),
-          ],
-        ),
+          ),
+          // SizedBox(
+          //   height: 32,
+          //   width: 32,
+          //   child: OutlinedButton(
+          //     onPressed: () async {
+          //       Navigator.pushNamed(context, "/cashier/transaction-date");
+          //       // final picked = await showDateRangePicker(
+          //       //   context: context,
+          //       //   lastDate: DateTime(DateTime.now().year + 1),
+          //       //   firstDate: DateTime(DateTime.now().year),
+          //       //   builder: (context, child) {
+          //       //     return Theme(
+          //       //       data: TAppTheme.lightTheme.copyWith(
+          //       //         primaryColor: TColors.primary,
+          //       //         // scaffoldBackgroundColor: TColors.errorMedium,
+          //       //         dividerColor: TColors.error,
+          //       //         colorScheme: TAppTheme.lightTheme.colorScheme.copyWith(
+          //       //           primary: TColors.primary,
+          //       //           onSecondary: TColors.error,
+          //       //           secondaryContainer: TColors.highlightLightest,
+          //       //         ),
+          //       //       ),
+          //       //       child: child!,
+          //       //     );
+          //       //   },
+          //       // );
+          //     },
+          //     style: const ButtonStyle(
+          //       padding: WidgetStatePropertyAll(
+          //         EdgeInsets.all(0),
+          //       ),
+          //       side: WidgetStatePropertyAll(
+          //         BorderSide(
+          //           color: TColors.neutralLightDark,
+          //           width: 0.5,
+          //         ),
+          //       ),
+          //       shape: WidgetStatePropertyAll(
+          //         RoundedRectangleBorder(
+          //           borderRadius: BorderRadius.all(
+          //             Radius.circular(
+          //               12.0,
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //     child: const UiIcons(
+          //       TIcons.calendar,
+          //       height: 16,
+          //       width: 16,
+          //     ),
+          //   ),
+          // ),
+        ],
       );
     });
   }
