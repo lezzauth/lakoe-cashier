@@ -47,6 +47,7 @@ class _BillEditScreenState extends State<BillEditScreen> {
             horizontal: 20,
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 margin: const EdgeInsets.only(bottom: 16.0),
@@ -70,9 +71,9 @@ class _BillEditScreenState extends State<BillEditScreen> {
                   ],
                 ),
               ),
-              Expanded(
+              Flexible(
                 child: SizedBox(
-                  height: 300,
+                  height: 500,
                   child: ShaderMask(
                     shaderCallback: (bounds) => LinearGradient(
                       begin: Alignment.topCenter,

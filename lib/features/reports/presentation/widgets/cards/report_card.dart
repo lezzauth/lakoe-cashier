@@ -52,6 +52,8 @@ class ReportCard extends StatelessWidget {
                   child: TextBodyS(
                     label,
                     color: TColors.neutralDarkLightest,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               )
@@ -63,6 +65,8 @@ class ReportCard extends StatelessWidget {
                 child: TextHeading2(
                   amount,
                   color: TColors.neutralDarkDark,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               )
             ],

@@ -4,8 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_state.dart';
 import 'package:point_of_sales_cashier/features/reports/data/arguments.dart';
