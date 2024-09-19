@@ -138,15 +138,15 @@ class DetailCustomerOutletResponse with _$DetailCustomerOutletResponse {
 // Outlet Report
 
 @freezed
-class OutletReportModel with _$OutletReportModel {
-  const factory OutletReportModel({
+class OutletSalesModel with _$OutletSalesModel {
+  const factory OutletSalesModel({
     required OutletReportTotalSaleModel total_sales,
     required OutletReportTotalTransactionModel total_transactions,
     required OutletReportTimeWindow timeWindow,
-  }) = _OutletReportModel;
+  }) = _OutletSalesModel;
 
-  factory OutletReportModel.fromJson(Map<String, Object?> json) =>
-      _$OutletReportModelFromJson(json);
+  factory OutletSalesModel.fromJson(Map<String, Object?> json) =>
+      _$OutletSalesModelFromJson(json);
 }
 
 @freezed
@@ -195,4 +195,36 @@ class TimeRange with _$TimeRange {
 
   factory TimeRange.fromJson(Map<String, dynamic> json) =>
       _$TimeRangeFromJson(json);
+}
+
+@freezed
+class OutletReportModel with _$OutletReportModel {
+  const factory OutletReportModel({
+    required String totalSales,
+    required String averageSales,
+    required int totalProductSold,
+    required int totalTransaction,
+    required String totalProfit,
+    required String totalPastSales,
+    required int? totalSalesDiff,
+    required List<OutletReportBestSalesProductModel> bestSalesProduct,
+  }) = _OutletReportModel;
+
+  factory OutletReportModel.fromJson(Map<String, dynamic> json) =>
+      _$OutletReportModelFromJson(json);
+}
+
+@freezed
+class OutletReportBestSalesProductModel
+    with _$OutletReportBestSalesProductModel {
+  const factory OutletReportBestSalesProductModel({
+    required String id,
+    required String name,
+    required List<String> images,
+    required int soldCount,
+  }) = _OutletReportBestSalesProductModel;
+
+  factory OutletReportBestSalesProductModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$OutletReportBestSalesProductModelFromJson(json);
 }

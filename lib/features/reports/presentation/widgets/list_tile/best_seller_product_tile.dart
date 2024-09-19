@@ -45,6 +45,7 @@ class BestSellerProductTile extends StatelessWidget {
         style: GoogleFonts.inter(
           fontWeight: FontWeight.w900,
           color: TColors.neutralDarkMedium,
+          fontSize: 12,
         ),
       );
     }
