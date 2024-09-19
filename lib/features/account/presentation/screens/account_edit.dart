@@ -37,7 +37,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
       icon: TIcons.passwordOutline,
       field: "PIN",
       value: "",
-      routeName: "/account/edit/name",
+      routeName: "/account/edit/pin",
     ),
   ];
   @override
