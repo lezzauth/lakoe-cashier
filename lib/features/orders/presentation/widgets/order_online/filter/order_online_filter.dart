@@ -25,6 +25,7 @@ class _OrderOnlineFilterState extends State<OrderOnlineFilter> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
+      clipBehavior: Clip.none,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

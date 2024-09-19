@@ -30,6 +30,7 @@ class _RolesFieldState extends State<RolesField> {
         return Wrap(
           direction: Axis.horizontal,
           spacing: 8,
+          runSpacing: -4,
           children: [
             ...roles.map(
               (role) {
@@ -48,8 +49,8 @@ class _RolesFieldState extends State<RolesField> {
                 );
               },
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
               child: SizedBox(
                 height: 32,
                 child: OutlinedButton.icon(

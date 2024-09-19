@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:point_of_sales_cashier/common/widgets/form/custom_radio.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class BankRadioTile<T> extends StatelessWidget {
   final T value;
   final T groupValue;
-  final Widget title;
+  final String title;
   final ValueChanged<T?> onChanged;
-  final BoxDecoration? decoration;
 
   const BankRadioTile({
     super.key,
@@ -13,30 +16,33 @@ class BankRadioTile<T> extends StatelessWidget {
     required this.groupValue,
     required this.onChanged,
     required this.title,
-    this.decoration,
   });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => onChanged(value),
-      child: Container(
-        padding: const EdgeInsets.only(left: 16, right: 4),
-        height: 48,
-        decoration: decoration,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(child: title),
-            Radio<T>(
-              groupValue: groupValue,
-              value: value,
-              onChanged: onChanged,
-            ),
-          ],
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ListTile(
+          onTap: () => onChanged(value),
+          title: TextHeading4(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          trailing: CustomRadio(
+            value: value,
+            groupValue: groupValue,
+            onChanged: onChanged,
+          ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         ),
-      ),
+        const Divider(
+          color: TColors.neutralLightMedium,
+          indent: 16.0,
+          height: 1,
+        ),
+      ],
     );
   }
 }

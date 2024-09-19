@@ -40,6 +40,7 @@ import 'package:point_of_sales_cashier/features/employees/presentation/screens/n
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/open_cashier_pin.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
+import 'package:point_of_sales_cashier/features/notifications/presentation/screens/notification_master.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_detail.dart';
@@ -229,6 +230,9 @@ class App extends StatelessWidget {
                 arguments: ModalRoute.of(context)!.settings.arguments
                     as ReportProductSalesArguments,
               ),
+
+          // Notifications
+          "/notifications": (context) => const NotificationMasterScreen(),
         },
       ),
     );
