@@ -11,16 +11,17 @@ class ReportProductSalesPaginationCubit
 
   Future<void> fetchData({
     required String productId,
-    String? cursor,
+    ListOrderByProductDto? dto,
   }) async {
-    if (cursor == null) {
+    if (dto?.cursor == null) {
       emit(ReportProductSalesPaginationLoadInProgress());
     }
 
     try {
       final response = await _productRepository.listOrderByProduct(
         productId,
-        ListOrderByProductDto(cursor: cursor),
+        ListOrderByProductDto(
+            cursor: dto?.cursor, from: dto?.from, to: dto?.to),
       );
 
       if (state is ReportProductSalesPaginationLoadSuccess) {
@@ -30,14 +31,22 @@ class ReportProductSalesPaginationCubit
           ReportProductSalesPaginationLoadSuccess(
             data: List.from(currentState.data)..addAll(response.data),
             productId: productId,
-            nextCursor: response.nextCursor,
+            dto: ListOrderByProductDto(
+              cursor: response.nextCursor,
+              from: currentState.dto?.from,
+              to: currentState.dto?.to,
+            ),
           ),
         );
       } else {
         emit(ReportProductSalesPaginationLoadSuccess(
           data: response.data,
           productId: productId,
-          nextCursor: response.nextCursor,
+          dto: ListOrderByProductDto(
+            cursor: response.nextCursor,
+            from: dto?.from,
+            to: dto?.to,
+          ),
         ));
       }
     } catch (e) {
@@ -50,18 +59,22 @@ class ReportProductSalesPaginationCubit
         state is! ReportProductSalesPaginationLoadMore) {
       final currentState = state as ReportProductSalesPaginationLoadSuccess;
 
-      if (currentState.nextCursor != null) {
+      if (currentState.dto?.cursor != null) {
         emit(ReportProductSalesPaginationLoadMore(
           data: currentState.data,
           productId: currentState.productId,
-          nextCursor: currentState.nextCursor,
+          dto: currentState.dto,
         ));
 
         fetchData(
           productId: currentState.productId,
-          cursor: currentState.nextCursor,
+          dto: currentState.dto,
         );
       }
     }
+  }
+
+  void reset() {
+    emit(ReportProductSalesPaginationInitial());
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/filters/date-filter/date_preset_range_filter.dart';
@@ -21,6 +22,7 @@ import 'package:point_of_sales_cashier/features/reports/presentation/widgets/car
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/list_tile/best_seller_product_tile.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class ReportMasterScreen extends StatelessWidget {
@@ -233,26 +235,64 @@ class _ReportMasterState extends State<ReportMaster> {
                         ),
                       ),
                       if (report.bestSalesProduct.isNotEmpty)
-                        ...report.bestSalesProduct.take(3).map((product) {
-                          int index = report.bestSalesProduct.indexOf(product);
+                        ...report.bestSalesProduct.take(3).map(
+                          (product) {
+                            int index =
+                                report.bestSalesProduct.indexOf(product);
 
-                          return BestSellerProductTile(
-                            imageSrc: product.images[0],
-                            sold: product.soldCount,
-                            name: product.name,
-                            rank: index + 1,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                "/reports/best_seller/detail",
-                                arguments: ReportProductSalesArguments(
-                                  rank: index + 1,
-                                  product: product,
+                            return BestSellerProductTile(
+                              imageSrc: product.images[0],
+                              sold: product.soldCount,
+                              name: product.name,
+                              rank: index + 1,
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  "/reports/best_seller/detail",
+                                  arguments: ReportProductSalesArguments(
+                                    rank: index + 1,
+                                    product: product,
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        )
+                      else
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 32,
+                            vertical: 20,
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 20),
+                                child: SvgPicture.asset(
+                                  TImages.productEmpty,
+                                  height: 101.45,
+                                  width: 140,
+                                  fit: BoxFit.cover,
                                 ),
-                              );
-                            },
-                          );
-                        })
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 4),
+                                child: const TextHeading3(
+                                  "Belum ada yang laku, nih!",
+                                  color: TColors.neutralDarkDarkest,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 265,
+                                child: TextBodyS(
+                                  "Kamu saat ini belum memiliki penjualan produk apapun",
+                                  color: TColors.neutralDarkLight,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                     ],
                   ),
                 ReportMasterLoadFailure(:final error) => Center(

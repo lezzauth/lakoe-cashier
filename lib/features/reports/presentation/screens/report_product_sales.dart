@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/filters/date-filter/date_range_filter_chip.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
@@ -11,16 +10,16 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
-import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_product_sales/report_product_sales_cubit.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_product_sales/report_product_sales_pagination_cubit.dart';
+import 'package:point_of_sales_cashier/features/reports/application/cubit/report_product_sales/report_product_sales_pagination_filter_cubit.dart';
+import 'package:point_of_sales_cashier/features/reports/application/cubit/report_product_sales/report_product_sales_pagination_filter_state.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_product_sales/report_product_sales_pagination_state.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_product_sales/report_product_sales_state.dart';
 import 'package:point_of_sales_cashier/features/reports/data/arguments.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/cards/purchase_history_summary_card.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/product_order_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:product_repository/product_repository.dart';
 
@@ -35,6 +34,8 @@ class ReportProductSalesScreen extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => ReportProductSalesCubit()),
         BlocProvider(create: (context) => ReportProductSalesPaginationCubit()),
+        BlocProvider(
+            create: (context) => ReportProductSalesPaginationFilterCubit()),
       ],
       child: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) => switch (state) {
@@ -111,157 +112,85 @@ class _ReportProductSalesState extends State<ReportProductSales> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppbar(
-        title: "Laporan Penjualan Produk",
-      ),
-      body: Scrollbar(
-        child: RefreshIndicator(
-          backgroundColor: TColors.neutralLightLightest,
-          onRefresh: () async {
-            return await Future.delayed(const Duration(milliseconds: 200));
-          },
-          child: BlocBuilder<ReportProductSalesCubit, ReportProductSalesState>(
-            builder: (context, state) => switch (state) {
-              ReportProductSalesLoadSuccess(:final product) => CustomScrollView(
-                  controller: _scrollController,
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Container(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                          top: 12,
-                          bottom: 20,
-                        ),
-                        margin: const EdgeInsets.only(bottom: 12),
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              width: 4,
-                              color: TColors.neutralLightMedium,
+    return BlocListener<ReportProductSalesPaginationFilterCubit,
+        ReportProductSalesPaginationFilterState>(
+      listener: (context, state) {
+        context.read<ReportProductSalesPaginationCubit>().reset();
+
+        context.read<ReportProductSalesPaginationCubit>().fetchData(
+              productId: widget.arguments.product.id,
+              dto: ListOrderByProductDto(from: state.from, to: state.to),
+            );
+      },
+      child: Scaffold(
+        appBar: const CustomAppbar(
+          title: "Laporan Penjualan Produk",
+        ),
+        body: Scrollbar(
+          child: RefreshIndicator(
+            backgroundColor: TColors.neutralLightLightest,
+            onRefresh: () async {
+              return await Future.delayed(const Duration(milliseconds: 200));
+            },
+            child:
+                BlocBuilder<ReportProductSalesCubit, ReportProductSalesState>(
+              builder: (context, state) => switch (state) {
+                ReportProductSalesLoadSuccess(:final product) =>
+                  CustomScrollView(
+                    controller: _scrollController,
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Container(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            top: 12,
+                            bottom: 20,
+                          ),
+                          margin: const EdgeInsets.only(bottom: 12),
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                width: 4,
+                                color: TColors.neutralLightMedium,
+                              ),
                             ),
                           ),
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    margin: const EdgeInsets.only(right: 12),
-                                    child: Image.network(
-                                      "https://picsum.photos/100",
-                                      height: 44,
-                                      width: 44,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        TextHeading4(
-                                          product.name,
-                                          color: TColors.neutralDarkDarkest,
-                                        ),
-                                        TextBodyM(
-                                          TFormatter.formatToRupiah(
-                                            int.parse(
-                                              product.price,
-                                            ),
-                                          ),
-                                          color: TColors.neutralDarkLight,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            _buildRank(widget.arguments.rank)
-                          ],
-                        ),
-                      ),
-                    ),
-                    SliverToBoxAdapter(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(top: 6, bottom: 8),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const TextHeading3(
-                                    "Riwayat Pembelian",
-                                    color: TColors.neutralDarkDarkest,
-                                  ),
-                                  TextBodyS(
-                                    "Terjual ${widget.arguments.product.soldCount} item",
-                                    color: TColors.neutralDarkLight,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8,
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: PurchaseHistorySummaryCard(
-                                      title: "Total Keuntungan",
-                                      value: TFormatter.formatToRupiah(
-                                        int.parse(product.profit),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      margin: const EdgeInsets.only(right: 12),
+                                      child: Image.network(
+                                        "https://picsum.photos/100",
+                                        height: 44,
+                                        width: 44,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: PurchaseHistorySummaryCard(
-                                      title: "Pembeli Favorit",
-                                      value: product.favoriteCustomerId == null
-                                          ? "-"
-                                          : "Umum",
-                                      onTap: () {
-                                        //
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: SingleChildScrollView(
-                                child: Row(
-                                  children: [
-                                    InputChip(
-                                      onPressed: () {
-                                        //
-                                      },
-                                      label: const Row(
+                                    Expanded(
+                                      child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          TextBodyM("Semua Tanggal"),
-                                          SizedBox(width: 8),
-                                          UiIcons(
-                                            TIcons.arrowDown,
-                                            height: 12,
-                                            width: 12,
-                                            color: TColors.neutralDarkLightest,
+                                          TextHeading4(
+                                            product.name,
+                                            color: TColors.neutralDarkDarkest,
+                                          ),
+                                          TextBodyM(
+                                            TFormatter.formatToRupiah(
+                                              int.parse(
+                                                product.price,
+                                              ),
+                                            ),
+                                            color: TColors.neutralDarkLight,
                                           ),
                                         ],
                                       ),
@@ -269,35 +198,126 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                   ],
                                 ),
                               ),
-                            ),
-                          ],
+                              _buildRank(widget.arguments.rank)
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    BlocBuilder<ReportProductSalesPaginationCubit,
-                            ReportProductSalesPaginationState>(
+                      SliverToBoxAdapter(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Container(
+                                margin:
+                                    const EdgeInsets.only(top: 6, bottom: 8),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const TextHeading3(
+                                      "Riwayat Pembelian",
+                                      color: TColors.neutralDarkDarkest,
+                                    ),
+                                    TextBodyS(
+                                      "Terjual ${widget.arguments.product.soldCount} item",
+                                      color: TColors.neutralDarkLight,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: PurchaseHistorySummaryCard(
+                                        title: "Total Keuntungan",
+                                        value: TFormatter.formatToRupiah(
+                                          int.parse(product.profit),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: PurchaseHistorySummaryCard(
+                                        title: "Pembeli Favorit",
+                                        value:
+                                            product.favoriteCustomerId == null
+                                                ? "-"
+                                                : "Umum",
+                                        onTap: () {
+                                          //
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8),
+                                child: SingleChildScrollView(
+                                  child: Row(
+                                    children: [
+                                      BlocBuilder<
+                                          ReportProductSalesPaginationFilterCubit,
+                                          ReportProductSalesPaginationFilterState>(
+                                        builder: (context, filterState) {
+                                          return DateRangeFilterChip(
+                                            onChanged: (from, to) {
+                                              context
+                                                  .read<
+                                                      ReportProductSalesPaginationFilterCubit>()
+                                                  .setFilter(
+                                                    from: from,
+                                                    to: to,
+                                                  );
+                                            },
+                                            from: filterState.from,
+                                            to: filterState.to,
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      BlocBuilder<ReportProductSalesPaginationCubit,
+                          ReportProductSalesPaginationState>(
                         builder: (context, paginationState) =>
                             switch (paginationState) {
-                              ReportProductSalesPaginationLoadSuccess() =>
-                                SliverList.builder(
-                                  itemCount: paginationState.data.length,
-                                  itemBuilder: (context, index) {
-                                    ProductOrderModel order =
-                                        paginationState.data.elementAt(index);
+                          ReportProductSalesPaginationLoadSuccess() =>
+                            SliverList.builder(
+                              itemCount: paginationState.data.length,
+                              itemBuilder: (context, index) {
+                                ProductOrderModel order =
+                                    paginationState.data.elementAt(index);
 
-                                    return ProductOrderItem(order: order);
-                                  },
-                                ),
-                              _ => const Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                            })
-                  ],
-                ),
-              _ => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-            },
+                                return ProductOrderItem(order: order);
+                              },
+                            ),
+                          _ => const SliverToBoxAdapter(
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                        },
+                      )
+                    ],
+                  ),
+                _ => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+              },
+            ),
           ),
         ),
       ),
