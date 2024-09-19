@@ -32,13 +32,11 @@ class BillListItem extends StatelessWidget {
             children: [
               Expanded(
                 flex: 3,
-                child: Expanded(
-                  child: TextSmall(
-                    itemName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    isBold: isBold,
-                  ),
+                child: TextSmall(
+                  itemName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  isBold: isBold,
                 ),
               ),
               const SizedBox(width: 4),

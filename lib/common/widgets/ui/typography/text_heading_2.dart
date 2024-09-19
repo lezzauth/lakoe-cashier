@@ -7,9 +7,19 @@ class TextHeading2 extends StatelessWidget {
   final FontWeight fontWeight;
   final double fontSize = TSizes.fontSizeHeading2;
   final Color? color;
+  final int? maxLines;
+  final TextOverflow? overflow;
+  final TextAlign? textAlign;
 
-  const TextHeading2(this.data,
-      {super.key, this.fontWeight = FontWeight.w900, this.color});
+  const TextHeading2(
+    this.data, {
+    super.key,
+    this.fontWeight = FontWeight.w900,
+    this.color,
+    this.maxLines,
+    this.overflow,
+    this.textAlign,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +30,10 @@ class TextHeading2 extends StatelessWidget {
         fontWeight: fontWeight,
         fontSize: fontSize,
       ),
+      maxLines: maxLines,
+      softWrap: true,
+      overflow: overflow,
+      textAlign: textAlign,
     );
   }
 }

@@ -91,34 +91,31 @@ class _ReportMasterState extends State<ReportMaster> {
                 ReportMasterLoadSuccess(:final report) => Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: BlocBuilder<ReportMasterFilterCubit,
-                            ReportMasterFilterState>(builder: (context, state) {
-                          return DatePresetRangeFilter(
-                            onChanged: ({
-                              duration,
-                              from,
-                              preset,
-                              template,
-                              to,
-                            }) {
-                              context.read<ReportMasterFilterCubit>().setFilter(
-                                    duration: duration,
-                                    from: from,
-                                    preset: preset,
-                                    template: template,
-                                    to: to,
-                                  );
-                            },
-                            duration: state.duration,
-                            from: state.from,
-                            preset: state.preset,
-                            template: state.template,
-                            to: state.to,
-                          );
-                        }),
-                      ),
+                      BlocBuilder<ReportMasterFilterCubit,
+                          ReportMasterFilterState>(builder: (context, state) {
+                        return DatePresetRangeFilter(
+                          onChanged: ({
+                            duration,
+                            from,
+                            preset,
+                            template,
+                            to,
+                          }) {
+                            context.read<ReportMasterFilterCubit>().setFilter(
+                                  duration: duration,
+                                  from: from,
+                                  preset: preset,
+                                  template: template,
+                                  to: to,
+                                );
+                          },
+                          duration: state.duration,
+                          from: state.from,
+                          preset: state.preset,
+                          template: state.template,
+                          to: state.to,
+                        );
+                      }),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: SizedBox(
@@ -174,7 +171,7 @@ class _ReportMasterState extends State<ReportMaster> {
                                   width: 20,
                                   color: TColors.primary,
                                 ),
-                                label: "Rata2 Nilai Transaksi",
+                                label: "Rata2 Transaksi",
                                 amount: TFormatter.formatToRupiah(
                                   report.averageSales == "NaN"
                                       ? 0
