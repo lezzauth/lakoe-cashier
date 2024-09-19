@@ -134,6 +134,7 @@ class _ReportMasterState extends State<ReportMaster> {
                                       from: from,
                                       template: template,
                                       to: to,
+                                      preset: template,
                                     );
                               },
                               duration: state.duration,
@@ -152,7 +153,7 @@ class _ReportMasterState extends State<ReportMaster> {
                             ReportMasterFilterState>(
                           builder: (context, filterState) {
                             return SalesTotalCard(
-                              template: filterState.template,
+                              preset: filterState.preset,
                               totalSales: report.totalSales,
                               duration: filterState.duration,
                               totalSalesDiff: report.totalSalesDiff,
