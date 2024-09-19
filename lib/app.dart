@@ -6,6 +6,7 @@ import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/account_edit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/account_master.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/form/name_edit.dart';
+import 'package:point_of_sales_cashier/features/account/presentation/screens/form/phone_number_edit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/screens/completing_data.dart';
@@ -226,6 +227,8 @@ class App extends StatelessWidget {
           "/account": (context) => const AccountMasterScreen(),
           "/account/edit": (context) => const AccountEditScreen(),
           "/account/edit/name": (context) => const NameEditScreen(),
+          "/account/edit/phone_number": (context) =>
+              const PhoneNumberEditScreen(),
 
           // reports
           "/reports": (context) => const ReportMasterScreen(),

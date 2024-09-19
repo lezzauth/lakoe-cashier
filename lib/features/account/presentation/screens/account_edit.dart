@@ -25,7 +25,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
       icon: TIcons.smartphoneOutline,
       field: "Nomor WA",
       value: "62812-3456-7890",
-      routeName: "/account/edit/name",
+      routeName: "/account/edit/phone_number",
     ),
     _ItemAccountEditModel(
       icon: TIcons.letterOutline,
