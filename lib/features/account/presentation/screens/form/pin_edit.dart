@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/dotted_pin.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/number_pad.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/general_information.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 
 class PinEditScreen extends StatefulWidget {
   const PinEditScreen({super.key});
@@ -55,7 +57,24 @@ class _PinEditScreenState extends State<PinEditScreen> {
                   DottedPin(
                     length: 6,
                     controller: _pinController,
-                    onCompleted: (value) {},
+                    onCompleted: (value) {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return GeneralInformation(
+                            imageSrc: TImages.successIllustration,
+                            title: "PIN kamu berhasil diubah",
+                            description:
+                                "Saat ini kamu harus menggunakan PIN terbaru setiap kali mau akses aplikasi.",
+                            onRequest: () {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                            requestTitle: "Selesai",
+                          );
+                        },
+                      );
+                    },
                   ),
                 ],
               ),
