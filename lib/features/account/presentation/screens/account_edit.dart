@@ -31,7 +31,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
       icon: TIcons.letterOutline,
       field: "Email",
       value: "-",
-      routeName: "/account/edit/name",
+      routeName: "/account/edit/email",
     ),
     _ItemAccountEditModel(
       icon: TIcons.passwordOutline,
