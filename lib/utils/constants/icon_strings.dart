@@ -1,5 +1,5 @@
 class TIcons {
-  static const String dashboardCustomer = "assets/icons/customer.svg";
+  static const String dashboardCustomer = "assets/icons/contact.svg";
   static const String dashboardProduct = "assets/icons/product.svg";
   static const String dashboardQROrder = "assets/icons/qr-order.svg";
   static const String dashboardReport = "assets/icons/report.svg";

@@ -92,8 +92,10 @@ class MainMenu extends StatelessWidget {
                             margin: const EdgeInsets.only(
                               bottom: 12,
                             ),
-                            child: const UiIcons(
-                              TIcons.lock,
+                            child: UiIcons(
+                              state is CashierOpened
+                                  ? TIcons.lock
+                                  : TIcons.cashier,
                               color: TColors.neutralLightLightest,
                             ),
                           ),

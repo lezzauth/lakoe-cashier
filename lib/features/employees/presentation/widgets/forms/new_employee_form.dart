@@ -53,11 +53,11 @@ class _NewEmployeeFormState extends State<NewEmployeeForm> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const FormLabel("Nama Produk"),
+                        const FormLabel("Nama Karyawan"),
                         FormBuilderTextField(
                           name: "name",
                           decoration: const InputDecoration(
-                            hintText: "Contoh: Es Teh",
+                            hintText: "Masukan nama karyawan",
                           ),
                           validator: FormBuilderValidators.required(
                               errorText: ErrorTextStrings.required()),
@@ -69,7 +69,7 @@ class _NewEmployeeFormState extends State<NewEmployeeForm> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(bottom: 16.0),
+              margin: const EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: [
                   Expanded(

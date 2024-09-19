@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:point_of_sales_cashier/common/widgets/form/custom_radio.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class SortRadioTile<T> extends StatelessWidget {
   final T value;
   final T groupValue;
-  final Widget title;
+  final String title;
   final ValueChanged<T?> onChanged;
   final BoxDecoration? decoration;
 
@@ -18,25 +21,28 @@ class SortRadioTile<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => onChanged(value),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        height: 52,
-        decoration: decoration,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ListTile(
+          onTap: () => onChanged(value),
+          title: TextBodyL(
             title,
-            Radio<T>(
-              groupValue: groupValue,
-              value: value,
-              onChanged: onChanged,
-            ),
-          ],
+            color: TColors.neutralDarkDarkest,
+          ),
+          trailing: CustomRadio(
+            value: value,
+            groupValue: groupValue,
+            onChanged: onChanged,
+          ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
         ),
-      ),
+        const Divider(
+          color: TColors.neutralLightMedium,
+          indent: 20.0,
+          height: 1,
+        ),
+      ],
     );
   }
 }

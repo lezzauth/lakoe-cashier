@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
@@ -62,20 +63,12 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                 _sortValue = value!;
               });
             },
-            title: TextBodyM(
-              e.label,
-              color: TColors.neutralDarkDarkest,
-            ),
-            decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(width: 1, color: TColors.neutralLightMedium),
-              ),
-            ),
+            title: e.label,
           ),
         ),
-        Container(
-          height: 52,
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+        const SizedBox(height: 12),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -108,9 +101,8 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
             ],
           ),
         ),
-        Container(
-          height: 52,
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -135,7 +127,7 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
           child: Row(
             children: [
               Expanded(
