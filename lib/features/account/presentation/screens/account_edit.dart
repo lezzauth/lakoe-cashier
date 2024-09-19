@@ -19,21 +19,25 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
       icon: TIcons.userOutline,
       field: "Nama Lengkap",
       value: "Tauhid",
+      routeName: "/account/edit/name",
     ),
     _ItemAccountEditModel(
       icon: TIcons.smartphoneOutline,
       field: "Nomor WA",
       value: "62812-3456-7890",
+      routeName: "/account/edit/name",
     ),
     _ItemAccountEditModel(
       icon: TIcons.letterOutline,
       field: "Email",
       value: "-",
+      routeName: "/account/edit/name",
     ),
     _ItemAccountEditModel(
       icon: TIcons.passwordOutline,
       field: "PIN",
       value: "",
+      routeName: "/account/edit/name",
     ),
   ];
   @override
@@ -49,6 +53,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                 icon: item.icon,
                 field: item.field,
                 value: item.value,
+                routeName: item.routeName,
               ),
             )
             .toList(),
@@ -61,12 +66,14 @@ class ItemAccountEdit extends StatelessWidget {
   final String icon;
   final String field;
   final String value;
+  final String routeName;
 
   const ItemAccountEdit({
     super.key,
     required this.icon,
     required this.field,
     required this.value,
+    required this.routeName,
   });
 
   @override
@@ -105,8 +112,7 @@ class ItemAccountEdit extends StatelessWidget {
             ],
           ),
           onTap: () {
-            // Aksi saat diklik
-            print('Nama Lengkap diklik');
+            Navigator.pushNamed(context, routeName);
           },
         ),
         const Divider(
@@ -123,10 +129,12 @@ class _ItemAccountEditModel {
   final String icon;
   final String field;
   final String value;
+  final String routeName;
 
   _ItemAccountEditModel({
     required this.icon,
     required this.field,
     required this.value,
+    required this.routeName,
   });
 }
