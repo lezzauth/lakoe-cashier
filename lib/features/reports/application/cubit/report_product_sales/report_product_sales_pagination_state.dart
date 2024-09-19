@@ -18,17 +18,17 @@ final class ReportProductSalesPaginationLoadInProgress
 final class ReportProductSalesPaginationLoadSuccess
     extends ReportProductSalesPaginationState {
   final List<ProductOrderModel> data;
-  final String? nextCursor;
+  final ListOrderByProductDto? dto;
   final String productId;
 
   ReportProductSalesPaginationLoadSuccess({
     required this.data,
     required this.productId,
-    this.nextCursor,
+    this.dto,
   });
 
   @override
-  List<Object?> get props => [data, nextCursor, productId];
+  List<Object?> get props => [data, dto, productId];
 }
 
 final class ReportProductSalesPaginationLoadFailure
@@ -46,6 +46,6 @@ final class ReportProductSalesPaginationLoadMore
   ReportProductSalesPaginationLoadMore({
     required super.data,
     required super.productId,
-    super.nextCursor,
+    super.dto,
   });
 }
