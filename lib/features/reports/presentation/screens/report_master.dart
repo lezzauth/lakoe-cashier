@@ -171,7 +171,7 @@ class _ReportMasterState extends State<ReportMaster> {
                                   width: 20,
                                   color: TColors.primary,
                                 ),
-                                label: "Rata2 Nilai Transaksi",
+                                label: "Rata2 Transaksi",
                                 amount: TFormatter.formatToRupiah(
                                   report.averageSales == "NaN"
                                       ? 0
