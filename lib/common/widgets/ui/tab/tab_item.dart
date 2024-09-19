@@ -12,28 +12,30 @@ class TabItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tab(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextHeading4(title),
-          if (counter != null) ...[
-            const SizedBox(width: 10),
-            Container(
-              height: 16,
-              width: 16,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: TColors.error,
-              ),
-              child: Center(
-                child: TextCaptionM(
-                  counter!.toString(),
-                  color: TColors.neutralLightLightest,
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(child: TextHeading4(title)),
+            if (counter != null) ...[
+              const SizedBox(width: 8),
+              Container(
+                height: 16,
+                width: 16,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: TColors.error,
                 ),
-              ),
-            )
-          ]
-        ],
+                child: Center(
+                  child: TextCaptionM(
+                    counter!.toString(),
+                    color: TColors.neutralLightLightest,
+                  ),
+                ),
+              )
+            ]
+          ],
+        ),
       ),
     );
   }

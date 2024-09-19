@@ -40,10 +40,13 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
       appBar: CustomAppbar(
         title: "Karyawan Baru",
         actions: const [
-          TextActionL(
-            "SIMPAN",
-            color: TColors.primary,
-          ),
+          TextButton(
+            onPressed: null,
+            child: TextActionL(
+              "SIMPAN",
+              color: TColors.primary,
+            ),
+          )
         ],
         bottom: TabContainer(
           controller: _tabController,
