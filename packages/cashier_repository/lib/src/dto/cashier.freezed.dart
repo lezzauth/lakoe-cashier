@@ -1041,6 +1041,188 @@ abstract class _CompleteDebitCreditOrderDto
       get copyWith => throw _privateConstructorUsedError;
 }
 
+CompleteQRCodeOrderDto _$CompleteQRCodeOrderDtoFromJson(
+    Map<String, dynamic> json) {
+  return _CompleteQRCodeOrderDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CompleteQRCodeOrderDto {
+  String get paymentMethod => throw _privateConstructorUsedError;
+  int get paidAmount => throw _privateConstructorUsedError;
+  int? get change => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CompleteQRCodeOrderDtoCopyWith<CompleteQRCodeOrderDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CompleteQRCodeOrderDtoCopyWith<$Res> {
+  factory $CompleteQRCodeOrderDtoCopyWith(CompleteQRCodeOrderDto value,
+          $Res Function(CompleteQRCodeOrderDto) then) =
+      _$CompleteQRCodeOrderDtoCopyWithImpl<$Res, CompleteQRCodeOrderDto>;
+  @useResult
+  $Res call({String paymentMethod, int paidAmount, int? change});
+}
+
+/// @nodoc
+class _$CompleteQRCodeOrderDtoCopyWithImpl<$Res,
+        $Val extends CompleteQRCodeOrderDto>
+    implements $CompleteQRCodeOrderDtoCopyWith<$Res> {
+  _$CompleteQRCodeOrderDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? paymentMethod = null,
+    Object? paidAmount = null,
+    Object? change = freezed,
+  }) {
+    return _then(_value.copyWith(
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidAmount: null == paidAmount
+          ? _value.paidAmount
+          : paidAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      change: freezed == change
+          ? _value.change
+          : change // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CompleteQRCodeOrderDtoImplCopyWith<$Res>
+    implements $CompleteQRCodeOrderDtoCopyWith<$Res> {
+  factory _$$CompleteQRCodeOrderDtoImplCopyWith(
+          _$CompleteQRCodeOrderDtoImpl value,
+          $Res Function(_$CompleteQRCodeOrderDtoImpl) then) =
+      __$$CompleteQRCodeOrderDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String paymentMethod, int paidAmount, int? change});
+}
+
+/// @nodoc
+class __$$CompleteQRCodeOrderDtoImplCopyWithImpl<$Res>
+    extends _$CompleteQRCodeOrderDtoCopyWithImpl<$Res,
+        _$CompleteQRCodeOrderDtoImpl>
+    implements _$$CompleteQRCodeOrderDtoImplCopyWith<$Res> {
+  __$$CompleteQRCodeOrderDtoImplCopyWithImpl(
+      _$CompleteQRCodeOrderDtoImpl _value,
+      $Res Function(_$CompleteQRCodeOrderDtoImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? paymentMethod = null,
+    Object? paidAmount = null,
+    Object? change = freezed,
+  }) {
+    return _then(_$CompleteQRCodeOrderDtoImpl(
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidAmount: null == paidAmount
+          ? _value.paidAmount
+          : paidAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      change: freezed == change
+          ? _value.change
+          : change // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CompleteQRCodeOrderDtoImpl implements _CompleteQRCodeOrderDto {
+  const _$CompleteQRCodeOrderDtoImpl(
+      {required this.paymentMethod, required this.paidAmount, this.change = 0});
+
+  factory _$CompleteQRCodeOrderDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CompleteQRCodeOrderDtoImplFromJson(json);
+
+  @override
+  final String paymentMethod;
+  @override
+  final int paidAmount;
+  @override
+  @JsonKey()
+  final int? change;
+
+  @override
+  String toString() {
+    return 'CompleteQRCodeOrderDto(paymentMethod: $paymentMethod, paidAmount: $paidAmount, change: $change)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CompleteQRCodeOrderDtoImpl &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.paidAmount, paidAmount) ||
+                other.paidAmount == paidAmount) &&
+            (identical(other.change, change) || other.change == change));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, paymentMethod, paidAmount, change);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CompleteQRCodeOrderDtoImplCopyWith<_$CompleteQRCodeOrderDtoImpl>
+      get copyWith => __$$CompleteQRCodeOrderDtoImplCopyWithImpl<
+          _$CompleteQRCodeOrderDtoImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CompleteQRCodeOrderDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CompleteQRCodeOrderDto implements CompleteQRCodeOrderDto {
+  const factory _CompleteQRCodeOrderDto(
+      {required final String paymentMethod,
+      required final int paidAmount,
+      final int? change}) = _$CompleteQRCodeOrderDtoImpl;
+
+  factory _CompleteQRCodeOrderDto.fromJson(Map<String, dynamic> json) =
+      _$CompleteQRCodeOrderDtoImpl.fromJson;
+
+  @override
+  String get paymentMethod;
+  @override
+  int get paidAmount;
+  @override
+  int? get change;
+  @override
+  @JsonKey(ignore: true)
+  _$$CompleteQRCodeOrderDtoImplCopyWith<_$CompleteQRCodeOrderDtoImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
 OpenCashierDto _$OpenCashierDtoFromJson(Map<String, dynamic> json) {
   return _OpenCashierDto.fromJson(json);
 }

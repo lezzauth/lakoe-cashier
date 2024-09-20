@@ -74,6 +74,19 @@ class CompleteDebitCreditOrderDto extends CompleteOrderDto
       _$CompleteDebitCreditOrderDtoFromJson(json);
 }
 
+@freezed
+class CompleteQRCodeOrderDto extends CompleteOrderDto
+    with _$CompleteQRCodeOrderDto {
+  const factory CompleteQRCodeOrderDto({
+    required String paymentMethod,
+    required int paidAmount,
+    @Default(0) int? change,
+  }) = _CompleteQRCodeOrderDto;
+
+  factory CompleteQRCodeOrderDto.fromJson(Map<String, Object?> json) =>
+      _$CompleteQRCodeOrderDtoFromJson(json);
+}
+
 // Open Cashier
 @freezed
 class OpenCashierDto with _$OpenCashierDto {

@@ -80,6 +80,22 @@ Map<String, dynamic> _$$CompleteDebitCreditOrderDtoImplToJson(
       'accountNumber': instance.accountNumber,
     };
 
+_$CompleteQRCodeOrderDtoImpl _$$CompleteQRCodeOrderDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CompleteQRCodeOrderDtoImpl(
+      paymentMethod: json['paymentMethod'] as String,
+      paidAmount: (json['paidAmount'] as num).toInt(),
+      change: (json['change'] as num?)?.toInt() ?? 0,
+    );
+
+Map<String, dynamic> _$$CompleteQRCodeOrderDtoImplToJson(
+        _$CompleteQRCodeOrderDtoImpl instance) =>
+    <String, dynamic>{
+      'paymentMethod': instance.paymentMethod,
+      'paidAmount': instance.paidAmount,
+      'change': instance.change,
+    };
+
 _$OpenCashierDtoImpl _$$OpenCashierDtoImplFromJson(Map<String, dynamic> json) =>
     _$OpenCashierDtoImpl(
       initialBalance: (json['initialBalance'] as num).toInt(),

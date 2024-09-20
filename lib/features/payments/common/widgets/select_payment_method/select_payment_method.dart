@@ -18,12 +18,14 @@ class SelectPaymentMethod extends StatefulWidget {
     required this.onPaymentCash,
     required this.onPaymentBankTransfer,
     required this.onPaymentDebitCredit,
+    required this.onPaymentQRCode,
   });
 
   final int amount;
   final ValueChanged<PaymentCash> onPaymentCash;
   final ValueChanged<PaymentBankTransfer> onPaymentBankTransfer;
   final ValueChanged<PaymentDebitCredit> onPaymentDebitCredit;
+  final ValueChanged<PaymentQRCode> onPaymentQRCode;
 
   @override
   State<SelectPaymentMethod> createState() => _SelectPaymentMethodState();
@@ -50,6 +52,9 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
               if (state is PaymentDebitCredit) {
                 widget.onPaymentDebitCredit(state);
               }
+              if (state is PaymentQRCode) {
+                widget.onPaymentQRCode(state);
+              }
             },
           )
         ],
@@ -74,7 +79,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
                       "CASH" => CashPaymentContent(
                           amount: widget.amount,
                         ),
-                      "QR_CODE" => const QrisPaymentContent(),
+                      "QR_CODE" => QrisPaymentContent(amount: widget.amount),
                       "DEBIT" => DebitPaymentContent(amount: widget.amount),
                       "BANK_TRANSFER" => BankTransferPaymentContent(
                           amount: widget.amount,
