@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/radio.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method_not_available.dart';
 
@@ -20,10 +21,10 @@ class PaymentMethodRadioGroup extends StatelessWidget {
       Navigator.pop(context);
       showModalBottomSheet(
         context: context,
-        showDragHandle: true,
         isScrollControlled: true,
         builder: (context) {
-          return const SelectPaymentMethodNotAvailable();
+          return const CustomBottomsheet(
+              child: SelectPaymentMethodNotAvailable());
         },
       );
     }

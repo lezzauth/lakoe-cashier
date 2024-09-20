@@ -12,7 +12,7 @@ class TBottomSheetTheme {
       ),
     ),
     dragHandleColor: TColors.neutralLightDark,
-    showDragHandle: true,
+    // showDragHandle: true,
     dragHandleSize: Size.fromHeight(5),
   );
 

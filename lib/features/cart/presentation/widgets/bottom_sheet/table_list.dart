@@ -85,8 +85,7 @@ class _TableListContentState extends State<TableListContent> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               child: const TextHeading2("Pilih nomor meja"),
             ),
             BlocBuilder<TableMasterFilterCubit, TableMasterFilterState>(

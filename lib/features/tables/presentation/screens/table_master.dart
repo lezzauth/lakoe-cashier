@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
@@ -62,12 +63,15 @@ class _TableMasterState extends State<TableMaster> {
     bool? editedProduct = await showModalBottomSheet<bool?>(
       context: context,
       isScrollControlled: true,
-      showDragHandle: true,
       useSafeArea: true,
       useRootNavigator: true,
       builder: (context) {
-        return TableDetailPage(
-          table: table,
+        return CustomBottomsheet(
+          child: Expanded(
+            child: TableDetailPage(
+              table: table,
+            ),
+          ),
         );
       },
     );
