@@ -1,3 +1,4 @@
+import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
@@ -33,9 +34,11 @@ class _ExploreProductDrawerTabletState
     await context.read<CartDetailCubit>().saveAndCompleteOrder(
           carts: cartState.carts,
           outletId: authState.outletId,
-          paidAmount: data.paidAmount,
-          change: data.change,
-          paymentMethod: "CASH",
+          dto: CompleteCashOrderDto(
+            paidAmount: data.paidAmount,
+            change: data.change,
+            paymentMethod: "CASH",
+          ),
           type: filterState.type,
           customerId: filterState.customer?.id,
           tableId: filterState.table?.id,

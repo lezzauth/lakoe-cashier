@@ -67,11 +67,28 @@ class _OrderDetailState extends State<OrderDetail> {
   }) async {
     await context.read<OrderDetailCubit>().completeOrder(
           order.id,
-          CompleteOrderDto(
+          CompleteCashOrderDto(
             paymentMethod: "CASH",
             paidAmount: data.paidAmount,
             change: data.change,
             customerId: order.customerId,
+          ),
+        );
+  }
+
+  Future<void> _onBankTransferPaid({
+    required PaymentBankTransfer data,
+    required OrderModel order,
+  }) async {
+    await context.read<OrderDetailCubit>().completeOrder(
+          order.id,
+          CompleteBankTransferOrderDto(
+            data: CompleteBankTransferOrderData(
+              paymentMethod: "BANK_TRANSFER",
+              paidAmount: data.paidAmount,
+              accountNumber: data.accountNumber,
+            ),
+            photo: data.photo,
           ),
         );
   }
@@ -90,6 +107,9 @@ class _OrderDetailState extends State<OrderDetail> {
           amount: amount,
           onPaymentCash: (value) {
             _onCashPaid(data: value, order: order);
+          },
+          onPaymentBankTransfer: (value) {
+            _onBankTransferPaid(data: value, order: order);
           },
         );
       },

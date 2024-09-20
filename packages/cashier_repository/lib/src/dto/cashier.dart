@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:order_repository/order_repository.dart';
 
@@ -19,19 +21,43 @@ class SaveOrderDto with _$SaveOrderDto {
       _$SaveOrderDtoFromJson(json);
 }
 
+sealed class CompleteOrderDto {}
+
 // Complete Order
 @freezed
-class CompleteOrderDto with _$CompleteOrderDto {
-  const factory CompleteOrderDto({
+class CompleteCashOrderDto extends CompleteOrderDto
+    with _$CompleteCashOrderDto {
+  const factory CompleteCashOrderDto({
     required String paymentMethod,
     required int paidAmount,
     required int change,
     String? customerId,
     String? redeemCoinAmount,
-  }) = _CompleteOrderDto;
+  }) = _CompleteCashOrderDto;
 
-  factory CompleteOrderDto.fromJson(Map<String, Object?> json) =>
-      _$CompleteOrderDtoFromJson(json);
+  factory CompleteCashOrderDto.fromJson(Map<String, Object?> json) =>
+      _$CompleteCashOrderDtoFromJson(json);
+}
+
+@freezed
+class CompleteBankTransferOrderDto extends CompleteOrderDto
+    with _$CompleteBankTransferOrderDto {
+  const factory CompleteBankTransferOrderDto({
+    required File photo,
+    required CompleteBankTransferOrderData data,
+  }) = _CompleteBankTransferOrderDto;
+}
+
+@freezed
+class CompleteBankTransferOrderData with _$CompleteBankTransferOrderData {
+  const factory CompleteBankTransferOrderData({
+    required String paymentMethod,
+    required int paidAmount,
+    required String accountNumber,
+  }) = _CompleteBankTransferOrderData;
+
+  factory CompleteBankTransferOrderData.fromJson(Map<String, Object?> json) =>
+      _$CompleteBankTransferOrderDataFromJson(json);
 }
 
 // Open Cashier

@@ -90,27 +90,23 @@ class CartDetailCubit extends Cubit<CartDetailState> {
   Future<void> saveAndCompleteOrder({
     required List<CartModel> carts,
     required String outletId,
-    required int paidAmount,
-    required int change,
-    required String paymentMethod,
     required String type,
+    required CompleteOrderDto dto,
     String? customerId,
     String? tableId,
   }) async {
     try {
       emit(CartDetailActionInProgress());
+
       final response = await _cashierRepository.saveAndCompleteOrder(
         _cartsToSaveOrderDto(
           carts: carts,
           outletId: outletId,
           type: type,
           customerId: customerId,
+          tableId: tableId,
         ),
-        CompleteOrderDto(
-          paymentMethod: paymentMethod,
-          paidAmount: paidAmount,
-          change: change,
-        ),
+        dto,
       );
       emit(CartDetailCompleteActionSuccess(response: response));
     } catch (e, stackTrace) {
