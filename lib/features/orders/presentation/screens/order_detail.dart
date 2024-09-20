@@ -107,6 +107,19 @@ class _OrderDetailState extends State<OrderDetail> {
         ));
   }
 
+  Future<void> _onQRCodePaid({
+    required PaymentQRCode data,
+    required OrderModel order,
+  }) async {
+    await context.read<OrderDetailCubit>().completeOrder(
+        order.id,
+        CompleteQRCodeOrderDto(
+          paymentMethod: "QR_CODE",
+          paidAmount: data.paidAmount,
+          change: data.change,
+        ));
+  }
+
   Future<void> _onCompleteOrder({
     required int amount,
     required OrderModel order,
@@ -127,6 +140,9 @@ class _OrderDetailState extends State<OrderDetail> {
           },
           onPaymentDebitCredit: (value) {
             _onDebitCreditPaid(data: value, order: order);
+          },
+          onPaymentQRCode: (value) {
+            _onQRCodePaid(data: value, order: order);
           },
         );
       },

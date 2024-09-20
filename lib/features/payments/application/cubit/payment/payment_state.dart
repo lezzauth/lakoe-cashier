@@ -37,15 +37,27 @@ final class PaymentBankTransfer extends PaymentState {
 final class PaymentDebitCredit extends PaymentState {
   final int paidAmount;
   final String accountNumber;
+  final int change;
 
   PaymentDebitCredit({
     required this.accountNumber,
     required this.paidAmount,
+    required this.change,
   });
 
   @override
-  List<Object?> get props => [
-        paidAmount,
-        accountNumber,
-      ];
+  List<Object?> get props => [paidAmount, accountNumber, change];
+}
+
+final class PaymentQRCode extends PaymentState {
+  final int paidAmount;
+  final int change;
+
+  PaymentQRCode({
+    required this.paidAmount,
+    required this.change,
+  });
+
+  @override
+  List<Object?> get props => [paidAmount, change];
 }
