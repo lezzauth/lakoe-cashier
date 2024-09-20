@@ -3,11 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/bloc/completing_data/completing_data_page_state.dart';
-import 'package:point_of_sales_cashier/features/authentication/data/completing_data/arguments.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
 import 'package:point_of_sales_cashier/features/home/data/arguments/open_cashier_pin_argument.dart';
@@ -31,12 +27,13 @@ class MainMenu extends StatelessWidget {
     onCashierOpened() {
       return showModalBottomSheet(
         context: context,
-        showDragHandle: true,
         isScrollControlled: true,
         builder: (context) {
-          return Padding(
-            padding: TDeviceUtils.getViewInsets(context),
-            child: InitialBalanceForm(),
+          return CustomBottomsheet(
+            child: Padding(
+              padding: TDeviceUtils.getViewInsets(context),
+              child: const InitialBalanceForm(),
+            ),
           );
         },
       );

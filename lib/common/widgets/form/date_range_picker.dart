@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/date_picker.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
@@ -55,8 +56,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
-          margin: const EdgeInsets.only(bottom: 16),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           child: const TextHeading2("Pilih tanggal"),
         ),
         Ink(
@@ -145,17 +145,18 @@ class Picker extends StatefulWidget {
 class _PickerState extends State<Picker> {
   Future<void> _onPick() async {
     DateTime? date = await showModalBottomSheet<DateTime?>(
-      showDragHandle: true,
       context: context,
       builder: (context) {
-        return DatePicker(
-          title: widget.label,
-          initialDateTime: widget.initialDateTime ?? widget.value,
-          maximumDate: widget.maximumDate,
-          minimumDate: widget.minimumDate,
-          onChanged: (value) {
-            Navigator.pop(context, value);
-          },
+        return CustomBottomsheet(
+          child: DatePicker(
+            title: widget.label,
+            initialDateTime: widget.initialDateTime ?? widget.value,
+            maximumDate: widget.maximumDate,
+            minimumDate: widget.minimumDate,
+            onChanged: (value) {
+              Navigator.pop(context, value);
+            },
+          ),
         );
       },
     );

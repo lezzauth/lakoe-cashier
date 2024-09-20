@@ -24,8 +24,10 @@ class _DownloadQrOrderContentState extends State<DownloadQrOrderContent> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              margin: const EdgeInsets.only(bottom: 16),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 16,
+              ),
               child: const TextHeading2(
                 "Download QR Order",
                 color: TColors.neutralDarkDarkest,

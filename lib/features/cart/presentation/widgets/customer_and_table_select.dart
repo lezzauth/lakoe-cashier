@@ -2,6 +2,7 @@ import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/bottom_sheet/customer_list.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/bottom_sheet/table_list.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/cards/card_order.dart';
@@ -33,12 +34,17 @@ class _CustomerAndTableSelectState extends State<CustomerAndTableSelect> {
     CustomerModel? selectedCustomer =
         await showModalBottomSheet<CustomerModel?>(
       context: context,
-      showDragHandle: true,
       isScrollControlled: true,
       useSafeArea: true,
       useRootNavigator: true,
       builder: (context) {
-        return CartCustomerList(value: widget.customer);
+        return CustomBottomsheet(
+          child: Expanded(
+            child: CartCustomerList(
+              value: widget.customer,
+            ),
+          ),
+        );
       },
     );
     widget.onCustomerChanged(selectedCustomer);
@@ -47,12 +53,17 @@ class _CustomerAndTableSelectState extends State<CustomerAndTableSelect> {
   Future<void> _onTableOpened() async {
     TableModel? selectedTable = await showModalBottomSheet<TableModel?>(
       context: context,
-      showDragHandle: true,
       isScrollControlled: true,
       useSafeArea: true,
       useRootNavigator: true,
       builder: (context) {
-        return TableList(value: widget.table);
+        return CustomBottomsheet(
+          child: Expanded(
+            child: TableList(
+              value: widget.table,
+            ),
+          ),
+        );
       },
     );
     widget.onTableChanged(selectedTable);
