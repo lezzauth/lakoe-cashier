@@ -244,12 +244,12 @@ abstract class _SaveOrderDto implements SaveOrderDto {
       throw _privateConstructorUsedError;
 }
 
-CompleteOrderDto _$CompleteOrderDtoFromJson(Map<String, dynamic> json) {
-  return _CompleteOrderDto.fromJson(json);
+CompleteCashOrderDto _$CompleteCashOrderDtoFromJson(Map<String, dynamic> json) {
+  return _CompleteCashOrderDto.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CompleteOrderDto {
+mixin _$CompleteCashOrderDto {
   String get paymentMethod => throw _privateConstructorUsedError;
   int get paidAmount => throw _privateConstructorUsedError;
   int get change => throw _privateConstructorUsedError;
@@ -258,15 +258,15 @@ mixin _$CompleteOrderDto {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CompleteOrderDtoCopyWith<CompleteOrderDto> get copyWith =>
+  $CompleteCashOrderDtoCopyWith<CompleteCashOrderDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CompleteOrderDtoCopyWith<$Res> {
-  factory $CompleteOrderDtoCopyWith(
-          CompleteOrderDto value, $Res Function(CompleteOrderDto) then) =
-      _$CompleteOrderDtoCopyWithImpl<$Res, CompleteOrderDto>;
+abstract class $CompleteCashOrderDtoCopyWith<$Res> {
+  factory $CompleteCashOrderDtoCopyWith(CompleteCashOrderDto value,
+          $Res Function(CompleteCashOrderDto) then) =
+      _$CompleteCashOrderDtoCopyWithImpl<$Res, CompleteCashOrderDto>;
   @useResult
   $Res call(
       {String paymentMethod,
@@ -277,9 +277,10 @@ abstract class $CompleteOrderDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CompleteOrderDtoCopyWithImpl<$Res, $Val extends CompleteOrderDto>
-    implements $CompleteOrderDtoCopyWith<$Res> {
-  _$CompleteOrderDtoCopyWithImpl(this._value, this._then);
+class _$CompleteCashOrderDtoCopyWithImpl<$Res,
+        $Val extends CompleteCashOrderDto>
+    implements $CompleteCashOrderDtoCopyWith<$Res> {
+  _$CompleteCashOrderDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -321,11 +322,11 @@ class _$CompleteOrderDtoCopyWithImpl<$Res, $Val extends CompleteOrderDto>
 }
 
 /// @nodoc
-abstract class _$$CompleteOrderDtoImplCopyWith<$Res>
-    implements $CompleteOrderDtoCopyWith<$Res> {
-  factory _$$CompleteOrderDtoImplCopyWith(_$CompleteOrderDtoImpl value,
-          $Res Function(_$CompleteOrderDtoImpl) then) =
-      __$$CompleteOrderDtoImplCopyWithImpl<$Res>;
+abstract class _$$CompleteCashOrderDtoImplCopyWith<$Res>
+    implements $CompleteCashOrderDtoCopyWith<$Res> {
+  factory _$$CompleteCashOrderDtoImplCopyWith(_$CompleteCashOrderDtoImpl value,
+          $Res Function(_$CompleteCashOrderDtoImpl) then) =
+      __$$CompleteCashOrderDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -337,11 +338,11 @@ abstract class _$$CompleteOrderDtoImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CompleteOrderDtoImplCopyWithImpl<$Res>
-    extends _$CompleteOrderDtoCopyWithImpl<$Res, _$CompleteOrderDtoImpl>
-    implements _$$CompleteOrderDtoImplCopyWith<$Res> {
-  __$$CompleteOrderDtoImplCopyWithImpl(_$CompleteOrderDtoImpl _value,
-      $Res Function(_$CompleteOrderDtoImpl) _then)
+class __$$CompleteCashOrderDtoImplCopyWithImpl<$Res>
+    extends _$CompleteCashOrderDtoCopyWithImpl<$Res, _$CompleteCashOrderDtoImpl>
+    implements _$$CompleteCashOrderDtoImplCopyWith<$Res> {
+  __$$CompleteCashOrderDtoImplCopyWithImpl(_$CompleteCashOrderDtoImpl _value,
+      $Res Function(_$CompleteCashOrderDtoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -353,7 +354,7 @@ class __$$CompleteOrderDtoImplCopyWithImpl<$Res>
     Object? customerId = freezed,
     Object? redeemCoinAmount = freezed,
   }) {
-    return _then(_$CompleteOrderDtoImpl(
+    return _then(_$CompleteCashOrderDtoImpl(
       paymentMethod: null == paymentMethod
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
@@ -380,16 +381,16 @@ class __$$CompleteOrderDtoImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CompleteOrderDtoImpl implements _CompleteOrderDto {
-  const _$CompleteOrderDtoImpl(
+class _$CompleteCashOrderDtoImpl implements _CompleteCashOrderDto {
+  const _$CompleteCashOrderDtoImpl(
       {required this.paymentMethod,
       required this.paidAmount,
       required this.change,
       this.customerId,
       this.redeemCoinAmount});
 
-  factory _$CompleteOrderDtoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CompleteOrderDtoImplFromJson(json);
+  factory _$CompleteCashOrderDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CompleteCashOrderDtoImplFromJson(json);
 
   @override
   final String paymentMethod;
@@ -404,14 +405,14 @@ class _$CompleteOrderDtoImpl implements _CompleteOrderDto {
 
   @override
   String toString() {
-    return 'CompleteOrderDto(paymentMethod: $paymentMethod, paidAmount: $paidAmount, change: $change, customerId: $customerId, redeemCoinAmount: $redeemCoinAmount)';
+    return 'CompleteCashOrderDto(paymentMethod: $paymentMethod, paidAmount: $paidAmount, change: $change, customerId: $customerId, redeemCoinAmount: $redeemCoinAmount)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CompleteOrderDtoImpl &&
+            other is _$CompleteCashOrderDtoImpl &&
             (identical(other.paymentMethod, paymentMethod) ||
                 other.paymentMethod == paymentMethod) &&
             (identical(other.paidAmount, paidAmount) ||
@@ -431,28 +432,29 @@ class _$CompleteOrderDtoImpl implements _CompleteOrderDto {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CompleteOrderDtoImplCopyWith<_$CompleteOrderDtoImpl> get copyWith =>
-      __$$CompleteOrderDtoImplCopyWithImpl<_$CompleteOrderDtoImpl>(
-          this, _$identity);
+  _$$CompleteCashOrderDtoImplCopyWith<_$CompleteCashOrderDtoImpl>
+      get copyWith =>
+          __$$CompleteCashOrderDtoImplCopyWithImpl<_$CompleteCashOrderDtoImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CompleteOrderDtoImplToJson(
+    return _$$CompleteCashOrderDtoImplToJson(
       this,
     );
   }
 }
 
-abstract class _CompleteOrderDto implements CompleteOrderDto {
-  const factory _CompleteOrderDto(
+abstract class _CompleteCashOrderDto implements CompleteCashOrderDto {
+  const factory _CompleteCashOrderDto(
       {required final String paymentMethod,
       required final int paidAmount,
       required final int change,
       final String? customerId,
-      final String? redeemCoinAmount}) = _$CompleteOrderDtoImpl;
+      final String? redeemCoinAmount}) = _$CompleteCashOrderDtoImpl;
 
-  factory _CompleteOrderDto.fromJson(Map<String, dynamic> json) =
-      _$CompleteOrderDtoImpl.fromJson;
+  factory _CompleteCashOrderDto.fromJson(Map<String, dynamic> json) =
+      _$CompleteCashOrderDtoImpl.fromJson;
 
   @override
   String get paymentMethod;
@@ -466,8 +468,361 @@ abstract class _CompleteOrderDto implements CompleteOrderDto {
   String? get redeemCoinAmount;
   @override
   @JsonKey(ignore: true)
-  _$$CompleteOrderDtoImplCopyWith<_$CompleteOrderDtoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CompleteCashOrderDtoImplCopyWith<_$CompleteCashOrderDtoImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$CompleteBankTransferOrderDto {
+  File get photo => throw _privateConstructorUsedError;
+  CompleteBankTransferOrderData get data => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CompleteBankTransferOrderDtoCopyWith<CompleteBankTransferOrderDto>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CompleteBankTransferOrderDtoCopyWith<$Res> {
+  factory $CompleteBankTransferOrderDtoCopyWith(
+          CompleteBankTransferOrderDto value,
+          $Res Function(CompleteBankTransferOrderDto) then) =
+      _$CompleteBankTransferOrderDtoCopyWithImpl<$Res,
+          CompleteBankTransferOrderDto>;
+  @useResult
+  $Res call({File photo, CompleteBankTransferOrderData data});
+
+  $CompleteBankTransferOrderDataCopyWith<$Res> get data;
+}
+
+/// @nodoc
+class _$CompleteBankTransferOrderDtoCopyWithImpl<$Res,
+        $Val extends CompleteBankTransferOrderDto>
+    implements $CompleteBankTransferOrderDtoCopyWith<$Res> {
+  _$CompleteBankTransferOrderDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? photo = null,
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as File,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as CompleteBankTransferOrderData,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CompleteBankTransferOrderDataCopyWith<$Res> get data {
+    return $CompleteBankTransferOrderDataCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$CompleteBankTransferOrderDtoImplCopyWith<$Res>
+    implements $CompleteBankTransferOrderDtoCopyWith<$Res> {
+  factory _$$CompleteBankTransferOrderDtoImplCopyWith(
+          _$CompleteBankTransferOrderDtoImpl value,
+          $Res Function(_$CompleteBankTransferOrderDtoImpl) then) =
+      __$$CompleteBankTransferOrderDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({File photo, CompleteBankTransferOrderData data});
+
+  @override
+  $CompleteBankTransferOrderDataCopyWith<$Res> get data;
+}
+
+/// @nodoc
+class __$$CompleteBankTransferOrderDtoImplCopyWithImpl<$Res>
+    extends _$CompleteBankTransferOrderDtoCopyWithImpl<$Res,
+        _$CompleteBankTransferOrderDtoImpl>
+    implements _$$CompleteBankTransferOrderDtoImplCopyWith<$Res> {
+  __$$CompleteBankTransferOrderDtoImplCopyWithImpl(
+      _$CompleteBankTransferOrderDtoImpl _value,
+      $Res Function(_$CompleteBankTransferOrderDtoImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? photo = null,
+    Object? data = null,
+  }) {
+    return _then(_$CompleteBankTransferOrderDtoImpl(
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as File,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as CompleteBankTransferOrderData,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CompleteBankTransferOrderDtoImpl
+    implements _CompleteBankTransferOrderDto {
+  const _$CompleteBankTransferOrderDtoImpl(
+      {required this.photo, required this.data});
+
+  @override
+  final File photo;
+  @override
+  final CompleteBankTransferOrderData data;
+
+  @override
+  String toString() {
+    return 'CompleteBankTransferOrderDto(photo: $photo, data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CompleteBankTransferOrderDtoImpl &&
+            (identical(other.photo, photo) || other.photo == photo) &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, photo, data);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CompleteBankTransferOrderDtoImplCopyWith<
+          _$CompleteBankTransferOrderDtoImpl>
+      get copyWith => __$$CompleteBankTransferOrderDtoImplCopyWithImpl<
+          _$CompleteBankTransferOrderDtoImpl>(this, _$identity);
+}
+
+abstract class _CompleteBankTransferOrderDto
+    implements CompleteBankTransferOrderDto {
+  const factory _CompleteBankTransferOrderDto(
+          {required final File photo,
+          required final CompleteBankTransferOrderData data}) =
+      _$CompleteBankTransferOrderDtoImpl;
+
+  @override
+  File get photo;
+  @override
+  CompleteBankTransferOrderData get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$CompleteBankTransferOrderDtoImplCopyWith<
+          _$CompleteBankTransferOrderDtoImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+CompleteBankTransferOrderData _$CompleteBankTransferOrderDataFromJson(
+    Map<String, dynamic> json) {
+  return _CompleteBankTransferOrderData.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CompleteBankTransferOrderData {
+  String get paymentMethod => throw _privateConstructorUsedError;
+  int get paidAmount => throw _privateConstructorUsedError;
+  String get accountNumber => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CompleteBankTransferOrderDataCopyWith<CompleteBankTransferOrderData>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CompleteBankTransferOrderDataCopyWith<$Res> {
+  factory $CompleteBankTransferOrderDataCopyWith(
+          CompleteBankTransferOrderData value,
+          $Res Function(CompleteBankTransferOrderData) then) =
+      _$CompleteBankTransferOrderDataCopyWithImpl<$Res,
+          CompleteBankTransferOrderData>;
+  @useResult
+  $Res call({String paymentMethod, int paidAmount, String accountNumber});
+}
+
+/// @nodoc
+class _$CompleteBankTransferOrderDataCopyWithImpl<$Res,
+        $Val extends CompleteBankTransferOrderData>
+    implements $CompleteBankTransferOrderDataCopyWith<$Res> {
+  _$CompleteBankTransferOrderDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? paymentMethod = null,
+    Object? paidAmount = null,
+    Object? accountNumber = null,
+  }) {
+    return _then(_value.copyWith(
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidAmount: null == paidAmount
+          ? _value.paidAmount
+          : paidAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      accountNumber: null == accountNumber
+          ? _value.accountNumber
+          : accountNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CompleteBankTransferOrderDataImplCopyWith<$Res>
+    implements $CompleteBankTransferOrderDataCopyWith<$Res> {
+  factory _$$CompleteBankTransferOrderDataImplCopyWith(
+          _$CompleteBankTransferOrderDataImpl value,
+          $Res Function(_$CompleteBankTransferOrderDataImpl) then) =
+      __$$CompleteBankTransferOrderDataImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String paymentMethod, int paidAmount, String accountNumber});
+}
+
+/// @nodoc
+class __$$CompleteBankTransferOrderDataImplCopyWithImpl<$Res>
+    extends _$CompleteBankTransferOrderDataCopyWithImpl<$Res,
+        _$CompleteBankTransferOrderDataImpl>
+    implements _$$CompleteBankTransferOrderDataImplCopyWith<$Res> {
+  __$$CompleteBankTransferOrderDataImplCopyWithImpl(
+      _$CompleteBankTransferOrderDataImpl _value,
+      $Res Function(_$CompleteBankTransferOrderDataImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? paymentMethod = null,
+    Object? paidAmount = null,
+    Object? accountNumber = null,
+  }) {
+    return _then(_$CompleteBankTransferOrderDataImpl(
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidAmount: null == paidAmount
+          ? _value.paidAmount
+          : paidAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      accountNumber: null == accountNumber
+          ? _value.accountNumber
+          : accountNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CompleteBankTransferOrderDataImpl
+    implements _CompleteBankTransferOrderData {
+  const _$CompleteBankTransferOrderDataImpl(
+      {required this.paymentMethod,
+      required this.paidAmount,
+      required this.accountNumber});
+
+  factory _$CompleteBankTransferOrderDataImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$CompleteBankTransferOrderDataImplFromJson(json);
+
+  @override
+  final String paymentMethod;
+  @override
+  final int paidAmount;
+  @override
+  final String accountNumber;
+
+  @override
+  String toString() {
+    return 'CompleteBankTransferOrderData(paymentMethod: $paymentMethod, paidAmount: $paidAmount, accountNumber: $accountNumber)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CompleteBankTransferOrderDataImpl &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.paidAmount, paidAmount) ||
+                other.paidAmount == paidAmount) &&
+            (identical(other.accountNumber, accountNumber) ||
+                other.accountNumber == accountNumber));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, paymentMethod, paidAmount, accountNumber);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CompleteBankTransferOrderDataImplCopyWith<
+          _$CompleteBankTransferOrderDataImpl>
+      get copyWith => __$$CompleteBankTransferOrderDataImplCopyWithImpl<
+          _$CompleteBankTransferOrderDataImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CompleteBankTransferOrderDataImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CompleteBankTransferOrderData
+    implements CompleteBankTransferOrderData {
+  const factory _CompleteBankTransferOrderData(
+          {required final String paymentMethod,
+          required final int paidAmount,
+          required final String accountNumber}) =
+      _$CompleteBankTransferOrderDataImpl;
+
+  factory _CompleteBankTransferOrderData.fromJson(Map<String, dynamic> json) =
+      _$CompleteBankTransferOrderDataImpl.fromJson;
+
+  @override
+  String get paymentMethod;
+  @override
+  int get paidAmount;
+  @override
+  String get accountNumber;
+  @override
+  @JsonKey(ignore: true)
+  _$$CompleteBankTransferOrderDataImplCopyWith<
+          _$CompleteBankTransferOrderDataImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 OpenCashierDto _$OpenCashierDtoFromJson(Map<String, dynamic> json) {

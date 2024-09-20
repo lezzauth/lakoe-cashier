@@ -112,6 +112,21 @@ class CashierRepositoryImpl implements CashierRepository {
     return SaveOrderResponse.fromJson(response.data);
   }
 
+  Future<Object?> _completeOrderDto(CompleteOrderDto dto) async {
+    if (dto is CompleteCashOrderDto) return dto.toJson();
+    if (dto is CompleteBankTransferOrderDto) {
+      FormData formData = FormData.fromMap({...dto.data.toJson()});
+      formData.files.add(MapEntry(
+          "photo",
+          await MultipartFile.fromFile(dto.photo.path,
+              filename: dto.photo.path.split("/").last)));
+
+      return formData;
+    }
+
+    return null;
+  }
+
   @override
   Future<CompleteOrderResponse> saveAndCompleteOrder(
     SaveOrderDto saveOrderDto,
@@ -122,7 +137,7 @@ class CashierRepositoryImpl implements CashierRepository {
 
     final response = await _dio.post(
       "$_baseURL/orders/${saveOrderResponse.id}/complete",
-      data: completeOrderDto.toJson(),
+      data: await _completeOrderDto(completeOrderDto),
       options: options,
     );
     return CompleteOrderResponse.fromJson(response.data);
@@ -137,7 +152,7 @@ class CashierRepositoryImpl implements CashierRepository {
 
     final response = await _dio.post(
       "$_baseURL/orders/${id}/complete",
-      data: dto.toJson(),
+      data: await _completeOrderDto(dto),
       options: options,
     );
     return CompleteOrderResponse.fromJson(response.data);

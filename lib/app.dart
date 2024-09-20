@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/account_edit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/account_master.dart';
@@ -51,6 +50,7 @@ import 'package:point_of_sales_cashier/features/orders/application/cubit/order_m
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_detail.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_master.dart';
 import 'package:point_of_sales_cashier/features/payment_method/presentation/screens/payment_method_master.dart';
+import 'package:point_of_sales_cashier/features/payments/data/arguments/bank_transfer_payment_argument.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/bank_transfer_payment.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/qris_payment.dart';
 import 'package:point_of_sales_cashier/features/payments/presentation/screens/success_confirmation_payment.dart';
@@ -189,8 +189,10 @@ class App extends StatelessWidget {
 
           // payments
           "/payments/qris": (context) => const QrisPaymentScreen(),
-          "/payments/bank_transfer": (context) =>
-              const BankTransferPaymentScreen(),
+          "/payments/bank_transfer": (context) => BankTransferPaymentScreen(
+                arguments: ModalRoute.of(context)!.settings.arguments
+                    as BankTransferPaymentArgument,
+              ),
           "/payments/success_confirmation": (context) =>
               const SuccessConfirmationPaymentScreen(),
 
