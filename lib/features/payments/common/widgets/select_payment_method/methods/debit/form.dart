@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class DebitPaymentForm extends StatefulWidget {
   const DebitPaymentForm({super.key});
@@ -11,6 +13,11 @@ class DebitPaymentForm extends StatefulWidget {
 }
 
 class DebitPaymentFormState extends State<DebitPaymentForm> {
+  MaskTextInputFormatter creditFormatter = MaskTextInputFormatter(
+    mask: '####-####-####-####',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,39 +38,45 @@ class DebitPaymentFormState extends State<DebitPaymentForm> {
                   children: [
                     const FormLabel(
                       "Nomor Kartu",
-                      optional: true,
+                      // optional: true,
                     ),
                     FormBuilderTextField(
-                      name: "cardNumber",
+                      name: "accountNumber",
                       keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        CreditCardFormatter(),
-                      ],
+                      inputFormatters: [creditFormatter],
                       decoration: const InputDecoration(
                         hintText: '0000-0000-0000-0000',
                       ),
+                      valueTransformer: (value) {
+                        return creditFormatter.getUnmaskedText();
+                      },
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(
+                          errorText: ErrorTextStrings.required(),
+                        ),
+                        FormBuilderValidators.equalLength(19,
+                            errorText: "Nomor kartu tidak valid.")
+                      ]),
                     ),
                   ],
                 ),
               ),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const FormLabel(
-                      "Catatan",
-                      optional: true,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const FormLabel(
+                    "Catatan",
+                    optional: true,
+                  ),
+                  FormBuilderTextField(
+                    name: "notes",
+                    decoration: const InputDecoration(
+                      hintText: 'Masukan catatan jika diperlukan',
                     ),
-                    FormBuilderTextField(
-                      name: "notes",
-                      decoration: const InputDecoration(
-                        hintText: 'Masukan catatan jika diperlukan',
-                      ),
-                      maxLines: 3,
-                    ),
-                  ],
-                ),
+                    maxLines: 3,
+                  ),
+                ],
               ),
             ],
           ),

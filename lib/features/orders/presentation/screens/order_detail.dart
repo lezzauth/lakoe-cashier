@@ -93,6 +93,20 @@ class _OrderDetailState extends State<OrderDetail> {
         );
   }
 
+  Future<void> _onDebitCreditPaid({
+    required PaymentDebitCredit data,
+    required OrderModel order,
+  }) async {
+    await context.read<OrderDetailCubit>().completeOrder(
+        order.id,
+        CompleteDebitCreditOrderDto(
+          paymentMethod: "DEBIT",
+          paidAmount: data.paidAmount,
+          accountNumber: data.accountNumber,
+          change: 0,
+        ));
+  }
+
   Future<void> _onCompleteOrder({
     required int amount,
     required OrderModel order,
@@ -111,13 +125,12 @@ class _OrderDetailState extends State<OrderDetail> {
           onPaymentBankTransfer: (value) {
             _onBankTransferPaid(data: value, order: order);
           },
+          onPaymentDebitCredit: (value) {
+            _onDebitCreditPaid(data: value, order: order);
+          },
         );
       },
     );
-
-    // if (data is CashPaymentMethodReturn) {
-    //   await onCashPaid(data: data, order: order);
-    // }
   }
 
   double _getOrderTotal(OrderModel order) {

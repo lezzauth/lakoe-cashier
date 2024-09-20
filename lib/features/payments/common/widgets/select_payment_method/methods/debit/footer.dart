@@ -10,7 +10,7 @@ class DebitPaymentFooter extends StatelessWidget {
     this.onCanceled,
   });
 
-  final Function() onSubmitted;
+  final Function()? onSubmitted;
   final Function()? onCanceled;
 
   @override

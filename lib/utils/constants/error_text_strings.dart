@@ -19,6 +19,11 @@ class ErrorTextStrings {
     return "Maksimal $maxLength ${isNumber ? "angka" : "karakter"}.";
   }
 
+  static String equalLength(
+      {String? name, bool isNumber = false, required int maxLength}) {
+    return "Harus $maxLength ${isNumber ? "angka" : "karakter"}.";
+  }
+
   static String min({String? name, required int min}) {
     return "Nilai minimal $min.";
   }
