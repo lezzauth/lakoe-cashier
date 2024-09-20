@@ -114,6 +114,7 @@ class CashierRepositoryImpl implements CashierRepository {
 
   Future<Object?> _completeOrderDto(CompleteOrderDto dto) async {
     if (dto is CompleteCashOrderDto) return dto.toJson();
+
     if (dto is CompleteBankTransferOrderDto) {
       FormData formData = FormData.fromMap({...dto.data.toJson()});
       formData.files.add(MapEntry(
@@ -123,6 +124,8 @@ class CashierRepositoryImpl implements CashierRepository {
 
       return formData;
     }
+
+    if (dto is CompleteDebitCreditOrderDto) return dto.toJson();
 
     return null;
   }

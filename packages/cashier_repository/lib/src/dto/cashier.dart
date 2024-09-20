@@ -60,6 +60,20 @@ class CompleteBankTransferOrderData with _$CompleteBankTransferOrderData {
       _$CompleteBankTransferOrderDataFromJson(json);
 }
 
+@freezed
+class CompleteDebitCreditOrderDto extends CompleteOrderDto
+    with _$CompleteDebitCreditOrderDto {
+  const factory CompleteDebitCreditOrderDto({
+    required String paymentMethod,
+    required int paidAmount,
+    @Default(0) int? change,
+    required String accountNumber,
+  }) = _CompleteDebitCreditOrderDto;
+
+  factory CompleteDebitCreditOrderDto.fromJson(Map<String, Object?> json) =>
+      _$CompleteDebitCreditOrderDtoFromJson(json);
+}
+
 // Open Cashier
 @freezed
 class OpenCashierDto with _$OpenCashierDto {

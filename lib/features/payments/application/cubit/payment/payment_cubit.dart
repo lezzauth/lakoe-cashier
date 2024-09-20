@@ -21,4 +21,12 @@ class PaymentCubit extends Cubit<PaymentState> {
     emit(PaymentBankTransfer(
         accountNumber: accountNumber, paidAmount: paidAmount, photo: photo));
   }
+
+  void setDebitCreditPayment({
+    required String accountNumber,
+    required int paidAmount,
+  }) {
+    emit(PaymentDebitCredit(
+        accountNumber: accountNumber, paidAmount: paidAmount));
+  }
 }
