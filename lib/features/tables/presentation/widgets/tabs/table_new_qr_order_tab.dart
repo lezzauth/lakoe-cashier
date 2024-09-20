@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:point_of_sales_cashier/common/widgets/form/custom_radio.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
@@ -116,18 +117,26 @@ class DownloadItemRadio extends StatelessWidget {
           width: 1,
         ),
       ),
-      child: ListTileTheme(
-        horizontalTitleGap: 0,
-        child: RadioListTile<String>(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        onTap: () => onChanged(value),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              CustomRadio(
+                value: value,
+                groupValue: groupValue,
+                onChanged: onChanged,
+              ),
+              const SizedBox(width: 12),
+              TextHeading4(
+                title,
+                color: TColors.neutralDarkDarkest,
+              ),
+            ],
           ),
-          dense: true,
-          title: TextHeading4(title),
-          value: value,
-          groupValue: groupValue,
-          onChanged: onChanged,
-          contentPadding: const EdgeInsets.all(0),
         ),
       ),
     );
