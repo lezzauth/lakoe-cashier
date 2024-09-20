@@ -102,6 +102,27 @@ class _CartState extends State<Cart> {
         );
   }
 
+  Future<void> _onDebitCreditPaid(PaymentDebitCredit data) async {
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+    CartState cartState = context.read<CartCubit>().state;
+    CartDetailFilterState filterState =
+        context.read<CartDetailFilterCubit>().state;
+
+    await context.read<CartDetailCubit>().saveAndCompleteOrder(
+          carts: cartState.carts,
+          outletId: authState.outletId,
+          dto: CompleteDebitCreditOrderDto(
+            paymentMethod: "DEBIT",
+            paidAmount: data.paidAmount,
+            accountNumber: data.accountNumber,
+            change: 0,
+          ),
+          type: filterState.type,
+          customerId: filterState.customer?.id,
+          tableId: filterState.table?.id,
+        );
+  }
+
   Future<void> onCompleteOrder(int amount) async {
     await showModalBottomSheet(
       context: context,
@@ -113,6 +134,7 @@ class _CartState extends State<Cart> {
           amount: amount,
           onPaymentCash: _onCashPaid,
           onPaymentBankTransfer: _onBankTransferPaid,
+          onPaymentDebitCredit: _onDebitCreditPaid,
         );
       },
     );

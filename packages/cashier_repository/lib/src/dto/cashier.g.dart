@@ -62,6 +62,24 @@ Map<String, dynamic> _$$CompleteBankTransferOrderDataImplToJson(
       'accountNumber': instance.accountNumber,
     };
 
+_$CompleteDebitCreditOrderDtoImpl _$$CompleteDebitCreditOrderDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CompleteDebitCreditOrderDtoImpl(
+      paymentMethod: json['paymentMethod'] as String,
+      paidAmount: (json['paidAmount'] as num).toInt(),
+      change: (json['change'] as num?)?.toInt() ?? 0,
+      accountNumber: json['accountNumber'] as String,
+    );
+
+Map<String, dynamic> _$$CompleteDebitCreditOrderDtoImplToJson(
+        _$CompleteDebitCreditOrderDtoImpl instance) =>
+    <String, dynamic>{
+      'paymentMethod': instance.paymentMethod,
+      'paidAmount': instance.paidAmount,
+      'change': instance.change,
+      'accountNumber': instance.accountNumber,
+    };
+
 _$OpenCashierDtoImpl _$$OpenCashierDtoImplFromJson(Map<String, dynamic> json) =>
     _$OpenCashierDtoImpl(
       initialBalance: (json['initialBalance'] as num).toInt(),
