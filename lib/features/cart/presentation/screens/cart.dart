@@ -123,6 +123,26 @@ class _CartState extends State<Cart> {
         );
   }
 
+  Future<void> _onQRCodePaid(PaymentQRCode data) async {
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+    CartState cartState = context.read<CartCubit>().state;
+    CartDetailFilterState filterState =
+        context.read<CartDetailFilterCubit>().state;
+
+    await context.read<CartDetailCubit>().saveAndCompleteOrder(
+          carts: cartState.carts,
+          outletId: authState.outletId,
+          dto: CompleteQRCodeOrderDto(
+            paymentMethod: "QR_CODE",
+            paidAmount: data.paidAmount,
+            change: data.change,
+          ),
+          type: filterState.type,
+          customerId: filterState.customer?.id,
+          tableId: filterState.table?.id,
+        );
+  }
+
   Future<void> onCompleteOrder(int amount) async {
     await showModalBottomSheet(
       context: context,
@@ -135,6 +155,7 @@ class _CartState extends State<Cart> {
           onPaymentCash: _onCashPaid,
           onPaymentBankTransfer: _onBankTransferPaid,
           onPaymentDebitCredit: _onDebitCreditPaid,
+          onPaymentQRCode: _onQRCodePaid,
         );
       },
     );
