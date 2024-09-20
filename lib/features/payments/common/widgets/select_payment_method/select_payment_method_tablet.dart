@@ -65,7 +65,9 @@ class _SelectPaymentMethodTabletState extends State<SelectPaymentMethodTablet> {
                             ),
                           "QR_CODE" => const QrisPaymentContent(),
                           "DEBIT" => const DebitPaymentContent(),
-                          "BANK_TRANSFER" => const BankTransferPaymentContent(),
+                          "BANK_TRANSFER" => BankTransferPaymentContent(
+                              amount: widget.amount,
+                            ),
                           _ => const SizedBox(),
                         },
                       ),

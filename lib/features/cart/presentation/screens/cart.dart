@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
@@ -67,9 +68,34 @@ class _CartState extends State<Cart> {
     await context.read<CartDetailCubit>().saveAndCompleteOrder(
           carts: cartState.carts,
           outletId: authState.outletId,
-          paidAmount: data.paidAmount,
-          change: data.change,
-          paymentMethod: "CASH",
+          dto: CompleteCashOrderDto(
+            paidAmount: data.paidAmount,
+            change: data.change,
+            paymentMethod: "CASH",
+          ),
+          type: filterState.type,
+          customerId: filterState.customer?.id,
+          tableId: filterState.table?.id,
+        );
+  }
+
+  Future<void> _onBankTransferPaid(PaymentBankTransfer data) async {
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+    CartState cartState = context.read<CartCubit>().state;
+    CartDetailFilterState filterState =
+        context.read<CartDetailFilterCubit>().state;
+
+    await context.read<CartDetailCubit>().saveAndCompleteOrder(
+          carts: cartState.carts,
+          outletId: authState.outletId,
+          dto: CompleteBankTransferOrderDto(
+            photo: data.photo,
+            data: CompleteBankTransferOrderData(
+              paymentMethod: "BANK_TRANSFER",
+              paidAmount: data.paidAmount,
+              accountNumber: data.accountNumber,
+            ),
+          ),
           type: filterState.type,
           customerId: filterState.customer?.id,
           tableId: filterState.table?.id,
@@ -86,6 +112,7 @@ class _CartState extends State<Cart> {
         return SelectPaymentMethod(
           amount: amount,
           onPaymentCash: _onCashPaid,
+          onPaymentBankTransfer: _onBankTransferPaid,
         );
       },
     );

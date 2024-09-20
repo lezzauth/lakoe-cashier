@@ -2,9 +2,14 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
+import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_cubit.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_filter_state.dart';
+import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/bank_transfer/footer.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/bank_transfer/form.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/radio_group.dart';
@@ -12,7 +17,12 @@ import 'package:point_of_sales_cashier/features/payments/data/arguments/bank_tra
 import 'package:point_of_sales_cashier/features/payments/data/models/bank_account_model.dart';
 
 class BankTransferPaymentContent extends StatefulWidget {
-  const BankTransferPaymentContent({super.key});
+  const BankTransferPaymentContent({
+    super.key,
+    required this.amount,
+  });
+
+  final int amount;
 
   @override
   State<BankTransferPaymentContent> createState() =>
@@ -32,23 +42,42 @@ class _BankTransferPaymentContentState
         id: "2", bankName: "bri", name: "Thohirin", number: "900000283381902"),
   ];
 
-  void _onSubmitted() {
+  void _onSubmitted() async {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
-    if (!isFormValid) {
-      return;
-    }
+    if (!isFormValid) return;
 
-    BankAccountModel? account = accounts.singleWhereOrNull(
-      (account) =>
-          account.id == _formKey.currentState?.value["account"] as String,
-    );
+    dynamic value = _formKey.currentState?.value;
+
+    BankAccountMasterState bankAccountMasterState =
+        context.read<BankAccountMasterCubit>().state;
+
+    if (bankAccountMasterState is! BankAccountMasterLoadSuccess) return;
+
+    OwnerBankModel? account = bankAccountMasterState.bankAccounts
+        .singleWhereOrNull((item) => item.id == value["account"]);
+
     if (account == null) return;
 
-    Navigator.pushNamed(
+    final transferValue = await Navigator.pushNamed(
       context,
       "/payments/bank_transfer",
-      arguments: BankTransferPaymentArgument(account: account, amount: 20123),
-    );
+      arguments: BankTransferPaymentArgument(
+        account: account,
+        amount: widget.amount,
+      ),
+    ) as PaymentBankTransfer?;
+
+    if (transferValue == null) return;
+
+    if (!mounted) return;
+
+    context.read<PaymentCubit>().setBankTransferPayment(
+          accountNumber: transferValue.accountNumber,
+          paidAmount: transferValue.paidAmount,
+          photo: transferValue.photo,
+        );
+
+    Navigator.pop(context);
   }
 
   @override
@@ -89,9 +118,7 @@ class _BankTransferPaymentContentState
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: const TextHeading3("Pilih rekening bank"),
                     ),
-                    BankTransferPaymentForm(
-                      accounts: accounts,
-                    )
+                    const BankTransferPaymentForm()
                   ],
                 )
               ],

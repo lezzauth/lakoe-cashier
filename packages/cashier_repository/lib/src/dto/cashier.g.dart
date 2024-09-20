@@ -26,9 +26,9 @@ Map<String, dynamic> _$$SaveOrderDtoImplToJson(_$SaveOrderDtoImpl instance) =>
       'tableId': instance.tableId,
     };
 
-_$CompleteOrderDtoImpl _$$CompleteOrderDtoImplFromJson(
+_$CompleteCashOrderDtoImpl _$$CompleteCashOrderDtoImplFromJson(
         Map<String, dynamic> json) =>
-    _$CompleteOrderDtoImpl(
+    _$CompleteCashOrderDtoImpl(
       paymentMethod: json['paymentMethod'] as String,
       paidAmount: (json['paidAmount'] as num).toInt(),
       change: (json['change'] as num).toInt(),
@@ -36,14 +36,30 @@ _$CompleteOrderDtoImpl _$$CompleteOrderDtoImplFromJson(
       redeemCoinAmount: json['redeemCoinAmount'] as String?,
     );
 
-Map<String, dynamic> _$$CompleteOrderDtoImplToJson(
-        _$CompleteOrderDtoImpl instance) =>
+Map<String, dynamic> _$$CompleteCashOrderDtoImplToJson(
+        _$CompleteCashOrderDtoImpl instance) =>
     <String, dynamic>{
       'paymentMethod': instance.paymentMethod,
       'paidAmount': instance.paidAmount,
       'change': instance.change,
       'customerId': instance.customerId,
       'redeemCoinAmount': instance.redeemCoinAmount,
+    };
+
+_$CompleteBankTransferOrderDataImpl
+    _$$CompleteBankTransferOrderDataImplFromJson(Map<String, dynamic> json) =>
+        _$CompleteBankTransferOrderDataImpl(
+          paymentMethod: json['paymentMethod'] as String,
+          paidAmount: (json['paidAmount'] as num).toInt(),
+          accountNumber: json['accountNumber'] as String,
+        );
+
+Map<String, dynamic> _$$CompleteBankTransferOrderDataImplToJson(
+        _$CompleteBankTransferOrderDataImpl instance) =>
+    <String, dynamic>{
+      'paymentMethod': instance.paymentMethod,
+      'paidAmount': instance.paidAmount,
+      'accountNumber': instance.accountNumber,
     };
 
 _$OpenCashierDtoImpl _$$OpenCashierDtoImplFromJson(Map<String, dynamic> json) =>

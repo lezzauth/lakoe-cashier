@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/custom_radio.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/payments/data/models/bank_account_model.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
 
@@ -11,7 +11,7 @@ class BankAccountRadio extends StatelessWidget {
   final String value;
   final String groupValue;
   final ValueChanged<String?> onChanged;
-  final BankAccountModel account;
+  final OwnerBankModel account;
 
   const BankAccountRadio({
     super.key,
@@ -41,36 +41,31 @@ class BankAccountRadio extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-                child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  THelper.getBankImage(account.bankName),
-                  height: 32,
-                  width: 32,
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      TextHeading4(
-                        THelper.getBankName(account.bankName),
-                        color: TColors.neutralDarkDarkest,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 2),
-                      TextBodyM(
-                        "${account.number} • ${account.name}",
-                        color: TColors.neutralDarkLightest,
-                      ),
-                    ],
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextHeading4(
+                          THelper.getBankName(account.name),
+                          color: TColors.neutralDarkDarkest,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 2),
+                        TextBodyM(
+                          "${account.accountNumber} • ${account.accountName}",
+                          color: TColors.neutralDarkLightest,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            )),
+                ],
+              ),
+            ),
             CustomRadio(
               value: value,
               groupValue: groupValue,
