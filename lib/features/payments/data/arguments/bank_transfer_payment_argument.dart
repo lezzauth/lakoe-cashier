@@ -1,8 +1,8 @@
-import 'package:point_of_sales_cashier/features/payments/data/models/bank_account_model.dart';
+import 'package:owner_repository/owner_repository.dart';
 
 class BankTransferPaymentArgument {
-  final BankAccountModel account;
-  final double amount;
+  final OwnerBankModel account;
+  final int amount;
 
   BankTransferPaymentArgument({
     required this.account,
