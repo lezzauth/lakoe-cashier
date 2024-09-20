@@ -112,7 +112,7 @@ class _NewProductScreenState extends State<NewProductScreen>
         outletId: authState.outletId,
         sku: sku,
         stock: stock != null ? int.parse(stock) : null,
-        availability: stockInformationValue?["availability"],
+        availability: stockInformationValue?["availability"] ?? "AVAILABLE",
       ),
     );
   }
