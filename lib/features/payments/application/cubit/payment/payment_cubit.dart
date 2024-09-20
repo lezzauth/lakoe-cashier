@@ -27,6 +27,12 @@ class PaymentCubit extends Cubit<PaymentState> {
     required int paidAmount,
   }) {
     emit(PaymentDebitCredit(
-        accountNumber: accountNumber, paidAmount: paidAmount));
+        accountNumber: accountNumber, paidAmount: paidAmount, change: 0));
+  }
+
+  void setQRCodePayment({
+    required int paidAmount,
+  }) {
+    emit(PaymentQRCode(paidAmount: paidAmount, change: 0));
   }
 }

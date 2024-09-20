@@ -25,7 +25,7 @@ class QrisPaymentFooter extends StatelessWidget {
                 height: 48,
                 child: ElevatedButton(
                   onPressed: onSubmitted,
-                  child: const TextActionL("Siapkan QRIS"),
+                  child: const TextActionL("Selesaikan"),
                 ),
               ),
             ),
