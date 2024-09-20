@@ -103,62 +103,62 @@ class SectionBillInformation extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
+            Expanded(
               child: Row(
                 children: [
                   const TextSmall(
                     "Kasir:",
                   ),
                   const SizedBox(width: 4),
-                  Expanded(
-                    child: TextSmall(
-                      cashierName,
-                      isBold: true,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  TextSmall(
+                    cashierName,
+                    isBold: true,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
             ),
             const SizedBox(width: 12),
-            TextSmall(
-              "$orderType $noTable",
-              textAlign: TextAlign.right,
-              isBold: true,
-              maxLines: 1,
-              overflow: TextOverflow.clip,
+            Expanded(
+              child: TextSmall(
+                "$orderType $noTable",
+                textAlign: TextAlign.right,
+                isBold: true,
+                maxLines: 1,
+                overflow: TextOverflow.clip,
+              ),
             ),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
+            Expanded(
               child: Row(
                 children: [
                   const TextSmall(
                     "No.Struk:",
                   ),
                   const SizedBox(width: 4),
-                  Expanded(
-                    child: TextSmall(
-                      noBill,
-                      isBold: true,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  TextSmall(
+                    noBill,
+                    isBold: true,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
             ),
             const SizedBox(width: 12),
-            TextSmall(
-              dateTime,
-              textAlign: TextAlign.right,
-              isBold: true,
-              maxLines: 1,
-              overflow: TextOverflow.clip,
+            Expanded(
+              child: TextSmall(
+                dateTime,
+                textAlign: TextAlign.right,
+                isBold: true,
+                maxLines: 1,
+                overflow: TextOverflow.clip,
+              ),
             ),
           ],
         ),
@@ -191,11 +191,9 @@ class BillGreeting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: TextSmall(
-        greeting,
-        textAlign: TextAlign.center,
-      ),
+    return TextSmall(
+      greeting,
+      textAlign: TextAlign.center,
     );
   }
 }
