@@ -34,6 +34,8 @@ class DateStepperFilter extends StatefulWidget {
 }
 
 class _DateStepperFilterState extends State<DateStepperFilter> {
+  DateTime now = DateTime.now().toUtc();
+
   String _getFormattedDateBasedOnFilter() {
     DateTime now = DateTime.now();
 
@@ -80,11 +82,8 @@ class _DateStepperFilterState extends State<DateStepperFilter> {
     return "";
   }
 
-  void _onAction(String action) {
-    DateTime now = DateTime.now().toUtc();
-
+  List<DateTime> _calculateDateRange(String action) {
     DateTime? from = widget.from == null ? null : DateTime.parse(widget.from!);
-    DateTime? to = widget.to == null ? null : DateTime.parse(widget.to!);
 
     DateTime baseDate = (from ?? now).toLocal();
     DateTime modifiedBaseDate;
@@ -141,14 +140,20 @@ class _DateStepperFilterState extends State<DateStepperFilter> {
       ];
     }
 
-    from = fromTo.elementAt(0);
-    to = fromTo.elementAt(1);
+    return fromTo;
+  }
 
+  void _onAction(String action) {
+    final [from, to] = _calculateDateRange(action);
     widget.onChanged(template: null, from: from, to: to);
   }
 
   @override
   Widget build(BuildContext context) {
+    final [from, _] = _calculateDateRange("next");
+    bool isNextDisabled =
+        from.isAfter(DateTime(now.year, now.month, now.day, 23, 59, 59, 999));
+
     return SizedBox(
       height: 36,
       child: Row(
@@ -180,15 +185,20 @@ class _DateStepperFilterState extends State<DateStepperFilter> {
           SizedBox(
             height: 36,
             width: 36,
-            child: IconButton(
-              onPressed: () {
-                _onAction("next");
-              },
-              icon: const UiIcons(
-                TIcons.arrowRight,
-                height: 16,
-                width: 16,
-                color: TColors.primary,
+            child: Opacity(
+              opacity: isNextDisabled ? 0.5 : 1,
+              child: IconButton(
+                onPressed: isNextDisabled
+                    ? null
+                    : () {
+                        _onAction("next");
+                      },
+                icon: const UiIcons(
+                  TIcons.arrowRight,
+                  height: 16,
+                  width: 16,
+                  color: TColors.primary,
+                ),
               ),
             ),
           )
