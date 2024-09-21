@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -38,10 +42,12 @@ class PreviewQrTable extends StatelessWidget {
               child: Stack(
                 children: [
                   Positioned(
-                    child: SvgPicture.string(
-                      PreviewQrTableHelper.getPreviewQrTable(color),
-                      height: 100,
-                      fit: BoxFit.fill,
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: SvgPicture.string(
+                        PreviewQrTableHelper.getPreviewQrTable(color),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                   Padding(
@@ -79,7 +85,7 @@ class PreviewQrTable extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(16, 12, 16, 8),
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
               child: Center(
                 child: TextHeading1(
                   "PESAN & BAYAR DISINI",
@@ -117,9 +123,15 @@ class PreviewQrTable extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: Center(
-                child: TextHeading3(
-                  "CARA PESAN",
-                  color: TColors.neutralDarkMedium,
+                child: ResponsiveLayout(
+                  mobile: TextHeading3(
+                    "CARA PESAN",
+                    color: TColors.neutralDarkMedium,
+                  ),
+                  tablet: TextHeading2(
+                    "CARA PESAN",
+                    color: TColors.neutralDarkMedium,
+                  ),
                 ),
               ),
             ),
@@ -127,64 +139,93 @@ class PreviewQrTable extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Expanded(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        UiIcons(
-                          TIcons.scanner,
-                          color: TColors.neutralDarkMedium,
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: TextBodyS(
-                            "Scan QR order",
-                            maxLines: 2,
+                    child: Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          UiIcons(
+                            TIcons.scanner,
                             color: TColors.neutralDarkMedium,
                           ),
-                        ),
-                      ],
+                          SizedBox(width: 8),
+                          Flexible(
+                            child: ResponsiveLayout(
+                              mobile: TextBodyS(
+                                "Scan QR order",
+                                maxLines: 2,
+                                color: TColors.neutralDarkMedium,
+                              ),
+                              tablet: TextBodyL(
+                                "Scan QR order",
+                                maxLines: 2,
+                                color: TColors.neutralDarkMedium,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(width: 8),
                   Expanded(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        UiIcons(
-                          TIcons.grid,
-                          color: TColors.neutralDarkMedium,
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: TextBodyS(
-                            "Pesan menunya",
-                            maxLines: 2,
+                    child: Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          UiIcons(
+                            TIcons.grid,
                             color: TColors.neutralDarkMedium,
                           ),
-                        ),
-                      ],
+                          SizedBox(width: 8),
+                          Flexible(
+                            child: ResponsiveLayout(
+                              mobile: TextBodyS(
+                                "Pesan menunya",
+                                maxLines: 2,
+                                color: TColors.neutralDarkMedium,
+                              ),
+                              tablet: TextBodyL(
+                                "Pesan menunya",
+                                maxLines: 2,
+                                color: TColors.neutralDarkMedium,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(width: 8),
                   Expanded(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        UiIcons(
-                          TIcons.billChecked,
-                          color: TColors.neutralDarkMedium,
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: TextBodyS(
-                            "Bayar pesanan",
-                            maxLines: 2,
+                    child: Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          UiIcons(
+                            TIcons.billChecked,
                             color: TColors.neutralDarkMedium,
                           ),
-                        ),
-                      ],
+                          SizedBox(width: 8),
+                          Flexible(
+                            child: ResponsiveLayout(
+                              mobile: TextBodyS(
+                                "Bayar pesanan",
+                                maxLines: 2,
+                                color: TColors.neutralDarkMedium,
+                              ),
+                              tablet: TextBodyL(
+                                "Bayar pesanan",
+                                maxLines: 2,
+                                color: TColors.neutralDarkMedium,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
