@@ -9,12 +9,10 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_state.dart';
-import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/forms/table_information_form.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/tabs/table_new_qr_order_tab.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
-import 'package:table_location_repository/table_location_repository.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableNewScreen extends StatelessWidget {

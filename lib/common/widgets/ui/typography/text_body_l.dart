@@ -8,6 +8,7 @@ class TextBodyL extends StatelessWidget {
   final double fontSize = TSizes.fontSizeBodyL;
   final Color? color;
   final TextAlign? textAlign;
+  final int? maxLines;
 
   const TextBodyL(
     this.data, {
@@ -15,6 +16,7 @@ class TextBodyL extends StatelessWidget {
     this.fontWeight = FontWeight.w400,
     this.color,
     this.textAlign,
+    this.maxLines,
   });
 
   @override
@@ -27,6 +29,7 @@ class TextBodyL extends StatelessWidget {
         fontSize: fontSize,
       ),
       textAlign: textAlign,
+      maxLines: maxLines,
     );
   }
 }
