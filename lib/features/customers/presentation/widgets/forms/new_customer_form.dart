@@ -6,6 +6,7 @@ import 'package:point_of_sales_cashier/common/widgets/access_permission/contact_
 import 'package:point_of_sales_cashier/common/widgets/access_permission/contact_permission.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
@@ -37,7 +38,9 @@ class _NewCustomerFormState extends State<NewCustomerForm> {
         context: context,
         isScrollControlled: true,
         builder: (context) {
-          return const ContactPermission();
+          return const CustomBottomsheet(
+            child: ContactPermission(),
+          );
         },
       );
     }
