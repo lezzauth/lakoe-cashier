@@ -18,26 +18,30 @@ class ListItemCard extends StatelessWidget {
   final bool isNewItem;
   final bool isBoldTitle;
   final bool dangerTheme;
+  final Function()? onTap;
 
   const ListItemCard({
     super.key,
     required this.iconSrc,
     required this.title,
     this.subTitle = "",
-    required this.routeName,
+    this.routeName = "",
     this.isNewItem = false,
     this.textTrailing,
     this.iconTrailing = true,
     this.isBoldTitle = false,
     this.dangerTheme = false,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, routeName);
-      },
+      onTap: routeName.isNotEmpty
+          ? () {
+              Navigator.pushNamed(context, routeName);
+            }
+          : onTap,
       splashColor: TColors.neutralLightLight,
       highlightColor: TColors.neutralLightLight,
       child: Container(

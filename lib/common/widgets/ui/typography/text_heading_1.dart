@@ -13,7 +13,7 @@ class TextHeading1 extends StatelessWidget {
   const TextHeading1(
     this.data, {
     super.key,
-    this.fontWeight = FontWeight.w900,
+    this.fontWeight = FontWeight.w800,
     this.color,
     this.maxLines,
     this.overflow,
