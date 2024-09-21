@@ -42,6 +42,7 @@ class _DeleteAccountReasonScreenState extends State<DeleteAccountReasonScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: const CustomAppbar(
           title: "Hapus Akun",
         ),
@@ -50,95 +51,98 @@ class _DeleteAccountReasonScreenState extends State<DeleteAccountReasonScreen> {
           child: Column(
             children: [
               Expanded(
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  child: Wrap(
-                    runSpacing: 20,
-                    children: [
-                      const Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextHeading3(
-                            "Sebelum pergi, boleh tau alasannya?",
-                            color: TColors.neutralDarkDark,
-                            fontWeight: FontWeight.w700,
-                          ),
-                          SizedBox(height: 4),
-                          TextBodyM(
-                            "Kamu boleh pilih lebih dari satu, ya",
-                            color: TColors.neutralDarkDark,
-                          ),
-                        ],
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ...listItemReason.map(
-                            (item) => Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 6.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CustomCheckbox(
-                                    value: item.isSelected,
-                                    onChanged: (bool value) {
-                                      setState(() {
-                                        item.isSelected = value;
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 12),
+                    child: Wrap(
+                      runSpacing: 20,
+                      children: [
+                        const Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextHeading3(
+                              "Sebelum pergi, boleh tau alasannya?",
+                              color: TColors.neutralDarkDark,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            SizedBox(height: 4),
+                            TextBodyM(
+                              "Kamu boleh pilih lebih dari satu, ya",
+                              color: TColors.neutralDarkDark,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ...listItemReason.map(
+                              (item) => Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 6.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    CustomCheckbox(
+                                      value: item.isSelected,
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          item.isSelected = value;
 
-                                        if (item.label == "Lainnya") {
-                                          isOtherSelected = value;
-                                          if (isOtherSelected) {
-                                            FocusScope.of(context).requestFocus(
-                                                _otherReasonFocusNode);
+                                          if (item.label == "Lainnya") {
+                                            isOtherSelected = value;
+                                            if (isOtherSelected) {
+                                              FocusScope.of(context)
+                                                  .requestFocus(
+                                                      _otherReasonFocusNode);
+                                            }
                                           }
-                                        }
-                                      });
-                                    },
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Flexible(
-                                    child: TextHeading4(
-                                      item.label,
-                                      color: TColors.neutralDarkDark,
+                                        });
+                                      },
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(width: 12),
+                                    Flexible(
+                                      child: TextHeading4(
+                                        item.label,
+                                        color: TColors.neutralDarkDark,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 12),
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 16.0),
-                            child: FormBuilderTextField(
-                              name: "other_reason",
-                              focusNode: _otherReasonFocusNode,
-                              decoration: InputDecoration(
-                                hintText: "Tuliskan alasanmu disini",
-                                fillColor: isOtherSelected == true
-                                    ? TColors.neutralLightLightest
-                                    : TColors.neutralLightLight,
+                            const SizedBox(height: 12),
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 16.0),
+                              child: FormBuilderTextField(
+                                name: "other_reason",
+                                focusNode: _otherReasonFocusNode,
+                                decoration: InputDecoration(
+                                  hintText: "Tuliskan alasanmu disini",
+                                  fillColor: isOtherSelected == true
+                                      ? TColors.neutralLightLightest
+                                      : TColors.neutralLightLight,
+                                ),
+                                maxLines: 3,
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value != null && value.isNotEmpty) {
+                                      isOtherSelected = true;
+                                      listItemReason.last.isSelected = true;
+                                    } else {
+                                      isOtherSelected = false;
+                                      listItemReason.last.isSelected = false;
+                                    }
+                                  });
+                                },
                               ),
-                              maxLines: 3,
-                              onChanged: (value) {
-                                setState(() {
-                                  if (value != null && value.isNotEmpty) {
-                                    isOtherSelected = true;
-                                    listItemReason.last.isSelected = true;
-                                  } else {
-                                    isOtherSelected = false;
-                                    listItemReason.last.isSelected = false;
-                                  }
-                                });
-                              },
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

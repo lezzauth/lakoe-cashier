@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
@@ -17,12 +15,14 @@ class SalesTotalCard extends StatelessWidget {
     this.duration,
     this.totalSalesDiff,
     required this.totalSales,
+    this.onTap,
   });
 
   final String? preset;
   final int? duration;
   final String totalSales;
   final int? totalSalesDiff;
+  final Function()? onTap;
 
   StatsType getType() {
     if (totalSalesDiff == null) return StatsType.neutral;
@@ -44,75 +44,80 @@ class SalesTotalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('SalesTotalCard: $preset');
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: TColors.neutralDarkDark,
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 4),
-                  child: const TextHeading5(
-                    "Total Penjualan",
-                    color: TColors.neutralDarkLightest,
+    return InkWell(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: TColors.neutralDarkDark,
+        ),
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 4),
+                    child: const TextHeading5(
+                      "Total Penjualan",
+                      color: TColors.neutralDarkLightest,
+                    ),
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 4),
-                  child: TextHeading1(
-                    TFormatter.formatToRupiah(int.parse(totalSales)),
-                    color: TColors.neutralLightLightest,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 4),
+                    child: TextHeading1(
+                      TFormatter.formatToRupiah(int.parse(totalSales)),
+                      color: TColors.neutralLightLightest,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: Row(
-                    children: [
-                      StatsBadge(
-                        type: getType(),
-                        value: "${totalSalesDiff ?? 0}%",
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 8),
-                        child: TextBodyM(
-                          "vs ${getComparisonText()}",
-                          color: TColors.neutralDarkLightest,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                  Container(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Row(
+                      children: [
+                        StatsBadge(
+                          type: getType(),
+                          value: "${totalSalesDiff ?? 0}%",
                         ),
-                      ),
-                    ],
+                        Container(
+                          margin: const EdgeInsets.only(left: 8),
+                          child: TextBodyM(
+                            "vs ${getComparisonText()}",
+                            color: TColors.neutralDarkLightest,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Container(
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-              color: TColors.neutralDarkMedium,
-              borderRadius: BorderRadius.circular(40),
+            const SizedBox(width: 12),
+            Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                color: TColors.neutralDarkMedium,
+                borderRadius: BorderRadius.circular(40),
+              ),
+              child: const UiIcons(
+                TIcons.roundGraph,
+                height: 16,
+                width: 16,
+                color: TColors.primary,
+              ),
             ),
-            child: const UiIcons(
-              TIcons.roundGraph,
-              height: 16,
-              width: 16,
-              color: TColors.primary,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
