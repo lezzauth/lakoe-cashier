@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/list_item_card.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/section_card.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/widgets/appbar/account_appbar.dart';
-import 'package:point_of_sales_cashier/features/account/presentation/widgets/section/section_card.dart';
-import 'package:point_of_sales_cashier/features/account/presentation/widgets/section/section_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -21,28 +20,7 @@ class AccountMasterScreen extends StatefulWidget {
   State<AccountMasterScreen> createState() => _AccountMasterScreenState();
 }
 
-class _AccountMasterScreenState extends State<AccountMasterScreen>
-    with WidgetsBindingObserver {
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      systemNavigationBarColor: TColors.neutralLightLight,
-      statusBarIconBrightness: Brightness.light,
-    ));
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      systemNavigationBarColor: TColors.neutralLightLightest,
-      statusBarIconBrightness: Brightness.dark,
-    ));
-    super.dispose();
-  }
-
+class _AccountMasterScreenState extends State<AccountMasterScreen> {
   List<_OtherItem> otherSettingItems = [
     _OtherItem(
       title: "Paket & Riwayat",
@@ -67,7 +45,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen>
     ),
     _OtherItem(
       title: "Atur Akun",
-      routeName: "/",
+      routeName: "/manage_account",
       iconSrc: TIcons.linkSquare,
     ),
   ];
@@ -106,7 +84,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen>
                   OtherCard(
                     children: otherSettingItems
                         .map(
-                          (item) => AccountOtherSectionItem(
+                          (item) => ListItemCard(
                             iconSrc: item.iconSrc,
                             title: item.title,
                             routeName: item.routeName,
@@ -360,7 +338,7 @@ class OtherCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
-      child: AccountOtherSectionCard(
+      child: SectionCard(
         title: "Lainnya",
         children: children,
       ),

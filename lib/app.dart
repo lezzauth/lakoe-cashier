@@ -44,6 +44,7 @@ import 'package:point_of_sales_cashier/features/employees/presentation/screens/n
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/open_cashier_pin.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
+import 'package:point_of_sales_cashier/features/manage_account/presentation/screens/manage_account.dart';
 import 'package:point_of_sales_cashier/features/notifications/presentation/screens/notification_master.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_cubit.dart';
@@ -74,6 +75,7 @@ import 'package:point_of_sales_cashier/features/tables/presentation/screens/tabl
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
 import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_master/tax_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/taxes/presentation/screens/tax_master.dart';
+import 'package:point_of_sales_cashier/utils/helpers/navigator_observer.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -139,6 +141,9 @@ class App extends StatelessWidget {
         theme: TAppTheme.lightTheme,
         darkTheme: TAppTheme.darkTheme,
         themeMode: ThemeMode.light,
+        navigatorObservers: [
+          CustomNavigatorObserver(),
+        ],
         initialRoute: "/",
         debugShowCheckedModeBanner: false,
         localizationsDelegates: const [
@@ -246,6 +251,9 @@ class App extends StatelessWidget {
 
           // Notifications
           "/notifications": (context) => const NotificationMasterScreen(),
+
+          // Manage Account
+          "/manage_account": (context) => const ManageAccountScreen(),
         },
       ),
     );
