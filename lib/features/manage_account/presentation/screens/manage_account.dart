@@ -41,7 +41,7 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
                     title: "Hapus akun",
                     subTitle:
                         "Akun kamu akan dihapus secara permanen. Jadi, kamu tidak bisa lagi akses riwayat transaksi, laporan dan lainnya dari akun ini.",
-                    routeName: "/",
+                    routeName: "/delete_account",
                     iconSrc: TIcons.billAlt,
                   ),
                 ),
