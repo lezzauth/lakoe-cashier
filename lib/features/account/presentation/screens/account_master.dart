@@ -83,9 +83,12 @@ class _AccountMasterScreenState extends State<AccountMasterScreen>
       body: Stack(
         children: [
           Positioned(
-            child: SvgPicture.asset(
-              TImages.liteLevel,
+            child: SizedBox(
               width: MediaQuery.of(context).size.width,
+              child: SvgPicture.asset(
+                TImages.liteLevel,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
           Padding(
