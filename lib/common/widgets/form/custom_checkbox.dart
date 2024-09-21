@@ -6,6 +6,7 @@ import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 class CustomCheckbox extends StatefulWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
+  final bool isError;
   final double size;
   final Color borderColor;
   final Color selectedColor;
@@ -16,12 +17,12 @@ class CustomCheckbox extends StatefulWidget {
     Key? key,
     required this.value,
     required this.onChanged,
-    this.size = 24.0, // Ukuran default kotak checkbox
+    this.isError = false,
+    this.size = 24.0,
     this.borderColor = TColors.neutralLightDarkest,
     this.selectedColor = TColors.primary,
     this.checkColor = TColors.neutralLightLightest,
-    this.animationDuration =
-        const Duration(milliseconds: 300), // Durasi animasi
+    this.animationDuration = const Duration(milliseconds: 200),
   }) : super(key: key);
 
   @override
@@ -36,12 +37,16 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
         widget.onChanged(!widget.value);
       },
       child: AnimatedContainer(
-        duration: widget.animationDuration, // Menambahkan animasi transisi
+        duration: widget.animationDuration,
         width: widget.size,
         height: widget.size,
         decoration: BoxDecoration(
           border: Border.all(
-            color: widget.value ? widget.selectedColor : widget.borderColor,
+            color: widget.isError
+                ? TColors.error
+                : widget.value
+                    ? widget.selectedColor
+                    : widget.borderColor,
             width: 1.5,
           ),
           borderRadius: BorderRadius.circular(6.0),
@@ -51,10 +56,11 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
             ? AnimatedOpacity(
                 opacity: 1.0,
                 duration: widget.animationDuration,
-                child: Icon(
-                  Icons.check,
-                  size: widget.size * 0.6, // Ukuran ikon check
-                  color: widget.checkColor,
+                child: UiIcons(
+                  TIcons.check,
+                  width: widget.size * 0.9,
+                  height: widget.size * 0.9,
+                  color: widget.isError ? TColors.error : widget.checkColor,
                 ),
               )
             : AnimatedOpacity(
@@ -64,7 +70,7 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
                   TIcons.check,
                   width: widget.size * 0.2,
                   height: widget.size * 0.2,
-                  color: widget.checkColor,
+                  color: Colors.transparent,
                 ),
               ),
       ),
