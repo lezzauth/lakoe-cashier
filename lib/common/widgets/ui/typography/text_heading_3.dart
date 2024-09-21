@@ -14,7 +14,7 @@ class TextHeading3 extends StatelessWidget {
   const TextHeading3(
     this.data, {
     super.key,
-    this.fontWeight = FontWeight.w600,
+    this.fontWeight = FontWeight.w700,
     this.color = TColors.neutralDarkDarkest,
     this.maxLines,
     this.overflow,

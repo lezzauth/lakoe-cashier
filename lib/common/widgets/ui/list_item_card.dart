@@ -76,6 +76,7 @@ class ListItemCard extends StatelessWidget {
                               color: dangerTheme == true
                                   ? TColors.error
                                   : TColors.neutralDarkDark,
+                              fontWeight: FontWeight.w600,
                             )
                           : TextBodyL(
                               title,
