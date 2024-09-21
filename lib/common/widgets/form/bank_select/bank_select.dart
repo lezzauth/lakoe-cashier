@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/bank_select/bank_select_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -41,12 +42,16 @@ class _BankSelectState extends State<BankSelect> {
                 isScrollControlled: true,
                 useSafeArea: true,
                 builder: (context) {
-                  return BankSelectList(
-                    initialValue: widget.value,
-                    onChanged: (value) {
-                      Navigator.pop(context);
-                      widget.onChanged(value!);
-                    },
+                  return CustomBottomsheet(
+                    child: Expanded(
+                      child: BankSelectList(
+                        initialValue: widget.value,
+                        onChanged: (value) {
+                          Navigator.pop(context);
+                          widget.onChanged(value!);
+                        },
+                      ),
+                    ),
                   );
                 },
               );

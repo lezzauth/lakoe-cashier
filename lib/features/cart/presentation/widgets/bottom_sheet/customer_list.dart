@@ -74,7 +74,7 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
                 child: SearchField(
                   hintText: "Cari pelanggan...",
                   debounceTime: 500,

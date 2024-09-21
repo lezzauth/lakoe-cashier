@@ -44,7 +44,7 @@ class CartFooter extends StatelessWidget {
                     ),
             ),
           ),
-          const SizedBox(width: 6),
+          const SizedBox(width: 12),
           Expanded(
             child: SizedBox(
               height: 48.0,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
@@ -32,47 +33,49 @@ class ProductItem extends StatelessWidget {
     onAddNotes() {
       return showModalBottomSheet(
         context: context,
-        showDragHandle: true,
+        // showDragHandle: true,
         isScrollControlled: true,
         builder: (context) {
-          return Padding(
-            padding: TDeviceUtils.getViewInsets(context),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: TextHeading2("Tambah catatan"),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 8.0),
-                        child: TextField(
-                          decoration: const InputDecoration(
-                            hintText: "Tuliskan catatan",
-                          ),
-                          maxLines: 4,
-                        ),
-                      ),
-                      SizedBox(
-                        width: double.maxFinite,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: const TextActionL(
-                            "Lanjutkan",
-                            color: TColors.neutralLightLightest,
-                          ),
-                        ),
-                      )
-                    ],
+          return CustomBottomsheet(
+            child: Padding(
+              padding: TDeviceUtils.getViewInsets(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
+                    child: TextHeading2("Tambah catatan"),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 16),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 20.0),
+                          child: const TextField(
+                            decoration: InputDecoration(
+                              hintText: "Tuliskan catatan",
+                            ),
+                            maxLines: 4,
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.maxFinite,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: const TextActionL(
+                              "Lanjutkan",
+                              color: TColors.neutralLightLightest,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },
@@ -103,7 +106,7 @@ class ProductItem extends StatelessWidget {
             children: [
               Container(
                 clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(
                     Radius.circular(12),
                   ),
@@ -117,97 +120,95 @@ class ProductItem extends StatelessWidget {
               ),
               const SizedBox(width: 12.0),
               Expanded(
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          constraints: const BoxConstraints(
+                            maxWidth: 100,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextHeading4(product.name),
+                              TextBodyM(
+                                "Rp${product.price}",
+                                color: TColors.neutralDarkLight,
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (isSelected)
                           Container(
-                            constraints: BoxConstraints(
-                              maxWidth: 100,
+                            decoration: BoxDecoration(
+                              color: TColors.neutralLightLightest,
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: Border.all(
+                                color: TColors.highlightMedium,
+                                width: 1,
+                              ),
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Row(
                               children: [
-                                TextHeading4(product.name),
-                                TextBodyM(
-                                  "Rp${product.price}",
-                                  color: TColors.neutralDarkLight,
+                                SizedBox(
+                                  width: 36,
+                                  height: 36,
+                                  child: IconButton(
+                                    // style: ButtonStyle(),
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      size: 16,
+                                      color: TColors.error,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 36,
+                                  width: 36,
+                                  child: Center(
+                                    child: Text(
+                                      qty.toString(),
+                                      style: GoogleFonts.inter(
+                                        fontSize: TSizes.fontSizeActionL,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 36,
+                                  height: 36,
+                                  child: IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.add,
+                                      size: 20,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                          if (isSelected)
-                            Container(
-                              decoration: BoxDecoration(
-                                color: TColors.neutralLightLightest,
-                                borderRadius: BorderRadius.circular(8.0),
-                                border: Border.all(
-                                  color: TColors.highlightMedium,
-                                  width: 1,
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 36,
-                                    height: 36,
-                                    child: IconButton(
-                                      // style: ButtonStyle(),
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.delete,
-                                        size: 16,
-                                        color: TColors.error,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 36,
-                                    width: 36,
-                                    child: Center(
-                                      child: Text(
-                                        qty.toString(),
-                                        style: GoogleFonts.inter(
-                                          fontSize: TSizes.fontSizeActionL,
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 36,
-                                    height: 36,
-                                    child: IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.add,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                      ],
+                    ),
+                    if (isSelected && isNotesEmpty)
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: onAddNotes,
+                            child: const TextHeading5(
+                              "Tambah Catatan",
+                              color: TColors.primary,
                             ),
+                          ),
                         ],
                       ),
-                      if (isSelected && isNotesEmpty)
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: onAddNotes,
-                              child: TextHeading5(
-                                "Tambah Catatan",
-                                color: TColors.primary,
-                              ),
-                            ),
-                          ],
-                        ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ],

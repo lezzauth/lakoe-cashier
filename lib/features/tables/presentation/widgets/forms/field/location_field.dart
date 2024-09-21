@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
@@ -36,13 +37,14 @@ class _LocationFieldState extends State<LocationField> {
         await showModalBottomSheet<TableLocationModel>(
       context: context,
       useSafeArea: true,
-      showDragHandle: true,
       isScrollControlled: true,
       builder: (context) {
-        return Container(
-          padding: TDeviceUtils.getViewInsets(context),
-          child: const SingleChildScrollView(
-            child: CreateTableLocationForm(),
+        return CustomBottomsheet(
+          child: Container(
+            padding: TDeviceUtils.getViewInsets(context),
+            child: const SingleChildScrollView(
+              child: CreateTableLocationForm(),
+            ),
           ),
         );
       },
@@ -195,7 +197,7 @@ class _CreateTableLocationFormState extends State<CreateTableLocationForm> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
               child: const TextHeading2(
                 "Buat lokasi baru",
                 color: TColors.neutralDarkDarkest,

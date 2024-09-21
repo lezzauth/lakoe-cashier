@@ -11,68 +11,61 @@ class GeneralInformation extends StatelessWidget {
     required this.imageSrc,
     required this.title,
     required this.onRequest,
-    this.requestTitle,
+    this.actionTitle,
   });
 
   final String imageSrc;
   final String title;
   final String description;
   final Function() onRequest;
-  final String? requestTitle;
+  final String? actionTitle;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 20),
-                  child: Image.asset(
-                    imageSrc,
-                    height: 72.46,
-                    width: 100,
-                  ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                child: Image.asset(
+                  imageSrc,
+                  height: 72.46,
+                  width: 100,
                 ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  child: TextHeading2(
-                    title,
-                    color: TColors.neutralDarkDarkest,
-                  ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 8),
+                child: TextHeading2(
+                  title,
+                  color: TColors.neutralDarkDarkest,
                 ),
-                TextBodyM(
-                  description,
-                  color: TColors.neutralDarkMedium,
-                ),
-              ],
+              ),
+              TextBodyM(
+                description,
+                color: TColors.neutralDarkMedium,
+              ),
+            ],
+          ),
+        ),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          child: SizedBox(
+            height: 48,
+            child: ElevatedButton(
+              onPressed: onRequest,
+              child: TextActionL(actionTitle ?? "Berikan Izin"),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: onRequest,
-                      child: TextActionL(requestTitle ?? "Berikan Izin"),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
