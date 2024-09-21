@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/form/custom_checkbox.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
@@ -127,29 +128,13 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                               ),
                             ),
                             const SizedBox(width: 20),
-                            Transform.scale(
-                              scale: 1.6,
-                              child: Checkbox(
-                                value: isAgreed,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isAgreed = value ?? isAgreed;
-                                  });
-                                },
-                                isError: false,
-                                side: WidgetStateBorderSide.resolveWith(
-                                  (states) {
-                                    if (states.contains(WidgetState.error)) {
-                                      return const BorderSide(
-                                        color: TColors.error,
-                                        width: 1,
-                                        strokeAlign: 1,
-                                      );
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
+                            CustomCheckbox(
+                              value: isAgreed,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  isAgreed = value;
+                                });
+                              },
                             ),
                           ],
                         ),

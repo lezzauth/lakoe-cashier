@@ -6,7 +6,11 @@ import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart'
 import 'package:point_of_sales_cashier/common/widgets/filters/date-filter/date_preset_range_filter.dart';
 import 'package:point_of_sales_cashier/common/widgets/filters/date-filter/date_stepper_filter.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
@@ -150,6 +154,19 @@ class _ReportMasterState extends State<ReportMaster> {
                             ReportMasterFilterState>(
                           builder: (context, filterState) {
                             return SalesTotalCard(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  useSafeArea: true,
+                                  builder: (context) {
+                                    return DetailAmount(
+                                      label: "Total Penjualan",
+                                      amount: report.totalSales,
+                                    );
+                                  },
+                                );
+                              },
                               preset: filterState.preset,
                               totalSales: report.totalSales,
                               duration: filterState.duration,
@@ -165,6 +182,19 @@ class _ReportMasterState extends State<ReportMaster> {
                           children: [
                             Expanded(
                               child: ReportCard(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    useSafeArea: true,
+                                    builder: (context) {
+                                      return DetailAmount(
+                                        label: "Rata-rata transaksi",
+                                        amount: report.averageSales,
+                                      );
+                                    },
+                                  );
+                                },
                                 icon: const UiIcons(
                                   TIcons.pieChartOutline,
                                   height: 20,
@@ -184,6 +214,19 @@ class _ReportMasterState extends State<ReportMaster> {
                             const SizedBox(width: 12),
                             Expanded(
                               child: ReportCard(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    useSafeArea: true,
+                                    builder: (context) {
+                                      return DetailAmount(
+                                        label: "Total Keuntungan Transaksi",
+                                        amount: report.totalProfit,
+                                      );
+                                    },
+                                  );
+                                },
                                 icon: const UiIcons(
                                   TIcons.billCheckedOutline,
                                   height: 20,
@@ -304,6 +347,62 @@ class _ReportMasterState extends State<ReportMaster> {
                   ),
               },
             )),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DetailAmount extends StatelessWidget {
+  final String label;
+  final String amount;
+  const DetailAmount({super.key, required this.label, required this.amount});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomBottomsheet(
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(
+                  top: 16,
+                  bottom: 32,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextBodyL(
+                      label,
+                      color: TColors.neutralDarkLight,
+                    ),
+                    const SizedBox(height: 4),
+                    TextHeading1(
+                      TFormatter.formatToRupiah(
+                        amount == "NaN"
+                            ? 0
+                            : int.parse(
+                                amount,
+                              ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 48,
+                width: MediaQuery.of(context).size.width,
+                child: OutlinedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const TextActionL("Oke, Tutup"),
+                ),
+              ),
+            ],
           ),
         ),
       ),
