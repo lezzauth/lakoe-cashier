@@ -24,7 +24,6 @@ class _BankAccountNewScreenState extends State<BankAccountNewScreen> {
 
     final result = await showModalBottomSheet<BankVerifyArgument?>(
       context: context,
-      showDragHandle: false,
       isDismissible: false,
       enableDrag: false,
       builder: (context) {

@@ -97,13 +97,13 @@ class _EmailEditScreenState extends State<EmailEditScreen> {
                                     Navigator.pop(context);
                                     Navigator.pop(context);
                                   },
-                                  requestTitle: "Selesai",
+                                  actionTitle: "Selesai",
                                 ),
                               );
                             },
                           );
                         },
-                        requestTitle: "Buka Aplikasi Email",
+                        actionTitle: "Buka Aplikasi Email",
                       ),
                     );
                   },

@@ -4,8 +4,11 @@ import 'package:point_of_sales_cashier/application/cubit/bank_verify_cubit.dart'
 import 'package:point_of_sales_cashier/application/cubit/bank_verify_state.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/bank_verify/bank_verify_confirmation.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/general_information.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:public_repository/public_repository.dart';
 
 class BankVerify extends StatefulWidget {
@@ -82,12 +85,38 @@ class _BankVerifyContentState extends State<BankVerifyContent> {
             isScrollControlled: true,
             barrierColor: Colors.transparent,
             builder: (context) {
-              return BankVerifyConfirmation(
-                accountName: state.account.accountName,
-                accountNumber: widget.accountNumber,
-                bankName: widget.bankName,
-                name: widget.name,
+              return CustomBottomsheet(
+                child: BankVerifyConfirmation(
+                  accountName: state.account.accountName,
+                  accountNumber: widget.accountNumber,
+                  bankName: widget.bankName,
+                  name: widget.name,
+                ),
               );
+            },
+          );
+
+          if (!context.mounted) return;
+          Navigator.pop(context, result);
+        }
+
+        if (state is BankVerifyActionFailure) {
+          final result = await showModalBottomSheet<BankVerifyArgument?>(
+            context: context,
+            isScrollControlled: true,
+            barrierColor: Colors.transparent,
+            builder: (context) {
+              return CustomBottomsheet(
+                  child: GeneralInformation(
+                imageSrc: TImages.generalIllustration,
+                title: "Nomor rekening tidak ditemukan",
+                description:
+                    "Yuk! Cek lagi nomor rekening yang kamu masukan, pastikan sesuai denga bank-nya, ya!",
+                onRequest: () {
+                  Navigator.pop(context);
+                },
+                actionTitle: "Cek Lagi",
+              ));
             },
           );
 
@@ -100,14 +129,23 @@ class _BankVerifyContentState extends State<BankVerifyContent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding:
-                const EdgeInsets.only(left: 20, top: 12, bottom: 16, right: 20),
+            padding: const EdgeInsets.only(
+              left: 20,
+              top: 16,
+              bottom: 8,
+              right: 20,
+            ),
             child: const TextHeading2(
               "Sedang verifikasi rekening...",
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(left: 20, top: 12, right: 20),
+            padding: const EdgeInsets.only(
+              left: 20,
+              top: 8,
+              right: 20,
+              bottom: 20,
+            ),
             child: LinearProgressIndicator(
               minHeight: 8,
               borderRadius: BorderRadius.circular(12),

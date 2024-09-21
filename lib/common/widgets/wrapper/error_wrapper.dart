@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 
 class ErrorWrapper extends StatefulWidget {
@@ -56,21 +56,24 @@ class _ErrorWrapperState extends State<ErrorWrapper> {
       enableDrag: false,
       isDismissible: false,
       builder: (context) {
-        return widget.fetchErrorDisplay ??
-            ErrorDisplay(
-              description: "Terjadi kesalahan saat mendapatkan data!",
-              imageSrc: TImages.storagePermission,
-              title: "Gagal mendapatkan data",
-              actionTitle: "Refresh",
-              onAction: () async {
-                if (widget.onRefresh != null) {
-                  await widget.onRefresh!();
-                }
+        return CustomBottomsheet(
+          child: widget.fetchErrorDisplay ??
+              ErrorDisplay(
+                imageSrc: TImages.generalIllustration,
+                title: "Ups, Terjadi sedikit kesalahan!",
+                description:
+                    "Kamu bisa mencobanya lagi dengan tekan tombol dibawah ini, ya",
+                actionTitle: "Coba Lagi",
+                onAction: () async {
+                  if (widget.onRefresh != null) {
+                    await widget.onRefresh!();
+                  }
 
-                if (!context.mounted) return;
-                Navigator.pop(context);
-              },
-            );
+                  if (!context.mounted) return;
+                  Navigator.pop(context);
+                },
+              ),
+        );
       },
     );
   }
@@ -81,16 +84,18 @@ class _ErrorWrapperState extends State<ErrorWrapper> {
       enableDrag: false,
       isDismissible: false,
       builder: (context) {
-        return widget.actionErrorDisplay ??
-            ErrorDisplay(
-              description: "Terjadi kesalahan saat melakukan aksi!",
-              imageSrc: TImages.storagePermission,
-              title: "Gagal melakukan aksi",
-              actionTitle: "Tutup",
-              onAction: () {
-                Navigator.pop(context);
-              },
-            );
+        return CustomBottomsheet(
+          child: widget.actionErrorDisplay ??
+              ErrorDisplay(
+                imageSrc: TImages.generalIllustration,
+                title: "Maaf, servernya lagi sibuk, nih!",
+                description: "Kamu bisa mencobanya beberapa saat lagi, ya",
+                actionTitle: "Tutup",
+                onAction: () {
+                  Navigator.pop(context);
+                },
+              ),
+        );
       },
     );
   }
