@@ -8,10 +8,15 @@ class TTextFieldTheme {
 
   static InputDecorationTheme lightTheme = InputDecorationTheme(
     isDense: true,
-    border: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(
-        TSizes.inputRadius,
+    disabledBorder: OutlineInputBorder().copyWith(
+      borderRadius: BorderRadius.circular(TSizes.inputRadius),
+      borderSide: const BorderSide(
+        width: 1,
+        color: TColors.neutralLightDarkest,
       ),
+    ),
+    border: const OutlineInputBorder().copyWith(
+      borderRadius: BorderRadius.circular(TSizes.inputRadius),
       borderSide: const BorderSide(
         width: 1,
         color: TColors.neutralLightDarkest,

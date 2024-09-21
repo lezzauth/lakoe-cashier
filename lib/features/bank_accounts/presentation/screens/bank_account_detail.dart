@@ -29,7 +29,6 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
 
     final result = await showModalBottomSheet<BankVerifyArgument?>(
       context: context,
-      showDragHandle: false,
       isDismissible: false,
       enableDrag: false,
       builder: (context) {
@@ -75,6 +74,7 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
         ),
         body: BankAccountForm(
           onSubmitted: (value, bank) {
+            FocusScope.of(context).unfocus();
             _onSubmitted(arguments.id, bank: bank, value: value);
           },
           isLoading: state is BankAccountMasterActionInProgress,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/forms/final_balance_form.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -19,12 +20,13 @@ class _CloseCashierButtonState extends State<CloseCashierButton> {
   _onCashierClosed() {
     return showModalBottomSheet(
       context: context,
-      showDragHandle: true,
       isScrollControlled: true,
       builder: (context) {
-        return Padding(
-          padding: TDeviceUtils.getViewInsets(context),
-          child: const FinalBalanceForm(),
+        return CustomBottomsheet(
+          child: Padding(
+            padding: TDeviceUtils.getViewInsets(context),
+            child: const FinalBalanceForm(),
+          ),
         );
       },
     );

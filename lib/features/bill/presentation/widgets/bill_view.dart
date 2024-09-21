@@ -91,10 +91,9 @@ class BillView extends StatelessWidget {
                 children: children,
               ),
               closeBill != null
-                  ? Expanded(
+                  ? SizedBox(
                       child: TextSmall(
                         closeBill!,
-                        // "Close Bill: 28/12/2024 - 21:37",
                         isBold: true,
                       ),
                     )
@@ -118,7 +117,7 @@ class BillView extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              Expanded(
+              SizedBox(
                 child: SvgPicture.asset(
                   TImages.primaryLogoLakoe,
                   height: 12,

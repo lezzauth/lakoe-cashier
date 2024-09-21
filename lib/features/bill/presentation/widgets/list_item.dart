@@ -41,6 +41,7 @@ class BillListItem extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Expanded(
+                flex: 1,
                 child: TextSmall(
                   isHeadList == true ? qty : "x$qty",
                   isBold: isBold,
@@ -48,6 +49,7 @@ class BillListItem extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Expanded(
+                flex: 1,
                 child: TextSmall(
                   isHeadList == true ? price : "Rp$price",
                   textAlign: TextAlign.right,
