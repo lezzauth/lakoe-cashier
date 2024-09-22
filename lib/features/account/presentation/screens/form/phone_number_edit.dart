@@ -39,7 +39,7 @@ class _PhoneNumberEditScreenState extends State<PhoneNumberEditScreen> {
                         color: TColors.neutralDarkDark,
                       ),
                       TextBodyL(
-                        "Silahkan masukan nomor WA baru untuk menggantikan nomor sebelumnya.",
+                        "Silahkan masukkan nomor WA baru untuk menggantikan nomor sebelumnya.",
                         color: TColors.neutralDarkDark,
                       ),
                     ],

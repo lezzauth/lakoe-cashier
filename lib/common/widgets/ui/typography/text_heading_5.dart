@@ -10,6 +10,7 @@ class TextHeading5 extends StatelessWidget {
   final int? maxLines;
   final TextOverflow? overflow;
   final bool? softWrap;
+  final TextAlign? textAlign;
 
   const TextHeading5(
     this.data, {
@@ -19,6 +20,7 @@ class TextHeading5 extends StatelessWidget {
     this.maxLines,
     this.overflow,
     this.softWrap,
+    this.textAlign,
   });
 
   @override
@@ -33,6 +35,7 @@ class TextHeading5 extends StatelessWidget {
       maxLines: maxLines,
       overflow: overflow,
       softWrap: softWrap,
+      textAlign: textAlign,
     );
   }
 }
