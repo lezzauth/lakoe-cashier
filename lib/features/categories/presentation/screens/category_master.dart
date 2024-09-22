@@ -104,7 +104,8 @@ class _CategoryMasterState extends State<CategoryMaster> {
                             if (categories.isEmpty)
                               const EmptyList(
                                 title: "Belum ada kategori, nih!",
-                                subTitle: "Yuk! Masukan masukan kategori kamu.",
+                                subTitle:
+                                    "Yuk! Masukan masukkan kategori kamu.",
                               ),
                             if (categories.isNotEmpty)
                               SliverList.builder(
