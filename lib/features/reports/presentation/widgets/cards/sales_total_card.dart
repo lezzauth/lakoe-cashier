@@ -69,7 +69,7 @@ class SalesTotalCard extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(bottom: 4),
                   child: TextHeading1(
-                    TFormatter.formatToRupiah(int.parse(totalSales)),
+                    TFormatter.formatToRupiah(double.parse(totalSales)),
                     color: TColors.neutralLightLightest,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

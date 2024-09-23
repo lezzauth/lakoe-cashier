@@ -97,7 +97,7 @@ class ProductOrderItem extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: TFormatter.formatToRupiah(
-                            int.parse(
+                            double.parse(
                               order.price,
                             ),
                           ),
