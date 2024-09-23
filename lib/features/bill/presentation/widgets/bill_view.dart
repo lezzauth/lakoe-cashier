@@ -109,7 +109,7 @@ class BillView extends StatelessWidget {
               BillGreeting(
                 greeting: greeting,
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 52),
               const SizedBox(
                 width: double.infinity,
                 child: TextSmall(
