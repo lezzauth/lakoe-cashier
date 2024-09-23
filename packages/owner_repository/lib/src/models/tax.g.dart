@@ -10,7 +10,7 @@ _$TaxModelImpl _$$TaxModelImplFromJson(Map<String, dynamic> json) =>
     _$TaxModelImpl(
       id: json['id'] as String,
       name: json['name'] as String,
-      value: (json['value'] as num).toInt(),
+      value: json['value'] as String,
       ownerId: json['ownerId'] as String,
     );
 

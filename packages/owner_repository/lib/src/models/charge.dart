@@ -8,7 +8,7 @@ class ChargeModel with _$ChargeModel {
   const factory ChargeModel({
     required String id,
     required String name,
-    required int value,
+    required String value,
     required String ownerId,
     required bool isPrecentage,
   }) = _ChargeModel;

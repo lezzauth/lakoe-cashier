@@ -8,6 +8,7 @@ class DetailCustomerOutletDto with _$DetailCustomerOutletDto {
   const factory DetailCustomerOutletDto({
     String? from,
     String? to,
+    String? template,
   }) = _DetailCustomerOutletDto;
 
   factory DetailCustomerOutletDto.fromJson(Map<String, Object?> json) =>

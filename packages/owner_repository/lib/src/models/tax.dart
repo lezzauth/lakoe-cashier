@@ -8,7 +8,7 @@ class TaxModel with _$TaxModel {
   const factory TaxModel({
     required String id,
     required String name,
-    required int value,
+    required String value,
     required String ownerId,
   }) = _TaxModel;
 

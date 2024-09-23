@@ -10,6 +10,7 @@ _$OrderChargeImpl _$$OrderChargeImplFromJson(Map<String, dynamic> json) =>
     _$OrderChargeImpl(
       id: json['id'] as String,
       orderId: json['orderId'] as String,
+      name: json['name'] as String,
       type: json['type'] as String,
       amount: json['amount'] as String,
       createdAt: json['createdAt'] as String,
@@ -20,6 +21,7 @@ Map<String, dynamic> _$$OrderChargeImplToJson(_$OrderChargeImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'orderId': instance.orderId,
+      'name': instance.name,
       'type': instance.type,
       'amount': instance.amount,
       'createdAt': instance.createdAt,
@@ -189,6 +191,7 @@ Map<String, dynamic> _$$PreviewOrderItemImplToJson(
 _$PreviewOrderChargeImpl _$$PreviewOrderChargeImplFromJson(
         Map<String, dynamic> json) =>
     _$PreviewOrderChargeImpl(
+      name: json['name'] as String,
       type: json['type'] as String,
       amount: json['amount'] as String,
     );
@@ -196,6 +199,7 @@ _$PreviewOrderChargeImpl _$$PreviewOrderChargeImplFromJson(
 Map<String, dynamic> _$$PreviewOrderChargeImplToJson(
         _$PreviewOrderChargeImpl instance) =>
     <String, dynamic>{
+      'name': instance.name,
       'type': instance.type,
       'amount': instance.amount,
     };
@@ -210,6 +214,7 @@ _$PreviewOrderPriceResponseImpl _$$PreviewOrderPriceResponseImplFromJson(
       charges: (json['charges'] as List<dynamic>)
           .map((e) => PreviewOrderCharge.fromJson(e as Map<String, dynamic>))
           .toList(),
+      orderItemTotal: json['orderItemTotal'] as String,
     );
 
 Map<String, dynamic> _$$PreviewOrderPriceResponseImplToJson(
@@ -218,4 +223,5 @@ Map<String, dynamic> _$$PreviewOrderPriceResponseImplToJson(
       'total': instance.total,
       'orderItems': instance.orderItems,
       'charges': instance.charges,
+      'orderItemTotal': instance.orderItemTotal,
     };

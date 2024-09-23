@@ -11,7 +11,6 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
-import 'package:point_of_sales_cashier/features/home/data/arguments/open_cashier_pin_argument.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
@@ -24,6 +23,7 @@ class FinalBalanceForm extends StatefulWidget {
 
 class _FinalBalanceFormState extends State<FinalBalanceForm> {
   final _formKey = GlobalKey<FormBuilderState>();
+  bool _isFormValid = false;
 
   final CurrencyTextInputFormatter _finalBalance =
       CurrencyTextInputFormatter.currency(
@@ -33,28 +33,11 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
   );
 
   Future<void> _onSubmit() async {
-    if (!mounted) return;
+    bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
-    if (_formKey.currentState?.saveAndValidate() ?? false) {
-      dynamic value = _formKey.currentState?.value;
-
-      AuthState authState = context.read<AuthCubit>().state;
-      if (authState is! AuthReady) return;
-
-      await context.read<CashierCubit>().closeCashier(
-            CloseCashierDto(
-              finalBalance: value["finalBalance"],
-              outletId: authState.outletId,
-            ),
-          );
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        "/cashier",
-        (route) => false,
-      );
-    } else {
-      const snackBar = SnackBar(
-        content: Text('Validation failed'),
+    if (!isFormValid) {
+      SnackBar snackBar = SnackBar(
+        content: Text(ErrorTextStrings.formInvalid()),
         showCloseIcon: true,
       );
       ScaffoldMessenger.of(context)
@@ -62,13 +45,40 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
         ..showSnackBar(
           snackBar,
         );
+      return;
     }
+
+    dynamic value = _formKey.currentState?.value;
+
+    AuthState authState = context.read<AuthCubit>().state;
+    if (authState is! AuthReady) return;
+
+    await context.read<CashierCubit>().closeCashier(
+          CloseCashierDto(
+            finalBalance: value["finalBalance"],
+            outletId: authState.outletId,
+          ),
+        );
+
+    if (!mounted) return;
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      "/cashier",
+      (route) => false,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
       key: _formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: () {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          _isFormValid = _formKey.currentState?.isValid ?? false;
+          setState(() {});
+        });
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -105,19 +115,21 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
                   ),
                 ),
                 BlocBuilder<CashierCubit, CashierState>(
-                    builder: (context, state) {
-                  return SizedBox(
-                    width: double.maxFinite,
-                    child: ElevatedButton(
-                      onPressed:
-                          state is! CashierCloseInProgress ? _onSubmit : null,
-                      child: const TextActionL(
-                        "Lanjutkan",
-                        color: TColors.neutralLightLightest,
+                  builder: (context, state) {
+                    bool enabled =
+                        state is! CashierCloseInProgress && _isFormValid;
+                    return SizedBox(
+                      width: double.maxFinite,
+                      child: ElevatedButton(
+                        onPressed: enabled ? _onSubmit : null,
+                        child: const TextActionL(
+                          "Lanjutkan",
+                          color: TColors.neutralLightLightest,
+                        ),
                       ),
-                    ),
-                  );
-                })
+                    );
+                  },
+                )
               ],
             ),
           ),

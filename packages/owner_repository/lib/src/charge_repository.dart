@@ -58,8 +58,10 @@ class ChargeRepositoryImpl implements ChargeRepository {
   }
 
   @override
-  Future<ChargeModel> create(
-      {required String ownerId, required CreateChargeDto dto}) async {
+  Future<ChargeModel> create({
+    required String ownerId,
+    required CreateChargeDto dto,
+  }) async {
     final options = await _getOptions();
     final response = await _dio.post(
       "$_baseURL/$ownerId/charges",
@@ -71,10 +73,11 @@ class ChargeRepositoryImpl implements ChargeRepository {
   }
 
   @override
-  Future<ChargeModel> update(
-      {required String ownerId,
-      required String chargeId,
-      required UpdateChargeDto dto}) async {
+  Future<ChargeModel> update({
+    required String ownerId,
+    required String chargeId,
+    required UpdateChargeDto dto,
+  }) async {
     final options = await _getOptions();
     final response = await _dio.patch(
       "$_baseURL/$ownerId/charges/$chargeId",

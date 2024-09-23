@@ -11,6 +11,7 @@ _$DetailCustomerOutletDtoImpl _$$DetailCustomerOutletDtoImplFromJson(
     _$DetailCustomerOutletDtoImpl(
       from: json['from'] as String?,
       to: json['to'] as String?,
+      template: json['template'] as String?,
     );
 
 Map<String, dynamic> _$$DetailCustomerOutletDtoImplToJson(
@@ -18,6 +19,7 @@ Map<String, dynamic> _$$DetailCustomerOutletDtoImplToJson(
     <String, dynamic>{
       'from': instance.from,
       'to': instance.to,
+      'template': instance.template,
     };
 
 _$GetOutletReportDtoImpl _$$GetOutletReportDtoImplFromJson(

@@ -7,7 +7,7 @@ part 'charge.freezed.dart';
 class CreateChargeDto with _$CreateChargeDto {
   const factory CreateChargeDto({
     required String name,
-    required int value,
+    required double value,
     required bool isPrecentage,
   }) = _CreateChargeDto;
 
@@ -19,7 +19,7 @@ class CreateChargeDto with _$CreateChargeDto {
 class UpdateChargeDto with _$UpdateChargeDto {
   const factory UpdateChargeDto({
     String? name,
-    int? value,
+    double? value,
     bool? isPrecentage,
   }) = _UpdateChargeDto;
 

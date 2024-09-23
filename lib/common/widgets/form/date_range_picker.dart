@@ -11,9 +11,18 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class DateRangePicker extends StatefulWidget {
-  const DateRangePicker({super.key, this.from, this.to});
+  const DateRangePicker({
+    super.key,
+    this.from,
+    this.to,
+    this.hideLabel = false,
+    this.onSubmit,
+  });
+
   final DateTime? from;
   final DateTime? to;
+  final bool hideLabel;
+  final Function({DateTime? from, DateTime? to})? onSubmit;
 
   @override
   State<DateRangePicker> createState() => _DateRangePickerState();
@@ -26,6 +35,12 @@ class _DateRangePickerState extends State<DateRangePicker> {
 
   Future<void> _onSubmit() async {
     if (from == null || to == null) return;
+
+    if (widget.onSubmit != null) {
+      widget.onSubmit!(from: from, to: to);
+      return;
+    }
+
     Navigator.pop(context, [
       DateTime(from!.year, from!.month, from!.day),
       DateTime(to!.year, to!.month, to!.day, 23, 59, 59, 999)
@@ -55,10 +70,11 @@ class _DateRangePickerState extends State<DateRangePicker> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          child: const TextHeading2("Pilih tanggal"),
-        ),
+        if (!widget.hideLabel)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            child: const TextHeading2("Pilih tanggal"),
+          ),
         Ink(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           child: Row(

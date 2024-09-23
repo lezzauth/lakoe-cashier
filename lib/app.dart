@@ -142,128 +142,133 @@ class App extends StatelessWidget {
         // Employee Master
         BlocProvider(create: (context) => EmployeeMasterCubit()),
       ],
-      child: MaterialApp(
-        title: "Point of Sales",
-        theme: TAppTheme.lightTheme,
-        darkTheme: TAppTheme.darkTheme,
-        themeMode: ThemeMode.light,
-        navigatorObservers: [
-          CustomNavigatorObserver(),
-        ],
-        initialRoute: "/",
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [Locale("id"), Locale('en')],
-        builder: (context, child) => ResponsiveBreakpoints.builder(
-          child: child!,
-          breakpoints: [
-            const Breakpoint(start: 0, end: 450, name: MOBILE),
-            const Breakpoint(start: 451, end: 800, name: TABLET),
-            const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+      child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: MaterialApp(
+          title: "Point of Sales",
+          theme: TAppTheme.lightTheme,
+          darkTheme: TAppTheme.darkTheme,
+          themeMode: ThemeMode.light,
+          navigatorObservers: [
+            CustomNavigatorObserver(),
           ],
+          initialRoute: "/",
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale("id"), Locale('en')],
+          builder: (context, child) => ResponsiveBreakpoints.builder(
+            child: child!,
+            breakpoints: [
+              const Breakpoint(start: 0, end: 450, name: MOBILE),
+              const Breakpoint(start: 451, end: 800, name: TABLET),
+              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+            ],
+          ),
+          routes: {
+            "/": (context) => const RedirectScreen(),
+            "/on-boarding": (context) => const OnBoardingScreen(),
+            "/otp-input": (context) => const OtpInputScreen(),
+            "/completing-data": (context) => const CompletingDataScreen(),
+            "/cashier": (context) => const DashboardScreen(),
+            "/cashier/open-cashier-pin": (context) =>
+                const OpenCashierPinScreen(),
+            "/cashier/transaction-date": (context) =>
+                const TransactionDateScreen(),
+            "/cashier/explore-products": (context) =>
+                const ExploreProductScreen(),
+            "/cart": (context) => const CartScreen(),
+            // products
+            "/products": (context) => const ProductMasterScreen(),
+            "/products/new": (context) => const NewProductScreen(),
+            "/products/edit": (context) => const ProductEditScreen(),
+
+            // categories
+            "/categories": (context) => const CategoryMasterScreen(),
+            "/categories/new": (context) => const CategoryNewScreen(),
+            "/categories/edit": (context) => const CategoryEditScreen(),
+
+            // customers
+            "/customers": (context) => const MasterCustomerScreen(),
+            "/customers/new": (context) => const NewCustomerScreen(),
+            "/customers/detail": (context) => const CustomerDetailScreen(),
+
+            // orders
+            "/orders": (context) => const OrderMasterScreen(),
+            "/orders/detail": (context) => const OrderDetailScreen(),
+
+            // payments
+            "/payments/qris": (context) => const QrisPaymentScreen(),
+            "/payments/bank_transfer": (context) => BankTransferPaymentScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as BankTransferPaymentArgument,
+                ),
+            "/payments/success_confirmation": (context) =>
+                const SuccessConfirmationPaymentScreen(),
+
+            // tables
+            "/tables": (context) => const TableMasterScreen(),
+            "/tables/new": (context) => const TableNewScreen(),
+            "/tables/edit": (context) => const TableEditScreen(),
+
+            // settings
+            "/settings": (context) => const SettingsScreen(),
+
+            // payment method
+            "/payment_method": (context) => const PaymentMethodMasterScreen(),
+
+            // bill
+            "/bill": (context) => const BillMasterScreen(),
+            "/bill/edit": (context) => const BillEditScreen(),
+
+            // employee
+            "/employee": (context) => const MasterEmployeScreen(),
+            "/employee/new": (context) => const NewEmployeeScreen(),
+            "/employee/detail": (context) => const DetailEmployeeScreen(),
+
+            // bank accounts
+            "/bank_accounts": (context) => const BankAccountMasterScreen(),
+            "/bank_accounts/new": (context) => const BankAccountNewScreen(),
+            "/bank_accounts/detail": (context) =>
+                const BankAccountDetailScreen(),
+
+            // taxes
+            "/taxes": (context) => const TaxMasterScreen(),
+
+            // charges
+            "/charges": (context) => const ChargeMasterScreen(),
+
+            // Profile & Account
+            "/account": (context) => const AccountMasterScreen(),
+            "/account/edit": (context) => const AccountEditScreen(),
+            "/account/edit/name": (context) => const NameEditScreen(),
+            "/account/edit/phone_number": (context) =>
+                const PhoneNumberEditScreen(),
+            "/account/edit/email": (context) => const EmailEditScreen(),
+            "/account/edit/pin": (context) => const PinEditScreen(),
+
+            // reports
+            "/reports": (context) => const ReportMasterScreen(),
+            "/reports/best_seller": (context) => const ReportBestSellerScreen(),
+            "/reports/best_seller/detail": (context) =>
+                ReportProductSalesScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as ReportProductSalesArguments,
+                ),
+
+            // Notifications
+            "/notifications": (context) => const NotificationMasterScreen(),
+
+            // Manage Account
+            "/manage_account": (context) => const ManageAccountScreen(),
+            "/delete_account": (context) => const DeleteAccountScreen(),
+            "/delete_account/reason": (context) =>
+                const DeleteAccountReasonScreen(),
+          },
         ),
-        routes: {
-          "/": (context) => const RedirectScreen(),
-          "/on-boarding": (context) => const OnBoardingScreen(),
-          "/otp-input": (context) => const OtpInputScreen(),
-          "/completing-data": (context) => const CompletingDataScreen(),
-          "/cashier": (context) => const DashboardScreen(),
-          "/cashier/open-cashier-pin": (context) =>
-              const OpenCashierPinScreen(),
-          "/cashier/transaction-date": (context) =>
-              const TransactionDateScreen(),
-          "/cashier/explore-products": (context) =>
-              const ExploreProductScreen(),
-          "/cart": (context) => const CartScreen(),
-          // products
-          "/products": (context) => const ProductMasterScreen(),
-          "/products/new": (context) => const NewProductScreen(),
-          "/products/edit": (context) => const ProductEditScreen(),
-
-          // categories
-          "/categories": (context) => const CategoryMasterScreen(),
-          "/categories/new": (context) => const CategoryNewScreen(),
-          "/categories/edit": (context) => const CategoryEditScreen(),
-
-          // customers
-          "/customers": (context) => const MasterCustomerScreen(),
-          "/customers/new": (context) => const NewCustomerScreen(),
-          "/customers/detail": (context) => const CustomerDetailScreen(),
-
-          // orders
-          "/orders": (context) => const OrderMasterScreen(),
-          "/orders/detail": (context) => const OrderDetailScreen(),
-
-          // payments
-          "/payments/qris": (context) => const QrisPaymentScreen(),
-          "/payments/bank_transfer": (context) => BankTransferPaymentScreen(
-                arguments: ModalRoute.of(context)!.settings.arguments
-                    as BankTransferPaymentArgument,
-              ),
-          "/payments/success_confirmation": (context) =>
-              const SuccessConfirmationPaymentScreen(),
-
-          // tables
-          "/tables": (context) => const TableMasterScreen(),
-          "/tables/new": (context) => const TableNewScreen(),
-          "/tables/edit": (context) => const TableEditScreen(),
-
-          // settings
-          "/settings": (context) => const SettingsScreen(),
-
-          // payment method
-          "/payment_method": (context) => const PaymentMethodMasterScreen(),
-
-          // bill
-          "/bill": (context) => const BillMasterScreen(),
-          "/bill/edit": (context) => const BillEditScreen(),
-
-          // employee
-          "/employee": (context) => const MasterEmployeScreen(),
-          "/employee/new": (context) => const NewEmployeeScreen(),
-          "/employee/detail": (context) => const DetailEmployeeScreen(),
-
-          // bank accounts
-          "/bank_accounts": (context) => const BankAccountMasterScreen(),
-          "/bank_accounts/new": (context) => const BankAccountNewScreen(),
-          "/bank_accounts/detail": (context) => const BankAccountDetailScreen(),
-
-          // taxes
-          "/taxes": (context) => const TaxMasterScreen(),
-
-          // charges
-          "/charges": (context) => const ChargeMasterScreen(),
-
-          // Profile & Account
-          "/account": (context) => const AccountMasterScreen(),
-          "/account/edit": (context) => const AccountEditScreen(),
-          "/account/edit/name": (context) => const NameEditScreen(),
-          "/account/edit/phone_number": (context) =>
-              const PhoneNumberEditScreen(),
-          "/account/edit/email": (context) => const EmailEditScreen(),
-          "/account/edit/pin": (context) => const PinEditScreen(),
-
-          // reports
-          "/reports": (context) => const ReportMasterScreen(),
-          "/reports/best_seller": (context) => const ReportBestSellerScreen(),
-          "/reports/best_seller/detail": (context) => ReportProductSalesScreen(
-                arguments: ModalRoute.of(context)!.settings.arguments
-                    as ReportProductSalesArguments,
-              ),
-
-          // Notifications
-          "/notifications": (context) => const NotificationMasterScreen(),
-
-          // Manage Account
-          "/manage_account": (context) => const ManageAccountScreen(),
-          "/delete_account": (context) => const DeleteAccountScreen(),
-          "/delete_account/reason": (context) =>
-              const DeleteAccountReasonScreen(),
-        },
       ),
     );
   }
