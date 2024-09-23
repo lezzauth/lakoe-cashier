@@ -81,7 +81,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     //   iconSrc: TIcons.smartphoneUpdate,
     // ),
     _SettingItem(
-      title: "Integrasi",
+      title: "Sambungkan Aplikasi",
       routeName: "/",
       iconSrc: TIcons.linkSquare,
     ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
@@ -33,7 +33,7 @@ class _NameEditScreenState extends State<NameEditScreen> {
                         "Ubah Nama Lengkap",
                         color: TColors.neutralDarkDark,
                       ),
-                      TextBodyL(
+                      TextBodyM(
                         "Kamu bisa mengganti nama lengkap kamu",
                         color: TColors.neutralDarkDark,
                       ),

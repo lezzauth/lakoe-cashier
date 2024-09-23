@@ -43,7 +43,7 @@ class SectionCard extends StatelessWidget {
                   ),
                 if (description.isNotEmpty)
                   Container(
-                    margin: const EdgeInsets.only(top: 4),
+                    margin: const EdgeInsets.only(top: 2),
                     child: TextBodyM(
                       description,
                       color: TColors.neutralDarkLight,

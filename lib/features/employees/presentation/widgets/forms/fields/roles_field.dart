@@ -52,7 +52,7 @@ class _RolesFieldState extends State<RolesField> {
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: SizedBox(
-                height: 32,
+                height: 33,
                 child: OutlinedButton.icon(
                   onPressed: () {},
                   label: const TextActionM(

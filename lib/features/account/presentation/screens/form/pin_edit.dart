@@ -4,7 +4,7 @@ import 'package:point_of_sales_cashier/common/widgets/form/dotted_pin.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/number_pad.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/general_information.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -47,7 +47,7 @@ class _PinEditScreenState extends State<PinEditScreen> {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        const TextBodyL(
+                        const TextBodyM(
                           "Silahkan buat PIN baru yang berbeda dengan PIN sebelumnya.",
                           color: TColors.neutralDarkMedium,
                           textAlign: TextAlign.center,

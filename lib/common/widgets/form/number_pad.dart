@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 
 class NumberPad extends StatefulWidget {
@@ -152,27 +154,42 @@ class _NumberPadState extends State<NumberPad> {
         Wrap(
           spacing: 8.0,
           children: [
-            const SizedBox(
-              height: 96,
-              width: 96,
+            Pad(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              color: Colors.transparent,
+              child: Text(
+                "Batal",
+                style: GoogleFonts.inter(
+                  fontSize: TSizes.fontSizeHeading4,
+                  fontWeight: FontWeight.w600,
+                  color: TColors.primary,
+                ),
+              ),
             ),
             Pad(
-                onTap: () {
-                  handleChange("0");
-                },
-                child: Text("0",
-                    style: GoogleFonts.inter(
-                      fontSize: TSizes.fontSizeHeading1,
-                      fontWeight: FontWeight.w900,
-                      color: TColors.neutralDarkDarkest,
-                    ))),
+              onTap: () {
+                handleChange("0");
+              },
+              child: Text(
+                "0",
+                style: GoogleFonts.inter(
+                  fontSize: TSizes.fontSizeHeading1,
+                  fontWeight: FontWeight.w900,
+                  color: TColors.neutralDarkDarkest,
+                ),
+              ),
+            ),
             Pad(
               onTap: () {
                 handleBackspace();
               },
-              child: const Icon(
-                Icons.backspace,
-                size: 24.0,
+              child: const UiIcons(
+                TIcons.backspace,
+                width: 24,
+                height: 24,
+                color: TColors.neutralDarkDarkest,
               ),
             ),
           ],
@@ -185,8 +202,9 @@ class _NumberPadState extends State<NumberPad> {
 class Pad extends StatelessWidget {
   final Widget child;
   final Function()? onTap;
+  final Color? color;
 
-  const Pad({super.key, required this.child, this.onTap});
+  const Pad({super.key, required this.child, this.onTap, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +217,7 @@ class Pad extends StatelessWidget {
           width: 72,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(72.0),
-            color: TColors.neutralLightMedium,
+            color: color ?? TColors.neutralLightLight,
           ),
           child: Center(
             child: child,
