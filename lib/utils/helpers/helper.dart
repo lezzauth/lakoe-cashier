@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:point_of_sales_cashier/utils/constants/bank_name_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 
@@ -106,6 +107,10 @@ class THelper {
 
     return DateTime(newYear, newMonth, newDay, baseDate.hour, baseDate.minute,
         baseDate.second);
+  }
+
+  static Future<void> copyToClipboard(String text) async {
+    await Clipboard.setData(ClipboardData(text: text));
   }
 }
 

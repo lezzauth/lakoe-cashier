@@ -91,7 +91,7 @@ class _PinInputPageState extends State<PinInputPage> {
                     defaultPinTheme: defaultPinTheme,
                     focusedPinTheme: defaultPinTheme,
                     submittedPinTheme: focusedPinTheme,
-                    length: 4,
+                    length: 6,
                     useNativeKeyboard: false,
                     controller: _pinController,
                     onCompleted: (value) {

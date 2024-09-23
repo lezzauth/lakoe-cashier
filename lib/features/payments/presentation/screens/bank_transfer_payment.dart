@@ -19,6 +19,7 @@ import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
 
 class BankTransferPaymentScreen extends StatefulWidget {
   const BankTransferPaymentScreen({super.key, required this.arguments});
@@ -51,6 +52,21 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
         photo: photo.file!,
       ),
     );
+  }
+
+  Future<void> _onCopy({required String title, required String text}) async {
+    await THelper.copyToClipboard(text);
+
+    if (!mounted) return;
+    SnackBar snackBar = SnackBar(
+      content: Text(title),
+      showCloseIcon: true,
+    );
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        snackBar,
+      );
   }
 
   @override
@@ -152,8 +168,9 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  padding: EdgeInsets.fromLTRB(20, 12, 16, 12),
-                                  margin: EdgeInsets.only(bottom: 28),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 12, 16, 12),
+                                  margin: const EdgeInsets.only(bottom: 28),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(16.0),
                                     color: TColors.neutralLightLight,
@@ -169,7 +186,14 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
                                       SizedBox(
                                         height: 32,
                                         child: OutlinedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            _onCopy(
+                                              title:
+                                                  "Nomor rekening sudah tersalin",
+                                              text: arguments
+                                                  .account.accountNumber,
+                                            );
+                                          },
                                           style: const ButtonStyle(
                                             padding: WidgetStatePropertyAll(
                                               EdgeInsets.symmetric(
@@ -188,15 +212,16 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(bottom: 8),
-                                  child: TextBodyM(
+                                  margin: const EdgeInsets.only(bottom: 8),
+                                  child: const TextBodyM(
                                     "Jumlah transfer",
                                     color: TColors.neutralDarkDark,
                                   ),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.fromLTRB(20, 12, 16, 12),
-                                  margin: EdgeInsets.only(bottom: 8),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 12, 16, 12),
+                                  margin: const EdgeInsets.only(bottom: 8),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(16.0),
                                     color: TColors.neutralLightLight,
@@ -228,7 +253,15 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
                                       SizedBox(
                                         height: 32,
                                         child: OutlinedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            _onCopy(
+                                              title:
+                                                  "Jumlah transfer sudah tersalin",
+                                              text: arguments.amount
+                                                  .toInt()
+                                                  .toString(),
+                                            );
+                                          },
                                           style: const ButtonStyle(
                                             padding: WidgetStatePropertyAll(
                                               EdgeInsets.symmetric(
@@ -246,7 +279,7 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
                                     ],
                                   ),
                                 ),
-                                TextBodyS(
+                                const TextBodyS(
                                   "Pastikan jumlahnya benar hingga 3 digit terakhir",
                                   color: TColors.neutralDarkLight,
                                 ),
@@ -257,8 +290,8 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(bottom: 12),
-                      child: TextHeading3(
+                      margin: const EdgeInsets.only(bottom: 12),
+                      child: const TextHeading3(
                         "Bukti transfer",
                         color: TColors.neutralDarkDarkest,
                       ),
