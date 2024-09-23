@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/custom_radio.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
 
 class BankAccountRadio extends StatelessWidget {
   final String value;
@@ -50,7 +48,7 @@ class BankAccountRadio extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         TextHeading4(
-                          THelper.getBankName(account.name),
+                          account.name,
                           color: TColors.neutralDarkDarkest,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
