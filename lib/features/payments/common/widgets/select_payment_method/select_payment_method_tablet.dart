@@ -18,7 +18,7 @@ class SelectPaymentMethodTablet extends StatefulWidget {
     required this.onPaymentCash,
   });
 
-  final int amount;
+  final double amount;
   final ValueChanged<PaymentCash> onPaymentCash;
 
   @override

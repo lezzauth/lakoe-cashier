@@ -182,7 +182,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                         child: CustomerSummaryCard(
                                           title: "Total Belanja",
                                           value: TFormatter.formatToRupiah(
-                                            int.parse(
+                                            double.parse(
                                               customer.summary.totalPrice,
                                             ),
                                           ),
@@ -391,7 +391,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                                           TextSpan(
                                                             text: TFormatter
                                                                 .formatToRupiah(
-                                                              int.parse(
+                                                              double.parse(
                                                                 order.price,
                                                               ),
                                                             ),

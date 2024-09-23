@@ -175,7 +175,7 @@ class _ReportMasterState extends State<ReportMaster> {
                                 amount: TFormatter.formatToRupiah(
                                   report.averageSales == "NaN"
                                       ? 0
-                                      : int.parse(
+                                      : double.parse(
                                           report.averageSales,
                                         ),
                                 ),
@@ -192,7 +192,7 @@ class _ReportMasterState extends State<ReportMaster> {
                                 ),
                                 label: "Total Keuntungan",
                                 amount: TFormatter.formatToRupiah(
-                                  int.parse(
+                                  double.parse(
                                     report.totalProfit,
                                   ),
                                 ),

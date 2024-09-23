@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -16,7 +14,7 @@ class DebitPaymentContent extends StatefulWidget {
     required this.amount,
   });
 
-  final int amount;
+  final double amount;
 
   @override
   State<DebitPaymentContent> createState() => DebitPaymentContentState();

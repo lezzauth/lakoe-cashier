@@ -7,14 +7,14 @@ class PaymentCubit extends Cubit<PaymentState> {
   PaymentCubit() : super(PaymentInitial());
 
   void setCashPayment({
-    required int paidAmount,
-    required int change,
+    required double paidAmount,
+    required double change,
   }) {
     emit(PaymentCash(paidAmount: paidAmount, change: change));
   }
 
   void setBankTransferPayment({
-    required int paidAmount,
+    required double paidAmount,
     required String accountNumber,
     required File photo,
   }) {
@@ -24,14 +24,14 @@ class PaymentCubit extends Cubit<PaymentState> {
 
   void setDebitCreditPayment({
     required String accountNumber,
-    required int paidAmount,
+    required double paidAmount,
   }) {
     emit(PaymentDebitCredit(
         accountNumber: accountNumber, paidAmount: paidAmount, change: 0));
   }
 
   void setQRCodePayment({
-    required int paidAmount,
+    required double paidAmount,
   }) {
     emit(PaymentQRCode(paidAmount: paidAmount, change: 0));
   }
