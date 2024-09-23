@@ -23,7 +23,7 @@ class DebitPaymentContent extends StatefulWidget {
 class DebitPaymentContentState extends State<DebitPaymentContent> {
   final _formKey = GlobalKey<FormBuilderState>();
 
-  bool _isFormValid = false;
+  bool _isFormValid = true;
 
   void _onSubmitted() {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
