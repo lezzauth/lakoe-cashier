@@ -18,17 +18,14 @@ class InitialBalanceForm extends StatefulWidget {
 
 class _InitialBalanceFormState extends State<InitialBalanceForm> {
   final _formKey = GlobalKey<FormBuilderState>();
+  bool _isFormValid = false;
 
   onSubmit() {
-    if (_formKey.currentState?.saveAndValidate() ?? false) {
-      dynamic value = _formKey.currentState?.value;
+    bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
-      Navigator.popAndPushNamed(context, "/cashier/open-cashier-pin",
-          arguments:
-              OpenCashierInitial(initialBalance: value["initialBalance"]));
-    } else {
-      const snackBar = SnackBar(
-        content: Text('Validation failed'),
+    if (!isFormValid) {
+      SnackBar snackBar = SnackBar(
+        content: Text(ErrorTextStrings.formInvalid()),
         showCloseIcon: true,
       );
       ScaffoldMessenger.of(context)
@@ -36,7 +33,13 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
         ..showSnackBar(
           snackBar,
         );
+      return;
     }
+
+    dynamic value = _formKey.currentState?.value;
+
+    Navigator.popAndPushNamed(context, "/cashier/open-cashier-pin",
+        arguments: OpenCashierInitial(initialBalance: value["initialBalance"]));
   }
 
   final CurrencyTextInputFormatter _currencyFormatter =
@@ -50,6 +53,13 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
   Widget build(BuildContext context) {
     return FormBuilder(
       key: _formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: () {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          _isFormValid = _formKey.currentState?.isValid ?? false;
+          setState(() {});
+        });
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -64,25 +74,19 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 8.0),
-                  child: FormBuilderField<int>(
-                      name: "initialBalance",
-                      validator: FormBuilderValidators.required(
-                          errorText: ErrorTextStrings.required()),
-                      builder: (field) {
-                        return TextField(
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [_currencyFormatter],
-                          decoration: InputDecoration(
-                            hintText: 'Rp 0',
-                            errorText: field.errorText,
-                          ),
-                          onChanged: (value) {
-                            field.didChange(_currencyFormatter
-                                .getUnformattedValue()
-                                .toInt());
-                          },
-                        );
-                      }),
+                  child: FormBuilderTextField(
+                    name: "initialBalance",
+                    keyboardType: TextInputType.number,
+                    validator: FormBuilderValidators.required(
+                        errorText: ErrorTextStrings.required()),
+                    inputFormatters: [_currencyFormatter],
+                    decoration: const InputDecoration(
+                      hintText: 'Rp 0',
+                    ),
+                    valueTransformer: (value) {
+                      return _currencyFormatter.getUnformattedValue().toInt();
+                    },
+                  ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 28.0),
@@ -94,7 +98,7 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
                 SizedBox(
                   width: double.maxFinite,
                   child: ElevatedButton(
-                    onPressed: onSubmit,
+                    onPressed: _isFormValid ? onSubmit : null,
                     child: const TextActionL(
                       "Lanjutkan",
                       color: TColors.neutralLightLightest,
