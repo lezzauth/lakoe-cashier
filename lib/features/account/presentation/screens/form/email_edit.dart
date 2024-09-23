@@ -39,7 +39,7 @@ class _EmailEditScreenState extends State<EmailEditScreen> {
                         color: TColors.neutralDarkDark,
                       ),
                       TextBodyL(
-                        "Silahkan masukan email baru untuk menggantikan email sebelumnya.",
+                        "Silahkan masukkan email baru untuk menggantikan email sebelumnya.",
                         color: TColors.neutralDarkDark,
                       ),
                     ],

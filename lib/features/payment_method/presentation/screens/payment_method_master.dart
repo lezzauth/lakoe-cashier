@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/changes_confirmation.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/payment_method/presentation/widgets/section/section_card.dart';
 import 'package:point_of_sales_cashier/features/payment_method/presentation/widgets/section/section_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -39,23 +40,23 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
   List<_PaymentItem> listPaymentMethodSecondary = [
     _PaymentItem(
       title: "QRIS",
-      subTitle: "Maks. 0.4% per transaksi",
-      isActive: true,
-    ),
-    _PaymentItem(
-      title: "E-Wallet",
-      subTitle: "Rp4.000 per transaksi",
+      subTitle: "Cetak dan tampilkan untuk bayar",
       isActive: false,
     ),
+    // _PaymentItem(
+    //   title: "E-Wallet",
+    //   subTitle: "Rp4.000 per transaksi",
+    //   isActive: false,
+    // ),
     _PaymentItem(
-      title: "Debit / Credit",
-      subTitle: "1.5% per transaksi",
+      title: "Debit/Credit",
+      subTitle: "Gesek atau masukkan kartunya",
       isActive: false,
       lastItem: true,
     ),
   ];
 
-  void _showPopup(BuildContext context) {
+  void _showPopupConfirmation(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isDismissible: false,
@@ -82,7 +83,7 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
     return Scaffold(
       appBar: CustomAppbar(
         title: "Metode Pembayaran",
-        handleBackButton: () => _showPopup(context),
+        handleBackButton: () => _showPopupConfirmation(context),
         actions: const [
           TextButton(
             onPressed: null,
@@ -99,6 +100,7 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
           vertical: 12,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PaymentSectionCard(
               children: listPaymentMethodPrimary
@@ -112,7 +114,15 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
                   )
                   .toList(),
             ),
-            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.only(top: 32),
+              margin: const EdgeInsets.only(bottom: 16),
+              child: const TextHeading5(
+                "DIHARUSKAN PUNYA MESIN EDC",
+                color: TColors.neutralDarkLightest,
+                textAlign: TextAlign.left,
+              ),
+            ),
             PaymentSectionCard(
               children: listPaymentMethodSecondary
                   .map(
