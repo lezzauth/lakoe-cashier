@@ -68,8 +68,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
                   Row(
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(bottom: 8.0),
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        padding: const EdgeInsets.fromLTRB(20, 16, 20, 4),
                         child: const TextHeading2("Metode pembayaran"),
                       )
                     ],
