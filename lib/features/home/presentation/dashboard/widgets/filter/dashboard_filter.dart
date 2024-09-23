@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/date_range_picker.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_cubit.dart';
@@ -30,15 +31,16 @@ class _DashboardFilterState extends State<DashboardFilter> {
     log('_onPickDateRange: $filter');
     List<DateTime>? ranges = await showModalBottomSheet<List<DateTime>?>(
       context: context,
-      showDragHandle: true,
       builder: (context) {
-        return DateRangePicker(
-          from: filter.from == null
-              ? DateTime.now()
-              : DateTime.parse(filter.from!).toLocal(),
-          to: filter.to == null
-              ? DateTime.now()
-              : DateTime.parse(filter.to!).toLocal(),
+        return CustomBottomsheet(
+          child: DateRangePicker(
+            from: filter.from == null
+                ? DateTime.now()
+                : DateTime.parse(filter.from!).toLocal(),
+            to: filter.to == null
+                ? DateTime.now()
+                : DateTime.parse(filter.to!).toLocal(),
+          ),
         );
       },
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/dotted_pin.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/number_pad.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/general_information.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
@@ -61,16 +62,18 @@ class _PinEditScreenState extends State<PinEditScreen> {
                       showModalBottomSheet(
                         context: context,
                         builder: (context) {
-                          return GeneralInformation(
-                            imageSrc: TImages.successIllustration,
-                            title: "PIN kamu berhasil diubah",
-                            description:
-                                "Saat ini kamu harus menggunakan PIN terbaru setiap kali mau akses aplikasi.",
-                            onRequest: () {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                            requestTitle: "Selesai",
+                          return CustomBottomsheet(
+                            child: GeneralInformation(
+                              imageSrc: TImages.successIllustration,
+                              title: "PIN kamu berhasil diubah",
+                              description:
+                                  "Saat ini kamu harus menggunakan PIN terbaru setiap kali mau akses aplikasi.",
+                              onRequest: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                              actionTitle: "Selesai",
+                            ),
                           );
                         },
                       );

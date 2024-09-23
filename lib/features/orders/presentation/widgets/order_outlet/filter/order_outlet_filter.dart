@@ -2,6 +2,7 @@ import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_outlet/filter/order_outlet_advanced_filter.dart';
@@ -35,15 +36,16 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
     onFilterOpen() {
       return showModalBottomSheet(
         context: context,
-        showDragHandle: true,
         isScrollControlled: true,
         builder: (context) {
-          return OrderOutletAdvancedFilter(
-            onFilterChanged: () {
-              setState(() {
-                isFilterUsed = true;
-              });
-            },
+          return CustomBottomsheet(
+            child: OrderOutletAdvancedFilter(
+              onFilterChanged: () {
+                setState(() {
+                  isFilterUsed = true;
+                });
+              },
+            ),
           );
         },
       );

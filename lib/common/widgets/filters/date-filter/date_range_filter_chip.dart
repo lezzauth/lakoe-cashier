@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/date_range_picker.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -26,15 +27,16 @@ class _DateRangeFilterChipState extends State<DateRangeFilterChip> {
   Future<void> _onPickDateRange() async {
     List<DateTime>? ranges = await showModalBottomSheet<List<DateTime>?>(
       context: context,
-      showDragHandle: true,
       builder: (context) {
-        return DateRangePicker(
-          from: widget.from == null
-              ? DateTime.now()
-              : DateTime.parse(widget.from!).toLocal(),
-          to: widget.to == null
-              ? DateTime.now()
-              : DateTime.parse(widget.to!).toLocal(),
+        return CustomBottomsheet(
+          child: DateRangePicker(
+            from: widget.from == null
+                ? DateTime.now()
+                : DateTime.parse(widget.from!).toLocal(),
+            to: widget.to == null
+                ? DateTime.now()
+                : DateTime.parse(widget.to!).toLocal(),
+          ),
         );
       },
     );

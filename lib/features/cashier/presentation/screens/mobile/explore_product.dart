@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
@@ -28,20 +27,6 @@ class ExploreProductMobile extends StatefulWidget {
 }
 
 class _ExploreProductMobileState extends State<ExploreProductMobile> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (ModalRoute.of(context)?.isCurrent == true) {
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: TColors.neutralLightLight,
-      ));
-    } else {
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-      ));
-    }
-  }
-
   Future<void> _onRefresh() async {
     if (!mounted) return;
 

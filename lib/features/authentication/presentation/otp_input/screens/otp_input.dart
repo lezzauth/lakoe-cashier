@@ -109,6 +109,7 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
+                                const SizedBox(height: 12),
                                 Text(
                                   "62812-****-*890 [hardcode]",
                                   style: GoogleFonts.inter(
@@ -179,7 +180,7 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
                           ),
                           TimerCountdown(
                             endTime: countdownDate.add(
-                              Duration(seconds: 10),
+                              const Duration(seconds: 10),
                             ),
                             format: CountDownTimerFormat.minutesSeconds,
                             enableDescriptions: false,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
@@ -52,54 +53,55 @@ class _ProductNoteActionState extends State<ProductNoteAction> {
     onAddNotes() {
       return showModalBottomSheet(
         context: context,
-        showDragHandle: true,
         isScrollControlled: true,
         builder: (context) {
-          return Padding(
-            padding: TDeviceUtils.getViewInsets(context),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: TextHeading2("Tambah catatan"),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  child: FormBuilder(
-                    key: _formKey,
-                    initialValue: {
-                      "notes": widget.notes,
-                    },
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 8.0),
-                          child: FormBuilderTextField(
-                            name: "notes",
-                            decoration: const InputDecoration(
-                              hintText: "Tuliskan catatan",
-                            ),
-                            maxLines: 4,
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.maxFinite,
-                          child: ElevatedButton(
-                            onPressed: _onSubmit,
-                            child: const TextActionL(
-                              "Lanjutkan",
-                              color: TColors.neutralLightLightest,
+          return CustomBottomsheet(
+            child: Padding(
+              padding: TDeviceUtils.getViewInsets(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
+                    child: TextHeading2("Tambah catatan"),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 16),
+                    child: FormBuilder(
+                      key: _formKey,
+                      initialValue: {
+                        "notes": widget.notes,
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 20.0),
+                            child: FormBuilderTextField(
+                              name: "notes",
+                              decoration: const InputDecoration(
+                                hintText: "Tuliskan catatan",
+                              ),
+                              maxLines: 4,
                             ),
                           ),
-                        )
-                      ],
+                          SizedBox(
+                            width: double.maxFinite,
+                            child: ElevatedButton(
+                              onPressed: _onSubmit,
+                              child: const TextActionL(
+                                "Lanjutkan",
+                                color: TColors.neutralLightLightest,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

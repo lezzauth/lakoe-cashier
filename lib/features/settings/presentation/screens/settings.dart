@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/features/settings/presentation/widgets/section/section_card.dart';
-import 'package:point_of_sales_cashier/features/settings/presentation/widgets/section/section_item.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/list_item_card.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/section_card.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
@@ -14,22 +13,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (ModalRoute.of(context)?.isCurrent == true) {
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: TColors.neutralLightLightest,
-        systemNavigationBarColor: TColors.neutralLightLight,
-      ));
-    } else {
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        systemNavigationBarColor: TColors.neutralLightLightest,
-      ));
-    }
-  }
-
   List<_SettingItem> productServiceSettingItems = [
     // _SettingItem(
     //   title: "Kategori",
@@ -125,11 +108,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // ),
             // Container(
             //   margin: const EdgeInsets.only(bottom: 12),
-            //   child: SettingSectionCard(
+            //   child: SectionCard(
             //     title: "Produk & Service",
             //     children: productServiceSettingItems
             //         .map(
-            //           (item) => SettingSectionItem(
+            //           (item) => ListItemCard(
             //             iconSrc: item.iconSrc,
             //             title: item.title,
             //             routeName: item.routeName,
@@ -147,12 +130,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
                 splashColor: TColors.neutralLightLight,
                 highlightColor: TColors.neutralLightLight,
-                child: SettingSectionCard(
+                child: SectionCard(
                   title: "Karyawan",
                   description: "Manajemen, Hak akses atau PIN",
                   children: employeeSettingItems
                       .map(
-                        (item) => SettingSectionItem(
+                        (item) => ListItemCard(
                           iconSrc: item.iconSrc,
                           title: item.title,
                           routeName: item.routeName,
@@ -164,11 +147,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             Container(
               margin: const EdgeInsets.only(bottom: 12),
-              child: SettingSectionCard(
+              child: SectionCard(
                 title: "Pembayaran & Struk",
                 children: paymentReceiptSettingItems
                     .map(
-                      (item) => SettingSectionItem(
+                      (item) => ListItemCard(
                         iconSrc: item.iconSrc,
                         title: item.title,
                         routeName: item.routeName,
@@ -180,11 +163,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
             Container(
               margin: const EdgeInsets.only(bottom: 12),
-              child: SettingSectionCard(
+              child: SectionCard(
                 title: "Lainnya",
                 children: otherSettingItems
                     .map(
-                      (item) => SettingSectionItem(
+                      (item) => ListItemCard(
                         iconSrc: item.iconSrc,
                         title: item.title,
                         routeName: item.routeName,
