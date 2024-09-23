@@ -82,7 +82,7 @@ class _ExploreProductDrawerTabletState
                       builder: (context, state) => switch (state) {
                         CartDetailLoadSuccess(:final previewOrderPrice) =>
                           SelectPaymentMethodTablet(
-                            amount: int.parse(previewOrderPrice.total),
+                            amount: double.parse(previewOrderPrice.total),
                             onPaymentCash: _onCashPaid,
                           ),
                         CartDetailLoadFailure(:final error) => Center(

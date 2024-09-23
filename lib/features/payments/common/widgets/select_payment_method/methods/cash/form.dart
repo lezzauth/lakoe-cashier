@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 class CashPaymentForm extends StatefulWidget {
   const CashPaymentForm({super.key, this.amount = 0, required this.formKey});
 
-  final int amount;
+  final double amount;
   final GlobalKey<FormBuilderState> formKey;
 
   @override
@@ -25,7 +26,7 @@ class CashPaymentForm extends StatefulWidget {
 }
 
 class _CashPaymentFormState extends State<CashPaymentForm> {
-  int _paidAmount = 0;
+  double _paidAmount = 0;
 
   List<int> _getPreset() {
     if (widget.amount <= 5000) {
@@ -54,12 +55,12 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
     decimalDigits: 0,
   );
 
-  int _getPaidAmount() {
+  double _getPaidAmount() {
     return _paidAmount;
   }
 
-  int _getChange() {
-    int change = _getPaidAmount() - widget.amount;
+  double _getChange() {
+    double change = _getPaidAmount() - widget.amount;
     if (change <= 0) return 0;
 
     return change;
@@ -67,18 +68,21 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
 
   bool _showTextAmount = false;
   double _textAmountOpacity = 0.0;
-  int _selectedPreset = 0;
+  double _selectedPreset = 0;
   Timer? _debounce;
 
-  void _onPresetSelected(int amount) {
+  void _onPresetSelected(double amount) {
     setState(() {
       _showTextAmount = true;
       _selectedPreset = amount;
       _textAmountOpacity = 1.0;
       _paidAmount += amount;
     });
-    widget.formKey.currentState?.fields["paidAmount"]?.didChange(
-        _paidAmountFormatter.formatString((_paidAmount).toString()));
+
+    log("_onPresetSelected: ${_paidAmountFormatter.formatDouble(_paidAmount).toString()}");
+
+    widget.formKey.currentState?.fields["paidAmount"]
+        ?.didChange(_paidAmountFormatter.formatDouble(_paidAmount));
 
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(seconds: 1), () {
@@ -114,7 +118,7 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
                         setState(() {
                           _paidAmount = _paidAmountFormatter
                               .getUnformattedValue()
-                              .toInt();
+                              .toDouble();
                         });
                       },
                       decoration: InputDecoration(
@@ -182,7 +186,7 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
                       ),
                       selected: false,
                       onPressed: () {
-                        _onPresetSelected(preset);
+                        _onPresetSelected(preset.toDouble());
                       },
                     ),
                   );

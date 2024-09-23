@@ -66,7 +66,7 @@ class CreateProductDto with _$CreateProductDto {
     required String outletId,
     String? sku,
     int? stock,
-    String? availability,
+    @Default("AVAILABLE") String availability,
   }) = _CreateProductDto;
 
   factory CreateProductDto.fromJson(Map<String, Object?> json) =>

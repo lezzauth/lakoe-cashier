@@ -52,7 +52,7 @@ _$CreateProductDtoImpl _$$CreateProductDtoImplFromJson(
       outletId: json['outletId'] as String,
       sku: json['sku'] as String?,
       stock: (json['stock'] as num?)?.toInt(),
-      availability: json['availability'] as String?,
+      availability: json['availability'] as String? ?? "AVAILABLE",
     );
 
 Map<String, dynamic> _$$CreateProductDtoImplToJson(

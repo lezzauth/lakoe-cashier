@@ -21,7 +21,7 @@ class SelectPaymentMethod extends StatefulWidget {
     required this.onPaymentQRCode,
   });
 
-  final int amount;
+  final double amount;
   final ValueChanged<PaymentCash> onPaymentCash;
   final ValueChanged<PaymentBankTransfer> onPaymentBankTransfer;
   final ValueChanged<PaymentDebitCredit> onPaymentDebitCredit;

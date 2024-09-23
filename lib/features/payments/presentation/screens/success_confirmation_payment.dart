@@ -110,7 +110,7 @@ class _SuccessConfirmationPaymentContentState
                           margin: const EdgeInsets.only(bottom: 8),
                           child: TextHeading1(
                             TFormatter.formatToRupiah(
-                              int.parse(arguments.amount),
+                              double.parse(arguments.amount),
                             ),
                           ),
                         ),
@@ -185,7 +185,7 @@ class _SuccessConfirmationPaymentContentState
                                 const TextReceipt("Uang Diterima"),
                                 TextReceipt(
                                   TFormatter.formatToRupiah(
-                                    int.parse(arguments.paidAmount),
+                                    double.parse(arguments.paidAmount),
                                   ),
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -198,7 +198,7 @@ class _SuccessConfirmationPaymentContentState
                                 const TextReceipt("Total Tagihan"),
                                 TextReceipt(
                                   TFormatter.formatToRupiah(
-                                    int.parse(arguments.amount),
+                                    double.parse(arguments.amount),
                                   ),
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -227,7 +227,7 @@ class _SuccessConfirmationPaymentContentState
                           children: [
                             const TextReceipt("Kembalian"),
                             TextReceipt(
-                              TFormatter.formatToRupiah(int.parse(
+                              TFormatter.formatToRupiah(double.parse(
                                 arguments.change,
                               )),
                               fontWeight: FontWeight.w600,

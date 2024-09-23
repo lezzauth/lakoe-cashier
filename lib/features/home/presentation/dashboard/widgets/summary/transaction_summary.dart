@@ -25,9 +25,9 @@ class TransactionSummary extends StatelessWidget {
   }
 
   String getComparisonText(CashierReportFilterState filter) {
-    if (filter.template == "TODAY") return "Kemarin";
-    if (filter.template == "THISWEEK") return "Minggu sebelumnya";
-    if (filter.template == "THISMONTH") return "Bulan sebelumnya";
+    if (filter.preset == "TODAY") return "Kemarin";
+    if (filter.preset == "THISWEEK") return "Minggu sebelumnya";
+    if (filter.preset == "THISMONTH") return "Bulan sebelumnya";
     if (filter.duration != null) return "${filter.duration} hari sebelumnya";
 
     return "";

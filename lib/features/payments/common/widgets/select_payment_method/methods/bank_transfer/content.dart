@@ -22,7 +22,7 @@ class BankTransferPaymentContent extends StatefulWidget {
     required this.amount,
   });
 
-  final int amount;
+  final double amount;
 
   @override
   State<BankTransferPaymentContent> createState() =>

@@ -27,7 +27,6 @@ class ProductMasterCubit extends Cubit<ProductMasterState> {
   }
 
   Future<void> create(List<File> images, CreateProductDto dto) async {
-    // ProductMasterState currentState = state;
     try {
       emit(ProductMasterActionInProgress());
       await _productRepository.create(images, dto);
@@ -35,15 +34,13 @@ class ProductMasterCubit extends Cubit<ProductMasterState> {
     } catch (e) {
       ProductActionFailure(e.toString());
     }
-
-    // if (currentState is ProductLoadSuccess) {
-    //   await findAll(FindAllProductDto(outletId: currentState.dto.outletId));
-    // }
   }
 
-  Future<void> update(String id,
-      {List<File>? images, required UpdateProductDto dto}) async {
-    // ProductMasterState currentState = state;
+  Future<void> update(
+    String id, {
+    List<File>? images,
+    required UpdateProductDto dto,
+  }) async {
     try {
       emit(ProductMasterActionInProgress());
       await _productRepository.update(id, dto: dto, images: images);
@@ -51,9 +48,5 @@ class ProductMasterCubit extends Cubit<ProductMasterState> {
     } catch (e) {
       ProductActionFailure(e.toString());
     }
-
-    // if (currentState is ProductLoadSuccess) {
-    //   await findAll(FindAllProductDto(outletId: currentState.dto.outletId));
-    // }
   }
 }
