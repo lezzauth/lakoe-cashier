@@ -33,7 +33,7 @@ class BillSectionHeading extends StatelessWidget {
           ],
         ),
         const Padding(
-          padding: EdgeInsets.symmetric(vertical: 2),
+          padding: EdgeInsets.symmetric(vertical: 4),
           child: Separator(
             color: TColors.neutralDarkDarkest,
             height: 0.5,
@@ -45,7 +45,7 @@ class BillSectionHeading extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         const Padding(
-          padding: EdgeInsets.symmetric(vertical: 2),
+          padding: EdgeInsets.symmetric(vertical: 4),
           child: Separator(
             color: TColors.neutralDarkDarkest,
             height: 0.5,
