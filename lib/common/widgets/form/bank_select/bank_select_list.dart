@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
 import 'package:point_of_sales_cashier/application/cubit/bank_list_state.dart';
@@ -8,7 +7,7 @@ import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
 import 'package:public_repository/public_repository.dart';
@@ -100,15 +99,43 @@ class _BankSelectListState extends State<BankSelectList> {
                       BankListModel bank =
                           _getFilteredBanks(banks).elementAt(index);
 
-                      return BankRadioTile<String?>(
-                        value: bank.name,
-                        title: bank.name,
-                        groupValue: _value,
-                        onChanged: (value) {
-                          setState(() {
-                            _value = value;
-                          });
-                        },
+                      if (search.isNotEmpty) {
+                        return BankRadioTile<String?>(
+                          value: bank.name,
+                          title: bank.name,
+                          groupValue: _value,
+                          onChanged: (value) {
+                            setState(() {
+                              _value = value;
+                            });
+                          },
+                        );
+                      }
+
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          BankRadioTile<String?>(
+                            value: bank.name,
+                            title: bank.name,
+                            groupValue: _value,
+                            onChanged: (value) {
+                              setState(() {
+                                _value = value;
+                              });
+                            },
+                          ),
+                          if (index == 4)
+                            Container(
+                              padding: const EdgeInsets.only(
+                                  left: 16, right: 16, top: 20, bottom: 4),
+                              child: const TextHeading5(
+                                "BANK LAINNYA",
+                                color: TColors.neutralDarkLightest,
+                              ),
+                            ),
+                        ],
                       );
                     },
                   ),

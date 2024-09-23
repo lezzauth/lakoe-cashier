@@ -17,6 +17,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.4.1"
+  app_data_provider:
+    dependency: transitive
+    description:
+      path: "packages/app_data_provider"
+      relative: true
+    source: path
+    version: "0.0.0"
   args:
     dependency: transitive
     description:
