@@ -10,7 +10,7 @@ class TFormatter {
 
   static String formatNumber(num number) {
     final formatter = NumberFormat('#,###', 'id_ID');
-    return formatter.format(number);
+    return formatter.format(number).replaceAll(',', '.');
   }
 
   static String orderDate(String isoDate, {bool withDay = false}) {
