@@ -42,7 +42,7 @@ class _BillSectionListItemState extends State<BillSectionListItem> {
           isBold: true,
         ),
         const Padding(
-          padding: EdgeInsets.symmetric(vertical: 2),
+          padding: EdgeInsets.symmetric(vertical: 4),
           child: Separator(
             color: TColors.neutralDarkDarkest,
             height: 0.5,
