@@ -99,7 +99,7 @@ class BillView extends StatelessWidget {
                     )
                   : const SizedBox(),
               const Padding(
-                padding: EdgeInsets.symmetric(vertical: 2),
+                padding: EdgeInsets.symmetric(vertical: 8),
                 child: Separator(
                   color: TColors.neutralDarkDarkest,
                   height: 0.5,
