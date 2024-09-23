@@ -8,6 +8,11 @@ class TFormatter {
         .format(amount);
   }
 
+  static String formatNumber(num number) {
+    final formatter = NumberFormat('#,###', 'id_ID');
+    return formatter.format(number);
+  }
+
   static String orderDate(String isoDate, {bool withDay = false}) {
     DateTime dateTime = DateTime.parse(isoDate).toLocal();
 
