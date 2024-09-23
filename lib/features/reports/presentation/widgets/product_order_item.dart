@@ -81,12 +81,13 @@ class ProductOrderItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 5),
-                    child: TransactionTypeTag(
-                      tag: order.paymentMethod,
+                  if (order.paymentMethod != null)
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 5),
+                      child: TransactionTypeTag(
+                        tag: order.paymentMethod!,
+                      ),
                     ),
-                  ),
                   RichText(
                     text: TextSpan(
                       text: "Total: ",

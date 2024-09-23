@@ -49,7 +49,7 @@ _$ProductOrderModelImpl _$$ProductOrderModelImplFromJson(
       orderId: json['orderId'] as String,
       customerName: json['customerName'] as String,
       createdAt: json['createdAt'] as String,
-      paymentMethod: json['paymentMethod'] as String,
+      paymentMethod: json['paymentMethod'] as String?,
       itemTotal: (json['itemTotal'] as num).toInt(),
       price: json['price'] as String,
     );

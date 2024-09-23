@@ -81,7 +81,9 @@ class SelectPaymentMethodNotAvailable extends StatelessWidget {
                     child: SizedBox(
                       height: 48,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/settings");
+                        },
                         child: const TextActionL(
                           "Atur Sekarang",
                           color: TColors.primary,

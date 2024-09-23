@@ -19,6 +19,7 @@ import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card
 import 'package:point_of_sales_cashier/features/orders/common/widgets/summary/order_summary.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/solid_order_type_tag.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
+import 'package:point_of_sales_cashier/features/orders/data/models.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/tags/solid_order_online_status_tag.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
@@ -155,18 +156,6 @@ class _OrderDetailState extends State<OrderDetail> {
     return order.items.fold(0, (sum, item) {
       return sum + double.parse(item.price);
     });
-  }
-
-  double _getTaxTotal(OrderModel order) {
-    OrderCharge? taxChargeItem =
-        order.charges.firstWhereOrNull((charge) => charge.type == "TAX");
-    OrderCharge? serviceFeeChargeItem = order.charges
-        .firstWhereOrNull((charge) => charge.type == "SERVICE_FEE");
-
-    String tax = taxChargeItem?.amount ?? "0";
-    String serviceFee = serviceFeeChargeItem?.amount ?? "0";
-
-    return double.parse(tax) + double.parse(serviceFee);
   }
 
   @override
@@ -321,9 +310,15 @@ class _OrderDetailState extends State<OrderDetail> {
                                       padding: const EdgeInsets.all(16.0),
                                       child: OrderSummary(
                                         orderTotal: _getOrderTotal(order),
-                                        tax: _getTaxTotal(order),
                                         total: double.parse(order.price),
                                         isPaid: order.paymentStatus == "PAID",
+                                        charges: order.charges
+                                            .map((e) => OrderSummaryChargeModel(
+                                                  type: e.type,
+                                                  amount: e.amount,
+                                                  name: e.name,
+                                                ))
+                                            .toList(),
                                       ),
                                     ),
                                   ),

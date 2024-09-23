@@ -10,7 +10,7 @@ _$ChargeModelImpl _$$ChargeModelImplFromJson(Map<String, dynamic> json) =>
     _$ChargeModelImpl(
       id: json['id'] as String,
       name: json['name'] as String,
-      value: (json['value'] as num).toInt(),
+      value: json['value'] as String,
       ownerId: json['ownerId'] as String,
       isPrecentage: json['isPrecentage'] as bool,
     );

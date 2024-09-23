@@ -30,13 +30,13 @@ class TaxMasterCubit extends Cubit<TaxMasterState> {
       final newTaxesExecute = newTaxes.map((e) {
         return _ownerRepository.tax.create(
             ownerId: ownerId,
-            dto: CreateTaxDto(name: e.name, value: int.parse(e.value)));
+            dto: CreateTaxDto(name: e.name, value: double.parse(e.value)));
       });
       final updateTaxesExecute = updatedTaxes.map((e) {
         return _ownerRepository.tax.update(
             ownerId: ownerId,
             taxId: e.id,
-            dto: UpdateTaxDto(name: e.name, value: int.parse(e.value)));
+            dto: UpdateTaxDto(name: e.name, value: double.parse(e.value)));
       });
 
       final removeTaxesExecute = removedIds.map((e) {

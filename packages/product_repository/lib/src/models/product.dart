@@ -32,7 +32,7 @@ class ProductOrderModel with _$ProductOrderModel {
     required String orderId,
     required String customerName,
     required String createdAt,
-    required String paymentMethod,
+    String? paymentMethod,
     required int itemTotal,
     required String price,
   }) = _ProductOrderModel;

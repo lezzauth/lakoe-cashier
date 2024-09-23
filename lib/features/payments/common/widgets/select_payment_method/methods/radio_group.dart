@@ -24,7 +24,8 @@ class PaymentMethodRadioGroup extends StatelessWidget {
         isScrollControlled: true,
         builder: (context) {
           return const CustomBottomsheet(
-              child: SelectPaymentMethodNotAvailable());
+            child: SelectPaymentMethodNotAvailable(),
+          );
         },
       );
     }
