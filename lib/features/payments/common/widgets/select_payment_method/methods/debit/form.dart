@@ -61,23 +61,23 @@ class DebitPaymentFormState extends State<DebitPaymentForm> {
                   ],
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const FormLabel(
-                    "Catatan",
-                    optional: true,
-                  ),
-                  FormBuilderTextField(
-                    name: "notes",
-                    decoration: const InputDecoration(
-                      hintText: 'Masukan catatan jika diperlukan',
-                    ),
-                    maxLines: 3,
-                  ),
-                ],
-              ),
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   mainAxisSize: MainAxisSize.min,
+              //   children: [
+              //     const FormLabel(
+              //       "Catatan",
+              //       optional: true,
+              //     ),
+              //     FormBuilderTextField(
+              //       name: "notes",
+              //       decoration: const InputDecoration(
+              //         hintText: 'Masukan catatan jika diperlukan',
+              //       ),
+              //       maxLines: 3,
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),
