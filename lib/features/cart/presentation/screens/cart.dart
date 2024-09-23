@@ -143,7 +143,7 @@ class _CartState extends State<Cart> {
         );
   }
 
-  Future<void> onCompleteOrder(int amount) async {
+  Future<void> onCompleteOrder(double amount) async {
     await showModalBottomSheet(
       context: context,
       showDragHandle: true,

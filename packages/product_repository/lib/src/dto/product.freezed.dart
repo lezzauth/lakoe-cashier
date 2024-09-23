@@ -401,7 +401,7 @@ mixin _$CreateProductDto {
   String get outletId => throw _privateConstructorUsedError;
   String? get sku => throw _privateConstructorUsedError;
   int? get stock => throw _privateConstructorUsedError;
-  String? get availability => throw _privateConstructorUsedError;
+  String get availability => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -425,7 +425,7 @@ abstract class $CreateProductDtoCopyWith<$Res> {
       String outletId,
       String? sku,
       int? stock,
-      String? availability});
+      String availability});
 }
 
 /// @nodoc
@@ -450,7 +450,7 @@ class _$CreateProductDtoCopyWithImpl<$Res, $Val extends CreateProductDto>
     Object? outletId = null,
     Object? sku = freezed,
     Object? stock = freezed,
-    Object? availability = freezed,
+    Object? availability = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -489,10 +489,10 @@ class _$CreateProductDtoCopyWithImpl<$Res, $Val extends CreateProductDto>
           ? _value.stock
           : stock // ignore: cast_nullable_to_non_nullable
               as int?,
-      availability: freezed == availability
+      availability: null == availability
           ? _value.availability
           : availability // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -515,7 +515,7 @@ abstract class _$$CreateProductDtoImplCopyWith<$Res>
       String outletId,
       String? sku,
       int? stock,
-      String? availability});
+      String availability});
 }
 
 /// @nodoc
@@ -538,7 +538,7 @@ class __$$CreateProductDtoImplCopyWithImpl<$Res>
     Object? outletId = null,
     Object? sku = freezed,
     Object? stock = freezed,
-    Object? availability = freezed,
+    Object? availability = null,
   }) {
     return _then(_$CreateProductDtoImpl(
       name: null == name
@@ -577,10 +577,10 @@ class __$$CreateProductDtoImplCopyWithImpl<$Res>
           ? _value.stock
           : stock // ignore: cast_nullable_to_non_nullable
               as int?,
-      availability: freezed == availability
+      availability: null == availability
           ? _value.availability
           : availability // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -598,7 +598,7 @@ class _$CreateProductDtoImpl implements _CreateProductDto {
       required this.outletId,
       this.sku,
       this.stock,
-      this.availability});
+      this.availability = "AVAILABLE"});
 
   factory _$CreateProductDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateProductDtoImplFromJson(json);
@@ -622,7 +622,8 @@ class _$CreateProductDtoImpl implements _CreateProductDto {
   @override
   final int? stock;
   @override
-  final String? availability;
+  @JsonKey()
+  final String availability;
 
   @override
   String toString() {
@@ -681,7 +682,7 @@ abstract class _CreateProductDto implements CreateProductDto {
       required final String outletId,
       final String? sku,
       final int? stock,
-      final String? availability}) = _$CreateProductDtoImpl;
+      final String availability}) = _$CreateProductDtoImpl;
 
   factory _CreateProductDto.fromJson(Map<String, dynamic> json) =
       _$CreateProductDtoImpl.fromJson;
@@ -705,7 +706,7 @@ abstract class _CreateProductDto implements CreateProductDto {
   @override
   int? get stock;
   @override
-  String? get availability;
+  String get availability;
   @override
   @JsonKey(ignore: true)
   _$$CreateProductDtoImplCopyWith<_$CreateProductDtoImpl> get copyWith =>

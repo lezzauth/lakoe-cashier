@@ -10,8 +10,8 @@ final class PaymentInitial extends PaymentState {
 }
 
 final class PaymentCash extends PaymentState {
-  final int paidAmount;
-  final int change;
+  final double paidAmount;
+  final double change;
 
   PaymentCash({required this.paidAmount, required this.change});
 
@@ -20,7 +20,7 @@ final class PaymentCash extends PaymentState {
 }
 
 final class PaymentBankTransfer extends PaymentState {
-  final int paidAmount;
+  final double paidAmount;
   final String accountNumber;
   final File photo;
 
@@ -35,9 +35,9 @@ final class PaymentBankTransfer extends PaymentState {
 }
 
 final class PaymentDebitCredit extends PaymentState {
-  final int paidAmount;
+  final double paidAmount;
   final String accountNumber;
-  final int change;
+  final double change;
 
   PaymentDebitCredit({
     required this.accountNumber,
@@ -50,8 +50,8 @@ final class PaymentDebitCredit extends PaymentState {
 }
 
 final class PaymentQRCode extends PaymentState {
-  final int paidAmount;
-  final int change;
+  final double paidAmount;
+  final double change;
 
   PaymentQRCode({
     required this.paidAmount,

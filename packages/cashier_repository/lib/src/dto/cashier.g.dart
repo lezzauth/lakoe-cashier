@@ -30,8 +30,8 @@ _$CompleteCashOrderDtoImpl _$$CompleteCashOrderDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$CompleteCashOrderDtoImpl(
       paymentMethod: json['paymentMethod'] as String,
-      paidAmount: (json['paidAmount'] as num).toInt(),
-      change: (json['change'] as num).toInt(),
+      paidAmount: (json['paidAmount'] as num).toDouble(),
+      change: (json['change'] as num).toDouble(),
       customerId: json['customerId'] as String?,
       redeemCoinAmount: json['redeemCoinAmount'] as String?,
     );
@@ -50,7 +50,7 @@ _$CompleteBankTransferOrderDataImpl
     _$$CompleteBankTransferOrderDataImplFromJson(Map<String, dynamic> json) =>
         _$CompleteBankTransferOrderDataImpl(
           paymentMethod: json['paymentMethod'] as String,
-          paidAmount: (json['paidAmount'] as num).toInt(),
+          paidAmount: (json['paidAmount'] as num).toDouble(),
           accountNumber: json['accountNumber'] as String,
         );
 
@@ -66,8 +66,8 @@ _$CompleteDebitCreditOrderDtoImpl _$$CompleteDebitCreditOrderDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$CompleteDebitCreditOrderDtoImpl(
       paymentMethod: json['paymentMethod'] as String,
-      paidAmount: (json['paidAmount'] as num).toInt(),
-      change: (json['change'] as num?)?.toInt() ?? 0,
+      paidAmount: (json['paidAmount'] as num).toDouble(),
+      change: (json['change'] as num?)?.toDouble() ?? 0,
       accountNumber: json['accountNumber'] as String,
     );
 
@@ -84,8 +84,8 @@ _$CompleteQRCodeOrderDtoImpl _$$CompleteQRCodeOrderDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$CompleteQRCodeOrderDtoImpl(
       paymentMethod: json['paymentMethod'] as String,
-      paidAmount: (json['paidAmount'] as num).toInt(),
-      change: (json['change'] as num?)?.toInt() ?? 0,
+      paidAmount: (json['paidAmount'] as num).toDouble(),
+      change: (json['change'] as num?)?.toDouble() ?? 0,
     );
 
 Map<String, dynamic> _$$CompleteQRCodeOrderDtoImplToJson(
