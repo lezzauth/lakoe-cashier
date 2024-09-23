@@ -229,7 +229,7 @@ class BillAction extends StatelessWidget {
                     onTap: () {},
                   ),
                   const TextActionL(
-                    "Tes Print",
+                    "Test Print",
                     color: TColors.neutralLightLightest,
                   ),
                 ],
