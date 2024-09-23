@@ -4,6 +4,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class ProductTransactionReportCard extends StatelessWidget {
   const ProductTransactionReportCard({
@@ -30,27 +31,30 @@ class ProductTransactionReportCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 4),
-                child: const TextBodyS(
-                  "Product Terjual",
-                  color: TColors.neutralDarkLightest,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 4),
+                  child: const TextBodyS(
+                    "Product Terjual",
+                    color: TColors.neutralDarkLightest,
+                  ),
                 ),
-              ),
-              TextHeading2(
-                "$totalProductSold",
-                color: TColors.neutralDarkDark,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              )
-            ],
+                TextHeading2(
+                  TFormatter.formatNumber(totalProductSold),
+                  color: TColors.neutralDarkDark,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                )
+              ],
+            ),
           ),
           Container(
             height: 44,
             width: 44,
+            margin: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(44),
               color: TColors.neutralLightLight,
@@ -62,23 +66,25 @@ class ProductTransactionReportCard extends StatelessWidget {
               color: TColors.primary,
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 4),
-                child: const TextBodyS(
-                  "Total Transaksi",
-                  color: TColors.neutralDarkLightest,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 4),
+                  child: const TextBodyS(
+                    "Total Transaksi",
+                    color: TColors.neutralDarkLightest,
+                  ),
                 ),
-              ),
-              TextHeading2(
-                "$totalTransaction",
-                color: TColors.neutralDarkDark,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              )
-            ],
+                TextHeading2(
+                  TFormatter.formatNumber(totalTransaction),
+                  color: TColors.neutralDarkDark,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                )
+              ],
+            ),
           ),
         ],
       ),

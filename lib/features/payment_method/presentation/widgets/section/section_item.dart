@@ -36,19 +36,23 @@ class PaymentSectionItem extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextHeading4(
-                  title,
-                  color: TColors.neutralDarkDark,
-                ),
-                TextBodyM(
-                  subTitle,
-                  color: TColors.neutralDarkLightest,
-                ),
-              ],
+            Flexible(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextHeading4(
+                    title,
+                    color: TColors.neutralDarkDark,
+                  ),
+                  TextBodyM(
+                    subTitle,
+                    color: TColors.neutralDarkLightest,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
             const SizedBox(width: 12),
             Switch(
