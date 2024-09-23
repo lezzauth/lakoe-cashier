@@ -148,7 +148,7 @@ class OrderListItem extends StatelessWidget {
                               children: [
                                 TextSpan(
                                   text: TFormatter.formatToRupiah(
-                                    int.parse(price),
+                                    double.parse(price),
                                   ),
                                   style: GoogleFonts.inter(
                                     fontSize: TSizes.fontSizeBodyM,

@@ -12,7 +12,7 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 class QrisPaymentContent extends StatefulWidget {
   const QrisPaymentContent({super.key, required this.amount});
 
-  final int amount;
+  final double amount;
 
   @override
   State<QrisPaymentContent> createState() => _QrisPaymentContentState();

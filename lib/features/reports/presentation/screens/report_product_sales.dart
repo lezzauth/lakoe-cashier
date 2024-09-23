@@ -186,7 +186,7 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                           ),
                                           TextBodyM(
                                             TFormatter.formatToRupiah(
-                                              int.parse(
+                                              double.parse(
                                                 product.price,
                                               ),
                                             ),
@@ -237,7 +237,7 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                       child: PurchaseHistorySummaryCard(
                                         title: "Total Keuntungan",
                                         value: TFormatter.formatToRupiah(
-                                          int.parse(product.profit),
+                                          double.parse(product.profit),
                                         ),
                                       ),
                                     ),

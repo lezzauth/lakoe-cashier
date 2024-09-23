@@ -251,8 +251,8 @@ CompleteCashOrderDto _$CompleteCashOrderDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CompleteCashOrderDto {
   String get paymentMethod => throw _privateConstructorUsedError;
-  int get paidAmount => throw _privateConstructorUsedError;
-  int get change => throw _privateConstructorUsedError;
+  double get paidAmount => throw _privateConstructorUsedError;
+  double get change => throw _privateConstructorUsedError;
   String? get customerId => throw _privateConstructorUsedError;
   String? get redeemCoinAmount => throw _privateConstructorUsedError;
 
@@ -270,8 +270,8 @@ abstract class $CompleteCashOrderDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {String paymentMethod,
-      int paidAmount,
-      int change,
+      double paidAmount,
+      double change,
       String? customerId,
       String? redeemCoinAmount});
 }
@@ -304,11 +304,11 @@ class _$CompleteCashOrderDtoCopyWithImpl<$Res,
       paidAmount: null == paidAmount
           ? _value.paidAmount
           : paidAmount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       change: null == change
           ? _value.change
           : change // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       customerId: freezed == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
@@ -331,8 +331,8 @@ abstract class _$$CompleteCashOrderDtoImplCopyWith<$Res>
   @useResult
   $Res call(
       {String paymentMethod,
-      int paidAmount,
-      int change,
+      double paidAmount,
+      double change,
       String? customerId,
       String? redeemCoinAmount});
 }
@@ -362,11 +362,11 @@ class __$$CompleteCashOrderDtoImplCopyWithImpl<$Res>
       paidAmount: null == paidAmount
           ? _value.paidAmount
           : paidAmount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       change: null == change
           ? _value.change
           : change // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       customerId: freezed == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
@@ -395,9 +395,9 @@ class _$CompleteCashOrderDtoImpl implements _CompleteCashOrderDto {
   @override
   final String paymentMethod;
   @override
-  final int paidAmount;
+  final double paidAmount;
   @override
-  final int change;
+  final double change;
   @override
   final String? customerId;
   @override
@@ -448,8 +448,8 @@ class _$CompleteCashOrderDtoImpl implements _CompleteCashOrderDto {
 abstract class _CompleteCashOrderDto implements CompleteCashOrderDto {
   const factory _CompleteCashOrderDto(
       {required final String paymentMethod,
-      required final int paidAmount,
-      required final int change,
+      required final double paidAmount,
+      required final double change,
       final String? customerId,
       final String? redeemCoinAmount}) = _$CompleteCashOrderDtoImpl;
 
@@ -459,9 +459,9 @@ abstract class _CompleteCashOrderDto implements CompleteCashOrderDto {
   @override
   String get paymentMethod;
   @override
-  int get paidAmount;
+  double get paidAmount;
   @override
-  int get change;
+  double get change;
   @override
   String? get customerId;
   @override
@@ -641,7 +641,7 @@ CompleteBankTransferOrderData _$CompleteBankTransferOrderDataFromJson(
 /// @nodoc
 mixin _$CompleteBankTransferOrderData {
   String get paymentMethod => throw _privateConstructorUsedError;
-  int get paidAmount => throw _privateConstructorUsedError;
+  double get paidAmount => throw _privateConstructorUsedError;
   String get accountNumber => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -658,7 +658,7 @@ abstract class $CompleteBankTransferOrderDataCopyWith<$Res> {
       _$CompleteBankTransferOrderDataCopyWithImpl<$Res,
           CompleteBankTransferOrderData>;
   @useResult
-  $Res call({String paymentMethod, int paidAmount, String accountNumber});
+  $Res call({String paymentMethod, double paidAmount, String accountNumber});
 }
 
 /// @nodoc
@@ -687,7 +687,7 @@ class _$CompleteBankTransferOrderDataCopyWithImpl<$Res,
       paidAmount: null == paidAmount
           ? _value.paidAmount
           : paidAmount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       accountNumber: null == accountNumber
           ? _value.accountNumber
           : accountNumber // ignore: cast_nullable_to_non_nullable
@@ -705,7 +705,7 @@ abstract class _$$CompleteBankTransferOrderDataImplCopyWith<$Res>
       __$$CompleteBankTransferOrderDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String paymentMethod, int paidAmount, String accountNumber});
+  $Res call({String paymentMethod, double paidAmount, String accountNumber});
 }
 
 /// @nodoc
@@ -733,7 +733,7 @@ class __$$CompleteBankTransferOrderDataImplCopyWithImpl<$Res>
       paidAmount: null == paidAmount
           ? _value.paidAmount
           : paidAmount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       accountNumber: null == accountNumber
           ? _value.accountNumber
           : accountNumber // ignore: cast_nullable_to_non_nullable
@@ -758,7 +758,7 @@ class _$CompleteBankTransferOrderDataImpl
   @override
   final String paymentMethod;
   @override
-  final int paidAmount;
+  final double paidAmount;
   @override
   final String accountNumber;
 
@@ -805,7 +805,7 @@ abstract class _CompleteBankTransferOrderData
     implements CompleteBankTransferOrderData {
   const factory _CompleteBankTransferOrderData(
           {required final String paymentMethod,
-          required final int paidAmount,
+          required final double paidAmount,
           required final String accountNumber}) =
       _$CompleteBankTransferOrderDataImpl;
 
@@ -815,7 +815,7 @@ abstract class _CompleteBankTransferOrderData
   @override
   String get paymentMethod;
   @override
-  int get paidAmount;
+  double get paidAmount;
   @override
   String get accountNumber;
   @override
@@ -833,8 +833,8 @@ CompleteDebitCreditOrderDto _$CompleteDebitCreditOrderDtoFromJson(
 /// @nodoc
 mixin _$CompleteDebitCreditOrderDto {
   String get paymentMethod => throw _privateConstructorUsedError;
-  int get paidAmount => throw _privateConstructorUsedError;
-  int? get change => throw _privateConstructorUsedError;
+  double get paidAmount => throw _privateConstructorUsedError;
+  double? get change => throw _privateConstructorUsedError;
   String get accountNumber => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -853,8 +853,8 @@ abstract class $CompleteDebitCreditOrderDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {String paymentMethod,
-      int paidAmount,
-      int? change,
+      double paidAmount,
+      double? change,
       String accountNumber});
 }
 
@@ -885,11 +885,11 @@ class _$CompleteDebitCreditOrderDtoCopyWithImpl<$Res,
       paidAmount: null == paidAmount
           ? _value.paidAmount
           : paidAmount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       change: freezed == change
           ? _value.change
           : change // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       accountNumber: null == accountNumber
           ? _value.accountNumber
           : accountNumber // ignore: cast_nullable_to_non_nullable
@@ -909,8 +909,8 @@ abstract class _$$CompleteDebitCreditOrderDtoImplCopyWith<$Res>
   @useResult
   $Res call(
       {String paymentMethod,
-      int paidAmount,
-      int? change,
+      double paidAmount,
+      double? change,
       String accountNumber});
 }
 
@@ -940,11 +940,11 @@ class __$$CompleteDebitCreditOrderDtoImplCopyWithImpl<$Res>
       paidAmount: null == paidAmount
           ? _value.paidAmount
           : paidAmount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       change: freezed == change
           ? _value.change
           : change // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       accountNumber: null == accountNumber
           ? _value.accountNumber
           : accountNumber // ignore: cast_nullable_to_non_nullable
@@ -970,10 +970,10 @@ class _$CompleteDebitCreditOrderDtoImpl
   @override
   final String paymentMethod;
   @override
-  final int paidAmount;
+  final double paidAmount;
   @override
   @JsonKey()
-  final int? change;
+  final double? change;
   @override
   final String accountNumber;
 
@@ -1020,8 +1020,8 @@ abstract class _CompleteDebitCreditOrderDto
     implements CompleteDebitCreditOrderDto {
   const factory _CompleteDebitCreditOrderDto(
       {required final String paymentMethod,
-      required final int paidAmount,
-      final int? change,
+      required final double paidAmount,
+      final double? change,
       required final String accountNumber}) = _$CompleteDebitCreditOrderDtoImpl;
 
   factory _CompleteDebitCreditOrderDto.fromJson(Map<String, dynamic> json) =
@@ -1030,9 +1030,9 @@ abstract class _CompleteDebitCreditOrderDto
   @override
   String get paymentMethod;
   @override
-  int get paidAmount;
+  double get paidAmount;
   @override
-  int? get change;
+  double? get change;
   @override
   String get accountNumber;
   @override
@@ -1049,8 +1049,8 @@ CompleteQRCodeOrderDto _$CompleteQRCodeOrderDtoFromJson(
 /// @nodoc
 mixin _$CompleteQRCodeOrderDto {
   String get paymentMethod => throw _privateConstructorUsedError;
-  int get paidAmount => throw _privateConstructorUsedError;
-  int? get change => throw _privateConstructorUsedError;
+  double get paidAmount => throw _privateConstructorUsedError;
+  double? get change => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1064,7 +1064,7 @@ abstract class $CompleteQRCodeOrderDtoCopyWith<$Res> {
           $Res Function(CompleteQRCodeOrderDto) then) =
       _$CompleteQRCodeOrderDtoCopyWithImpl<$Res, CompleteQRCodeOrderDto>;
   @useResult
-  $Res call({String paymentMethod, int paidAmount, int? change});
+  $Res call({String paymentMethod, double paidAmount, double? change});
 }
 
 /// @nodoc
@@ -1093,11 +1093,11 @@ class _$CompleteQRCodeOrderDtoCopyWithImpl<$Res,
       paidAmount: null == paidAmount
           ? _value.paidAmount
           : paidAmount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       change: freezed == change
           ? _value.change
           : change // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
     ) as $Val);
   }
 }
@@ -1111,7 +1111,7 @@ abstract class _$$CompleteQRCodeOrderDtoImplCopyWith<$Res>
       __$$CompleteQRCodeOrderDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String paymentMethod, int paidAmount, int? change});
+  $Res call({String paymentMethod, double paidAmount, double? change});
 }
 
 /// @nodoc
@@ -1139,11 +1139,11 @@ class __$$CompleteQRCodeOrderDtoImplCopyWithImpl<$Res>
       paidAmount: null == paidAmount
           ? _value.paidAmount
           : paidAmount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       change: freezed == change
           ? _value.change
           : change // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
     ));
   }
 }
@@ -1160,10 +1160,10 @@ class _$CompleteQRCodeOrderDtoImpl implements _CompleteQRCodeOrderDto {
   @override
   final String paymentMethod;
   @override
-  final int paidAmount;
+  final double paidAmount;
   @override
   @JsonKey()
-  final int? change;
+  final double? change;
 
   @override
   String toString() {
@@ -1205,8 +1205,8 @@ class _$CompleteQRCodeOrderDtoImpl implements _CompleteQRCodeOrderDto {
 abstract class _CompleteQRCodeOrderDto implements CompleteQRCodeOrderDto {
   const factory _CompleteQRCodeOrderDto(
       {required final String paymentMethod,
-      required final int paidAmount,
-      final int? change}) = _$CompleteQRCodeOrderDtoImpl;
+      required final double paidAmount,
+      final double? change}) = _$CompleteQRCodeOrderDtoImpl;
 
   factory _CompleteQRCodeOrderDto.fromJson(Map<String, dynamic> json) =
       _$CompleteQRCodeOrderDtoImpl.fromJson;
@@ -1214,9 +1214,9 @@ abstract class _CompleteQRCodeOrderDto implements CompleteQRCodeOrderDto {
   @override
   String get paymentMethod;
   @override
-  int get paidAmount;
+  double get paidAmount;
   @override
-  int? get change;
+  double? get change;
   @override
   @JsonKey(ignore: true)
   _$$CompleteQRCodeOrderDtoImplCopyWith<_$CompleteQRCodeOrderDtoImpl>

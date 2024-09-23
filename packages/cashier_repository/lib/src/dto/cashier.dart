@@ -29,8 +29,8 @@ class CompleteCashOrderDto extends CompleteOrderDto
     with _$CompleteCashOrderDto {
   const factory CompleteCashOrderDto({
     required String paymentMethod,
-    required int paidAmount,
-    required int change,
+    required double paidAmount,
+    required double change,
     String? customerId,
     String? redeemCoinAmount,
   }) = _CompleteCashOrderDto;
@@ -52,7 +52,7 @@ class CompleteBankTransferOrderDto extends CompleteOrderDto
 class CompleteBankTransferOrderData with _$CompleteBankTransferOrderData {
   const factory CompleteBankTransferOrderData({
     required String paymentMethod,
-    required int paidAmount,
+    required double paidAmount,
     required String accountNumber,
   }) = _CompleteBankTransferOrderData;
 
@@ -65,8 +65,8 @@ class CompleteDebitCreditOrderDto extends CompleteOrderDto
     with _$CompleteDebitCreditOrderDto {
   const factory CompleteDebitCreditOrderDto({
     required String paymentMethod,
-    required int paidAmount,
-    @Default(0) int? change,
+    required double paidAmount,
+    @Default(0) double? change,
     required String accountNumber,
   }) = _CompleteDebitCreditOrderDto;
 
@@ -79,8 +79,8 @@ class CompleteQRCodeOrderDto extends CompleteOrderDto
     with _$CompleteQRCodeOrderDto {
   const factory CompleteQRCodeOrderDto({
     required String paymentMethod,
-    required int paidAmount,
-    @Default(0) int? change,
+    required double paidAmount,
+    @Default(0) double? change,
   }) = _CompleteQRCodeOrderDto;
 
   factory CompleteQRCodeOrderDto.fromJson(Map<String, Object?> json) =>

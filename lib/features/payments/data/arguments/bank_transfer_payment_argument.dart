@@ -2,7 +2,7 @@ import 'package:owner_repository/owner_repository.dart';
 
 class BankTransferPaymentArgument {
   final OwnerBankModel account;
-  final int amount;
+  final double amount;
 
   BankTransferPaymentArgument({
     required this.account,

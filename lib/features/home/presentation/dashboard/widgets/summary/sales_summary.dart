@@ -103,7 +103,7 @@ class SalesSummary extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  TFormatter.formatToRupiah(int.parse(totalSales.current)),
+                  TFormatter.formatToRupiah(double.parse(totalSales.current)),
                   style: GoogleFonts.inter(
                     color: TColors.infoMedium,
                     fontSize: TSizes.fontSizeHeading1,

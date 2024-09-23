@@ -203,9 +203,12 @@ class _ReportMasterState extends State<ReportMaster> {
                                 ),
                                 label: "Rata2 Transaksi",
                                 amount: TFormatter.formatToRupiah(
-                                    report.averageSales == "NaN"
-                                        ? 0
-                                        : int.parse(report.averageSales)),
+                                  report.averageSales == "NaN"
+                                      ? 0
+                                      : double.parse(
+                                          report.averageSales,
+                                        ),
+                                ),
                               ),
                             ),
                             const SizedBox(width: 12),
@@ -232,7 +235,7 @@ class _ReportMasterState extends State<ReportMaster> {
                                 ),
                                 label: "Total Keuntungan",
                                 amount: TFormatter.formatToRupiah(
-                                  int.parse(
+                                  double.parse(
                                     report.totalProfit,
                                   ),
                                 ),
