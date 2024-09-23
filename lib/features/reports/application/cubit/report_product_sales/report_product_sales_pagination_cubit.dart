@@ -21,7 +21,11 @@ class ReportProductSalesPaginationCubit
       final response = await _productRepository.listOrderByProduct(
         productId,
         ListOrderByProductDto(
-            cursor: dto?.cursor, from: dto?.from, to: dto?.to),
+          cursor: dto?.cursor,
+          from: dto?.from,
+          to: dto?.to,
+          template: dto?.template,
+        ),
       );
 
       if (state is ReportProductSalesPaginationLoadSuccess) {
@@ -35,6 +39,7 @@ class ReportProductSalesPaginationCubit
               cursor: response.nextCursor,
               from: currentState.dto?.from,
               to: currentState.dto?.to,
+              template: currentState.dto?.template,
             ),
           ),
         );
@@ -46,6 +51,7 @@ class ReportProductSalesPaginationCubit
             cursor: response.nextCursor,
             from: dto?.from,
             to: dto?.to,
+            template: dto?.template,
           ),
         ));
       }

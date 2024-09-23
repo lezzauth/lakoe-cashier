@@ -18,7 +18,7 @@ class Grabber extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Container(
-          margin: const EdgeInsets.only(top: 12.0),
+          margin: const EdgeInsets.only(top: 12.0, bottom: 12.0),
           width: 32.0,
           height: 5.0,
           decoration: BoxDecoration(

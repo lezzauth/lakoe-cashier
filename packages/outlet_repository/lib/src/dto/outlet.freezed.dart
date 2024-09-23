@@ -23,6 +23,7 @@ DetailCustomerOutletDto _$DetailCustomerOutletDtoFromJson(
 mixin _$DetailCustomerOutletDto {
   String? get from => throw _privateConstructorUsedError;
   String? get to => throw _privateConstructorUsedError;
+  String? get template => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,7 @@ abstract class $DetailCustomerOutletDtoCopyWith<$Res> {
           $Res Function(DetailCustomerOutletDto) then) =
       _$DetailCustomerOutletDtoCopyWithImpl<$Res, DetailCustomerOutletDto>;
   @useResult
-  $Res call({String? from, String? to});
+  $Res call({String? from, String? to, String? template});
 }
 
 /// @nodoc
@@ -55,6 +56,7 @@ class _$DetailCustomerOutletDtoCopyWithImpl<$Res,
   $Res call({
     Object? from = freezed,
     Object? to = freezed,
+    Object? template = freezed,
   }) {
     return _then(_value.copyWith(
       from: freezed == from
@@ -64,6 +66,10 @@ class _$DetailCustomerOutletDtoCopyWithImpl<$Res,
       to: freezed == to
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
+              as String?,
+      template: freezed == template
+          ? _value.template
+          : template // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -78,7 +84,7 @@ abstract class _$$DetailCustomerOutletDtoImplCopyWith<$Res>
       __$$DetailCustomerOutletDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? from, String? to});
+  $Res call({String? from, String? to, String? template});
 }
 
 /// @nodoc
@@ -96,6 +102,7 @@ class __$$DetailCustomerOutletDtoImplCopyWithImpl<$Res>
   $Res call({
     Object? from = freezed,
     Object? to = freezed,
+    Object? template = freezed,
   }) {
     return _then(_$DetailCustomerOutletDtoImpl(
       from: freezed == from
@@ -106,6 +113,10 @@ class __$$DetailCustomerOutletDtoImplCopyWithImpl<$Res>
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
               as String?,
+      template: freezed == template
+          ? _value.template
+          : template // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -113,7 +124,7 @@ class __$$DetailCustomerOutletDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$DetailCustomerOutletDtoImpl implements _DetailCustomerOutletDto {
-  const _$DetailCustomerOutletDtoImpl({this.from, this.to});
+  const _$DetailCustomerOutletDtoImpl({this.from, this.to, this.template});
 
   factory _$DetailCustomerOutletDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$DetailCustomerOutletDtoImplFromJson(json);
@@ -122,10 +133,12 @@ class _$DetailCustomerOutletDtoImpl implements _DetailCustomerOutletDto {
   final String? from;
   @override
   final String? to;
+  @override
+  final String? template;
 
   @override
   String toString() {
-    return 'DetailCustomerOutletDto(from: $from, to: $to)';
+    return 'DetailCustomerOutletDto(from: $from, to: $to, template: $template)';
   }
 
   @override
@@ -134,12 +147,14 @@ class _$DetailCustomerOutletDtoImpl implements _DetailCustomerOutletDto {
         (other.runtimeType == runtimeType &&
             other is _$DetailCustomerOutletDtoImpl &&
             (identical(other.from, from) || other.from == from) &&
-            (identical(other.to, to) || other.to == to));
+            (identical(other.to, to) || other.to == to) &&
+            (identical(other.template, template) ||
+                other.template == template));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, from, to);
+  int get hashCode => Object.hash(runtimeType, from, to, template);
 
   @JsonKey(ignore: true)
   @override
@@ -158,7 +173,9 @@ class _$DetailCustomerOutletDtoImpl implements _DetailCustomerOutletDto {
 
 abstract class _DetailCustomerOutletDto implements DetailCustomerOutletDto {
   const factory _DetailCustomerOutletDto(
-      {final String? from, final String? to}) = _$DetailCustomerOutletDtoImpl;
+      {final String? from,
+      final String? to,
+      final String? template}) = _$DetailCustomerOutletDtoImpl;
 
   factory _DetailCustomerOutletDto.fromJson(Map<String, dynamic> json) =
       _$DetailCustomerOutletDtoImpl.fromJson;
@@ -167,6 +184,8 @@ abstract class _DetailCustomerOutletDto implements DetailCustomerOutletDto {
   String? get from;
   @override
   String? get to;
+  @override
+  String? get template;
   @override
   @JsonKey(ignore: true)
   _$$DetailCustomerOutletDtoImplCopyWith<_$DetailCustomerOutletDtoImpl>

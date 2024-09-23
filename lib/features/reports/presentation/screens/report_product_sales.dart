@@ -1,8 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/filters/date-filter/date_range_filter_chip.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
@@ -10,6 +11,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:point_of_sales_cashier/features/orders/common/widgets/filters/order_date_filter.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_product_sales/report_product_sales_cubit.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_product_sales/report_product_sales_pagination_cubit.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_product_sales/report_product_sales_pagination_filter_cubit.dart';
@@ -117,9 +119,17 @@ class _ReportProductSalesState extends State<ReportProductSales> {
       listener: (context, state) {
         context.read<ReportProductSalesPaginationCubit>().reset();
 
+        log('ReportProductSalesPaginationFilterCubit: $state');
+
         context.read<ReportProductSalesPaginationCubit>().fetchData(
               productId: widget.arguments.product.id,
-              dto: ListOrderByProductDto(from: state.from, to: state.to),
+              dto: ListOrderByProductDto(
+                from: state.from,
+                to: state.to,
+                template: ["ALL", "CUSTOM"].contains(state.template)
+                    ? null
+                    : state.template,
+              ),
             );
       },
       child: Scaffold(
@@ -267,18 +277,20 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                           ReportProductSalesPaginationFilterCubit,
                                           ReportProductSalesPaginationFilterState>(
                                         builder: (context, filterState) {
-                                          return DateRangeFilterChip(
-                                            onChanged: (from, to) {
+                                          return OrderDateFilter(
+                                            template: filterState.template,
+                                            from: filterState.from,
+                                            to: filterState.to,
+                                            onChanged: (template, from, to) {
                                               context
                                                   .read<
                                                       ReportProductSalesPaginationFilterCubit>()
                                                   .setFilter(
                                                     from: from,
                                                     to: to,
+                                                    template: template,
                                                   );
                                             },
-                                            from: filterState.from,
-                                            to: filterState.to,
                                           );
                                         },
                                       ),
@@ -303,6 +315,17 @@ class _ReportProductSalesState extends State<ReportProductSales> {
 
                                 return ProductOrderItem(order: order);
                               },
+                            ),
+                          ReportProductSalesPaginationLoadFailure(
+                            :final error
+                          ) =>
+                            SliverToBoxAdapter(
+                              child: Center(
+                                child: TextBodyS(
+                                  error,
+                                  color: TColors.error,
+                                ),
+                              ),
                             ),
                           _ => const SliverToBoxAdapter(
                               child: Center(
