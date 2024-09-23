@@ -5,7 +5,7 @@ import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart'
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/general_information.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
@@ -38,7 +38,7 @@ class _EmailEditScreenState extends State<EmailEditScreen> {
                         "Ubah Email",
                         color: TColors.neutralDarkDark,
                       ),
-                      TextBodyL(
+                      TextBodyM(
                         "Silahkan masukkan email baru untuk menggantikan email sebelumnya.",
                         color: TColors.neutralDarkDark,
                       ),
