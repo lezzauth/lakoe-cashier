@@ -121,7 +121,7 @@ class _OrderDetailState extends State<OrderDetail> {
   }
 
   Future<void> _onCompleteOrder({
-    required int amount,
+    required double amount,
     required OrderModel order,
   }) async {
     await showModalBottomSheet<PaymentMethodReturnModel>(
@@ -338,7 +338,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                   onAddMoreItem: () {},
                                   onComplete: () {
                                     _onCompleteOrder(
-                                      amount: int.parse(order.price),
+                                      amount: double.parse(order.price),
                                       order: order,
                                     );
                                   },

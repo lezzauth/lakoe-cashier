@@ -38,6 +38,7 @@ import 'package:point_of_sales_cashier/features/customers/application/cubit/cust
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/master_customer.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/screens/new_customer.dart';
+import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/employees/presentation/screens/detail_employee.dart';
 import 'package:point_of_sales_cashier/features/employees/presentation/screens/master_employee.dart';
 import 'package:point_of_sales_cashier/features/employees/presentation/screens/new_employee.dart';
@@ -137,6 +138,9 @@ class App extends StatelessWidget {
 
         // Report Master
         BlocProvider(create: (context) => ReportMasterCubit()),
+
+        // Employee Master
+        BlocProvider(create: (context) => EmployeeMasterCubit()),
       ],
       child: MaterialApp(
         title: "Point of Sales",

@@ -14,7 +14,7 @@ class CashPaymentContent extends StatefulWidget {
     super.key,
     required this.amount,
   });
-  final int amount;
+  final double amount;
 
   @override
   State<CashPaymentContent> createState() => _CashPaymentContentState();
@@ -38,7 +38,7 @@ class _CashPaymentContentState extends State<CashPaymentContent> {
     }
 
     dynamic value = _formKey.currentState?.value;
-    int paidAmount = value["paidAmount"] ?? 0;
+    double paidAmount = ((value["paidAmount"] ?? 0) as int).toDouble();
 
     if (paidAmount < widget.amount) {
       return;

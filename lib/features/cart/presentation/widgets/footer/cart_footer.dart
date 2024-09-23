@@ -13,7 +13,7 @@ class CartFooter extends StatelessWidget {
   });
 
   final Function() onSaved;
-  final ValueChanged<int> onCompleted;
+  final ValueChanged<double> onCompleted;
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +52,11 @@ class CartFooter extends StatelessWidget {
                 onPressed: cartState is CartDetailActionInProgress
                     ? null
                     : () {
+                        // TODO: handle int string decimal
                         if (cartState is CartDetailLoadSuccess) {
                           onCompleted(
-                              int.parse(cartState.previewOrderPrice.total));
+                            double.parse(cartState.previewOrderPrice.total),
+                          );
                         }
                       },
                 child: cartState is CartDetailActionInProgress
