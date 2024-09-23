@@ -4,6 +4,7 @@ import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
@@ -146,16 +147,17 @@ class _CartState extends State<Cart> {
   Future<void> onCompleteOrder(double amount) async {
     await showModalBottomSheet(
       context: context,
-      showDragHandle: true,
       isScrollControlled: true,
       useSafeArea: true,
       builder: (context) {
-        return SelectPaymentMethod(
-          amount: amount,
-          onPaymentCash: _onCashPaid,
-          onPaymentBankTransfer: _onBankTransferPaid,
-          onPaymentDebitCredit: _onDebitCreditPaid,
-          onPaymentQRCode: _onQRCodePaid,
+        return CustomBottomsheet(
+          child: SelectPaymentMethod(
+            amount: amount,
+            onPaymentCash: _onCashPaid,
+            onPaymentBankTransfer: _onBankTransferPaid,
+            onPaymentDebitCredit: _onDebitCreditPaid,
+            onPaymentQRCode: _onQRCodePaid,
+          ),
         );
       },
     );

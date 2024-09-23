@@ -25,7 +25,7 @@ class BillPriceInfo extends StatelessWidget {
       children: [
         ...children,
         const Padding(
-          padding: EdgeInsets.symmetric(vertical: 2),
+          padding: EdgeInsets.symmetric(vertical: 4),
           child: Separator(
             color: TColors.neutralDarkDarkest,
             height: 0.5,
@@ -42,7 +42,7 @@ class BillPriceInfo extends StatelessWidget {
           price: moneyReceived,
         ),
         const Padding(
-          padding: EdgeInsets.symmetric(vertical: 2),
+          padding: EdgeInsets.symmetric(vertical: 4),
           child: Separator(
             color: TColors.neutralDarkDarkest,
             height: 0.5,
@@ -55,7 +55,7 @@ class BillPriceInfo extends StatelessWidget {
           isBold: true,
         ),
         const Padding(
-          padding: EdgeInsets.symmetric(vertical: 2),
+          padding: EdgeInsets.symmetric(vertical: 8),
           child: Column(
             children: [
               Separator(

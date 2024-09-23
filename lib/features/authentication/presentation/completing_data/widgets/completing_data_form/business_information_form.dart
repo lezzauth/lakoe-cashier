@@ -16,7 +16,12 @@ class BusinessInformationForm extends StatefulWidget {
 }
 
 class _BusinessInformationFormState extends State<BusinessInformationForm> {
-  final List<String> businessTypes = ["Kuliner", "Toko Online", "Retail"];
+  final List<String> businessTypes = [
+    "Kuliner",
+    "Toko Online",
+    "Retail",
+    "Lainnya"
+  ];
 
   @override
   Widget build(BuildContext context) {
