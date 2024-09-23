@@ -83,13 +83,14 @@ class _LocationFieldState extends State<LocationField> {
             builder: (field) {
               return Wrap(
                 direction: Axis.horizontal,
+                alignment: WrapAlignment.center,
                 spacing: 8,
                 runSpacing: 8,
                 children: [
                   ...locations.map((location) {
                     bool selected = location.id == field.value;
                     return SizedBox(
-                      height: 32,
+                      // height: 32,
                       child: ChoiceChip(
                         label: selected
                             ? TextHeading5(
@@ -104,27 +105,30 @@ class _LocationFieldState extends State<LocationField> {
                       ),
                     );
                   }),
-                  SizedBox(
-                    height: 32,
-                    child: OutlinedButton.icon(
-                      onPressed: showCreateLocation,
-                      label: const TextActionM(
-                        "Buat Baru",
-                        color: TColors.primary,
-                      ),
-                      style: const ButtonStyle(
-                          padding: WidgetStatePropertyAll(
-                            EdgeInsets.symmetric(horizontal: 14.0),
-                          ),
-                          side: WidgetStatePropertyAll(BorderSide(
-                            width: 1,
-                            color: TColors.primary,
-                          ))),
-                      icon: const UiIcons(
-                        TIcons.add,
-                        height: 12,
-                        width: 12,
-                        color: TColors.primary,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: SizedBox(
+                      height: 33,
+                      child: OutlinedButton.icon(
+                        onPressed: showCreateLocation,
+                        label: const TextActionM(
+                          "Buat Baru",
+                          color: TColors.primary,
+                        ),
+                        style: const ButtonStyle(
+                            padding: WidgetStatePropertyAll(
+                              EdgeInsets.symmetric(horizontal: 14.0),
+                            ),
+                            side: WidgetStatePropertyAll(BorderSide(
+                              width: 1,
+                              color: TColors.primary,
+                            ))),
+                        icon: const UiIcons(
+                          TIcons.add,
+                          height: 12,
+                          width: 12,
+                          color: TColors.primary,
+                        ),
                       ),
                     ),
                   )
@@ -209,7 +213,9 @@ class _CreateTableLocationFormState extends State<CreateTableLocationForm> {
                 name: "name",
                 decoration: const InputDecoration(hintText: "Contoh: Indoor"),
                 validator: FormBuilderValidators.required(
-                    errorText: ErrorTextStrings.required()),
+                  errorText: ErrorTextStrings.required(),
+                ),
+                textCapitalization: TextCapitalization.words,
               ),
             ),
             Container(

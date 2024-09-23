@@ -48,7 +48,6 @@ class _TableLocationFilterState extends State<TableLocationFilter> {
               widget.onChanged(null);
             },
           ),
-
           BlocBuilder<TableMasterLocationCubit, TableMasterLocationState>(
             builder: (context, state) => switch (state) {
               TableMasterLocationLoadSuccess(:final locations) => Wrap(
@@ -89,21 +88,6 @@ class _TableLocationFilterState extends State<TableLocationFilter> {
                 ),
             },
           ),
-          // ChoiceChip(
-          //   label: TextBodyS("Indoor"),
-          //   selected: false,
-          //   onSelected: (value) {},
-          // ),
-          // ChoiceChip(
-          //   label: TextBodyS("Outdoor"),
-          //   selected: false,
-          //   onSelected: (value) {},
-          // ),
-          // ChoiceChip(
-          //   label: TextBodyS("Lantai 2"),
-          //   selected: false,
-          //   onSelected: (value) {},
-          // ),
         ],
       ),
     );

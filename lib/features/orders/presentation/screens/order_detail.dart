@@ -328,7 +328,9 @@ class _OrderDetailState extends State<OrderDetail> {
                             if (order.source == "CASHIER")
                               Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    vertical: 12, horizontal: 16),
+                                  vertical: 20,
+                                  horizontal: 16,
+                                ),
                                 child: OrderOutletAction(
                                   isPaid: order.paymentStatus == "PAID",
                                   type: order.type,

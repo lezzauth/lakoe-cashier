@@ -29,6 +29,7 @@ class _BillMasterState extends State<BillMaster> {
   List<_BillPriceItem> listBillPriceItem = [
     _BillPriceItem(label: "Subtotal", price: "Rp20.000"),
     _BillPriceItem(label: "Pajak", price: "5%"),
+    _BillPriceItem(label: "Service Charge", price: "2%"),
   ];
 
   @override

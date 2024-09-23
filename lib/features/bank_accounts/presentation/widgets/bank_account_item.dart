@@ -75,7 +75,7 @@ class BankAccountItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: TextBodyS(
-                            "${bankAccount.accountNumber} • ${bankAccount.accountName}",
+                            "${bankAccount.accountNumber} • ${bankAccount.accountName.toUpperCase()}",
                             color: TColors.neutralDarkLightest,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
