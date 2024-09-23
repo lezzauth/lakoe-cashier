@@ -3,7 +3,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class DebitPaymentForm extends StatefulWidget {
   const DebitPaymentForm({super.key});
@@ -38,7 +37,7 @@ class DebitPaymentFormState extends State<DebitPaymentForm> {
                   children: [
                     const FormLabel(
                       "Nomor Kartu",
-                      // optional: true,
+                      optional: true,
                     ),
                     FormBuilderTextField(
                       name: "accountNumber",
@@ -51,11 +50,13 @@ class DebitPaymentFormState extends State<DebitPaymentForm> {
                         return creditFormatter.getUnmaskedText();
                       },
                       validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(
-                          errorText: ErrorTextStrings.required(),
-                        ),
-                        FormBuilderValidators.equalLength(19,
-                            errorText: "Nomor kartu tidak valid.")
+                        FormBuilderValidators.skipWhen(
+                          (value) {
+                            return value == null || value.isEmpty;
+                          },
+                          FormBuilderValidators.equalLength(19,
+                              errorText: "Nomor kartu tidak valid."),
+                        )
                       ]),
                     ),
                   ],
