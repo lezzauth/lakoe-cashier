@@ -111,7 +111,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
                         ),
                       if (!checkPIN || isPinWrong)
                         DottedPin(
-                          length: 4,
+                          length: 6,
                           controller: _pinController,
                           onCompleted: (value) {
                             setState(() {
