@@ -31,18 +31,20 @@ class ChargeMasterCubit extends Cubit<ChargeMasterState> {
         return _ownerRepository.charge.create(
             ownerId: ownerId,
             dto: CreateChargeDto(
-                name: e.name,
-                value: int.parse(e.value),
-                isPrecentage: e.unit == "percentage"));
+              name: e.name,
+              value: double.parse(e.value),
+              isPrecentage: e.unit == "percentage",
+            ));
       });
       final updateChargesExecute = updatedCharges.map((e) {
         return _ownerRepository.charge.update(
             ownerId: ownerId,
             chargeId: e.id,
             dto: UpdateChargeDto(
-                name: e.name,
-                value: int.parse(e.value),
-                isPrecentage: e.unit == "percentage"));
+              name: e.name,
+              value: double.parse(e.value),
+              isPrecentage: e.unit == "percentage",
+            ));
       });
 
       final removeChargesExecute = removedIds.map((e) {

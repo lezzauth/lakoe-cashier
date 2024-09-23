@@ -22,7 +22,7 @@ ChargeModel _$ChargeModelFromJson(Map<String, dynamic> json) {
 mixin _$ChargeModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  int get value => throw _privateConstructorUsedError;
+  String get value => throw _privateConstructorUsedError;
   String get ownerId => throw _privateConstructorUsedError;
   bool get isPrecentage => throw _privateConstructorUsedError;
 
@@ -39,7 +39,11 @@ abstract class $ChargeModelCopyWith<$Res> {
       _$ChargeModelCopyWithImpl<$Res, ChargeModel>;
   @useResult
   $Res call(
-      {String id, String name, int value, String ownerId, bool isPrecentage});
+      {String id,
+      String name,
+      String value,
+      String ownerId,
+      bool isPrecentage});
 }
 
 /// @nodoc
@@ -73,7 +77,7 @@ class _$ChargeModelCopyWithImpl<$Res, $Val extends ChargeModel>
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       ownerId: null == ownerId
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
@@ -95,7 +99,11 @@ abstract class _$$ChargeModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id, String name, int value, String ownerId, bool isPrecentage});
+      {String id,
+      String name,
+      String value,
+      String ownerId,
+      bool isPrecentage});
 }
 
 /// @nodoc
@@ -127,7 +135,7 @@ class __$$ChargeModelImplCopyWithImpl<$Res>
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       ownerId: null == ownerId
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
@@ -158,7 +166,7 @@ class _$ChargeModelImpl implements _ChargeModel {
   @override
   final String name;
   @override
-  final int value;
+  final String value;
   @override
   final String ownerId;
   @override
@@ -205,7 +213,7 @@ abstract class _ChargeModel implements ChargeModel {
   const factory _ChargeModel(
       {required final String id,
       required final String name,
-      required final int value,
+      required final String value,
       required final String ownerId,
       required final bool isPrecentage}) = _$ChargeModelImpl;
 
@@ -217,7 +225,7 @@ abstract class _ChargeModel implements ChargeModel {
   @override
   String get name;
   @override
-  int get value;
+  String get value;
   @override
   String get ownerId;
   @override

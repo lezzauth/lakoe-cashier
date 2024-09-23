@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
@@ -15,6 +16,7 @@ import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_mast
 import 'package:point_of_sales_cashier/features/taxes/data/models.dart';
 import 'package:point_of_sales_cashier/features/taxes/presentation/widgets/form/field/other_tax_field.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class TaxForm extends StatefulWidget {
   const TaxForm({super.key});
@@ -30,6 +32,7 @@ class _TaxFormState extends State<TaxForm> {
   final List<OtherTaxField> taxes = [];
 
   bool _isFormValid = false;
+  bool _isPB1Active = false;
 
   Future<void> _onSubmit() async {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
@@ -71,7 +74,9 @@ class _TaxFormState extends State<TaxForm> {
         removedTaxIds.add(pb1Tax.id);
       }
     } else {
-      newTaxes.add(TaxField(id: "pb1", name: "PB1", value: value["value"]));
+      if (value["isPB1Active"] == true) {
+        newTaxes.add(TaxField(id: "pb1", name: "PB1", value: value["value"]));
+      }
     }
 
     AuthReady authState = context.read<AuthCubit>().state as AuthReady;
@@ -94,6 +99,9 @@ class _TaxFormState extends State<TaxForm> {
             _formKey.currentState?.fields["isPB1Active"]?.didChange(true);
             _formKey.currentState?.fields["value"]
                 ?.didChange(pb1Tax.value.toString());
+            setState(() {
+              _isPB1Active = true;
+            });
           }
           final otherTaxes = state.taxes.where((tax) => tax.name != "PB1");
           if (otherTaxes.isNotEmpty) {
@@ -129,6 +137,9 @@ class _TaxFormState extends State<TaxForm> {
         onChanged: () {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
             _isFormValid = _formKey.currentState?.isValid ?? false;
+            _isPB1Active =
+                _formKey.currentState?.instantValue["isPB1Active"] ?? false;
+
             setState(() {});
           });
         },
@@ -221,6 +232,21 @@ class _TaxFormState extends State<TaxForm> {
                               FilteringTextInputFormatter.allow(
                                   RegExp(r'^\d+\.?\d{0,2}|^\d+\,?\d{0,2}')),
                             ],
+                            validator: (value) {
+                              bool isPB1Active = _formKey.currentState
+                                      ?.fields["isPB1Active"]?.value ??
+                                  false;
+
+                              if (!isPB1Active) return null;
+
+                              return FormBuilderValidators.compose([
+                                FormBuilderValidators.max(
+                                  10,
+                                  errorText: ErrorTextStrings.max(max: 10),
+                                ),
+                              ])(value);
+                            },
+                            enabled: _isPB1Active,
                           )
                         ],
                       ),
