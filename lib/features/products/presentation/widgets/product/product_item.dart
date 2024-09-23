@@ -33,7 +33,6 @@ class ProductItem extends StatelessWidget {
     onAddNotes() {
       return showModalBottomSheet(
         context: context,
-        // showDragHandle: true,
         isScrollControlled: true,
         builder: (context) {
           return CustomBottomsheet(

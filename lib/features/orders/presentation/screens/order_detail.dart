@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
@@ -126,24 +127,25 @@ class _OrderDetailState extends State<OrderDetail> {
   }) async {
     await showModalBottomSheet<PaymentMethodReturnModel>(
       context: context,
-      showDragHandle: true,
       isScrollControlled: true,
       useSafeArea: true,
       builder: (context) {
-        return SelectPaymentMethod(
-          amount: amount,
-          onPaymentCash: (value) {
-            _onCashPaid(data: value, order: order);
-          },
-          onPaymentBankTransfer: (value) {
-            _onBankTransferPaid(data: value, order: order);
-          },
-          onPaymentDebitCredit: (value) {
-            _onDebitCreditPaid(data: value, order: order);
-          },
-          onPaymentQRCode: (value) {
-            _onQRCodePaid(data: value, order: order);
-          },
+        return CustomBottomsheet(
+          child: SelectPaymentMethod(
+            amount: amount,
+            onPaymentCash: (value) {
+              _onCashPaid(data: value, order: order);
+            },
+            onPaymentBankTransfer: (value) {
+              _onBankTransferPaid(data: value, order: order);
+            },
+            onPaymentDebitCredit: (value) {
+              _onDebitCreditPaid(data: value, order: order);
+            },
+            onPaymentQRCode: (value) {
+              _onQRCodePaid(data: value, order: order);
+            },
+          ),
         );
       },
     );
