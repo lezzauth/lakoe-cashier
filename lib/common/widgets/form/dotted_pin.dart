@@ -18,8 +18,8 @@ class DottedPin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
-      width: 16,
-      height: 16,
+      width: 12,
+      height: 12,
       textStyle: const TextStyle(
         fontSize: 0,
         color: Colors.transparent,
@@ -31,7 +31,7 @@ class DottedPin extends StatelessWidget {
         color: TColors.neutralLightDark,
       ),
       margin: const EdgeInsets.all(
-        12.0,
+        4.0,
       ),
     );
 

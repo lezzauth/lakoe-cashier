@@ -40,7 +40,7 @@ class MainMenu extends StatelessWidget {
     }
 
     onCashierAlreadyOpened() {
-      Navigator.popAndPushNamed(
+      Navigator.pushNamed(
         context,
         "/cashier/open-cashier-pin",
         arguments: OpenCashierReInitial(),

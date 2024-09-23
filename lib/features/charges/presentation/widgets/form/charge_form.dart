@@ -319,7 +319,7 @@ class _ChargeFormState extends State<ChargeForm> {
               return Container(
                 width: double.infinity,
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: ElevatedButton(
                   onPressed:
                       state is! ChargeMasterActionInProgress && _isFormValid

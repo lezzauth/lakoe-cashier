@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
@@ -106,351 +107,345 @@ class _CustomerDetailState extends State<CustomerDetail> {
           title: "Detail Pelanggan",
         ),
         body: BlocBuilder<CustomerDetailCubit, CustomerDetailState>(
-            builder: (context, state) => switch (state) {
-                  CustomerDetailLoadSuccess(:final customer) => Scrollbar(
-                      child: RefreshIndicator(
-                        onRefresh: _onRefresh,
-                        backgroundColor: TColors.neutralLightLightest,
+          builder: (context, state) => switch (state) {
+            CustomerDetailLoadSuccess(:final customer) => Scrollbar(
+                child: RefreshIndicator(
+                  onRefresh: _onRefresh,
+                  backgroundColor: TColors.neutralLightLightest,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    TImages.contactAvatar,
+                                    height: 40,
+                                    width: 40,
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextHeading4(customer.customer.name),
+                                      TextBodyS(
+                                        customer.customer.phoneNumber,
+                                        color: TColors.neutralDarkLight,
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    SvgPicture.asset(
+                                      TImages.lakoeCoin,
+                                      height: 20,
+                                      width: 20,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    TextHeading4(
+                                      customer.customer.owners.first.coin
+                                          .toString(),
+                                    ),
+                                  ],
+                                ),
+                                const TextBodyS(
+                                  "Poin",
+                                  color: TColors.neutralDarkLight,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 4,
+                        color: TColors.neutralLightMedium,
+                        margin: const EdgeInsets.only(top: 8.0, bottom: 16.0),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(
+                            top: 6.0, left: 16, right: 16),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 12),
+                              margin: const EdgeInsets.only(bottom: 8),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
+                                  const TextHeading3("Riwayat Transaksi"),
+                                  TextBodyS(
+                                    "Total ${customer.customer.count.orders} transaksi",
+                                    color: TColors.neutralDarkLight,
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: Row(
+                                children: [
                                   Expanded(
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          TImages.contactAvatar,
-                                          height: 40,
-                                          width: 40,
+                                    child: CustomerSummaryCard(
+                                      title: "Total Belanja",
+                                      value: TFormatter.formatToRupiah(
+                                        double.parse(
+                                          customer.summary.totalPrice,
                                         ),
-                                        const SizedBox(width: 16),
-                                        Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            TextHeading4(
-                                                customer.customer.name),
-                                            TextBodyS(
-                                              customer.customer.phoneNumber,
-                                              color: TColors.neutralDarkLight,
-                                            )
-                                          ],
-                                        )
-                                      ],
+                                      ),
                                     ),
                                   ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: CustomerSummaryCard(
+                                      title: "Menu Favorit",
+                                      value: customer.summary.favorite,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: SizedBox(
+                                  width: double.maxFinite,
+                                  child: Row(
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                      Wrap(
+                                        direction: Axis.horizontal,
+                                        alignment: WrapAlignment.start,
+                                        spacing: 8,
                                         children: [
-                                          SvgPicture.asset(
-                                            TImages.lakoeCoin,
-                                            height: 20,
-                                            width: 20,
-                                          ),
-                                          const SizedBox(width: 4),
-                                          TextHeading4(
-                                            customer.customer.owners.first.coin
-                                                .toString(),
-                                          ),
+                                          BlocBuilder<CustomerDetailFilterCubit,
+                                                  CustomerDetailFilterState>(
+                                              builder: (context, state) {
+                                            return OrderDateFilter(
+                                              from: state.from,
+                                              template: state.template,
+                                              to: state.to,
+                                              onChanged: (template, from, to) {
+                                                context
+                                                    .read<
+                                                        CustomerDetailFilterCubit>()
+                                                    .setFilter(
+                                                      template: template,
+                                                      from: from,
+                                                      to: to,
+                                                    );
+                                              },
+                                            );
+                                          }),
                                         ],
-                                      ),
-                                      const TextBodyS(
-                                        "Poin",
-                                        color: TColors.neutralDarkLight,
                                       ),
                                     ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
-                            Container(
-                              height: 4,
-                              color: TColors.neutralLightMedium,
-                              margin:
-                                  const EdgeInsets.only(top: 8.0, bottom: 16.0),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  top: 6.0, left: 16, right: 16),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(bottom: 8),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const TextHeading3("Riwayat Transaksi"),
-                                        TextBodyS(
-                                          "Total ${customer.customer.count.orders} transaksi",
-                                          color: TColors.neutralDarkLight,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: CustomerSummaryCard(
-                                            title: "Total Belanja",
-                                            value: TFormatter.formatToRupiah(
-                                              double.parse(
-                                                customer.summary.totalPrice,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 12),
-                                        Expanded(
-                                          child: CustomerSummaryCard(
-                                            title: "Menu Favorit",
-                                            value: customer.summary.favorite,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: SizedBox(
-                                        width: double.maxFinite,
-                                        child: Row(
-                                          children: [
-                                            Wrap(
-                                              direction: Axis.horizontal,
-                                              alignment: WrapAlignment.start,
-                                              spacing: 8,
-                                              children: [
-                                                BlocBuilder<
-                                                        CustomerDetailFilterCubit,
-                                                        CustomerDetailFilterState>(
-                                                    builder: (context, state) {
-                                                  return OrderDateFilter(
-                                                    from: state.from,
-                                                    template: state.template,
-                                                    to: state.to,
-                                                    onChanged:
-                                                        (template, from, to) {
-                                                      context
-                                                          .read<
-                                                              CustomerDetailFilterCubit>()
-                                                          .setFilter(
-                                                            template: template,
-                                                            from: from,
-                                                            to: to,
-                                                          );
-                                                    },
-                                                  );
-                                                }),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: ListView.builder(
-                                itemCount: customer.customer.orders.length,
-                                itemBuilder: (context, index) {
-                                  DetailCustomerOrder order =
-                                      customer.customer.orders.elementAt(index);
+                          ],
+                        ),
+                      ),
+                      if (customer.customer.orders.isEmpty)
+                        EmptyList(
+                          image: SvgPicture.asset(
+                            TImages.catBox,
+                            width: 140,
+                            height: 101.45,
+                          ),
+                          title: "Belum ada transaksi, nih!",
+                          subTitle:
+                              "${customer.customer.name} sampai saat ini belum pernah melakukan transaksi.",
+                        ),
+                      if (customer.customer.orders.isNotEmpty)
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: customer.customer.orders.length,
+                            itemBuilder: (context, index) {
+                              DetailCustomerOrder order =
+                                  customer.customer.orders.elementAt(index);
 
-                                  bool isPaid = order.paymentStatus == "PAID";
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, "/orders/detail",
-                                          arguments: OrderDetailArgument(
-                                              id: order.id));
-                                    },
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            width: 1,
-                                            color: TColors.neutralLightMedium,
+                              bool isPaid = order.paymentStatus == "PAID";
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, "/orders/detail",
+                                      arguments:
+                                          OrderDetailArgument(id: order.id));
+                                },
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        width: 1,
+                                        color: TColors.neutralLightMedium,
+                                      ),
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      if (isPaid)
+                                        Positioned(
+                                          right: 47,
+                                          bottom: 0,
+                                          child: Image.asset(
+                                            TImages.stamp,
+                                            width: 80,
+                                            height: 53.35,
                                           ),
                                         ),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 16.0,
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          if (isPaid)
-                                            Positioned(
-                                              right: 47,
-                                              bottom: 0,
-                                              child: Image.asset(
-                                                TImages.stamp,
-                                                width: 80,
-                                                height: 53.35,
-                                              ),
-                                            ),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 14,
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment: isPaid
-                                                  ? CrossAxisAlignment.center
-                                                  : CrossAxisAlignment.end,
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 14,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: isPaid
+                                              ? CrossAxisAlignment.center
+                                              : CrossAxisAlignment.end,
+                                          children: [
+                                            Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      margin:
-                                                          const EdgeInsets.only(
-                                                              bottom: 8.0),
-                                                      child: RichText(
-                                                        text: TextSpan(
-                                                          style:
-                                                              GoogleFonts.inter(
-                                                            fontSize: TSizes
-                                                                .fontSizeHeading4,
-                                                            color: TColors
-                                                                .neutralDarkDarkest,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                          text:
-                                                              "Order #${order.no}",
-                                                          children: [
-                                                            TextSpan(
-                                                              style: GoogleFonts
-                                                                  .inter(
-                                                                fontSize: TSizes
-                                                                    .fontSizeBodyS,
-                                                                color: TColors
-                                                                    .neutralDarkLight,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                              ),
-                                                              text:
-                                                                  " - (${order.count.items} Item)",
-                                                            ),
-                                                          ],
-                                                        ),
+                                                Container(
+                                                  margin: const EdgeInsets.only(
+                                                      bottom: 8.0),
+                                                  child: RichText(
+                                                    text: TextSpan(
+                                                      style: GoogleFonts.inter(
+                                                        fontSize: TSizes
+                                                            .fontSizeHeading4,
+                                                        color: TColors
+                                                            .neutralDarkDarkest,
+                                                        fontWeight:
+                                                            FontWeight.w600,
                                                       ),
-                                                    ),
-                                                    TextBodyS(
-                                                      TFormatter.orderDate(
-                                                        order.createdAt,
-                                                      ),
-                                                      color: TColors
-                                                          .neutralDarkLight,
-                                                    ),
-                                                  ],
-                                                ),
-                                                Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    if (order.transactions
-                                                            .firstOrNull !=
-                                                        null)
-                                                      Container(
-                                                        margin: const EdgeInsets
-                                                            .only(bottom: 5),
-                                                        child:
-                                                            TransactionTypeTag(
-                                                          tag: order
-                                                              .transactions
-                                                              .first
-                                                              .paymentMethod,
-                                                        ),
-                                                      ),
-                                                    RichText(
-                                                      text: TextSpan(
-                                                          text: "Total: ",
+                                                      text:
+                                                          "Order #${order.no}",
+                                                      children: [
+                                                        TextSpan(
                                                           style:
                                                               GoogleFonts.inter(
                                                             fontSize: TSizes
                                                                 .fontSizeBodyS,
                                                             color: TColors
                                                                 .neutralDarkLight,
+                                                            fontWeight:
+                                                                FontWeight.w400,
                                                           ),
-                                                          children: [
-                                                            TextSpan(
-                                                              text: TFormatter
-                                                                  .formatToRupiah(
-                                                                double.parse(
-                                                                  order.price,
-                                                                ),
-                                                              ),
-                                                              style: GoogleFonts
-                                                                  .inter(
-                                                                fontSize: TSizes
-                                                                    .fontSizeBodyM,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                                color: TColors
-                                                                    .neutralDarkDarkest,
-                                                              ),
-                                                            )
-                                                          ]),
+                                                          text:
+                                                              " - (${order.count.items} Item)",
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                )
+                                                  ),
+                                                ),
+                                                TextBodyS(
+                                                  TFormatter.orderDate(
+                                                    order.createdAt,
+                                                  ),
+                                                  color:
+                                                      TColors.neutralDarkLight,
+                                                ),
                                               ],
                                             ),
-                                          ),
-                                        ],
+                                            Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                if (order.transactions
+                                                        .firstOrNull !=
+                                                    null)
+                                                  Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            bottom: 5),
+                                                    child: TransactionTypeTag(
+                                                      tag: order.transactions
+                                                          .first.paymentMethod,
+                                                    ),
+                                                  ),
+                                                RichText(
+                                                  text: TextSpan(
+                                                      text: "Total: ",
+                                                      style: GoogleFonts.inter(
+                                                        fontSize: TSizes
+                                                            .fontSizeBodyS,
+                                                        color: TColors
+                                                            .neutralDarkLight,
+                                                      ),
+                                                      children: [
+                                                        TextSpan(
+                                                          text: TFormatter
+                                                              .formatToRupiah(
+                                                            double.parse(
+                                                              order.price,
+                                                            ),
+                                                          ),
+                                                          style:
+                                                              GoogleFonts.inter(
+                                                            fontSize: TSizes
+                                                                .fontSizeBodyM,
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                            color: TColors
+                                                                .neutralDarkDarkest,
+                                                          ),
+                                                        )
+                                                      ]),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  CustomerDetailLoadFailure(:final error) => Center(
-                      child: TextBodyS(
-                        error,
-                        color: TColors.error,
-                      ),
-                    ),
-                  _ => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                }),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                    ],
+                  ),
+                ),
+              ),
+            CustomerDetailLoadFailure(:final error) => Center(
+                child: TextBodyS(
+                  error,
+                  color: TColors.error,
+                ),
+              ),
+            _ => const Center(
+                child: CircularProgressIndicator(),
+              ),
+          },
+        ),
       ),
     );
   }
