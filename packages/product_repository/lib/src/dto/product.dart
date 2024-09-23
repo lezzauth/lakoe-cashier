@@ -35,6 +35,7 @@ class ListOrderByProductDto with _$ListOrderByProductDto {
     String? cursor,
     String? from,
     String? to,
+    String? template,
   }) = _ListOrderByProductDto;
 
   factory ListOrderByProductDto.fromJson(Map<String, Object?> json) =>

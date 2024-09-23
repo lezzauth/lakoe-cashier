@@ -4,12 +4,13 @@ import 'package:point_of_sales_cashier/features/reports/application/cubit/report
 class ReportProductSalesPaginationFilterCubit
     extends Cubit<ReportProductSalesPaginationFilterState> {
   ReportProductSalesPaginationFilterCubit()
-      : super(const ReportProductSalesPaginationFilterState());
+      : super(const ReportProductSalesPaginationFilterState(template: "ALL"));
 
-  setFilter({DateTime? from, DateTime? to}) {
+  setFilter({DateTime? from, DateTime? to, required String template}) {
     emit(ReportProductSalesPaginationFilterState(
       from: from?.toUtc().toIso8601String(),
       to: to?.toUtc().toIso8601String(),
+      template: template,
     ));
   }
 }

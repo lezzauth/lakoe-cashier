@@ -30,6 +30,7 @@ _$ListOrderByProductDtoImpl _$$ListOrderByProductDtoImplFromJson(
       cursor: json['cursor'] as String?,
       from: json['from'] as String?,
       to: json['to'] as String?,
+      template: json['template'] as String?,
     );
 
 Map<String, dynamic> _$$ListOrderByProductDtoImplToJson(
@@ -38,6 +39,7 @@ Map<String, dynamic> _$$ListOrderByProductDtoImplToJson(
       'cursor': instance.cursor,
       'from': instance.from,
       'to': instance.to,
+      'template': instance.template,
     };
 
 _$CreateProductDtoImpl _$$CreateProductDtoImplFromJson(

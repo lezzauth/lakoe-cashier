@@ -220,6 +220,7 @@ mixin _$ListOrderByProductDto {
   String? get cursor => throw _privateConstructorUsedError;
   String? get from => throw _privateConstructorUsedError;
   String? get to => throw _privateConstructorUsedError;
+  String? get template => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -233,7 +234,7 @@ abstract class $ListOrderByProductDtoCopyWith<$Res> {
           $Res Function(ListOrderByProductDto) then) =
       _$ListOrderByProductDtoCopyWithImpl<$Res, ListOrderByProductDto>;
   @useResult
-  $Res call({String? cursor, String? from, String? to});
+  $Res call({String? cursor, String? from, String? to, String? template});
 }
 
 /// @nodoc
@@ -253,6 +254,7 @@ class _$ListOrderByProductDtoCopyWithImpl<$Res,
     Object? cursor = freezed,
     Object? from = freezed,
     Object? to = freezed,
+    Object? template = freezed,
   }) {
     return _then(_value.copyWith(
       cursor: freezed == cursor
@@ -267,6 +269,10 @@ class _$ListOrderByProductDtoCopyWithImpl<$Res,
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
               as String?,
+      template: freezed == template
+          ? _value.template
+          : template // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -280,7 +286,7 @@ abstract class _$$ListOrderByProductDtoImplCopyWith<$Res>
       __$$ListOrderByProductDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? cursor, String? from, String? to});
+  $Res call({String? cursor, String? from, String? to, String? template});
 }
 
 /// @nodoc
@@ -298,6 +304,7 @@ class __$$ListOrderByProductDtoImplCopyWithImpl<$Res>
     Object? cursor = freezed,
     Object? from = freezed,
     Object? to = freezed,
+    Object? template = freezed,
   }) {
     return _then(_$ListOrderByProductDtoImpl(
       cursor: freezed == cursor
@@ -312,6 +319,10 @@ class __$$ListOrderByProductDtoImplCopyWithImpl<$Res>
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
               as String?,
+      template: freezed == template
+          ? _value.template
+          : template // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -319,7 +330,8 @@ class __$$ListOrderByProductDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ListOrderByProductDtoImpl implements _ListOrderByProductDto {
-  const _$ListOrderByProductDtoImpl({this.cursor, this.from, this.to});
+  const _$ListOrderByProductDtoImpl(
+      {this.cursor, this.from, this.to, this.template});
 
   factory _$ListOrderByProductDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ListOrderByProductDtoImplFromJson(json);
@@ -330,10 +342,12 @@ class _$ListOrderByProductDtoImpl implements _ListOrderByProductDto {
   final String? from;
   @override
   final String? to;
+  @override
+  final String? template;
 
   @override
   String toString() {
-    return 'ListOrderByProductDto(cursor: $cursor, from: $from, to: $to)';
+    return 'ListOrderByProductDto(cursor: $cursor, from: $from, to: $to, template: $template)';
   }
 
   @override
@@ -343,12 +357,14 @@ class _$ListOrderByProductDtoImpl implements _ListOrderByProductDto {
             other is _$ListOrderByProductDtoImpl &&
             (identical(other.cursor, cursor) || other.cursor == cursor) &&
             (identical(other.from, from) || other.from == from) &&
-            (identical(other.to, to) || other.to == to));
+            (identical(other.to, to) || other.to == to) &&
+            (identical(other.template, template) ||
+                other.template == template));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, cursor, from, to);
+  int get hashCode => Object.hash(runtimeType, cursor, from, to, template);
 
   @JsonKey(ignore: true)
   @override
@@ -369,7 +385,8 @@ abstract class _ListOrderByProductDto implements ListOrderByProductDto {
   const factory _ListOrderByProductDto(
       {final String? cursor,
       final String? from,
-      final String? to}) = _$ListOrderByProductDtoImpl;
+      final String? to,
+      final String? template}) = _$ListOrderByProductDtoImpl;
 
   factory _ListOrderByProductDto.fromJson(Map<String, dynamic> json) =
       _$ListOrderByProductDtoImpl.fromJson;
@@ -380,6 +397,8 @@ abstract class _ListOrderByProductDto implements ListOrderByProductDto {
   String? get from;
   @override
   String? get to;
+  @override
+  String? get template;
   @override
   @JsonKey(ignore: true)
   _$$ListOrderByProductDtoImplCopyWith<_$ListOrderByProductDtoImpl>
