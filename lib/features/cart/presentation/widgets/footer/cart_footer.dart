@@ -52,6 +52,7 @@ class CartFooter extends StatelessWidget {
                 onPressed: cartState is CartDetailActionInProgress
                     ? null
                     : () {
+                        // TODO: handle int string decimal
                         if (cartState is CartDetailLoadSuccess) {
                           onCompleted(
                               int.parse(cartState.previewOrderPrice.total));
