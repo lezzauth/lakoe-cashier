@@ -188,17 +188,6 @@ class _OrderDetailState extends State<OrderDetail> {
                 OrderDetailLoadSuccess(:final order) => Scaffold(
                     appBar: CustomAppbar(
                       title: "Order #${order.no}",
-                      actions: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const UiIcons(
-                            TIcons.bill,
-                            color: TColors.neutralDarkDark,
-                            height: 24,
-                            width: 24,
-                          ),
-                        )
-                      ],
                     ),
                     body: Scrollbar(
                       child: RefreshIndicator(

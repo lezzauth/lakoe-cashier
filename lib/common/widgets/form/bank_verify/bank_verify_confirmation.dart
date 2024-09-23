@@ -40,9 +40,9 @@ class _BankVerifyConfirmationState extends State<BankVerifyConfirmation> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(top: 16, bottom: 8),
                 child: const TextHeading2(
-                  "Cek lagi informasi rekening bank kamu, ya!",
+                  "Cek lagi rekening bank kamu",
                 ),
               ),
               const TextBodyM(

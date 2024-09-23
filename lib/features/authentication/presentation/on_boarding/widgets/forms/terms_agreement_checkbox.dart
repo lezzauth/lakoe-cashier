@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:point_of_sales_cashier/common/widgets/form/custom_checkbox.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class TermsAgreementCheckbox extends StatelessWidget {
@@ -23,29 +24,10 @@ class TermsAgreementCheckbox extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
-          height: 20.0,
-          width: 20.0,
-          child: Transform.scale(
-            scale: 1.2,
-            child: Checkbox(
-              value: value,
-              onChanged: onChanged,
-              isError: isError,
-              side: WidgetStateBorderSide.resolveWith(
-                (states) {
-                  if (states.contains(WidgetState.error)) {
-                    return const BorderSide(
-                      color: TColors.error,
-                      width: 1.5,
-                      strokeAlign: 1,
-                    );
-                  }
-                  return null;
-                },
-              ),
-            ),
-          ),
+        CustomCheckbox(
+          value: value,
+          isError: isError,
+          onChanged: onChanged,
         ),
         const SizedBox(width: 12),
         Flexible(

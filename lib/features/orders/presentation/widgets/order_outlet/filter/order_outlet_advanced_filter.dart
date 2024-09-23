@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_outlet/filter/sort_radio_tile.dart';
@@ -40,8 +38,10 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
         Row(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              margin: const EdgeInsets.only(bottom: 16),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 16,
+              ),
               child: const TextHeading2("Filter"),
             ),
           ],

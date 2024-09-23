@@ -74,7 +74,7 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
             child: TextHeading2("Masukan saldo akhir kasir"),
           ),
           Padding(

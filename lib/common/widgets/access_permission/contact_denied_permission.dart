@@ -16,7 +16,7 @@ class ContactDeniedPermission extends StatelessWidget {
       onRequest: () {
         openAppSettings();
       },
-      requestTitle: "Ke Pengaturan Aplikasi",
+      actionTitle: "Ke Pengaturan Aplikasi",
     );
   }
 }

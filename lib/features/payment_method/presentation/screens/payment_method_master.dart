@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/changes_confirmation.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/features/payment_method/presentation/widgets/section/section_card.dart';
 import 'package:point_of_sales_cashier/features/payment_method/presentation/widgets/section/section_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -60,13 +58,21 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
   void _showPopup(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      showDragHandle: false,
       isDismissible: false,
       useSafeArea: true,
       enableDrag: false,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
-        return const PopupContent();
+        return ChangesConfirmation(
+          messageChanges: 'pengaturan metode pembayaran',
+          discardAction: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          saveAction: () {
+            Navigator.pop(context);
+          },
+        );
       },
     );
   }
@@ -138,94 +144,4 @@ class _PaymentItem {
     this.isActive = false,
     this.lastItem = false,
   });
-}
-
-class PopupContent extends StatefulWidget {
-  const PopupContent({super.key});
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _PopupContentState createState() => _PopupContentState();
-}
-
-class _PopupContentState extends State<PopupContent> {
-  @override
-  void initState() {
-    super.initState();
-
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.grey[600],
-      systemNavigationBarDividerColor: Colors.transparent,
-    ));
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      systemNavigationBarColor: TColors.neutralLightLightest,
-    ));
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: MediaQuery.of(context).viewInsets,
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20),
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const TextHeading2(
-              'Ada yang berubah...',
-            ),
-            const SizedBox(height: 8),
-            const TextBodyM(
-              'Kamu telah melakukan perubahan pengaturan metode pembayaran. Mau disimpan atau diabaikan?',
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      },
-                      child: const TextActionL(
-                        "Abaikan",
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const TextActionL(
-                        "Simpan",
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
