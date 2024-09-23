@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
@@ -15,6 +16,7 @@ import 'package:point_of_sales_cashier/features/charges/application/cubit/charge
 import 'package:point_of_sales_cashier/features/charges/data/models.dart';
 import 'package:point_of_sales_cashier/features/charges/presentation/widgets/form/field/other_charge_field.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class ChargeForm extends StatefulWidget {
   const ChargeForm({super.key});
@@ -30,6 +32,7 @@ class _ChargeFormState extends State<ChargeForm> {
   final List<OtherChargeField> charges = [];
 
   bool _isFormValid = false;
+  bool _isServiceChargeActive = false;
 
   Future<void> _onSubmit() async {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
@@ -82,12 +85,14 @@ class _ChargeFormState extends State<ChargeForm> {
         removedChargeIds.add(serviceCharge.id);
       }
     } else {
-      newCharges.add(ChargeField(
-        id: "serviceCharge",
-        name: "Service Charge",
-        value: value["value"],
-        unit: "percentage",
-      ));
+      if (value["isServiceChargeActive"] == true) {
+        newCharges.add(ChargeField(
+          id: "serviceCharge",
+          name: "Service Charge",
+          value: value["value"],
+          unit: "percentage",
+        ));
+      }
     }
 
     AuthReady authState = context.read<AuthCubit>().state as AuthReady;
@@ -152,6 +157,10 @@ class _ChargeFormState extends State<ChargeForm> {
         onChanged: () {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
             _isFormValid = _formKey.currentState?.isValid ?? false;
+            _isServiceChargeActive =
+                _formKey.currentState?.instantValue["isServiceChargeActive"] ??
+                    false;
+
             setState(() {});
           });
         },
@@ -244,6 +253,22 @@ class _ChargeFormState extends State<ChargeForm> {
                               FilteringTextInputFormatter.allow(
                                   RegExp(r'^\d+\.?\d{0,2}|^\d+\,?\d{0,2}')),
                             ],
+                            validator: (value) {
+                              bool isServiceChargeActive = _formKey
+                                      .currentState
+                                      ?.fields["isServiceChargeActive"]
+                                      ?.value ??
+                                  false;
+
+                              if (!isServiceChargeActive) return null;
+
+                              return FormBuilderValidators.compose([
+                                FormBuilderValidators.required(
+                                  errorText: ErrorTextStrings.required(),
+                                ),
+                              ])(value);
+                            },
+                            enabled: _isServiceChargeActive,
                           )
                         ],
                       ),

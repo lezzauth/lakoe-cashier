@@ -21,7 +21,7 @@ CreateTaxDto _$CreateTaxDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CreateTaxDto {
   String get name => throw _privateConstructorUsedError;
-  int get value => throw _privateConstructorUsedError;
+  double get value => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $CreateTaxDtoCopyWith<$Res> {
           CreateTaxDto value, $Res Function(CreateTaxDto) then) =
       _$CreateTaxDtoCopyWithImpl<$Res, CreateTaxDto>;
   @useResult
-  $Res call({String name, int value});
+  $Res call({String name, double value});
 }
 
 /// @nodoc
@@ -62,7 +62,7 @@ class _$CreateTaxDtoCopyWithImpl<$Res, $Val extends CreateTaxDto>
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
     ) as $Val);
   }
 }
@@ -75,7 +75,7 @@ abstract class _$$CreateTaxDtoImplCopyWith<$Res>
       __$$CreateTaxDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, int value});
+  $Res call({String name, double value});
 }
 
 /// @nodoc
@@ -100,7 +100,7 @@ class __$$CreateTaxDtoImplCopyWithImpl<$Res>
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
     ));
   }
 }
@@ -116,7 +116,7 @@ class _$CreateTaxDtoImpl implements _CreateTaxDto {
   @override
   final String name;
   @override
-  final int value;
+  final double value;
 
   @override
   String toString() {
@@ -153,7 +153,7 @@ class _$CreateTaxDtoImpl implements _CreateTaxDto {
 abstract class _CreateTaxDto implements CreateTaxDto {
   const factory _CreateTaxDto(
       {required final String name,
-      required final int value}) = _$CreateTaxDtoImpl;
+      required final double value}) = _$CreateTaxDtoImpl;
 
   factory _CreateTaxDto.fromJson(Map<String, dynamic> json) =
       _$CreateTaxDtoImpl.fromJson;
@@ -161,7 +161,7 @@ abstract class _CreateTaxDto implements CreateTaxDto {
   @override
   String get name;
   @override
-  int get value;
+  double get value;
   @override
   @JsonKey(ignore: true)
   _$$CreateTaxDtoImplCopyWith<_$CreateTaxDtoImpl> get copyWith =>
@@ -175,7 +175,7 @@ UpdateTaxDto _$UpdateTaxDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UpdateTaxDto {
   String? get name => throw _privateConstructorUsedError;
-  int? get value => throw _privateConstructorUsedError;
+  double? get value => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -189,7 +189,7 @@ abstract class $UpdateTaxDtoCopyWith<$Res> {
           UpdateTaxDto value, $Res Function(UpdateTaxDto) then) =
       _$UpdateTaxDtoCopyWithImpl<$Res, UpdateTaxDto>;
   @useResult
-  $Res call({String? name, int? value});
+  $Res call({String? name, double? value});
 }
 
 /// @nodoc
@@ -216,7 +216,7 @@ class _$UpdateTaxDtoCopyWithImpl<$Res, $Val extends UpdateTaxDto>
       value: freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
     ) as $Val);
   }
 }
@@ -229,7 +229,7 @@ abstract class _$$UpdateTaxDtoImplCopyWith<$Res>
       __$$UpdateTaxDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? name, int? value});
+  $Res call({String? name, double? value});
 }
 
 /// @nodoc
@@ -254,7 +254,7 @@ class __$$UpdateTaxDtoImplCopyWithImpl<$Res>
       value: freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
     ));
   }
 }
@@ -270,7 +270,7 @@ class _$UpdateTaxDtoImpl implements _UpdateTaxDto {
   @override
   final String? name;
   @override
-  final int? value;
+  final double? value;
 
   @override
   String toString() {
@@ -305,7 +305,7 @@ class _$UpdateTaxDtoImpl implements _UpdateTaxDto {
 }
 
 abstract class _UpdateTaxDto implements UpdateTaxDto {
-  const factory _UpdateTaxDto({final String? name, final int? value}) =
+  const factory _UpdateTaxDto({final String? name, final double? value}) =
       _$UpdateTaxDtoImpl;
 
   factory _UpdateTaxDto.fromJson(Map<String, dynamic> json) =
@@ -314,7 +314,7 @@ abstract class _UpdateTaxDto implements UpdateTaxDto {
   @override
   String? get name;
   @override
-  int? get value;
+  double? get value;
   @override
   @JsonKey(ignore: true)
   _$$UpdateTaxDtoImplCopyWith<_$UpdateTaxDtoImpl> get copyWith =>

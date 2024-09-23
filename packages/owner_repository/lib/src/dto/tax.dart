@@ -7,7 +7,7 @@ part 'tax.freezed.dart';
 class CreateTaxDto with _$CreateTaxDto {
   const factory CreateTaxDto({
     required String name,
-    required int value,
+    required double value,
   }) = _CreateTaxDto;
 
   factory CreateTaxDto.fromJson(Map<String, Object?> json) =>
@@ -18,7 +18,7 @@ class CreateTaxDto with _$CreateTaxDto {
 class UpdateTaxDto with _$UpdateTaxDto {
   const factory UpdateTaxDto({
     String? name,
-    int? value,
+    double? value,
   }) = _UpdateTaxDto;
 
   factory UpdateTaxDto.fromJson(Map<String, Object?> json) =>

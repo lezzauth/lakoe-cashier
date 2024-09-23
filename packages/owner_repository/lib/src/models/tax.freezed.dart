@@ -22,7 +22,7 @@ TaxModel _$TaxModelFromJson(Map<String, dynamic> json) {
 mixin _$TaxModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  int get value => throw _privateConstructorUsedError;
+  String get value => throw _privateConstructorUsedError;
   String get ownerId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ abstract class $TaxModelCopyWith<$Res> {
   factory $TaxModelCopyWith(TaxModel value, $Res Function(TaxModel) then) =
       _$TaxModelCopyWithImpl<$Res, TaxModel>;
   @useResult
-  $Res call({String id, String name, int value, String ownerId});
+  $Res call({String id, String name, String value, String ownerId});
 }
 
 /// @nodoc
@@ -69,7 +69,7 @@ class _$TaxModelCopyWithImpl<$Res, $Val extends TaxModel>
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       ownerId: null == ownerId
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
@@ -86,7 +86,7 @@ abstract class _$$TaxModelImplCopyWith<$Res>
       __$$TaxModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, int value, String ownerId});
+  $Res call({String id, String name, String value, String ownerId});
 }
 
 /// @nodoc
@@ -117,7 +117,7 @@ class __$$TaxModelImplCopyWithImpl<$Res>
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       ownerId: null == ownerId
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
@@ -143,7 +143,7 @@ class _$TaxModelImpl implements _TaxModel {
   @override
   final String name;
   @override
-  final int value;
+  final String value;
   @override
   final String ownerId;
 
@@ -185,7 +185,7 @@ abstract class _TaxModel implements TaxModel {
   const factory _TaxModel(
       {required final String id,
       required final String name,
-      required final int value,
+      required final String value,
       required final String ownerId}) = _$TaxModelImpl;
 
   factory _TaxModel.fromJson(Map<String, dynamic> json) =
@@ -196,7 +196,7 @@ abstract class _TaxModel implements TaxModel {
   @override
   String get name;
   @override
-  int get value;
+  String get value;
   @override
   String get ownerId;
   @override

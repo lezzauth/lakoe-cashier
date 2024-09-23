@@ -9,7 +9,7 @@ part of 'tax.dart';
 _$CreateTaxDtoImpl _$$CreateTaxDtoImplFromJson(Map<String, dynamic> json) =>
     _$CreateTaxDtoImpl(
       name: json['name'] as String,
-      value: (json['value'] as num).toInt(),
+      value: (json['value'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$$CreateTaxDtoImplToJson(_$CreateTaxDtoImpl instance) =>
@@ -21,7 +21,7 @@ Map<String, dynamic> _$$CreateTaxDtoImplToJson(_$CreateTaxDtoImpl instance) =>
 _$UpdateTaxDtoImpl _$$UpdateTaxDtoImplFromJson(Map<String, dynamic> json) =>
     _$UpdateTaxDtoImpl(
       name: json['name'] as String?,
-      value: (json['value'] as num?)?.toInt(),
+      value: (json['value'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$UpdateTaxDtoImplToJson(_$UpdateTaxDtoImpl instance) =>
