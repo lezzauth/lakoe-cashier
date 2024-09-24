@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/changes_confirmation.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/popup_confirmation.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/payment_method/presentation/widgets/section/section_card.dart';
@@ -64,8 +64,12 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
       enableDrag: false,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
-        return ChangesConfirmation(
-          messageChanges: 'pengaturan metode pembayaran',
+        return PopupConfirmation(
+          title: "Ada yang berubah...",
+          message:
+              'Kamu telah melakukan perubahan pengaturan metode pembayaran.\nMau disimpan atau diabaikan?',
+          labelButtonPrimary: "Simpan",
+          labelButtonSecondary: "Abaikan",
           discardAction: () {
             Navigator.pop(context);
             Navigator.pop(context);
