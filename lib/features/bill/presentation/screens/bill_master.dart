@@ -53,9 +53,9 @@ class _BillMasterState extends State<BillMaster> {
                 noTable: "T-12",
                 dateTime: "28/12/2024 - 20:18",
                 paymentMetod: 'Cash (Tunai)',
-                totalPrice: "Rp20.000",
+                totalPrice: "Rp21.400",
                 moneyReceived: "Rp50.000",
-                changeMoney: "Rp30.000",
+                changeMoney: "Rp28.600",
                 closeBill: "Close Bill: 28/12/2024 - 21:37",
                 greeting: "Terimakasih\nDitunggu kembali kedatangannya",
                 children: listBillPriceItem
