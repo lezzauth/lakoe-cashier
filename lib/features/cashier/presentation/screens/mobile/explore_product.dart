@@ -141,7 +141,11 @@ class _ExploreProductMobileState extends State<ExploreProductMobile> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: const CartCountFloatingAction(),
+      floatingActionButton: CartCountFloatingAction(
+        onPressed: () {
+          Navigator.pushNamed(context, "/cart");
+        },
+      ),
     );
   }
 }

@@ -146,3 +146,26 @@ class PreviewOrderPriceResponse with _$PreviewOrderPriceResponse {
   factory PreviewOrderPriceResponse.fromJson(Map<String, Object?> json) =>
       _$PreviewOrderPriceResponseFromJson(json);
 }
+
+@freezed
+class OrderModelWithoutInclude with _$OrderModelWithoutInclude {
+  const factory OrderModelWithoutInclude({
+    required String id,
+    required int no,
+    required String status,
+    required String price,
+    String? customerId,
+    required String paymentStatus,
+    required String customerType,
+    required String type,
+    required String source,
+    required String outletId,
+    String? tableId,
+    required String cashierId,
+    required String createdAt,
+    required String updatedAt,
+  }) = _OrderModelWithoutInclude;
+
+  factory OrderModelWithoutInclude.fromJson(Map<String, Object?> json) =>
+      _$OrderModelWithoutIncludeFromJson(json);
+}

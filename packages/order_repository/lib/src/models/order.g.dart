@@ -225,3 +225,41 @@ Map<String, dynamic> _$$PreviewOrderPriceResponseImplToJson(
       'charges': instance.charges,
       'orderItemTotal': instance.orderItemTotal,
     };
+
+_$OrderModelWithoutIncludeImpl _$$OrderModelWithoutIncludeImplFromJson(
+        Map<String, dynamic> json) =>
+    _$OrderModelWithoutIncludeImpl(
+      id: json['id'] as String,
+      no: (json['no'] as num).toInt(),
+      status: json['status'] as String,
+      price: json['price'] as String,
+      customerId: json['customerId'] as String?,
+      paymentStatus: json['paymentStatus'] as String,
+      customerType: json['customerType'] as String,
+      type: json['type'] as String,
+      source: json['source'] as String,
+      outletId: json['outletId'] as String,
+      tableId: json['tableId'] as String?,
+      cashierId: json['cashierId'] as String,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
+    );
+
+Map<String, dynamic> _$$OrderModelWithoutIncludeImplToJson(
+        _$OrderModelWithoutIncludeImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'no': instance.no,
+      'status': instance.status,
+      'price': instance.price,
+      'customerId': instance.customerId,
+      'paymentStatus': instance.paymentStatus,
+      'customerType': instance.customerType,
+      'type': instance.type,
+      'source': instance.source,
+      'outletId': instance.outletId,
+      'tableId': instance.tableId,
+      'cashierId': instance.cashierId,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+    };

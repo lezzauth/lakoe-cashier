@@ -23,7 +23,11 @@ class CartCubit extends Cubit<CartState> {
     emit(CartState(
         carts: updatedCarts.map((cart) {
       if (cart.product.id != product.id) return cart;
-      return CartModel(quantity: cart.quantity + 1, product: cart.product);
+      return CartModel(
+        quantity: cart.quantity + 1,
+        product: cart.product,
+        notes: cart.notes,
+      );
     }).toList()));
   }
 
@@ -46,6 +50,7 @@ class CartCubit extends Cubit<CartState> {
           return CartModel(
             quantity: cart.quantity - 1,
             product: cart.product,
+            notes: cart.notes,
           );
         },
       ).toList()));
@@ -74,6 +79,7 @@ class CartCubit extends Cubit<CartState> {
           return CartModel(
             quantity: quantity,
             product: cart.product,
+            notes: cart.notes,
           );
         },
       ).toList()));
@@ -107,6 +113,10 @@ class CartCubit extends Cubit<CartState> {
         );
       },
     ).toList()));
+  }
+
+  void setCarts(List<CartModel> carts) {
+    emit(CartState(carts: carts));
   }
 
   void reset() {

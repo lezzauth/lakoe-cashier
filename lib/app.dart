@@ -51,6 +51,9 @@ import 'package:point_of_sales_cashier/features/manage_account/presentation/scre
 import 'package:point_of_sales_cashier/features/notifications/presentation/screens/notification_master.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/orders/data/arguments/order_add_item_argument.dart';
+import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
+import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_add_item.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_detail.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_master.dart';
 import 'package:point_of_sales_cashier/features/payment_method/presentation/screens/payment_method_master.dart';
@@ -198,7 +201,14 @@ class App extends StatelessWidget {
 
             // orders
             "/orders": (context) => const OrderMasterScreen(),
-            "/orders/detail": (context) => const OrderDetailScreen(),
+            "/orders/detail": (context) => OrderDetailScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as OrderDetailArgument,
+                ),
+            "/orders/add-item": (context) => OrderAddItemScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as OrderAddItemArgument,
+                ),
 
             // payments
             "/payments/qris": (context) => const QrisPaymentScreen(),

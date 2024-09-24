@@ -18,6 +18,7 @@ import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card
 
 import 'package:point_of_sales_cashier/features/orders/common/widgets/summary/order_summary.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/solid_order_type_tag.dart';
+import 'package:point_of_sales_cashier/features/orders/data/arguments/order_add_item_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/data/models.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/tags/solid_order_online_status_tag.dart';
@@ -31,16 +32,27 @@ import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class OrderDetailScreen extends StatelessWidget {
-  const OrderDetailScreen({super.key});
+  const OrderDetailScreen({
+    super.key,
+    required this.arguments,
+  });
+
+  final OrderDetailArgument arguments;
 
   @override
   Widget build(BuildContext context) {
-    return const OrderDetail();
+    return OrderDetail(
+      arguments: arguments,
+    );
   }
 }
 
 class OrderDetail extends StatefulWidget {
-  const OrderDetail({super.key});
+  const OrderDetail({
+    super.key,
+    required this.arguments,
+  });
+  final OrderDetailArgument arguments;
 
   @override
   State<OrderDetail> createState() => _OrderDetailState();
@@ -50,9 +62,7 @@ class _OrderDetailState extends State<OrderDetail> {
   Future<void> _onRefresh() async {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
-        final arguments =
-            ModalRoute.of(context)!.settings.arguments as OrderDetailArgument;
-        await context.read<OrderDetailCubit>().findOne(arguments.id);
+        await context.read<OrderDetailCubit>().findOne(widget.arguments.id);
       },
     );
   }
@@ -246,9 +256,14 @@ class _OrderDetailState extends State<OrderDetail> {
                                           switch (order.source) {
                                             "QRONLINE" =>
                                               const ContactWhatsapp(),
-                                            _ => CustomerAndTableInformation(
-                                                customer: order.customer,
-                                                table: order.table,
+                                            _ => Container(
+                                                margin: const EdgeInsets.only(
+                                                    bottom: 16),
+                                                child:
+                                                    CustomerAndTableInformation(
+                                                  customer: order.customer,
+                                                  table: order.table,
+                                                ),
                                               ),
                                           },
                                           Container(
@@ -334,7 +349,16 @@ class _OrderDetailState extends State<OrderDetail> {
                                 child: OrderOutletAction(
                                   isPaid: order.paymentStatus == "PAID",
                                   type: order.type,
-                                  onAddMoreItem: () {},
+                                  onAddMoreItem: () async {
+                                    await Navigator.pushNamed(
+                                      context,
+                                      "/orders/add-item",
+                                      arguments:
+                                          OrderAddItemArgument(order: order),
+                                    );
+
+                                    _onRefresh();
+                                  },
                                   onComplete: () {
                                     _onCompleteOrder(
                                       amount: double.parse(order.price),
@@ -773,40 +797,37 @@ class CustomerAndTableInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            flex: 1,
-            child: CardOrder(
-              title: "Pelanggan",
-              subTitle: customer == null ? "Umum" : customer!.name,
-              icon: const UiIcons(
-                TIcons.profile,
-                height: 20,
-                width: 20,
-                color: TColors.primary,
-              ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          flex: 1,
+          child: CardOrder(
+            title: "Pelanggan",
+            subTitle: customer == null ? "Umum" : customer!.name,
+            icon: const UiIcons(
+              TIcons.profile,
+              height: 20,
+              width: 20,
+              color: TColors.primary,
             ),
           ),
-          const SizedBox(width: 12.0),
-          Flexible(
-            flex: 1,
-            child: CardOrder(
-              title: "Meja",
-              subTitle: table == null ? "Bebas" : table!.no,
-              icon: const UiIcons(
-                TIcons.tableRestaurant,
-                height: 20,
-                width: 20,
-                color: TColors.primary,
-              ),
+        ),
+        const SizedBox(width: 12.0),
+        Flexible(
+          flex: 1,
+          child: CardOrder(
+            title: "Meja",
+            subTitle: table == null ? "Bebas" : table!.no,
+            icon: const UiIcons(
+              TIcons.tableRestaurant,
+              height: 20,
+              width: 20,
+              color: TColors.primary,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
