@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_small.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/bill_view.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_price.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 class BillMasterScreen extends StatelessWidget {
   const BillMasterScreen({super.key});
@@ -28,8 +27,8 @@ class BillMaster extends StatefulWidget {
 class _BillMasterState extends State<BillMaster> {
   List<_BillPriceItem> listBillPriceItem = [
     _BillPriceItem(label: "Subtotal", price: "Rp20.000"),
-    _BillPriceItem(label: "Pajak", price: "5%"),
-    _BillPriceItem(label: "Service Charge", price: "2%"),
+    _BillPriceItem(label: "Pajak (5%)", price: "Rp1.000"),
+    _BillPriceItem(label: "Service Charge (2%)", price: "Rp400"),
   ];
 
   @override
@@ -42,37 +41,53 @@ class _BillMasterState extends State<BillMaster> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          BillView(
-            outletName: "Warmindo Cak Tho",
-            outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
-            orderNumber: "2563",
-            cashierName: "Dimas",
-            noBill: "GS731",
-            orderType: "DineIn",
-            noTable: "T-12",
-            dateTime: "28/12/2024 - 20:18",
-            paymentMetod: 'Cash (Tunai)',
-            totalPrice: "Rp20.000",
-            moneyReceived: "Rp50.000",
-            changeMoney: "Rp30.000",
-            closeBill: "Close Bill: 28/12/2024 - 21:37",
-            greeting: "Terimakasih\nDitunggu kembali kedatangannya",
-            children: listBillPriceItem
-                .map(
-                  (item) => BillListPrice(
-                    label: item.label,
-                    price: item.price,
-                  ),
-                )
-                .toList(),
+          Column(
+            children: [
+              BillView(
+                outletName: "Warmindo Cak Tho",
+                outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
+                orderNumber: "2563",
+                cashierName: "Dimas",
+                noBill: "GS731",
+                orderType: "DineIn",
+                noTable: "T-12",
+                dateTime: "28/12/2024 - 20:18",
+                paymentMetod: 'Cash (Tunai)',
+                totalPrice: "Rp20.000",
+                moneyReceived: "Rp50.000",
+                changeMoney: "Rp30.000",
+                closeBill: "Close Bill: 28/12/2024 - 21:37",
+                greeting: "Terimakasih\nDitunggu kembali kedatangannya",
+                children: listBillPriceItem
+                    .map(
+                      (item) => BillListPrice(
+                        label: item.label,
+                        price: item.price,
+                      ),
+                    )
+                    .toList(),
+              ),
+              const TextBodyS(
+                "Ini hanya contoh tampilan struk",
+                color: TColors.neutralDarkLightest,
+                fontStyle: FontStyle.italic,
+              ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: BillAction(
-              onTestPrint: () {},
-              onChangeFooter: () {
-                Navigator.pushNamed(context, "/bill/edit");
-              },
+            child: SizedBox(
+              height: 48,
+              width: double.infinity,
+              child: OutlinedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/bill/edit");
+                },
+                child: const TextActionL(
+                  "Ubah Catatan Kaki",
+                  color: TColors.primary,
+                ),
+              ),
             ),
           ),
         ],
@@ -195,63 +210,6 @@ class BillGreeting extends StatelessWidget {
     return TextSmall(
       greeting,
       textAlign: TextAlign.center,
-    );
-  }
-}
-
-class BillAction extends StatelessWidget {
-  final Function() onTestPrint;
-  final Function() onChangeFooter;
-
-  const BillAction({
-    super.key,
-    required this.onChangeFooter,
-    required this.onTestPrint,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: onTestPrint,
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 8,
-                children: [
-                  UiIcons(
-                    TIcons.printer,
-                    height: 20,
-                    width: 20,
-                    color: TColors.neutralLightLightest,
-                    onTap: () {},
-                  ),
-                  const TextActionL(
-                    "Test Print",
-                    color: TColors.neutralLightLightest,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: SizedBox(
-            height: 48,
-            child: OutlinedButton(
-              onPressed: onChangeFooter,
-              child: const TextActionL(
-                "Ubah Catatan",
-                color: TColors.primary,
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
