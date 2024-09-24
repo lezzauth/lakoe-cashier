@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cashier_repository/src/dto/cashier.dart';
 import 'package:cashier_repository/src/models/cashier.dart';
 import 'package:dio/dio.dart';
@@ -109,6 +111,7 @@ class CashierRepositoryImpl implements CashierRepository {
       data: dto.toJson(),
       options: options,
     );
+    log('saveOrder: ${response.data} | ${dto.toJson()}');
     return SaveOrderResponse.fromJson(response.data);
   }
 

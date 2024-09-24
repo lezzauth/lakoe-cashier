@@ -2474,3 +2474,431 @@ abstract class _PreviewOrderPriceResponse implements PreviewOrderPriceResponse {
   _$$PreviewOrderPriceResponseImplCopyWith<_$PreviewOrderPriceResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+OrderModelWithoutInclude _$OrderModelWithoutIncludeFromJson(
+    Map<String, dynamic> json) {
+  return _OrderModelWithoutInclude.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OrderModelWithoutInclude {
+  String get id => throw _privateConstructorUsedError;
+  int get no => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
+  String? get customerId => throw _privateConstructorUsedError;
+  String get paymentStatus => throw _privateConstructorUsedError;
+  String get customerType => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
+  String get source => throw _privateConstructorUsedError;
+  String get outletId => throw _privateConstructorUsedError;
+  String? get tableId => throw _privateConstructorUsedError;
+  String get cashierId => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
+  String get updatedAt => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OrderModelWithoutIncludeCopyWith<OrderModelWithoutInclude> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OrderModelWithoutIncludeCopyWith<$Res> {
+  factory $OrderModelWithoutIncludeCopyWith(OrderModelWithoutInclude value,
+          $Res Function(OrderModelWithoutInclude) then) =
+      _$OrderModelWithoutIncludeCopyWithImpl<$Res, OrderModelWithoutInclude>;
+  @useResult
+  $Res call(
+      {String id,
+      int no,
+      String status,
+      String price,
+      String? customerId,
+      String paymentStatus,
+      String customerType,
+      String type,
+      String source,
+      String outletId,
+      String? tableId,
+      String cashierId,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class _$OrderModelWithoutIncludeCopyWithImpl<$Res,
+        $Val extends OrderModelWithoutInclude>
+    implements $OrderModelWithoutIncludeCopyWith<$Res> {
+  _$OrderModelWithoutIncludeCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? no = null,
+    Object? status = null,
+    Object? price = null,
+    Object? customerId = freezed,
+    Object? paymentStatus = null,
+    Object? customerType = null,
+    Object? type = null,
+    Object? source = null,
+    Object? outletId = null,
+    Object? tableId = freezed,
+    Object? cashierId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as int,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      customerId: freezed == customerId
+          ? _value.customerId
+          : customerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String,
+      customerType: null == customerType
+          ? _value.customerType
+          : customerType // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      tableId: freezed == tableId
+          ? _value.tableId
+          : tableId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cashierId: null == cashierId
+          ? _value.cashierId
+          : cashierId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$OrderModelWithoutIncludeImplCopyWith<$Res>
+    implements $OrderModelWithoutIncludeCopyWith<$Res> {
+  factory _$$OrderModelWithoutIncludeImplCopyWith(
+          _$OrderModelWithoutIncludeImpl value,
+          $Res Function(_$OrderModelWithoutIncludeImpl) then) =
+      __$$OrderModelWithoutIncludeImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      int no,
+      String status,
+      String price,
+      String? customerId,
+      String paymentStatus,
+      String customerType,
+      String type,
+      String source,
+      String outletId,
+      String? tableId,
+      String cashierId,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class __$$OrderModelWithoutIncludeImplCopyWithImpl<$Res>
+    extends _$OrderModelWithoutIncludeCopyWithImpl<$Res,
+        _$OrderModelWithoutIncludeImpl>
+    implements _$$OrderModelWithoutIncludeImplCopyWith<$Res> {
+  __$$OrderModelWithoutIncludeImplCopyWithImpl(
+      _$OrderModelWithoutIncludeImpl _value,
+      $Res Function(_$OrderModelWithoutIncludeImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? no = null,
+    Object? status = null,
+    Object? price = null,
+    Object? customerId = freezed,
+    Object? paymentStatus = null,
+    Object? customerType = null,
+    Object? type = null,
+    Object? source = null,
+    Object? outletId = null,
+    Object? tableId = freezed,
+    Object? cashierId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_$OrderModelWithoutIncludeImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as int,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      customerId: freezed == customerId
+          ? _value.customerId
+          : customerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String,
+      customerType: null == customerType
+          ? _value.customerType
+          : customerType // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      tableId: freezed == tableId
+          ? _value.tableId
+          : tableId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cashierId: null == cashierId
+          ? _value.cashierId
+          : cashierId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OrderModelWithoutIncludeImpl implements _OrderModelWithoutInclude {
+  const _$OrderModelWithoutIncludeImpl(
+      {required this.id,
+      required this.no,
+      required this.status,
+      required this.price,
+      this.customerId,
+      required this.paymentStatus,
+      required this.customerType,
+      required this.type,
+      required this.source,
+      required this.outletId,
+      this.tableId,
+      required this.cashierId,
+      required this.createdAt,
+      required this.updatedAt});
+
+  factory _$OrderModelWithoutIncludeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OrderModelWithoutIncludeImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final int no;
+  @override
+  final String status;
+  @override
+  final String price;
+  @override
+  final String? customerId;
+  @override
+  final String paymentStatus;
+  @override
+  final String customerType;
+  @override
+  final String type;
+  @override
+  final String source;
+  @override
+  final String outletId;
+  @override
+  final String? tableId;
+  @override
+  final String cashierId;
+  @override
+  final String createdAt;
+  @override
+  final String updatedAt;
+
+  @override
+  String toString() {
+    return 'OrderModelWithoutInclude(id: $id, no: $no, status: $status, price: $price, customerId: $customerId, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, outletId: $outletId, tableId: $tableId, cashierId: $cashierId, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OrderModelWithoutIncludeImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.no, no) || other.no == no) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.customerId, customerId) ||
+                other.customerId == customerId) &&
+            (identical(other.paymentStatus, paymentStatus) ||
+                other.paymentStatus == paymentStatus) &&
+            (identical(other.customerType, customerType) ||
+                other.customerType == customerType) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.source, source) || other.source == source) &&
+            (identical(other.outletId, outletId) ||
+                other.outletId == outletId) &&
+            (identical(other.tableId, tableId) || other.tableId == tableId) &&
+            (identical(other.cashierId, cashierId) ||
+                other.cashierId == cashierId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      no,
+      status,
+      price,
+      customerId,
+      paymentStatus,
+      customerType,
+      type,
+      source,
+      outletId,
+      tableId,
+      cashierId,
+      createdAt,
+      updatedAt);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OrderModelWithoutIncludeImplCopyWith<_$OrderModelWithoutIncludeImpl>
+      get copyWith => __$$OrderModelWithoutIncludeImplCopyWithImpl<
+          _$OrderModelWithoutIncludeImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OrderModelWithoutIncludeImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OrderModelWithoutInclude implements OrderModelWithoutInclude {
+  const factory _OrderModelWithoutInclude(
+      {required final String id,
+      required final int no,
+      required final String status,
+      required final String price,
+      final String? customerId,
+      required final String paymentStatus,
+      required final String customerType,
+      required final String type,
+      required final String source,
+      required final String outletId,
+      final String? tableId,
+      required final String cashierId,
+      required final String createdAt,
+      required final String updatedAt}) = _$OrderModelWithoutIncludeImpl;
+
+  factory _OrderModelWithoutInclude.fromJson(Map<String, dynamic> json) =
+      _$OrderModelWithoutIncludeImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  int get no;
+  @override
+  String get status;
+  @override
+  String get price;
+  @override
+  String? get customerId;
+  @override
+  String get paymentStatus;
+  @override
+  String get customerType;
+  @override
+  String get type;
+  @override
+  String get source;
+  @override
+  String get outletId;
+  @override
+  String? get tableId;
+  @override
+  String get cashierId;
+  @override
+  String get createdAt;
+  @override
+  String get updatedAt;
+  @override
+  @JsonKey(ignore: true)
+  _$$OrderModelWithoutIncludeImplCopyWith<_$OrderModelWithoutIncludeImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
