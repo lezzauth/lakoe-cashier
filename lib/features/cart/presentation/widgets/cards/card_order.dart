@@ -31,6 +31,7 @@ class CardOrder extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
             border: Border.all(color: TColors.neutralLightMedium, width: 1),
+            color: TColors.neutralLightLightest,
           ),
           padding: const EdgeInsets.all(8.0),
           child: Row(

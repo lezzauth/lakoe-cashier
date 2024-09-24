@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:order_repository/src/dto/order.dart';
@@ -7,6 +10,7 @@ import 'package:token_provider/token_provider.dart';
 abstract class OrderRepository {
   Future<OrderModel> findOne(String id);
   Future<PreviewOrderPriceResponse> previewOrderPrice(PreviewOrderPriceDto dto);
+  Future<OrderModelWithoutInclude> addItems(String id, List<OrderItemDto> dto);
 }
 
 class OrderRepositoryImpl implements OrderRepository {
@@ -44,7 +48,8 @@ class OrderRepositoryImpl implements OrderRepository {
 
   @override
   Future<PreviewOrderPriceResponse> previewOrderPrice(
-      PreviewOrderPriceDto dto) async {
+    PreviewOrderPriceDto dto,
+  ) async {
     final Options options = await _getOptions();
 
     final response = await _dio.post(
@@ -53,5 +58,23 @@ class OrderRepositoryImpl implements OrderRepository {
       options: options,
     );
     return PreviewOrderPriceResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<OrderModelWithoutInclude> addItems(
+    String id,
+    List<OrderItemDto> dto,
+  ) async {
+    final Options options = await _getOptions();
+
+    final response = await _dio.post(
+      "$_baseURL/$id/items",
+      data: jsonEncode(dto.map((e) => e.toJson()).toList()),
+      options: options,
+    );
+
+    log('addItems: $response');
+
+    return OrderModelWithoutInclude.fromJson(response.data);
   }
 }

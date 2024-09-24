@@ -8,7 +8,9 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class CartCountFloatingAction extends StatelessWidget {
-  const CartCountFloatingAction({super.key});
+  const CartCountFloatingAction({super.key, required this.onPressed});
+
+  final void Function() onPressed;
 
   String _getTotalPrice(List<CartModel> carts) {
     return TFormatter.formatToRupiah(carts.fold(0,
@@ -27,9 +29,7 @@ class CartCountFloatingAction extends StatelessWidget {
               height: 52,
               width: double.maxFinite,
               child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/cart");
-                },
+                onPressed: onPressed,
                 elevation: 0,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),

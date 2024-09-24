@@ -101,7 +101,7 @@ class TransactionSummary extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "${totalTransactions.diff ?? 0}",
+                  "${totalTransactions.past ?? 0}",
                   style: GoogleFonts.inter(
                     color: TColors.infoMedium,
                     fontSize: TSizes.fontSizeHeading1,

@@ -26,10 +26,15 @@ class Counter extends StatelessWidget {
           width: 1,
         ),
       ),
+      clipBehavior: Clip.hardEdge,
       height: 36,
       child: Row(
         children: [
-          SizedBox(
+          Container(
+            decoration: BoxDecoration(
+              color: TColors.neutralLightLight,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
             width: 36,
             height: 36,
             child: (value <= 1)
@@ -82,7 +87,11 @@ class Counter extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          Container(
+            decoration: BoxDecoration(
+              color: TColors.neutralLightLight,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
             width: 36,
             height: 36,
             child: UiIcons(
