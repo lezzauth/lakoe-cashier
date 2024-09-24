@@ -98,86 +98,89 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
               ),
             ),
           ),
-          Flexible(
-            child: ListView(
-              children: [
-                // Bagian Perangkat Tersambung
-                if (connectedDevices.isNotEmpty) ...[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 20),
-                      margin: const EdgeInsets.only(bottom: 8),
-                      child: const TextHeading5(
-                        "TERSAMBUNG",
-                        color: TColors.neutralDarkLightest,
+          if (availableDevices.isNotEmpty || connectedDevices.isNotEmpty)
+            Flexible(
+              child: ListView(
+                children: [
+                  if (connectedDevices.isNotEmpty) ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Container(
+                        padding: const EdgeInsets.only(top: 20),
+                        margin: const EdgeInsets.only(bottom: 8),
+                        child: const TextHeading5(
+                          "TERSAMBUNG",
+                          color: TColors.neutralDarkLightest,
+                        ),
                       ),
                     ),
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: connectedDevices.length,
-                    itemBuilder: (context, index) {
-                      BluetoothDevice device = connectedDevices[index];
-                      return BluetoothDeviceTile(
-                        device: device,
-                        isConnected: true,
-                        onConnectPressed: () {},
-                      );
-                    },
-                  ),
-                ],
-                // Bagian Perangkat Tersedia
-                if (availableDevices.isNotEmpty) ...[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 20),
-                      margin: const EdgeInsets.only(bottom: 8),
-                      child: const TextHeading5(
-                        "PERANGKAT TERSEDIA",
-                        color: TColors.neutralDarkLightest,
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: connectedDevices.length,
+                      itemBuilder: (context, index) {
+                        BluetoothDevice device = connectedDevices[index];
+                        return BluetoothDeviceTile(
+                          device: device,
+                          isConnected: true,
+                          onConnectPressed: () {},
+                        );
+                      },
+                    ),
+                  ],
+                  if (availableDevices.isNotEmpty ||
+                      connectedDevices.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Container(
+                        padding: const EdgeInsets.only(top: 20),
+                        margin: const EdgeInsets.only(bottom: 8),
+                        child: const TextHeading5(
+                          "PERANGKAT TERSEDIA",
+                          color: TColors.neutralDarkLightest,
+                        ),
                       ),
                     ),
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: availableDevices.length,
-                    itemBuilder: (context, index) {
-                      BluetoothDevice device = availableDevices[index];
-                      return BluetoothDeviceTile(
-                        device: device,
-                        isConnected: false,
-                        onConnectPressed: () {},
-                      );
-                    },
-                  ),
+                  if (availableDevices.isNotEmpty) ...[
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: availableDevices.length,
+                      itemBuilder: (context, index) {
+                        BluetoothDevice device = availableDevices[index];
+                        return BluetoothDeviceTile(
+                          device: device,
+                          isConnected: false,
+                          onConnectPressed: () {},
+                        );
+                      },
+                    ),
+                  ],
+                  const SizedBox(height: 12),
+                  if (availableDevices.isNotEmpty ||
+                      connectedDevices.isNotEmpty)
+                    TextButton(
+                      onPressed: () {},
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          UiIcons(
+                            TIcons.refresh,
+                            width: 24,
+                            height: 24,
+                            color: TColors.primary,
+                          ),
+                          SizedBox(width: 8),
+                          TextActionL(
+                            "Refresh",
+                            color: TColors.primary,
+                          ),
+                        ],
+                      ),
+                    ),
                 ],
-                const SizedBox(height: 12),
-                TextButton(
-                  onPressed: () {},
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      UiIcons(
-                        TIcons.refresh,
-                        width: 24,
-                        height: 24,
-                        color: TColors.primary,
-                      ),
-                      SizedBox(width: 8),
-                      TextActionL(
-                        "Refresh",
-                        color: TColors.primary,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
           if (connectedDevices.isEmpty && availableDevices.isEmpty)
             Expanded(
               child: Padding(
