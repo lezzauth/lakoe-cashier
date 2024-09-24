@@ -34,6 +34,8 @@ class SelectPaymentMethod extends StatefulWidget {
 class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
   @override
   Widget build(BuildContext context) {
+    double amount = double.parse(widget.amount.toStringAsFixed(2));
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => PaymentCubit()),
@@ -76,12 +78,12 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
                   BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
                     builder: (context, state) => switch (state.paymentMethod) {
                       "CASH" => CashPaymentContent(
-                          amount: widget.amount,
+                          amount: amount,
                         ),
-                      "QR_CODE" => QrisPaymentContent(amount: widget.amount),
-                      "DEBIT" => DebitPaymentContent(amount: widget.amount),
+                      "QR_CODE" => QrisPaymentContent(amount: amount),
+                      "DEBIT" => DebitPaymentContent(amount: amount),
                       "BANK_TRANSFER" => BankTransferPaymentContent(
-                          amount: widget.amount,
+                          amount: amount,
                         ),
                       _ => const SizedBox(),
                     },

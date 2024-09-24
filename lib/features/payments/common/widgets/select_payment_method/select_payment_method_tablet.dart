@@ -16,10 +16,16 @@ class SelectPaymentMethodTablet extends StatefulWidget {
     super.key,
     required this.amount,
     required this.onPaymentCash,
+    required this.onPaymentBankTransfer,
+    required this.onPaymentDebitCredit,
+    required this.onPaymentQRCode,
   });
 
   final double amount;
   final ValueChanged<PaymentCash> onPaymentCash;
+  final ValueChanged<PaymentBankTransfer> onPaymentBankTransfer;
+  final ValueChanged<PaymentDebitCredit> onPaymentDebitCredit;
+  final ValueChanged<PaymentQRCode> onPaymentQRCode;
 
   @override
   State<SelectPaymentMethodTablet> createState() =>
@@ -29,6 +35,8 @@ class SelectPaymentMethodTablet extends StatefulWidget {
 class _SelectPaymentMethodTabletState extends State<SelectPaymentMethodTablet> {
   @override
   Widget build(BuildContext context) {
+    double amount = double.parse(widget.amount.toStringAsFixed(2));
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => PaymentCubit()),
@@ -40,6 +48,15 @@ class _SelectPaymentMethodTabletState extends State<SelectPaymentMethodTablet> {
             listener: (context, state) {
               if (state is PaymentCash) {
                 widget.onPaymentCash(state);
+              }
+              if (state is PaymentBankTransfer) {
+                widget.onPaymentBankTransfer(state);
+              }
+              if (state is PaymentDebitCredit) {
+                widget.onPaymentDebitCredit(state);
+              }
+              if (state is PaymentQRCode) {
+                widget.onPaymentQRCode(state);
               }
             },
           )
@@ -61,16 +78,16 @@ class _SelectPaymentMethodTabletState extends State<SelectPaymentMethodTablet> {
                         builder: (context, state) =>
                             switch (state.paymentMethod) {
                           "CASH" => CashPaymentContent(
-                              amount: widget.amount,
+                              amount: amount,
                             ),
                           "QR_CODE" => QrisPaymentContent(
-                              amount: widget.amount,
+                              amount: amount,
                             ),
                           "DEBIT" => DebitPaymentContent(
-                              amount: widget.amount,
+                              amount: amount,
                             ),
                           "BANK_TRANSFER" => BankTransferPaymentContent(
-                              amount: widget.amount,
+                              amount: amount,
                             ),
                           _ => const SizedBox(),
                         },
