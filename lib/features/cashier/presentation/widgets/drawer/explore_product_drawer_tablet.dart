@@ -45,6 +45,70 @@ class _ExploreProductDrawerTabletState
         );
   }
 
+  Future<void> _onBankTransferPaid(PaymentBankTransfer data) async {
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+    CartState cartState = context.read<CartCubit>().state;
+    CartDetailFilterState filterState =
+        context.read<CartDetailFilterCubit>().state;
+
+    await context.read<CartDetailCubit>().saveAndCompleteOrder(
+          carts: cartState.carts,
+          outletId: authState.outletId,
+          dto: CompleteBankTransferOrderDto(
+            photo: data.photo,
+            data: CompleteBankTransferOrderData(
+              paymentMethod: "BANK_TRANSFER",
+              paidAmount: data.paidAmount,
+              accountNumber: data.accountNumber,
+            ),
+          ),
+          type: filterState.type,
+          customerId: filterState.customer?.id,
+          tableId: filterState.table?.id,
+        );
+  }
+
+  Future<void> _onDebitCreditPaid(PaymentDebitCredit data) async {
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+    CartState cartState = context.read<CartCubit>().state;
+    CartDetailFilterState filterState =
+        context.read<CartDetailFilterCubit>().state;
+
+    await context.read<CartDetailCubit>().saveAndCompleteOrder(
+          carts: cartState.carts,
+          outletId: authState.outletId,
+          dto: CompleteDebitCreditOrderDto(
+            paymentMethod: "DEBIT",
+            paidAmount: data.paidAmount,
+            accountNumber: data.accountNumber,
+            change: 0,
+          ),
+          type: filterState.type,
+          customerId: filterState.customer?.id,
+          tableId: filterState.table?.id,
+        );
+  }
+
+  Future<void> _onQRCodePaid(PaymentQRCode data) async {
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+    CartState cartState = context.read<CartCubit>().state;
+    CartDetailFilterState filterState =
+        context.read<CartDetailFilterCubit>().state;
+
+    await context.read<CartDetailCubit>().saveAndCompleteOrder(
+          carts: cartState.carts,
+          outletId: authState.outletId,
+          dto: CompleteQRCodeOrderDto(
+            paymentMethod: "QR_CODE",
+            paidAmount: data.paidAmount,
+            change: data.change,
+          ),
+          type: filterState.type,
+          customerId: filterState.customer?.id,
+          tableId: filterState.table?.id,
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<CartDetailCubit, CartDetailState>(
@@ -84,6 +148,9 @@ class _ExploreProductDrawerTabletState
                           SelectPaymentMethodTablet(
                             amount: double.parse(previewOrderPrice.total),
                             onPaymentCash: _onCashPaid,
+                            onPaymentBankTransfer: _onBankTransferPaid,
+                            onPaymentDebitCredit: _onDebitCreditPaid,
+                            onPaymentQRCode: _onQRCodePaid,
                           ),
                         CartDetailLoadFailure(:final error) => Center(
                             child: TextBodyS(
