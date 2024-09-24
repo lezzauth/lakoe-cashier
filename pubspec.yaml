@@ -91,6 +91,12 @@ dependencies:
   flutter_contacts: ^1.1.9+2
   responsive_framework: ^1.5.1
   shimmer: ^3.0.0
+  printing: ^5.13.2
+  pdf: ^3.11.1
+  path_provider: ^2.1.4
+  print_bluetooth_thermal: ^1.1.1
+  esc_pos_utils_plus: ^2.0.4
+  image: ^4.2.0
 
 dev_dependencies:
   flutter_test:
