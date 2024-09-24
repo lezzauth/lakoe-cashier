@@ -20,6 +20,8 @@ class TImages {
   static const String growLogo = "assets/images/grow-logo.png";
   static const String proLogo = "assets/images/pro-logo.png";
   static const String defaultAvatar = "assets/images/default-avatar.png";
+  static const String noPrintIllustration =
+      "assets/images/no-print-ilustration.svg";
   static const String successIllustration =
       "assets/images/success-illustration.png";
   static const String generalIllustration =
