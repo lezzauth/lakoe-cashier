@@ -3,7 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/popup_confirmation.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/forms/field/location_field.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class TableInformationForm extends StatefulWidget {
@@ -21,6 +24,30 @@ class TableInformationForm extends StatefulWidget {
 }
 
 class _TableInformationFormState extends State<TableInformationForm> {
+  void _showPopupConfirmation(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isDismissible: false,
+      useSafeArea: true,
+      enableDrag: false,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return PopupConfirmation(
+          title: "Hapus meja?",
+          message: "Kamu yakin ingin menghapus meja ini?",
+          labelButtonPrimary: "Tidak",
+          labelButtonSecondary: "Ya, Hapus",
+          discardAction: () {
+            Navigator.pop(context);
+          },
+          saveAction: () {
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
@@ -106,6 +133,13 @@ class _TableInformationFormState extends State<TableInformationForm> {
                     ],
                   ),
                 ),
+                TextButton(
+                  onPressed: () => _showPopupConfirmation(context),
+                  child: const TextActionL(
+                    "Hapus Meja",
+                    color: TColors.error,
+                  ),
+                )
               ],
             ),
           ),
