@@ -6,6 +6,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/bank_select/bank_select.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/popup_confirmation.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -54,6 +55,30 @@ class _BankAccountFormState extends State<BankAccountForm> {
     final bank = await context.read<BankListCubit>().findOne(value["name"]);
 
     widget.onSubmitted(value, bank);
+  }
+
+  void _showPopupConfirmation(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isDismissible: false,
+      useSafeArea: true,
+      enableDrag: false,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return PopupConfirmation(
+          title: "Hapus rekening bank?",
+          message: "Kamu yakin ingin menghapus rekening ini?",
+          labelButtonPrimary: "Tidak",
+          labelButtonSecondary: "Ya, Hapus",
+          discardAction: () {
+            Navigator.pop(context);
+          },
+          saveAction: () {
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -167,6 +192,13 @@ class _BankAccountFormState extends State<BankAccountForm> {
                         ),
                       ),
                     ),
+                  TextButton(
+                    onPressed: () => _showPopupConfirmation(context),
+                    child: const TextActionL(
+                      "Hapus Rekening Bank",
+                      color: TColors.error,
+                    ),
+                  )
                 ],
               ),
             ),

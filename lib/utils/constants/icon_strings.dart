@@ -73,4 +73,6 @@ class TIcons {
   static const String smartphoneOutline = "assets/icons/smartphone-outline.svg";
   static const String userOutline = "assets/icons/user-outline.svg";
   static const String backspace = "assets/icons/backspace.svg";
+  static const String refresh = "assets/icons/refresh.svg";
+  static const String bluetooth = "assets/icons/bluetooth.svg";
 }

@@ -10,16 +10,16 @@ class TextBodyS extends StatelessWidget {
   final TextAlign? textAlign;
   final int? maxLines;
   final TextOverflow? overflow;
+  final FontStyle? fontStyle;
 
-  const TextBodyS(
-    this.data, {
-    super.key,
-    this.fontWeight = FontWeight.w400,
-    this.color,
-    this.textAlign,
-    this.maxLines,
-    this.overflow,
-  });
+  const TextBodyS(this.data,
+      {super.key,
+      this.fontWeight = FontWeight.w400,
+      this.color,
+      this.textAlign,
+      this.maxLines,
+      this.overflow,
+      this.fontStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +29,7 @@ class TextBodyS extends StatelessWidget {
         color: color,
         fontWeight: fontWeight,
         fontSize: fontSize,
+        fontStyle: fontStyle,
       ),
       textAlign: textAlign,
       maxLines: maxLines,
