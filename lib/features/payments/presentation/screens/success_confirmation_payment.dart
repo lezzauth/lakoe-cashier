@@ -1,4 +1,3 @@
-import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,14 +7,20 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
+import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
+import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_state.dart';
+import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SuccessConfirmationPaymentScreen extends StatefulWidget {
-  const SuccessConfirmationPaymentScreen({super.key});
+  const SuccessConfirmationPaymentScreen({super.key, required this.arguments});
+
+  final SuccessConfirmationPaymentArgument arguments;
 
   @override
   State<SuccessConfirmationPaymentScreen> createState() =>
@@ -33,25 +38,34 @@ class _SuccessConfirmationPaymentScreenState
 
   @override
   Widget build(BuildContext context) {
-    return const PopScope(
-      child: Scaffold(
-        body: SafeArea(
+    return BlocProvider(
+      create: (context) => OrderDetailCubit(),
+      child: PopScope(
+        child: Scaffold(
+          body: SafeArea(
             child: ResponsiveLayout(
-          mobile: SuccessConfirmationPaymentContent(),
-          tablet: Center(
-            child: SizedBox(
-              width: 311,
-              child: SuccessConfirmationPaymentContent(),
+              mobile: SuccessConfirmationPaymentContent(
+                arguments: widget.arguments,
+              ),
+              tablet: Center(
+                child: SizedBox(
+                  width: 311,
+                  child: SuccessConfirmationPaymentContent(
+                    arguments: widget.arguments,
+                  ),
+                ),
+              ),
             ),
           ),
-        )),
+        ),
       ),
     );
   }
 }
 
 class SuccessConfirmationPaymentContent extends StatefulWidget {
-  const SuccessConfirmationPaymentContent({super.key});
+  const SuccessConfirmationPaymentContent({super.key, required this.arguments});
+  final SuccessConfirmationPaymentArgument arguments;
 
   @override
   State<SuccessConfirmationPaymentContent> createState() =>
@@ -60,26 +74,19 @@ class SuccessConfirmationPaymentContent extends StatefulWidget {
 
 class _SuccessConfirmationPaymentContentState
     extends State<SuccessConfirmationPaymentContent> {
-  String _getPaymentMethodName(String paymentMethod) {
-    switch (paymentMethod) {
-      case "CASH":
-        return TPaymentMethodName.cash;
-      case "DEBIT":
-        return TPaymentMethodName.debit;
-      case "BANK_TRANSFER":
-        return TPaymentMethodName.bankTransfer;
-      case "QR_CODE":
-        return TPaymentMethodName.qris;
+  void _onInit() {
+    context.read<OrderDetailCubit>().findOne(widget.arguments.payment.orderId);
+  }
 
-      default:
-        return "";
-    }
+  @override
+  void initState() {
+    super.initState();
+    _onInit();
   }
 
   @override
   Widget build(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)!.settings.arguments as CompleteOrderResponse;
+    final arguments = widget.arguments;
     return PopScope(
       onPopInvokedWithResult: (popDisposition, popResult) async {
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -123,7 +130,7 @@ class _SuccessConfirmationPaymentContentState
                             margin: const EdgeInsets.only(bottom: 8),
                             child: TextHeading1(
                               TFormatter.formatToRupiah(
-                                double.parse(arguments.amount),
+                                double.parse(arguments.payment.amount),
                               ),
                             ),
                           ),
@@ -157,7 +164,7 @@ class _SuccessConfirmationPaymentContentState
                                 children: [
                                   const TextReceipt("No. Order"),
                                   TextReceipt(
-                                    arguments.no.toString(),
+                                    arguments.payment.no.toString(),
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ],
@@ -169,7 +176,8 @@ class _SuccessConfirmationPaymentContentState
                                 children: [
                                   const TextReceipt("Tanggal"),
                                   TextReceipt(
-                                    TFormatter.orderDate(arguments.createdAt),
+                                    TFormatter.orderDate(
+                                        arguments.payment.createdAt),
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ],
@@ -181,8 +189,8 @@ class _SuccessConfirmationPaymentContentState
                                 children: [
                                   const TextReceipt("Pembayaran"),
                                   TextReceipt(
-                                    _getPaymentMethodName(
-                                      arguments.paymentMethod,
+                                    TPaymentMethodName.getName(
+                                      arguments.payment.paymentMethod,
                                     ),
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -202,7 +210,8 @@ class _SuccessConfirmationPaymentContentState
                                   const TextReceipt("Uang Diterima"),
                                   TextReceipt(
                                     TFormatter.formatToRupiah(
-                                      double.parse(arguments.paidAmount),
+                                      double.parse(
+                                          arguments.payment.paidAmount),
                                     ),
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -216,7 +225,7 @@ class _SuccessConfirmationPaymentContentState
                                   const TextReceipt("Total Tagihan"),
                                   TextReceipt(
                                     TFormatter.formatToRupiah(
-                                      double.parse(arguments.amount),
+                                      double.parse(arguments.payment.amount),
                                     ),
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -245,9 +254,11 @@ class _SuccessConfirmationPaymentContentState
                             children: [
                               const TextReceipt("Kembalian"),
                               TextReceipt(
-                                TFormatter.formatToRupiah(double.parse(
-                                  arguments.change,
-                                )),
+                                TFormatter.formatToRupiah(
+                                  double.parse(
+                                    arguments.payment.change,
+                                  ),
+                                ),
                                 fontWeight: FontWeight.w600,
                               ),
                             ],
@@ -281,47 +292,84 @@ class _SuccessConfirmationPaymentContentState
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 12),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: SizedBox(
-                          height: 48,
-                          child: OutlinedButton(
-                            onPressed: () {},
-                            style: const ButtonStyle(
-                              padding: WidgetStatePropertyAll(
-                                EdgeInsets.symmetric(
-                                  horizontal: 0,
+                  child: BlocBuilder<OrderDetailCubit, OrderDetailState>(
+                    builder: (context, state) => switch (state) {
+                      OrderDetailLoadSuccess(:final order) => Row(
+                          children: [
+                            Expanded(
+                              child: SizedBox(
+                                height: 48,
+                                child: OutlinedButton(
+                                  onPressed: () {},
+                                  style: const ButtonStyle(
+                                    padding: WidgetStatePropertyAll(
+                                      EdgeInsets.symmetric(
+                                        horizontal: 0,
+                                      ),
+                                    ),
+                                  ),
+                                  child: const TextActionL(
+                                    "Bagikan Struk",
+                                    color: TColors.primary,
+                                  ),
                                 ),
                               ),
                             ),
-                            child: const TextActionL(
-                              "Bagikan Struk",
-                              color: TColors.primary,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: SizedBox(
-                          height: 48,
-                          child: OutlinedButton(
-                            onPressed: () {},
-                            style: const ButtonStyle(
-                              padding: WidgetStatePropertyAll(
-                                EdgeInsets.symmetric(horizontal: 16),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: SizedBox(
+                                height: 48,
+                                child: OutlinedButton(
+                                  onPressed: () {},
+                                  style: const ButtonStyle(
+                                    padding: WidgetStatePropertyAll(
+                                      EdgeInsets.symmetric(horizontal: 16),
+                                    ),
+                                  ),
+                                  child: const TextActionL(
+                                    "Cetak Struk",
+                                    color: TColors.primary,
+                                    maxLines: 1,
+                                  ),
+                                ),
                               ),
                             ),
-                            child: const TextActionL(
-                              "Cetak Struk",
-                              color: TColors.primary,
-                              maxLines: 1,
-                            ),
-                          ),
+                          ],
                         ),
-                      ),
-                    ],
+                      _ => Row(
+                          children: [
+                            Shimmer.fromColors(
+                              baseColor: const Color(0xFFE8E9F1),
+                              highlightColor: const Color(0xFFF8F9FE),
+                              child: Container(
+                                height: 48,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  color: TColors.neutralLightLightest,
+                                  border: Border.all(
+                                      color: TColors.neutralLightMedium,
+                                      width: 1),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Shimmer.fromColors(
+                              baseColor: const Color(0xFFE8E9F1),
+                              highlightColor: const Color(0xFFF8F9FE),
+                              child: Container(
+                                height: 48,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  color: TColors.neutralLightLightest,
+                                  border: Border.all(
+                                      color: TColors.neutralLightMedium,
+                                      width: 1),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                    },
                   ),
                 ),
                 SizedBox(

@@ -2,6 +2,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class TFormatter {
+  TFormatter._();
+
   static String formatToRupiah(dynamic amount) {
     return NumberFormat.currency(
             locale: "id_ID", symbol: "Rp", decimalDigits: 0)
