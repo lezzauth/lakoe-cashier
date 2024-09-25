@@ -13,6 +13,7 @@ import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_stat
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/content/cart_content_tablet.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method_tablet.dart';
+import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class ExploreProductDrawerTablet extends StatefulWidget {
@@ -117,7 +118,8 @@ class _ExploreProductDrawerTabletState
           Navigator.popAndPushNamed(
             context,
             "/payments/success_confirmation",
-            arguments: state.response,
+            arguments:
+                SuccessConfirmationPaymentArgument(payment: state.response),
           );
         }
       },

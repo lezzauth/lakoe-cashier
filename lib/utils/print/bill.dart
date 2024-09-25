@@ -3,14 +3,31 @@ import 'dart:developer';
 import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:order_repository/order_repository.dart';
+import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:image/image.dart' as image;
 
 class TBill {
   TBill._();
 
-  Future<List<int>> print(OrderModel order) async {
+  static double _getOrderTotal(
+    List<BillItem> items,
+  ) {
+    return items.fold(0, (sum, item) {
+      return sum + double.parse(item.price);
+    });
+  }
+
+  static Future<List<int>> print({
+    required BillOrder order,
+    BillTable? table,
+    required BillOutlet outlet,
+    required BillOperator operator,
+    required List<BillItem> items,
+    required List<BillCharge> charges,
+    required List<BillTax> taxes,
+    required BillPayment payment,
+  }) async {
     List<int> bytes = [];
     // Using default profile
     final profile = await CapabilityProfile.load();
@@ -58,8 +75,7 @@ class TBill {
           width: 3,
           styles: const PosStyles(align: PosAlign.left, bold: true)),
       PosColumn(
-        text:
-            order.tableId == null ? "Dibungkus" : "Dine In ${order.table!.no}",
+        text: table == null ? "Dibungkus" : "Dine In ${table.no}",
         width: 6,
         styles: const PosStyles(align: PosAlign.right, bold: true),
       ),
@@ -113,7 +129,7 @@ class TBill {
     bytes += generator.hr();
 
     // Item loop start
-    order.items.forEach((item) {
+    for (var item in items) {
       bytes += generator.row([
         PosColumn(
           text: item.product.name,
@@ -140,7 +156,7 @@ class TBill {
       if (item.notes != null || item.notes!.isNotEmpty) {
         bytes += generator.text("  ${item.notes}");
       }
-    });
+    }
 
     // bytes += generator.row([
     //   PosColumn(
@@ -201,45 +217,52 @@ class TBill {
         ),
       ),
       PosColumn(
-        text: TFormatter.formatToRupiah(double.parse(order.price)),
+        text: TFormatter.formatToRupiah(_getOrderTotal(items)),
         width: 6,
         styles: const PosStyles(
           align: PosAlign.right,
         ),
       ),
     ]);
-    bytes += generator.row([
-      PosColumn(
-        text: "Pajak(5%)",
-        width: 6,
-        styles: const PosStyles(
-          align: PosAlign.left,
+
+    for (var tax in taxes) {
+      bytes += generator.row([
+        PosColumn(
+          text: tax.name,
+          width: 6,
+          styles: const PosStyles(
+            align: PosAlign.left,
+          ),
         ),
-      ),
-      PosColumn(
-        text: TFormatter.formatToRupiah(10000),
-        width: 6,
-        styles: const PosStyles(
-          align: PosAlign.right,
+        PosColumn(
+          text: TFormatter.formatToRupiah(double.parse(tax.amount)),
+          width: 6,
+          styles: const PosStyles(
+            align: PosAlign.right,
+          ),
         ),
-      ),
-    ]);
-    bytes += generator.row([
-      PosColumn(
-        text: "Service Charge(2%)",
-        width: 6,
-        styles: const PosStyles(
-          align: PosAlign.left,
+      ]);
+    }
+
+    for (var charge in charges) {
+      bytes += generator.row([
+        PosColumn(
+          text: charge.name,
+          width: 6,
+          styles: const PosStyles(
+            align: PosAlign.left,
+          ),
         ),
-      ),
-      PosColumn(
-        text: TFormatter.formatToRupiah(4000),
-        width: 6,
-        styles: const PosStyles(
-          align: PosAlign.right,
+        PosColumn(
+          text: TFormatter.formatToRupiah(double.parse(charge.amount)),
+          width: 6,
+          styles: const PosStyles(
+            align: PosAlign.right,
+          ),
         ),
-      ),
-    ]);
+      ]);
+    }
+
     bytes += generator.hr();
     bytes += generator.row([
       PosColumn(
@@ -253,7 +276,9 @@ class TBill {
         ),
       ),
       PosColumn(
-        text: TFormatter.formatToRupiah(20000),
+        text: TFormatter.formatToRupiah(double.parse(
+          order.price,
+        )),
         width: 6,
         styles: const PosStyles(
           align: PosAlign.right,
@@ -265,14 +290,14 @@ class TBill {
     ]);
     bytes += generator.row([
       PosColumn(
-        text: "Cash (Tunai)",
+        text: TPaymentMethodName.getName(payment.paymentMethod),
         width: 6,
         styles: const PosStyles(
           align: PosAlign.left,
         ),
       ),
       PosColumn(
-        text: TFormatter.formatToRupiah(50000),
+        text: TFormatter.formatToRupiah(double.parse(payment.paidAmount)),
         width: 6,
         styles: const PosStyles(
           align: PosAlign.right,
@@ -287,7 +312,7 @@ class TBill {
         styles: const PosStyles(align: PosAlign.left, bold: true),
       ),
       PosColumn(
-        text: TFormatter.formatToRupiah(30000),
+        text: TFormatter.formatToRupiah(double.parse(payment.change)),
         width: 6,
         styles: const PosStyles(
           align: PosAlign.right,
@@ -296,11 +321,12 @@ class TBill {
       ),
     ]);
     bytes += generator.hr();
-    bytes += generator.text("Close Bill: 28/12/2024 - 21:37",
-        styles: const PosStyles(
-          align: PosAlign.center,
-          bold: true,
-        ));
+    bytes +=
+        generator.text("Close Bill: ${TFormatter.orderDate(payment.createdAt)}",
+            styles: const PosStyles(
+              align: PosAlign.center,
+              bold: true,
+            ));
     bytes += generator.hr();
     bytes += generator.text(
       "Terimakasih\nDitunggu kembali kedatangannya",
@@ -329,12 +355,67 @@ class TBill {
   }
 }
 
+class BillOrder {
+  final int no;
+  final String createdAt;
+  final String price;
+
+  BillOrder({
+    required this.no,
+    required this.createdAt,
+    required this.price,
+  });
+}
+
+class BillPayment {
+  final String paymentMethod;
+  final String change;
+  final String paidAmount;
+  final String createdAt;
+
+  BillPayment({
+    required this.paymentMethod,
+    required this.change,
+    required this.paidAmount,
+    required this.createdAt,
+  });
+}
+
+class BillOutlet {
+  final String name;
+  final String? address;
+
+  BillOutlet({required this.name, this.address});
+}
+
+class BillTable {
+  final String no;
+
+  BillTable({required this.no});
+}
+
+class BillCustomer {
+  //
+}
+
+class BillOperator {
+  final String name;
+
+  BillOperator({required this.name});
+}
+
 class BillItem {
   final int quantity;
+  final String price;
   final String? notes;
   final BillItemProduct product;
 
-  BillItem({required this.quantity, required this.product, this.notes});
+  BillItem({
+    required this.quantity,
+    required this.product,
+    this.notes,
+    required this.price,
+  });
 }
 
 class BillItemProduct {
@@ -348,6 +429,20 @@ class BillCharge {
   final String type;
   final String name;
   final String amount;
+  final bool isPercentage;
 
-  BillCharge({required this.type, required this.name, required this.amount});
+  BillCharge({
+    required this.type,
+    required this.name,
+    required this.amount,
+    this.isPercentage = false,
+  });
+}
+
+class BillTax {
+  final String type;
+  final String name;
+  final String amount;
+
+  BillTax({required this.type, required this.name, required this.amount});
 }
