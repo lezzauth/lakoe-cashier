@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_cubit.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_filter_state.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/qris/footer.dart';
+import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/qris/form.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/radio_group.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class QrisPaymentContent extends StatefulWidget {
   const QrisPaymentContent({super.key, required this.amount});
@@ -20,9 +19,18 @@ class QrisPaymentContent extends StatefulWidget {
 
 class _QrisPaymentContentState extends State<QrisPaymentContent> {
   final _formKey = GlobalKey<FormBuilderState>();
+  bool _isFormValid = false;
+
+  void _onFormChanged(bool isValid) {
+    setState(() {
+      _isFormValid = isValid;
+    });
+  }
 
   void _onSubmitted() {
-    context.read<PaymentCubit>().setQRCodePayment(paidAmount: widget.amount);
+    if (_isFormValid) {
+      context.read<PaymentCubit>().setQRCodePayment(paidAmount: widget.amount);
+    }
   }
 
   @override
@@ -57,28 +65,9 @@ class _QrisPaymentContentState extends State<QrisPaymentContent> {
                     );
                   },
                 ),
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: ListTileTheme(
-                //         contentPadding:
-                //             const EdgeInsets.symmetric(horizontal: 16),
-                //         horizontalTitleGap: 0,
-                //         child: CheckboxListTile(
-                //           value: false,
-                //           onChanged: (value) {},
-                //           controlAffinity: ListTileControlAffinity.leading,
-                //           title: const TextBodyS(
-                //             "Cetak QRIS secara otomatis",
-                //             color: TColors.neutralDarkDarkest,
-                //           ),
-                //           dense: true,
-                //           enableFeedback: false,
-                //         ),
-                //       ),
-                //     )
-                //   ],
-                // ),
+                QrisPaymentForm(
+                  onFormChanged: _onFormChanged,
+                ),
               ],
             ),
           ),
@@ -91,6 +80,7 @@ class _QrisPaymentContentState extends State<QrisPaymentContent> {
                 Navigator.pop(context);
               },
               onSubmitted: _onSubmitted,
+              isFormValid: _isFormValid,
             ),
           ),
         ],
