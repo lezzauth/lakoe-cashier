@@ -8,10 +8,12 @@ class QrisPaymentFooter extends StatelessWidget {
     super.key,
     this.onCanceled,
     required this.onSubmitted,
+    required this.isFormValid,
   });
 
   final Function() onSubmitted;
   final Function()? onCanceled;
+  final bool isFormValid;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class QrisPaymentFooter extends StatelessWidget {
               child: SizedBox(
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: onSubmitted,
+                  onPressed: isFormValid ? onSubmitted : null,
                   child: const TextActionL("Selesaikan"),
                 ),
               ),
@@ -64,8 +66,8 @@ class QrisPaymentFooter extends StatelessWidget {
                   child: SizedBox(
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: onSubmitted,
-                      child: const TextActionL("Siapkan QRIS"),
+                      onPressed: isFormValid ? onSubmitted : null,
+                      child: const TextActionL("Selesaikan"),
                     ),
                   ),
                 ),

@@ -8,10 +8,12 @@ class DebitPaymentFooter extends StatelessWidget {
     super.key,
     required this.onSubmitted,
     this.onCanceled,
+    required this.isFormValid,
   });
 
   final Function()? onSubmitted;
   final Function()? onCanceled;
+  final bool isFormValid;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class DebitPaymentFooter extends StatelessWidget {
               child: SizedBox(
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: onSubmitted,
+                  onPressed: isFormValid ? onSubmitted : null,
                   child: const TextActionL("Selesaikan"),
                 ),
               ),
@@ -64,8 +66,8 @@ class DebitPaymentFooter extends StatelessWidget {
                   child: SizedBox(
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: onSubmitted,
-                      child: const TextActionL("Bayar & Selesaikan"),
+                      onPressed: isFormValid ? onSubmitted : null,
+                      child: const TextActionL("Selesaikan"),
                     ),
                   ),
                 ),

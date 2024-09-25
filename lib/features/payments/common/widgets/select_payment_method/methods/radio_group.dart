@@ -44,10 +44,10 @@ class PaymentMethodRadioGroup extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               PaymentMethodRadio(
-                value: "QR_CODE",
+                value: "BANK_TRANSFER",
                 groupValue: value,
                 onChanged: onChanged,
-                limited: limitedValues.contains("QR_CODE"),
+                limited: limitedValues.contains("BANK_TRANSFER"),
                 onLimited: onLimitedPressed,
               ),
             ],
@@ -56,17 +56,17 @@ class PaymentMethodRadioGroup extends StatelessWidget {
         Row(
           children: [
             PaymentMethodRadio(
-              value: "DEBIT",
+              value: "QR_CODE",
               groupValue: value,
               onChanged: onChanged,
+              limited: limitedValues.contains("QR_CODE"),
+              onLimited: onLimitedPressed,
             ),
             const SizedBox(width: 12),
             PaymentMethodRadio(
-              value: "BANK_TRANSFER",
+              value: "DEBIT",
               groupValue: value,
               onChanged: onChanged,
-              limited: limitedValues.contains("BANK_TRANSFER"),
-              onLimited: onLimitedPressed,
             ),
           ],
         ),

@@ -69,19 +69,19 @@ class PaymentMethodRadio extends StatelessWidget {
           child: ResponsiveLayout(
             mobile: switch (value) {
               "CASH" => CashPaymentRadioContent(selected: selected),
-              "DEBIT" => DebitPaymentRadioContent(selected: selected),
               "BANK_TRANSFER" =>
                 BankTransferPaymentRadioContent(selected: selected),
               "QR_CODE" => QrisPaymentRadioContent(selected: selected),
+              "DEBIT" => DebitPaymentRadioContent(selected: selected),
               _ => const SizedBox(),
             },
             tablet: Center(
               child: switch (value) {
                 "CASH" => CashPaymentRadioContent(selected: selected),
-                "DEBIT" => DebitPaymentRadioContent(selected: selected),
                 "BANK_TRANSFER" =>
                   BankTransferPaymentRadioContent(selected: selected),
                 "QR_CODE" => QrisPaymentRadioContent(selected: selected),
+                "DEBIT" => DebitPaymentRadioContent(selected: selected),
                 _ => const SizedBox(),
               },
             ),
@@ -204,13 +204,15 @@ class QrisPaymentRadioContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      TImages.qrisLogo,
-      height: 19.28,
-      width: 120,
-      colorFilter: ColorFilter.mode(
-        selected ? TColors.primary : TColors.neutralDarkMedium,
-        BlendMode.srcIn,
+    return Center(
+      child: SvgPicture.asset(
+        TImages.qrisLogo,
+        height: 20,
+        width: 120,
+        colorFilter: ColorFilter.mode(
+          selected ? TColors.primary : TColors.neutralDarkMedium,
+          BlendMode.srcIn,
+        ),
       ),
     );
   }
