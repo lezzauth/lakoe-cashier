@@ -23,18 +23,25 @@ class DebitPaymentContent extends StatefulWidget {
 class DebitPaymentContentState extends State<DebitPaymentContent> {
   final _formKey = GlobalKey<FormBuilderState>();
 
-  bool _isFormValid = true;
+  bool _isFormValid = false;
+
+  void _onFormChanged(bool isValid) {
+    setState(() {
+      _isFormValid = isValid;
+    });
+  }
 
   void _onSubmitted() {
-    bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
-    if (!isFormValid) return;
+    // bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
+    // if (!isFormValid) return;
 
-    dynamic value = _formKey.currentState?.value;
-
-    context.read<PaymentCubit>().setDebitCreditPayment(
-          accountNumber: value["accountNumber"],
-          paidAmount: widget.amount,
-        );
+    if (_isFormValid) {
+      dynamic value = _formKey.currentState?.value;
+      context.read<PaymentCubit>().setDebitCreditPayment(
+            accountNumber: value["accountNumber"],
+            paidAmount: widget.amount,
+          );
+    }
   }
 
   @override
@@ -74,7 +81,7 @@ class DebitPaymentContentState extends State<DebitPaymentContent> {
                     );
                   },
                 ),
-                const DebitPaymentForm(),
+                DebitPaymentForm(onFormChanged: _onFormChanged),
               ],
             ),
           ),
@@ -86,7 +93,8 @@ class DebitPaymentContentState extends State<DebitPaymentContent> {
               onCanceled: () {
                 Navigator.pop(context);
               },
-              onSubmitted: _isFormValid ? _onSubmitted : null,
+              onSubmitted: _onSubmitted,
+              isFormValid: _isFormValid,
             ),
           ),
         ],
