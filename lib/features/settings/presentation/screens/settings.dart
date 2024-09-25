@@ -52,8 +52,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       iconSrc: TIcons.handMoney,
     ),
     _SettingItem(
-      title: "Struk (Bill)",
-      routeName: "/bill",
+      title: "Print & Struk (Bill)",
+      routeName: "/print",
       iconSrc: TIcons.bill,
     ),
   ];
@@ -70,11 +70,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       iconSrc: TIcons.tableRestaurant,
       isNewItem: true,
     ),
-    _SettingItem(
-      title: "Print",
-      routeName: "/",
-      iconSrc: TIcons.printer,
-    ),
+    // _SettingItem(
+    //   title: "Print",
+    //   routeName: "/",
+    //   iconSrc: TIcons.printer,
+    // ),
     // _SettingItem(
     //   title: "Singkronisasi Data",
     //   routeName: "/",
