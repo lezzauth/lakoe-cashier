@@ -3,7 +3,7 @@ import 'package:permission_handler/permission_handler.dart';
 class TBluetoothPermission {
   TBluetoothPermission._();
 
-  static Future<void> checkBluetoothPermissions() async {
+  static Future<BluetoothPermissionStatus> checkPermissions() async {
     // Check if the required permissions are granted
     PermissionStatus bluetoothScanStatus =
         await Permission.bluetoothScan.status;
@@ -25,10 +25,30 @@ class TBluetoothPermission {
     }
 
     // Check if permissions are permanently denied (open settings if so)
-    if (bluetoothScanStatus.isPermanentlyDenied ||
-        bluetoothConnectStatus.isPermanentlyDenied ||
-        nearbyDevicesStatus.isPermanentlyDenied) {
-      openAppSettings();
-    }
+    // if (bluetoothScanStatus.isPermanentlyDenied ||
+    //     bluetoothConnectStatus.isPermanentlyDenied ||
+    //     nearbyDevicesStatus.isPermanentlyDenied) {
+    //   return false;
+    // }
+
+    return BluetoothPermissionStatus(
+      bluetoothConnect: bluetoothConnectStatus.isPermanentlyDenied,
+      bluetoothScan: bluetoothScanStatus.isPermanentlyDenied,
+      nearbyDevices: nearbyDevicesStatus.isPermanentlyDenied,
+    );
+
+    // return true;
   }
+}
+
+class BluetoothPermissionStatus {
+  final bool bluetoothScan;
+  final bool bluetoothConnect;
+  final bool nearbyDevices;
+
+  BluetoothPermissionStatus({
+    required this.bluetoothConnect,
+    required this.bluetoothScan,
+    required this.nearbyDevices,
+  });
 }
