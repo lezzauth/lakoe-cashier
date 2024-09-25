@@ -24,6 +24,7 @@ import 'package:point_of_sales_cashier/features/orders/data/models.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/tags/solid_order_online_status_tag.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
+import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
 import 'package:point_of_sales_cashier/features/payments/data/models/payment_method_return_model.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
@@ -178,7 +179,8 @@ class _OrderDetailState extends State<OrderDetail> {
               Navigator.popAndPushNamed(
                 context,
                 "/payments/success_confirmation",
-                arguments: state.response,
+                arguments:
+                    SuccessConfirmationPaymentArgument(payment: state.response),
               );
             }
           },
