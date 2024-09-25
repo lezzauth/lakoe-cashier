@@ -19,6 +19,27 @@ class TBill {
     });
   }
 
+  static String wordWrap(String text, int maxLength) {
+    List<String> words = text.split(' ');
+    String wrappedText = '';
+    String currentLine = '';
+
+    for (String word in words) {
+      if ((currentLine + word).length > maxLength) {
+        // Jika kata berikutnya melebihi batas, pindahkan ke baris berikutnya
+        wrappedText += currentLine.trim() + '\n';
+        currentLine = word + ' ';
+      } else {
+        // Tambahkan kata ke baris saat ini
+        currentLine += word + ' ';
+      }
+    }
+    // Tambahkan baris terakhir
+    wrappedText += currentLine.trim();
+
+    return wrappedText;
+  }
+
   static Future<List<int>> print({
     required BillOrder order,
     BillTable? table,
@@ -30,12 +51,15 @@ class TBill {
     required BillPayment payment,
   }) async {
     List<int> bytes = [];
-    // Using default profile
+    int maxLength = 32;
+
     final profile = await CapabilityProfile.load();
     final generator = Generator(PaperSize.mm58, profile);
     final profiles = await CapabilityProfile.getAvailableProfiles();
     log('profiles: $profiles');
     bytes += generator.reset();
+
+    bytes += generator.emptyLines(1);
 
     bytes += generator.text(
       "warmindo cak tho".toUpperCase(),
@@ -47,83 +71,80 @@ class TBill {
       ),
     );
 
+    String addressOutlet =
+        wordWrap("Tebet, Jakarta Selatan, DKI Jakarta", maxLength);
+
     bytes += generator.text(
-      'Tebet, Jakarta Selatan, DKI Jakarta',
+      addressOutlet,
       styles: const PosStyles(
         align: PosAlign.center,
       ),
     );
     bytes += generator.hr();
 
-    bytes += generator.text(
-      "ORDER #${order.no}".toUpperCase(),
-      styles: const PosStyles(
-        bold: true,
-        align: PosAlign.center,
-        height: PosTextSize.size1,
-        width: PosTextSize.size1,
-      ),
-    );
-    bytes += generator.hr();
-
     bytes += generator.row([
       PosColumn(
-          text: "Kasir:",
-          width: 3,
-          styles: const PosStyles(align: PosAlign.left)),
-      PosColumn(
-          text: "Dimas",
-          width: 3,
-          styles: const PosStyles(align: PosAlign.left, bold: true)),
-      PosColumn(
-        text: table == null ? "Dibungkus" : "Dine In ${table.no}",
-        width: 6,
-        styles: const PosStyles(align: PosAlign.right, bold: true),
-      ),
-    ]);
-
-    bytes += generator.row([
-      PosColumn(
-          text: "Struk:",
-          width: 3,
-          styles: const PosStyles(align: PosAlign.left)),
-      PosColumn(
-          text: "GS731",
-          width: 3,
-          styles: const PosStyles(align: PosAlign.left, bold: true)),
-      PosColumn(
-        text: DateFormat("dd/MM/yyyy").format(
-          DateTime.parse(order.createdAt).toLocal(),
-        ),
-        width: 6,
-        styles: const PosStyles(align: PosAlign.right, bold: true),
-      ),
-    ]);
-    bytes += generator.row([
-      PosColumn(
-        text: DateFormat("HH:mm").format(
-          DateTime.parse(order.createdAt).toLocal(),
-        ),
-        width: 12,
-        styles: const PosStyles(align: PosAlign.right, bold: true),
-      ),
-    ]);
-
-    bytes += generator.hr(linesAfter: 1);
-
-    bytes += generator.row([
-      PosColumn(
-        text: "Item",
+        text: "ORDER #${order.no}".toUpperCase(),
         width: 6,
         styles: const PosStyles(align: PosAlign.left, bold: true),
       ),
       PosColumn(
+        text: table == null ? "Take Away" : "Dine In ${table.no}",
+        width: 6,
+        styles: const PosStyles(align: PosAlign.right, bold: true),
+      ),
+    ]);
+    bytes += generator.hr();
+
+    bytes += generator.row([
+      PosColumn(
+          text: "Cashier:",
+          width: 4,
+          styles: const PosStyles(align: PosAlign.left)),
+      PosColumn(
+          text: operator.name,
+          width: 8,
+          styles: const PosStyles(align: PosAlign.right, bold: true)),
+    ]);
+    bytes += generator.row([
+      PosColumn(
+          text: "Receipt No:",
+          width: 5,
+          styles: const PosStyles(align: PosAlign.left)),
+      PosColumn(
+          text: "LK-00001",
+          width: 7,
+          styles: const PosStyles(align: PosAlign.right, bold: true)),
+    ]);
+    bytes += generator.row([
+      PosColumn(
+          text: "Order Date:",
+          width: 5,
+          styles: const PosStyles(align: PosAlign.left)),
+      PosColumn(
+        text: DateFormat("dd/MM/yyyy, HH:mm").format(
+          DateTime.parse(order.createdAt).toLocal(),
+        ),
+        width: 7,
+        styles: const PosStyles(align: PosAlign.right, bold: true),
+      ),
+    ]);
+
+    bytes += generator.hr();
+
+    bytes += generator.row([
+      PosColumn(
+        text: "Item",
+        width: 5,
+        styles: const PosStyles(align: PosAlign.left, bold: true),
+      ),
+      PosColumn(
           text: "Qty",
-          width: 3,
-          styles: const PosStyles(align: PosAlign.left, bold: true)),
+          width: 2,
+          styles: const PosStyles(align: PosAlign.right, bold: true)),
       PosColumn(
         text: "Harga",
-        width: 3,
+        width: 5,
         styles: const PosStyles(align: PosAlign.right, bold: true),
       ),
     ]);
@@ -141,14 +162,14 @@ class TBill {
         ),
         PosColumn(
           text: "${item.quantity}x",
-          width: 3,
+          width: 1,
           styles: const PosStyles(
-            align: PosAlign.left,
+            align: PosAlign.right,
           ),
         ),
         PosColumn(
           text: TFormatter.formatToRupiah(double.parse(item.product.price)),
-          width: 3,
+          width: 5,
           styles: const PosStyles(
             align: PosAlign.right,
           ),
@@ -159,54 +180,6 @@ class TBill {
         bytes += generator.text("  ${item.notes}");
       }
     }
-
-    // bytes += generator.row([
-    //   PosColumn(
-    //     text: "Nama Item#2",
-    //     width: 6,
-    //     styles: const PosStyles(
-    //       align: PosAlign.left,
-    //     ),
-    //   ),
-    //   PosColumn(
-    //     text: "x1",
-    //     width: 3,
-    //     styles: const PosStyles(
-    //       align: PosAlign.left,
-    //     ),
-    //   ),
-    //   PosColumn(
-    //     text: TFormatter.formatToRupiah(5000),
-    //     width: 3,
-    //     styles: const PosStyles(
-    //       align: PosAlign.right,
-    //     ),
-    //   ),
-    // ]);
-    // bytes += generator.row([
-    //   PosColumn(
-    //     text: "Nama Item#3",
-    //     width: 6,
-    //     styles: const PosStyles(
-    //       align: PosAlign.left,
-    //     ),
-    //   ),
-    //   PosColumn(
-    //     text: "x1",
-    //     width: 3,
-    //     styles: const PosStyles(
-    //       align: PosAlign.left,
-    //     ),
-    //   ),
-    //   PosColumn(
-    //     text: TFormatter.formatToRupiah(10000),
-    //     width: 3,
-    //     styles: const PosStyles(
-    //       align: PosAlign.right,
-    //     ),
-    //   ),
-    // ]);
-    // // Item loop end
 
     bytes += generator.hr();
 
@@ -230,7 +203,7 @@ class TBill {
     for (var tax in taxes) {
       bytes += generator.row([
         PosColumn(
-          text: tax.name,
+          text: "${tax.name} (${tax.percentage})",
           width: 6,
           styles: const PosStyles(
             align: PosAlign.left,
@@ -249,7 +222,7 @@ class TBill {
     for (var charge in charges) {
       bytes += generator.row([
         PosColumn(
-          text: charge.name,
+          text: "${charge.name} (${charge.percentage})",
           width: 6,
           styles: const PosStyles(
             align: PosAlign.left,
@@ -323,13 +296,16 @@ class TBill {
       ),
     ]);
     bytes += generator.hr();
-    bytes +=
-        generator.text("Close Bill: ${TFormatter.orderDate(payment.createdAt)}",
-            styles: const PosStyles(
-              align: PosAlign.center,
-              bold: true,
-            ));
+    bytes += generator.text(
+        "Close Bill: ${DateFormat("dd/MM/yyyy, HH:mm").format(
+          DateTime.parse(payment.createdAt).toLocal(),
+        )}",
+        styles: const PosStyles(
+          align: PosAlign.center,
+          bold: true,
+        ));
     bytes += generator.hr();
+
     bytes += generator.text(
       "Terimakasih\nDitunggu kembali kedatangannya",
       styles: const PosStyles(
@@ -346,13 +322,9 @@ class TBill {
     final ByteData data = await rootBundle.load('assets/logos/lakoe-bw.png');
     final Uint8List bytesImg = data.buffer.asUint8List();
     final img = image.decodeImage(bytesImg);
-    // Using `ESC *`
-    bytes += generator.image(
-      img!,
-    );
+    bytes += generator.image(img!);
 
-    // bytes += generator.feed(1);
-    bytes += generator.cut();
+    bytes += generator.cut(mode: PosCutMode.full);
     return bytes;
   }
 
@@ -362,38 +334,46 @@ class TBill {
       List<int> ticket = await print(
         items: [
           BillItem(
-            quantity: 1,
-            product: BillItemProduct(name: "Small Rubber Tuna", price: "39517"),
-            price: "39517",
-          ),
+              quantity: 1,
+              product: BillItemProduct(name: "Kopi Hitam", price: "5000"),
+              price: "39517",
+              notes: "Gulanya sedikit"),
           BillItem(
             quantity: 1,
-            product: BillItemProduct(name: "Elegant Metal Hat", price: "41308"),
+            product: BillItemProduct(name: "Es Teh", price: "5000"),
             price: "41308",
-            notes: "anjay mabar",
           ),
           BillItem(
             quantity: 1,
-            product: BillItemProduct(name: "Small Rubber Tuna", price: "39517"),
+            product: BillItemProduct(name: "Mie Goreng", price: "10000"),
             price: "39517",
-            notes: "contoh notes",
           ),
         ],
         operator: BillOperator(name: "Iruha"),
         order: BillOrder(
-            no: 239, createdAt: "2024-09-23T17:34:59.086Z", price: "135534.33"),
+            no: "9849", createdAt: "2024-09-23T17:34:59.086Z", price: "21400"),
         outlet: BillOutlet(name: "Warung Iruha"),
         payment: BillPayment(
           paymentMethod: "CASH",
-          change: "0",
-          paidAmount: "500000",
+          change: "28600",
+          paidAmount: "50000",
           createdAt: "2024-09-23T17:34:59.131Z",
         ),
         taxes: [
-          BillTax(type: "TAX", name: "PB1", amount: "5000"),
+          BillTax(
+            type: "TAX",
+            name: "PB1",
+            percentage: "5%",
+            amount: "1000",
+          ),
         ],
         charges: [
-          BillCharge(type: "CHARGE", name: "Service Charge", amount: "23000"),
+          BillCharge(
+            type: "CHARGE",
+            name: "Service",
+            percentage: "2%",
+            amount: "4000",
+          ),
         ],
       );
       final result = await PrintBluetoothThermal.writeBytes(ticket);
@@ -405,7 +385,7 @@ class TBill {
 }
 
 class BillOrder {
-  final int no;
+  final String no;
   final String createdAt;
   final String price;
 
@@ -479,19 +459,27 @@ class BillCharge {
   final String name;
   final String amount;
   final bool isPercentage;
+  final String percentage;
 
   BillCharge({
     required this.type,
     required this.name,
     required this.amount,
     this.isPercentage = false,
+    required this.percentage,
   });
 }
 
 class BillTax {
   final String type;
   final String name;
+  final String percentage;
   final String amount;
 
-  BillTax({required this.type, required this.name, required this.amount});
+  BillTax({
+    required this.type,
+    required this.name,
+    required this.percentage,
+    required this.amount,
+  });
 }
