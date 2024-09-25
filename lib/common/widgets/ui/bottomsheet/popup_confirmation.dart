@@ -5,23 +5,29 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
-class ChangesConfirmation extends StatefulWidget {
-  const ChangesConfirmation({
+class PopupConfirmation extends StatefulWidget {
+  const PopupConfirmation({
     super.key,
-    required this.messageChanges,
+    required this.title,
+    required this.message,
+    required this.labelButtonPrimary,
+    required this.labelButtonSecondary,
     required this.discardAction,
     required this.saveAction,
   });
 
-  final String messageChanges;
+  final String title;
+  final String message;
+  final String labelButtonPrimary;
+  final String labelButtonSecondary;
   final Function() discardAction;
   final Function() saveAction;
 
   @override
-  State<ChangesConfirmation> createState() => _ChangesConfirmationState();
+  State<PopupConfirmation> createState() => _ChangesConfirmationState();
 }
 
-class _ChangesConfirmationState extends State<ChangesConfirmation> {
+class _ChangesConfirmationState extends State<PopupConfirmation> {
   @override
   void initState() {
     super.initState();
@@ -55,16 +61,12 @@ class _ChangesConfirmationState extends State<ChangesConfirmation> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const TextHeading2(
-              "Ada yang berubah...",
+            TextHeading2(
+              widget.title,
             ),
             const SizedBox(height: 8),
             TextBodyM(
-              "Kamu telah melakukan perubahan ${widget.messageChanges.toLowerCase()}.",
-            ),
-            const SizedBox(height: 8),
-            const TextBodyM(
-              "Mau disimpan atau diabaikan?",
+              widget.message,
             ),
             const SizedBox(height: 20),
             Row(
@@ -75,8 +77,8 @@ class _ChangesConfirmationState extends State<ChangesConfirmation> {
                     height: 48,
                     child: OutlinedButton(
                       onPressed: widget.discardAction,
-                      child: const TextActionL(
-                        "Abaikan",
+                      child: TextActionL(
+                        widget.labelButtonSecondary,
                       ),
                     ),
                   ),
@@ -87,8 +89,8 @@ class _ChangesConfirmationState extends State<ChangesConfirmation> {
                     height: 48,
                     child: ElevatedButton(
                       onPressed: widget.saveAction,
-                      child: const TextActionL(
-                        "Simpan",
+                      child: TextActionL(
+                        widget.labelButtonPrimary,
                       ),
                     ),
                   ),
