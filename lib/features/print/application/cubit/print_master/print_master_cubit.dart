@@ -10,7 +10,6 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
 
   Future<void> init() async {
     try {
-      emit(PrintMasterLoadInProgress());
       final permissions = await TBluetoothPermission.checkPermissions();
       bool isPermissionsAllowed = ![
         permissions.bluetoothConnect,
@@ -36,6 +35,7 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
           connectedDevices: currentState.connectedDevices,
         ));
       } else {
+        emit(PrintMasterLoadInProgress());
         emit(PrintMasterLoadSuccess(devices: devices));
       }
     } catch (e) {
