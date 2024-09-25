@@ -16,7 +16,7 @@ class BillView extends StatelessWidget {
   final String cashierName;
   final String noBill;
   final String orderType;
-  final String noTable;
+  final String? noTable;
   final String dateTime;
   final String paymentMetod;
   final String totalPrice;
@@ -35,7 +35,7 @@ class BillView extends StatelessWidget {
     required this.cashierName,
     required this.noBill,
     required this.orderType,
-    required this.noTable,
+    this.noTable,
     required this.dateTime,
     required this.paymentMetod,
     required this.totalPrice,
@@ -74,12 +74,12 @@ class BillView extends StatelessWidget {
                 outletName: outletName,
                 outletAddress: outletAddress,
                 orderNumber: orderNumber,
+                orderType: orderType,
+                noTable: noTable,
               ),
               SectionBillInformation(
                 cashierName: cashierName,
                 noBill: noBill,
-                orderType: orderType,
-                noTable: noTable,
                 dateTime: dateTime,
               ),
               const BillSectionListItem(),
