@@ -11,11 +11,13 @@ class EmptyList extends StatelessWidget {
     this.image,
     required this.title,
     required this.subTitle,
+    this.action,
   });
 
   final SvgPicture? image;
   final String title;
   final String subTitle;
+  final Widget? action;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,8 @@ class EmptyList extends StatelessWidget {
                         color: TColors.neutralDarkLight,
                         textAlign: TextAlign.center,
                       ),
-                    )
+                    ),
+                    action!,
                   ],
                 ),
               ),

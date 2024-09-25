@@ -19,6 +19,7 @@ import 'package:point_of_sales_cashier/features/bank_accounts/presentation/scree
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_new.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_edit.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_master.dart';
+import 'package:point_of_sales_cashier/features/print/presentation/screens/print_master.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/customer/cart_customer_cubit.dart';
@@ -233,6 +234,9 @@ class App extends StatelessWidget {
             // bill
             "/bill": (context) => const BillMasterScreen(),
             "/bill/edit": (context) => const BillEditScreen(),
+
+            // print
+            "/print": (context) => const PrintMasterScreen(),
 
             // employee
             "/employee": (context) => const MasterEmployeScreen(),
