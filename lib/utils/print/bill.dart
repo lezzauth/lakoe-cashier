@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:image/image.dart' as image;
+import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
 class TBill {
   TBill._();
@@ -139,7 +140,7 @@ class TBill {
           ),
         ),
         PosColumn(
-          text: "${item.quantity}",
+          text: "${item.quantity}x",
           width: 3,
           styles: const PosStyles(
             align: PosAlign.left,
@@ -153,7 +154,8 @@ class TBill {
           ),
         ),
       ]);
-      if (item.notes != null || item.notes!.isNotEmpty) {
+      if (item.notes != null ||
+          (item.notes != null && item.notes!.isNotEmpty)) {
         bytes += generator.text("  ${item.notes}");
       }
     }
@@ -349,9 +351,56 @@ class TBill {
       img!,
     );
 
-    bytes += generator.feed(1);
+    // bytes += generator.feed(1);
     bytes += generator.cut();
     return bytes;
+  }
+
+  static Future<void> testPrint() async {
+    bool connectionStatus = await PrintBluetoothThermal.connectionStatus;
+    if (connectionStatus) {
+      List<int> ticket = await print(
+        items: [
+          BillItem(
+            quantity: 1,
+            product: BillItemProduct(name: "Small Rubber Tuna", price: "39517"),
+            price: "39517",
+          ),
+          BillItem(
+            quantity: 1,
+            product: BillItemProduct(name: "Elegant Metal Hat", price: "41308"),
+            price: "41308",
+            notes: "anjay mabar",
+          ),
+          BillItem(
+            quantity: 1,
+            product: BillItemProduct(name: "Small Rubber Tuna", price: "39517"),
+            price: "39517",
+            notes: "contoh notes",
+          ),
+        ],
+        operator: BillOperator(name: "Iruha"),
+        order: BillOrder(
+            no: 239, createdAt: "2024-09-23T17:34:59.086Z", price: "135534.33"),
+        outlet: BillOutlet(name: "Warung Iruha"),
+        payment: BillPayment(
+          paymentMethod: "CASH",
+          change: "0",
+          paidAmount: "500000",
+          createdAt: "2024-09-23T17:34:59.131Z",
+        ),
+        taxes: [
+          BillTax(type: "TAX", name: "PB1", amount: "5000"),
+        ],
+        charges: [
+          BillCharge(type: "CHARGE", name: "Service Charge", amount: "23000"),
+        ],
+      );
+      final result = await PrintBluetoothThermal.writeBytes(ticket);
+      log("print result: $result");
+    } else {
+      log("the printer is disconnected ($connectionStatus)");
+    }
   }
 }
 

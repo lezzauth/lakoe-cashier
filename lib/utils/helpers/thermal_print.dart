@@ -1,0 +1,3 @@
+class TTHermalPrintHelper {
+  TTHermalPrintHelper._();
+}
