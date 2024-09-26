@@ -73,8 +73,10 @@ class OtherTaxField extends StatelessWidget {
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [
+                  LengthLimitingTextInputFormatter(3),
                   FilteringTextInputFormatter.allow(
-                      RegExp(r'^\d+\.?\d{0,2}|^\d+\,?\d{0,2}')),
+                    RegExp(r'^\d+\.?\d{0,2}|^\d+,?\d{0,2}'),
+                  ),
                 ],
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(
