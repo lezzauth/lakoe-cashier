@@ -97,6 +97,7 @@ dependencies:
   print_bluetooth_thermal: ^1.1.1
   esc_pos_utils_plus: ^2.0.4
   image: ^4.2.0
+  flutter_bluetooth_serial: ^0.4.0
 
 dev_dependencies:
   flutter_test:

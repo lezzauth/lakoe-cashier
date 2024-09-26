@@ -30,8 +30,13 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
 
       if (state is PrintMasterLoadSuccess) {
         final currentState = state as PrintMasterLoadSuccess;
+        final List<String> connectedDeviceMacs =
+            currentState.connectedDevices.map((e) => e.macAdress).toList();
+
         emit(PrintMasterLoadSuccess(
-          devices: devices,
+          devices: devices
+              .where((e) => !connectedDeviceMacs.contains(e.macAdress))
+              .toList(),
           connectedDevices: currentState.connectedDevices,
         ));
       } else {
@@ -75,6 +80,8 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
       disconnectDevice(device);
     }
 
+    await init();
+
     return result;
   }
 
@@ -95,6 +102,8 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
       devices: currentState.devices,
       connectedDevices: connectedDevices,
     ));
+
+    await init();
 
     return result;
   }
