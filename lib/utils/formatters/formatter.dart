@@ -33,6 +33,11 @@ class TFormatter {
 
     return splittedText.join(" ");
   }
+
+  static String censoredPhoneNumber(String text) {
+    return text.replaceRange(
+        text.length - 7, text.length - 3, List.filled(4, "*").join());
+  }
 }
 
 class CreditCardFormatter extends TextInputFormatter {
