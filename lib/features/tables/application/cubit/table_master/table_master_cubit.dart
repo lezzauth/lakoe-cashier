@@ -52,4 +52,14 @@ class TableMasterCubit extends Cubit<TableMasterState> {
       emit(TableMasterActionFailure(e.toString()));
     }
   }
+
+  Future<void> delete(String id) async {
+    try {
+      emit(TableMasterActionInProgress());
+      final response = await _tableRepository.delete(id);
+      emit(TableMasterActionSuccess(response: response));
+    } catch (e) {
+      emit(TableMasterActionFailure(e.toString()));
+    }
+  }
 }

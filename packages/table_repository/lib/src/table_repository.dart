@@ -8,6 +8,7 @@ abstract class TableRepository {
   Future<List<TableModel>> findAll(FindAllTableDto dto);
   Future<TableModel> create(CreateTableDto dto);
   Future<TableModel> update(String id, UpdateTableDto dto);
+  Future<TableModel> delete(String id);
 }
 
 class TableRepositoryImpl implements TableRepository {
@@ -53,6 +54,17 @@ class TableRepositoryImpl implements TableRepository {
     final response = await _dio.patch(
       "$_baseURL/$id",
       data: dto.toJson(),
+      options: options,
+    );
+
+    return TableModel.fromJson(response.data);
+  }
+
+  @override
+  Future<TableModel> delete(String id) async {
+    final options = await _getOptions();
+    final response = await _dio.delete(
+      "$_baseURL/$id",
       options: options,
     );
 

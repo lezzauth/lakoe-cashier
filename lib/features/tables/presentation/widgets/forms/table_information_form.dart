@@ -14,10 +14,14 @@ class TableInformationForm extends StatefulWidget {
     super.key,
     required this.formKey,
     this.initialValue = const <String, dynamic>{},
+    this.onDeleted,
+    this.isLoading = false,
   });
 
   final GlobalKey<FormBuilderState> formKey;
   final Map<String, dynamic> initialValue;
+  final Future Function()? onDeleted;
+  final bool isLoading;
 
   @override
   State<TableInformationForm> createState() => _TableInformationFormState();
@@ -37,7 +41,13 @@ class _TableInformationFormState extends State<TableInformationForm> {
           message: "Kamu yakin ingin menghapus meja ini?",
           labelButtonPrimary: "Tidak",
           labelButtonSecondary: "Ya, Hapus",
-          discardAction: () {
+          isDiscardActionLoading: widget.isLoading,
+          discardAction: () async {
+            if (widget.onDeleted != null) {
+              await widget.onDeleted!();
+            }
+
+            if (!context.mounted) return;
             Navigator.pop(context);
           },
           saveAction: () {
@@ -133,13 +143,14 @@ class _TableInformationFormState extends State<TableInformationForm> {
                     ],
                   ),
                 ),
-                TextButton(
-                  onPressed: () => _showPopupConfirmation(context),
-                  child: const TextActionL(
-                    "Hapus Meja",
-                    color: TColors.error,
-                  ),
-                )
+                if (widget.initialValue.isNotEmpty)
+                  TextButton(
+                    onPressed: () => _showPopupConfirmation(context),
+                    child: const TextActionL(
+                      "Hapus Meja",
+                      color: TColors.error,
+                    ),
+                  )
               ],
             ),
           ),

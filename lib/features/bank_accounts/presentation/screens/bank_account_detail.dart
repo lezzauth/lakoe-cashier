@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owner_repository/owner_repository.dart';
@@ -43,9 +45,10 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
 
     if (result == null) return;
 
+    if (!mounted) return;
     AuthReady authState = context.read<AuthCubit>().state as AuthReady;
 
-    context.read<BankAccountMasterCubit>().update(
+    await context.read<BankAccountMasterCubit>().update(
           ownerId: authState.profile.id,
           bankId: bankId,
           dto: UpdateOwnerBankDto(
@@ -54,6 +57,15 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
             accountName: result.accountName,
             isPrimary: value["isPrimary"] ?? false,
           ),
+        );
+  }
+
+  Future<void> _onDeleted(String bankId) async {
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+
+    await context.read<BankAccountMasterCubit>().delete(
+          ownerId: authState.profile.id,
+          bankId: bankId,
         );
   }
 
@@ -76,6 +88,9 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
           onSubmitted: (value, bank) {
             FocusScope.of(context).unfocus();
             _onSubmitted(arguments.id, bank: bank, value: value);
+          },
+          onDeleted: () async {
+            return await _onDeleted(arguments.id);
           },
           isLoading: state is BankAccountMasterActionInProgress,
           initialValue: {

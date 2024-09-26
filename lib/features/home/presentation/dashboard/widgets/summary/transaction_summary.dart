@@ -67,7 +67,7 @@ class TransactionSummary extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.only(bottom: 8),
                         child: Text(
-                          "Penjualan",
+                          "Transaksi",
                           style: GoogleFonts.inter(
                             color: TColors.neutralDarkDarkest,
                             fontSize: TSizes.fontSizeHeading3,
@@ -101,7 +101,7 @@ class TransactionSummary extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "${totalTransactions.past ?? 0}",
+                  "${totalTransactions.current}",
                   style: GoogleFonts.inter(
                     color: TColors.infoMedium,
                     fontSize: TSizes.fontSizeHeading1,

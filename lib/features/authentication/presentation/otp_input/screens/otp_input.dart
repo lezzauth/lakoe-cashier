@@ -9,6 +9,7 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class OtpInputScreen extends StatefulWidget {
   const OtpInputScreen({super.key});
@@ -61,7 +62,7 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
       border: Border.all(color: TColors.primary, width: 1.5),
     );
 
-    return BlocListener<AuthCubit, AuthState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) async {
         if (!mounted) return;
 
@@ -74,173 +75,172 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
               context, "/cashier", ModalRoute.withName("/cashier"));
         }
       },
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) {
-          return Scaffold(
-            body: SafeArea(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 23.5),
-                      margin: const EdgeInsets.only(top: 88.5),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 40),
-                            child: Column(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(bottom: 8.0),
-                                  child: Text(
-                                    "Verifikasi Nomor WhatsApp",
-                                    style: GoogleFonts.inter(
-                                      fontSize: TSizes.fontSizeHeading3,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  "Masukkan 4 digit kode OTP yang telah kami kirimkan melalui WhatsApp untuk melanjutkan.",
+      builder: (context, state) {
+        return Scaffold(
+          body: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 23.5),
+                    margin: const EdgeInsets.only(top: 88.5),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 40),
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 8.0),
+                                child: Text(
+                                  "Verifikasi Nomor WhatsApp",
                                   style: GoogleFonts.inter(
-                                    fontSize: TSizes.fontSizeBodyS,
-                                    color: TColors.neutralDarkMedium,
+                                    fontSize: TSizes.fontSizeHeading3,
+                                    fontWeight: FontWeight.w700,
                                   ),
-                                  textAlign: TextAlign.center,
                                 ),
-                                const SizedBox(height: 12),
-                                Text(
-                                  "62812-****-*890 [hardcode]",
-                                  style: GoogleFonts.inter(
-                                    fontSize: TSizes.fontSizeBodyS,
-                                    color: TColors.neutralDarkMedium,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Pinput(
-                            defaultPinTheme: defaultPinTheme,
-                            focusedPinTheme: focusedPinTheme,
-                            length: 4,
-                            autofocus: true,
-                            controller: _optController,
-                            onCompleted: (value) {
-                              print('onCompleted:${state}');
-
-                              switch (state) {
-                                case AuthRequestOTPSuccess(:final target):
-                                case AuthVerifyOTPFailure(:final target):
-                                  context.read<AuthCubit>().verifyOTP(
-                                        VerifyOTPDto(
-                                          phoneNumber: target,
-                                          code: value,
-                                        ),
-                                      );
-
-                                  break;
-                                default:
-                              }
-                              _optController.clear();
-                            },
-                          ),
-                          if (state is AuthVerifyOTPFailure)
-                            Container(
-                              margin: const EdgeInsets.only(top: 12),
-                              child: Text(
-                                "OTP Salah",
+                              ),
+                              Text(
+                                "Masukkan 4 digit kode OTP yang telah kami kirimkan melalui WhatsApp untuk melanjutkan.",
                                 style: GoogleFonts.inter(
                                   fontSize: TSizes.fontSizeBodyS,
-                                  color: TColors.error,
+                                  color: TColors.neutralDarkMedium,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(bottom: 55.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (!isRepeat) ...[
-                          const SizedBox(
-                            height: 12,
-                            width: 12,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.0,
-                            ),
+                              const SizedBox(height: 12),
+                              if (state is AuthRequestOTPSuccess)
+                                Text(
+                                  TFormatter.censoredPhoneNumber(state.target),
+                                  style: GoogleFonts.inter(
+                                    fontSize: TSizes.fontSizeBodyS,
+                                    color: TColors.neutralDarkMedium,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                            ],
                           ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          TimerCountdown(
-                            endTime: countdownDate.add(
-                              const Duration(seconds: 10),
-                            ),
-                            format: CountDownTimerFormat.minutesSeconds,
-                            enableDescriptions: false,
-                            spacerWidth: 2,
-                            timeTextStyle: GoogleFonts.inter(
-                              color: TColors.primary,
-                              fontSize: TSizes.fontSizeActionL,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            colonsTextStyle: GoogleFonts.inter(
-                              color: TColors.primary,
-                              fontSize: TSizes.fontSizeActionL,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            onEnd: () {
-                              setState(() {
-                                isRepeat = true;
-                              });
-                            },
-                          )
-                        ],
-                        if (isRepeat)
-                          TextButton(
-                            onPressed: () {
-                              switch (state) {
-                                case AuthRequestOTPSuccess(:final target):
-                                case AuthVerifyOTPFailure(:final target):
-                                  context.read<AuthCubit>().requestOTP(
-                                      RequestOTPDto(phoneNumber: target));
+                        ),
+                        Pinput(
+                          defaultPinTheme: defaultPinTheme,
+                          focusedPinTheme: focusedPinTheme,
+                          length: 4,
+                          autofocus: true,
+                          controller: _optController,
+                          onCompleted: (value) {
+                            print('onCompleted:${state}');
 
-                                  break;
-                                default:
-                              }
-                              setState(() {
-                                isRepeat = false;
-                                countdownDate = DateTime.now();
-                              });
-                            },
-                            child: const TextActionL(
-                              "Kirim Ulang OTP",
-                              color: TColors.primary,
+                            switch (state) {
+                              case AuthRequestOTPSuccess(:final target):
+                              case AuthVerifyOTPFailure(:final target):
+                                context.read<AuthCubit>().verifyOTP(
+                                      VerifyOTPDto(
+                                        phoneNumber: target,
+                                        code: value,
+                                      ),
+                                    );
+
+                                break;
+                              default:
+                            }
+                            _optController.clear();
+                          },
+                        ),
+                        if (state is AuthVerifyOTPFailure)
+                          Container(
+                            margin: const EdgeInsets.only(top: 12),
+                            child: Text(
+                              "OTP Salah",
+                              style: GoogleFonts.inter(
+                                fontSize: TSizes.fontSizeBodyS,
+                                color: TColors.error,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                          )
-                        // Text(
-                        //   "59:00",
-                        //   style: GoogleFonts.inter(
-                        //     color: TColors.primary,
-                        //     fontSize: TSizes.fontSizeActionL,
-                        //     fontWeight: FontWeight.w600,
-                        //   ),
-                        // )
+                          ),
                       ],
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(bottom: 55.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (!isRepeat) ...[
+                        const SizedBox(
+                          height: 12,
+                          width: 12,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2.0,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        TimerCountdown(
+                          endTime: countdownDate.add(
+                            const Duration(seconds: 10),
+                          ),
+                          format: CountDownTimerFormat.minutesSeconds,
+                          enableDescriptions: false,
+                          spacerWidth: 2,
+                          timeTextStyle: GoogleFonts.inter(
+                            color: TColors.primary,
+                            fontSize: TSizes.fontSizeActionL,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          colonsTextStyle: GoogleFonts.inter(
+                            color: TColors.primary,
+                            fontSize: TSizes.fontSizeActionL,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          onEnd: () {
+                            setState(() {
+                              isRepeat = true;
+                            });
+                          },
+                        )
+                      ],
+                      if (isRepeat)
+                        TextButton(
+                          onPressed: () {
+                            switch (state) {
+                              case AuthRequestOTPSuccess(:final target):
+                              case AuthVerifyOTPFailure(:final target):
+                                context.read<AuthCubit>().requestOTP(
+                                    RequestOTPDto(phoneNumber: target));
+
+                                break;
+                              default:
+                            }
+                            setState(() {
+                              isRepeat = false;
+                              countdownDate = DateTime.now();
+                            });
+                          },
+                          child: const TextActionL(
+                            "Kirim Ulang OTP",
+                            color: TColors.primary,
+                          ),
+                        )
+                      // Text(
+                      //   "59:00",
+                      //   style: GoogleFonts.inter(
+                      //     color: TColors.primary,
+                      //     fontSize: TSizes.fontSizeActionL,
+                      //     fontWeight: FontWeight.w600,
+                      //   ),
+                      // )
+                    ],
+                  ),
+                )
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
