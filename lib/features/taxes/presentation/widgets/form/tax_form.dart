@@ -172,7 +172,7 @@ class _TaxFormState extends State<TaxForm> {
                                       decimal: true),
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(
-                                    RegExp(r'^\d+\.?\d{0,2}|^\d+\,?\d{0,2}')),
+                                    RegExp(r'^\d+\.?\d{0,2}|^\d+,?\d{0,2}')),
                               ],
                               validator: (value) {
                                 bool isPB1Active = _formKey.currentState
