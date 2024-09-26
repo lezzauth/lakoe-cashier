@@ -18,7 +18,7 @@ class OrderRepositoryImpl implements OrderRepository {
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
 
-  CashierRepositoryImpl() {
+  cashierRepositoryImpl() {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onError: (DioException error, handler) async {

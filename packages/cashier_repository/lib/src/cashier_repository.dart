@@ -157,7 +157,7 @@ class CashierRepositoryImpl implements CashierRepository {
     final Options options = await _getOptions();
 
     final response = await _dio.post(
-      "$_baseURL/orders/${id}/complete",
+      "$_baseURL/orders/$id/complete",
       data: await _completeOrderDto(dto),
       options: options,
     );
