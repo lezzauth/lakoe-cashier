@@ -68,7 +68,7 @@ class SalesSummary extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.only(bottom: 8),
                         child: Text(
-                          "Pendapatan",
+                          "Penjualan",
                           style: GoogleFonts.inter(
                             color: TColors.neutralDarkDarkest,
                             fontSize: TSizes.fontSizeHeading3,
