@@ -70,6 +70,10 @@ class _TableEditState extends State<TableEdit> {
         ));
   }
 
+  Future<void> _onDeleted(String tableId) async {
+    await context.read<TableMasterCubit>().delete(tableId);
+  }
+
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments as TableModel;
@@ -131,6 +135,7 @@ class _TableEditState extends State<TableEdit> {
                     "capacity": arguments.capacity.toString(),
                     "outletRoomId": arguments.outletRoomId,
                   },
+                  onDeleted: () => _onDeleted(arguments.id),
                 ),
               ),
               TableNewQrOrderTab(
