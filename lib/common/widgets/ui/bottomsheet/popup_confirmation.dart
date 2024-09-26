@@ -15,6 +15,7 @@ class PopupConfirmation extends StatefulWidget {
     required this.discardAction,
     required this.saveAction,
     this.isDiscardActionLoading = false,
+    this.isSaveActionLoading = false,
   });
 
   final String title;
@@ -24,6 +25,7 @@ class PopupConfirmation extends StatefulWidget {
   final Function() discardAction;
   final Function() saveAction;
   final bool isDiscardActionLoading;
+  final bool isSaveActionLoading;
 
   @override
   State<PopupConfirmation> createState() => _ChangesConfirmationState();
@@ -77,21 +79,21 @@ class _ChangesConfirmationState extends State<PopupConfirmation> {
                 Expanded(
                   child: SizedBox(
                     height: 48,
-                    child: widget.isDiscardActionLoading
-                        ? const SizedBox(
-                            height: 16,
-                            width: 16,
-                            child: CircularProgressIndicator(
-                              color: TColors.primary,
-                              strokeWidth: 2,
-                            ),
-                          )
-                        : OutlinedButton(
-                            onPressed: widget.discardAction,
-                            child: TextActionL(
+                    child: OutlinedButton(
+                      onPressed: widget.discardAction,
+                      child: widget.isDiscardActionLoading
+                          ? const SizedBox(
+                              height: 16,
+                              width: 16,
+                              child: CircularProgressIndicator(
+                                color: TColors.primary,
+                                strokeWidth: 2,
+                              ),
+                            )
+                          : TextActionL(
                               widget.labelButtonSecondary,
                             ),
-                          ),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -100,9 +102,18 @@ class _ChangesConfirmationState extends State<PopupConfirmation> {
                     height: 48,
                     child: ElevatedButton(
                       onPressed: widget.saveAction,
-                      child: TextActionL(
-                        widget.labelButtonPrimary,
-                      ),
+                      child: widget.isSaveActionLoading
+                          ? const SizedBox(
+                              height: 16,
+                              width: 16,
+                              child: CircularProgressIndicator(
+                                color: TColors.neutralLightLightest,
+                                strokeWidth: 2,
+                              ),
+                            )
+                          : TextActionL(
+                              widget.labelButtonPrimary,
+                            ),
                     ),
                   ),
                 ),
