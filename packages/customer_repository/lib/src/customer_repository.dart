@@ -51,7 +51,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
   Future<CustomerModel> create(CreateCustomerDto dto) async {
     final options = await _getOptions();
     final response = await _dio.post(
-      "$_baseURL",
+      _baseURL,
       data: dto.toJson(),
       options: options,
     );

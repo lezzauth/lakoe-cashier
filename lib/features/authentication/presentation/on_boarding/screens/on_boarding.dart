@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
