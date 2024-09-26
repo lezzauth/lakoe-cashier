@@ -36,7 +36,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
     final options = await _getOptions();
 
     final response =
-        await _dio.post("$_baseURL", data: dto.toJson(), options: options);
+        await _dio.post(_baseURL, data: dto.toJson(), options: options);
     return CategoryModel.fromJson(response.data);
   }
 

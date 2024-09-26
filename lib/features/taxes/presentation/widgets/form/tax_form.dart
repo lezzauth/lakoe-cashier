@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +13,6 @@ import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_form
 import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_form.dart/tax_form_state.dart';
 import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_master/tax_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_master/tax_master_state.dart';
-import 'package:point_of_sales_cashier/features/taxes/data/models.dart';
 import 'package:point_of_sales_cashier/features/taxes/presentation/widgets/form/field/other_tax_field.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';

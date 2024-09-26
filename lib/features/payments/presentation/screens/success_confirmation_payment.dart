@@ -294,7 +294,7 @@ class _SuccessConfirmationPaymentContentState
                   margin: const EdgeInsets.only(bottom: 12),
                   child: BlocBuilder<OrderDetailCubit, OrderDetailState>(
                     builder: (context, state) => switch (state) {
-                      OrderDetailLoadSuccess(:final order) => Row(
+                      OrderDetailLoadSuccess() => Row(
                           children: [
                             Expanded(
                               child: SizedBox(
