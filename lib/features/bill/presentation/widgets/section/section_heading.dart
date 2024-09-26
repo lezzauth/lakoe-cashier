@@ -8,12 +8,16 @@ class BillSectionHeading extends StatelessWidget {
   final String outletName;
   final String outletAddress;
   final String orderNumber;
+  final String orderType;
+  final String? noTable;
 
   const BillSectionHeading({
     super.key,
     required this.outletName,
     required this.outletAddress,
     required this.orderNumber,
+    required this.orderType,
+    this.noTable,
   });
 
   @override
@@ -40,9 +44,25 @@ class BillSectionHeading extends StatelessWidget {
             dashWidth: 4.0,
           ),
         ),
-        TextLarge(
-          "ORDER #$orderNumber".toUpperCase(),
-          textAlign: TextAlign.center,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: TextLarge(
+                "ORDER #$orderNumber".toUpperCase(),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: TextSmall(
+                "$orderType ${noTable ?? ""}",
+                textAlign: TextAlign.right,
+                isBold: true,
+                maxLines: 1,
+                overflow: TextOverflow.clip,
+              ),
+            ),
+          ],
         ),
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 4),

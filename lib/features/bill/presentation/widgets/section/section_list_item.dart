@@ -13,18 +13,18 @@ class BillSectionListItem extends StatefulWidget {
 class _BillSectionListItemState extends State<BillSectionListItem> {
   List<_BillListItem> listBillListItem = [
     _BillListItem(
-      itemName: "Nama Item#1",
+      itemName: "Kopi Hitam",
       qty: "1",
       price: "5.000",
-      note: "Catatan tambahan",
+      note: "Gulanya sedikit",
     ),
     _BillListItem(
-      itemName: "Nama Item#2",
+      itemName: "Es Teh",
       qty: "1",
       price: "5.000",
     ),
     _BillListItem(
-      itemName: "Nama Item#3",
+      itemName: "Mie Goreng",
       qty: "1",
       price: "10.000",
     ),

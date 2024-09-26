@@ -192,17 +192,13 @@ class _TaxFormState extends State<TaxForm> {
                               name: "isPB1Active",
                               initialValue: false,
                               builder: (FormFieldState<bool> field) {
-                                return SizedBox(
-                                  height: 28,
-                                  width: 45,
-                                  child: FittedBox(
-                                    fit: BoxFit.cover,
-                                    child: Switch(
-                                      value: field.value ?? false,
-                                      onChanged: (value) {
-                                        field.didChange(value);
-                                      },
-                                    ),
+                                return FittedBox(
+                                  fit: BoxFit.cover,
+                                  child: Switch(
+                                    value: field.value ?? false,
+                                    onChanged: (value) {
+                                      field.didChange(value);
+                                    },
                                   ),
                                 );
                               },
