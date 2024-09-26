@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
@@ -116,7 +115,6 @@ class _ImagePickerWrapperState extends State<ImagePickerWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    bool isError = widget.errorText.isNotEmpty;
     bool isEmptyValue = widget.value?.file == null && widget.value?.url == null;
 
     return GestureDetector(

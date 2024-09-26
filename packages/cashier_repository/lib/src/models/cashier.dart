@@ -1,4 +1,3 @@
-import 'package:customer_repository/customer_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'cashier.g.dart';
