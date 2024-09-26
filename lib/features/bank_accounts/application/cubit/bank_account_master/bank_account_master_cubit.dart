@@ -52,4 +52,15 @@ class BankAccountMasterCubit extends Cubit<BankAccountMasterState> {
       emit(BankAccountMasterActionFailure(e.toString()));
     }
   }
+
+  Future<void> delete({required String ownerId, required String bankId}) async {
+    try {
+      emit(BankAccountMasterActionInProgress());
+      final response =
+          await _ownerRepository.bank.delete(bankId: bankId, ownerId: ownerId);
+      emit(BankAccountMasterActionSuccess(response: response));
+    } catch (e) {
+      emit(BankAccountMasterActionFailure(e.toString()));
+    }
+  }
 }

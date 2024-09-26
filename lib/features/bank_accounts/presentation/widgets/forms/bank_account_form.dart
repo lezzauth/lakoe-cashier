@@ -19,9 +19,11 @@ class BankAccountForm extends StatefulWidget {
     required this.onSubmitted,
     this.isLoading = false,
     this.initialValue = const <String, dynamic>{},
+    this.onDeleted,
   });
 
   final Function(dynamic value, BankListModel? bank) onSubmitted;
+  final Future Function()? onDeleted;
   final bool isLoading;
   final Map<String, dynamic> initialValue;
 
@@ -70,10 +72,15 @@ class _BankAccountFormState extends State<BankAccountForm> {
           message: "Kamu yakin ingin menghapus rekening ini?",
           labelButtonPrimary: "Tidak",
           labelButtonSecondary: "Ya, Hapus",
-          discardAction: () {
+          isDiscardActionLoading: widget.isLoading,
+          discardAction: () async {
+            if (widget.onDeleted != null) {
+              await widget.onDeleted!();
+            }
+            if (!context.mounted) return;
             Navigator.pop(context);
           },
-          saveAction: () {
+          saveAction: () async {
             Navigator.pop(context);
           },
         );
@@ -192,13 +199,14 @@ class _BankAccountFormState extends State<BankAccountForm> {
                         ),
                       ),
                     ),
-                  TextButton(
-                    onPressed: () => _showPopupConfirmation(context),
-                    child: const TextActionL(
-                      "Hapus Rekening Bank",
-                      color: TColors.error,
-                    ),
-                  )
+                  if (widget.initialValue.isNotEmpty)
+                    TextButton(
+                      onPressed: () => _showPopupConfirmation(context),
+                      child: const TextActionL(
+                        "Hapus Rekening Bank",
+                        color: TColors.error,
+                      ),
+                    )
                 ],
               ),
             ),
