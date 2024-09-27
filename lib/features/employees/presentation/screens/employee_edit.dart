@@ -8,20 +8,23 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_state.dart';
+import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
 import 'package:point_of_sales_cashier/features/employees/presentation/widgets/forms/employee_form.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NewEmployeeScreen extends StatefulWidget {
-  const NewEmployeeScreen({super.key});
+class EmployeeEditScreen extends StatefulWidget {
+  const EmployeeEditScreen({super.key, required this.arguments});
+
+  final EmployeeEditArgument arguments;
 
   @override
-  State<NewEmployeeScreen> createState() => _NewEmployeeScreenState();
+  State<EmployeeEditScreen> createState() => _EmployeeEditScreenState();
 }
 
-class _NewEmployeeScreenState extends State<NewEmployeeScreen>
+class _EmployeeEditScreenState extends State<EmployeeEditScreen>
     with SingleTickerProviderStateMixin {
   final _employeeFormKey = GlobalKey<FormBuilderState>();
 
@@ -54,9 +57,10 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
       email = null;
     }
 
-    await context.read<EmployeeMasterCubit>().create(
-          profilePicture.file!,
-          CreateEmployeeDto(
+    await context.read<EmployeeMasterCubit>().update(
+          widget.arguments.employee.id,
+          profilePicture: profilePicture.file,
+          dto: UpdateEmployeeDto(
             name: value["name"],
             pin: value["pin"],
             phoneNumber: value["phoneNumber"],
@@ -81,6 +85,8 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final employee = widget.arguments.employee;
+
     return BlocConsumer<EmployeeMasterCubit, EmployeeMasterState>(
       listener: (context, state) {
         if (state is EmployeeMasterActionSuccess) {
@@ -94,7 +100,7 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
           actionError: state is EmployeeMasterActionFailure,
           child: Scaffold(
             appBar: CustomAppbar(
-              title: "Karyawan Baru",
+              title: "Ubah Data Karyawan",
               actions: [
                 TextButton(
                     onPressed: !isLoading ? _onSubmitted : null,
@@ -123,6 +129,14 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
               padding: const EdgeInsets.only(top: 16.0),
               child: EmployeeForm(
                 formKey: _employeeFormKey,
+                initialValue: {
+                  "profilePicture": employee.profilePicture == null
+                      ? null
+                      : ImagePickerValue(url: employee.profilePicture!),
+                  "name": employee.name,
+                  "phoneNumber": employee.phoneNumber,
+                  "email": employee.email,
+                },
               ),
             ),
             // body: TabBarView(
