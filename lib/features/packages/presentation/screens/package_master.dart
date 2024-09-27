@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -25,7 +28,7 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
   TabController? _tabController;
   int _selectedIndex = 0;
 
-  List<_CardItemPackage> listCardItem = [
+  List<_CardItemPackage> listCardItemPackage = [
     _CardItemPackage(
       logo: TImages.liteLogoPackage,
       description:
@@ -48,6 +51,24 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
       price: 56000,
       color: Color(0xFF9306AF),
       isActive: false,
+    ),
+  ];
+
+  List<_CardItemBoost> listCardItemBoost = [
+    _CardItemBoost(
+      title: "Boost Transaksi",
+      subtitle: "Tambah kuota order dan produk",
+      price: 3500,
+    ),
+    _CardItemBoost(
+      title: "Boost Loyalty",
+      subtitle: "Raih pelanggan lebih banyak lagi",
+      price: 2500,
+    ),
+    _CardItemBoost(
+      title: "Boost Operasional",
+      subtitle: "Tambah karyawan dan QR meja",
+      price: 4500,
     ),
   ];
 
@@ -120,8 +141,8 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
                   child: TabBarView(
                     controller: _tabController,
                     children: [
-                      PackageTabView(children: listCardItem),
-                      BoostTabView(),
+                      PackageTabView(data: listCardItemPackage),
+                      BoostTabView(data: listCardItemBoost),
                     ],
                   ),
                 ),
@@ -135,19 +156,16 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
 }
 
 class PackageTabView extends StatelessWidget {
-  const PackageTabView({
-    super.key,
-    required this.children,
-  });
+  const PackageTabView({super.key, required this.data});
 
-  final List children;
+  final List data;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 12),
       child: Column(
-        children: children
+        children: data
             .map((item) => Container(
                   margin: EdgeInsets.only(bottom: 16),
                   decoration: BoxDecoration(
@@ -221,7 +239,7 @@ class PackageTabView extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    child: Text("Cek Detail"),
+                                    child: TextActionL("Cek Detail"),
                                   ),
                                 if (item.isActive == true)
                                   Container(
@@ -251,13 +269,91 @@ class PackageTabView extends StatelessWidget {
 }
 
 class BoostTabView extends StatelessWidget {
-  const BoostTabView({super.key});
+  const BoostTabView({super.key, required this.data});
+
+  final List data;
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(top: 12),
-      child: Placeholder(),
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Column(
+          children: data
+              .map(
+                (item) => Container(
+                  margin: EdgeInsets.only(bottom: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: TColors.neutralLightMedium,
+                      width: 1,
+                    ),
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextHeading3(
+                            item.title,
+                            color: TColors.neutralDarkDarkest,
+                          ),
+                          TextBodyM(
+                            item.subtitle,
+                            color: TColors.neutralDarkLightest,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12),
+                      const Separator(
+                        color: TColors.neutralLightMedium,
+                        height: 1,
+                        dashWidth: 5.0,
+                      ),
+                      SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (item.price != 0)
+                                TextBodyS(
+                                  "Mulai dari",
+                                  color: TColors.neutralDarkLightest,
+                                ),
+                              TextHeading2(
+                                TFormatter.formatToRupiah(item.price),
+                                color: TColors.neutralDarkDark,
+                              ),
+                            ],
+                          ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ButtonStyle(
+                              minimumSize: WidgetStateProperty.all(
+                                Size(0, 36),
+                              ),
+                              padding: WidgetStateProperty.all(
+                                EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 8,
+                                ),
+                              ),
+                            ),
+                            child: TextActionL("Cek Detail"),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              )
+              .toList()),
     );
   }
 }
@@ -305,5 +401,17 @@ class _CardItemPackage {
     this.isActive = false,
     required this.price,
     required this.color,
+  });
+}
+
+class _CardItemBoost {
+  final String title;
+  final String subtitle;
+  final int price;
+
+  _CardItemBoost({
+    required this.title,
+    required this.subtitle,
+    required this.price,
   });
 }
