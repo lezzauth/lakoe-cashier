@@ -8,6 +8,7 @@ import 'package:token_provider/token_provider.dart';
 
 abstract class EmployeeRepository {
   Future<List<EmployeeModel>> findAll(FindAllEmployeeDto dto);
+  Future<EmployeeModel> findOne(String id);
   Future<EmployeeModel> create({
     required File profilePicture,
     required CreateEmployeeDto dto,
@@ -21,7 +22,7 @@ abstract class EmployeeRepository {
 }
 
 class EmployeeRepositoryImpl implements EmployeeRepository {
-  String _baseURL = "/employees";
+  final String _baseURL = "/employees";
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
 
@@ -42,6 +43,14 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
         options: options);
 
     return response.data!.map((e) => EmployeeModel.fromJson(e)).toList();
+  }
+
+  @override
+  Future<EmployeeModel> findOne(String id) async {
+    final options = await _getOptions();
+    final response = await _dio.get("$_baseURL/$id", options: options);
+
+    return EmployeeModel.fromJson(response.data);
   }
 
   @override

@@ -19,10 +19,26 @@ class MasterEmployeScreen extends StatefulWidget {
 }
 
 class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
+  Future<void> _onRefresh() async {
+    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+
+    await context
+        .read<EmployeeMasterCubit>()
+        .findAll(FindAllEmployeeDto(outletId: authState.outletId));
+  }
+
   void _onInit() {
     AuthReady authState = context.read<AuthCubit>().state as AuthReady;
 
     context.read<EmployeeMasterCubit>().init(authState.outletId);
+  }
+
+  Future<void> _onGoToCreateScreen() async {
+    bool? newProduct =
+        await Navigator.pushNamed(context, "/employee/new") as bool?;
+
+    if (newProduct != true) return;
+    _onRefresh();
   }
 
   @override
@@ -44,9 +60,7 @@ class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
       body: Scrollbar(
         child: RefreshIndicator(
           backgroundColor: TColors.neutralLightLightest,
-          onRefresh: () async {
-            return await Future.delayed(const Duration(milliseconds: 200));
-          },
+          onRefresh: _onRefresh,
           child: BlocBuilder<EmployeeMasterCubit, EmployeeMasterState>(
             builder: (context, state) => ErrorWrapper(
               fetchError: state is EmployeeMasterLoadFailure,
@@ -91,9 +105,7 @@ class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
-          onPressed: () {
-            Navigator.pushNamed(context, "/employee/new");
-          },
+          onPressed: _onGoToCreateScreen,
           elevation: 0,
           child: const Icon(
             Icons.add,
