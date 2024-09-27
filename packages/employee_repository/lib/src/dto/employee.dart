@@ -18,6 +18,14 @@ class CreateEmployeeDto with _$CreateEmployeeDto {
       _$CreateEmployeeDtoFromJson(json);
 }
 
+extension CreateToJsonFilterExtension on CreateEmployeeDto {
+  Map<String, dynamic> toJsonFilter() {
+    final Map<String, dynamic> json = toJson();
+    json.removeWhere((key, value) => value == null);
+    return json;
+  }
+}
+
 @freezed
 class UpdateEmployeeDto with _$UpdateEmployeeDto {
   const factory UpdateEmployeeDto({
