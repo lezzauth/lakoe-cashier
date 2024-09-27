@@ -8,7 +8,7 @@ class OrderMasterCubit extends Cubit<OrderMasterState> {
   OrderMasterCubit() : super(OrderMasterInitial());
 
   Future<void> init() async {
-    await findAll(const FindAllOrderDto(status: "OPEN"));
+    await findAll(const FindAllOrderDto(status: "OPEN", source: "CASHIER"));
   }
 
   Future<void> findAll(FindAllOrderDto dto) async {
