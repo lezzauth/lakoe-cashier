@@ -7,14 +7,21 @@ class TextCaptionM extends StatelessWidget {
   final FontWeight fontWeight;
   final double fontSize = TSizes.fontSizeCaptionM;
   final Color? color;
+  final TextAlign? textAlign;
 
-  const TextCaptionM(this.data,
-      {super.key, this.fontWeight = FontWeight.w600, this.color});
+  const TextCaptionM(
+    this.data, {
+    super.key,
+    this.fontWeight = FontWeight.w600,
+    this.color,
+    this.textAlign,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       data,
+      textAlign: textAlign,
       style: GoogleFonts.inter(
         color: color,
         fontWeight: fontWeight,
