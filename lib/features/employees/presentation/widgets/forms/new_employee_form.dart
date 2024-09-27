@@ -130,17 +130,14 @@ class _NewEmployeeFormState extends State<NewEmployeeForm> {
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.email(
-                        errorText: ErrorTextStrings.email(),
-                      ),
-                      // FormBuilderValidators.conditional((value) {
-                      //   if (value == null) return false;
-                      //   if (value.isEmpty) return false;
-                      //   return true;
-                      // },
-                      //     FormBuilderValidators.email(
-                      //       errorText: ErrorTextStrings.email(),
-                      //     ))
+                      FormBuilderValidators.conditional((value) {
+                        if (value == null) return false;
+                        if (value.isEmpty) return false;
+                        return true;
+                      },
+                          FormBuilderValidators.email(
+                            errorText: ErrorTextStrings.email(),
+                          ))
                     ]),
                   ),
                 ],

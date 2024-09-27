@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -60,7 +61,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
   }) async {
     final Options options = await _getOptions();
 
-    FormData formData = FormData.fromMap({...dto.toJson()});
+    FormData formData = FormData.fromMap({...dto.toJsonFilter()});
     formData.files.add(MapEntry(
         "profilePicture",
         await MultipartFile.fromFile(profilePicture.path,

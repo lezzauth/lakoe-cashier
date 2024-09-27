@@ -49,6 +49,10 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
         value["profilePicture"] as ImagePickerValue;
 
     AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+    String? email = value["email"];
+    if (email == null || email.isEmpty) {
+      email = null;
+    }
 
     await context.read<EmployeeMasterCubit>().create(
           profilePicture.file!,
@@ -58,7 +62,7 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
             phoneNumber: value["phoneNumber"],
             role: "CASHIER",
             outletId: authState.outletId,
-            email: value["email"],
+            email: email,
           ),
         );
   }

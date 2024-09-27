@@ -9,6 +9,7 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_state.dart';
 import 'package:point_of_sales_cashier/features/employees/common/widgets/employee_item.dart';
+import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_detail_argument.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class MasterEmployeScreen extends StatefulWidget {
@@ -81,10 +82,9 @@ class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
                           name: employee.name,
                           role: employee.role,
                           onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              "/employee/detail",
-                            );
+                            Navigator.pushNamed(context, "/employee/detail",
+                                arguments:
+                                    EmployeeDetailArgument(employee: employee));
                           },
                         ),
                       );
