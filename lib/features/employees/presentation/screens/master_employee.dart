@@ -81,10 +81,12 @@ class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
                         child: EmployeeItem(
                           name: employee.name,
                           role: employee.role,
-                          onTap: () {
-                            Navigator.pushNamed(context, "/employee/detail",
+                          onTap: () async {
+                            await Navigator.pushNamed(
+                                context, "/employee/detail",
                                 arguments:
                                     EmployeeDetailArgument(employee: employee));
+                            _onRefresh();
                           },
                         ),
                       );

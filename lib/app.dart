@@ -20,6 +20,8 @@ import 'package:point_of_sales_cashier/features/bank_accounts/presentation/scree
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_edit.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_master.dart';
 import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_detail_argument.dart';
+import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
+import 'package:point_of_sales_cashier/features/employees/presentation/screens/employee_edit.dart';
 import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
 import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/print/presentation/screens/print_master.dart';
@@ -251,8 +253,13 @@ class App extends StatelessWidget {
             "/employee": (context) => const MasterEmployeScreen(),
             "/employee/new": (context) => const NewEmployeeScreen(),
             "/employee/detail": (context) => DetailEmployeeScreen(
-                arguments: ModalRoute.of(context)!.settings.arguments
-                    as EmployeeDetailArgument),
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as EmployeeDetailArgument,
+                ),
+            "/employee/edit": (context) => EmployeeEditScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as EmployeeEditArgument,
+                ),
 
             // bank accounts
             "/bank_accounts": (context) => const BankAccountMasterScreen(),
