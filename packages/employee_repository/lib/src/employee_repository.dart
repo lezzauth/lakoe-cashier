@@ -16,7 +16,7 @@ abstract class EmployeeRepository {
   });
   Future<EmployeeModel> update(
     String id, {
-    required File profilePicture,
+    File? profilePicture,
     required UpdateEmployeeDto dto,
   });
   Future<EmployeeModel> delete(String id);
@@ -83,7 +83,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
   }) async {
     final options = await _getOptions();
 
-    FormData formData = FormData.fromMap({...dto.toJson()});
+    FormData formData = FormData.fromMap({...dto.toJsonFilter()});
 
     if (profilePicture != null) {
       formData.files.add(MapEntry(

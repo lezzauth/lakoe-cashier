@@ -35,4 +35,22 @@ class EmployeeMasterCubit extends Cubit<EmployeeMasterState> {
       emit(EmployeeMasterActionFailure(e.toString()));
     }
   }
+
+  Future<void> update(
+    String id, {
+    File? profilePicture,
+    required UpdateEmployeeDto dto,
+  }) async {
+    try {
+      emit(EmployeeMasterActionInProgress());
+      final response = await _employeeRepository.update(
+        id,
+        profilePicture: profilePicture,
+        dto: dto,
+      );
+      emit(EmployeeMasterActionSuccess(response: response));
+    } catch (e) {
+      emit(EmployeeMasterActionFailure(e.toString()));
+    }
+  }
 }

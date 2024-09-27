@@ -7,15 +7,21 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/fo
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class NewEmployeeForm extends StatefulWidget {
-  const NewEmployeeForm({super.key, required this.formKey});
+class EmployeeForm extends StatefulWidget {
+  const EmployeeForm({
+    super.key,
+    required this.formKey,
+    this.initialValue = const <String, dynamic>{},
+  });
+
   final GlobalKey<FormBuilderState> formKey;
+  final Map<String, dynamic> initialValue;
 
   @override
-  State<NewEmployeeForm> createState() => _NewEmployeeFormState();
+  State<EmployeeForm> createState() => _EmployeeFormState();
 }
 
-class _NewEmployeeFormState extends State<NewEmployeeForm> {
+class _EmployeeFormState extends State<EmployeeForm> {
   final pinFormatter = MaskTextInputFormatter(
     mask: '######',
     filter: {"#": RegExp(r'[0-9]')},
@@ -24,9 +30,12 @@ class _NewEmployeeFormState extends State<NewEmployeeForm> {
 
   @override
   Widget build(BuildContext context) {
+    bool isEdit = widget.initialValue.isNotEmpty;
+
     return FormBuilder(
       key: widget.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      initialValue: widget.initialValue,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
@@ -160,15 +169,23 @@ class _NewEmployeeFormState extends State<NewEmployeeForm> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [pinFormatter],
                     obscureText: true,
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                        errorText: ErrorTextStrings.required(),
-                      ),
-                      FormBuilderValidators.equalLength(
-                        6,
-                        errorText: ErrorTextStrings.equalLength(maxLength: 6),
-                      )
-                    ]),
+                    validator: FormBuilderValidators.conditional((value) {
+                      if (isEdit) {
+                        if (value == null) return false;
+                      }
+
+                      return true;
+                    },
+                        FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                            errorText: ErrorTextStrings.required(),
+                          ),
+                          FormBuilderValidators.equalLength(
+                            6,
+                            errorText:
+                                ErrorTextStrings.equalLength(maxLength: 6),
+                          )
+                        ])),
                   ),
                 ],
               ),
