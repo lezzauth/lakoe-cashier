@@ -462,8 +462,22 @@ class TabViewPackage extends StatelessWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width,
           child: ElevatedButton(
-            // ignore: avoid_print
-            onPressed: () => print("Saved!"),
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                "/checkout",
+                arguments: {
+                  'type': 'boost',
+                  'logo': TImages.boostLogo,
+                  'colorWave': Color(0xFF6F390A),
+                  'bgColor': Color(0xFFFFEBD9),
+                  'packageName': 'Boost Transaksi',
+                  'period': package.period,
+                  'pricePerMonth': package.pricePerMonth,
+                  'finalPrice': package.finalPrice,
+                },
+              );
+            },
             child: const TextActionL(
               "Langganan Sekarang",
             ),

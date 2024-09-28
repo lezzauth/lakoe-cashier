@@ -19,6 +19,7 @@ import 'package:point_of_sales_cashier/features/bank_accounts/presentation/scree
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_new.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_edit.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_master.dart';
+import 'package:point_of_sales_cashier/features/checkout/presentation/screens/chekcout_master.dart';
 import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
 import 'package:point_of_sales_cashier/features/employees/presentation/screens/employee_edit.dart';
@@ -309,6 +310,9 @@ class App extends StatelessWidget {
             "/packages/grow": (context) => const GrowPackageDetailScreen(),
             "/packages/pro": (context) => const ProPackageDetailScreen(),
             "/boost": (context) => const BoostDetailScreen(),
+
+            // Checkout
+            "/checkout": (context) => const ChekcoutMasterScreen(),
           },
         ),
       ),

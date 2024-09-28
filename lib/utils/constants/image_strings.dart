@@ -63,6 +63,7 @@ class TImages {
   static const String lakoeXPro = "assets/logos/package/lakoe_x_pro.png";
   static const String boostLightLogo =
       "assets/logos/package/logo-light-boost.png";
+  static const String boostLogo = "assets/logos/package/logo-boost.png";
 
   // banks
   static const String bankBCALogo = "assets/images/bank-bca-logo.svg";

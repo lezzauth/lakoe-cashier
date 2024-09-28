@@ -168,7 +168,7 @@ class _GrowPackageDetailScreenState extends State<GrowPackageDetailScreen>
                         ),
                         TabViewPackage(
                           packageData: listPeriodPackage,
-                          quotaData: listQuotaPackage,
+                          quota: listQuotaPackage,
                           index: _selectedIndex,
                         ),
                       ],
@@ -188,18 +188,17 @@ class TabViewPackage extends StatelessWidget {
   const TabViewPackage({
     super.key,
     required this.packageData,
-    required this.quotaData,
+    required this.quota,
     required this.index,
   });
 
   // ignore: library_private_types_in_public_api
   final List<_PackagesDetail> packageData;
-  final List<_QuotaPackages> quotaData;
+  final List<_QuotaPackages> quota;
   final int index;
 
   @override
   Widget build(BuildContext context) {
-    final List<_QuotaPackages> quota = quotaData;
     final package = packageData[index];
     return Column(
       children: [
@@ -272,16 +271,18 @@ class TabViewPackage extends StatelessWidget {
 
         const SizedBox(height: 20),
         // Highlighted Table
-        PackageComparisonTable(quota: quota),
+        PackageComparisonTable(package: package, quota: quota),
       ],
     );
   }
 }
 
 class PackageComparisonTable extends StatelessWidget {
-  const PackageComparisonTable({super.key, required this.quota});
+  const PackageComparisonTable(
+      {super.key, required this.package, required this.quota});
 
   // ignore: library_private_types_in_public_api
+  final _PackagesDetail package;
   final List<_QuotaPackages> quota;
 
   @override
@@ -490,7 +491,20 @@ class PackageComparisonTable extends StatelessWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width,
           child: ElevatedButton(
-            onPressed: () => print("Saved!"),
+            onPressed: () => Navigator.pushNamed(
+              context,
+              "/checkout",
+              arguments: {
+                'type': 'package',
+                'logo': TImages.growLogoPackage,
+                'colorWave': Color(0xFF00712D),
+                'bgColor': TColors.successLight,
+                'packageName': 'Grow',
+                'period': package.period,
+                'pricePerMonth': package.pricePerMonth,
+                'finalPrice': package.finalPrice,
+              },
+            ),
             child: const TextActionL(
               "Langganan Sekarang",
             ),
