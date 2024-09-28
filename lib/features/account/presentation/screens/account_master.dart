@@ -8,7 +8,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/account/presentation/widgets/appbar/account_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/appbar/light_appbar.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -55,7 +55,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
     return Scaffold(
       backgroundColor: TColors.neutralLightLight,
       extendBodyBehindAppBar: true,
-      appBar: const AccountAppbar(
+      appBar: const CustomAppbarLight(
         title: "Profil & Akun",
       ),
       body: Stack(
@@ -64,7 +64,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: SvgPicture.asset(
-                TImages.liteLevel,
+                TImages.liteLevelHero,
                 fit: BoxFit.fill,
               ),
             ),
