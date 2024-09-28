@@ -27,6 +27,11 @@ class _BoostDetailScreenState extends State<BoostDetailScreen>
   TabController? _tabController;
   int _selectedIndex = 0;
 
+  Map<String, dynamic>? arguments;
+  int? id;
+  String? title;
+  String? subtitle;
+
   List<_BoostDetail> listPeriodBoostTransaction = [
     _BoostDetail(
       period: "1",
@@ -177,6 +182,18 @@ class _BoostDetailScreenState extends State<BoostDetailScreen>
         _selectedIndex = _tabController!.index;
       });
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        arguments =
+            ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+        if (arguments != null) {
+          id = arguments?['id'];
+          title = arguments?['title'];
+          subtitle = arguments?['subtitle'];
+        }
+      });
+    });
   }
 
   @override
@@ -187,17 +204,11 @@ class _BoostDetailScreenState extends State<BoostDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    int id = arguments['id'];
-    String title = arguments['title'];
-    String subtitle = arguments['subtitle'];
-
     return Scaffold(
       backgroundColor: TColors.neutralLightLight,
       extendBodyBehindAppBar: true,
       appBar: CustomAppbarLight(
-        title: title,
+        title: title!,
       ),
       body: Stack(
         children: [
@@ -246,16 +257,17 @@ class _BoostDetailScreenState extends State<BoostDetailScreen>
                         ),
                         TabViewPackage(
                           index: _selectedIndex,
-                          title: title,
-                          subtitle: subtitle,
-                          packageInfo: id == 1
+                          id: id!,
+                          title: title!,
+                          subtitle: subtitle!,
+                          packageInfo: id! == 1
                               ? listPeriodBoostTransaction
-                              : id == 2
+                              : id! == 2
                                   ? listPeriodBoostLoyalty
                                   : listPeriodBoostOperation,
-                          itemPackage: id == 1
+                          itemPackage: id! == 1
                               ? listItemModuleTransaction
-                              : id == 2
+                              : id! == 2
                                   ? listItemModuleLoyalty
                                   : listItemModuleOperation,
                         ),
@@ -278,16 +290,17 @@ class TabViewPackage extends StatelessWidget {
     required this.index,
     required this.packageInfo,
     required this.itemPackage,
+    required this.id,
     required this.title,
     required this.subtitle,
   });
 
-  // ignore: library_private_types_in_public_api
   final int index;
   // ignore: library_private_types_in_public_api
   final List<_BoostDetail> packageInfo;
   // ignore: library_private_types_in_public_api
   final List<_ModuleItemPackage> itemPackage;
+  final int id;
   final String title;
   final String subtitle;
 
@@ -471,7 +484,11 @@ class TabViewPackage extends StatelessWidget {
                   'logo': TImages.boostLogo,
                   'colorWave': Color(0xFF6F390A),
                   'bgColor': Color(0xFFFFEBD9),
-                  'packageName': 'Boost Transaksi',
+                  'packageName': id == 1
+                      ? 'Boost Transaksi'
+                      : id == 2
+                          ? 'Boost Loyalty'
+                          : 'Boost Operasional',
                   'period': package.period,
                   'pricePerMonth': package.pricePerMonth,
                   'finalPrice': package.finalPrice,
