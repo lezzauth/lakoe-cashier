@@ -41,10 +41,10 @@ class TImages {
   static const String bankAccountEmpty = "assets/images/bank-account-empty.svg";
 
   // hero
-  static const String liteLevel = "assets/images/hero/lite.svg";
-  static const String growLevel = "assets/images/hero/grow.svg";
-  static const String proLevel = "assets/images/hero/pro.svg";
-  static const String package = "assets/images/hero/package.svg";
+  static const String liteLevelHero = "assets/images/hero/lite.svg";
+  static const String growLevelHero = "assets/images/hero/grow.svg";
+  static const String proLevelHero = "assets/images/hero/pro.svg";
+  static const String packageHero = "assets/images/hero/package.svg";
 
   // logo package level
   static const String liteLogoPackage =
@@ -53,9 +53,13 @@ class TImages {
       "assets/logos/package/grow-logo-level.png";
   static const String proLogoPackage =
       "assets/logos/package/pro-logo-level.png";
+  static const String liteLogoLow =
+      "assets/logos/package/lite-logo-level-low.png";
   static const String liteIcon = "assets/logos/package/icon-lite.png";
   static const String growIcon = "assets/logos/package/icon-grow.png";
   static const String proIcon = "assets/logos/package/icon-pro.png";
+  static const String lakoeXGrow = "assets/logos/package/lakoe_x_grow.png";
+  static const String lakoeXPro = "assets/logos/package/lakoe_x_pro.png";
 
   // banks
   static const String bankBCALogo = "assets/images/bank-bca-logo.svg";

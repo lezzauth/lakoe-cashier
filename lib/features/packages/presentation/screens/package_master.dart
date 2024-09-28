@@ -43,6 +43,7 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
       price: 30000,
       color: Color(0xFF00712D),
       isActive: false,
+      routeName: "/packages/grow",
     ),
     _CardItemPackage(
       logo: TImages.proLogoPackage,
@@ -51,6 +52,7 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
       price: 56000,
       color: Color(0xFF9306AF),
       isActive: false,
+      routeName: "/",
     ),
   ];
 
@@ -100,7 +102,7 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: SvgPicture.asset(
-                TImages.package,
+                TImages.packageHero,
                 fit: BoxFit.fill,
               ),
             ),
@@ -227,7 +229,10 @@ class PackageTabView extends StatelessWidget {
                                 ),
                                 if (item.isActive == false)
                                   ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, item.routeName);
+                                    },
                                     style: ButtonStyle(
                                       minimumSize: WidgetStateProperty.all(
                                         Size(0, 36),
@@ -394,6 +399,7 @@ class _CardItemPackage {
   final bool isActive;
   final int price;
   final Color color;
+  final String? routeName;
 
   _CardItemPackage({
     required this.logo,
@@ -401,6 +407,7 @@ class _CardItemPackage {
     this.isActive = false,
     required this.price,
     required this.color,
+    this.routeName,
   });
 }
 
