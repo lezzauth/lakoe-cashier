@@ -24,6 +24,7 @@ import 'package:point_of_sales_cashier/features/employees/data/arguments/employe
 import 'package:point_of_sales_cashier/features/employees/presentation/screens/employee_edit.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/grow_package_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_master.dart';
+import 'package:point_of_sales_cashier/features/packages/presentation/screens/pro_package_detail.dart';
 import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
 import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/print/presentation/screens/print_master.dart';
@@ -305,6 +306,7 @@ class App extends StatelessWidget {
             // Package
             "/packages": (context) => const PackageMasterScreen(),
             "/packages/grow": (context) => const GrowPackageDetailScreen(),
+            "/packages/pro": (context) => const ProPackageDetailScreen(),
           },
         ),
       ),

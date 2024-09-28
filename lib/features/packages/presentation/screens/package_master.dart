@@ -52,7 +52,7 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
       price: 56000,
       color: Color(0xFF9306AF),
       isActive: false,
-      routeName: "/",
+      routeName: "/packages/pro",
     ),
   ];
 

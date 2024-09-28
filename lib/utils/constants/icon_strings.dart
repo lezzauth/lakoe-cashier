@@ -75,4 +75,5 @@ class TIcons {
   static const String backspace = "assets/icons/backspace.svg";
   static const String refresh = "assets/icons/refresh.svg";
   static const String bluetooth = "assets/icons/bluetooth.svg";
+  static const String infinity = "assets/icons/infinity.svg";
 }
