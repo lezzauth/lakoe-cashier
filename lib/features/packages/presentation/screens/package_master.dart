@@ -58,19 +58,25 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
 
   List<_CardItemBoost> listCardItemBoost = [
     _CardItemBoost(
+      id: 1,
       title: "Boost Transaksi",
       subtitle: "Tambah kuota order dan produk",
       price: 3500,
+      routeName: "/boost",
     ),
     _CardItemBoost(
+      id: 2,
       title: "Boost Loyalty",
       subtitle: "Raih pelanggan lebih banyak lagi",
       price: 2500,
+      routeName: "/boost",
     ),
     _CardItemBoost(
+      id: 3,
       title: "Boost Operasional",
       subtitle: "Tambah karyawan dan QR meja",
       price: 4500,
+      routeName: "/boost",
     ),
   ];
 
@@ -127,12 +133,12 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
                       title: "Boost",
                       labelAssets: _selectedIndex != 1
                           ? SvgPicture.asset(
-                              TImages.boostLogo,
+                              TImages.boostLogoSvg,
                               height: 16,
                               width: 62,
                             )
                           : SvgPicture.asset(
-                              TImages.boostLogoLight,
+                              TImages.boostLogoSvgLight,
                               height: 16,
                               width: 62,
                             ),
@@ -338,7 +344,17 @@ class BoostTabView extends StatelessWidget {
                             ],
                           ),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                item.routeName,
+                                arguments: {
+                                  'id': item.id,
+                                  'title': item.title,
+                                  'subtitle': item.subtitle,
+                                },
+                              );
+                            },
                             style: ButtonStyle(
                               minimumSize: WidgetStateProperty.all(
                                 Size(0, 36),
@@ -412,13 +428,17 @@ class _CardItemPackage {
 }
 
 class _CardItemBoost {
+  final int id;
   final String title;
   final String subtitle;
   final int price;
+  final String? routeName;
 
   _CardItemBoost({
+    required this.id,
     required this.title,
     required this.subtitle,
     required this.price,
+    this.routeName,
   });
 }

@@ -27,7 +27,7 @@ class _ProPackageDetailScreenState extends State<ProPackageDetailScreen>
   TabController? _tabController;
   int _selectedIndex = 0;
 
-  List<_PackagesDetail> listBenefitOfPackage = [
+  List<_PackagesDetail> listPeriodPackage = [
     _PackagesDetail(
       period: "1",
       pricePerMonth: 56250,
@@ -170,7 +170,7 @@ class _ProPackageDetailScreenState extends State<ProPackageDetailScreen>
                           ],
                         ),
                         TabViewPackage(
-                          packageData: listBenefitOfPackage,
+                          packageData: listPeriodPackage,
                           quotaData: listQuotaPackage,
                           index: _selectedIndex,
                         ),
@@ -365,7 +365,7 @@ class PackageComparisonTable extends StatelessWidget {
                   margin: EdgeInsets.only(left: 8),
                   padding: const EdgeInsets.symmetric(
                     vertical: 12.0,
-                    horizontal: 8.0,
+                    horizontal: 12.0,
                   ),
                   child: Center(
                     child: Image.asset(
@@ -390,7 +390,7 @@ class PackageComparisonTable extends StatelessWidget {
                         TableCellVerticalAlignment.intrinsicHeight,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                        vertical: 12.0,
+                        vertical: 8.0,
                         horizontal: 12.0,
                       ),
                       child: TextHeading4(
@@ -431,7 +431,7 @@ class PackageComparisonTable extends StatelessWidget {
                       ),
                       margin: EdgeInsets.only(left: 8),
                       padding: const EdgeInsets.symmetric(
-                        vertical: 12.0,
+                        vertical: 8.0,
                         horizontal: 12.0,
                       ),
                       child: Center(
@@ -474,7 +474,7 @@ class PackageComparisonTable extends StatelessWidget {
                       ),
                       margin: EdgeInsets.only(left: 8),
                       padding: const EdgeInsets.symmetric(
-                        vertical: 12.0,
+                        vertical: 8.0,
                         horizontal: 12.0,
                       ),
                       child: Center(
