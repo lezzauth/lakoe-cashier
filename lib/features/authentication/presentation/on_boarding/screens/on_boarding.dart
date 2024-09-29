@@ -1,9 +1,14 @@
+import 'dart:async';
+
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
@@ -28,6 +33,22 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
   PageController pageController = PageController();
   bool _isFormValid = false;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
+      if (pageController.page == 2) {
+        pageController.jumpToPage(0);
+      } else {
+        pageController.nextPage(
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+        );
+      }
+    });
+  }
 
   onPageUpdate(int index) {
     setState(() {
@@ -91,18 +112,137 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 children: [
                   Expanded(
                     child: PageView(
+                      allowImplicitScrolling: true,
                       onPageChanged: onPageUpdate,
                       controller: pageController,
                       children: [
                         Container(
-                          color: TColors.primary,
+                          // color: TColors.highlightLightest,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment(0.00, -1.00),
+                              end: Alignment(0, 1),
+                              colors: [Color(0xFFFFF3EA), Color(0xFFFFD4B3)],
+                            ),
+                          ),
+                          padding: EdgeInsets.only(top: 84),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 52),
+                                child: Column(
+                                  children: [
+                                    SvgPicture.asset(
+                                      TImages.primaryLogoLakoe,
+                                      height: 28,
+                                    ),
+                                    SizedBox(height: 12),
+                                    TextBodyM(
+                                      "Solusi POS Terbaik untuk Bisnis F&B. Kelola bisnis Anda dengan lebih mudah, efisien, dan menguntungkan.",
+                                      color: TColors.neutralDarkDark,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Image.asset(
+                                  TImages.onboarding1,
+                                  height: 320,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         Container(
-                          color: TColors.highlightDark,
+                          // color: TColors.highlightLightest,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment(0.00, -1.00),
+                              end: Alignment(0, 1),
+                              colors: [Color(0xFFFFF3EA), Color(0xFFFFD4B3)],
+                            ),
+                          ),
+                          padding: EdgeInsets.only(top: 84),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 32),
+                                child: Column(
+                                  children: [
+                                    TextHeading2(
+                                      "Jualan Makin Gampang!",
+                                      color: TColors.neutralDarkDark,
+                                      textAlign: TextAlign.center,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                    SizedBox(height: 4),
+                                    TextBodyM(
+                                      "Atur penjualan toko fisik dan online secara bersamaan. Semua lebih praktis!",
+                                      color: TColors.neutralDarkDark,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Image.asset(
+                                  TImages.onboarding2,
+                                  height: 340,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         Container(
-                          color: TColors.highlightLight,
-                        )
+                          // color: TColors.highlightLightest,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment(0.00, -1.00),
+                              end: Alignment(0, 1),
+                              colors: [Color(0xFFFFF3EA), Color(0xFFFFD4B3)],
+                            ),
+                          ),
+                          padding: EdgeInsets.only(top: 84),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 32),
+                                child: Column(
+                                  children: [
+                                    TextHeading2(
+                                      "Hasil Jualan Saat Ini",
+                                      color: TColors.neutralDarkDark,
+                                      textAlign: TextAlign.center,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                    SizedBox(height: 4),
+                                    TextBodyM(
+                                      "Semua data penjualan dan keuntungan ada di tanganmu, lebih mudah dan cepat.",
+                                      color: TColors.neutralDarkDark,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Image.asset(
+                                  TImages.onboarding3,
+                                  height: 300,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -123,7 +263,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               activeDotColor: TColors.primary,
                               dotHeight: 8,
                               dotWidth: 8,
-                              dotColor: TColors.neutralLightLight,
+                              dotColor: TColors.neutralLightMedium,
                             ),
                           ),
                         ),
@@ -238,5 +378,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    pageController.dispose();
+    super.dispose();
   }
 }
