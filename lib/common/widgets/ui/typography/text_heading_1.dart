@@ -10,8 +10,6 @@ class TextHeading1 extends StatelessWidget {
   final int? maxLines;
   final TextOverflow? overflow;
   final TextAlign? textAlign;
-  final int? maxLines;
-  final TextOverflow? overflow;
 
   const TextHeading1(
     this.data, {
