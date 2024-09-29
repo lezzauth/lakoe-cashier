@@ -42,6 +42,27 @@ class CustomNavigatorObserver extends NavigatorObserver {
           systemNavigationBarColor: TColors.neutralLightLight,
         ),
       );
+    } else if (route?.settings.name == "/packages/grow") {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.light.copyWith(
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: TColors.neutralLightLight,
+        ),
+      );
+    } else if (route?.settings.name == "/packages/pro") {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.light.copyWith(
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: TColors.neutralLightLight,
+        ),
+      );
+    } else if (route?.settings.name == "/boost") {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.light.copyWith(
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: TColors.neutralLightLight,
+        ),
+      );
     } else {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.dark.copyWith(

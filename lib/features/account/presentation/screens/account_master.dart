@@ -8,7 +8,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/account/presentation/widgets/appbar/account_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/appbar/light_appbar.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -55,7 +55,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
     return Scaffold(
       backgroundColor: TColors.neutralLightLight,
       extendBodyBehindAppBar: true,
-      appBar: const AccountAppbar(
+      appBar: const CustomAppbarLight(
         title: "Profil & Akun",
       ),
       body: Stack(
@@ -64,7 +64,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: SvgPicture.asset(
-                TImages.liteLevel,
+                TImages.liteLevelHero,
                 fit: BoxFit.fill,
               ),
             ),
@@ -75,7 +75,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
               child: Column(
                 children: [
                   const SizedBox(height: 120),
-                  const ProfileCard(),
+                  ProfileCard(),
                   // const SizedBox(height: 12),
                   // const BalanceCard(),
                   const SizedBox(height: 12),
@@ -109,41 +109,17 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 36),
-      child: Stack(
-        clipBehavior: Clip.none,
+    return Container(
+      decoration: BoxDecoration(
+        color: TColors.highlightLightest,
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Positioned(
-            bottom: -40,
-            left: 0,
-            right: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(16),
-                  bottomRight: Radius.circular(16),
-                ),
-                color: TColors.highlightLightest,
-              ),
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const TextBodyM(
-                    "Paket aktif kamu saat ini",
-                    color: TColors.neutralDarkDarkest,
-                  ),
-                  const SizedBox(width: 8.0),
-                  Image.asset(
-                    TImages.liteLogoPackage,
-                    height: 24,
-                  ),
-                ],
-              ),
-            ),
-          ),
           InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
             onTap: () => Navigator.pushNamed(context, "/account/edit"),
             child: Container(
               decoration: BoxDecoration(
@@ -179,7 +155,7 @@ class ProfileCard extends StatelessWidget {
                           "Tauhid",
                           color: TColors.neutralDarkDark,
                         ),
-                        SizedBox(height: 4.0),
+                        SizedBox(height: 2.0),
                         TextBodyS(
                           "62812-3456-7890",
                           color: TColors.neutralDarkLight,
@@ -192,6 +168,35 @@ class ProfileCard extends StatelessWidget {
                     height: 20,
                     width: 20,
                     color: TColors.primary,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () => Navigator.pushNamed(context, "/packages"),
+            child: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(16),
+                  bottomRight: Radius.circular(16),
+                ),
+                color: TColors.highlightLightest,
+              ),
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const TextBodyM(
+                    "Paket aktif kamu saat ini",
+                    color: TColors.neutralDarkDarkest,
+                  ),
+                  const SizedBox(width: 8.0),
+                  Image.asset(
+                    TImages.liteLogoPackage,
+                    height: 24,
                   ),
                 ],
               ),
