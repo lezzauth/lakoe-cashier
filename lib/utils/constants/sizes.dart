@@ -19,7 +19,7 @@ class TSizes {
   static const double fontSizeActionM = 12.0;
   static const double fontSizeActionS = 10.0;
   // -- Caption
-  static const double fontSizeCaptionM = 10;
+  static const double fontSizeCaptionM = 12;
 
   // Button Sizes
   static const double buttonRadius = 12.0;
