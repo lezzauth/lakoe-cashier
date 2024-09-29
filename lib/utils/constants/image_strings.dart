@@ -96,7 +96,10 @@ class TImages {
   static const String pakcageWaves = "assets/images/package-waves.svg";
 
   // Onboarding
-  static const String onboarding1 = "assets/images/onboarding/onboarding-1.png";
-  static const String onboarding2 = "assets/images/onboarding/onboarding-2.png";
-  static const String onboarding3 = "assets/images/onboarding/onboarding-3.png";
+  static const String onboarding1 =
+      "assets/images/onboarding/onboarding-1.webp";
+  static const String onboarding2 =
+      "assets/images/onboarding/onboarding-2.webp";
+  static const String onboarding3 =
+      "assets/images/onboarding/onboarding-3.webp";
 }
