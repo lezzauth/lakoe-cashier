@@ -130,6 +130,7 @@ flutter:
     - assets/images/
     - assets/images/access-permission/
     - assets/images/hero/
+    - assets/images/onboarding/
     - assets/logos/
     - assets/logos/package/
     - assets/flags/

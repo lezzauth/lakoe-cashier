@@ -138,7 +138,7 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
                               width: 62,
                             )
                           : SvgPicture.asset(
-                              TImages.boostLogoSvgLight,
+                              TImages.boostLogoSvgWhite,
                               height: 16,
                               width: 62,
                             ),

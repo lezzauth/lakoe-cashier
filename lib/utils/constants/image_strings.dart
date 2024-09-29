@@ -5,7 +5,7 @@ class TImages {
       "assets/logos/lakoe-letter-primary.png";
   static const String lakoeLogoQRIS = "assets/logos/lakoe-logo-qris.png";
   static const String boostLogoSvg = "assets/logos/package/logo-boost.svg";
-  static const String boostLogoSvgLight =
+  static const String boostLogoSvgWhite =
       "assets/logos/package/logo-boost-light.svg";
 
   static const String mainMenuWaves = "assets/images/main-menu-waves.svg";
@@ -94,4 +94,9 @@ class TImages {
   static const String bannerWaves = "assets/images/banner-waves.svg";
   static const String balanceWaves = "assets/images/balance-waves.svg";
   static const String pakcageWaves = "assets/images/package-waves.svg";
+
+  // Onboarding
+  static const String onboarding1 = "assets/images/onboarding/onboarding-1.png";
+  static const String onboarding2 = "assets/images/onboarding/onboarding-2.png";
+  static const String onboarding3 = "assets/images/onboarding/onboarding-3.png";
 }
