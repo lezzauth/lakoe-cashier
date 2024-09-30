@@ -31,7 +31,7 @@ class TableRepositoryImpl implements TableRepository {
     final outletId = await _appDataProvider.outletId;
 
     final response = await _dio.get<List<dynamic>>(
-      "$_baseURL?outlet=$outletId&${dto.toQueryString()}",
+      "$_baseURL?outletId=$outletId&${dto.toQueryString()}",
       options: options,
     );
 
