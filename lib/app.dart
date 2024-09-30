@@ -17,6 +17,7 @@ import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_detail.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_master.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_new.dart';
+import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_edit.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_master.dart';
 import 'package:point_of_sales_cashier/features/checkout/presentation/screens/chekcout_master.dart';
@@ -161,6 +162,9 @@ class App extends StatelessWidget {
 
         // Print Master
         BlocProvider(create: (context) => PrintMasterCubit()),
+
+        // Bill Master
+        BlocProvider(create: (context) => BillMasterCubit()),
       ],
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
