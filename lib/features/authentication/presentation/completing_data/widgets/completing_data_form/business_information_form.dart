@@ -60,7 +60,7 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
                   name: "outletType",
                   builder: (field) {
                     return Wrap(
-                      alignment: WrapAlignment.center,
+                      alignment: WrapAlignment.start,
                       spacing: 8.0,
                       children: businessTypes.map((type) {
                         bool selected = type == field.value;

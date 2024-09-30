@@ -70,12 +70,13 @@ class _DashboardState extends State<Dashboard> {
       listener: (context, state) {
         AuthReady authState = context.read<AuthCubit>().state as AuthReady;
         context.read<CashierReportCubit>().getReport(
-            outletId: authState.outletId,
-            dto: GetOutletSalesDto(
-              from: state.from,
-              template: state.template,
-              to: state.to,
-            ));
+              outletId: authState.outletId,
+              dto: GetOutletSalesDto(
+                from: state.from,
+                template: state.template,
+                to: state.to,
+              ),
+            );
       },
       child: Scaffold(
         appBar: const DashboardAppbar(),
