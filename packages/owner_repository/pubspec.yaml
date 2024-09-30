@@ -14,6 +14,8 @@ dependencies:
     path: ../token_provider
   dio_provider:
     path: ../dio_provider
+  app_data_provider:
+    path: ../app_data_provider
 
   dio: ^5.6.0
   freezed_annotation: ^2.4.4

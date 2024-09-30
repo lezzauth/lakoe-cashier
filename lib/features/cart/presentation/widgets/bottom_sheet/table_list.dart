@@ -55,12 +55,8 @@ class _TableListContentState extends State<TableListContent> {
   Future<void> _onInit() async {
     if (!mounted) return;
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
-    await context
-        .read<TableMasterLocationCubit>()
-        .findAll(FindAllTableLocationDto(outletId: authState.outletId));
-    await context.read<TableMasterCubit>().init(authState.outletId);
+    context.read<TableMasterLocationCubit>().findAll(FindAllTableLocationDto());
+    context.read<TableMasterCubit>().init();
   }
 
   @override
@@ -73,9 +69,7 @@ class _TableListContentState extends State<TableListContent> {
   Widget build(BuildContext context) {
     return BlocListener<TableMasterFilterCubit, TableMasterFilterState>(
       listener: (context, state) {
-        AuthReady authState = context.read<AuthCubit>().state as AuthReady;
         context.read<TableMasterCubit>().findAll(FindAllTableDto(
-              outletId: authState.outletId,
               outletRoomId: state.outletRoomId,
             ));
       },

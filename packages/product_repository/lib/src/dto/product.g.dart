@@ -9,7 +9,6 @@ part of 'product.dart';
 _$FindAllProductDtoImpl _$$FindAllProductDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$FindAllProductDtoImpl(
-      outletId: json['outletId'] as String,
       categoryId: (json['categoryId'] as num?)?.toInt(),
       name: json['name'] as String?,
       availability: json['availability'] as String?,
@@ -18,7 +17,6 @@ _$FindAllProductDtoImpl _$$FindAllProductDtoImplFromJson(
 Map<String, dynamic> _$$FindAllProductDtoImplToJson(
         _$FindAllProductDtoImpl instance) =>
     <String, dynamic>{
-      'outletId': instance.outletId,
       'categoryId': instance.categoryId,
       'name': instance.name,
       'availability': instance.availability,
@@ -51,7 +49,7 @@ _$CreateProductDtoImpl _$$CreateProductDtoImplFromJson(
       modal: (json['modal'] as num).toInt(),
       categoryId: (json['categoryId'] as num).toInt(),
       unit: json['unit'] as String,
-      outletId: json['outletId'] as String,
+      outletId: json['outletId'] as String?,
       sku: json['sku'] as String?,
       stock: (json['stock'] as num?)?.toInt(),
       availability: json['availability'] as String? ?? "AVAILABLE",

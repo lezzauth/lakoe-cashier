@@ -196,7 +196,7 @@ PreviewOrderPriceDto _$PreviewOrderPriceDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PreviewOrderPriceDto {
   String get type => throw _privateConstructorUsedError;
-  String get outletId => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
   List<OrderItemDto> get items => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -211,7 +211,7 @@ abstract class $PreviewOrderPriceDtoCopyWith<$Res> {
           $Res Function(PreviewOrderPriceDto) then) =
       _$PreviewOrderPriceDtoCopyWithImpl<$Res, PreviewOrderPriceDto>;
   @useResult
-  $Res call({String type, String outletId, List<OrderItemDto> items});
+  $Res call({String type, String? outletId, List<OrderItemDto> items});
 }
 
 /// @nodoc
@@ -229,7 +229,7 @@ class _$PreviewOrderPriceDtoCopyWithImpl<$Res,
   @override
   $Res call({
     Object? type = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? items = null,
   }) {
     return _then(_value.copyWith(
@@ -237,10 +237,10 @@ class _$PreviewOrderPriceDtoCopyWithImpl<$Res,
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
@@ -257,7 +257,7 @@ abstract class _$$PreviewOrderPriceDtoImplCopyWith<$Res>
       __$$PreviewOrderPriceDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String type, String outletId, List<OrderItemDto> items});
+  $Res call({String type, String? outletId, List<OrderItemDto> items});
 }
 
 /// @nodoc
@@ -272,7 +272,7 @@ class __$$PreviewOrderPriceDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? type = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? items = null,
   }) {
     return _then(_$PreviewOrderPriceDtoImpl(
@@ -280,10 +280,10 @@ class __$$PreviewOrderPriceDtoImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -297,7 +297,7 @@ class __$$PreviewOrderPriceDtoImplCopyWithImpl<$Res>
 class _$PreviewOrderPriceDtoImpl implements _PreviewOrderPriceDto {
   const _$PreviewOrderPriceDtoImpl(
       {required this.type,
-      required this.outletId,
+      this.outletId,
       required final List<OrderItemDto> items})
       : _items = items;
 
@@ -307,7 +307,7 @@ class _$PreviewOrderPriceDtoImpl implements _PreviewOrderPriceDto {
   @override
   final String type;
   @override
-  final String outletId;
+  final String? outletId;
   final List<OrderItemDto> _items;
   @override
   List<OrderItemDto> get items {
@@ -356,7 +356,7 @@ class _$PreviewOrderPriceDtoImpl implements _PreviewOrderPriceDto {
 abstract class _PreviewOrderPriceDto implements PreviewOrderPriceDto {
   const factory _PreviewOrderPriceDto(
       {required final String type,
-      required final String outletId,
+      final String? outletId,
       required final List<OrderItemDto> items}) = _$PreviewOrderPriceDtoImpl;
 
   factory _PreviewOrderPriceDto.fromJson(Map<String, dynamic> json) =
@@ -365,7 +365,7 @@ abstract class _PreviewOrderPriceDto implements PreviewOrderPriceDto {
   @override
   String get type;
   @override
-  String get outletId;
+  String? get outletId;
   @override
   List<OrderItemDto> get items;
   @override

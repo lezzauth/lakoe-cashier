@@ -20,11 +20,14 @@ FindAllTableDto _$FindAllTableDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FindAllTableDto {
-  String get outletId => throw _privateConstructorUsedError;
   String? get outletRoomId => throw _privateConstructorUsedError;
 
+  /// Serializes this FindAllTableDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FindAllTableDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FindAllTableDtoCopyWith<FindAllTableDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -35,7 +38,7 @@ abstract class $FindAllTableDtoCopyWith<$Res> {
           FindAllTableDto value, $Res Function(FindAllTableDto) then) =
       _$FindAllTableDtoCopyWithImpl<$Res, FindAllTableDto>;
   @useResult
-  $Res call({String outletId, String? outletRoomId});
+  $Res call({String? outletRoomId});
 }
 
 /// @nodoc
@@ -48,17 +51,14 @@ class _$FindAllTableDtoCopyWithImpl<$Res, $Val extends FindAllTableDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FindAllTableDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
     Object? outletRoomId = freezed,
   }) {
     return _then(_value.copyWith(
-      outletId: null == outletId
-          ? _value.outletId
-          : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
       outletRoomId: freezed == outletRoomId
           ? _value.outletRoomId
           : outletRoomId // ignore: cast_nullable_to_non_nullable
@@ -75,7 +75,7 @@ abstract class _$$FindAllTableDtoImplCopyWith<$Res>
       __$$FindAllTableDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String outletId, String? outletRoomId});
+  $Res call({String? outletRoomId});
 }
 
 /// @nodoc
@@ -86,17 +86,14 @@ class __$$FindAllTableDtoImplCopyWithImpl<$Res>
       _$FindAllTableDtoImpl _value, $Res Function(_$FindAllTableDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FindAllTableDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
     Object? outletRoomId = freezed,
   }) {
     return _then(_$FindAllTableDtoImpl(
-      outletId: null == outletId
-          ? _value.outletId
-          : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
       outletRoomId: freezed == outletRoomId
           ? _value.outletRoomId
           : outletRoomId // ignore: cast_nullable_to_non_nullable
@@ -108,19 +105,17 @@ class __$$FindAllTableDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$FindAllTableDtoImpl implements _FindAllTableDto {
-  const _$FindAllTableDtoImpl({required this.outletId, this.outletRoomId});
+  const _$FindAllTableDtoImpl({this.outletRoomId});
 
   factory _$FindAllTableDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$FindAllTableDtoImplFromJson(json);
 
   @override
-  final String outletId;
-  @override
   final String? outletRoomId;
 
   @override
   String toString() {
-    return 'FindAllTableDto(outletId: $outletId, outletRoomId: $outletRoomId)';
+    return 'FindAllTableDto(outletRoomId: $outletRoomId)';
   }
 
   @override
@@ -128,17 +123,17 @@ class _$FindAllTableDtoImpl implements _FindAllTableDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FindAllTableDtoImpl &&
-            (identical(other.outletId, outletId) ||
-                other.outletId == outletId) &&
             (identical(other.outletRoomId, outletRoomId) ||
                 other.outletRoomId == outletRoomId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, outletId, outletRoomId);
+  int get hashCode => Object.hash(runtimeType, outletRoomId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FindAllTableDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FindAllTableDtoImplCopyWith<_$FindAllTableDtoImpl> get copyWith =>
@@ -154,19 +149,19 @@ class _$FindAllTableDtoImpl implements _FindAllTableDto {
 }
 
 abstract class _FindAllTableDto implements FindAllTableDto {
-  const factory _FindAllTableDto(
-      {required final String outletId,
-      final String? outletRoomId}) = _$FindAllTableDtoImpl;
+  const factory _FindAllTableDto({final String? outletRoomId}) =
+      _$FindAllTableDtoImpl;
 
   factory _FindAllTableDto.fromJson(Map<String, dynamic> json) =
       _$FindAllTableDtoImpl.fromJson;
 
   @override
-  String get outletId;
-  @override
   String? get outletRoomId;
+
+  /// Create a copy of FindAllTableDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FindAllTableDtoImplCopyWith<_$FindAllTableDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -179,11 +174,15 @@ CreateTableDto _$CreateTableDtoFromJson(Map<String, dynamic> json) {
 mixin _$CreateTableDto {
   String get no => throw _privateConstructorUsedError;
   int get capacity => throw _privateConstructorUsedError;
-  String get outletId => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
   String get outletRoomId => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateTableDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateTableDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateTableDtoCopyWith<CreateTableDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -194,7 +193,7 @@ abstract class $CreateTableDtoCopyWith<$Res> {
           CreateTableDto value, $Res Function(CreateTableDto) then) =
       _$CreateTableDtoCopyWithImpl<$Res, CreateTableDto>;
   @useResult
-  $Res call({String no, int capacity, String outletId, String outletRoomId});
+  $Res call({String no, int capacity, String? outletId, String outletRoomId});
 }
 
 /// @nodoc
@@ -207,12 +206,14 @@ class _$CreateTableDtoCopyWithImpl<$Res, $Val extends CreateTableDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateTableDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? no = null,
     Object? capacity = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? outletRoomId = null,
   }) {
     return _then(_value.copyWith(
@@ -224,10 +225,10 @@ class _$CreateTableDtoCopyWithImpl<$Res, $Val extends CreateTableDto>
           ? _value.capacity
           : capacity // ignore: cast_nullable_to_non_nullable
               as int,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       outletRoomId: null == outletRoomId
           ? _value.outletRoomId
           : outletRoomId // ignore: cast_nullable_to_non_nullable
@@ -244,7 +245,7 @@ abstract class _$$CreateTableDtoImplCopyWith<$Res>
       __$$CreateTableDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String no, int capacity, String outletId, String outletRoomId});
+  $Res call({String no, int capacity, String? outletId, String outletRoomId});
 }
 
 /// @nodoc
@@ -255,12 +256,14 @@ class __$$CreateTableDtoImplCopyWithImpl<$Res>
       _$CreateTableDtoImpl _value, $Res Function(_$CreateTableDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateTableDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? no = null,
     Object? capacity = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? outletRoomId = null,
   }) {
     return _then(_$CreateTableDtoImpl(
@@ -272,10 +275,10 @@ class __$$CreateTableDtoImplCopyWithImpl<$Res>
           ? _value.capacity
           : capacity // ignore: cast_nullable_to_non_nullable
               as int,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       outletRoomId: null == outletRoomId
           ? _value.outletRoomId
           : outletRoomId // ignore: cast_nullable_to_non_nullable
@@ -290,7 +293,7 @@ class _$CreateTableDtoImpl implements _CreateTableDto {
   const _$CreateTableDtoImpl(
       {required this.no,
       required this.capacity,
-      required this.outletId,
+      this.outletId,
       required this.outletRoomId});
 
   factory _$CreateTableDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -301,7 +304,7 @@ class _$CreateTableDtoImpl implements _CreateTableDto {
   @override
   final int capacity;
   @override
-  final String outletId;
+  final String? outletId;
   @override
   final String outletRoomId;
 
@@ -324,12 +327,14 @@ class _$CreateTableDtoImpl implements _CreateTableDto {
                 other.outletRoomId == outletRoomId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, no, capacity, outletId, outletRoomId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateTableDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateTableDtoImplCopyWith<_$CreateTableDtoImpl> get copyWith =>
@@ -348,7 +353,7 @@ abstract class _CreateTableDto implements CreateTableDto {
   const factory _CreateTableDto(
       {required final String no,
       required final int capacity,
-      required final String outletId,
+      final String? outletId,
       required final String outletRoomId}) = _$CreateTableDtoImpl;
 
   factory _CreateTableDto.fromJson(Map<String, dynamic> json) =
@@ -359,11 +364,14 @@ abstract class _CreateTableDto implements CreateTableDto {
   @override
   int get capacity;
   @override
-  String get outletId;
+  String? get outletId;
   @override
   String get outletRoomId;
+
+  /// Create a copy of CreateTableDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateTableDtoImplCopyWith<_$CreateTableDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -379,8 +387,12 @@ mixin _$UpdateTableDto {
   String? get outletId => throw _privateConstructorUsedError;
   String? get outletRoomId => throw _privateConstructorUsedError;
 
+  /// Serializes this UpdateTableDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UpdateTableDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UpdateTableDtoCopyWith<UpdateTableDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -405,6 +417,8 @@ class _$UpdateTableDtoCopyWithImpl<$Res, $Val extends UpdateTableDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UpdateTableDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -454,6 +468,8 @@ class __$$UpdateTableDtoImplCopyWithImpl<$Res>
       _$UpdateTableDtoImpl _value, $Res Function(_$UpdateTableDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UpdateTableDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -520,12 +536,14 @@ class _$UpdateTableDtoImpl implements _UpdateTableDto {
                 other.outletRoomId == outletRoomId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, no, capacity, outletId, outletRoomId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UpdateTableDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateTableDtoImplCopyWith<_$UpdateTableDtoImpl> get copyWith =>
@@ -558,8 +576,11 @@ abstract class _UpdateTableDto implements UpdateTableDto {
   String? get outletId;
   @override
   String? get outletRoomId;
+
+  /// Create a copy of UpdateTableDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateTableDtoImplCopyWith<_$UpdateTableDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

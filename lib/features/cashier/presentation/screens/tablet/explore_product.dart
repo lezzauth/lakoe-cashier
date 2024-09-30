@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_cubit.dart';
@@ -32,12 +30,7 @@ class ExploreProductTablet extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CartDetailFilterCubit(),
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) => switch (state) {
-          AuthReady() => const ExploreProductTabletContent(),
-          _ => const Scaffold(body: Center(child: CircularProgressIndicator())),
-        },
-      ),
+      child: const ExploreProductTabletContent(),
     );
   }
 }
@@ -55,14 +48,12 @@ class _ExploreProductTabletContentState
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<void> _onCartSaved() async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
         context.read<CartDetailFilterCubit>().state;
 
     await context.read<CartDetailCubit>().saveOrder(
           carts: cartState.carts,
-          outletId: authState.outletId,
           type: filterState.type,
           customerId: filterState.customer?.id,
           tableId: filterState.table?.id,
@@ -72,17 +63,12 @@ class _ExploreProductTabletContentState
   Future<void> _onRefresh() async {
     if (!mounted) return;
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
     CashierProductFilterState filterState =
         context.read<CashierProductFilterCubit>().state;
 
-    await context.read<CashierOrderCubit>().findAll();
-    await context
-        .read<CashierCategoryCubit>()
-        .findAll(outletId: authState.outletId);
+    context.read<CashierOrderCubit>().findAll();
+    context.read<CashierCategoryCubit>().findAll();
     await context.read<CashierProductCubit>().findAll(
-          outletId: authState.outletId,
           categoryId: filterState.categoryId,
           name: filterState.name,
         );

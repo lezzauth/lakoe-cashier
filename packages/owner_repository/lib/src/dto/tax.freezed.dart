@@ -23,8 +23,12 @@ mixin _$CreateTaxDto {
   String get name => throw _privateConstructorUsedError;
   double get value => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateTaxDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateTaxDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateTaxDtoCopyWith<CreateTaxDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$CreateTaxDtoCopyWithImpl<$Res, $Val extends CreateTaxDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateTaxDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -86,6 +92,8 @@ class __$$CreateTaxDtoImplCopyWithImpl<$Res>
       _$CreateTaxDtoImpl _value, $Res Function(_$CreateTaxDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateTaxDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -132,11 +140,13 @@ class _$CreateTaxDtoImpl implements _CreateTaxDto {
             (identical(other.value, value) || other.value == value));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, value);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateTaxDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateTaxDtoImplCopyWith<_$CreateTaxDtoImpl> get copyWith =>
@@ -162,8 +172,11 @@ abstract class _CreateTaxDto implements CreateTaxDto {
   String get name;
   @override
   double get value;
+
+  /// Create a copy of CreateTaxDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateTaxDtoImplCopyWith<_$CreateTaxDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -177,8 +190,12 @@ mixin _$UpdateTaxDto {
   String? get name => throw _privateConstructorUsedError;
   double? get value => throw _privateConstructorUsedError;
 
+  /// Serializes this UpdateTaxDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UpdateTaxDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UpdateTaxDtoCopyWith<UpdateTaxDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -202,6 +219,8 @@ class _$UpdateTaxDtoCopyWithImpl<$Res, $Val extends UpdateTaxDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UpdateTaxDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -240,6 +259,8 @@ class __$$UpdateTaxDtoImplCopyWithImpl<$Res>
       _$UpdateTaxDtoImpl _value, $Res Function(_$UpdateTaxDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UpdateTaxDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -286,11 +307,13 @@ class _$UpdateTaxDtoImpl implements _UpdateTaxDto {
             (identical(other.value, value) || other.value == value));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, value);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UpdateTaxDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateTaxDtoImplCopyWith<_$UpdateTaxDtoImpl> get copyWith =>
@@ -315,8 +338,11 @@ abstract class _UpdateTaxDto implements UpdateTaxDto {
   String? get name;
   @override
   double? get value;
+
+  /// Create a copy of UpdateTaxDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateTaxDtoImplCopyWith<_$UpdateTaxDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

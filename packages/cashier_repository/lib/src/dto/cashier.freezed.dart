@@ -20,14 +20,18 @@ SaveOrderDto _$SaveOrderDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SaveOrderDto {
-  String get outletId => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   List<OrderItemDto> get items => throw _privateConstructorUsedError;
   String? get customerId => throw _privateConstructorUsedError;
   String? get tableId => throw _privateConstructorUsedError;
 
+  /// Serializes this SaveOrderDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SaveOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SaveOrderDtoCopyWith<SaveOrderDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -39,7 +43,7 @@ abstract class $SaveOrderDtoCopyWith<$Res> {
       _$SaveOrderDtoCopyWithImpl<$Res, SaveOrderDto>;
   @useResult
   $Res call(
-      {String outletId,
+      {String? outletId,
       String type,
       List<OrderItemDto> items,
       String? customerId,
@@ -56,20 +60,22 @@ class _$SaveOrderDtoCopyWithImpl<$Res, $Val extends SaveOrderDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SaveOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? type = null,
     Object? items = null,
     Object? customerId = freezed,
     Object? tableId = freezed,
   }) {
     return _then(_value.copyWith(
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -99,7 +105,7 @@ abstract class _$$SaveOrderDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String outletId,
+      {String? outletId,
       String type,
       List<OrderItemDto> items,
       String? customerId,
@@ -114,20 +120,22 @@ class __$$SaveOrderDtoImplCopyWithImpl<$Res>
       _$SaveOrderDtoImpl _value, $Res Function(_$SaveOrderDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SaveOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? type = null,
     Object? items = null,
     Object? customerId = freezed,
     Object? tableId = freezed,
   }) {
     return _then(_$SaveOrderDtoImpl(
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -152,7 +160,7 @@ class __$$SaveOrderDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SaveOrderDtoImpl implements _SaveOrderDto {
   const _$SaveOrderDtoImpl(
-      {required this.outletId,
+      {this.outletId,
       required this.type,
       required final List<OrderItemDto> items,
       this.customerId,
@@ -163,7 +171,7 @@ class _$SaveOrderDtoImpl implements _SaveOrderDto {
       _$$SaveOrderDtoImplFromJson(json);
 
   @override
-  final String outletId;
+  final String? outletId;
   @override
   final String type;
   final List<OrderItemDto> _items;
@@ -198,12 +206,14 @@ class _$SaveOrderDtoImpl implements _SaveOrderDto {
             (identical(other.tableId, tableId) || other.tableId == tableId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, outletId, type,
       const DeepCollectionEquality().hash(_items), customerId, tableId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SaveOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SaveOrderDtoImplCopyWith<_$SaveOrderDtoImpl> get copyWith =>
@@ -219,7 +229,7 @@ class _$SaveOrderDtoImpl implements _SaveOrderDto {
 
 abstract class _SaveOrderDto implements SaveOrderDto {
   const factory _SaveOrderDto(
-      {required final String outletId,
+      {final String? outletId,
       required final String type,
       required final List<OrderItemDto> items,
       final String? customerId,
@@ -229,7 +239,7 @@ abstract class _SaveOrderDto implements SaveOrderDto {
       _$SaveOrderDtoImpl.fromJson;
 
   @override
-  String get outletId;
+  String? get outletId;
   @override
   String get type;
   @override
@@ -238,8 +248,11 @@ abstract class _SaveOrderDto implements SaveOrderDto {
   String? get customerId;
   @override
   String? get tableId;
+
+  /// Create a copy of SaveOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SaveOrderDtoImplCopyWith<_$SaveOrderDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -256,8 +269,12 @@ mixin _$CompleteCashOrderDto {
   String? get customerId => throw _privateConstructorUsedError;
   String? get redeemCoinAmount => throw _privateConstructorUsedError;
 
+  /// Serializes this CompleteCashOrderDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CompleteCashOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CompleteCashOrderDtoCopyWith<CompleteCashOrderDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -287,6 +304,8 @@ class _$CompleteCashOrderDtoCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CompleteCashOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -345,6 +364,8 @@ class __$$CompleteCashOrderDtoImplCopyWithImpl<$Res>
       $Res Function(_$CompleteCashOrderDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CompleteCashOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -424,12 +445,14 @@ class _$CompleteCashOrderDtoImpl implements _CompleteCashOrderDto {
                 other.redeemCoinAmount == redeemCoinAmount));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, paymentMethod, paidAmount,
       change, customerId, redeemCoinAmount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CompleteCashOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CompleteCashOrderDtoImplCopyWith<_$CompleteCashOrderDtoImpl>
@@ -466,8 +489,11 @@ abstract class _CompleteCashOrderDto implements CompleteCashOrderDto {
   String? get customerId;
   @override
   String? get redeemCoinAmount;
+
+  /// Create a copy of CompleteCashOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CompleteCashOrderDtoImplCopyWith<_$CompleteCashOrderDtoImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -477,7 +503,9 @@ mixin _$CompleteBankTransferOrderDto {
   File get photo => throw _privateConstructorUsedError;
   CompleteBankTransferOrderData get data => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CompleteBankTransferOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CompleteBankTransferOrderDtoCopyWith<CompleteBankTransferOrderDto>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -506,6 +534,8 @@ class _$CompleteBankTransferOrderDtoCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CompleteBankTransferOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -524,6 +554,8 @@ class _$CompleteBankTransferOrderDtoCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of CompleteBankTransferOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $CompleteBankTransferOrderDataCopyWith<$Res> get data {
@@ -558,6 +590,8 @@ class __$$CompleteBankTransferOrderDtoImplCopyWithImpl<$Res>
       $Res Function(_$CompleteBankTransferOrderDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CompleteBankTransferOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -606,7 +640,9 @@ class _$CompleteBankTransferOrderDtoImpl
   @override
   int get hashCode => Object.hash(runtimeType, photo, data);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CompleteBankTransferOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CompleteBankTransferOrderDtoImplCopyWith<
@@ -626,8 +662,11 @@ abstract class _CompleteBankTransferOrderDto
   File get photo;
   @override
   CompleteBankTransferOrderData get data;
+
+  /// Create a copy of CompleteBankTransferOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CompleteBankTransferOrderDtoImplCopyWith<
           _$CompleteBankTransferOrderDtoImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -644,8 +683,12 @@ mixin _$CompleteBankTransferOrderData {
   double get paidAmount => throw _privateConstructorUsedError;
   String get accountNumber => throw _privateConstructorUsedError;
 
+  /// Serializes this CompleteBankTransferOrderData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CompleteBankTransferOrderData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CompleteBankTransferOrderDataCopyWith<CompleteBankTransferOrderData>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -672,6 +715,8 @@ class _$CompleteBankTransferOrderDataCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CompleteBankTransferOrderData
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -718,6 +763,8 @@ class __$$CompleteBankTransferOrderDataImplCopyWithImpl<$Res>
       $Res Function(_$CompleteBankTransferOrderDataImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CompleteBankTransferOrderData
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -780,12 +827,14 @@ class _$CompleteBankTransferOrderDataImpl
                 other.accountNumber == accountNumber));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, paymentMethod, paidAmount, accountNumber);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CompleteBankTransferOrderData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CompleteBankTransferOrderDataImplCopyWith<
@@ -818,8 +867,11 @@ abstract class _CompleteBankTransferOrderData
   double get paidAmount;
   @override
   String get accountNumber;
+
+  /// Create a copy of CompleteBankTransferOrderData
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CompleteBankTransferOrderDataImplCopyWith<
           _$CompleteBankTransferOrderDataImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -837,8 +889,12 @@ mixin _$CompleteDebitCreditOrderDto {
   double? get change => throw _privateConstructorUsedError;
   String get accountNumber => throw _privateConstructorUsedError;
 
+  /// Serializes this CompleteDebitCreditOrderDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CompleteDebitCreditOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CompleteDebitCreditOrderDtoCopyWith<CompleteDebitCreditOrderDto>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -869,6 +925,8 @@ class _$CompleteDebitCreditOrderDtoCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CompleteDebitCreditOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -924,6 +982,8 @@ class __$$CompleteDebitCreditOrderDtoImplCopyWithImpl<$Res>
       $Res Function(_$CompleteDebitCreditOrderDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CompleteDebitCreditOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -996,12 +1056,14 @@ class _$CompleteDebitCreditOrderDtoImpl
                 other.accountNumber == accountNumber));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, paymentMethod, paidAmount, change, accountNumber);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CompleteDebitCreditOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CompleteDebitCreditOrderDtoImplCopyWith<_$CompleteDebitCreditOrderDtoImpl>
@@ -1035,8 +1097,11 @@ abstract class _CompleteDebitCreditOrderDto
   double? get change;
   @override
   String get accountNumber;
+
+  /// Create a copy of CompleteDebitCreditOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CompleteDebitCreditOrderDtoImplCopyWith<_$CompleteDebitCreditOrderDtoImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1052,8 +1117,12 @@ mixin _$CompleteQRCodeOrderDto {
   double get paidAmount => throw _privateConstructorUsedError;
   double? get change => throw _privateConstructorUsedError;
 
+  /// Serializes this CompleteQRCodeOrderDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CompleteQRCodeOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CompleteQRCodeOrderDtoCopyWith<CompleteQRCodeOrderDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1078,6 +1147,8 @@ class _$CompleteQRCodeOrderDtoCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CompleteQRCodeOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1124,6 +1195,8 @@ class __$$CompleteQRCodeOrderDtoImplCopyWithImpl<$Res>
       $Res Function(_$CompleteQRCodeOrderDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CompleteQRCodeOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1182,12 +1255,14 @@ class _$CompleteQRCodeOrderDtoImpl implements _CompleteQRCodeOrderDto {
             (identical(other.change, change) || other.change == change));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, paymentMethod, paidAmount, change);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CompleteQRCodeOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CompleteQRCodeOrderDtoImplCopyWith<_$CompleteQRCodeOrderDtoImpl>
@@ -1217,8 +1292,11 @@ abstract class _CompleteQRCodeOrderDto implements CompleteQRCodeOrderDto {
   double get paidAmount;
   @override
   double? get change;
+
+  /// Create a copy of CompleteQRCodeOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CompleteQRCodeOrderDtoImplCopyWith<_$CompleteQRCodeOrderDtoImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1230,11 +1308,15 @@ OpenCashierDto _$OpenCashierDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$OpenCashierDto {
   int get initialBalance => throw _privateConstructorUsedError;
-  String get outletId => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
   String get pin => throw _privateConstructorUsedError;
 
+  /// Serializes this OpenCashierDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OpenCashierDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OpenCashierDtoCopyWith<OpenCashierDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1245,7 +1327,7 @@ abstract class $OpenCashierDtoCopyWith<$Res> {
           OpenCashierDto value, $Res Function(OpenCashierDto) then) =
       _$OpenCashierDtoCopyWithImpl<$Res, OpenCashierDto>;
   @useResult
-  $Res call({int initialBalance, String outletId, String pin});
+  $Res call({int initialBalance, String? outletId, String pin});
 }
 
 /// @nodoc
@@ -1258,11 +1340,13 @@ class _$OpenCashierDtoCopyWithImpl<$Res, $Val extends OpenCashierDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of OpenCashierDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? initialBalance = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? pin = null,
   }) {
     return _then(_value.copyWith(
@@ -1270,10 +1354,10 @@ class _$OpenCashierDtoCopyWithImpl<$Res, $Val extends OpenCashierDto>
           ? _value.initialBalance
           : initialBalance // ignore: cast_nullable_to_non_nullable
               as int,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       pin: null == pin
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
@@ -1290,7 +1374,7 @@ abstract class _$$OpenCashierDtoImplCopyWith<$Res>
       __$$OpenCashierDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int initialBalance, String outletId, String pin});
+  $Res call({int initialBalance, String? outletId, String pin});
 }
 
 /// @nodoc
@@ -1301,11 +1385,13 @@ class __$$OpenCashierDtoImplCopyWithImpl<$Res>
       _$OpenCashierDtoImpl _value, $Res Function(_$OpenCashierDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OpenCashierDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? initialBalance = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? pin = null,
   }) {
     return _then(_$OpenCashierDtoImpl(
@@ -1313,10 +1399,10 @@ class __$$OpenCashierDtoImplCopyWithImpl<$Res>
           ? _value.initialBalance
           : initialBalance // ignore: cast_nullable_to_non_nullable
               as int,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       pin: null == pin
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
@@ -1329,9 +1415,7 @@ class __$$OpenCashierDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OpenCashierDtoImpl implements _OpenCashierDto {
   const _$OpenCashierDtoImpl(
-      {required this.initialBalance,
-      required this.outletId,
-      required this.pin});
+      {required this.initialBalance, this.outletId, required this.pin});
 
   factory _$OpenCashierDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$OpenCashierDtoImplFromJson(json);
@@ -1339,7 +1423,7 @@ class _$OpenCashierDtoImpl implements _OpenCashierDto {
   @override
   final int initialBalance;
   @override
-  final String outletId;
+  final String? outletId;
   @override
   final String pin;
 
@@ -1360,11 +1444,13 @@ class _$OpenCashierDtoImpl implements _OpenCashierDto {
             (identical(other.pin, pin) || other.pin == pin));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, initialBalance, outletId, pin);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OpenCashierDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OpenCashierDtoImplCopyWith<_$OpenCashierDtoImpl> get copyWith =>
@@ -1382,7 +1468,7 @@ class _$OpenCashierDtoImpl implements _OpenCashierDto {
 abstract class _OpenCashierDto implements OpenCashierDto {
   const factory _OpenCashierDto(
       {required final int initialBalance,
-      required final String outletId,
+      final String? outletId,
       required final String pin}) = _$OpenCashierDtoImpl;
 
   factory _OpenCashierDto.fromJson(Map<String, dynamic> json) =
@@ -1391,11 +1477,14 @@ abstract class _OpenCashierDto implements OpenCashierDto {
   @override
   int get initialBalance;
   @override
-  String get outletId;
+  String? get outletId;
   @override
   String get pin;
+
+  /// Create a copy of OpenCashierDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OpenCashierDtoImplCopyWith<_$OpenCashierDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1407,11 +1496,15 @@ RegenerateCashierTokenDto _$RegenerateCashierTokenDtoFromJson(
 
 /// @nodoc
 mixin _$RegenerateCashierTokenDto {
-  String get outletId => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
   String get pin => throw _privateConstructorUsedError;
 
+  /// Serializes this RegenerateCashierTokenDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RegenerateCashierTokenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RegenerateCashierTokenDtoCopyWith<RegenerateCashierTokenDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1422,7 +1515,7 @@ abstract class $RegenerateCashierTokenDtoCopyWith<$Res> {
           $Res Function(RegenerateCashierTokenDto) then) =
       _$RegenerateCashierTokenDtoCopyWithImpl<$Res, RegenerateCashierTokenDto>;
   @useResult
-  $Res call({String outletId, String pin});
+  $Res call({String? outletId, String pin});
 }
 
 /// @nodoc
@@ -1436,17 +1529,19 @@ class _$RegenerateCashierTokenDtoCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RegenerateCashierTokenDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? pin = null,
   }) {
     return _then(_value.copyWith(
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       pin: null == pin
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
@@ -1464,7 +1559,7 @@ abstract class _$$RegenerateCashierTokenDtoImplCopyWith<$Res>
       __$$RegenerateCashierTokenDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String outletId, String pin});
+  $Res call({String? outletId, String pin});
 }
 
 /// @nodoc
@@ -1477,17 +1572,19 @@ class __$$RegenerateCashierTokenDtoImplCopyWithImpl<$Res>
       $Res Function(_$RegenerateCashierTokenDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RegenerateCashierTokenDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? pin = null,
   }) {
     return _then(_$RegenerateCashierTokenDtoImpl(
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       pin: null == pin
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
@@ -1499,14 +1596,13 @@ class __$$RegenerateCashierTokenDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$RegenerateCashierTokenDtoImpl implements _RegenerateCashierTokenDto {
-  const _$RegenerateCashierTokenDtoImpl(
-      {required this.outletId, required this.pin});
+  const _$RegenerateCashierTokenDtoImpl({this.outletId, required this.pin});
 
   factory _$RegenerateCashierTokenDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$RegenerateCashierTokenDtoImplFromJson(json);
 
   @override
-  final String outletId;
+  final String? outletId;
   @override
   final String pin;
 
@@ -1525,11 +1621,13 @@ class _$RegenerateCashierTokenDtoImpl implements _RegenerateCashierTokenDto {
             (identical(other.pin, pin) || other.pin == pin));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, outletId, pin);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RegenerateCashierTokenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RegenerateCashierTokenDtoImplCopyWith<_$RegenerateCashierTokenDtoImpl>
@@ -1546,18 +1644,21 @@ class _$RegenerateCashierTokenDtoImpl implements _RegenerateCashierTokenDto {
 
 abstract class _RegenerateCashierTokenDto implements RegenerateCashierTokenDto {
   const factory _RegenerateCashierTokenDto(
-      {required final String outletId,
+      {final String? outletId,
       required final String pin}) = _$RegenerateCashierTokenDtoImpl;
 
   factory _RegenerateCashierTokenDto.fromJson(Map<String, dynamic> json) =
       _$RegenerateCashierTokenDtoImpl.fromJson;
 
   @override
-  String get outletId;
+  String? get outletId;
   @override
   String get pin;
+
+  /// Create a copy of RegenerateCashierTokenDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RegenerateCashierTokenDtoImplCopyWith<_$RegenerateCashierTokenDtoImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1569,10 +1670,14 @@ CloseCashierDto _$CloseCashierDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CloseCashierDto {
   int get finalBalance => throw _privateConstructorUsedError;
-  String get outletId => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
 
+  /// Serializes this CloseCashierDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CloseCashierDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CloseCashierDtoCopyWith<CloseCashierDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1583,7 +1688,7 @@ abstract class $CloseCashierDtoCopyWith<$Res> {
           CloseCashierDto value, $Res Function(CloseCashierDto) then) =
       _$CloseCashierDtoCopyWithImpl<$Res, CloseCashierDto>;
   @useResult
-  $Res call({int finalBalance, String outletId});
+  $Res call({int finalBalance, String? outletId});
 }
 
 /// @nodoc
@@ -1596,21 +1701,23 @@ class _$CloseCashierDtoCopyWithImpl<$Res, $Val extends CloseCashierDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CloseCashierDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? finalBalance = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
   }) {
     return _then(_value.copyWith(
       finalBalance: null == finalBalance
           ? _value.finalBalance
           : finalBalance // ignore: cast_nullable_to_non_nullable
               as int,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -1623,7 +1730,7 @@ abstract class _$$CloseCashierDtoImplCopyWith<$Res>
       __$$CloseCashierDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int finalBalance, String outletId});
+  $Res call({int finalBalance, String? outletId});
 }
 
 /// @nodoc
@@ -1634,21 +1741,23 @@ class __$$CloseCashierDtoImplCopyWithImpl<$Res>
       _$CloseCashierDtoImpl _value, $Res Function(_$CloseCashierDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CloseCashierDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? finalBalance = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
   }) {
     return _then(_$CloseCashierDtoImpl(
       finalBalance: null == finalBalance
           ? _value.finalBalance
           : finalBalance // ignore: cast_nullable_to_non_nullable
               as int,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -1656,8 +1765,7 @@ class __$$CloseCashierDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CloseCashierDtoImpl implements _CloseCashierDto {
-  const _$CloseCashierDtoImpl(
-      {required this.finalBalance, required this.outletId});
+  const _$CloseCashierDtoImpl({required this.finalBalance, this.outletId});
 
   factory _$CloseCashierDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CloseCashierDtoImplFromJson(json);
@@ -1665,7 +1773,7 @@ class _$CloseCashierDtoImpl implements _CloseCashierDto {
   @override
   final int finalBalance;
   @override
-  final String outletId;
+  final String? outletId;
 
   @override
   String toString() {
@@ -1683,11 +1791,13 @@ class _$CloseCashierDtoImpl implements _CloseCashierDto {
                 other.outletId == outletId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, finalBalance, outletId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CloseCashierDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CloseCashierDtoImplCopyWith<_$CloseCashierDtoImpl> get copyWith =>
@@ -1705,7 +1815,7 @@ class _$CloseCashierDtoImpl implements _CloseCashierDto {
 abstract class _CloseCashierDto implements CloseCashierDto {
   const factory _CloseCashierDto(
       {required final int finalBalance,
-      required final String outletId}) = _$CloseCashierDtoImpl;
+      final String? outletId}) = _$CloseCashierDtoImpl;
 
   factory _CloseCashierDto.fromJson(Map<String, dynamic> json) =
       _$CloseCashierDtoImpl.fromJson;
@@ -1713,9 +1823,12 @@ abstract class _CloseCashierDto implements CloseCashierDto {
   @override
   int get finalBalance;
   @override
-  String get outletId;
+  String? get outletId;
+
+  /// Create a copy of CloseCashierDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CloseCashierDtoImplCopyWith<_$CloseCashierDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1728,7 +1841,9 @@ mixin _$FindAllOrderDto {
   String? get search => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FindAllOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FindAllOrderDtoCopyWith<FindAllOrderDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1757,6 +1872,8 @@ class _$FindAllOrderDtoCopyWithImpl<$Res, $Val extends FindAllOrderDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FindAllOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1815,6 +1932,8 @@ class __$$FindAllOrderDtoImplCopyWithImpl<$Res>
       _$FindAllOrderDtoImpl _value, $Res Function(_$FindAllOrderDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FindAllOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1887,7 +2006,9 @@ class _$FindAllOrderDtoImpl implements _FindAllOrderDto {
   int get hashCode =>
       Object.hash(runtimeType, type, source, status, search, sort);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FindAllOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FindAllOrderDtoImplCopyWith<_$FindAllOrderDtoImpl> get copyWith =>
@@ -1913,8 +2034,11 @@ abstract class _FindAllOrderDto implements FindAllOrderDto {
   String? get search;
   @override
   String? get sort;
+
+  /// Create a copy of FindAllOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FindAllOrderDtoImplCopyWith<_$FindAllOrderDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

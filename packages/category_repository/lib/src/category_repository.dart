@@ -1,3 +1,4 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:category_repository/src/dto/category.dart';
 import 'package:category_repository/src/models/category.dart';
 import 'package:dio/dio.dart';
@@ -11,9 +12,10 @@ abstract class CategoryRepository {
 }
 
 class CategoryRepositoryImpl implements CategoryRepository {
-  String _baseURL = "/categories";
+  final String _baseURL = "/categories";
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   Future<Options> _getOptions() async {
     final token = await _tokenProvider.getAuthToken();
@@ -24,8 +26,10 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
   @override
   Future<List<CategoryModel>> findAll(FindAllCategoryDto dto) async {
-    final response =
-        await _dio.get<List<dynamic>>("$_baseURL?${dto.toQueryString()}");
+    final outletId = await _appDataProvider.outletId;
+
+    final response = await _dio.get<List<dynamic>>(
+        "$_baseURL?${dto.copyWith(outletId: outletId).toQueryString()}");
     return response.data!
         .map((element) => CategoryModel.fromJson(element))
         .toList();
@@ -34,9 +38,10 @@ class CategoryRepositoryImpl implements CategoryRepository {
   @override
   Future<CategoryModel> create(CreateCategoryDto dto) async {
     final options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
 
-    final response =
-        await _dio.post(_baseURL, data: dto.toJson(), options: options);
+    final response = await _dio.post(_baseURL,
+        data: dto.copyWith(outletId: outletId).toJson(), options: options);
     return CategoryModel.fromJson(response.data);
   }
 

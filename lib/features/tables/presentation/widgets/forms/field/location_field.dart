@@ -9,8 +9,6 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -54,11 +52,10 @@ class _LocationFieldState extends State<LocationField> {
 
   Future<void> _onInit() async {
     if (!mounted) return;
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
 
     await context
         .read<TableMasterLocationCubit>()
-        .findAll(FindAllTableLocationDto(outletId: authState.outletId));
+        .findAll(FindAllTableLocationDto());
   }
 
   @override
@@ -171,7 +168,6 @@ class _CreateTableLocationFormState extends State<CreateTableLocationForm> {
 
   Future<void> _onSubmit() async {
     FocusScope.of(context).unfocus();
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
 
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
     if (!isFormValid) return;
@@ -180,10 +176,7 @@ class _CreateTableLocationFormState extends State<CreateTableLocationForm> {
 
     await context
         .read<TableMasterLocationCubit>()
-        .create(CreateTableLocationDto(
-          name: value["name"],
-          outletId: authState.outletId,
-        ));
+        .create(CreateTableLocationDto(name: value["name"]));
   }
 
   @override

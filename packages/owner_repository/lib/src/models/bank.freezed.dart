@@ -29,8 +29,12 @@ mixin _$OwnerBankModel {
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
 
+  /// Serializes this OwnerBankModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OwnerBankModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OwnerBankModelCopyWith<OwnerBankModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -62,6 +66,8 @@ class _$OwnerBankModelCopyWithImpl<$Res, $Val extends OwnerBankModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of OwnerBankModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -138,6 +144,8 @@ class __$$OwnerBankModelImplCopyWithImpl<$Res>
       _$OwnerBankModelImpl _value, $Res Function(_$OwnerBankModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OwnerBankModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -245,12 +253,14 @@ class _$OwnerBankModelImpl implements _OwnerBankModel {
                 other.updatedAt == updatedAt));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, isPrimary,
       accountNumber, accountName, ownerId, createdAt, updatedAt);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OwnerBankModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OwnerBankModelImplCopyWith<_$OwnerBankModelImpl> get copyWith =>
@@ -295,8 +305,11 @@ abstract class _OwnerBankModel implements OwnerBankModel {
   String get createdAt;
   @override
   String get updatedAt;
+
+  /// Create a copy of OwnerBankModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OwnerBankModelImplCopyWith<_$OwnerBankModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

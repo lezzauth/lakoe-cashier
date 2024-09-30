@@ -8,19 +8,17 @@ class CashierProductCubit extends Cubit<CashierProductState> {
 
   CashierProductCubit() : super(CashierProductInitial());
 
-  Future<void> init(String outletId) async {
-    await findAll(outletId: outletId);
+  Future<void> init() async {
+    await findAll();
   }
 
   Future<void> findAll({
-    required String outletId,
     String? name,
     int? categoryId,
   }) async {
     try {
       emit(CashierProductLoadInProgress());
       final products = await _productRepository.findAll(FindAllProductDto(
-        outletId: outletId,
         availability: "AVAILABLE",
         name: name,
         categoryId: categoryId,

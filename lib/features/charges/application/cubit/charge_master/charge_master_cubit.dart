@@ -8,10 +8,10 @@ class ChargeMasterCubit extends Cubit<ChargeMasterState> {
 
   ChargeMasterCubit() : super(ChargeMasterInitial());
 
-  Future<void> findAll({required ownerId}) async {
+  Future<void> findAll() async {
     try {
       emit(ChargeMasterLoadInProgress());
-      final charges = await _ownerRepository.charge.findAll(ownerId: ownerId);
+      final charges = await _ownerRepository.charge.findAll();
       emit(ChargeMasterLoadSuccess(charges: charges));
     } catch (e) {
       emit(ChargeMasterLoadFailure(e.toString()));
@@ -19,7 +19,6 @@ class ChargeMasterCubit extends Cubit<ChargeMasterState> {
   }
 
   Future<void> save({
-    required ownerId,
     required List<ChargeField> newCharges,
     required List<ChargeField> updatedCharges,
     required List<String> removedIds,
@@ -29,16 +28,14 @@ class ChargeMasterCubit extends Cubit<ChargeMasterState> {
 
       final newChargesExecute = newCharges.map((e) {
         return _ownerRepository.charge.create(
-            ownerId: ownerId,
             dto: CreateChargeDto(
-              name: e.name,
-              value: double.parse(e.value),
-              isPrecentage: e.unit == "percentage",
-            ));
+          name: e.name,
+          value: double.parse(e.value),
+          isPrecentage: e.unit == "percentage",
+        ));
       });
       final updateChargesExecute = updatedCharges.map((e) {
         return _ownerRepository.charge.update(
-            ownerId: ownerId,
             chargeId: e.id,
             dto: UpdateChargeDto(
               name: e.name,
@@ -49,7 +46,6 @@ class ChargeMasterCubit extends Cubit<ChargeMasterState> {
 
       final removeChargesExecute = removedIds.map((e) {
         return _ownerRepository.charge.delete(
-          ownerId: ownerId,
           chargeId: e,
         );
       });

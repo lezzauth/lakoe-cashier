@@ -14,7 +14,7 @@ _$CreateEmployeeDtoImpl _$$CreateEmployeeDtoImplFromJson(
       pin: json['pin'] as String,
       phoneNumber: json['phoneNumber'] as String,
       role: json['role'] as String,
-      outletId: json['outletId'] as String,
+      outletId: json['outletId'] as String?,
     );
 
 Map<String, dynamic> _$$CreateEmployeeDtoImplToJson(
@@ -36,7 +36,6 @@ _$UpdateEmployeeDtoImpl _$$UpdateEmployeeDtoImplFromJson(
       pin: json['pin'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
       role: json['role'] as String?,
-      outletId: json['outletId'] as String?,
     );
 
 Map<String, dynamic> _$$UpdateEmployeeDtoImplToJson(
@@ -47,13 +46,12 @@ Map<String, dynamic> _$$UpdateEmployeeDtoImplToJson(
       'pin': instance.pin,
       'phoneNumber': instance.phoneNumber,
       'role': instance.role,
-      'outletId': instance.outletId,
     };
 
 _$FindAllEmployeeDtoImpl _$$FindAllEmployeeDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$FindAllEmployeeDtoImpl(
-      outletId: json['outletId'] as String,
+      outletId: json['outletId'] as String?,
     );
 
 Map<String, dynamic> _$$FindAllEmployeeDtoImplToJson(

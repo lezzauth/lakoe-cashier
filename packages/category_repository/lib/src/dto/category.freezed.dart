@@ -20,11 +20,15 @@ FindAllCategoryDto _$FindAllCategoryDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FindAllCategoryDto {
-  String get outletId => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
   String? get search => throw _privateConstructorUsedError;
 
+  /// Serializes this FindAllCategoryDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FindAllCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FindAllCategoryDtoCopyWith<FindAllCategoryDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -35,7 +39,7 @@ abstract class $FindAllCategoryDtoCopyWith<$Res> {
           FindAllCategoryDto value, $Res Function(FindAllCategoryDto) then) =
       _$FindAllCategoryDtoCopyWithImpl<$Res, FindAllCategoryDto>;
   @useResult
-  $Res call({String outletId, String? search});
+  $Res call({String? outletId, String? search});
 }
 
 /// @nodoc
@@ -48,17 +52,19 @@ class _$FindAllCategoryDtoCopyWithImpl<$Res, $Val extends FindAllCategoryDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FindAllCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? search = freezed,
   }) {
     return _then(_value.copyWith(
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       search: freezed == search
           ? _value.search
           : search // ignore: cast_nullable_to_non_nullable
@@ -75,7 +81,7 @@ abstract class _$$FindAllCategoryDtoImplCopyWith<$Res>
       __$$FindAllCategoryDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String outletId, String? search});
+  $Res call({String? outletId, String? search});
 }
 
 /// @nodoc
@@ -86,17 +92,19 @@ class __$$FindAllCategoryDtoImplCopyWithImpl<$Res>
       $Res Function(_$FindAllCategoryDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FindAllCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? search = freezed,
   }) {
     return _then(_$FindAllCategoryDtoImpl(
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       search: freezed == search
           ? _value.search
           : search // ignore: cast_nullable_to_non_nullable
@@ -108,13 +116,13 @@ class __$$FindAllCategoryDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$FindAllCategoryDtoImpl implements _FindAllCategoryDto {
-  const _$FindAllCategoryDtoImpl({required this.outletId, this.search});
+  const _$FindAllCategoryDtoImpl({this.outletId, this.search});
 
   factory _$FindAllCategoryDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$FindAllCategoryDtoImplFromJson(json);
 
   @override
-  final String outletId;
+  final String? outletId;
   @override
   final String? search;
 
@@ -133,11 +141,13 @@ class _$FindAllCategoryDtoImpl implements _FindAllCategoryDto {
             (identical(other.search, search) || other.search == search));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, outletId, search);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FindAllCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FindAllCategoryDtoImplCopyWith<_$FindAllCategoryDtoImpl> get copyWith =>
@@ -154,18 +164,21 @@ class _$FindAllCategoryDtoImpl implements _FindAllCategoryDto {
 
 abstract class _FindAllCategoryDto implements FindAllCategoryDto {
   const factory _FindAllCategoryDto(
-      {required final String outletId,
+      {final String? outletId,
       final String? search}) = _$FindAllCategoryDtoImpl;
 
   factory _FindAllCategoryDto.fromJson(Map<String, dynamic> json) =
       _$FindAllCategoryDtoImpl.fromJson;
 
   @override
-  String get outletId;
+  String? get outletId;
   @override
   String? get search;
+
+  /// Create a copy of FindAllCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FindAllCategoryDtoImplCopyWith<_$FindAllCategoryDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -176,12 +189,16 @@ CreateCategoryDto _$CreateCategoryDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CreateCategoryDto {
-  String get outletId => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get icon => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateCategoryDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateCategoryDtoCopyWith<CreateCategoryDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -192,7 +209,7 @@ abstract class $CreateCategoryDtoCopyWith<$Res> {
           CreateCategoryDto value, $Res Function(CreateCategoryDto) then) =
       _$CreateCategoryDtoCopyWithImpl<$Res, CreateCategoryDto>;
   @useResult
-  $Res call({String outletId, String name, String icon});
+  $Res call({String? outletId, String name, String icon});
 }
 
 /// @nodoc
@@ -205,18 +222,20 @@ class _$CreateCategoryDtoCopyWithImpl<$Res, $Val extends CreateCategoryDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? name = null,
     Object? icon = null,
   }) {
     return _then(_value.copyWith(
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -237,7 +256,7 @@ abstract class _$$CreateCategoryDtoImplCopyWith<$Res>
       __$$CreateCategoryDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String outletId, String name, String icon});
+  $Res call({String? outletId, String name, String icon});
 }
 
 /// @nodoc
@@ -248,18 +267,20 @@ class __$$CreateCategoryDtoImplCopyWithImpl<$Res>
       $Res Function(_$CreateCategoryDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? name = null,
     Object? icon = null,
   }) {
     return _then(_$CreateCategoryDtoImpl(
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -276,13 +297,13 @@ class __$$CreateCategoryDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CreateCategoryDtoImpl implements _CreateCategoryDto {
   const _$CreateCategoryDtoImpl(
-      {required this.outletId, required this.name, required this.icon});
+      {this.outletId, required this.name, required this.icon});
 
   factory _$CreateCategoryDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateCategoryDtoImplFromJson(json);
 
   @override
-  final String outletId;
+  final String? outletId;
   @override
   final String name;
   @override
@@ -304,11 +325,13 @@ class _$CreateCategoryDtoImpl implements _CreateCategoryDto {
             (identical(other.icon, icon) || other.icon == icon));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, outletId, name, icon);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateCategoryDtoImplCopyWith<_$CreateCategoryDtoImpl> get copyWith =>
@@ -325,7 +348,7 @@ class _$CreateCategoryDtoImpl implements _CreateCategoryDto {
 
 abstract class _CreateCategoryDto implements CreateCategoryDto {
   const factory _CreateCategoryDto(
-      {required final String outletId,
+      {final String? outletId,
       required final String name,
       required final String icon}) = _$CreateCategoryDtoImpl;
 
@@ -333,13 +356,16 @@ abstract class _CreateCategoryDto implements CreateCategoryDto {
       _$CreateCategoryDtoImpl.fromJson;
 
   @override
-  String get outletId;
+  String? get outletId;
   @override
   String get name;
   @override
   String get icon;
+
+  /// Create a copy of CreateCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateCategoryDtoImplCopyWith<_$CreateCategoryDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -353,8 +379,12 @@ mixin _$UpdateCategoryDto {
   String? get name => throw _privateConstructorUsedError;
   String? get icon => throw _privateConstructorUsedError;
 
+  /// Serializes this UpdateCategoryDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UpdateCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UpdateCategoryDtoCopyWith<UpdateCategoryDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -378,6 +408,8 @@ class _$UpdateCategoryDtoCopyWithImpl<$Res, $Val extends UpdateCategoryDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UpdateCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -416,6 +448,8 @@ class __$$UpdateCategoryDtoImplCopyWithImpl<$Res>
       $Res Function(_$UpdateCategoryDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UpdateCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -462,11 +496,13 @@ class _$UpdateCategoryDtoImpl implements _UpdateCategoryDto {
             (identical(other.icon, icon) || other.icon == icon));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, icon);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UpdateCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateCategoryDtoImplCopyWith<_$UpdateCategoryDtoImpl> get copyWith =>
@@ -492,8 +528,11 @@ abstract class _UpdateCategoryDto implements UpdateCategoryDto {
   String? get name;
   @override
   String? get icon;
+
+  /// Create a copy of UpdateCategoryDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateCategoryDtoImplCopyWith<_$UpdateCategoryDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -37,11 +37,7 @@ class BankAccountMaster extends StatefulWidget {
 
 class _BankAccountMasterState extends State<BankAccountMaster> {
   Future<void> _onRefresh() async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
-    context
-        .read<BankAccountMasterCubit>()
-        .findAll(ownerId: authState.profile.id);
+    context.read<BankAccountMasterCubit>().findAll();
   }
 
   Future<void> _onGoToCreateScreen() async {
@@ -56,8 +52,7 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
   void initState() {
     super.initState();
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-    context.read<BankAccountMasterCubit>().init(authState.profile.id);
+    context.read<BankAccountMasterCubit>().init();
   }
 
   @override
@@ -69,12 +64,7 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
           BlocListener<BankAccountMasterFilterCubit,
               BankAccountMasterFilterState>(
             listener: (context, state) {
-              AuthReady authState =
-                  context.read<AuthCubit>().state as AuthReady;
-
-              context
-                  .read<BankAccountMasterCubit>()
-                  .findAll(ownerId: authState.profile.id);
+              context.read<BankAccountMasterCubit>().findAll();
             },
           ),
           BlocListener<BankAccountMasterCubit, BankAccountMasterState>(

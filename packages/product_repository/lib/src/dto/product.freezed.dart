@@ -20,13 +20,16 @@ FindAllProductDto _$FindAllProductDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FindAllProductDto {
-  String get outletId => throw _privateConstructorUsedError;
   int? get categoryId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get availability => throw _privateConstructorUsedError;
 
+  /// Serializes this FindAllProductDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FindAllProductDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FindAllProductDtoCopyWith<FindAllProductDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -37,8 +40,7 @@ abstract class $FindAllProductDtoCopyWith<$Res> {
           FindAllProductDto value, $Res Function(FindAllProductDto) then) =
       _$FindAllProductDtoCopyWithImpl<$Res, FindAllProductDto>;
   @useResult
-  $Res call(
-      {String outletId, int? categoryId, String? name, String? availability});
+  $Res call({int? categoryId, String? name, String? availability});
 }
 
 /// @nodoc
@@ -51,19 +53,16 @@ class _$FindAllProductDtoCopyWithImpl<$Res, $Val extends FindAllProductDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FindAllProductDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
     Object? categoryId = freezed,
     Object? name = freezed,
     Object? availability = freezed,
   }) {
     return _then(_value.copyWith(
-      outletId: null == outletId
-          ? _value.outletId
-          : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
       categoryId: freezed == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
@@ -88,8 +87,7 @@ abstract class _$$FindAllProductDtoImplCopyWith<$Res>
       __$$FindAllProductDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String outletId, int? categoryId, String? name, String? availability});
+  $Res call({int? categoryId, String? name, String? availability});
 }
 
 /// @nodoc
@@ -100,19 +98,16 @@ class __$$FindAllProductDtoImplCopyWithImpl<$Res>
       $Res Function(_$FindAllProductDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FindAllProductDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
     Object? categoryId = freezed,
     Object? name = freezed,
     Object? availability = freezed,
   }) {
     return _then(_$FindAllProductDtoImpl(
-      outletId: null == outletId
-          ? _value.outletId
-          : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
       categoryId: freezed == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
@@ -133,13 +128,11 @@ class __$$FindAllProductDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FindAllProductDtoImpl implements _FindAllProductDto {
   const _$FindAllProductDtoImpl(
-      {required this.outletId, this.categoryId, this.name, this.availability});
+      {this.categoryId, this.name, this.availability});
 
   factory _$FindAllProductDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$FindAllProductDtoImplFromJson(json);
 
-  @override
-  final String outletId;
   @override
   final int? categoryId;
   @override
@@ -149,7 +142,7 @@ class _$FindAllProductDtoImpl implements _FindAllProductDto {
 
   @override
   String toString() {
-    return 'FindAllProductDto(outletId: $outletId, categoryId: $categoryId, name: $name, availability: $availability)';
+    return 'FindAllProductDto(categoryId: $categoryId, name: $name, availability: $availability)';
   }
 
   @override
@@ -157,8 +150,6 @@ class _$FindAllProductDtoImpl implements _FindAllProductDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FindAllProductDtoImpl &&
-            (identical(other.outletId, outletId) ||
-                other.outletId == outletId) &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
             (identical(other.name, name) || other.name == name) &&
@@ -166,12 +157,13 @@ class _$FindAllProductDtoImpl implements _FindAllProductDto {
                 other.availability == availability));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, outletId, categoryId, name, availability);
+  int get hashCode => Object.hash(runtimeType, categoryId, name, availability);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FindAllProductDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FindAllProductDtoImplCopyWith<_$FindAllProductDtoImpl> get copyWith =>
@@ -188,8 +180,7 @@ class _$FindAllProductDtoImpl implements _FindAllProductDto {
 
 abstract class _FindAllProductDto implements FindAllProductDto {
   const factory _FindAllProductDto(
-      {required final String outletId,
-      final int? categoryId,
+      {final int? categoryId,
       final String? name,
       final String? availability}) = _$FindAllProductDtoImpl;
 
@@ -197,15 +188,16 @@ abstract class _FindAllProductDto implements FindAllProductDto {
       _$FindAllProductDtoImpl.fromJson;
 
   @override
-  String get outletId;
-  @override
   int? get categoryId;
   @override
   String? get name;
   @override
   String? get availability;
+
+  /// Create a copy of FindAllProductDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FindAllProductDtoImplCopyWith<_$FindAllProductDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -222,8 +214,12 @@ mixin _$ListOrderByProductDto {
   String? get to => throw _privateConstructorUsedError;
   String? get template => throw _privateConstructorUsedError;
 
+  /// Serializes this ListOrderByProductDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ListOrderByProductDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ListOrderByProductDtoCopyWith<ListOrderByProductDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -248,6 +244,8 @@ class _$ListOrderByProductDtoCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ListOrderByProductDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -298,6 +296,8 @@ class __$$ListOrderByProductDtoImplCopyWithImpl<$Res>
       $Res Function(_$ListOrderByProductDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ListOrderByProductDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -362,11 +362,13 @@ class _$ListOrderByProductDtoImpl implements _ListOrderByProductDto {
                 other.template == template));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, cursor, from, to, template);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ListOrderByProductDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ListOrderByProductDtoImplCopyWith<_$ListOrderByProductDtoImpl>
@@ -399,8 +401,11 @@ abstract class _ListOrderByProductDto implements ListOrderByProductDto {
   String? get to;
   @override
   String? get template;
+
+  /// Create a copy of ListOrderByProductDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ListOrderByProductDtoImplCopyWith<_$ListOrderByProductDtoImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -417,13 +422,17 @@ mixin _$CreateProductDto {
   int get modal => throw _privateConstructorUsedError;
   int get categoryId => throw _privateConstructorUsedError;
   String get unit => throw _privateConstructorUsedError;
-  String get outletId => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
   String? get sku => throw _privateConstructorUsedError;
   int? get stock => throw _privateConstructorUsedError;
   String get availability => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateProductDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateProductDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateProductDtoCopyWith<CreateProductDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -441,7 +450,7 @@ abstract class $CreateProductDtoCopyWith<$Res> {
       int modal,
       int categoryId,
       String unit,
-      String outletId,
+      String? outletId,
       String? sku,
       int? stock,
       String availability});
@@ -457,6 +466,8 @@ class _$CreateProductDtoCopyWithImpl<$Res, $Val extends CreateProductDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateProductDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -466,7 +477,7 @@ class _$CreateProductDtoCopyWithImpl<$Res, $Val extends CreateProductDto>
     Object? modal = null,
     Object? categoryId = null,
     Object? unit = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? sku = freezed,
     Object? stock = freezed,
     Object? availability = null,
@@ -496,10 +507,10 @@ class _$CreateProductDtoCopyWithImpl<$Res, $Val extends CreateProductDto>
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
               as String,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       sku: freezed == sku
           ? _value.sku
           : sku // ignore: cast_nullable_to_non_nullable
@@ -531,7 +542,7 @@ abstract class _$$CreateProductDtoImplCopyWith<$Res>
       int modal,
       int categoryId,
       String unit,
-      String outletId,
+      String? outletId,
       String? sku,
       int? stock,
       String availability});
@@ -545,6 +556,8 @@ class __$$CreateProductDtoImplCopyWithImpl<$Res>
       $Res Function(_$CreateProductDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateProductDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -554,7 +567,7 @@ class __$$CreateProductDtoImplCopyWithImpl<$Res>
     Object? modal = null,
     Object? categoryId = null,
     Object? unit = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? sku = freezed,
     Object? stock = freezed,
     Object? availability = null,
@@ -584,10 +597,10 @@ class __$$CreateProductDtoImplCopyWithImpl<$Res>
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
               as String,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       sku: freezed == sku
           ? _value.sku
           : sku // ignore: cast_nullable_to_non_nullable
@@ -614,7 +627,7 @@ class _$CreateProductDtoImpl implements _CreateProductDto {
       required this.modal,
       required this.categoryId,
       required this.unit,
-      required this.outletId,
+      this.outletId,
       this.sku,
       this.stock,
       this.availability = "AVAILABLE"});
@@ -635,7 +648,7 @@ class _$CreateProductDtoImpl implements _CreateProductDto {
   @override
   final String unit;
   @override
-  final String outletId;
+  final String? outletId;
   @override
   final String? sku;
   @override
@@ -670,12 +683,14 @@ class _$CreateProductDtoImpl implements _CreateProductDto {
                 other.availability == availability));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, description, price, modal,
       categoryId, unit, outletId, sku, stock, availability);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateProductDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateProductDtoImplCopyWith<_$CreateProductDtoImpl> get copyWith =>
@@ -698,7 +713,7 @@ abstract class _CreateProductDto implements CreateProductDto {
       required final int modal,
       required final int categoryId,
       required final String unit,
-      required final String outletId,
+      final String? outletId,
       final String? sku,
       final int? stock,
       final String availability}) = _$CreateProductDtoImpl;
@@ -719,15 +734,18 @@ abstract class _CreateProductDto implements CreateProductDto {
   @override
   String get unit;
   @override
-  String get outletId;
+  String? get outletId;
   @override
   String? get sku;
   @override
   int? get stock;
   @override
   String get availability;
+
+  /// Create a copy of CreateProductDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateProductDtoImplCopyWith<_$CreateProductDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -749,8 +767,12 @@ mixin _$UpdateProductDto {
   int? get stock => throw _privateConstructorUsedError;
   String? get availability => throw _privateConstructorUsedError;
 
+  /// Serializes this UpdateProductDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UpdateProductDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UpdateProductDtoCopyWith<UpdateProductDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -784,6 +806,8 @@ class _$UpdateProductDtoCopyWithImpl<$Res, $Val extends UpdateProductDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UpdateProductDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -872,6 +896,8 @@ class __$$UpdateProductDtoImplCopyWithImpl<$Res>
       $Res Function(_$UpdateProductDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UpdateProductDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -996,12 +1022,14 @@ class _$UpdateProductDtoImpl implements _UpdateProductDto {
                 other.availability == availability));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, description, price, modal,
       categoryId, unit, outletId, sku, stock, availability);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UpdateProductDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateProductDtoImplCopyWith<_$UpdateProductDtoImpl> get copyWith =>
@@ -1052,8 +1080,11 @@ abstract class _UpdateProductDto implements UpdateProductDto {
   int? get stock;
   @override
   String? get availability;
+
+  /// Create a copy of UpdateProductDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateProductDtoImplCopyWith<_$UpdateProductDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/bank_transfer/bank_account_radio.dart';
@@ -21,9 +19,7 @@ class BankTransferPaymentForm extends StatefulWidget {
 
 class _BankTransferPaymentFormState extends State<BankTransferPaymentForm> {
   void _onInit() {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
-    context.read<BankAccountMasterCubit>().init(authState.profile.id);
+    context.read<BankAccountMasterCubit>().init();
   }
 
   @override

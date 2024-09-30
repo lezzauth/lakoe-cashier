@@ -9,8 +9,8 @@ class EmployeeMasterCubit extends Cubit<EmployeeMasterState> {
 
   EmployeeMasterCubit() : super(EmployeeMasterInitial());
 
-  Future<void> init(String outletId) async {
-    await findAll(FindAllEmployeeDto(outletId: outletId));
+  Future<void> init() async {
+    await findAll(FindAllEmployeeDto());
   }
 
   Future<void> findAll(FindAllEmployeeDto dto) async {

@@ -1,38 +1,68 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:app_data_provider/src/models/app_data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+enum AppDataKeys {
+  outletId,
+  ownerId,
+  footNote,
+  isBillAutoPrint,
+}
 
 class AppDataProvider {
-  final FlutterSecureStorage _storage = FlutterSecureStorage();
+  final SharedPreferencesAsync _storage = SharedPreferencesAsync();
 
-  Future<String?> getOutletId() async {
-    return await _storage.read(key: 'outlet_id');
+  Future<void> setOutletId(String value) async {
+    return await _storage.setString(AppDataKeys.outletId.name, value);
   }
 
-  Future<void> setOutletId(String token) async {
-    await _storage.write(key: 'outlet_id', value: token);
+  Future<void> setOwnerId(String value) async {
+    return await _storage.setString(AppDataKeys.ownerId.name, value);
   }
 
-  Future<void> clearOutletId() async {
-    await _storage.delete(key: 'outlet_id');
+  Future<void> setFootNote(String value) async {
+    return await _storage.setString(AppDataKeys.footNote.name, value);
   }
 
-  Future<String?> getOwnerId() async {
-    return await _storage.read(key: 'owner_id');
+  Future<void> setIsBillAutoPrint(bool value) async {
+    return await _storage.setBool(AppDataKeys.isBillAutoPrint.name, value);
   }
 
-  Future<void> setOwnerId(String token) async {
-    await _storage.write(key: 'owner_id', value: token);
+  Future<void> setValues(AppDataModel values) async {
+    await _storage.setString(AppDataKeys.outletId.name, values.outletId);
+    await _storage.setString(AppDataKeys.ownerId.name, values.ownerId);
+    await _storage.setString(AppDataKeys.footNote.name, values.footNote);
+    await _storage.setBool(
+        AppDataKeys.isBillAutoPrint.name, values.isBillAutoPrint);
   }
 
-  Future<void> clearOwnerId() async {
-    await _storage.delete(key: 'owner_id');
+  Future<String> get outletId async {
+    return await _storage.getString(AppDataKeys.outletId.name) ?? "";
   }
 
-  Future<Map<String, String>> allValues() async {
-    return await _storage.readAll();
+  Future<String> get ownerId async {
+    return await _storage.getString(AppDataKeys.ownerId.name) ?? "";
   }
 
-  Future<void> clear() async {
-    await clearOutletId();
-    await clearOwnerId();
+  Future<String> get footNote async {
+    return await _storage.getString(AppDataKeys.footNote.name) ?? "";
+  }
+
+  Future<String> get isBillAutoPrint async {
+    return await _storage.getString(AppDataKeys.isBillAutoPrint.name) ?? "";
+  }
+
+  Future<AppDataModel> get values async {
+    final outletId = await _storage.getString(AppDataKeys.outletId.name) ?? "";
+    final ownerId = await _storage.getString(AppDataKeys.ownerId.name) ?? "";
+    final footNote = await _storage.getString(AppDataKeys.footNote.name) ?? "";
+    final isBillAutoPrint =
+        await _storage.getBool(AppDataKeys.isBillAutoPrint.name) ?? false;
+
+    return AppDataModel(
+      footNote: footNote,
+      isBillAutoPrint: isBillAutoPrint,
+      outletId: outletId,
+      ownerId: ownerId,
+    );
   }
 }

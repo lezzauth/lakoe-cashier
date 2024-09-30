@@ -7,8 +7,6 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -50,13 +48,9 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
 
     dynamic value = _formKey.currentState?.value;
 
-    AuthState authState = context.read<AuthCubit>().state;
-    if (authState is! AuthReady) return;
-
     await context.read<CashierCubit>().closeCashier(
           CloseCashierDto(
             finalBalance: value["finalBalance"],
-            outletId: authState.outletId,
           ),
         );
 

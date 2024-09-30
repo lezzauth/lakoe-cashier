@@ -5,8 +5,6 @@ import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart'
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_filter_state.dart';
@@ -26,16 +24,7 @@ class _MasterCustomerScreenState extends State<MasterCustomerScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CustomerMasterFilterCubit(),
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) => switch (state) {
-          AuthReady() => const MasterCustomer(),
-          _ => const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-        },
-      ),
+      child: const MasterCustomer(),
     );
   }
 }
@@ -49,19 +38,14 @@ class MasterCustomer extends StatefulWidget {
 
 class _MasterCustomerState extends State<MasterCustomer> {
   Future<void> _onRefresh() async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
-    context
-        .read<CustomerMasterCubit>()
-        .findAll(FindAllCustomerDto(ownerId: authState.profile.id));
+    context.read<CustomerMasterCubit>().findAll(FindAllCustomerDto());
   }
 
   @override
   void initState() {
     super.initState();
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-    context.read<CustomerMasterCubit>().init(authState.profile.id);
+    context.read<CustomerMasterCubit>().init();
   }
 
   @override
@@ -70,10 +54,9 @@ class _MasterCustomerState extends State<MasterCustomer> {
       listeners: [
         BlocListener<CustomerMasterFilterCubit, CustomerMasterFilterState>(
           listener: (context, state) {
-            AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
-            context.read<CustomerMasterCubit>().findAll(FindAllCustomerDto(
-                ownerId: authState.profile.id, search: state.search));
+            context
+                .read<CustomerMasterCubit>()
+                .findAll(FindAllCustomerDto(search: state.search));
           },
         ),
         BlocListener<CustomerMasterCubit, CustomerMasterState>(

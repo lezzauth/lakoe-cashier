@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:employee_repository/src/dto/employee.dart';
@@ -25,8 +26,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
   final String _baseURL = "/employees";
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
-
-  EmployeeRepositoryImpl();
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   Future<Options> _getOptions() async {
     final token = await _tokenProvider.getAuthToken();
@@ -38,8 +38,10 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
   @override
   Future<List<EmployeeModel>> findAll(FindAllEmployeeDto dto) async {
     final options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
+
     final response = await _dio.get<List<dynamic>>(
-        "$_baseURL?${dto.toQueryString()}",
+        "$_baseURL?${dto.copyWith(outletId: outletId).toQueryString()}",
         options: options);
 
     return response.data!.map((e) => EmployeeModel.fromJson(e)).toList();
@@ -59,8 +61,10 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
     required CreateEmployeeDto dto,
   }) async {
     final Options options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
 
-    FormData formData = FormData.fromMap({...dto.toJsonFilter()});
+    FormData formData =
+        FormData.fromMap({...dto.copyWith(outletId: outletId).toJsonFilter()});
     formData.files.add(MapEntry(
         "profilePicture",
         await MultipartFile.fromFile(profilePicture.path,

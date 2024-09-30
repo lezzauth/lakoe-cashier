@@ -32,7 +32,7 @@ class ProductCubit extends Cubit<ProductState> {
     }
 
     if (currentState is ProductLoadSuccess) {
-      await findAll(FindAllProductDto(outletId: currentState.dto.outletId));
+      await findAll(FindAllProductDto());
     }
   }
 
@@ -48,7 +48,7 @@ class ProductCubit extends Cubit<ProductState> {
     }
 
     if (currentState is ProductLoadSuccess) {
-      await findAll(FindAllProductDto(outletId: currentState.dto.outletId));
+      await findAll(FindAllProductDto());
     }
   }
 }

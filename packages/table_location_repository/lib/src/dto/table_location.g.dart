@@ -8,21 +8,17 @@ part of 'table_location.dart';
 
 _$FindAllTableLocationDtoImpl _$$FindAllTableLocationDtoImplFromJson(
         Map<String, dynamic> json) =>
-    _$FindAllTableLocationDtoImpl(
-      outletId: json['outletId'] as String,
-    );
+    _$FindAllTableLocationDtoImpl();
 
 Map<String, dynamic> _$$FindAllTableLocationDtoImplToJson(
         _$FindAllTableLocationDtoImpl instance) =>
-    <String, dynamic>{
-      'outletId': instance.outletId,
-    };
+    <String, dynamic>{};
 
 _$CreateTableLocationDtoImpl _$$CreateTableLocationDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$CreateTableLocationDtoImpl(
       name: json['name'] as String,
-      outletId: json['outletId'] as String,
+      outletId: json['outletId'] as String?,
     );
 
 Map<String, dynamic> _$$CreateTableLocationDtoImplToJson(

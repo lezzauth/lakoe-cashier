@@ -28,8 +28,12 @@ mixin _$TableModel {
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
 
+  /// Serializes this TableModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TableModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TableModelCopyWith<TableModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -60,6 +64,8 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TableModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -130,6 +136,8 @@ class __$$TableModelImplCopyWithImpl<$Res>
       _$TableModelImpl _value, $Res Function(_$TableModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TableModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -228,12 +236,14 @@ class _$TableModelImpl implements _TableModel {
                 other.updatedAt == updatedAt));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, no, capacity, outletId,
       outletRoomId, createdAt, updatedAt);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TableModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TableModelImplCopyWith<_$TableModelImpl> get copyWith =>
@@ -274,8 +284,11 @@ abstract class _TableModel implements TableModel {
   String get createdAt;
   @override
   String get updatedAt;
+
+  /// Create a copy of TableModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TableModelImplCopyWith<_$TableModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -6,8 +6,6 @@ import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart'
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_state.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
@@ -49,8 +47,6 @@ class _NewProductScreenState extends State<NewProductScreen>
 
   onSubmit() {
     FocusScope.of(context).unfocus();
-    AuthState authState = context.read<AuthCubit>().state;
-    if (authState is! AuthReady) return;
 
     bool isProductInformationValid =
         _productInformationFormKey.currentState?.saveAndValidate() ?? false;
@@ -109,7 +105,6 @@ class _NewProductScreenState extends State<NewProductScreen>
         modal: productInformationValue["modal"],
         categoryId: productInformationValue["categoryId"],
         unit: productInformationValue["unit"],
-        outletId: authState.outletId,
         sku: sku,
         stock: stock != null ? int.parse(stock) : null,
         availability: stockInformationValue?["availability"] ?? "AVAILABLE",

@@ -20,11 +20,15 @@ FindAllCustomerDto _$FindAllCustomerDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FindAllCustomerDto {
-  String get ownerId => throw _privateConstructorUsedError;
+  String? get ownerId => throw _privateConstructorUsedError;
   String? get search => throw _privateConstructorUsedError;
 
+  /// Serializes this FindAllCustomerDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FindAllCustomerDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FindAllCustomerDtoCopyWith<FindAllCustomerDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -35,7 +39,7 @@ abstract class $FindAllCustomerDtoCopyWith<$Res> {
           FindAllCustomerDto value, $Res Function(FindAllCustomerDto) then) =
       _$FindAllCustomerDtoCopyWithImpl<$Res, FindAllCustomerDto>;
   @useResult
-  $Res call({String ownerId, String? search});
+  $Res call({String? ownerId, String? search});
 }
 
 /// @nodoc
@@ -48,17 +52,19 @@ class _$FindAllCustomerDtoCopyWithImpl<$Res, $Val extends FindAllCustomerDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FindAllCustomerDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ownerId = null,
+    Object? ownerId = freezed,
     Object? search = freezed,
   }) {
     return _then(_value.copyWith(
-      ownerId: null == ownerId
+      ownerId: freezed == ownerId
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       search: freezed == search
           ? _value.search
           : search // ignore: cast_nullable_to_non_nullable
@@ -75,7 +81,7 @@ abstract class _$$FindAllCustomerDtoImplCopyWith<$Res>
       __$$FindAllCustomerDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String ownerId, String? search});
+  $Res call({String? ownerId, String? search});
 }
 
 /// @nodoc
@@ -86,17 +92,19 @@ class __$$FindAllCustomerDtoImplCopyWithImpl<$Res>
       $Res Function(_$FindAllCustomerDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FindAllCustomerDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ownerId = null,
+    Object? ownerId = freezed,
     Object? search = freezed,
   }) {
     return _then(_$FindAllCustomerDtoImpl(
-      ownerId: null == ownerId
+      ownerId: freezed == ownerId
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       search: freezed == search
           ? _value.search
           : search // ignore: cast_nullable_to_non_nullable
@@ -108,13 +116,13 @@ class __$$FindAllCustomerDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$FindAllCustomerDtoImpl implements _FindAllCustomerDto {
-  const _$FindAllCustomerDtoImpl({required this.ownerId, this.search});
+  const _$FindAllCustomerDtoImpl({this.ownerId, this.search});
 
   factory _$FindAllCustomerDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$FindAllCustomerDtoImplFromJson(json);
 
   @override
-  final String ownerId;
+  final String? ownerId;
   @override
   final String? search;
 
@@ -132,11 +140,13 @@ class _$FindAllCustomerDtoImpl implements _FindAllCustomerDto {
             (identical(other.search, search) || other.search == search));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, ownerId, search);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FindAllCustomerDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FindAllCustomerDtoImplCopyWith<_$FindAllCustomerDtoImpl> get copyWith =>
@@ -153,18 +163,20 @@ class _$FindAllCustomerDtoImpl implements _FindAllCustomerDto {
 
 abstract class _FindAllCustomerDto implements FindAllCustomerDto {
   const factory _FindAllCustomerDto(
-      {required final String ownerId,
-      final String? search}) = _$FindAllCustomerDtoImpl;
+      {final String? ownerId, final String? search}) = _$FindAllCustomerDtoImpl;
 
   factory _FindAllCustomerDto.fromJson(Map<String, dynamic> json) =
       _$FindAllCustomerDtoImpl.fromJson;
 
   @override
-  String get ownerId;
+  String? get ownerId;
   @override
   String? get search;
+
+  /// Create a copy of FindAllCustomerDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FindAllCustomerDtoImplCopyWith<_$FindAllCustomerDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -177,12 +189,16 @@ CreateCustomerDto _$CreateCustomerDtoFromJson(Map<String, dynamic> json) {
 mixin _$CreateCustomerDto {
   String get name => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
-  String get outletId => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateCustomerDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateCustomerDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateCustomerDtoCopyWith<CreateCustomerDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -196,7 +212,7 @@ abstract class $CreateCustomerDtoCopyWith<$Res> {
   $Res call(
       {String name,
       String phoneNumber,
-      String outletId,
+      String? outletId,
       String? email,
       String? address});
 }
@@ -211,12 +227,14 @@ class _$CreateCustomerDtoCopyWithImpl<$Res, $Val extends CreateCustomerDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateCustomerDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = null,
     Object? phoneNumber = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? email = freezed,
     Object? address = freezed,
   }) {
@@ -229,10 +247,10 @@ class _$CreateCustomerDtoCopyWithImpl<$Res, $Val extends CreateCustomerDto>
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -256,7 +274,7 @@ abstract class _$$CreateCustomerDtoImplCopyWith<$Res>
   $Res call(
       {String name,
       String phoneNumber,
-      String outletId,
+      String? outletId,
       String? email,
       String? address});
 }
@@ -269,12 +287,14 @@ class __$$CreateCustomerDtoImplCopyWithImpl<$Res>
       $Res Function(_$CreateCustomerDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateCustomerDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = null,
     Object? phoneNumber = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
     Object? email = freezed,
     Object? address = freezed,
   }) {
@@ -287,10 +307,10 @@ class __$$CreateCustomerDtoImplCopyWithImpl<$Res>
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -309,7 +329,7 @@ class _$CreateCustomerDtoImpl implements _CreateCustomerDto {
   const _$CreateCustomerDtoImpl(
       {required this.name,
       required this.phoneNumber,
-      required this.outletId,
+      this.outletId,
       this.email,
       this.address});
 
@@ -321,7 +341,7 @@ class _$CreateCustomerDtoImpl implements _CreateCustomerDto {
   @override
   final String phoneNumber;
   @override
-  final String outletId;
+  final String? outletId;
   @override
   final String? email;
   @override
@@ -346,12 +366,14 @@ class _$CreateCustomerDtoImpl implements _CreateCustomerDto {
             (identical(other.address, address) || other.address == address));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, name, phoneNumber, outletId, email, address);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateCustomerDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateCustomerDtoImplCopyWith<_$CreateCustomerDtoImpl> get copyWith =>
@@ -370,7 +392,7 @@ abstract class _CreateCustomerDto implements CreateCustomerDto {
   const factory _CreateCustomerDto(
       {required final String name,
       required final String phoneNumber,
-      required final String outletId,
+      final String? outletId,
       final String? email,
       final String? address}) = _$CreateCustomerDtoImpl;
 
@@ -382,13 +404,16 @@ abstract class _CreateCustomerDto implements CreateCustomerDto {
   @override
   String get phoneNumber;
   @override
-  String get outletId;
+  String? get outletId;
   @override
   String? get email;
   @override
   String? get address;
+
+  /// Create a copy of CreateCustomerDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateCustomerDtoImplCopyWith<_$CreateCustomerDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -51,12 +51,8 @@ class _TableMasterState extends State<TableMaster> {
   Future<void> _onRefresh() async {
     if (!mounted) return;
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
-    await context
-        .read<TableMasterLocationCubit>()
-        .findAll(FindAllTableLocationDto(outletId: authState.outletId));
-    await context.read<TableMasterCubit>().init(authState.outletId);
+    context.read<TableMasterLocationCubit>().findAll(FindAllTableLocationDto());
+    await context.read<TableMasterCubit>().init();
   }
 
   Future<void> _onGoToDetail(TableModel table) async {
@@ -97,11 +93,8 @@ class _TableMasterState extends State<TableMaster> {
       listeners: [
         BlocListener<TableMasterFilterCubit, TableMasterFilterState>(
           listener: (context, state) {
-            AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
             context.read<TableMasterCubit>().findAll(
                   FindAllTableDto(
-                    outletId: authState.outletId,
                     outletRoomId: state.outletRoomId,
                   ),
                 );

@@ -7,21 +7,18 @@ class CashierReportCubit extends Cubit<CashierReportState> {
 
   CashierReportCubit() : super(CashierReportInitial());
 
-  Future<void> init(String outletId) async {
+  Future<void> init() async {
     await getReport(
-      outletId: outletId,
       dto: const GetOutletSalesDto(template: "TODAY"),
     );
   }
 
   Future<void> getReport({
-    required String outletId,
     GetOutletSalesDto? dto,
   }) async {
     try {
       emit(CashierReportLoadInProgress());
-      final report =
-          await _outletRepository.getOutletSales(outletId: outletId, dto: dto);
+      final report = await _outletRepository.getOutletSales(dto: dto);
       emit(CashierReportLoadSuccess(report: report));
     } catch (e) {
       emit(CashierReportLoadFailure(e.toString()));

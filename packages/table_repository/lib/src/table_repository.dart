@@ -1,3 +1,4 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:table_repository/src/dto/table.dart';
@@ -12,11 +13,10 @@ abstract class TableRepository {
 }
 
 class TableRepositoryImpl implements TableRepository {
-  String _baseURL = "/tables";
+  final String _baseURL = "/tables";
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
-
-  TableRepositoryImpl();
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   Future<Options> _getOptions() async {
     final token = await _tokenProvider.getAuthToken();
@@ -28,8 +28,10 @@ class TableRepositoryImpl implements TableRepository {
   @override
   Future<List<TableModel>> findAll(FindAllTableDto dto) async {
     final options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
+
     final response = await _dio.get<List<dynamic>>(
-      "$_baseURL?${dto.toQueryString()}",
+      "$_baseURL?outlet=$outletId&${dto.toQueryString()}",
       options: options,
     );
 
@@ -39,9 +41,11 @@ class TableRepositoryImpl implements TableRepository {
   @override
   Future<TableModel> create(CreateTableDto dto) async {
     final options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
+
     final response = await _dio.post(
-      "$_baseURL",
-      data: dto.toJson(),
+      _baseURL,
+      data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );
 
@@ -51,9 +55,11 @@ class TableRepositoryImpl implements TableRepository {
   @override
   Future<TableModel> update(String id, UpdateTableDto dto) async {
     final options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
+
     final response = await _dio.patch(
       "$_baseURL/$id",
-      data: dto.toJson(),
+      data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );
 

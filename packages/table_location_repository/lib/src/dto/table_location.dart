@@ -5,9 +5,7 @@ part 'table_location.g.dart';
 
 @freezed
 class FindAllTableLocationDto with _$FindAllTableLocationDto {
-  const factory FindAllTableLocationDto({
-    required String outletId,
-  }) = _FindAllTableLocationDto;
+  const factory FindAllTableLocationDto() = _FindAllTableLocationDto;
 
   factory FindAllTableLocationDto.fromJson(Map<String, Object?> json) =>
       _$FindAllTableLocationDtoFromJson(json);
@@ -30,7 +28,7 @@ extension QueryStringExtension on FindAllTableLocationDto {
 class CreateTableLocationDto with _$CreateTableLocationDto {
   const factory CreateTableLocationDto({
     required String name,
-    required String outletId,
+    String? outletId,
   }) = _CreateTableLocationDto;
 
   factory CreateTableLocationDto.fromJson(Map<String, Object?> json) =>

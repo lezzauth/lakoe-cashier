@@ -38,6 +38,8 @@ class _CompletingDataScreenState extends State<CompletingDataScreen> {
           listener: (context, state) async {
             if (state is AuthRegisterSuccess) {
               await context.read<AuthCubit>().initialize();
+
+              if (!context.mounted) return;
               Navigator.popAndPushNamed(context, "/cashier");
             }
           },

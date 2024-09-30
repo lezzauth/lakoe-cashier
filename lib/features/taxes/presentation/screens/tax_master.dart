@@ -121,10 +121,7 @@ class _TaxMasterState extends State<TaxMaster> {
       }
     }
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
     await context.read<TaxMasterCubit>().save(
-          ownerId: authState.profile.id,
           newTaxes: newTaxes,
           updatedTaxes: updatedTaxes,
           removedIds: removedTaxIds,
@@ -135,8 +132,7 @@ class _TaxMasterState extends State<TaxMaster> {
   void initState() {
     super.initState();
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-    context.read<TaxMasterCubit>().findAll(ownerId: authState.profile.id);
+    context.read<TaxMasterCubit>().findAll();
   }
 
   @override

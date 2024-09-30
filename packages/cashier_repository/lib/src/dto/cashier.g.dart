@@ -8,7 +8,7 @@ part of 'cashier.dart';
 
 _$SaveOrderDtoImpl _$$SaveOrderDtoImplFromJson(Map<String, dynamic> json) =>
     _$SaveOrderDtoImpl(
-      outletId: json['outletId'] as String,
+      outletId: json['outletId'] as String?,
       type: json['type'] as String,
       items: (json['items'] as List<dynamic>)
           .map((e) => OrderItemDto.fromJson(e as Map<String, dynamic>))
@@ -99,7 +99,7 @@ Map<String, dynamic> _$$CompleteQRCodeOrderDtoImplToJson(
 _$OpenCashierDtoImpl _$$OpenCashierDtoImplFromJson(Map<String, dynamic> json) =>
     _$OpenCashierDtoImpl(
       initialBalance: (json['initialBalance'] as num).toInt(),
-      outletId: json['outletId'] as String,
+      outletId: json['outletId'] as String?,
       pin: json['pin'] as String,
     );
 
@@ -114,7 +114,7 @@ Map<String, dynamic> _$$OpenCashierDtoImplToJson(
 _$RegenerateCashierTokenDtoImpl _$$RegenerateCashierTokenDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$RegenerateCashierTokenDtoImpl(
-      outletId: json['outletId'] as String,
+      outletId: json['outletId'] as String?,
       pin: json['pin'] as String,
     );
 
@@ -129,7 +129,7 @@ _$CloseCashierDtoImpl _$$CloseCashierDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$CloseCashierDtoImpl(
       finalBalance: (json['finalBalance'] as num).toInt(),
-      outletId: json['outletId'] as String,
+      outletId: json['outletId'] as String?,
     );
 
 Map<String, dynamic> _$$CloseCashierDtoImplToJson(

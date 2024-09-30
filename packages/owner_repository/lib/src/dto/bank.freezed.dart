@@ -24,8 +24,12 @@ mixin _$CreateOwnerBankDto {
   String get accountNumber => throw _privateConstructorUsedError;
   String get accountName => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateOwnerBankDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateOwnerBankDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateOwnerBankDtoCopyWith<CreateOwnerBankDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$CreateOwnerBankDtoCopyWithImpl<$Res, $Val extends CreateOwnerBankDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateOwnerBankDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,6 +98,8 @@ class __$$CreateOwnerBankDtoImplCopyWithImpl<$Res>
       $Res Function(_$CreateOwnerBankDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateOwnerBankDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -151,12 +159,14 @@ class _$CreateOwnerBankDtoImpl implements _CreateOwnerBankDto {
                 other.accountName == accountName));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, name, accountNumber, accountName);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateOwnerBankDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateOwnerBankDtoImplCopyWith<_$CreateOwnerBankDtoImpl> get copyWith =>
@@ -186,8 +196,11 @@ abstract class _CreateOwnerBankDto implements CreateOwnerBankDto {
   String get accountNumber;
   @override
   String get accountName;
+
+  /// Create a copy of CreateOwnerBankDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateOwnerBankDtoImplCopyWith<_$CreateOwnerBankDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -203,8 +216,12 @@ mixin _$UpdateOwnerBankDto {
   String? get accountName => throw _privateConstructorUsedError;
   bool? get isPrimary => throw _privateConstructorUsedError;
 
+  /// Serializes this UpdateOwnerBankDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UpdateOwnerBankDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UpdateOwnerBankDtoCopyWith<UpdateOwnerBankDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -232,6 +249,8 @@ class _$UpdateOwnerBankDtoCopyWithImpl<$Res, $Val extends UpdateOwnerBankDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UpdateOwnerBankDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -284,6 +303,8 @@ class __$$UpdateOwnerBankDtoImplCopyWithImpl<$Res>
       $Res Function(_$UpdateOwnerBankDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UpdateOwnerBankDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -350,12 +371,14 @@ class _$UpdateOwnerBankDtoImpl implements _UpdateOwnerBankDto {
                 other.isPrimary == isPrimary));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, name, accountNumber, accountName, isPrimary);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UpdateOwnerBankDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateOwnerBankDtoImplCopyWith<_$UpdateOwnerBankDtoImpl> get copyWith =>
@@ -388,8 +411,11 @@ abstract class _UpdateOwnerBankDto implements UpdateOwnerBankDto {
   String? get accountName;
   @override
   bool? get isPrimary;
+
+  /// Create a copy of UpdateOwnerBankDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateOwnerBankDtoImplCopyWith<_$UpdateOwnerBankDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -58,6 +58,8 @@ dependencies:
     path: packages/token_provider
   dio_provider:
     path: packages/dio_provider
+  app_data_provider:
+    path: packages/app_data_provider
 
   flutter:
     sdk: flutter

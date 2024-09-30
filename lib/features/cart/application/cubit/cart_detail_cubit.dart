@@ -14,14 +14,12 @@ class CartDetailCubit extends Cubit<CartDetailState> {
 
   Future<void> previewOrderPrice({
     required List<CartModel> carts,
-    required String outletId,
     required String type,
   }) async {
     try {
       emit(CartDetailLoadInProgress());
       final previewOrderPrice = await _orderRepository.previewOrderPrice(
         PreviewOrderPriceDto(
-          outletId: outletId,
           type: type,
           items: carts
               .map(
@@ -41,13 +39,11 @@ class CartDetailCubit extends Cubit<CartDetailState> {
 
   SaveOrderDto _cartsToSaveOrderDto({
     required List<CartModel> carts,
-    required String outletId,
     required String type,
     String? customerId,
     String? tableId,
   }) {
     return SaveOrderDto(
-      outletId: outletId,
       type: type,
       customerId: customerId,
       tableId: tableId,
@@ -65,7 +61,6 @@ class CartDetailCubit extends Cubit<CartDetailState> {
 
   Future<void> saveOrder({
     required List<CartModel> carts,
-    required String outletId,
     required String type,
     String? customerId,
     String? tableId,
@@ -74,7 +69,6 @@ class CartDetailCubit extends Cubit<CartDetailState> {
       emit(CartDetailActionInProgress());
       await _cashierRepository.saveOrder(_cartsToSaveOrderDto(
         carts: carts,
-        outletId: outletId,
         type: type,
         customerId: customerId,
         tableId: tableId,
@@ -89,7 +83,6 @@ class CartDetailCubit extends Cubit<CartDetailState> {
 
   Future<void> saveAndCompleteOrder({
     required List<CartModel> carts,
-    required String outletId,
     required String type,
     required CompleteOrderDto dto,
     String? customerId,
@@ -101,7 +94,6 @@ class CartDetailCubit extends Cubit<CartDetailState> {
       final response = await _cashierRepository.saveAndCompleteOrder(
         _cartsToSaveOrderDto(
           carts: carts,
-          outletId: outletId,
           type: type,
           customerId: customerId,
           tableId: tableId,

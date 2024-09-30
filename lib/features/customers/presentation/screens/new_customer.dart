@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_state.dart';
 import 'package:point_of_sales_cashier/features/customers/presentation/widgets/forms/new_customer_form.dart';
@@ -23,13 +21,9 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
 
   Future<void> _onSubmit() async {
     FocusScope.of(context).unfocus();
-    if (!mounted) return;
 
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
     if (!isFormValid) return;
-
-    AuthState authState = context.read<AuthCubit>().state;
-    if (authState is! AuthReady) return;
 
     dynamic value = _formKey.currentState?.value;
 
@@ -37,12 +31,12 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
           CreateCustomerDto(
             name: value["name"],
             phoneNumber: value["phoneNumber"],
-            outletId: authState.outletId,
             address: value["address"],
             email: value["email"],
           ),
         );
 
+    if (!mounted) return;
     Navigator.pop(context, true);
   }
 

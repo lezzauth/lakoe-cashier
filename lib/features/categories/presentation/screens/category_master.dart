@@ -47,12 +47,10 @@ class CategoryMaster extends StatefulWidget {
 
 class _CategoryMasterState extends State<CategoryMaster> {
   Future<void> onRefresh() async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     CategoryMasterFilterState filterState =
         context.read<CategoryMasterFilterCubit>().state;
 
     context.read<CategoryMasterCubit>().findAll(FindAllCategoryDto(
-          outletId: authState.outletId,
           search: filterState.search,
         ));
   }
@@ -60,9 +58,8 @@ class _CategoryMasterState extends State<CategoryMaster> {
   @override
   void initState() {
     super.initState();
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
 
-    context.read<CategoryMasterCubit>().init(authState.outletId);
+    context.read<CategoryMasterCubit>().init();
   }
 
   @override
@@ -71,10 +68,7 @@ class _CategoryMasterState extends State<CategoryMaster> {
       listeners: [
         BlocListener<CategoryMasterFilterCubit, CategoryMasterFilterState>(
           listener: (context, state) {
-            AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
             context.read<CategoryMasterCubit>().findAll(FindAllCategoryDto(
-                  outletId: authState.outletId,
                   search: state.search,
                 ));
           },

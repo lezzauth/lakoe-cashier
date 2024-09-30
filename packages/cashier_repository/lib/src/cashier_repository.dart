@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:cashier_repository/src/dto/cashier.dart';
 import 'package:cashier_repository/src/models/cashier.dart';
 import 'package:dio/dio.dart';
@@ -9,7 +10,7 @@ import 'package:token_provider/token_provider.dart';
 abstract class CashierRepository {
   Future<OpenCashierResponse> openCashier(OpenCashierDto dto);
   Future<CashierModel> closeCashier(CloseCashierDto dto);
-  Future<GetOpenCashierResponse?> getOpenCashier(String outletId);
+  Future<GetOpenCashierResponse?> getOpenCashier();
   Future<RegenerateCashierTokenResponse> regenerateToken(
       RegenerateCashierTokenDto dto);
 
@@ -27,22 +28,10 @@ abstract class CashierRepository {
 }
 
 class CashierRepositoryImpl implements CashierRepository {
-  String _baseURL = "/cashier";
+  final String _baseURL = "/cashier";
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
-
-  CashierRepositoryImpl() {
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onError: (DioException error, handler) async {
-          if (error.response?.statusCode == 401) {
-            // Handle token refresh logic here
-          }
-          handler.next(error);
-        },
-      ),
-    );
-  }
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   Future<Options> _getOptions() async {
     final token = await _tokenProvider.getCashierToken();
@@ -54,10 +43,11 @@ class CashierRepositoryImpl implements CashierRepository {
   @override
   Future<OpenCashierResponse> openCashier(OpenCashierDto dto) async {
     final Options options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
 
     final response = await _dio.post(
       "$_baseURL/open",
-      data: dto.toJson(),
+      data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );
     return OpenCashierResponse.fromJson(response.data);
@@ -66,18 +56,20 @@ class CashierRepositoryImpl implements CashierRepository {
   @override
   Future<CashierModel> closeCashier(CloseCashierDto dto) async {
     final Options options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
 
     final response = await _dio.post(
       "$_baseURL/close",
-      data: dto.toJson(),
+      data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );
     return CashierModel.fromJson(response.data);
   }
 
   @override
-  Future<GetOpenCashierResponse?> getOpenCashier(String outletId) async {
+  Future<GetOpenCashierResponse?> getOpenCashier() async {
     final Options options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
 
     final response = await _dio.get(
       "$_baseURL/open?outletId=$outletId",
@@ -91,10 +83,11 @@ class CashierRepositoryImpl implements CashierRepository {
   Future<RegenerateCashierTokenResponse> regenerateToken(
       RegenerateCashierTokenDto dto) async {
     final Options options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
 
     final response = await _dio.post(
       "$_baseURL/generate-token",
-      data: dto.toJson(),
+      data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );
     return RegenerateCashierTokenResponse.fromJson(response.data);
@@ -105,10 +98,11 @@ class CashierRepositoryImpl implements CashierRepository {
   @override
   Future<SaveOrderResponse> saveOrder(SaveOrderDto dto) async {
     final Options options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
 
     final response = await _dio.post(
       "$_baseURL/save-order",
-      data: dto.toJson(),
+      data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );
     log('saveOrder: ${response.data} | ${dto.toJson()}');

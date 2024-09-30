@@ -24,8 +24,12 @@ mixin _$CreateChargeDto {
   double get value => throw _privateConstructorUsedError;
   bool get isPrecentage => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateChargeDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateChargeDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateChargeDtoCopyWith<CreateChargeDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$CreateChargeDtoCopyWithImpl<$Res, $Val extends CreateChargeDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateChargeDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,6 +98,8 @@ class __$$CreateChargeDtoImplCopyWithImpl<$Res>
       _$CreateChargeDtoImpl _value, $Res Function(_$CreateChargeDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateChargeDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -148,11 +156,13 @@ class _$CreateChargeDtoImpl implements _CreateChargeDto {
                 other.isPrecentage == isPrecentage));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, value, isPrecentage);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateChargeDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateChargeDtoImplCopyWith<_$CreateChargeDtoImpl> get copyWith =>
@@ -182,8 +192,11 @@ abstract class _CreateChargeDto implements CreateChargeDto {
   double get value;
   @override
   bool get isPrecentage;
+
+  /// Create a copy of CreateChargeDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateChargeDtoImplCopyWith<_$CreateChargeDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -198,8 +211,12 @@ mixin _$UpdateChargeDto {
   double? get value => throw _privateConstructorUsedError;
   bool? get isPrecentage => throw _privateConstructorUsedError;
 
+  /// Serializes this UpdateChargeDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UpdateChargeDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UpdateChargeDtoCopyWith<UpdateChargeDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -223,6 +240,8 @@ class _$UpdateChargeDtoCopyWithImpl<$Res, $Val extends UpdateChargeDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UpdateChargeDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -266,6 +285,8 @@ class __$$UpdateChargeDtoImplCopyWithImpl<$Res>
       _$UpdateChargeDtoImpl _value, $Res Function(_$UpdateChargeDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UpdateChargeDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -321,11 +342,13 @@ class _$UpdateChargeDtoImpl implements _UpdateChargeDto {
                 other.isPrecentage == isPrecentage));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, value, isPrecentage);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UpdateChargeDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateChargeDtoImplCopyWith<_$UpdateChargeDtoImpl> get copyWith =>
@@ -355,8 +378,11 @@ abstract class _UpdateChargeDto implements UpdateChargeDto {
   double? get value;
   @override
   bool? get isPrecentage;
+
+  /// Create a copy of UpdateChargeDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateChargeDtoImplCopyWith<_$UpdateChargeDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

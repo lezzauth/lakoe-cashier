@@ -9,7 +9,7 @@ part of 'category.dart';
 _$FindAllCategoryDtoImpl _$$FindAllCategoryDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$FindAllCategoryDtoImpl(
-      outletId: json['outletId'] as String,
+      outletId: json['outletId'] as String?,
       search: json['search'] as String?,
     );
 
@@ -23,7 +23,7 @@ Map<String, dynamic> _$$FindAllCategoryDtoImplToJson(
 _$CreateCategoryDtoImpl _$$CreateCategoryDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$CreateCategoryDtoImpl(
-      outletId: json['outletId'] as String,
+      outletId: json['outletId'] as String?,
       name: json['name'] as String,
       icon: json['icon'] as String,
     );

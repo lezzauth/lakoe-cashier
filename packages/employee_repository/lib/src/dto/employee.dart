@@ -11,7 +11,7 @@ class CreateEmployeeDto with _$CreateEmployeeDto {
     required String pin,
     required String phoneNumber,
     required String role,
-    required String outletId,
+    String? outletId,
   }) = _CreateEmployeeDto;
 
   factory CreateEmployeeDto.fromJson(Map<String, Object?> json) =>
@@ -34,7 +34,6 @@ class UpdateEmployeeDto with _$UpdateEmployeeDto {
     String? pin,
     String? phoneNumber,
     String? role,
-    String? outletId,
   }) = _UpdateEmployeeDto;
 
   factory UpdateEmployeeDto.fromJson(Map<String, Object?> json) =>
@@ -52,7 +51,7 @@ extension ToJsonFilterExtension on UpdateEmployeeDto {
 @freezed
 class FindAllEmployeeDto with _$FindAllEmployeeDto {
   const factory FindAllEmployeeDto({
-    required String outletId,
+    String? outletId,
   }) = _FindAllEmployeeDto;
 
   factory FindAllEmployeeDto.fromJson(Map<String, Object?> json) =>

@@ -26,8 +26,12 @@ mixin _$ChargeModel {
   String get ownerId => throw _privateConstructorUsedError;
   bool get isPrecentage => throw _privateConstructorUsedError;
 
+  /// Serializes this ChargeModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ChargeModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ChargeModelCopyWith<ChargeModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -56,6 +60,8 @@ class _$ChargeModelCopyWithImpl<$Res, $Val extends ChargeModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ChargeModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -114,6 +120,8 @@ class __$$ChargeModelImplCopyWithImpl<$Res>
       _$ChargeModelImpl _value, $Res Function(_$ChargeModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ChargeModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -190,12 +198,14 @@ class _$ChargeModelImpl implements _ChargeModel {
                 other.isPrecentage == isPrecentage));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, name, value, ownerId, isPrecentage);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ChargeModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChargeModelImplCopyWith<_$ChargeModelImpl> get copyWith =>
@@ -230,8 +240,11 @@ abstract class _ChargeModel implements ChargeModel {
   String get ownerId;
   @override
   bool get isPrecentage;
+
+  /// Create a copy of ChargeModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChargeModelImplCopyWith<_$ChargeModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

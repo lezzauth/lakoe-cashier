@@ -7,8 +7,8 @@ class TableMasterCubit extends Cubit<TableMasterState> {
 
   TableMasterCubit() : super(TableMasterInitial());
 
-  Future<void> init(String outletId) async {
-    await findAll(FindAllTableDto(outletId: outletId));
+  Future<void> init() async {
+    await findAll(FindAllTableDto());
   }
 
   Future<void> findAll(FindAllTableDto dto) async {

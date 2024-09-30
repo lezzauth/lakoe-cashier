@@ -1,3 +1,4 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:table_location_repository/src/dto/table_location.dart';
@@ -10,11 +11,10 @@ abstract class TableLocationRepository {
 }
 
 class TableLocationRepositoryImpl implements TableLocationRepository {
-  String _baseURL = "/tables/rooms";
+  final String _baseURL = "/tables/rooms";
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
-
-  TableLocationRepositoryImpl();
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   Future<Options> _getOptions() async {
     final token = await _tokenProvider.getAuthToken();
@@ -26,8 +26,10 @@ class TableLocationRepositoryImpl implements TableLocationRepository {
   @override
   Future<List<TableLocationModel>> findAll(FindAllTableLocationDto dto) async {
     final options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
+
     final response = await _dio.get<List<dynamic>>(
-      "$_baseURL?${dto.toQueryString()}",
+      "$_baseURL?outletId=$outletId&${dto.toQueryString()}",
       options: options,
     );
 
@@ -39,8 +41,10 @@ class TableLocationRepositoryImpl implements TableLocationRepository {
   @override
   Future<TableLocationModel> create(CreateTableLocationDto dto) async {
     final options = await _getOptions();
-    final response =
-        await _dio.post("$_baseURL", data: dto.toJson(), options: options);
+    final outletId = await _appDataProvider.outletId;
+
+    final response = await _dio.post(_baseURL,
+        data: dto.copyWith(outletId: outletId).toJson(), options: options);
 
     return TableLocationModel.fromJson(response.data);
   }

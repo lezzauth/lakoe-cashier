@@ -11,8 +11,8 @@ class ProductMasterCubit extends Cubit<ProductMasterState> {
 
   ProductMasterCubit() : super(ProductMasterInitial());
 
-  Future<void> init(String outletId) async {
-    await findAll(FindAllProductDto(outletId: outletId));
+  Future<void> init() async {
+    await findAll(FindAllProductDto());
   }
 
   Future<void> findAll(FindAllProductDto dto) async {

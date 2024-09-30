@@ -6,7 +6,6 @@ part 'table.g.dart';
 @freezed
 class FindAllTableDto with _$FindAllTableDto {
   const factory FindAllTableDto({
-    required String outletId,
     String? outletRoomId,
   }) = _FindAllTableDto;
 
@@ -32,7 +31,7 @@ class CreateTableDto with _$CreateTableDto {
   const factory CreateTableDto({
     required String no,
     required int capacity,
-    required String outletId,
+    String? outletId,
     required String outletRoomId,
   }) = _CreateTableDto;
 

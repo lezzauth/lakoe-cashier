@@ -21,12 +21,8 @@ FindAllTableLocationDto _$FindAllTableLocationDtoFromJson(
 
 /// @nodoc
 mixin _$FindAllTableLocationDto {
-  String get outletId => throw _privateConstructorUsedError;
-
+  /// Serializes this FindAllTableLocationDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $FindAllTableLocationDtoCopyWith<FindAllTableLocationDto> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -34,8 +30,6 @@ abstract class $FindAllTableLocationDtoCopyWith<$Res> {
   factory $FindAllTableLocationDtoCopyWith(FindAllTableLocationDto value,
           $Res Function(FindAllTableLocationDto) then) =
       _$FindAllTableLocationDtoCopyWithImpl<$Res, FindAllTableLocationDto>;
-  @useResult
-  $Res call({String outletId});
 }
 
 /// @nodoc
@@ -49,30 +43,16 @@ class _$FindAllTableLocationDtoCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? outletId = null,
-  }) {
-    return _then(_value.copyWith(
-      outletId: null == outletId
-          ? _value.outletId
-          : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
+  /// Create a copy of FindAllTableLocationDto
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
-abstract class _$$FindAllTableLocationDtoImplCopyWith<$Res>
-    implements $FindAllTableLocationDtoCopyWith<$Res> {
+abstract class _$$FindAllTableLocationDtoImplCopyWith<$Res> {
   factory _$$FindAllTableLocationDtoImplCopyWith(
           _$FindAllTableLocationDtoImpl value,
           $Res Function(_$FindAllTableLocationDtoImpl) then) =
       __$$FindAllTableLocationDtoImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String outletId});
 }
 
 /// @nodoc
@@ -85,55 +65,33 @@ class __$$FindAllTableLocationDtoImplCopyWithImpl<$Res>
       $Res Function(_$FindAllTableLocationDtoImpl) _then)
       : super(_value, _then);
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? outletId = null,
-  }) {
-    return _then(_$FindAllTableLocationDtoImpl(
-      outletId: null == outletId
-          ? _value.outletId
-          : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+  /// Create a copy of FindAllTableLocationDto
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$FindAllTableLocationDtoImpl implements _FindAllTableLocationDto {
-  const _$FindAllTableLocationDtoImpl({required this.outletId});
+  const _$FindAllTableLocationDtoImpl();
 
   factory _$FindAllTableLocationDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$FindAllTableLocationDtoImplFromJson(json);
 
   @override
-  final String outletId;
-
-  @override
   String toString() {
-    return 'FindAllTableLocationDto(outletId: $outletId)';
+    return 'FindAllTableLocationDto()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FindAllTableLocationDtoImpl &&
-            (identical(other.outletId, outletId) ||
-                other.outletId == outletId));
+            other is _$FindAllTableLocationDtoImpl);
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, outletId);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$FindAllTableLocationDtoImplCopyWith<_$FindAllTableLocationDtoImpl>
-      get copyWith => __$$FindAllTableLocationDtoImplCopyWithImpl<
-          _$FindAllTableLocationDtoImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   Map<String, dynamic> toJson() {
@@ -144,18 +102,10 @@ class _$FindAllTableLocationDtoImpl implements _FindAllTableLocationDto {
 }
 
 abstract class _FindAllTableLocationDto implements FindAllTableLocationDto {
-  const factory _FindAllTableLocationDto({required final String outletId}) =
-      _$FindAllTableLocationDtoImpl;
+  const factory _FindAllTableLocationDto() = _$FindAllTableLocationDtoImpl;
 
   factory _FindAllTableLocationDto.fromJson(Map<String, dynamic> json) =
       _$FindAllTableLocationDtoImpl.fromJson;
-
-  @override
-  String get outletId;
-  @override
-  @JsonKey(ignore: true)
-  _$$FindAllTableLocationDtoImplCopyWith<_$FindAllTableLocationDtoImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }
 
 CreateTableLocationDto _$CreateTableLocationDtoFromJson(
@@ -166,10 +116,14 @@ CreateTableLocationDto _$CreateTableLocationDtoFromJson(
 /// @nodoc
 mixin _$CreateTableLocationDto {
   String get name => throw _privateConstructorUsedError;
-  String get outletId => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateTableLocationDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateTableLocationDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateTableLocationDtoCopyWith<CreateTableLocationDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -180,7 +134,7 @@ abstract class $CreateTableLocationDtoCopyWith<$Res> {
           $Res Function(CreateTableLocationDto) then) =
       _$CreateTableLocationDtoCopyWithImpl<$Res, CreateTableLocationDto>;
   @useResult
-  $Res call({String name, String outletId});
+  $Res call({String name, String? outletId});
 }
 
 /// @nodoc
@@ -194,21 +148,23 @@ class _$CreateTableLocationDtoCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateTableLocationDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -222,7 +178,7 @@ abstract class _$$CreateTableLocationDtoImplCopyWith<$Res>
       __$$CreateTableLocationDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String outletId});
+  $Res call({String name, String? outletId});
 }
 
 /// @nodoc
@@ -235,21 +191,23 @@ class __$$CreateTableLocationDtoImplCopyWithImpl<$Res>
       $Res Function(_$CreateTableLocationDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateTableLocationDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
   }) {
     return _then(_$CreateTableLocationDtoImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -257,8 +215,7 @@ class __$$CreateTableLocationDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CreateTableLocationDtoImpl implements _CreateTableLocationDto {
-  const _$CreateTableLocationDtoImpl(
-      {required this.name, required this.outletId});
+  const _$CreateTableLocationDtoImpl({required this.name, this.outletId});
 
   factory _$CreateTableLocationDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateTableLocationDtoImplFromJson(json);
@@ -266,7 +223,7 @@ class _$CreateTableLocationDtoImpl implements _CreateTableLocationDto {
   @override
   final String name;
   @override
-  final String outletId;
+  final String? outletId;
 
   @override
   String toString() {
@@ -283,11 +240,13 @@ class _$CreateTableLocationDtoImpl implements _CreateTableLocationDto {
                 other.outletId == outletId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, outletId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateTableLocationDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateTableLocationDtoImplCopyWith<_$CreateTableLocationDtoImpl>
@@ -305,7 +264,7 @@ class _$CreateTableLocationDtoImpl implements _CreateTableLocationDto {
 abstract class _CreateTableLocationDto implements CreateTableLocationDto {
   const factory _CreateTableLocationDto(
       {required final String name,
-      required final String outletId}) = _$CreateTableLocationDtoImpl;
+      final String? outletId}) = _$CreateTableLocationDtoImpl;
 
   factory _CreateTableLocationDto.fromJson(Map<String, dynamic> json) =
       _$CreateTableLocationDtoImpl.fromJson;
@@ -313,9 +272,12 @@ abstract class _CreateTableLocationDto implements CreateTableLocationDto {
   @override
   String get name;
   @override
-  String get outletId;
+  String? get outletId;
+
+  /// Create a copy of CreateTableLocationDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateTableLocationDtoImplCopyWith<_$CreateTableLocationDtoImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

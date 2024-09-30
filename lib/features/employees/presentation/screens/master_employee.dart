@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_state.dart';
 import 'package:point_of_sales_cashier/features/employees/common/widgets/employee_item.dart';
@@ -21,17 +19,11 @@ class MasterEmployeScreen extends StatefulWidget {
 
 class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
   Future<void> _onRefresh() async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
-    await context
-        .read<EmployeeMasterCubit>()
-        .findAll(FindAllEmployeeDto(outletId: authState.outletId));
+    await context.read<EmployeeMasterCubit>().findAll(FindAllEmployeeDto());
   }
 
   void _onInit() {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
-    context.read<EmployeeMasterCubit>().init(authState.outletId);
+    context.read<EmployeeMasterCubit>().init();
   }
 
   Future<void> _onGoToCreateScreen() async {

@@ -1,3 +1,4 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:owner_repository/src/dto/tax.dart';
@@ -5,36 +6,22 @@ import 'package:owner_repository/src/models/tax.dart';
 import 'package:token_provider/token_provider.dart';
 
 abstract class TaxRepository {
-  Future<List<TaxModel>> findAll({required String ownerId});
-  Future<TaxModel> create({required String ownerId, required CreateTaxDto dto});
+  Future<List<TaxModel>> findAll();
+  Future<TaxModel> create({required CreateTaxDto dto});
   Future<TaxModel> update({
-    required String ownerId,
     required String taxId,
     required UpdateTaxDto dto,
   });
   Future<TaxModel> delete({
-    required String ownerId,
     required String taxId,
   });
 }
 
 class TaxRepositoryImpl implements TaxRepository {
-  String _baseURL = "/owners";
-  Dio _dio = DioProvider().dio;
+  final String _baseURL = "/owners";
+  final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
-
-  OwnerRepositoryImpl() {
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onError: (DioException error, handler) async {
-          if (error.response?.statusCode == 401) {
-            // Handle token refresh logic here
-          }
-          handler.next(error);
-        },
-      ),
-    );
-  }
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   Future<Options> _getOptions() async {
     final token = await _tokenProvider.getAuthToken();
@@ -44,8 +31,10 @@ class TaxRepositoryImpl implements TaxRepository {
   }
 
   @override
-  Future<List<TaxModel>> findAll({required String ownerId}) async {
+  Future<List<TaxModel>> findAll() async {
     final options = await _getOptions();
+    final ownerId = await _appDataProvider.ownerId;
+
     final response = await _dio.get<List<dynamic>>(
       "$_baseURL/$ownerId/taxes",
       options: options,
@@ -55,9 +44,10 @@ class TaxRepositoryImpl implements TaxRepository {
   }
 
   @override
-  Future<TaxModel> create(
-      {required String ownerId, required CreateTaxDto dto}) async {
+  Future<TaxModel> create({required CreateTaxDto dto}) async {
     final options = await _getOptions();
+    final ownerId = await _appDataProvider.ownerId;
+
     final response = await _dio.post(
       "$_baseURL/$ownerId/taxes",
       data: dto.toJson(),
@@ -68,11 +58,13 @@ class TaxRepositoryImpl implements TaxRepository {
   }
 
   @override
-  Future<TaxModel> update(
-      {required String ownerId,
-      required String taxId,
-      required UpdateTaxDto dto}) async {
+  Future<TaxModel> update({
+    required String taxId,
+    required UpdateTaxDto dto,
+  }) async {
     final options = await _getOptions();
+    final ownerId = await _appDataProvider.ownerId;
+
     final response = await _dio.patch(
       "$_baseURL/$ownerId/taxes/$taxId",
       data: dto.toJson(),
@@ -84,10 +76,11 @@ class TaxRepositoryImpl implements TaxRepository {
 
   @override
   Future<TaxModel> delete({
-    required String ownerId,
     required String taxId,
   }) async {
     final options = await _getOptions();
+    final ownerId = await _appDataProvider.ownerId;
+
     final response = await _dio.delete(
       "$_baseURL/$ownerId/taxes/$taxId",
       options: options,

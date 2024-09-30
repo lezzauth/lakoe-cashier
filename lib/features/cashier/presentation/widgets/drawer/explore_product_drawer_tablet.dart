@@ -2,8 +2,6 @@ import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_cubit.dart';
@@ -27,14 +25,12 @@ class ExploreProductDrawerTablet extends StatefulWidget {
 class _ExploreProductDrawerTabletState
     extends State<ExploreProductDrawerTablet> {
   Future<void> _onCashPaid(PaymentCash data) async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
         context.read<CartDetailFilterCubit>().state;
 
     await context.read<CartDetailCubit>().saveAndCompleteOrder(
           carts: cartState.carts,
-          outletId: authState.outletId,
           dto: CompleteCashOrderDto(
             paidAmount: data.paidAmount,
             change: data.change,
@@ -47,14 +43,12 @@ class _ExploreProductDrawerTabletState
   }
 
   Future<void> _onBankTransferPaid(PaymentBankTransfer data) async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
         context.read<CartDetailFilterCubit>().state;
 
     await context.read<CartDetailCubit>().saveAndCompleteOrder(
           carts: cartState.carts,
-          outletId: authState.outletId,
           dto: CompleteBankTransferOrderDto(
             photo: data.photo,
             data: CompleteBankTransferOrderData(
@@ -70,14 +64,12 @@ class _ExploreProductDrawerTabletState
   }
 
   Future<void> _onDebitCreditPaid(PaymentDebitCredit data) async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
         context.read<CartDetailFilterCubit>().state;
 
     await context.read<CartDetailCubit>().saveAndCompleteOrder(
           carts: cartState.carts,
-          outletId: authState.outletId,
           dto: CompleteDebitCreditOrderDto(
             paymentMethod: "DEBIT",
             paidAmount: data.paidAmount,
@@ -91,14 +83,12 @@ class _ExploreProductDrawerTabletState
   }
 
   Future<void> _onQRCodePaid(PaymentQRCode data) async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
         context.read<CartDetailFilterCubit>().state;
 
     await context.read<CartDetailCubit>().saveAndCompleteOrder(
           carts: cartState.carts,
-          outletId: authState.outletId,
           dto: CompleteQRCodeOrderDto(
             paymentMethod: "QR_CODE",
             paidAmount: data.paidAmount,

@@ -58,14 +58,12 @@ class _TableEditState extends State<TableEdit> {
     }
 
     dynamic value = _formKey.currentState?.value;
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
 
     await context.read<TableMasterCubit>().update(
         tableId,
         UpdateTableDto(
           no: value["no"],
           capacity: int.parse(value["capacity"]),
-          outletId: authState.outletId,
           outletRoomId: value["outletRoomId"],
         ));
   }

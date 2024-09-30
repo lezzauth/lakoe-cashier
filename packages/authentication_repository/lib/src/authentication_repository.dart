@@ -11,7 +11,7 @@ abstract class AuthenticationRepository {
 }
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
-  String _baseURL = "/auth";
+  final String _baseURL = "/auth";
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
 
