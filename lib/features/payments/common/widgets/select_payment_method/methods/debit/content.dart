@@ -66,7 +66,6 @@ class DebitPaymentContentState extends State<DebitPaymentContent> {
                 BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
                   builder: (context, state) {
                     return Container(
-                      margin: const EdgeInsets.only(bottom: 8.0),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 12.0),
                       child: PaymentMethodRadioGroup(

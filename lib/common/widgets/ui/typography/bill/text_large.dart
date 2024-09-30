@@ -6,7 +6,7 @@ import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 class TextLarge extends StatelessWidget {
   final String data;
   final FontWeight fontWeight;
-  final double fontSize = TSizes.fontSizeHeading4;
+  final double fontSize = TSizes.fontSizeHeading2;
   final Color? color;
   final TextAlign? textAlign;
   final int? maxLines;

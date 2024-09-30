@@ -57,7 +57,7 @@ class ListItemCard extends StatelessWidget {
             UiIcons(
               iconSrc,
               height: 20,
-              width: 12,
+              width: 20,
               color:
                   dangerTheme == true ? TColors.error : TColors.neutralDarkDark,
             ),

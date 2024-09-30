@@ -6,7 +6,7 @@ import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 class TextSmall extends StatelessWidget {
   final String data;
   final FontWeight fontWeight;
-  final double fontSize = TSizes.fontSizeBodyS;
+  final double fontSize = TSizes.fontSizeBodyM;
   final Color? color;
   final TextAlign? textAlign;
   final int? maxLines;
