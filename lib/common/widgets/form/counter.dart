@@ -35,40 +35,41 @@ class Counter extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            decoration: BoxDecoration(
-              color: TColors.neutralLightLight,
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            width: 36,
-            height: 36,
-            child: (value <= 1 && isDeletable == true)
-                ? UiIcons(
-                    TIcons.trash,
-                    height: 16,
-                    width: 16,
-                    color: TColors.error,
-                    onTap: () {
-                      onChanged(value - 1);
-                    },
-                  )
-                : (minValue > 1 && isDeletable == false)
+              decoration: BoxDecoration(
+                color: TColors.neutralLightLight,
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              width: 36,
+              height: 36,
+              child: Center(
+                child: (value <= 1 && isDeletable == true)
                     ? UiIcons(
-                        TIcons.minus,
+                        TIcons.trash,
                         height: 16,
                         width: 16,
-                        color: TColors.highlightMedium,
-                        onTap: null,
-                      )
-                    : UiIcons(
-                        TIcons.minus,
-                        height: 16,
-                        width: 16,
-                        color: TColors.primary,
+                        color: TColors.error,
                         onTap: () {
                           onChanged(value - 1);
                         },
-                      ),
-          ),
+                      )
+                    : (minValue > 1 && isDeletable == false)
+                        ? UiIcons(
+                            TIcons.minus,
+                            height: 16,
+                            width: 16,
+                            color: TColors.highlightMedium,
+                            onTap: null,
+                          )
+                        : UiIcons(
+                            TIcons.minus,
+                            height: 16,
+                            width: 16,
+                            color: TColors.primary,
+                            onTap: () {
+                              onChanged(value - 1);
+                            },
+                          ),
+              )),
           SizedBox(
             height: 36,
             width: 36,

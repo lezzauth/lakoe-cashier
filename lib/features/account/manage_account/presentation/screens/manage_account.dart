@@ -42,7 +42,7 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
                     subTitle:
                         "Akun kamu akan dihapus secara permanen. Jadi, kamu tidak bisa lagi akses riwayat transaksi, laporan dan lainnya dari akun ini.",
                     routeName: "/delete_account",
-                    iconSrc: TIcons.billAlt,
+                    iconSrc: TIcons.trash,
                   ),
                 ),
               ],
@@ -58,7 +58,7 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
                       iconTrailing: false,
                       dangerTheme: true,
                       title: "Keluar aplikasi",
-                      iconSrc: TIcons.billAlt,
+                      iconSrc: TIcons.logout,
                       onTap: () {
                         showModalBottomSheet(
                           context: context,
