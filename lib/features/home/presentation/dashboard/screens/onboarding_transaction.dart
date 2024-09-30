@@ -83,13 +83,16 @@ class _OnboardingTransactionScreenState
                         CheckItem(
                           checked: isProductCompleted,
                           title: "Satu data produk",
-                          onTap: _onGoToCreateProduct,
+                          onTap:
+                              isProductCompleted ? null : _onGoToCreateProduct,
                         ),
                         SizedBox(height: 8),
                         CheckItem(
                           checked: isBankAccountCompleted,
                           title: "Satu rekening bank",
-                          onTap: _onGoToCreateBankAccount,
+                          onTap: isBankAccountCompleted
+                              ? null
+                              : _onGoToCreateBankAccount,
                         ),
                       ],
                     ),
@@ -110,13 +113,16 @@ class _OnboardingTransactionScreenState
                   child: SizedBox(
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(
-                          context,
-                          state.isBankAccountCompleted &&
-                              state.isProductCompleted,
-                        );
-                      },
+                      onPressed: (!state.isBankAccountCompleted ||
+                              !state.isProductCompleted)
+                          ? null
+                          : () {
+                              Navigator.pop(
+                                context,
+                                state.isBankAccountCompleted &&
+                                    state.isProductCompleted,
+                              );
+                            },
                       child: const TextActionL("Lanjutan"),
                     ),
                   ),
@@ -136,13 +142,13 @@ class CheckItem extends StatelessWidget {
   const CheckItem({
     super.key,
     required this.checked,
-    required this.onTap,
+    this.onTap,
     required this.title,
   });
 
   final bool checked;
   final String title;
-  final Function() onTap;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
