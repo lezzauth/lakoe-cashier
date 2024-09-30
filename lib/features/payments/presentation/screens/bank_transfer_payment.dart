@@ -58,15 +58,15 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
     await THelper.copyToClipboard(text);
 
     if (!mounted) return;
-    SnackBar snackBar = SnackBar(
-      content: Text(title),
-      showCloseIcon: true,
-    );
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        snackBar,
-      );
+    // SnackBar snackBar = SnackBar(
+    //   content: Text(title),
+    //   showCloseIcon: true,
+    // );
+    // ScaffoldMessenger.of(context)
+    //   ..hideCurrentSnackBar()
+    //   ..showSnackBar(
+    //     snackBar,
+    //   );
   }
 
   @override
@@ -234,17 +234,19 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
                                         text: TextSpan(
                                             children: splittedAmount.map(
                                           (text) {
-                                            bool isLastThreeDigits =
-                                                text == splittedAmount.last;
+                                            // bool isLastThreeDigits =
+                                            //     text == splittedAmount.last;
                                             return TextSpan(
                                               text: text,
                                               style: GoogleFonts.inter(
                                                   fontSize:
                                                       TSizes.fontSizeHeading2,
-                                                  color: isLastThreeDigits
-                                                      ? TColors.error
-                                                      : TColors
-                                                          .neutralDarkDarkest,
+                                                  // color: isLastThreeDigits
+                                                  //     ? TColors.error
+                                                  //     : TColors
+                                                  //         .neutralDarkDarkest,
+                                                  color: TColors
+                                                      .neutralDarkDarkest,
                                                   fontWeight: FontWeight.w900),
                                             );
                                           },

@@ -38,12 +38,11 @@ class _BillMasterState extends State<BillMaster> {
       appBar: const CustomAppbar(
         title: "Tampilan Struk (Bill)",
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-              child: SingleChildScrollView(
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
               children: [
                 BillView(
                   outletName: "Warmindo Cak Tho",
@@ -75,24 +74,24 @@ class _BillMasterState extends State<BillMaster> {
                 ),
               ],
             ),
-          )),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: SizedBox(
-              height: 48,
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/bill/edit");
-                },
-                child: const TextActionL(
-                  "Ubah Catatan Kaki",
-                  color: TColors.primary,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              child: SizedBox(
+                height: 48,
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/bill/edit");
+                  },
+                  child: const TextActionL(
+                    "Ubah Catatan Kaki",
+                    color: TColors.primary,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

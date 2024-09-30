@@ -1,8 +1,19 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'package:path/path.dart' as p;
+
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:order_repository/order_repository.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:point_of_sales_cashier/common/widgets/access_permission/photo_denied_permission.dart';
+import 'package:point_of_sales_cashier/common/widgets/access_permission/photo_permission.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
@@ -10,8 +21,11 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_xs.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/features/bill/presentation/widgets/bill_view.dart';
+import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_price.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_state.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card_order.dart';
@@ -31,6 +45,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/pr
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:share_plus/share_plus.dart';
 
 class OrderDetailScreen extends StatelessWidget {
   const OrderDetailScreen({
@@ -60,6 +75,13 @@ class OrderDetail extends StatefulWidget {
 }
 
 class _OrderDetailState extends State<OrderDetail> {
+  List<_BillPriceItem> listBillPriceItem = [
+    _BillPriceItem(label: "Subtotal", price: "Rp20.000"),
+    _BillPriceItem(label: "Pajak (5%)", price: "Rp1.000"),
+    _BillPriceItem(label: "Service Charge (2%)", price: "Rp400"),
+  ];
+
+  ScrollController scrollController = ScrollController();
   Future<void> _onRefresh() async {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
@@ -167,6 +189,290 @@ class _OrderDetailState extends State<OrderDetail> {
     return order.items.fold(0, (sum, item) {
       return sum + double.parse(item.price);
     });
+  }
+
+  final GlobalKey _billWidgetKey = GlobalKey();
+
+  Future<void> captureImage({bool save = true, bool share = false}) async {
+    try {
+      // Capture widget as image
+      RenderRepaintBoundary boundary = _billWidgetKey.currentContext!
+          .findRenderObject() as RenderRepaintBoundary;
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      Uint8List pngBytes = byteData!.buffer.asUint8List();
+
+      // Common directory for saving and sharing
+      final tempDir = await getTemporaryDirectory();
+      final file =
+          await File(p.join(tempDir.path, 'receipt-order-2983.png')).create();
+      await file.writeAsBytes(pngBytes);
+
+      // Save to gallery if requested
+      if (save) {
+        await saveImageToGallery(pngBytes, context);
+      }
+
+      // Share the image if requested
+      if (share) {
+        await Share.shareXFiles([XFile(file.path)],
+            text:
+                "Terima kasih sudah mampir di [Nama Caffe Anda]! 😊\n\nSampai jumpa lagi di kunjungan berikutnya! ❤️");
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> saveImageToGallery(
+      Uint8List pngBytes, BuildContext context) async {
+    if (await Permission.photos.isPermanentlyDenied) {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return CustomBottomsheet(
+            child: const PhotoDeniedPermission(),
+          );
+        },
+      );
+
+      return;
+    }
+
+    if (!(await Permission.photos.isGranted)) {
+      await showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return const CustomBottomsheet(
+            child: PhotosPermission(),
+          );
+        },
+      );
+    } else if (await _requestPermission()) {
+      try {
+        // Get the path to the public Pictures directory
+        Directory? picturesDir =
+            Directory('/storage/emulated/0/Pictures/Lakoe');
+
+        // Create a Lakoe folder in Pictures if it doesn't exist yet
+        if (!await picturesDir.exists()) {
+          await picturesDir.create(recursive: true);
+        }
+
+        // Create filenames with timestamps to avoid conflicts
+        String fileName = 'receipt-order-2983.png';
+        String filePath = p.join(picturesDir.path, fileName);
+
+        // Save the image file in the folder that has been created
+        File imgFile = File(filePath);
+        await imgFile.writeAsBytes(pngBytes);
+
+        // Update the gallery so that the images can appear immediately
+        final result = await ImageGallerySaver.saveFile(filePath);
+
+        if (result['isSuccess'] == true || result['success'] == true) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Gambar struk berhasil disimpan'),
+              duration: Duration(seconds: 3),
+              backgroundColor: TColors.neutralDarkDark,
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Gagal menyimpan gambar!'),
+              duration: Duration(seconds: 3),
+              backgroundColor: TColors.error,
+            ),
+          );
+        }
+      } catch (e) {
+        print('Error saving image: $e');
+      }
+    }
+  }
+
+  Future<bool> _requestPermission() async {
+    if (Platform.isAndroid) {
+      // For Android 10 and below
+      if (await Permission.storage.request().isGranted) {
+        return true;
+      }
+      // For Android 11 and above use MANAGE_EXTERNAL_STORAGE
+      else if (await Permission.manageExternalStorage.request().isGranted) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void _showDetailBill(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      useSafeArea: true,
+      isScrollControlled: true,
+      builder: (context) {
+        return CustomBottomsheet(
+          child: Expanded(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 16),
+                        child: const TextHeading2("Tampilan Struk"),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Container(
+                        color: TColors.neutralLightLight,
+                        child: RepaintBoundary(
+                          key: _billWidgetKey,
+                          child: Column(
+                            children: [
+                              BillView(
+                                outletName: "Warmindo Cak Tho",
+                                outletAddress:
+                                    "Tebet,Jakarta Selatan, DKI Jakarta",
+                                orderNumber: "9849",
+                                cashierName: "Dimas",
+                                noBill: "LK-0001",
+                                orderType: "Take Away",
+                                dateTime: "28/12/2024, 20:18",
+                                paymentMetod: 'Cash (Tunai)',
+                                totalPrice: "Rp21.400",
+                                moneyReceived: "Rp50.000",
+                                changeMoney: "Rp28.600",
+                                closeBill: "Close Bill: 28/12/2024, 21:37",
+                                greeting:
+                                    "Terimakasih\nDitunggu kembali kedatangannya",
+                                children: listBillPriceItem
+                                    .map(
+                                      (item) => BillListPrice(
+                                        label: item.label,
+                                        price: item.price,
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        color: TColors.neutralLightMedium,
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () async {
+                            await captureImage();
+                            Navigator.pop(context);
+                          },
+                          style: OutlinedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              UiIcons(
+                                TIcons.download,
+                                width: 20,
+                                height: 20,
+                                color: TColors.primary,
+                              ),
+                              SizedBox(width: 8),
+                              const TextActionL(
+                                "Unduh",
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () => print("Print"),
+                          style: OutlinedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              UiIcons(
+                                TIcons.printer,
+                                width: 20,
+                                height: 20,
+                                color: TColors.primary,
+                              ),
+                              SizedBox(width: 8),
+                              const TextActionL(
+                                "Print",
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            captureImage(save: false, share: true);
+                            Navigator.pop(context);
+                          },
+                          style: OutlinedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              UiIcons(
+                                TIcons.share,
+                                width: 20,
+                                height: 20,
+                                color: TColors.primary,
+                              ),
+                              SizedBox(width: 8),
+                              const TextActionL(
+                                "Bagikan",
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -367,8 +673,10 @@ class _OrderDetailState extends State<OrderDetail> {
                                       order: order,
                                     );
                                   },
-                                  onPrint: () {},
-                                  onShare: () {},
+                                  onPrint: () {
+                                    print("Print Bill");
+                                  },
+                                  onShare: () => _showDetailBill(context),
                                 ),
                               ),
                             if (order.source == "QRONLINE")
@@ -832,4 +1140,14 @@ class CustomerAndTableInformation extends StatelessWidget {
       ],
     );
   }
+}
+
+class _BillPriceItem {
+  final String label;
+  final String price;
+
+  _BillPriceItem({
+    required this.label,
+    required this.price,
+  });
 }

@@ -7,6 +7,7 @@ import 'package:point_of_sales_cashier/utils/theme/custom_themes/chip_theme.dart
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/elevated_button_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/outlined_button_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/radio_theme.dart';
+import 'package:point_of_sales_cashier/utils/theme/custom_themes/snackbar_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/switch_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/tab_bar_theme.dart';
 import 'package:point_of_sales_cashier/utils/theme/custom_themes/text_button_theme.dart';
@@ -39,6 +40,7 @@ class TAppTheme {
     switchTheme: TSwitchTheme.lightTheme,
     textButtonTheme: TTextButtonTheme.lightTheme,
     bottomSheetTheme: TBottomSheetTheme.lightTheme,
+    snackBarTheme: TSnackbarTheme.lightTheme,
   );
 
   static ThemeData darkTheme = ThemeData(

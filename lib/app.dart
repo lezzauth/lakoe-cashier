@@ -59,9 +59,9 @@ import 'package:point_of_sales_cashier/features/employees/presentation/screens/n
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/open_cashier_pin.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
-import 'package:point_of_sales_cashier/features/manage_account/presentation/screens/delete_account.dart';
-import 'package:point_of_sales_cashier/features/manage_account/presentation/screens/delete_account_reason.dart';
-import 'package:point_of_sales_cashier/features/manage_account/presentation/screens/manage_account.dart';
+import 'package:point_of_sales_cashier/features/account/manage_account/presentation/screens/delete_account.dart';
+import 'package:point_of_sales_cashier/features/account/manage_account/presentation/screens/delete_account_reason.dart';
+import 'package:point_of_sales_cashier/features/account/manage_account/presentation/screens/manage_account.dart';
 import 'package:point_of_sales_cashier/features/notifications/presentation/screens/notification_master.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_cubit.dart';

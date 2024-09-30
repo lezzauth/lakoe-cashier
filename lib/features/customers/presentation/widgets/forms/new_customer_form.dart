@@ -26,7 +26,9 @@ class _NewCustomerFormState extends State<NewCustomerForm> {
       showModalBottomSheet(
         context: context,
         builder: (context) {
-          return const ContactDeniedPermission();
+          return CustomBottomsheet(
+            child: const ContactDeniedPermission(),
+          );
         },
       );
 

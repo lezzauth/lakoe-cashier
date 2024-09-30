@@ -76,4 +76,6 @@ class TIcons {
   static const String refresh = "assets/icons/refresh.svg";
   static const String bluetooth = "assets/icons/bluetooth.svg";
   static const String infinity = "assets/icons/infinity.svg";
+  static const String logout = "assets/icons/logout.svg";
+  static const String share = "assets/icons/share.svg";
 }
