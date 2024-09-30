@@ -1,3 +1,4 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:customer_repository/src/dto/customer.dart';
 import 'package:customer_repository/src/models/customer.dart';
 import 'package:dio/dio.dart';
@@ -10,22 +11,10 @@ abstract class CustomerRepository {
 }
 
 class CustomerRepositoryImpl implements CustomerRepository {
-  String _baseURL = "/customers";
+  final String _baseURL = "/customers";
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
-
-  CustomerRepositoryImpl() {
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onError: (DioException error, handler) async {
-          if (error.response?.statusCode == 401) {
-            // Handle token refresh logic here
-          }
-          handler.next(error);
-        },
-      ),
-    );
-  }
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   Future<Options> _getOptions() async {
     final token = await _tokenProvider.getAuthToken();
@@ -37,9 +26,10 @@ class CustomerRepositoryImpl implements CustomerRepository {
   @override
   Future<List<CustomerModel>> findAll(FindAllCustomerDto dto) async {
     final options = await _getOptions();
+    final ownerId = await _appDataProvider.ownerId;
 
     final response = await _dio.get<List<dynamic>>(
-        "$_baseURL?${dto.toQueryString()}",
+        "$_baseURL?${dto.copyWith(ownerId: ownerId).toQueryString()}",
         options: options);
 
     return response.data!
@@ -50,9 +40,11 @@ class CustomerRepositoryImpl implements CustomerRepository {
   @override
   Future<CustomerModel> create(CreateCustomerDto dto) async {
     final options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
+
     final response = await _dio.post(
       _baseURL,
-      data: dto.toJson(),
+      data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );
 

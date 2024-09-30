@@ -1,3 +1,4 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:outlet_repository/src/dto/outlet.dart';
@@ -6,37 +7,22 @@ import 'package:token_provider/token_provider.dart';
 
 abstract class OutletRepository {
   Future<DetailCustomerOutletResponse> detailCustomerOutlet({
-    required String outletId,
     required String customerId,
     DetailCustomerOutletDto? dto,
   });
   Future<OutletSalesModel> getOutletSales({
-    required String outletId,
     GetOutletSalesDto? dto,
   });
   Future<OutletReportModel> getOutletReports({
-    required String outletId,
     GetOutletReportDto? dto,
   });
 }
 
 class OutletRepositoryImpl implements OutletRepository {
-  String _baseURL = "/outlets";
-  Dio _dio = DioProvider().dio;
+  final String _baseURL = "/outlets";
+  final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
-
-  OwnerRepositoryImpl() {
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onError: (DioException error, handler) async {
-          if (error.response?.statusCode == 401) {
-            // Handle token refresh logic here
-          }
-          handler.next(error);
-        },
-      ),
-    );
-  }
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   Future<Options> _getOptions() async {
     final token = await _tokenProvider.getAuthToken();
@@ -47,11 +33,12 @@ class OutletRepositoryImpl implements OutletRepository {
 
   @override
   Future<DetailCustomerOutletResponse> detailCustomerOutlet({
-    required String outletId,
     required String customerId,
     DetailCustomerOutletDto? dto,
   }) async {
     final options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
+
     final response = await _dio.get(
       "$_baseURL/$outletId/customers/$customerId?${dto == null ? "" : dto.toQueryString()}",
       options: options,
@@ -61,10 +48,11 @@ class OutletRepositoryImpl implements OutletRepository {
 
   @override
   Future<OutletSalesModel> getOutletSales({
-    required String outletId,
     GetOutletSalesDto? dto,
   }) async {
     final options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
+
     final response = await _dio.get(
       "$_baseURL/$outletId/sales?${dto == null ? "" : dto.toQueryString()}",
       options: options,
@@ -74,10 +62,11 @@ class OutletRepositoryImpl implements OutletRepository {
 
   @override
   Future<OutletReportModel> getOutletReports({
-    required String outletId,
     GetOutletReportDto? dto,
   }) async {
     final options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
+
     final response = await _dio.get(
       "$_baseURL/$outletId/reports?${dto == null ? "" : dto.toQueryString()}",
       options: options,

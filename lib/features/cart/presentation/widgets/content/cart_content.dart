@@ -8,8 +8,6 @@ import 'package:point_of_sales_cashier/common/widgets/form/counter.dart';
 import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_cubit.dart';
@@ -49,7 +47,6 @@ class _CartContentState extends State<CartContent> {
 
   Future<void> _onPreviewOrderPrice() async {
     if (!mounted) return;
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
         context.read<CartDetailFilterCubit>().state;
@@ -57,7 +54,6 @@ class _CartContentState extends State<CartContent> {
     await context.read<CartDetailCubit>().previewOrderPrice(
           type: filterState.type,
           carts: cartState.carts,
-          outletId: authState.outletId,
         );
   }
 

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:order_repository/src/dto/order.dart';
@@ -14,22 +15,10 @@ abstract class OrderRepository {
 }
 
 class OrderRepositoryImpl implements OrderRepository {
-  String _baseURL = "/orders";
+  final String _baseURL = "/orders";
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
-
-  cashierRepositoryImpl() {
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onError: (DioException error, handler) async {
-          if (error.response?.statusCode == 401) {
-            // Handle token refresh logic here
-          }
-          handler.next(error);
-        },
-      ),
-    );
-  }
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   Future<Options> _getOptions() async {
     final token = await _tokenProvider.getCashierToken();
@@ -51,10 +40,11 @@ class OrderRepositoryImpl implements OrderRepository {
     PreviewOrderPriceDto dto,
   ) async {
     final Options options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
 
     final response = await _dio.post(
       "$_baseURL/price-preview",
-      data: dto.toJson(),
+      data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );
     return PreviewOrderPriceResponse.fromJson(response.data);

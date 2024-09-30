@@ -6,7 +6,6 @@ part 'product.freezed.dart';
 @freezed
 class FindAllProductDto with _$FindAllProductDto {
   const factory FindAllProductDto({
-    required String outletId,
     int? categoryId,
     String? name,
     String? availability,
@@ -64,7 +63,7 @@ class CreateProductDto with _$CreateProductDto {
     required int modal,
     required int categoryId,
     required String unit,
-    required String outletId,
+    String? outletId,
     String? sku,
     int? stock,
     @Default("AVAILABLE") String availability,

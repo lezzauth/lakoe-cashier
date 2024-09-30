@@ -6,7 +6,7 @@ part 'category.freezed.dart';
 @freezed
 class FindAllCategoryDto with _$FindAllCategoryDto {
   const factory FindAllCategoryDto({
-    required String outletId,
+    String? outletId,
     String? search,
   }) = _FindAllCategoryDto;
 
@@ -30,7 +30,7 @@ extension QueryStringExtension on FindAllCategoryDto {
 @freezed
 class CreateCategoryDto with _$CreateCategoryDto {
   const factory CreateCategoryDto({
-    required String outletId,
+    String? outletId,
     required String name,
     required String icon,
   }) = _CreateCategoryDto;

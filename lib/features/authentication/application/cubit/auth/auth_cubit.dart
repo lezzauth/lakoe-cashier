@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ class AuthCubit extends Cubit<AuthState> {
       AuthenticationRepositoryImpl();
   final OwnerRepository _ownerRepository = OwnerRepositoryImpl();
   final TokenProvider _tokenProvider = TokenProvider();
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   AuthCubit() : super(AuthInitial());
 
@@ -84,6 +86,9 @@ class AuthCubit extends Cubit<AuthState> {
 
       final outlets = await _ownerRepository.listOutlets();
       final profile = await _ownerRepository.getProfile();
+
+      await _appDataProvider.setOutletId(outlets.first.id);
+      await _appDataProvider.setOwnerId(profile.id);
 
       emit(AuthReady(
         outletId: outlets.first.id,

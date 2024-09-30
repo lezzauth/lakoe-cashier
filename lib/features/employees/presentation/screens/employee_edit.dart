@@ -4,8 +4,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_state.dart';
 import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
@@ -51,7 +49,6 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
     ImagePickerValue profilePicture =
         value["profilePicture"] as ImagePickerValue;
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     String? email = value["email"];
     if (email == null || email.isEmpty) {
       email = null;
@@ -65,7 +62,6 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
             pin: value["pin"],
             phoneNumber: value["phoneNumber"],
             role: "CASHIER",
-            outletId: authState.outletId,
             email: email,
           ),
         );

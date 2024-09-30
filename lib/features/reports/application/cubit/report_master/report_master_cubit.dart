@@ -7,21 +7,18 @@ class ReportMasterCubit extends Cubit<ReportMasterState> {
 
   ReportMasterCubit() : super(ReportMasterInitial());
 
-  Future<void> init({required String outletId}) async {
+  Future<void> init() async {
     await findAll(
-      outletId: outletId,
       dto: const GetOutletReportDto(template: "TODAY"),
     );
   }
 
   Future<void> findAll({
-    required String outletId,
     GetOutletReportDto? dto,
   }) async {
     try {
       emit(ReportMasterLoadInProgress());
       final report = await _outletRepository.getOutletReports(
-        outletId: outletId,
         dto: dto,
       );
       emit(ReportMasterLoadSuccess(report: report));

@@ -58,12 +58,10 @@ class _TableNewState extends State<TableNew> {
     }
 
     dynamic value = _formKey.currentState?.value;
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
 
     await context.read<TableMasterCubit>().create(CreateTableDto(
           no: value["no"],
           capacity: int.parse(value["capacity"]),
-          outletId: authState.outletId,
           outletRoomId: value["outletRoomId"],
         ));
   }

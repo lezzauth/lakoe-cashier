@@ -24,7 +24,7 @@ _$PreviewOrderPriceDtoImpl _$$PreviewOrderPriceDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$PreviewOrderPriceDtoImpl(
       type: json['type'] as String,
-      outletId: json['outletId'] as String,
+      outletId: json['outletId'] as String?,
       items: (json['items'] as List<dynamic>)
           .map((e) => OrderItemDto.fromJson(e as Map<String, dynamic>))
           .toList(),

@@ -5,8 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_filter_state.dart';
@@ -47,8 +45,6 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
       listeners: [
         BlocListener<OrderMasterFilterCubit, OrderMasterFilterState>(
           listener: (context, state) {
-            AuthState authState = context.read<AuthCubit>().state;
-            if (authState is! AuthReady) return;
             context.read<OrderMasterCubit>().findAll(state.toFindAllOrderDto);
           },
         ),

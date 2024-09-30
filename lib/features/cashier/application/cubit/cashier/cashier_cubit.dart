@@ -18,7 +18,7 @@ class CashierCubit extends Cubit<CashierState> {
       final response = await _cashierRepository.openCashier(dto);
       _tokenProvider.setCashierToken(response.token);
 
-      final cashier = await _cashierRepository.getOpenCashier(dto.outletId);
+      final cashier = await _cashierRepository.getOpenCashier();
       if (cashier == null) throw ErrorDescription("cashier closed");
       emit(CashierOpened(operator: cashier.operator));
     } catch (e) {
@@ -36,10 +36,10 @@ class CashierCubit extends Cubit<CashierState> {
     }
   }
 
-  Future<void> getOpenCashier(String outletId) async {
+  Future<void> getOpenCashier() async {
     emit(CashierOpenInProgress());
     try {
-      final response = await _cashierRepository.getOpenCashier(outletId);
+      final response = await _cashierRepository.getOpenCashier();
       if (response == null) {
         emit(CashierClosed());
         return;
@@ -62,7 +62,7 @@ class CashierCubit extends Cubit<CashierState> {
       final response = await _cashierRepository.regenerateToken(dto);
       _tokenProvider.setCashierToken(response.token);
 
-      final cashier = await _cashierRepository.getOpenCashier(dto.outletId);
+      final cashier = await _cashierRepository.getOpenCashier();
       if (cashier == null) throw ErrorDescription("cashier closed");
       emit(CashierOpened(operator: cashier.operator));
     } catch (e) {

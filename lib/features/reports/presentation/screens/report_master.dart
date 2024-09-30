@@ -55,8 +55,7 @@ class ReportMaster extends StatefulWidget {
 
 class _ReportMasterState extends State<ReportMaster> {
   void _onInit() {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-    context.read<ReportMasterCubit>().init(outletId: authState.outletId);
+    context.read<ReportMasterCubit>().init();
   }
 
   @override
@@ -69,9 +68,7 @@ class _ReportMasterState extends State<ReportMaster> {
   Widget build(BuildContext context) {
     return BlocListener<ReportMasterFilterCubit, ReportMasterFilterState>(
       listener: (context, state) {
-        AuthReady authState = context.read<AuthCubit>().state as AuthReady;
         context.read<ReportMasterCubit>().findAll(
-              outletId: authState.outletId,
               dto: GetOutletReportDto(
                 from: state.from,
                 to: state.to,

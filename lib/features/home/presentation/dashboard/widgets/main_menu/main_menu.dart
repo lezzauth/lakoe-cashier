@@ -4,8 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
 import 'package:point_of_sales_cashier/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
@@ -67,11 +65,7 @@ class _MainMenuState extends State<MainMenu> {
   }
 
   void _onInit() {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
-    context
-        .read<OnboardingTransactionCubit>()
-        .init(ownerId: authState.profile.id, outletId: authState.outletId);
+    context.read<OnboardingTransactionCubit>().init();
   }
 
   @override

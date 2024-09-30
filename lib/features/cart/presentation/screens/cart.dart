@@ -46,14 +46,12 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   Future<void> _onCartSaved() async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
         context.read<CartDetailFilterCubit>().state;
 
     await context.read<CartDetailCubit>().saveOrder(
           carts: cartState.carts,
-          outletId: authState.outletId,
           type: filterState.type,
           customerId: filterState.customer?.id,
           tableId: filterState.table?.id,
@@ -62,14 +60,12 @@ class _CartState extends State<Cart> {
   }
 
   Future<void> _onCashPaid(PaymentCash data) async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
         context.read<CartDetailFilterCubit>().state;
 
     await context.read<CartDetailCubit>().saveAndCompleteOrder(
           carts: cartState.carts,
-          outletId: authState.outletId,
           dto: CompleteCashOrderDto(
             paidAmount: data.paidAmount,
             change: data.change,
@@ -82,14 +78,12 @@ class _CartState extends State<Cart> {
   }
 
   Future<void> _onBankTransferPaid(PaymentBankTransfer data) async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
         context.read<CartDetailFilterCubit>().state;
 
     await context.read<CartDetailCubit>().saveAndCompleteOrder(
           carts: cartState.carts,
-          outletId: authState.outletId,
           dto: CompleteBankTransferOrderDto(
             photo: data.photo,
             data: CompleteBankTransferOrderData(
@@ -105,14 +99,12 @@ class _CartState extends State<Cart> {
   }
 
   Future<void> _onDebitCreditPaid(PaymentDebitCredit data) async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
         context.read<CartDetailFilterCubit>().state;
 
     await context.read<CartDetailCubit>().saveAndCompleteOrder(
           carts: cartState.carts,
-          outletId: authState.outletId,
           dto: CompleteDebitCreditOrderDto(
             paymentMethod: "DEBIT",
             paidAmount: data.paidAmount,
@@ -126,14 +118,12 @@ class _CartState extends State<Cart> {
   }
 
   Future<void> _onQRCodePaid(PaymentQRCode data) async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
         context.read<CartDetailFilterCubit>().state;
 
     await context.read<CartDetailCubit>().saveAndCompleteOrder(
           carts: cartState.carts,
-          outletId: authState.outletId,
           dto: CompleteQRCodeOrderDto(
             paymentMethod: "QR_CODE",
             paidAmount: data.paidAmount,

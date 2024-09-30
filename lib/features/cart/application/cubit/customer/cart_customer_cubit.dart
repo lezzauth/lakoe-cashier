@@ -7,8 +7,8 @@ class CartCustomerCubit extends Cubit<CartCustomerState> {
 
   CartCustomerCubit() : super(CartCustomerInitial());
 
-  Future<void> init(String ownerId) async {
-    await findAll(FindAllCustomerDto(ownerId: ownerId));
+  Future<void> init() async {
+    await findAll(FindAllCustomerDto());
   }
 
   Future<void> findAll(FindAllCustomerDto dto) async {

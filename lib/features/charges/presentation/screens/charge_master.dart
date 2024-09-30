@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/popup_confirmation.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/charges/application/cubit/charge_form/charge_form_cubit.dart';
 import 'package:point_of_sales_cashier/features/charges/application/cubit/charge_form/charge_form_state.dart';
 import 'package:point_of_sales_cashier/features/charges/application/cubit/charge_master/charge_master_cubit.dart';
@@ -20,12 +18,7 @@ class ChargeMasterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ChargeFormCubit(),
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) => switch (state) {
-          AuthReady() => const ChargeMaster(),
-          _ => const Scaffold(body: Center(child: CircularProgressIndicator())),
-        },
-      ),
+      child: const ChargeMaster(),
     );
   }
 }
@@ -137,9 +130,7 @@ class _ChargeMasterState extends State<ChargeMaster> {
       }
     }
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     await context.read<ChargeMasterCubit>().save(
-          ownerId: authState.profile.id,
           newCharges: newCharges,
           updatedCharges: updatedCharges,
           removedIds: removedChargeIds,
@@ -150,8 +141,7 @@ class _ChargeMasterState extends State<ChargeMaster> {
   void initState() {
     super.initState();
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-    context.read<ChargeMasterCubit>().findAll(ownerId: authState.profile.id);
+    context.read<ChargeMasterCubit>().findAll();
   }
 
   @override

@@ -7,8 +7,8 @@ class CategoryMasterCubit extends Cubit<CategoryMasterState> {
 
   CategoryMasterCubit() : super(CategoryMasterInitial());
 
-  Future<void> init(String outletId) async {
-    await findAll(FindAllCategoryDto(outletId: outletId));
+  Future<void> init() async {
+    await findAll(FindAllCategoryDto());
   }
 
   Future<void> findAll(FindAllCategoryDto dto) async {
@@ -22,7 +22,6 @@ class CategoryMasterCubit extends Cubit<CategoryMasterState> {
   }
 
   Future<void> create(CreateCategoryDto dto) async {
-    // CategoryMasterState currentState = state;
     try {
       emit(CategoryMasterActionInProgress());
       await _categoryRepository.create(dto);
@@ -30,14 +29,9 @@ class CategoryMasterCubit extends Cubit<CategoryMasterState> {
     } catch (e) {
       emit(CategoryMasterActionFailure(e.toString()));
     }
-
-    // if (currentState is CategoryMasterLoadSuccess) {
-    //   await findAll(currentState.dto);
-    // }
   }
 
   Future<void> update(int id, UpdateCategoryDto dto) async {
-    // CategoryMasterState currentState = state;
     try {
       emit(CategoryMasterActionInProgress());
       await _categoryRepository.update(id, dto);
@@ -45,9 +39,5 @@ class CategoryMasterCubit extends Cubit<CategoryMasterState> {
     } catch (e) {
       emit(CategoryMasterActionFailure(e.toString()));
     }
-
-    // if (currentState is CategoryMasterLoadSuccess) {
-    //   await findAll(currentState.dto);
-    // }
   }
 }

@@ -9,12 +9,11 @@ class OnboardingTransactionCubit extends Cubit<OnboardingTransactionState> {
 
   OnboardingTransactionCubit() : super(OnboardingTransactionInitial());
 
-  Future<void> init({required String ownerId, required String outletId}) async {
+  Future<void> init() async {
     try {
       emit(OnboardingTransactionLoadInProgress());
-      final accounts = await _ownerRepository.bank.findAll(ownerId: ownerId);
-      final products = await _productRepository
-          .findAll(FindAllProductDto(outletId: outletId));
+      final accounts = await _ownerRepository.bank.findAll();
+      final products = await _productRepository.findAll(FindAllProductDto());
       emit(OnboardingTransactionLoadSuccess(
         isBankAccountCompleted: accounts.isNotEmpty,
         isProductCompleted: products.isNotEmpty,

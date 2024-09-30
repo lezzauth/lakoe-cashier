@@ -32,8 +32,12 @@ mixin _$EmployeeModel {
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
 
+  /// Serializes this EmployeeModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of EmployeeModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $EmployeeModelCopyWith<EmployeeModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -68,6 +72,8 @@ class _$EmployeeModelCopyWithImpl<$Res, $Val extends EmployeeModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of EmployeeModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -162,6 +168,8 @@ class __$$EmployeeModelImplCopyWithImpl<$Res>
       _$EmployeeModelImpl _value, $Res Function(_$EmployeeModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EmployeeModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -298,7 +306,7 @@ class _$EmployeeModelImpl implements _EmployeeModel {
                 other.updatedAt == updatedAt));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -314,7 +322,9 @@ class _$EmployeeModelImpl implements _EmployeeModel {
       createdAt,
       updatedAt);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EmployeeModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$EmployeeModelImplCopyWith<_$EmployeeModelImpl> get copyWith =>
@@ -367,8 +377,11 @@ abstract class _EmployeeModel implements EmployeeModel {
   String get createdAt;
   @override
   String get updatedAt;
+
+  /// Create a copy of EmployeeModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$EmployeeModelImplCopyWith<_$EmployeeModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

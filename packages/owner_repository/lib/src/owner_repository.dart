@@ -16,8 +16,8 @@ abstract class OwnerRepository {
 }
 
 class OwnerRepositoryImpl implements OwnerRepository {
-  String _baseURL = "/owners";
-  Dio _dio = DioProvider().dio;
+  final String _baseURL = "/owners";
+  final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
 
   @override
@@ -28,19 +28,6 @@ class OwnerRepositoryImpl implements OwnerRepository {
 
   @override
   ChargeRepository get charge => ChargeRepositoryImpl();
-
-  OwnerRepositoryImpl() {
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onError: (DioException error, handler) async {
-          if (error.response?.statusCode == 401) {
-            // Handle token refresh logic here
-          }
-          handler.next(error);
-        },
-      ),
-    );
-  }
 
   Future<Options> _getOptions() async {
     final token = await _tokenProvider.getAuthToken();

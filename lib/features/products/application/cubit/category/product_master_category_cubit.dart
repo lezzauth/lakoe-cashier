@@ -7,15 +7,15 @@ class ProductMasterCategoryCubit extends Cubit<ProductMasterCategoryState> {
 
   ProductMasterCategoryCubit() : super(ProductMasterCategoryInitial());
 
-  Future<void> init(String outletId) async {
-    await findAll(outletId: outletId);
+  Future<void> init() async {
+    await findAll();
   }
 
-  Future<void> findAll({required String outletId}) async {
+  Future<void> findAll() async {
     try {
       emit(ProductMasterCategoryLoadInProgress());
-      final categories = await _categoryRepository
-          .findAll(FindAllCategoryDto(outletId: outletId));
+      final categories =
+          await _categoryRepository.findAll(FindAllCategoryDto());
       emit(ProductMasterCategoryLoadSuccess(categories));
     } catch (e) {
       emit(ProductMasterCategoryLoadFailure(e.toString()));

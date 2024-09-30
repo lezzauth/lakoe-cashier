@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_cubit.dart';
@@ -30,16 +28,7 @@ class DashboardScreen extends StatelessWidget {
         BlocProvider(create: (context) => CashierReportCubit()),
         BlocProvider(create: (context) => CashierReportFilterCubit()),
       ],
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) => switch (state) {
-          AuthReady() => const Dashboard(),
-          _ => const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-        },
-      ),
+      child: const Dashboard(),
     );
   }
 }
@@ -53,9 +42,8 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   Future<void> _onInit() async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-    await context.read<CashierCubit>().getOpenCashier(authState.outletId);
-    await context.read<CashierReportCubit>().init(authState.outletId);
+    context.read<CashierCubit>().getOpenCashier();
+    context.read<CashierReportCubit>().init();
   }
 
   @override
@@ -68,9 +56,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return BlocListener<CashierReportFilterCubit, CashierReportFilterState>(
       listener: (context, state) {
-        AuthReady authState = context.read<AuthCubit>().state as AuthReady;
         context.read<CashierReportCubit>().getReport(
-              outletId: authState.outletId,
               dto: GetOutletSalesDto(
                 from: state.from,
                 template: state.template,

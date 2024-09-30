@@ -9,7 +9,7 @@ part of 'customer.dart';
 _$FindAllCustomerDtoImpl _$$FindAllCustomerDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$FindAllCustomerDtoImpl(
-      ownerId: json['ownerId'] as String,
+      ownerId: json['ownerId'] as String?,
       search: json['search'] as String?,
     );
 
@@ -25,7 +25,7 @@ _$CreateCustomerDtoImpl _$$CreateCustomerDtoImplFromJson(
     _$CreateCustomerDtoImpl(
       name: json['name'] as String,
       phoneNumber: json['phoneNumber'] as String,
-      outletId: json['outletId'] as String,
+      outletId: json['outletId'] as String?,
       email: json['email'] as String?,
       address: json['address'] as String?,
     );

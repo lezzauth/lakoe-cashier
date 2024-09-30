@@ -49,8 +49,7 @@ class CartCustomerListContent extends StatefulWidget {
 
 class _CartCustomerListContentState extends State<CartCustomerListContent> {
   Future<void> _onInit() async {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-    await context.read<CartCustomerCubit>().init(authState.profile.id);
+    await context.read<CartCustomerCubit>().init();
   }
 
   @override
@@ -63,11 +62,9 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
   Widget build(BuildContext context) {
     return BlocListener<CartCustomerFilterCubit, CartCustomerFilterState>(
       listener: (context, state) {
-        AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-        context.read<CartCustomerCubit>().findAll(FindAllCustomerDto(
-              ownerId: authState.profile.id,
-              search: state.search,
-            ));
+        context
+            .read<CartCustomerCubit>()
+            .findAll(FindAllCustomerDto(search: state.search));
       },
       child: Scaffold(
           body: Column(

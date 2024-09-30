@@ -25,8 +25,12 @@ mixin _$TaxModel {
   String get value => throw _privateConstructorUsedError;
   String get ownerId => throw _privateConstructorUsedError;
 
+  /// Serializes this TaxModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TaxModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TaxModelCopyWith<TaxModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$TaxModelCopyWithImpl<$Res, $Val extends TaxModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TaxModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -97,6 +103,8 @@ class __$$TaxModelImplCopyWithImpl<$Res>
       _$TaxModelImpl _value, $Res Function(_$TaxModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TaxModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -163,11 +171,13 @@ class _$TaxModelImpl implements _TaxModel {
             (identical(other.ownerId, ownerId) || other.ownerId == ownerId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, value, ownerId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TaxModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TaxModelImplCopyWith<_$TaxModelImpl> get copyWith =>
@@ -199,8 +209,11 @@ abstract class _TaxModel implements TaxModel {
   String get value;
   @override
   String get ownerId;
+
+  /// Create a copy of TaxModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaxModelImplCopyWith<_$TaxModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

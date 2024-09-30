@@ -10,8 +10,6 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_filter_state.dart';
@@ -30,16 +28,7 @@ class CustomerDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CustomerDetailFilterCubit(),
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) => switch (state) {
-          AuthReady() => const CustomerDetail(),
-          _ => const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-        },
-      ),
+      child: const CustomerDetail(),
     );
   }
 }
@@ -57,12 +46,10 @@ class _CustomerDetailState extends State<CustomerDetail> {
       (timeStamp) async {
         final arguments =
             ModalRoute.of(context)!.settings.arguments as CustomerModel;
-        AuthReady authState = context.read<AuthCubit>().state as AuthReady;
         CustomerDetailFilterState filterState =
             context.read<CustomerDetailFilterCubit>().state;
 
         await context.read<CustomerDetailCubit>().findOne(
-              outletId: authState.outletId,
               customerId: arguments.id,
               dto: DetailCustomerOutletDto(
                 from: filterState.from,
@@ -89,9 +76,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
         final arguments =
             ModalRoute.of(context)!.settings.arguments as CustomerModel;
 
-        AuthReady authState = context.read<AuthCubit>().state as AuthReady;
         context.read<CustomerDetailCubit>().findOne(
-              outletId: authState.outletId,
               customerId: arguments.id,
               dto: DetailCustomerOutletDto(
                 from: state.from,

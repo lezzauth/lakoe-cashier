@@ -6,7 +6,7 @@ part 'customer.freezed.dart';
 @freezed
 class FindAllCustomerDto with _$FindAllCustomerDto {
   const factory FindAllCustomerDto({
-    required String ownerId,
+    String? ownerId,
     String? search,
   }) = _FindAllCustomerDto;
 
@@ -32,7 +32,7 @@ class CreateCustomerDto with _$CreateCustomerDto {
   const factory CreateCustomerDto({
     required String name,
     required String phoneNumber,
-    required String outletId,
+    String? outletId,
     String? email,
     String? address,
   }) = _CreateCustomerDto;

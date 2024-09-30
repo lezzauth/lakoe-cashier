@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_cubit.dart';
@@ -23,16 +21,7 @@ class _ExploreProductScreenState extends State<ExploreProductScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CashierProductFilterCubit(),
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) => switch (state) {
-          AuthReady() => const ExploreProduct(),
-          _ => const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-        },
-      ),
+      child: const ExploreProduct(),
     );
   }
 }
@@ -49,33 +38,28 @@ class _ExploreProductState extends State<ExploreProduct> {
   void initState() {
     super.initState();
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     context.read<CashierOrderCubit>().init();
-    context.read<CashierProductCubit>().init(authState.outletId);
-    context.read<CashierCategoryCubit>().init(authState.outletId);
+    context.read<CashierProductCubit>().init();
+    context.read<CashierCategoryCubit>().init();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(builder: (context, authState) {
-      return MultiBlocListener(
-        listeners: [
-          BlocListener<CashierProductFilterCubit, CashierProductFilterState>(
-            listener: (context, state) {
-              if (authState is! AuthReady) return;
-              context.read<CashierProductCubit>().findAll(
-                    outletId: authState.outletId,
-                    categoryId: state.categoryId,
-                    name: state.name,
-                  );
-            },
-          ),
-        ],
-        child: const ResponsiveLayout(
-          mobile: ExploreProductMobile(),
-          tablet: ExploreProductTablet(),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<CashierProductFilterCubit, CashierProductFilterState>(
+          listener: (context, state) {
+            context.read<CashierProductCubit>().findAll(
+                  categoryId: state.categoryId,
+                  name: state.name,
+                );
+          },
         ),
-      );
-    });
+      ],
+      child: const ResponsiveLayout(
+        mobile: ExploreProductMobile(),
+        tablet: ExploreProductTablet(),
+      ),
+    );
   }
 }

@@ -8,10 +8,10 @@ class TaxMasterCubit extends Cubit<TaxMasterState> {
 
   TaxMasterCubit() : super(TaxMasterInitial());
 
-  Future<void> findAll({required ownerId}) async {
+  Future<void> findAll() async {
     try {
       emit(TaxMasterLoadInProgress());
-      final taxes = await _ownerRepository.tax.findAll(ownerId: ownerId);
+      final taxes = await _ownerRepository.tax.findAll();
       emit(TaxMasterLoadSuccess(taxes: taxes));
     } catch (e) {
       emit(TaxMasterLoadFailure(e.toString()));
@@ -19,7 +19,6 @@ class TaxMasterCubit extends Cubit<TaxMasterState> {
   }
 
   Future<void> save({
-    required ownerId,
     required List<TaxField> newTaxes,
     required List<TaxField> updatedTaxes,
     required List<String> removedIds,
@@ -29,19 +28,16 @@ class TaxMasterCubit extends Cubit<TaxMasterState> {
 
       final newTaxesExecute = newTaxes.map((e) {
         return _ownerRepository.tax.create(
-            ownerId: ownerId,
             dto: CreateTaxDto(name: e.name, value: double.parse(e.value)));
       });
       final updateTaxesExecute = updatedTaxes.map((e) {
         return _ownerRepository.tax.update(
-            ownerId: ownerId,
             taxId: e.id,
             dto: UpdateTaxDto(name: e.name, value: double.parse(e.value)));
       });
 
       final removeTaxesExecute = removedIds.map((e) {
         return _ownerRepository.tax.delete(
-          ownerId: ownerId,
           taxId: e,
         );
       });

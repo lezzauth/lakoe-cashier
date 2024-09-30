@@ -10,7 +10,7 @@ part 'cashier.freezed.dart';
 @freezed
 class SaveOrderDto with _$SaveOrderDto {
   const factory SaveOrderDto({
-    required String outletId,
+    String? outletId,
     required String type,
     required List<OrderItemDto> items,
     String? customerId,
@@ -92,7 +92,7 @@ class CompleteQRCodeOrderDto extends CompleteOrderDto
 class OpenCashierDto with _$OpenCashierDto {
   const factory OpenCashierDto({
     required int initialBalance,
-    required String outletId,
+    String? outletId,
     required String pin,
   }) = _OpenCashierDto;
 
@@ -104,7 +104,7 @@ class OpenCashierDto with _$OpenCashierDto {
 @freezed
 class RegenerateCashierTokenDto with _$RegenerateCashierTokenDto {
   const factory RegenerateCashierTokenDto({
-    required String outletId,
+    String? outletId,
     required String pin,
   }) = _RegenerateCashierTokenDto;
 
@@ -117,7 +117,7 @@ class RegenerateCashierTokenDto with _$RegenerateCashierTokenDto {
 class CloseCashierDto with _$CloseCashierDto {
   const factory CloseCashierDto({
     required int finalBalance,
-    required String outletId,
+    String? outletId,
   }) = _CloseCashierDto;
 
   factory CloseCashierDto.fromJson(Map<String, Object?> json) =>

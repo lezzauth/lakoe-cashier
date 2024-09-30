@@ -7,17 +7,14 @@ class BankAccountMasterCubit extends Cubit<BankAccountMasterState> {
 
   BankAccountMasterCubit() : super(BankAccountMasterInitial());
 
-  Future<void> init(String ownerId) async {
-    await findAll(ownerId: ownerId);
+  Future<void> init() async {
+    await findAll();
   }
 
-  Future<void> findAll({
-    required String ownerId,
-  }) async {
+  Future<void> findAll() async {
     try {
       emit(BankAccountMasterLoadInProgress());
-      final bankAccounts =
-          await _ownerRepository.bank.findAll(ownerId: ownerId);
+      final bankAccounts = await _ownerRepository.bank.findAll();
       emit(BankAccountMasterLoadSuccess(bankAccounts: bankAccounts));
     } catch (e) {
       emit(BankAccountMasterLoadFailure(e.toString()));
@@ -25,13 +22,11 @@ class BankAccountMasterCubit extends Cubit<BankAccountMasterState> {
   }
 
   Future<void> create({
-    required String ownerId,
     required CreateOwnerBankDto dto,
   }) async {
     try {
       emit(BankAccountMasterActionInProgress());
-      final response =
-          await _ownerRepository.bank.create(ownerId: ownerId, dto: dto);
+      final response = await _ownerRepository.bank.create(dto: dto);
       emit(BankAccountMasterActionSuccess(response: response));
     } catch (e) {
       emit(BankAccountMasterActionFailure(e.toString()));
@@ -39,25 +34,23 @@ class BankAccountMasterCubit extends Cubit<BankAccountMasterState> {
   }
 
   Future<void> update({
-    required String ownerId,
     required String bankId,
     required UpdateOwnerBankDto dto,
   }) async {
     try {
       emit(BankAccountMasterActionInProgress());
-      final response = await _ownerRepository.bank
-          .update(ownerId: ownerId, bankId: bankId, dto: dto);
+      final response =
+          await _ownerRepository.bank.update(bankId: bankId, dto: dto);
       emit(BankAccountMasterActionSuccess(response: response));
     } catch (e) {
       emit(BankAccountMasterActionFailure(e.toString()));
     }
   }
 
-  Future<void> delete({required String ownerId, required String bankId}) async {
+  Future<void> delete({required String bankId}) async {
     try {
       emit(BankAccountMasterActionInProgress());
-      final response =
-          await _ownerRepository.bank.delete(bankId: bankId, ownerId: ownerId);
+      final response = await _ownerRepository.bank.delete(bankId: bankId);
       emit(BankAccountMasterActionSuccess(response: response));
     } catch (e) {
       emit(BankAccountMasterActionFailure(e.toString()));

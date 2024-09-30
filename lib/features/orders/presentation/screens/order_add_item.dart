@@ -4,8 +4,6 @@ import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
@@ -60,14 +58,11 @@ class _OrderAddItemState extends State<OrderAddItem> {
   Future<void> _onRefresh() async {
     if (!mounted) return;
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
     CashierProductFilterState filterState =
         context.read<CashierProductFilterCubit>().state;
 
-    context.read<CashierCategoryCubit>().findAll(outletId: authState.outletId);
+    context.read<CashierCategoryCubit>().findAll();
     await context.read<CashierProductCubit>().findAll(
-          outletId: authState.outletId,
           categoryId: filterState.categoryId,
           name: filterState.name,
         );
@@ -103,10 +98,7 @@ class _OrderAddItemState extends State<OrderAddItem> {
 
     return BlocListener<CashierProductFilterCubit, CashierProductFilterState>(
       listener: (context, state) {
-        AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
         context.read<CashierProductCubit>().findAll(
-              outletId: authState.outletId,
               categoryId: state.categoryId,
               name: state.name,
             );

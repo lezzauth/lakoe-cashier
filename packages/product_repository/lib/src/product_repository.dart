@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:product_repository/product_repository.dart';
@@ -21,11 +22,10 @@ abstract class ProductRepository {
 }
 
 class ProductRepositoryImpl implements ProductRepository {
-  String _baseURL = "/products";
+  final String _baseURL = "/products";
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
-
-  ProductRepositoryImpl();
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   Future<Options> _getOptions() async {
     final token = await _tokenProvider.getAuthToken();
@@ -36,8 +36,10 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   Future<List<ProductModel>> findAll(FindAllProductDto dto) async {
-    final response =
-        await _dio.get<List<dynamic>>("$_baseURL?${dto.toQueryString()}");
+    final outletId = await _appDataProvider.outletId;
+
+    final response = await _dio.get<List<dynamic>>(
+        "$_baseURL?outletId=$outletId&${dto.toQueryString()}");
     return response.data!
         .map((element) => ProductModel.fromJson(element))
         .toList();
@@ -57,8 +59,10 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<ProductModel> create(List<File> images, CreateProductDto dto) async {
     final Options options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
 
-    FormData formData = FormData.fromMap({...dto.toJson()});
+    FormData formData =
+        FormData.fromMap({...dto.copyWith(outletId: outletId).toJson()});
     for (var image in images) {
       formData.files.add(MapEntry(
           "images",
@@ -80,8 +84,10 @@ class ProductRepositoryImpl implements ProductRepository {
     required UpdateProductDto dto,
   }) async {
     final Options options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
 
-    FormData formData = FormData.fromMap({...dto.toJsonFilter()});
+    FormData formData =
+        FormData.fromMap({...dto.copyWith(outletId: outletId).toJsonFilter()});
     if (images != null) {
       for (var image in images) {
         formData.files.add(MapEntry(

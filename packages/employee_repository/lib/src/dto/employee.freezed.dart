@@ -25,10 +25,14 @@ mixin _$CreateEmployeeDto {
   String get pin => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
-  String get outletId => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateEmployeeDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateEmployeeDtoCopyWith<CreateEmployeeDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -45,7 +49,7 @@ abstract class $CreateEmployeeDtoCopyWith<$Res> {
       String pin,
       String phoneNumber,
       String role,
-      String outletId});
+      String? outletId});
 }
 
 /// @nodoc
@@ -58,6 +62,8 @@ class _$CreateEmployeeDtoCopyWithImpl<$Res, $Val extends CreateEmployeeDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -66,7 +72,7 @@ class _$CreateEmployeeDtoCopyWithImpl<$Res, $Val extends CreateEmployeeDto>
     Object? pin = null,
     Object? phoneNumber = null,
     Object? role = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -89,10 +95,10 @@ class _$CreateEmployeeDtoCopyWithImpl<$Res, $Val extends CreateEmployeeDto>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -111,7 +117,7 @@ abstract class _$$CreateEmployeeDtoImplCopyWith<$Res>
       String pin,
       String phoneNumber,
       String role,
-      String outletId});
+      String? outletId});
 }
 
 /// @nodoc
@@ -122,6 +128,8 @@ class __$$CreateEmployeeDtoImplCopyWithImpl<$Res>
       $Res Function(_$CreateEmployeeDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -130,7 +138,7 @@ class __$$CreateEmployeeDtoImplCopyWithImpl<$Res>
     Object? pin = null,
     Object? phoneNumber = null,
     Object? role = null,
-    Object? outletId = null,
+    Object? outletId = freezed,
   }) {
     return _then(_$CreateEmployeeDtoImpl(
       name: null == name
@@ -153,10 +161,10 @@ class __$$CreateEmployeeDtoImplCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -170,7 +178,7 @@ class _$CreateEmployeeDtoImpl implements _CreateEmployeeDto {
       required this.pin,
       required this.phoneNumber,
       required this.role,
-      required this.outletId});
+      this.outletId});
 
   factory _$CreateEmployeeDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateEmployeeDtoImplFromJson(json);
@@ -186,7 +194,7 @@ class _$CreateEmployeeDtoImpl implements _CreateEmployeeDto {
   @override
   final String role;
   @override
-  final String outletId;
+  final String? outletId;
 
   @override
   String toString() {
@@ -208,12 +216,14 @@ class _$CreateEmployeeDtoImpl implements _CreateEmployeeDto {
                 other.outletId == outletId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, name, email, pin, phoneNumber, role, outletId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateEmployeeDtoImplCopyWith<_$CreateEmployeeDtoImpl> get copyWith =>
@@ -235,7 +245,7 @@ abstract class _CreateEmployeeDto implements CreateEmployeeDto {
       required final String pin,
       required final String phoneNumber,
       required final String role,
-      required final String outletId}) = _$CreateEmployeeDtoImpl;
+      final String? outletId}) = _$CreateEmployeeDtoImpl;
 
   factory _CreateEmployeeDto.fromJson(Map<String, dynamic> json) =
       _$CreateEmployeeDtoImpl.fromJson;
@@ -251,9 +261,12 @@ abstract class _CreateEmployeeDto implements CreateEmployeeDto {
   @override
   String get role;
   @override
-  String get outletId;
+  String? get outletId;
+
+  /// Create a copy of CreateEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateEmployeeDtoImplCopyWith<_$CreateEmployeeDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -269,10 +282,13 @@ mixin _$UpdateEmployeeDto {
   String? get pin => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   String? get role => throw _privateConstructorUsedError;
-  String? get outletId => throw _privateConstructorUsedError;
 
+  /// Serializes this UpdateEmployeeDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UpdateEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UpdateEmployeeDtoCopyWith<UpdateEmployeeDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -288,8 +304,7 @@ abstract class $UpdateEmployeeDtoCopyWith<$Res> {
       String? email,
       String? pin,
       String? phoneNumber,
-      String? role,
-      String? outletId});
+      String? role});
 }
 
 /// @nodoc
@@ -302,6 +317,8 @@ class _$UpdateEmployeeDtoCopyWithImpl<$Res, $Val extends UpdateEmployeeDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UpdateEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -310,7 +327,6 @@ class _$UpdateEmployeeDtoCopyWithImpl<$Res, $Val extends UpdateEmployeeDto>
     Object? pin = freezed,
     Object? phoneNumber = freezed,
     Object? role = freezed,
-    Object? outletId = freezed,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
@@ -333,10 +349,6 @@ class _$UpdateEmployeeDtoCopyWithImpl<$Res, $Val extends UpdateEmployeeDto>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String?,
-      outletId: freezed == outletId
-          ? _value.outletId
-          : outletId // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -354,8 +366,7 @@ abstract class _$$UpdateEmployeeDtoImplCopyWith<$Res>
       String? email,
       String? pin,
       String? phoneNumber,
-      String? role,
-      String? outletId});
+      String? role});
 }
 
 /// @nodoc
@@ -366,6 +377,8 @@ class __$$UpdateEmployeeDtoImplCopyWithImpl<$Res>
       $Res Function(_$UpdateEmployeeDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UpdateEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -374,7 +387,6 @@ class __$$UpdateEmployeeDtoImplCopyWithImpl<$Res>
     Object? pin = freezed,
     Object? phoneNumber = freezed,
     Object? role = freezed,
-    Object? outletId = freezed,
   }) {
     return _then(_$UpdateEmployeeDtoImpl(
       name: freezed == name
@@ -397,10 +409,6 @@ class __$$UpdateEmployeeDtoImplCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String?,
-      outletId: freezed == outletId
-          ? _value.outletId
-          : outletId // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -409,12 +417,7 @@ class __$$UpdateEmployeeDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UpdateEmployeeDtoImpl implements _UpdateEmployeeDto {
   const _$UpdateEmployeeDtoImpl(
-      {this.name,
-      this.email,
-      this.pin,
-      this.phoneNumber,
-      this.role,
-      this.outletId});
+      {this.name, this.email, this.pin, this.phoneNumber, this.role});
 
   factory _$UpdateEmployeeDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$UpdateEmployeeDtoImplFromJson(json);
@@ -429,12 +432,10 @@ class _$UpdateEmployeeDtoImpl implements _UpdateEmployeeDto {
   final String? phoneNumber;
   @override
   final String? role;
-  @override
-  final String? outletId;
 
   @override
   String toString() {
-    return 'UpdateEmployeeDto(name: $name, email: $email, pin: $pin, phoneNumber: $phoneNumber, role: $role, outletId: $outletId)';
+    return 'UpdateEmployeeDto(name: $name, email: $email, pin: $pin, phoneNumber: $phoneNumber, role: $role)';
   }
 
   @override
@@ -447,17 +448,17 @@ class _$UpdateEmployeeDtoImpl implements _UpdateEmployeeDto {
             (identical(other.pin, pin) || other.pin == pin) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
-            (identical(other.role, role) || other.role == role) &&
-            (identical(other.outletId, outletId) ||
-                other.outletId == outletId));
+            (identical(other.role, role) || other.role == role));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, name, email, pin, phoneNumber, role, outletId);
+      Object.hash(runtimeType, name, email, pin, phoneNumber, role);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UpdateEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateEmployeeDtoImplCopyWith<_$UpdateEmployeeDtoImpl> get copyWith =>
@@ -478,8 +479,7 @@ abstract class _UpdateEmployeeDto implements UpdateEmployeeDto {
       final String? email,
       final String? pin,
       final String? phoneNumber,
-      final String? role,
-      final String? outletId}) = _$UpdateEmployeeDtoImpl;
+      final String? role}) = _$UpdateEmployeeDtoImpl;
 
   factory _UpdateEmployeeDto.fromJson(Map<String, dynamic> json) =
       _$UpdateEmployeeDtoImpl.fromJson;
@@ -494,10 +494,11 @@ abstract class _UpdateEmployeeDto implements UpdateEmployeeDto {
   String? get phoneNumber;
   @override
   String? get role;
+
+  /// Create a copy of UpdateEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String? get outletId;
-  @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateEmployeeDtoImplCopyWith<_$UpdateEmployeeDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -508,10 +509,14 @@ FindAllEmployeeDto _$FindAllEmployeeDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FindAllEmployeeDto {
-  String get outletId => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
 
+  /// Serializes this FindAllEmployeeDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FindAllEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FindAllEmployeeDtoCopyWith<FindAllEmployeeDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -522,7 +527,7 @@ abstract class $FindAllEmployeeDtoCopyWith<$Res> {
           FindAllEmployeeDto value, $Res Function(FindAllEmployeeDto) then) =
       _$FindAllEmployeeDtoCopyWithImpl<$Res, FindAllEmployeeDto>;
   @useResult
-  $Res call({String outletId});
+  $Res call({String? outletId});
 }
 
 /// @nodoc
@@ -535,16 +540,18 @@ class _$FindAllEmployeeDtoCopyWithImpl<$Res, $Val extends FindAllEmployeeDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FindAllEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
+    Object? outletId = freezed,
   }) {
     return _then(_value.copyWith(
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -557,7 +564,7 @@ abstract class _$$FindAllEmployeeDtoImplCopyWith<$Res>
       __$$FindAllEmployeeDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String outletId});
+  $Res call({String? outletId});
 }
 
 /// @nodoc
@@ -568,16 +575,18 @@ class __$$FindAllEmployeeDtoImplCopyWithImpl<$Res>
       $Res Function(_$FindAllEmployeeDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FindAllEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? outletId = null,
+    Object? outletId = freezed,
   }) {
     return _then(_$FindAllEmployeeDtoImpl(
-      outletId: null == outletId
+      outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -585,13 +594,13 @@ class __$$FindAllEmployeeDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$FindAllEmployeeDtoImpl implements _FindAllEmployeeDto {
-  const _$FindAllEmployeeDtoImpl({required this.outletId});
+  const _$FindAllEmployeeDtoImpl({this.outletId});
 
   factory _$FindAllEmployeeDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$FindAllEmployeeDtoImplFromJson(json);
 
   @override
-  final String outletId;
+  final String? outletId;
 
   @override
   String toString() {
@@ -607,11 +616,13 @@ class _$FindAllEmployeeDtoImpl implements _FindAllEmployeeDto {
                 other.outletId == outletId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, outletId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FindAllEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FindAllEmployeeDtoImplCopyWith<_$FindAllEmployeeDtoImpl> get copyWith =>
@@ -627,16 +638,19 @@ class _$FindAllEmployeeDtoImpl implements _FindAllEmployeeDto {
 }
 
 abstract class _FindAllEmployeeDto implements FindAllEmployeeDto {
-  const factory _FindAllEmployeeDto({required final String outletId}) =
+  const factory _FindAllEmployeeDto({final String? outletId}) =
       _$FindAllEmployeeDtoImpl;
 
   factory _FindAllEmployeeDto.fromJson(Map<String, dynamic> json) =
       _$FindAllEmployeeDtoImpl.fromJson;
 
   @override
-  String get outletId;
+  String? get outletId;
+
+  /// Create a copy of FindAllEmployeeDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FindAllEmployeeDtoImplCopyWith<_$FindAllEmployeeDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -8,14 +8,12 @@ class CustomerDetailCubit extends Cubit<CustomerDetailState> {
   CustomerDetailCubit() : super(CustomerDetailInitial());
 
   Future<void> findOne({
-    required String outletId,
     required String customerId,
     DetailCustomerOutletDto? dto,
   }) async {
     try {
       emit(CustomerDetailLoadInProgress());
       final customer = await _outletRepository.detailCustomerOutlet(
-        outletId: outletId,
         customerId: customerId,
         dto: dto,
       );

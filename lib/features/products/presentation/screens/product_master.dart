@@ -50,17 +50,12 @@ class _ProductMasterState extends State<ProductMaster> {
   Future<void> onRefresh() async {
     if (!mounted) return;
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
     ProductMasterFilterState filterState =
         context.read<ProductMasterFilterCubit>().state;
 
-    await context
-        .read<ProductMasterCategoryCubit>()
-        .findAll(outletId: authState.outletId);
+    context.read<ProductMasterCategoryCubit>().findAll();
     await context.read<ProductMasterCubit>().findAll(
           FindAllProductDto(
-            outletId: authState.outletId,
             name: filterState.name,
             categoryId: filterState.categoryId,
           ),
@@ -87,10 +82,9 @@ class _ProductMasterState extends State<ProductMaster> {
   @override
   void initState() {
     super.initState();
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
 
-    context.read<ProductMasterCubit>().init(authState.outletId);
-    context.read<ProductMasterCategoryCubit>().init(authState.outletId);
+    context.read<ProductMasterCubit>().init();
+    context.read<ProductMasterCategoryCubit>().init();
   }
 
   @override
@@ -99,11 +93,8 @@ class _ProductMasterState extends State<ProductMaster> {
       listeners: [
         BlocListener<ProductMasterFilterCubit, ProductMasterFilterState>(
           listener: (context, state) {
-            AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
             context.read<ProductMasterCubit>().findAll(
                   FindAllProductDto(
-                    outletId: authState.outletId,
                     name: state.name,
                     categoryId: state.categoryId,
                   ),

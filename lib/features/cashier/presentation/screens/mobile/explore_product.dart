@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
@@ -30,17 +28,12 @@ class _ExploreProductMobileState extends State<ExploreProductMobile> {
   Future<void> _onRefresh() async {
     if (!mounted) return;
 
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
     CashierProductFilterState filterState =
         context.read<CashierProductFilterCubit>().state;
 
-    await context.read<CashierOrderCubit>().findAll();
-    await context
-        .read<CashierCategoryCubit>()
-        .findAll(outletId: authState.outletId);
+    context.read<CashierOrderCubit>().findAll();
+    context.read<CashierCategoryCubit>().findAll();
     await context.read<CashierProductCubit>().findAll(
-          outletId: authState.outletId,
           categoryId: filterState.categoryId,
           name: filterState.name,
         );

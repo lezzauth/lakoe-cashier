@@ -7,15 +7,15 @@ class CashierCategoryCubit extends Cubit<CashierCategoryState> {
 
   CashierCategoryCubit() : super(CashierCategoryInitial());
 
-  Future<void> init(String outletId) async {
-    await findAll(outletId: outletId);
+  Future<void> init() async {
+    await findAll();
   }
 
-  Future<void> findAll({required String outletId}) async {
+  Future<void> findAll() async {
     try {
       emit(CashierCategoryLoadInProgress());
-      final categories = await _categoryRepository
-          .findAll(FindAllCategoryDto(outletId: outletId));
+      final categories =
+          await _categoryRepository.findAll(FindAllCategoryDto());
       emit(CashierCategoryLoadSuccess(categories));
     } catch (e) {
       emit(CashierCategoryLoadFailure(e.toString()));

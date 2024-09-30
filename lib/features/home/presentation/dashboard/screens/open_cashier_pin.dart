@@ -6,8 +6,6 @@ import 'package:point_of_sales_cashier/common/widgets/form/dotted_pin.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/number_pad.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
 import 'package:point_of_sales_cashier/features/home/data/arguments/open_cashier_pin_argument.dart';
@@ -28,27 +26,17 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
   bool isPinWrong = false;
 
   onOpenCashierInitial(String value, int initialBalance) {
-    AuthState authState = context.read<AuthCubit>().state;
-    if (authState is! AuthReady) return;
-
     context.read<CashierCubit>().openCashier(
           OpenCashierDto(
             initialBalance: initialBalance,
-            outletId: authState.outletId,
             pin: value,
           ),
         );
   }
 
   onOpenCashierReInitial(String value) {
-    AuthState authState = context.read<AuthCubit>().state;
-    if (authState is! AuthReady) return;
-
     context.read<CashierCubit>().generatetoken(
-          RegenerateCashierTokenDto(
-            outletId: authState.outletId,
-            pin: value,
-          ),
+          RegenerateCashierTokenDto(pin: value),
         );
   }
 

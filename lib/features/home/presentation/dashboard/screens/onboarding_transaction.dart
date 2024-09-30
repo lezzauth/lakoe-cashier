@@ -5,8 +5,6 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
 import 'package:point_of_sales_cashier/features/home/application/cubit/onboarding_transaction/onboarding_transaction_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -24,11 +22,7 @@ class OnboardingTransactionScreen extends StatefulWidget {
 class _OnboardingTransactionScreenState
     extends State<OnboardingTransactionScreen> {
   void _onInit() {
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-
-    context
-        .read<OnboardingTransactionCubit>()
-        .init(ownerId: authState.profile.id, outletId: authState.outletId);
+    context.read<OnboardingTransactionCubit>().init();
   }
 
   Future<void> _onGoToCreateProduct() async {

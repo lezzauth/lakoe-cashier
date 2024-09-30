@@ -7,8 +7,6 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_cubit.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -37,17 +35,13 @@ class _CategoryFieldState extends State<CategoryField> {
     if (newCategory != true) return;
 
     if (!context.mounted) return;
-    AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-    context
-        .read<ProductMasterCategoryCubit>()
-        .findAll(outletId: authState.outletId);
+    context.read<ProductMasterCategoryCubit>().findAll();
   }
 
   void _onInit() {
     final state = context.read<ProductMasterCategoryCubit>().state;
     if (state is ProductMasterCategoryInitial) {
-      AuthReady authState = context.read<AuthCubit>().state as AuthReady;
-      context.read<ProductMasterCategoryCubit>().init(authState.outletId);
+      context.read<ProductMasterCategoryCubit>().init();
     }
   }
 

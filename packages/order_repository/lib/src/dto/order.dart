@@ -19,7 +19,7 @@ class OrderItemDto with _$OrderItemDto {
 class PreviewOrderPriceDto with _$PreviewOrderPriceDto {
   const factory PreviewOrderPriceDto({
     required String type,
-    required String outletId,
+    String? outletId,
     required List<OrderItemDto> items,
   }) = _PreviewOrderPriceDto;
 
