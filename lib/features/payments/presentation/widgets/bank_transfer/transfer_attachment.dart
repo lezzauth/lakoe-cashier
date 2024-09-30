@@ -1,9 +1,13 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:point_of_sales_cashier/common/widgets/access_permission/camera_denied_permission.dart';
+import 'package:point_of_sales_cashier/common/widgets/access_permission/camera_permission.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
@@ -38,27 +42,49 @@ class TransferAttachmentField extends StatefulWidget {
 
 class _TransferAttachmentFieldState extends State<TransferAttachmentField> {
   TransferAttachment? _selectedFile;
+  final ImagePicker _picker = ImagePicker();
 
-  Future<void> _pickFile() async {
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.image,
-        allowMultiple: false,
+  Future<void> _getImageFromCamera() async {
+    if (await Permission.camera.isPermanentlyDenied) {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return CustomBottomsheet(
+            child: const CameraDeniedPermission(),
+          );
+        },
       );
 
-      if (result != null && result.files.single.path != null) {
-        setState(() {
-          _selectedFile =
-              TransferAttachment(file: File(result.files.single.path!));
-        });
-        if (widget.onChanged != null) {
-          widget.onChanged!(
-              TransferAttachment(file: File(result.files.single.path!)));
+      return;
+    }
+
+    if (!(await Permission.camera.isGranted)) {
+      await showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return const CustomBottomsheet(
+            child: CameraPermission(),
+          );
+        },
+      );
+    }
+    if (await Permission.camera.isGranted) {
+      try {
+        final XFile? result =
+            await _picker.pickImage(source: ImageSource.camera);
+        if (result != null) {
+          setState(() {
+            _selectedFile = TransferAttachment(file: File(result.path));
+          });
+          if (widget.onChanged != null) {
+            widget.onChanged!(TransferAttachment(file: File(result.path)));
+          }
         }
-      }
-    } catch (e) {
-      if (widget.onError != null) {
-        widget.onError!(e.toString());
+      } catch (e) {
+        if (widget.onError != null) {
+          widget.onError!(e.toString());
+        }
       }
     }
   }
@@ -114,7 +140,8 @@ class _TransferAttachmentFieldState extends State<TransferAttachmentField> {
     bool isEmptyValue = widget.value?.file == null && widget.value?.url == null;
 
     return GestureDetector(
-      onTap: _pickFile,
+      onTap: _getImageFromCamera,
+      // onTap: _pickFile,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -171,12 +198,9 @@ class _TransferAttachmentFieldState extends State<TransferAttachmentField> {
               if (widget.errorText.isNotEmpty)
                 Container(
                   margin: const EdgeInsets.only(top: 4),
-                  child: SizedBox(
-                    width: 100,
-                    child: TextBodyS(
-                      widget.errorText,
-                      color: TColors.error,
-                    ),
+                  child: TextBodyS(
+                    widget.errorText,
+                    color: TColors.error,
                   ),
                 )
             ],
