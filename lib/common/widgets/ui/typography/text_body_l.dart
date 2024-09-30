@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 
 class TextBodyL extends StatelessWidget {
@@ -9,6 +10,7 @@ class TextBodyL extends StatelessWidget {
   final Color? color;
   final TextAlign? textAlign;
   final int? maxLines;
+  final TextDecoration? decoration;
 
   const TextBodyL(
     this.data, {
@@ -17,6 +19,7 @@ class TextBodyL extends StatelessWidget {
     this.color,
     this.textAlign,
     this.maxLines,
+    this.decoration,
   });
 
   @override
@@ -27,6 +30,8 @@ class TextBodyL extends StatelessWidget {
         color: color,
         fontWeight: fontWeight,
         fontSize: fontSize,
+        decoration: decoration,
+        decorationColor: TColors.neutralDarkLightest,
       ),
       textAlign: textAlign,
       maxLines: maxLines,

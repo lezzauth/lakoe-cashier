@@ -5,7 +5,7 @@ import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 class TextHeading4 extends StatelessWidget {
   final String data;
   final FontWeight fontWeight;
-  final double fontSize = TSizes.fontSizeHeading4;
+  final double fontSize;
   final Color? color;
   final TextOverflow? overflow;
   final TextAlign? textAlign;
@@ -16,6 +16,7 @@ class TextHeading4 extends StatelessWidget {
     this.data, {
     super.key,
     this.fontWeight = FontWeight.w600,
+    this.fontSize = TSizes.fontSizeHeading4,
     this.color,
     this.overflow,
     this.softWrap,

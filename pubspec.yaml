@@ -97,7 +97,7 @@ dependencies:
   print_bluetooth_thermal: ^1.1.1
   esc_pos_utils_plus: ^2.0.4
   image: ^4.2.0
-  flutter_bluetooth_serial: ^0.4.0
+  # flutter_bluetooth_serial: ^0.4.0
 
 dev_dependencies:
   flutter_test:
@@ -108,7 +108,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^5.0.0
   build_runner: ^2.4.11
   freezed: ^2.5.2
   json_serializable: ^6.8.0
@@ -130,6 +130,7 @@ flutter:
     - assets/images/
     - assets/images/access-permission/
     - assets/images/hero/
+    - assets/images/onboarding/
     - assets/logos/
     - assets/logos/package/
     - assets/flags/

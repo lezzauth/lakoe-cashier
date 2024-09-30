@@ -5,8 +5,8 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
-class AccountAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const AccountAppbar({
+class CustomAppbarLight extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppbarLight({
     super.key,
     this.title = "",
     this.leading,

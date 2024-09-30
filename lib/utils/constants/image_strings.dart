@@ -4,10 +4,11 @@ class TImages {
   static const String lakoeLetterPrimary =
       "assets/logos/lakoe-letter-primary.png";
   static const String lakoeLogoQRIS = "assets/logos/lakoe-logo-qris.png";
+  static const String boostLogoSvg = "assets/logos/package/logo-boost.svg";
+  static const String boostLogoSvgWhite =
+      "assets/logos/package/logo-boost-light.svg";
 
   static const String mainMenuWaves = "assets/images/main-menu-waves.svg";
-  static const String bannerWaves = "assets/images/banner-waves.svg";
-  static const String balanceWaves = "assets/images/balance-waves.svg";
   static const String tradingNews = "assets/images/trading-news.svg";
   static const String receiptSlip = "assets/images/receipt-slip.svg";
   static const String contactAvatar = "assets/images/contact-avatar.svg";
@@ -40,9 +41,11 @@ class TImages {
   static const String bankAccountEmpty = "assets/images/bank-account-empty.svg";
 
   // hero
-  static const String liteLevel = "assets/images/hero/lite.svg";
-  static const String growLevel = "assets/images/hero/grow.svg";
-  static const String proLevel = "assets/images/hero/pro.svg";
+  static const String liteLevelHero = "assets/images/hero/lite.svg";
+  static const String growLevelHero = "assets/images/hero/grow.svg";
+  static const String proLevelHero = "assets/images/hero/pro.svg";
+  static const String packageHero = "assets/images/hero/package.svg";
+  static const String boostHero = "assets/images/hero/boost.svg";
 
   // logo package level
   static const String liteLogoPackage =
@@ -51,9 +54,16 @@ class TImages {
       "assets/logos/package/grow-logo-level.png";
   static const String proLogoPackage =
       "assets/logos/package/pro-logo-level.png";
+  static const String liteLogoLow =
+      "assets/logos/package/lite-logo-level-low.png";
   static const String liteIcon = "assets/logos/package/icon-lite.png";
   static const String growIcon = "assets/logos/package/icon-grow.png";
   static const String proIcon = "assets/logos/package/icon-pro.png";
+  static const String lakoeXGrow = "assets/logos/package/lakoe_x_grow.png";
+  static const String lakoeXPro = "assets/logos/package/lakoe_x_pro.png";
+  static const String boostLightLogo =
+      "assets/logos/package/logo-light-boost.png";
+  static const String boostLogo = "assets/logos/package/logo-boost.png";
 
   // banks
   static const String bankBCALogo = "assets/images/bank-bca-logo.svg";
@@ -79,4 +89,17 @@ class TImages {
       "assets/images/access-permission/location-permission.png";
   static const String storagePermission =
       "assets/images/access-permission/storage-permission.png";
+
+  // Waves
+  static const String bannerWaves = "assets/images/banner-waves.svg";
+  static const String balanceWaves = "assets/images/balance-waves.svg";
+  static const String pakcageWaves = "assets/images/package-waves.svg";
+
+  // Onboarding
+  static const String onboarding1 =
+      "assets/images/onboarding/onboarding-1.webp";
+  static const String onboarding2 =
+      "assets/images/onboarding/onboarding-2.webp";
+  static const String onboarding3 =
+      "assets/images/onboarding/onboarding-3.webp";
 }
