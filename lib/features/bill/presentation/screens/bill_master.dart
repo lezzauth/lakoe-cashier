@@ -38,58 +38,60 @@ class _BillMasterState extends State<BillMaster> {
       appBar: const CustomAppbar(
         title: "Tampilan Struk (Bill)",
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              BillView(
-                outletName: "Warmindo Cak Tho",
-                outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
-                orderNumber: "9849",
-                cashierName: "Dimas",
-                noBill: "LK-0001",
-                orderType: "Take Away",
-                dateTime: "28/12/2024, 20:18",
-                paymentMetod: 'Cash (Tunai)',
-                totalPrice: "Rp21.400",
-                moneyReceived: "Rp50.000",
-                changeMoney: "Rp28.600",
-                closeBill: "Close Bill: 28/12/2024, 21:37",
-                greeting: "Terimakasih\nDitunggu kembali kedatangannya",
-                children: listBillPriceItem
-                    .map(
-                      (item) => BillListPrice(
-                        label: item.label,
-                        price: item.price,
-                      ),
-                    )
-                    .toList(),
-              ),
-              const TextBodyS(
-                "Ini hanya contoh tampilan struk",
-                color: TColors.neutralDarkLightest,
-                fontStyle: FontStyle.italic,
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: SizedBox(
-              height: 48,
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/bill/edit");
-                },
-                child: const TextActionL(
-                  "Ubah Catatan Kaki",
-                  color: TColors.primary,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                BillView(
+                  outletName: "Warmindo Cak Tho",
+                  outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
+                  orderNumber: "9849",
+                  cashierName: "Dimas",
+                  noBill: "LK-0001",
+                  orderType: "Take Away",
+                  dateTime: "28/12/2024, 20:18",
+                  paymentMetod: 'Cash (Tunai)',
+                  totalPrice: "Rp21.400",
+                  moneyReceived: "Rp50.000",
+                  changeMoney: "Rp28.600",
+                  closeBill: "Close Bill: 28/12/2024, 21:37",
+                  greeting: "Terimakasih\nDitunggu kembali kedatangannya",
+                  children: listBillPriceItem
+                      .map(
+                        (item) => BillListPrice(
+                          label: item.label,
+                          price: item.price,
+                        ),
+                      )
+                      .toList(),
+                ),
+                const TextBodyS(
+                  "Ini hanya contoh tampilan struk",
+                  color: TColors.neutralDarkLightest,
+                  fontStyle: FontStyle.italic,
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              child: SizedBox(
+                height: 48,
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/bill/edit");
+                  },
+                  child: const TextActionL(
+                    "Ubah Catatan Kaki",
+                    color: TColors.primary,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
