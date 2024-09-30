@@ -3,7 +3,7 @@ import 'package:point_of_sales_cashier/features/orders/application/cubit/order_m
 
 class OrderMasterFilterCubit extends Cubit<OrderMasterFilterState> {
   OrderMasterFilterCubit()
-      : super(const OrderMasterFilterState(status: "OPEN"));
+      : super(const OrderMasterFilterState(status: "OPEN", source: "CASHIER"));
 
   void setFilter({
     String? type,

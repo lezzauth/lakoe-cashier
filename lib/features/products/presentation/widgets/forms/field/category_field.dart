@@ -1,3 +1,4 @@
+import 'package:category_repository/category_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -13,7 +14,7 @@ import 'package:point_of_sales_cashier/features/products/application/cubit/categ
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
-class CategoryField extends StatelessWidget {
+class CategoryField extends StatefulWidget {
   const CategoryField({
     super.key,
     this.initialValue,
@@ -21,6 +22,11 @@ class CategoryField extends StatelessWidget {
 
   final int? initialValue;
 
+  @override
+  State<CategoryField> createState() => _CategoryFieldState();
+}
+
+class _CategoryFieldState extends State<CategoryField> {
   Future<void> _onCreateCategory(BuildContext context) async {
     if (!context.mounted) return;
 
@@ -30,20 +36,43 @@ class CategoryField extends StatelessWidget {
     ) as bool?;
     if (newCategory != true) return;
 
+    if (!context.mounted) return;
     AuthReady authState = context.read<AuthCubit>().state as AuthReady;
     context
         .read<ProductMasterCategoryCubit>()
         .findAll(outletId: authState.outletId);
   }
 
+  void _onInit() {
+    final state = context.read<ProductMasterCategoryCubit>().state;
+    if (state is ProductMasterCategoryInitial) {
+      AuthReady authState = context.read<AuthCubit>().state as AuthReady;
+      context.read<ProductMasterCategoryCubit>().init(authState.outletId);
+    }
+  }
+
+  int? _getInitialValue(List<CategoryModel> categories) {
+    if (widget.initialValue != null) return widget.initialValue;
+    if (categories.isEmpty) return null;
+
+    return categories[0].id;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _onInit();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductMasterCategoryCubit, ProductMasterCategoryState>(
+    return BlocConsumer<ProductMasterCategoryCubit, ProductMasterCategoryState>(
+      listener: (context, state) {},
       builder: (context, state) => switch (state) {
         ProductMasterCategoryLoadSuccess(:final categories) =>
           FormBuilderField<int>(
             name: "categoryId",
-            initialValue: initialValue ?? categories[0].id,
+            initialValue: _getInitialValue(categories),
             builder: (field) {
               return Wrap(
                 direction: Axis.horizontal,

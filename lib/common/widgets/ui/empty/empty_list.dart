@@ -50,7 +50,7 @@ class EmptyList extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    action!,
+                    if (action != null) action!,
                   ],
                 ),
               ),

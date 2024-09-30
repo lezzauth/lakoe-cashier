@@ -14,7 +14,7 @@ class CustomRadio<T> extends StatefulWidget {
   });
 
   @override
-  _CustomRadioState createState() => _CustomRadioState();
+  State<CustomRadio> createState() => _CustomRadioState();
 }
 
 class _CustomRadioState extends State<CustomRadio> {

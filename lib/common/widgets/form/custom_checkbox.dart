@@ -14,7 +14,7 @@ class CustomCheckbox extends StatefulWidget {
   final Duration animationDuration;
 
   const CustomCheckbox({
-    Key? key,
+    super.key,
     required this.value,
     required this.onChanged,
     this.isError = false,
@@ -23,10 +23,10 @@ class CustomCheckbox extends StatefulWidget {
     this.selectedColor = TColors.primary,
     this.checkColor = TColors.neutralLightLightest,
     this.animationDuration = const Duration(milliseconds: 200),
-  }) : super(key: key);
+  });
 
   @override
-  _CustomCheckboxState createState() => _CustomCheckboxState();
+  State<CustomCheckbox> createState() => _CustomCheckboxState();
 }
 
 class _CustomCheckboxState extends State<CustomCheckbox> {

@@ -23,6 +23,8 @@ import 'package:point_of_sales_cashier/features/checkout/presentation/screens/ch
 import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
 import 'package:point_of_sales_cashier/features/employees/presentation/screens/employee_edit.dart';
+import 'package:point_of_sales_cashier/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
+import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/onboarding_transaction.dart';
 import 'package:point_of_sales_cashier/features/packages/boost/presentation/screens/boost_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/grow_package_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_master.dart';
@@ -130,6 +132,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => CashierOrderCubit()),
         BlocProvider(create: (context) => CashierProductCubit()),
         BlocProvider(create: (context) => CashierCategoryCubit()),
+        BlocProvider(create: (context) => OnboardingTransactionCubit()),
 
         // Cart
         BlocProvider(create: (context) => CartCubit()),
@@ -197,6 +200,8 @@ class App extends StatelessWidget {
                 const TransactionDateScreen(),
             "/cashier/explore-products": (context) =>
                 const ExploreProductScreen(),
+            "/cashier/onboarding-transaction": (context) =>
+                const OnboardingTransactionScreen(),
             "/cart": (context) => const CartScreen(),
             // products
             "/products": (context) => const ProductMasterScreen(),
