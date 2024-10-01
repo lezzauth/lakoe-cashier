@@ -13,9 +13,9 @@ class THighlightPrimaryColors {
 class TNeutralLightColors {
   TNeutralLightColors._();
 
-  static const Color darkest = Color(0xFFC5C6CC);
-  static const Color dark = Color(0xFFD4D6DD);
-  static const Color medium = Color(0xFFE8E9F1);
+  static const Color darkest = Color(0xFFD0D2DB);
+  static const Color dark = Color(0xFFDBDEE7);
+  static const Color medium = Color(0xFFEBEDF6);
   static const Color light = Color(0xFFF8F9FE);
   static const Color lightest = Color(0xFFFFFFFF);
 }
