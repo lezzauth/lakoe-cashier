@@ -224,7 +224,7 @@ class Pad extends StatelessWidget {
           width: 72,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(72.0),
-            color: color ?? TColors.neutralLightLight,
+            color: color ?? TColors.neutralLightMedium,
           ),
           child: Center(
             child: child,
