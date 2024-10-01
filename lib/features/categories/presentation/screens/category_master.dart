@@ -96,10 +96,28 @@ class _CategoryMasterState extends State<CategoryMaster> {
                         CustomScrollView(
                           slivers: [
                             if (categories.isEmpty)
-                              const EmptyList(
-                                title: "Belum ada kategori, nih!",
-                                subTitle:
-                                    "Yuk! Masukan masukkan kategori kamu.",
+                              BlocBuilder<CategoryMasterFilterCubit,
+                                  CategoryMasterFilterState>(
+                                builder: (context, filterState) {
+                                  if (filterState.search != null &&
+                                      filterState.search!.isNotEmpty) {
+                                    return SliverToBoxAdapter(
+                                      child: const EmptyList(
+                                        title: "Pencarian tidak ditemukan",
+                                        subTitle:
+                                            "Coba cari dengan nama kategori yang lain.",
+                                      ),
+                                    );
+                                  }
+
+                                  return SliverToBoxAdapter(
+                                    child: const EmptyList(
+                                      title: "Belum ada kategori, nih!",
+                                      subTitle:
+                                          "Yuk! Masukan masukkan kategori kamu.",
+                                    ),
+                                  );
+                                },
                               ),
                             if (categories.isNotEmpty)
                               SliverList.builder(
