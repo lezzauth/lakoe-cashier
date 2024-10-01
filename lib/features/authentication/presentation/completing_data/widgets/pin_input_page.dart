@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/number_pad.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_screen_cubit.dart';
 
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
@@ -51,99 +53,108 @@ class _PinInputPageState extends State<PinInputPage> {
       color: TColors.primary,
     );
 
-    return Expanded(
-      child: Column(
-        children: [
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 23.5),
-              margin: const EdgeInsets.only(top: 16.0),
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 40),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 8.0),
-                          child: Text(
-                            !isRepeat
-                                ? "Buat kode akses (PIN)"
-                                : "Masukan ulang kode akses (PIN)",
-                            style: GoogleFonts.inter(
-                              fontSize: TSizes.fontSizeHeading3,
-                              fontWeight: FontWeight.w700,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        context.read<CompletingDataScreenCubit>().goToFormPage();
+      },
+      child: Expanded(
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 23.5),
+                margin: const EdgeInsets.only(top: 16.0),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 40),
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 8.0),
+                            child: Text(
+                              !isRepeat
+                                  ? "Buat kode akses (PIN)"
+                                  : "Masukan ulang kode akses (PIN)",
+                              style: GoogleFonts.inter(
+                                fontSize: TSizes.fontSizeHeading3,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
-                        ),
-                        Text(
-                          "Kode akses ini akan digunakan untuk setiap kali akan melakukan transaksi.",
-                          style: GoogleFonts.inter(
-                            fontSize: TSizes.fontSizeBodyS,
-                            color: TColors.neutralDarkMedium,
+                          Text(
+                            "Kode akses ini akan digunakan untuk setiap kali akan melakukan transaksi.",
+                            style: GoogleFonts.inter(
+                              fontSize: TSizes.fontSizeBodyS,
+                              color: TColors.neutralDarkMedium,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Pinput(
-                    defaultPinTheme: defaultPinTheme,
-                    focusedPinTheme: defaultPinTheme,
-                    submittedPinTheme: focusedPinTheme,
-                    length: 6,
-                    useNativeKeyboard: false,
-                    controller: _pinController,
-                    onCompleted: (value) {
-                      if (isRepeat) {
-                        if (value != firstValue) {
-                          setState(() {
-                            isPinWrong = true;
-                          });
-                          _pinController.clear();
+                    Pinput(
+                      defaultPinTheme: defaultPinTheme,
+                      focusedPinTheme: defaultPinTheme,
+                      submittedPinTheme: focusedPinTheme,
+                      length: 6,
+                      useNativeKeyboard: false,
+                      controller: _pinController,
+                      onCompleted: (value) {
+                        if (isRepeat) {
+                          if (value != firstValue) {
+                            setState(() {
+                              isPinWrong = true;
+                            });
+                            _pinController.clear();
 
-                          return;
+                            return;
+                          }
+
+                          setState(() {
+                            isPinWrong = false;
+                          });
+                          if (widget.onPinValid != null) {
+                            widget.onPinValid!(value);
+                          }
                         }
 
                         setState(() {
-                          isPinWrong = false;
+                          firstValue = value;
+                          isRepeat = true;
                         });
-                        if (widget.onPinValid != null) {
-                          widget.onPinValid!(value);
-                        }
-                      }
-
-                      setState(() {
-                        firstValue = value;
-                        isRepeat = true;
-                      });
-                      _pinController.clear();
-                    },
-                  ),
-                  if (isPinWrong)
-                    Container(
-                      margin: const EdgeInsets.only(top: 12),
-                      child: Text(
-                        "PIN Salah. Coba Lagi.",
-                        style: GoogleFonts.inter(
-                          fontSize: TSizes.fontSizeBodyS,
-                          color: TColors.error,
+                        _pinController.clear();
+                      },
+                    ),
+                    if (isPinWrong)
+                      Container(
+                        margin: const EdgeInsets.only(top: 12),
+                        child: Text(
+                          "PIN Salah. Coba Lagi.",
+                          style: GoogleFonts.inter(
+                            fontSize: TSizes.fontSizeBodyS,
+                            color: TColors.error,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                ],
+                      )
+                  ],
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 24),
-            child: NumberPad(
-              controller: _pinController,
-              maxLength: 6,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 24),
+              child: NumberPad(
+                controller: _pinController,
+                maxLength: 6,
+                onCancel: () {
+                  context.read<CompletingDataScreenCubit>().goToFormPage();
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

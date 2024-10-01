@@ -8,8 +8,14 @@ import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 class NumberPad extends StatefulWidget {
   final TextEditingController? controller;
   final int? maxLength;
+  final Function()? onCancel;
 
-  const NumberPad({super.key, this.controller, this.maxLength});
+  const NumberPad({
+    super.key,
+    this.controller,
+    this.maxLength,
+    this.onCancel,
+  });
 
   @override
   State<NumberPad> createState() => _NumberPadState();
@@ -155,9 +161,10 @@ class _NumberPadState extends State<NumberPad> {
           spacing: 8.0,
           children: [
             Pad(
-              onTap: () {
-                Navigator.pop(context);
-              },
+              onTap: widget.onCancel ??
+                  () {
+                    Navigator.pop(context);
+                  },
               color: Colors.transparent,
               child: Text(
                 "Batal",

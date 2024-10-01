@@ -1,21 +1,32 @@
-sealed class CompletingDataState {}
+import 'package:authentication_repository/authentication_repository.dart';
+import 'package:equatable/equatable.dart';
 
-class CompletingDataInitial extends CompletingDataState {}
+sealed class CompletingDataState extends Equatable {}
 
-class CompletingDataSubmitted extends CompletingDataState {
-  final String name;
-  final String phoneNumber;
-  final String email;
-  final String outletAddress;
-  final String outletName;
-  final String outletType;
+final class CompletingDataActionInitial extends CompletingDataState {
+  @override
+  List<Object?> get props => [];
+}
 
-  CompletingDataSubmitted({
-    required this.name,
-    required this.phoneNumber,
-    required this.email,
-    required this.outletAddress,
-    required this.outletName,
-    required this.outletType,
-  });
+final class CompletingDataActionInProgress extends CompletingDataState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class CompletingDataActionSuccess extends CompletingDataState {
+  final RegisterResponse response;
+
+  CompletingDataActionSuccess({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}
+
+final class CompletingDataActionFailure extends CompletingDataState {
+  final String error;
+
+  CompletingDataActionFailure(this.error);
+
+  @override
+  List<Object?> get props => [error];
 }

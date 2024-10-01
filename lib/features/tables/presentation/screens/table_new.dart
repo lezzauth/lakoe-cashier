@@ -5,8 +5,6 @@ import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart'
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_state.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/forms/table_information_form.dart';
@@ -20,12 +18,7 @@ class TableNewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
-      builder: (context, state) => switch (state) {
-        AuthReady() => const TableNew(),
-        _ => const Scaffold(body: Center(child: CircularProgressIndicator())),
-      },
-    );
+    return const TableNew();
   }
 }
 

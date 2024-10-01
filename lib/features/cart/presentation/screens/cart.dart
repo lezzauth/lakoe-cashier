@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_cubit.dart';
@@ -27,12 +25,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CartDetailFilterCubit(),
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) => switch (state) {
-          AuthReady() => const Cart(),
-          _ => const Scaffold(body: Center(child: CircularProgressIndicator())),
-        },
-      ),
+      child: const Cart(),
     );
   }
 }

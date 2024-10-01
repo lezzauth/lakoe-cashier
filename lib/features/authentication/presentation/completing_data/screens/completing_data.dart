@@ -2,120 +2,135 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_form_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_screen_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_screen_state.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_state.dart';
+import 'package:point_of_sales_cashier/features/authentication/data/arguments/completing_data_argument.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/completing_data_form_page.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/form_step_indicator.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/pin_input_page.dart';
 
-class CompletingDataScreen extends StatefulWidget {
-  const CompletingDataScreen({super.key});
+class CompletingDataScreen extends StatelessWidget {
+  const CompletingDataScreen({super.key, required this.arguments});
+
+  final CompletingDataArgument arguments;
 
   @override
-  State<CompletingDataScreen> createState() => _CompletingDataScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => CompletingDataFormCubit(),
+      child: CompletingData(arguments: arguments),
+    );
+  }
 }
 
-class _CompletingDataScreenState extends State<CompletingDataScreen> {
-  int currentPage = 0;
+class CompletingData extends StatefulWidget {
+  const CompletingData({super.key, required this.arguments});
+
+  final CompletingDataArgument arguments;
+
+  @override
+  State<CompletingData> createState() => _CompletingDataState();
+}
+
+class _CompletingDataState extends State<CompletingData> {
+  Widget _buildPage(int currentPage) {
+    final formState = context.read<CompletingDataFormCubit>().state;
+    final state = context.read<CompletingDataCubit>().state;
+    final formValue = formState.value;
+
+    if (currentPage == 1) {
+      return PinInputPage(
+        isError: state is CompletingDataActionFailure,
+        onPinValid: (value) {
+          context.read<CompletingDataCubit>().register(
+                RegisterDto(
+                  name: formValue["name"],
+                  email: formValue["email"],
+                  phoneNumber: formValue["phoneNumber"],
+                  pin: value,
+                  outlet: OutletDto(
+                    name: formValue["outletName"],
+                    address: formValue["outletAddress"],
+                    type: formValue["outletType"],
+                  ),
+                ),
+              );
+        },
+      );
+    }
+
+    return CompletingDataFormPage(
+      initialValue: {
+        "phoneNumber": widget.arguments.phoneNumber,
+        "outletType": formValue["outletType"] ?? "Kuliner",
+        "name": formValue["name"],
+        "email": formValue["email"],
+        "outletName": formValue["outletName"],
+        "outletAddress": formValue["outletAddress"],
+      },
+      onSubmitted: () {
+        context.read<CompletingDataScreenCubit>().goToPinInputPage();
+      },
+    );
+  }
+
+  Widget _buildPageIndicator(int currentPage) {
+    return Row(
+      children: [
+        Expanded(
+          child: FormStepIndicator(
+            active: true,
+          ),
+        ),
+        const SizedBox(
+          width: 6.28,
+        ),
+        Expanded(
+          child: FormStepIndicator(
+            active: currentPage >= 1,
+          ),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<CompletingDataCubit, CompletingDataState>(
-        listener: (context, state) {
-          if (state is CompletingDataSubmitted) {
-            setState(() {
-              currentPage = 1;
-            });
-          } else if (state is CompletingDataInitial) {
-            setState(() {
-              currentPage = 0;
-            });
-          }
-        },
-        child: BlocListener<AuthCubit, AuthState>(
-          listener: (context, state) async {
-            if (state is AuthRegisterSuccess) {
-              await context.read<AuthCubit>().initialize();
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<CompletingDataCubit, CompletingDataState>(
+            listener: (context, state) async {
+              if (state is CompletingDataActionSuccess) {
+                await context.read<AuthCubit>().initialize();
 
-              if (!context.mounted) return;
-              Navigator.popAndPushNamed(context, "/cashier");
-            }
-          },
-          child: BlocBuilder<CompletingDataCubit, CompletingDataState>(
-            builder: (context, completingDataState) {
-              return BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, authState) {
-                  if (authState is AuthVerifyOTPSuccessAndRegister ||
-                      authState is AuthRegisterFailure) {
-                    return SafeArea(
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 14, vertical: 16),
-                            child: Flex(
-                              direction: Axis.horizontal,
-                              children: [
-                                Flexible(
-                                  child: FormStepIndicator(
-                                      active: currentPage >= 0),
-                                ),
-                                const SizedBox(
-                                  width: 6.28,
-                                ),
-                                Flexible(
-                                  child: FormStepIndicator(
-                                    active: currentPage >= 1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          if (currentPage == 0 &&
-                              authState is AuthVerifyOTPSuccessAndRegister)
-                            CompletingDataFormPage(
-                              phoneNumber: authState.phoneNumber,
-                            ),
-                          if (currentPage == 1)
-                            PinInputPage(
-                              isError: authState is AuthRegisterFailure,
-                              onPinValid: (value) {
-                                if (completingDataState
-                                    is CompletingDataSubmitted) {
-                                  context.read<AuthCubit>().register(
-                                        RegisterDto(
-                                          name: completingDataState.name,
-                                          email: completingDataState.email,
-                                          phoneNumber:
-                                              completingDataState.phoneNumber,
-                                          pin: value,
-                                          outlet: OutletDto(
-                                            name:
-                                                completingDataState.outletName,
-                                            address: completingDataState
-                                                .outletAddress,
-                                            type:
-                                                completingDataState.outletType,
-                                          ),
-                                        ),
-                                      );
-                                }
-                              },
-                            ),
-                        ],
-                      ),
-                    );
-                  }
-
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              );
+                if (!context.mounted) return;
+                Navigator.popAndPushNamed(context, "/cashier");
+              }
             },
-          ),
+          )
+        ],
+        child:
+            BlocBuilder<CompletingDataScreenCubit, CompletingDataScreenState>(
+          builder: (context, pageState) {
+            final currentPage = pageState.page;
+
+            return SafeArea(
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 14, vertical: 16),
+                    child: _buildPageIndicator(currentPage),
+                  ),
+                  _buildPage(currentPage)
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
