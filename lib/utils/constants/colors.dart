@@ -16,7 +16,7 @@ class TNeutralLightColors {
   static const Color darkest = Color(0xFFC5C6CC);
   static const Color dark = Color(0xFFD4D6DD);
   static const Color medium = Color(0xFFE8E9F1);
-  static const Color light = Color(0xFFF8F9FE);
+  static const Color light = Color(0xFFF4F6FE);
   static const Color lightest = Color(0xFFFFFFFF);
 }
 
