@@ -30,29 +30,6 @@ class _PinInputPageState extends State<PinInputPage> {
 
   @override
   Widget build(BuildContext context) {
-    final defaultPinTheme = PinTheme(
-      width: 16,
-      height: 16,
-      textStyle: const TextStyle(
-        fontSize: 0,
-        color: Colors.transparent,
-        fontWeight: FontWeight.w400,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: TColors.neutralLightDark, width: 0),
-        borderRadius: BorderRadius.circular(TSizes.inputRadius),
-        color: TColors.neutralLightDark,
-      ),
-      margin: const EdgeInsets.all(
-        12.0,
-      ),
-    );
-
-    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(color: TColors.primary, width: 0),
-      color: TColors.primary,
-    );
-
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
@@ -94,12 +71,8 @@ class _PinInputPageState extends State<PinInputPage> {
                         ],
                       ),
                     ),
-                    Pinput(
-                      defaultPinTheme: defaultPinTheme,
-                      focusedPinTheme: defaultPinTheme,
-                      submittedPinTheme: focusedPinTheme,
+                    DottedPin(
                       length: 6,
-                      useNativeKeyboard: false,
                       controller: _pinController,
                       onCompleted: (value) {
                         if (isRepeat) {
@@ -148,9 +121,6 @@ class _PinInputPageState extends State<PinInputPage> {
               child: NumberPad(
                 controller: _pinController,
                 maxLength: 6,
-                onCancel: () {
-                  context.read<CompletingDataScreenCubit>().goToFormPage();
-                },
               ),
             ),
           ],

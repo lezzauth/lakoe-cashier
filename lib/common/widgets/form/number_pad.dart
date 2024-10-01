@@ -8,13 +8,11 @@ import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 class NumberPad extends StatefulWidget {
   final TextEditingController? controller;
   final int? maxLength;
-  final Function()? onCancel;
 
   const NumberPad({
     super.key,
     this.controller,
     this.maxLength,
-    this.onCancel,
   });
 
   @override
@@ -167,10 +165,9 @@ class _NumberPadState extends State<NumberPad> {
 
               //New row
               Pad(
-                onTap: widget.onCancel ??
-                    () {
-                      // Navigator.pop(context);
-                    },
+                onTap: () {
+                  // Navigator.pop(context);
+                },
                 color: Colors.transparent,
                 child: Text(
                   "Lupa?",

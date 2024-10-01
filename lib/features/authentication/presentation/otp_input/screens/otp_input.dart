@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/otp_input/otp_input_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/otp_input/otp_input_state.dart';
 import 'package:point_of_sales_cashier/features/authentication/data/arguments/completing_data_argument.dart';
@@ -122,16 +121,15 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 12),
-                              if (state is AuthRequestOTPSuccess)
-                                Text(
-                                  TFormatter.censoredPhoneNumber(
-                                      widget.arguments.target),
-                                  style: GoogleFonts.inter(
-                                    fontSize: TSizes.fontSizeBodyS,
-                                    color: TColors.neutralDarkMedium,
-                                  ),
-                                  textAlign: TextAlign.center,
+                              Text(
+                                TFormatter.censoredPhoneNumber(
+                                    widget.arguments.target),
+                                style: GoogleFonts.inter(
+                                  fontSize: TSizes.fontSizeBodyS,
+                                  color: TColors.neutralDarkMedium,
                                 ),
+                                textAlign: TextAlign.center,
+                              ),
                             ],
                           ),
                         ),
@@ -152,7 +150,7 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
                             _optController.clear();
                           },
                         ),
-                        if (state is AuthVerifyOTPFailure)
+                        if (state is OtpInputActionFailure)
                           Container(
                             margin: const EdgeInsets.only(top: 12),
                             child: Text(
