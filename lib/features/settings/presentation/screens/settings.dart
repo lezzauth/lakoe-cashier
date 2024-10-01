@@ -133,15 +133,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: SectionCard(
                   title: "Karyawan",
                   description: "Manajemen, Hak akses atau PIN",
-                  children: employeeSettingItems
-                      .map(
-                        (item) => ListItemCard(
-                          iconSrc: item.iconSrc,
-                          title: item.title,
-                          routeName: item.routeName,
-                        ),
-                      )
-                      .toList(),
+                  children: null,
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    "/orders",
+                    arguments: {
+                      "previousScreen": "Settings",
+                    },
+                  );
+                },
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                splashColor: TColors.neutralLightLight,
+                highlightColor: TColors.neutralLightLight,
+                child: SectionCard(
+                  iconSrc: TIcons.history,
+                  title: "Riwayat Pesanan",
+                  children: null,
                 ),
               ),
             ),
