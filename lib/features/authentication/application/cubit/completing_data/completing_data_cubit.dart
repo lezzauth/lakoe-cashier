@@ -1,24 +1,23 @@
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_state.dart';
+import 'package:token_provider/token_provider.dart';
 
 class CompletingDataCubit extends Cubit<CompletingDataState> {
-  CompletingDataCubit() : super(CompletingDataInitial());
+  final TokenProvider _tokenProvider = TokenProvider();
+  final AuthenticationRepository _authenticationRepository =
+      AuthenticationRepositoryImpl();
 
-  void submitBusinessInformation({
-    required String name,
-    required String phoneNumber,
-    required String email,
-    required String outletAddress,
-    required String outletName,
-    required String outletType,
-  }) {
-    emit(CompletingDataSubmitted(
-      name: name,
-      phoneNumber: phoneNumber,
-      email: email,
-      outletAddress: outletAddress,
-      outletName: outletName,
-      outletType: outletType,
-    ));
+  CompletingDataCubit() : super(CompletingDataActionInitial());
+
+  Future<void> register(RegisterDto dto) async {
+    emit(CompletingDataActionInProgress());
+    try {
+      final response = await _authenticationRepository.register(dto);
+      emit(CompletingDataActionSuccess(response: response));
+      _tokenProvider.setAuthToken(response.token);
+    } catch (e) {
+      emit(CompletingDataActionFailure(e.toString()));
+    }
   }
 }

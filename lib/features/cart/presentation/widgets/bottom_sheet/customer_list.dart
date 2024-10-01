@@ -6,8 +6,6 @@ import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/customer/cart_customer_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/customer/cart_customer_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/customer/cart_customer_filter_state.dart';
@@ -25,14 +23,7 @@ class CartCustomerList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CartCustomerFilterCubit(),
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) => switch (state) {
-          AuthReady() => CartCustomerListContent(value: value),
-          _ => const Center(
-              child: CircularProgressIndicator(),
-            ),
-        },
-      ),
+      child: CartCustomerListContent(value: value),
     );
   }
 }

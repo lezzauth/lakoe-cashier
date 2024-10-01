@@ -9,7 +9,11 @@ class NumberPad extends StatefulWidget {
   final TextEditingController? controller;
   final int? maxLength;
 
-  const NumberPad({super.key, this.controller, this.maxLength});
+  const NumberPad({
+    super.key,
+    this.controller,
+    this.maxLength,
+  });
 
   @override
   State<NumberPad> createState() => _NumberPadState();

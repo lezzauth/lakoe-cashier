@@ -4,8 +4,6 @@ import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_filter_state.dart';
@@ -30,14 +28,7 @@ class TableList extends StatelessWidget {
         BlocProvider(create: (context) => TableMasterFilterCubit()),
         BlocProvider(create: (context) => TableMasterLocationCubit()),
       ],
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) => switch (state) {
-          AuthReady() => TableListContent(value: value),
-          _ => const Center(
-              child: CircularProgressIndicator(),
-            ),
-        },
-      ),
+      child: TableListContent(value: value),
     );
   }
 }

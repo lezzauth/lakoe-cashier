@@ -6,13 +6,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/otp_input/otp_input_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/otp_input/otp_input_state.dart';
+import 'package:point_of_sales_cashier/features/authentication/data/arguments/completing_data_argument.dart';
+import 'package:point_of_sales_cashier/features/authentication/data/arguments/otp_input_argument.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class OtpInputScreen extends StatefulWidget {
-  const OtpInputScreen({super.key});
+  const OtpInputScreen({super.key, required this.arguments});
+
+  final OtpInputArgument arguments;
 
   @override
   State<OtpInputScreen> createState() => _OtpInputScreenState();
@@ -20,21 +25,21 @@ class OtpInputScreen extends StatefulWidget {
 
 class _OtpInputScreenState extends State<OtpInputScreen> {
   final TextEditingController _optController = TextEditingController();
+  final AuthenticationRepository _authenticationRepository =
+      AuthenticationRepositoryImpl();
+
   bool isRepeat = false;
   DateTime countdownDate = DateTime.now();
 
-  // @override
-  // void initState() {
-  //   super.initState();
+  Future<void> _onRequestOTP() async {
+    await _authenticationRepository
+        .requestOTP(RequestOTPDto(phoneNumber: widget.arguments.target));
 
-  //   _optController.addListener(() {
-  //     if (_optController.text.length == 4) {
-  //       // Future.delayed(const Duration(milliseconds: 500), () {
-  //       //   Navigator.pushNamed(context, "/completing-data");
-  //       // });
-  //     }
-  //   });
-  // }
+    setState(() {
+      isRepeat = false;
+      countdownDate = DateTime.now().add(Duration(minutes: 1));
+    });
+  }
 
   @override
   void dispose() {
@@ -62,17 +67,23 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
       border: Border.all(color: TColors.primary, width: 1.5),
     );
 
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer<OtpInputCubit, OtpInputState>(
       listener: (context, state) async {
         if (!mounted) return;
 
-        if (state is AuthVerifyOTPSuccessAndRegister) {
-          Navigator.pushNamedAndRemoveUntil(context, "/completing-data",
-              ModalRoute.withName("/completing-data"));
-        } else if (state is AuthVerifyOTPSuccessAndLogin) {
+        if (state is OtpInputActionLogin) {
           await context.read<AuthCubit>().initialize();
+          if (!context.mounted) return;
+
           Navigator.pushNamedAndRemoveUntil(
               context, "/cashier", ModalRoute.withName("/cashier"));
+        } else if (state is OtpInputActionRegister) {
+          Navigator.pushNamedAndRemoveUntil(context, "/completing-data",
+              ModalRoute.withName("/completing-data"),
+              arguments: CompletingDataArgument(
+                token: state.response.token,
+                phoneNumber: widget.arguments.target,
+              ));
         }
       },
       builder: (context, state) {
@@ -110,15 +121,15 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 12),
-                              if (state is AuthRequestOTPSuccess)
-                                Text(
-                                  TFormatter.censoredPhoneNumber(state.target),
-                                  style: GoogleFonts.inter(
-                                    fontSize: TSizes.fontSizeBodyS,
-                                    color: TColors.neutralDarkMedium,
-                                  ),
-                                  textAlign: TextAlign.center,
+                              Text(
+                                TFormatter.censoredPhoneNumber(
+                                    widget.arguments.target),
+                                style: GoogleFonts.inter(
+                                  fontSize: TSizes.fontSizeBodyS,
+                                  color: TColors.neutralDarkMedium,
                                 ),
+                                textAlign: TextAlign.center,
+                              ),
                             ],
                           ),
                         ),
@@ -129,25 +140,17 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
                           autofocus: true,
                           controller: _optController,
                           onCompleted: (value) {
-                            print('onCompleted:${state}');
+                            context
+                                .read<OtpInputCubit>()
+                                .verifyOTP(VerifyOTPDto(
+                                  phoneNumber: widget.arguments.target,
+                                  code: value,
+                                ));
 
-                            switch (state) {
-                              case AuthRequestOTPSuccess(:final target):
-                              case AuthVerifyOTPFailure(:final target):
-                                context.read<AuthCubit>().verifyOTP(
-                                      VerifyOTPDto(
-                                        phoneNumber: target,
-                                        code: value,
-                                      ),
-                                    );
-
-                                break;
-                              default:
-                            }
                             _optController.clear();
                           },
                         ),
-                        if (state is AuthVerifyOTPFailure)
+                        if (state is OtpInputActionFailure)
                           Container(
                             margin: const EdgeInsets.only(top: 12),
                             child: Text(
@@ -181,7 +184,7 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
                         ),
                         TimerCountdown(
                           endTime: countdownDate.add(
-                            const Duration(seconds: 10),
+                            const Duration(minutes: 1),
                           ),
                           format: CountDownTimerFormat.minutesSeconds,
                           enableDescriptions: false,
@@ -205,34 +208,12 @@ class _OtpInputScreenState extends State<OtpInputScreen> {
                       ],
                       if (isRepeat)
                         TextButton(
-                          onPressed: () {
-                            switch (state) {
-                              case AuthRequestOTPSuccess(:final target):
-                              case AuthVerifyOTPFailure(:final target):
-                                context.read<AuthCubit>().requestOTP(
-                                    RequestOTPDto(phoneNumber: target));
-
-                                break;
-                              default:
-                            }
-                            setState(() {
-                              isRepeat = false;
-                              countdownDate = DateTime.now();
-                            });
-                          },
+                          onPressed: _onRequestOTP,
                           child: const TextActionL(
                             "Kirim Ulang OTP",
                             color: TColors.primary,
                           ),
                         )
-                      // Text(
-                      //   "59:00",
-                      //   style: GoogleFonts.inter(
-                      //     color: TColors.primary,
-                      //     fontSize: TSizes.fontSizeActionL,
-                      //     fontWeight: FontWeight.w600,
-                      //   ),
-                      // )
                     ],
                   ),
                 )

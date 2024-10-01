@@ -8,8 +8,6 @@ import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_cubit.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_state.dart';
 import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_cubit.dart';
@@ -29,12 +27,7 @@ class ProductMasterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ProductMasterFilterCubit(),
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) => switch (state) {
-          AuthReady() => const ProductMaster(),
-          _ => const Scaffold(body: Center(child: CircularProgressIndicator())),
-        },
-      ),
+      child: const ProductMaster(),
     );
   }
 }

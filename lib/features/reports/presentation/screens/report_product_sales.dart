@@ -9,8 +9,6 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/filters/order_date_filter.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_product_sales/report_product_sales_cubit.dart';
 import 'package:point_of_sales_cashier/features/reports/application/cubit/report_product_sales/report_product_sales_pagination_cubit.dart';
@@ -39,12 +37,7 @@ class ReportProductSalesScreen extends StatelessWidget {
         BlocProvider(
             create: (context) => ReportProductSalesPaginationFilterCubit()),
       ],
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) => switch (state) {
-          AuthReady() => ReportProductSales(arguments: arguments),
-          _ => const Scaffold(body: Center(child: CircularProgressIndicator())),
-        },
-      ),
+      child: ReportProductSales(arguments: arguments),
     );
   }
 }

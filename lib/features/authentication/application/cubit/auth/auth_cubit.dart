@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:app_data_provider/app_data_provider.dart';
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owner_repository/owner_repository.dart';
@@ -9,74 +8,11 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:token_provider/token_provider.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final AuthenticationRepository _authenticationRepository =
-      AuthenticationRepositoryImpl();
   final OwnerRepository _ownerRepository = OwnerRepositoryImpl();
   final TokenProvider _tokenProvider = TokenProvider();
   final AppDataProvider _appDataProvider = AppDataProvider();
 
   AuthCubit() : super(AuthInitial());
-
-  Future<void> register(RegisterDto dto) async {
-    emit(AuthRegisterInProgress());
-    try {
-      final response = await _authenticationRepository.register(dto);
-      emit(AuthRegisterSuccess(token: response.token));
-      _tokenProvider.setAuthToken(response.token);
-    } catch (e) {
-      emit(AuthRegisterFailure(error: e.toString()));
-    }
-  }
-
-  Future<void> requestOTP(RequestOTPDto dto) async {
-    emit(AuthRequestOTPInProgress());
-    try {
-      final response = await _authenticationRepository.requestOTP(dto);
-      emit(AuthRequestOTPSuccess(
-        action: response.action,
-        id: response.id,
-        target: response.target,
-        type: response.type,
-      ));
-    } catch (e) {
-      emit(AuthRegisterFailure(error: e.toString()));
-    }
-  }
-
-  Future<void> verifyOTP(VerifyOTPDto dto) async {
-    AuthState currentState = state;
-
-    emit(AuthVerifyOTPInProgress());
-    try {
-      final response = await _authenticationRepository.verifyOTP(dto);
-
-      switch (response.action) {
-        case "LOGIN":
-          _tokenProvider.setAuthToken(response.token);
-          emit(AuthVerifyOTPSuccessAndLogin(token: response.token));
-          break;
-        case "REGISTER":
-          emit(AuthVerifyOTPSuccessAndRegister(
-              token: response.token, phoneNumber: dto.phoneNumber));
-          _tokenProvider.setAuthToken(response.token);
-          break;
-        default:
-          throw ErrorSummary("unknown action");
-      }
-    } catch (e) {
-      switch (currentState) {
-        case AuthRequestOTPSuccess(:final target, :final action):
-        case AuthVerifyOTPFailure(:final target, :final action):
-          emit(AuthVerifyOTPFailure(
-            error: e.toString(),
-            action: action,
-            target: target,
-          ));
-          break;
-        default:
-      }
-    }
-  }
 
   Future<void> initialize() async {
     emit(AuthLoadInProgress());
