@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pinput/pinput.dart';
+import 'package:point_of_sales_cashier/common/widgets/form/dotted_pin.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/number_pad.dart';
 
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -28,29 +28,6 @@ class _PinInputPageState extends State<PinInputPage> {
 
   @override
   Widget build(BuildContext context) {
-    final defaultPinTheme = PinTheme(
-      width: 16,
-      height: 16,
-      textStyle: const TextStyle(
-        fontSize: 0,
-        color: Colors.transparent,
-        fontWeight: FontWeight.w400,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: TColors.neutralLightDark, width: 0),
-        borderRadius: BorderRadius.circular(TSizes.inputRadius),
-        color: TColors.neutralLightDark,
-      ),
-      margin: const EdgeInsets.all(
-        12.0,
-      ),
-    );
-
-    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(color: TColors.primary, width: 0),
-      color: TColors.primary,
-    );
-
     return Expanded(
       child: Column(
         children: [
@@ -87,12 +64,8 @@ class _PinInputPageState extends State<PinInputPage> {
                       ],
                     ),
                   ),
-                  Pinput(
-                    defaultPinTheme: defaultPinTheme,
-                    focusedPinTheme: defaultPinTheme,
-                    submittedPinTheme: focusedPinTheme,
+                  DottedPin(
                     length: 6,
-                    useNativeKeyboard: false,
                     controller: _pinController,
                     onCompleted: (value) {
                       if (isRepeat) {
