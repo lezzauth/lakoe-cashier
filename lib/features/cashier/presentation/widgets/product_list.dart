@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
@@ -41,6 +42,15 @@ class _CashierProductListState extends State<CashierProductList> {
           CashierProductLoadSuccess(:final products) =>
             BlocBuilder<CartCubit, CartState>(
               builder: (context, cartState) {
+                if (products.isEmpty) {
+                  return SliverToBoxAdapter(
+                    child: EmptyList(
+                      title: "Pencarian tidak ditemukan",
+                      subTitle: "Coba cari dengan nama produk yang lain.",
+                    ),
+                  );
+                }
+
                 return SliverList.builder(
                   itemCount: products.length,
                   itemBuilder: (context, index) {

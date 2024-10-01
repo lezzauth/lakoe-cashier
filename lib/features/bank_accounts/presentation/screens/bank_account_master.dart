@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_filter_state.dart';
@@ -18,12 +16,7 @@ class BankAccountMasterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => BankAccountMasterFilterCubit(),
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) => switch (state) {
-          AuthReady() => const BankAccountMaster(),
-          _ => const Scaffold(body: Center(child: CircularProgressIndicator())),
-        },
-      ),
+      child: const BankAccountMaster(),
     );
   }
 }
@@ -100,23 +93,24 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
             height: 48,
             width: 48,
             child: BlocBuilder<BankAccountMasterCubit, BankAccountMasterState>(
-                builder: (context, state) => switch (state) {
-                      BankAccountMasterLoadSuccess(:final bankAccounts) =>
-                        bankAccounts.length < 3
-                            ? FloatingActionButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                onPressed: _onGoToCreateScreen,
-                                elevation: 0,
-                                child: const Icon(
-                                  Icons.add,
-                                  size: 24,
-                                ),
-                              )
-                            : const SizedBox(),
-                      _ => const SizedBox(),
-                    }),
+              builder: (context, state) => switch (state) {
+                BankAccountMasterLoadSuccess(:final bankAccounts) =>
+                  bankAccounts.length < 3
+                      ? FloatingActionButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          onPressed: _onGoToCreateScreen,
+                          elevation: 0,
+                          child: const Icon(
+                            Icons.add,
+                            size: 24,
+                          ),
+                        )
+                      : const SizedBox(),
+                _ => const SizedBox(),
+              },
+            ),
           ),
         ),
       ),
