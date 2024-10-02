@@ -7,12 +7,14 @@ class TaxFormState extends Equatable {
   final Map<String, dynamic> value;
   final int taxCount;
   final bool isFormValid;
+  final bool isFormDirty;
 
   const TaxFormState({
     required this.taxes,
     required this.value,
     required this.taxCount,
     this.isFormValid = false,
+    this.isFormDirty = false,
   });
 
   @override

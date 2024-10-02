@@ -130,22 +130,27 @@ class _TaxMasterState extends State<TaxMaster> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
-        if (didPop == true) return;
-        _showPopupConfirmation();
+    return BlocBuilder<TaxFormCubit, TaxFormState>(
+      builder: (context, state) {
+        return PopScope(
+          canPop: !state.isFormDirty,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop == true) return;
+            _showPopupConfirmation();
+          },
+          child: Scaffold(
+            appBar: CustomAppbar(
+              title: "Pajak",
+              handleBackButton:
+                  !state.isFormDirty ? null : () => _showPopupConfirmation(),
+            ),
+            body: TaxForm(
+              formKey: _formKey,
+              onSubmitted: _onSubmitted,
+            ),
+          ),
+        );
       },
-      child: Scaffold(
-        appBar: CustomAppbar(
-          title: "Pajak",
-          handleBackButton: () => _showPopupConfirmation(),
-        ),
-        body: TaxForm(
-          formKey: _formKey,
-          onSubmitted: _onSubmitted,
-        ),
-      ),
     );
   }
 }
