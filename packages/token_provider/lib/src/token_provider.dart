@@ -30,4 +30,8 @@ class TokenProvider {
   Future<Map<String, String>> allValues() async {
     return await _storage.readAll();
   }
+
+  Future<void> clearAll() async {
+    await _storage.deleteAll();
+  }
 }

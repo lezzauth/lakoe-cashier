@@ -21,14 +21,26 @@ import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class OnBoardingScreen extends StatefulWidget {
+class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
 
   @override
-  State<OnBoardingScreen> createState() => _OnBoardingScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => OnBoardingCubit(),
+      child: OnBoarding(),
+    );
+  }
 }
 
-class _OnBoardingScreenState extends State<OnBoardingScreen> {
+class OnBoarding extends StatefulWidget {
+  const OnBoarding({super.key});
+
+  @override
+  State<OnBoarding> createState() => _OnBoardingState();
+}
+
+class _OnBoardingState extends State<OnBoarding> {
   final int maxPage = 3;
   int pageIndex = 0;
   final _formKey = GlobalKey<FormBuilderState>();

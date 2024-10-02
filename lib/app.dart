@@ -9,16 +9,13 @@ import 'package:point_of_sales_cashier/features/account/presentation/screens/for
 import 'package:point_of_sales_cashier/features/account/presentation/screens/form/phone_number_edit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/form/pin_edit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_screen_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/on_boarding/on_boarding_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/otp_input/otp_input_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/data/arguments/completing_data_argument.dart';
 import 'package:point_of_sales_cashier/features/authentication/data/arguments/otp_input_argument.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/screens/completing_data.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/on_boarding.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/otp_input/screens/otp_input.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/bank_accounts/data/arguments/bank_account_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_detail.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_master.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_new.dart';
@@ -112,10 +109,6 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
-        BlocProvider(create: (context) => OnBoardingCubit()),
-        BlocProvider(create: (context) => OtpInputCubit()),
-        BlocProvider(create: (context) => CompletingDataScreenCubit()),
-        BlocProvider(create: (context) => CompletingDataCubit()),
 
         // Category Master
         BlocProvider(create: (context) => CategoryMasterCubit()),
@@ -292,8 +285,10 @@ class App extends StatelessWidget {
             // bank accounts
             "/bank_accounts": (context) => const BankAccountMasterScreen(),
             "/bank_accounts/new": (context) => const BankAccountNewScreen(),
-            "/bank_accounts/detail": (context) =>
-                const BankAccountDetailScreen(),
+            "/bank_accounts/detail": (context) => BankAccountDetailScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as BankAccountDetailArgument,
+                ),
 
             // taxes
             "/taxes": (context) => const TaxMasterScreen(),

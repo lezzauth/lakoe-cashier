@@ -14,16 +14,31 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
-class OtpInputScreen extends StatefulWidget {
+class OtpInputScreen extends StatelessWidget {
   const OtpInputScreen({super.key, required this.arguments});
+  final OtpInputArgument arguments;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => OtpInputCubit(),
+      child: OtpInput(
+        arguments: arguments,
+      ),
+    );
+  }
+}
+
+class OtpInput extends StatefulWidget {
+  const OtpInput({super.key, required this.arguments});
 
   final OtpInputArgument arguments;
 
   @override
-  State<OtpInputScreen> createState() => _OtpInputScreenState();
+  State<OtpInput> createState() => _OtpInputState();
 }
 
-class _OtpInputScreenState extends State<OtpInputScreen> {
+class _OtpInputState extends State<OtpInput> {
   final TextEditingController _optController = TextEditingController();
   final AuthenticationRepository _authenticationRepository =
       AuthenticationRepositoryImpl();

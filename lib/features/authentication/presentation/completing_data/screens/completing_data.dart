@@ -19,8 +19,12 @@ class CompletingDataScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CompletingDataFormCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CompletingDataScreenCubit()),
+        BlocProvider(create: (context) => CompletingDataCubit()),
+        BlocProvider(create: (context) => CompletingDataFormCubit()),
+      ],
       child: CompletingData(arguments: arguments),
     );
   }
