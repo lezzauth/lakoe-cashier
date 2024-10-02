@@ -4,9 +4,12 @@ import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dar
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_small.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_state.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/bill_view.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_price.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BillMasterScreen extends StatelessWidget {
   const BillMasterScreen({super.key});
@@ -31,6 +34,17 @@ class _BillMasterState extends State<BillMaster> {
     _BillPriceItem(label: "Service Charge (2%)", price: "Rp400"),
   ];
 
+  void _onInit() {
+    context.read<BillMasterCubit>().init();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _onInit();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,28 +58,32 @@ class _BillMasterState extends State<BillMaster> {
           children: [
             Column(
               children: [
-                BillView(
-                  outletName: "Warmindo Cak Tho",
-                  outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
-                  orderNumber: "9849",
-                  cashierName: "Dimas",
-                  noBill: "LK-0001",
-                  orderType: "Take Away",
-                  dateTime: "28/12/2024, 20:18",
-                  paymentMetod: 'Cash (Tunai)',
-                  totalPrice: "Rp21.400",
-                  moneyReceived: "Rp50.000",
-                  changeMoney: "Rp28.600",
-                  closeBill: "Close Bill: 28/12/2024, 21:37",
-                  greeting: "Terimakasih\nDitunggu kembali kedatangannya",
-                  children: listBillPriceItem
-                      .map(
-                        (item) => BillListPrice(
-                          label: item.label,
-                          price: item.price,
-                        ),
-                      )
-                      .toList(),
+                BlocBuilder<BillMasterCubit, BillMasterState>(
+                  builder: (context, state) {
+                    return BillView(
+                      outletName: "Warmindo Cak Tho",
+                      outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
+                      orderNumber: "9849",
+                      cashierName: "Dimas",
+                      noBill: "LK-0001",
+                      orderType: "Take Away",
+                      dateTime: "28/12/2024, 20:18",
+                      paymentMetod: 'Cash (Tunai)',
+                      totalPrice: "Rp21.400",
+                      moneyReceived: "Rp50.000",
+                      changeMoney: "Rp28.600",
+                      closeBill: "Close Bill: 28/12/2024, 21:37",
+                      greeting: state.footNote,
+                      children: listBillPriceItem
+                          .map(
+                            (item) => BillListPrice(
+                              label: item.label,
+                              price: item.price,
+                            ),
+                          )
+                          .toList(),
+                    );
+                  },
                 ),
                 const TextBodyS(
                   "Ini hanya contoh tampilan struk",

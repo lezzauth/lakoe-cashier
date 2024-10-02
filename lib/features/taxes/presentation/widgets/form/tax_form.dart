@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,15 +37,12 @@ class _TaxFormState extends State<TaxForm> {
     final _formKey = widget.formKey;
     return BlocBuilder<TaxFormCubit, TaxFormState>(
         builder: (context, formState) {
-      return BlocListener<TaxMasterCubit, TaxMasterState>(
+      return BlocConsumer<TaxMasterCubit, TaxMasterState>(
         listener: (context, state) {
           if (state is TaxMasterLoadSuccess) {
             final pb1Tax =
                 state.taxes.singleWhereOrNull((tax) => tax.name == "PB1");
             if (pb1Tax != null) {
-              _formKey.currentState?.fields["isPB1Active"]?.didChange(true);
-              _formKey.currentState?.fields["value"]
-                  ?.didChange(pb1Tax.value.toString());
               setState(() {
                 _isPB1Active = true;
               });
@@ -74,198 +73,224 @@ class _TaxFormState extends State<TaxForm> {
             Navigator.pop(context, true);
           }
         },
-        child: FormBuilder(
-          key: _formKey,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          onChanged: () {
-            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-              bool isFormValid = _formKey.currentState?.isValid ?? false;
-              _isPB1Active =
-                  _formKey.currentState?.instantValue["isPB1Active"] ?? false;
-              context.read<TaxFormCubit>().setValue(
-                    _formKey.currentState?.instantValue,
-                    isFormValid,
-                  );
-            });
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 20),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 16,
-                          ),
-                          decoration: BoxDecoration(
-                            color: TColors.neutralLightLight,
-                            borderRadius: BorderRadius.circular(12.0),
-                            border: Border.all(
-                              width: 1,
-                              color: TColors.neutralLightMedium,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Column(
+        builder: (context, state) {
+          Map<String, dynamic> initialValue = const <String, dynamic>{};
+
+          if (state is TaxMasterLoadSuccess) {
+            final pb1Tax =
+                state.taxes.singleWhereOrNull((tax) => tax.name == "PB1");
+            if (pb1Tax != null) {
+              initialValue = {
+                "isPB1Active": true,
+                "value": pb1Tax.value.toString(),
+              };
+            }
+          }
+
+          return switch (state) {
+            TaxMasterLoadSuccess() => FormBuilder(
+                key: _formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                initialValue: initialValue,
+                onChanged: () {
+                  log('onChanged');
+                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                    bool isFormValid = _formKey.currentState?.isValid ?? false;
+                    _isPB1Active =
+                        _formKey.currentState?.instantValue["isPB1Active"] ??
+                            false;
+                    context.read<TaxFormCubit>().setValue(
+                        _formKey.currentState?.instantValue, isFormValid, true);
+                  });
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 20),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                  horizontal: 16,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: TColors.neutralLightLight,
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  border: Border.all(
+                                    width: 1,
+                                    color: TColors.neutralLightMedium,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(bottom: 8),
-                                      child: const TextHeading4(
-                                        "Aktifkan PB1",
-                                        color: TColors.neutralDarkDarkest,
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 8),
+                                            child: const TextHeading4(
+                                              "Aktifkan PB1",
+                                              color: TColors.neutralDarkDarkest,
+                                            ),
+                                          ),
+                                          const TextBodyS(
+                                            "Pajak yang dikenakan jika usaha Anda menyediakan makanan/minuman untuk dinikmati di tempat.",
+                                            color: TColors.neutralDarkLight,
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const TextBodyS(
-                                      "Pajak yang dikenakan jika usaha Anda menyediakan makanan/minuman untuk dinikmati di tempat.",
-                                      color: TColors.neutralDarkLight,
+                                    FormBuilderField<bool>(
+                                      name: "isPB1Active",
+                                      initialValue:
+                                          initialValue["isPB1Active"] ?? false,
+                                      builder: (FormFieldState<bool> field) {
+                                        return FittedBox(
+                                          fit: BoxFit.cover,
+                                          child: Switch(
+                                            value: field.value ?? false,
+                                            onChanged: (value) {
+                                              field.didChange(value);
+                                            },
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),
                               ),
-                              FormBuilderField<bool>(
-                                name: "isPB1Active",
-                                initialValue: false,
-                                builder: (FormFieldState<bool> field) {
-                                  return FittedBox(
-                                    fit: BoxFit.cover,
-                                    child: Switch(
-                                      value: field.value ?? false,
-                                      onChanged: (value) {
-                                        field.didChange(value);
-                                      },
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const FormLabel(
-                              "Tarif PB1",
-                              sub: "(maksimal 10%)",
                             ),
-                            FormBuilderTextField(
-                              name: "value",
-                              decoration: const InputDecoration(
-                                suffixText: "%",
-                                hintText: "Masukan jumlah tarif PB1",
-                              ),
-                              keyboardType:
-                                  const TextInputType.numberWithOptions(
-                                      decimal: true),
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(3),
-                                FilteringTextInputFormatter.allow(
-                                  RegExp(r'^\d+\.?\d{0,2}|^\d+,?\d{0,2}'),
-                                ),
-                              ],
-                              validator: (value) {
-                                bool isPB1Active = _formKey.currentState
-                                        ?.fields["isPB1Active"]?.value ??
-                                    false;
-
-                                if (!isPB1Active) return null;
-
-                                return FormBuilderValidators.compose([
-                                  FormBuilderValidators.max(
-                                    10,
-                                    errorText: ErrorTextStrings.max(max: 10),
-                                  ),
-                                ])(value);
-                              },
-                              enabled: _isPB1Active,
-                            )
-                          ],
-                        ),
-                      ),
-                      if (formState.taxes.isNotEmpty)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
                             Container(
-                              padding: const EdgeInsets.only(top: 20),
-                              margin: const EdgeInsets.only(bottom: 24),
-                              child: const TextHeading5(
-                                "PAJAK LAINNYA",
-                                color: TColors.neutralDarkLightest,
+                              margin: const EdgeInsets.only(bottom: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const FormLabel(
+                                    "Tarif PB1",
+                                    sub: "(maksimal 10%)",
+                                  ),
+                                  FormBuilderTextField(
+                                    name: "value",
+                                    decoration: const InputDecoration(
+                                      suffixText: "%",
+                                      hintText: "Masukan jumlah tarif PB1",
+                                    ),
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                            decimal: true),
+                                    inputFormatters: [
+                                      LengthLimitingTextInputFormatter(3),
+                                      FilteringTextInputFormatter.allow(
+                                        RegExp(r'^\d+\.?\d{0,2}|^\d+,?\d{0,2}'),
+                                      ),
+                                    ],
+                                    validator: (value) {
+                                      bool isPB1Active = _formKey.currentState
+                                              ?.fields["isPB1Active"]?.value ??
+                                          false;
+
+                                      if (!isPB1Active) return null;
+
+                                      return FormBuilderValidators.compose([
+                                        FormBuilderValidators.max(
+                                          10,
+                                          errorText:
+                                              ErrorTextStrings.max(max: 10),
+                                        ),
+                                      ])(value);
+                                    },
+                                    enabled: _isPB1Active,
+                                  )
+                                ],
                               ),
                             ),
-                            ...formState.taxes,
+                            if (formState.taxes.isNotEmpty)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.only(top: 20),
+                                    margin: const EdgeInsets.only(bottom: 24),
+                                    child: const TextHeading5(
+                                      "PAJAK LAINNYA",
+                                      color: TColors.neutralDarkLightest,
+                                    ),
+                                  ),
+                                  ...formState.taxes,
+                                ],
+                              ),
+                            TextButton(
+                              onPressed: () {
+                                final int count = formState.taxCount + 1;
+                                final newTaxFieldId = "NEW_TAX_$count";
+                                final newTaxFieldKey = ValueKey(count);
+
+                                context.read<TaxFormCubit>().addTax(
+                                      OtherTaxField(
+                                        id: newTaxFieldId,
+                                        key: newTaxFieldKey,
+                                        onDelete: () {
+                                          context
+                                              .read<TaxFormCubit>()
+                                              .removeTax(newTaxFieldKey);
+                                        },
+                                      ),
+                                    );
+                              },
+                              child: const TextActionL(
+                                "Tambah pajak lainnya",
+                                color: TColors.primary,
+                              ),
+                            ),
                           ],
                         ),
-                      TextButton(
-                        onPressed: () {
-                          final int count = formState.taxCount + 1;
-                          final newTaxFieldId = "NEW_TAX_$count";
-                          final newTaxFieldKey = ValueKey(count);
-
-                          context.read<TaxFormCubit>().addTax(
-                                OtherTaxField(
-                                  id: newTaxFieldId,
-                                  key: newTaxFieldKey,
-                                  onDelete: () {
-                                    context
-                                        .read<TaxFormCubit>()
-                                        .removeTax(newTaxFieldKey);
-                                  },
-                                ),
-                              );
-                        },
-                        child: const TextActionL(
-                          "Tambah pajak lainnya",
-                          color: TColors.primary,
-                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                    BlocBuilder<TaxMasterCubit, TaxMasterState>(
+                        builder: (context, state) {
+                      return Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 20),
+                        child: ElevatedButton(
+                          onPressed: state is! TaxMasterActionInProgress &&
+                                  formState.isFormValid
+                              ? widget.onSubmitted
+                              : null,
+                          child: state is TaxMasterActionInProgress
+                              ? const SizedBox(
+                                  height: 16,
+                                  width: 16,
+                                  child: CircularProgressIndicator(
+                                    color: TColors.neutralLightLightest,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : const TextActionL(
+                                  "Simpan",
+                                ),
+                        ),
+                      );
+                    })
+                  ],
                 ),
               ),
-              BlocBuilder<TaxMasterCubit, TaxMasterState>(
-                  builder: (context, state) {
-                return Container(
-                  width: double.infinity,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  child: ElevatedButton(
-                    onPressed: state is! TaxMasterActionInProgress &&
-                            formState.isFormValid
-                        ? widget.onSubmitted
-                        : null,
-                    child: state is TaxMasterActionInProgress
-                        ? const SizedBox(
-                            height: 16,
-                            width: 16,
-                            child: CircularProgressIndicator(
-                              color: TColors.neutralLightLightest,
-                              strokeWidth: 2,
-                            ),
-                          )
-                        : const TextActionL(
-                            "Simpan",
-                          ),
-                  ),
-                );
-              })
-            ],
-          ),
-        ),
+            _ => const Center(
+                child: CircularProgressIndicator(),
+              ),
+          };
+        },
       );
     });
   }

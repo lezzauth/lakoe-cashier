@@ -146,22 +146,27 @@ class _ChargeMasterState extends State<ChargeMaster> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
-        if (didPop == true) return;
-        _showPopupConfirmation();
+    return BlocBuilder<ChargeFormCubit, ChargeFormState>(
+      builder: (context, state) {
+        return PopScope(
+          canPop: !state.isFormDirty,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop == true) return;
+            _showPopupConfirmation();
+          },
+          child: Scaffold(
+            appBar: CustomAppbar(
+              title: "Biaya Lainnya",
+              handleBackButton:
+                  !state.isFormDirty ? null : () => _showPopupConfirmation(),
+            ),
+            body: ChargeForm(
+              formKey: _formKey,
+              onSubmitted: _onSubmitted,
+            ),
+          ),
+        );
       },
-      child: Scaffold(
-        appBar: CustomAppbar(
-          title: "Biaya Lainnya",
-          handleBackButton: () => _showPopupConfirmation(),
-        ),
-        body: ChargeForm(
-          formKey: _formKey,
-          onSubmitted: _onSubmitted,
-        ),
-      ),
     );
   }
 }

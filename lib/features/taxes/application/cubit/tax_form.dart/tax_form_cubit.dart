@@ -14,12 +14,17 @@ class TaxFormCubit extends Cubit<TaxFormState> {
           ),
         );
 
-  void setValue(Map<String, dynamic>? value, bool isFormValid) {
+  void setValue(
+    Map<String, dynamic>? value,
+    bool isFormValid,
+    bool isFormDirty,
+  ) {
     emit(TaxFormState(
       taxes: state.taxes,
       value: value ?? state.value,
       taxCount: state.taxCount,
       isFormValid: isFormValid,
+      isFormDirty: isFormDirty,
     ));
   }
 

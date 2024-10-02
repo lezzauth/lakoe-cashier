@@ -7,12 +7,14 @@ class ChargeFormState extends Equatable {
   final Map<String, dynamic> value;
   final int chargeCount;
   final bool isFormValid;
+  final bool isFormDirty;
 
   const ChargeFormState({
     required this.charges,
     required this.value,
     required this.chargeCount,
     this.isFormValid = false,
+    this.isFormDirty = false,
   });
 
   @override

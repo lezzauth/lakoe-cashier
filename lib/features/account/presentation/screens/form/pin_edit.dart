@@ -88,6 +88,7 @@ class _PinEditScreenState extends State<PinEditScreen> {
             child: NumberPad(
               controller: _pinController,
               maxLength: 6,
+              isShowForgot: false,
             ),
           ),
         ],

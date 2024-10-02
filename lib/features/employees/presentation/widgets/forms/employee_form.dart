@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
@@ -152,44 +151,49 @@ class _EmployeeFormState extends State<EmployeeForm> {
                 ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(bottom: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const FormLabel(
-                    "Kode Akses (PIN)",
-                  ),
-                  FormBuilderTextField(
-                    name: "pin",
-                    decoration: const InputDecoration(
-                      hintText: "Masukan buat 6 digit PIN",
+            if (!isEdit)
+              Container(
+                margin: const EdgeInsets.only(bottom: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const FormLabel(
+                      "Kode Akses (PIN)",
                     ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [pinFormatter],
-                    obscureText: true,
-                    validator: FormBuilderValidators.conditional((value) {
-                      if (isEdit) {
-                        if (value == null) return false;
-                      }
+                    FormBuilderTextField(
+                      name: "pin",
+                      decoration: const InputDecoration(
+                        hintText: "Masukan buat 6 digit PIN",
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [pinFormatter],
+                      obscureText: true,
+                      validator: FormBuilderValidators.conditional(
+                        (value) {
+                          if (isEdit) {
+                            if (value == null) return false;
+                          }
 
-                      return true;
-                    },
-                        FormBuilderValidators.compose([
-                          FormBuilderValidators.required(
-                            errorText: ErrorTextStrings.required(),
-                          ),
-                          FormBuilderValidators.equalLength(
-                            6,
-                            errorText:
-                                ErrorTextStrings.equalLength(maxLength: 6),
-                          )
-                        ])),
-                  ),
-                ],
+                          return true;
+                        },
+                        FormBuilderValidators.compose(
+                          [
+                            FormBuilderValidators.required(
+                              errorText: ErrorTextStrings.required(),
+                            ),
+                            FormBuilderValidators.equalLength(
+                              6,
+                              errorText:
+                                  ErrorTextStrings.equalLength(maxLength: 6),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
           ],
         ),
       ),

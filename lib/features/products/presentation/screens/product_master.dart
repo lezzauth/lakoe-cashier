@@ -72,6 +72,84 @@ class _ProductMasterState extends State<ProductMaster> {
     onRefresh();
   }
 
+  Widget _buildProductList(List<ProductModel> products) {
+    final filterState = context.read<ProductMasterFilterCubit>().state;
+
+    if (products.isEmpty) {
+      if (filterState.name == null || filterState.name!.isEmpty) {
+        return EmptyList(
+          title: "Belum ada produk, nih!",
+          subTitle: "Yuk! Masukan produk kamu dan mulai berjualan.",
+          image: SvgPicture.asset(
+            TImages.productEmpty,
+            height: 200,
+            width: 276,
+          ),
+        );
+      }
+
+      return EmptyList(
+        title: "Pencarian tidak ditemukan",
+        subTitle: "Coba cari dengan nama produk yang lain.",
+      );
+    }
+
+    return ListView.builder(
+      itemCount: products.length,
+      itemBuilder: (context, index) {
+        ProductModel product = products[index];
+        String? image = product.images.elementAtOrNull(0);
+        image ??= "https://placehold.co/88/png?text=[...]";
+        bool isNotAvailable = product.availability != "AVAILABLE";
+
+        return InkWell(
+          onTap: () {
+            _onGoToEditScreen(product);
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              vertical: 12,
+              horizontal: 16,
+            ),
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: TColors.neutralLightMedium,
+                  width: 1,
+                ),
+              ),
+            ),
+            child: BaseProductItem(
+              name: product.name,
+              price: int.parse(product.price),
+              image: Image.network(
+                image,
+                height: 44,
+                width: 44,
+                fit: BoxFit.cover,
+              ),
+              notes: product.description ?? "",
+              tag: isNotAvailable
+                  ? Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: TColors.neutralLightMedium,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: const TextHeading5(
+                        "Tidak Tersedia",
+                        color: TColors.neutralDarkDark,
+                      ),
+                    )
+                  : null,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -145,86 +223,8 @@ class _ProductMasterState extends State<ProductMaster> {
                       fetchError: state is ProductMasterLoadFailure,
                       onRefresh: onRefresh,
                       child: switch (state) {
-                        ProductMasterLoadSuccess(:final products) => products
-                                .isEmpty
-                            ? EmptyList(
-                                title: "Belum ada produk, nih!",
-                                subTitle:
-                                    "Yuk! Masukan produk kamu dan mulai berjualan.",
-                                image: SvgPicture.asset(
-                                  TImages.productEmpty,
-                                  height: 200,
-                                  width: 276,
-                                ),
-                              )
-                            : ListView.builder(
-                                itemCount: products.length,
-                                itemBuilder: (context, index) {
-                                  ProductModel product = products[index];
-                                  String? image =
-                                      product.images.elementAtOrNull(0);
-                                  image ??=
-                                      "https://placehold.co/88/png?text=[...]";
-                                  bool isNotAvailable =
-                                      product.availability != "AVAILABLE";
-
-                                  return InkWell(
-                                    onTap: () {
-                                      _onGoToEditScreen(product);
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 12,
-                                        horizontal: 16,
-                                      ),
-                                      decoration: const BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            color: TColors.neutralLightMedium,
-                                            width: 1,
-                                          ),
-                                        ),
-                                      ),
-                                      child: BaseProductItem(
-                                        name: product.name,
-                                        price: int.parse(product.price),
-                                        image: Image.network(
-                                          image,
-                                          height: 44,
-                                          width: 44,
-                                          fit: BoxFit.cover,
-                                        ),
-                                        notes: product.description ?? "",
-                                        tag: isNotAvailable
-                                            ? Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8,
-                                                        vertical: 4),
-                                                decoration: BoxDecoration(
-                                                  color: TColors
-                                                      .neutralLightMedium,
-                                                  borderRadius:
-                                                      BorderRadius.circular(4),
-                                                ),
-                                                child: const TextHeading5(
-                                                  "Tidak Tersedia",
-                                                  color:
-                                                      TColors.neutralDarkDark,
-                                                ),
-                                              )
-                                            : null,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                        // ProductMasterLoadFailure(:final error) => Center(
-                        //     child: TextBodyS(
-                        //       error,
-                        //       color: TColors.error,
-                        //     ),
-                        //   ),
+                        ProductMasterLoadSuccess(:final products) =>
+                          _buildProductList(products),
                         _ => const Center(
                             child: CircularProgressIndicator(),
                           ),
