@@ -59,7 +59,7 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
           profilePicture: profilePicture.file,
           dto: UpdateEmployeeDto(
             name: value["name"],
-            pin: value["pin"],
+            // pin: value["pin"],
             phoneNumber: value["phoneNumber"],
             role: "CASHIER",
             email: email,
