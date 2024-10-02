@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -6,13 +7,15 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 class SectionCard extends StatelessWidget {
   final String title;
   final String description;
-  final List<Widget> children;
+  final String? iconSrc;
+  final List<Widget>? children;
 
   const SectionCard({
     super.key,
     this.title = "",
     this.description = "",
-    required this.children,
+    this.iconSrc,
+    this.children,
   });
 
   @override
@@ -38,9 +41,20 @@ class SectionCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (title.isNotEmpty)
-                  TextHeading3(
-                    title,
-                  ),
+                  iconSrc != null
+                      ? Row(
+                          children: [
+                            UiIcons(
+                              iconSrc!,
+                              height: 20,
+                              width: 20,
+                              color: TColors.neutralDarkDark,
+                            ),
+                            const SizedBox(width: 12),
+                            TextHeading3(title)
+                          ],
+                        )
+                      : TextHeading3(title),
                 if (description.isNotEmpty)
                   Container(
                     margin: const EdgeInsets.only(top: 2),
@@ -52,7 +66,7 @@ class SectionCard extends StatelessWidget {
               ],
             ),
           ),
-          ...children,
+          ...?children,
         ],
       ),
     );

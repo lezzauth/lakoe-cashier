@@ -11,6 +11,11 @@ class OrderMasterCubit extends Cubit<OrderMasterState> {
     await findAll(const FindAllOrderDto(status: "OPEN", source: "CASHIER"));
   }
 
+  Future<void> initCompletedOrder() async {
+    await findAll(
+        const FindAllOrderDto(status: "COMPLETED", source: "CASHIER"));
+  }
+
   Future<void> findAll(FindAllOrderDto dto) async {
     try {
       emit(OrderMasterLoadInProgress());

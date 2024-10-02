@@ -28,7 +28,13 @@ class CashierOpenOrderList extends StatelessWidget {
               children: [
                 OrderListButton(
                   onTap: () async {
-                    await Navigator.pushNamed(context, "/orders");
+                    await Navigator.pushNamed(
+                      context,
+                      "/orders",
+                      arguments: {
+                        "previousScreen": "ExploreProduct",
+                      },
+                    );
 
                     if (!context.mounted) return;
                     context.read<CashierOrderCubit>().findAll();

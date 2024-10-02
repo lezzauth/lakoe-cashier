@@ -50,6 +50,7 @@ class TIcons {
   static const String billCross = "assets/icons/bill-cross.svg";
 
   static const String card = "assets/icons/card.svg";
+  static const String history = "assets/icons/history.svg";
   static const String filters = "assets/icons/filters.svg";
   static const String handMoney = "assets/icons/hand-money.svg";
   static const String linkSquare = "assets/icons/link-square.svg";

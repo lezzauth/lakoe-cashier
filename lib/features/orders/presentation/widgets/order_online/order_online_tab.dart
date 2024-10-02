@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
+import 'package:point_of_sales_cashier/features/orders/common/widgets/filters/order_date_filter.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_online/filter/order_online_filter.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_online/order_list/order_online_list_item.dart';
@@ -15,7 +16,27 @@ class OrderOnlineTab extends StatefulWidget {
 }
 
 class _OrderOnlineTabState extends State<OrderOnlineTab> {
+  String? previousScreen;
   List<dynamic> _orders = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // context.read<OrderMasterCubit>().init();
+    // context.read<OrderMasterCubit>().initCompletedOrder();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+      if (args != null) {
+        setState(() {
+          previousScreen = args['previousScreen'];
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,9 +50,18 @@ class _OrderOnlineTabState extends State<OrderOnlineTab> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: OrderOnlineFilter(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: (previousScreen == 'ExploreProduct')
+                    ? OrderOnlineFilter()
+                    : IntrinsicWidth(
+                        child: OrderDateFilter(
+                          // from: "",
+                          template: "ALL",
+                          // to: "",
+                          onChanged: (template, from, to) {},
+                        ),
+                      ),
               ),
               Expanded(
                 child: CustomScrollView(

@@ -6,6 +6,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class BestSellerProductTile extends StatelessWidget {
   const BestSellerProductTile({
@@ -77,7 +78,7 @@ class BestSellerProductTile extends StatelessWidget {
         color: TColors.neutralDarkDarkest,
       ),
       subtitle: TextBodyM(
-        "Terjual $sold item",
+        "Terjual ${TFormatter.formatNumber(sold)} item",
         color: TColors.neutralDarkLight,
       ),
       trailing: Row(
