@@ -7,6 +7,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
+import 'package:point_of_sales_cashier/features/bank_accounts/data/arguments/bank_account_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/widgets/bank_account_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -24,11 +25,13 @@ class BankAccountList extends StatefulWidget {
 }
 
 class _BankAccountListState extends State<BankAccountList> {
-  Future<void> _onGoToEditScreen(OwnerBankModel bankAccount) async {
+  Future<void> _onGoToEditScreen(
+      OwnerBankModel bankAccount, int bankAccountLength) async {
     bool? isUpdated = await Navigator.pushNamed(
       context,
       "/bank_accounts/detail",
-      arguments: bankAccount,
+      arguments: BankAccountDetailArgument(
+          account: bankAccount, bankAccountLength: bankAccountLength),
     ) as bool?;
     if (widget.onEdit == null) return;
 
@@ -55,7 +58,7 @@ class _BankAccountListState extends State<BankAccountList> {
                         BankAccountItem(
                           bankAccount: bankAccount,
                           onTap: () {
-                            _onGoToEditScreen(bankAccount);
+                            _onGoToEditScreen(bankAccount, bankAccounts.length);
                           },
                         ),
                         if (bankAccounts.length >= 3 && isLastElement)
