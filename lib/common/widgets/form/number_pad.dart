@@ -8,11 +8,13 @@ import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 class NumberPad extends StatefulWidget {
   final TextEditingController? controller;
   final int? maxLength;
+  final bool isShowForgot;
 
   const NumberPad({
     super.key,
     this.controller,
     this.maxLength,
+    this.isShowForgot = true,
   });
 
   @override
@@ -169,14 +171,16 @@ class _NumberPadState extends State<NumberPad> {
                   // Navigator.pop(context);
                 },
                 color: Colors.transparent,
-                child: Text(
-                  "Lupa?",
-                  style: GoogleFonts.inter(
-                    fontSize: TSizes.fontSizeHeading4,
-                    fontWeight: FontWeight.w600,
-                    color: TColors.primary,
-                  ),
-                ),
+                child: !widget.isShowForgot
+                    ? SizedBox()
+                    : Text(
+                        "Lupa?",
+                        style: GoogleFonts.inter(
+                          fontSize: TSizes.fontSizeHeading4,
+                          fontWeight: FontWeight.w600,
+                          color: TColors.primary,
+                        ),
+                      ),
               ),
               Pad(
                 onTap: () {

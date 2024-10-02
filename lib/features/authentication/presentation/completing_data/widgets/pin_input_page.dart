@@ -121,6 +121,7 @@ class _PinInputPageState extends State<PinInputPage> {
               child: NumberPad(
                 controller: _pinController,
                 maxLength: 6,
+                isShowForgot: false,
               ),
             ),
           ],
