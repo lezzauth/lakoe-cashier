@@ -6,11 +6,17 @@ import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart'
 import 'package:point_of_sales_cashier/common/widgets/form/bank_verify/bank_verify.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
+import 'package:point_of_sales_cashier/features/bank_accounts/data/arguments/bank_account_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/presentation/widgets/forms/bank_account_form.dart';
 import 'package:public_repository/public_repository.dart';
 
 class BankAccountDetailScreen extends StatefulWidget {
-  const BankAccountDetailScreen({super.key});
+  const BankAccountDetailScreen({
+    super.key,
+    required this.arguments,
+  });
+
+  final BankAccountDetailArgument arguments;
 
   @override
   State<BankAccountDetailScreen> createState() =>
@@ -62,8 +68,8 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)!.settings.arguments as OwnerBankModel;
+    final arguments = widget.arguments;
+    bool isOnlyAccount = widget.arguments.bankAccountLength == 1;
 
     return BlocConsumer<BankAccountMasterCubit, BankAccountMasterState>(
       listener: (context, state) {
@@ -78,16 +84,18 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
         body: BankAccountForm(
           onSubmitted: (value, bank) {
             FocusScope.of(context).unfocus();
-            _onSubmitted(arguments.id, bank: bank, value: value);
+            _onSubmitted(arguments.account.id, bank: bank, value: value);
           },
-          onDeleted: () async {
-            return await _onDeleted(arguments.id);
-          },
+          onDeleted: isOnlyAccount
+              ? null
+              : () async {
+                  return await _onDeleted(arguments.account.id);
+                },
           isLoading: state is BankAccountMasterActionInProgress,
           initialValue: {
-            "name": arguments.name,
-            "accountNumber": arguments.accountNumber,
-            "isPrimary": arguments.isPrimary,
+            "name": arguments.account.name,
+            "accountNumber": arguments.account.accountNumber,
+            "isPrimary": arguments.account.isPrimary,
           },
         ),
       ),

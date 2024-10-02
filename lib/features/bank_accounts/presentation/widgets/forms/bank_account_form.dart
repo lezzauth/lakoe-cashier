@@ -199,7 +199,8 @@ class _BankAccountFormState extends State<BankAccountForm> {
                         ),
                       ),
                     ),
-                  if (widget.initialValue.isNotEmpty)
+                  if (widget.initialValue.isNotEmpty &&
+                      widget.onDeleted != null)
                     TextButton(
                       onPressed: () => _showPopupConfirmation(context),
                       child: const TextActionL(

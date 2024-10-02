@@ -7,6 +7,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:token_provider/token_provider.dart';
 
 class ManageAccountScreen extends StatefulWidget {
   const ManageAccountScreen({super.key});
@@ -16,6 +17,19 @@ class ManageAccountScreen extends StatefulWidget {
 }
 
 class _ManageAccountScreenState extends State<ManageAccountScreen> {
+  final TokenProvider _tokenProvider = TokenProvider();
+
+  Future<void> _onLogout() async {
+    await _tokenProvider.clearAll();
+
+    if (!mounted) return;
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      "/",
+      (route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,8 +103,7 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor: TColors.error),
-                                          onPressed: () =>
-                                              Navigator.pop(context),
+                                          onPressed: _onLogout,
                                           child: const TextActionL("Keluar"),
                                         ),
                                       ),
