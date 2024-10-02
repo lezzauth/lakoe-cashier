@@ -57,7 +57,11 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
             isPinWrong = true;
           });
         } else if (state is CashierOpened) {
-          Navigator.popAndPushNamed(context, "/cashier/explore-products");
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            "/cashier/explore-products",
+            (route) => false,
+          );
         }
       },
       child: Scaffold(
