@@ -32,7 +32,7 @@ class CreateCategoryDto with _$CreateCategoryDto {
   const factory CreateCategoryDto({
     String? outletId,
     required String name,
-    required String icon,
+    String? icon,
   }) = _CreateCategoryDto;
 
   factory CreateCategoryDto.fromJson(Map<String, Object?> json) =>

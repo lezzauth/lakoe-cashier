@@ -51,7 +51,7 @@ class _OnBoardingState extends State<OnBoarding> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
+    _timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
       if (pageController.page == 2) {
         pageController.jumpToPage(0);
       } else {

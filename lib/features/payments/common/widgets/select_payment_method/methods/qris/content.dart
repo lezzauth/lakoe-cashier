@@ -20,6 +20,7 @@ class QrisPaymentContent extends StatefulWidget {
 class _QrisPaymentContentState extends State<QrisPaymentContent> {
   final _formKey = GlobalKey<FormBuilderState>();
   bool _isFormValid = false;
+  bool useQRISStatic = false;
 
   void _onFormChanged(bool isValid) {
     setState(() {
@@ -67,6 +68,12 @@ class _QrisPaymentContentState extends State<QrisPaymentContent> {
                 ),
                 QrisPaymentForm(
                   onFormChanged: _onFormChanged,
+                  useQRISStatic: useQRISStatic,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      useQRISStatic = value ?? false;
+                    });
+                  },
                 ),
               ],
             ),

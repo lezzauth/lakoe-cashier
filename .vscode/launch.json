@@ -7,7 +7,8 @@
     {
       "name": "point_of_sales_cashier",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "program": "lib/main.dart",
     },
     {
       "name": "point_of_sales_cashier (profile mode)",
@@ -43,7 +44,10 @@
   "compounds": [
     {
       "name": "All Devices",
-      "configurations": ["Tablet", "Android"]
+      "configurations": [
+        "Tablet",
+        "Android"
+      ]
     }
   ]
 }

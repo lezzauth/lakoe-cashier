@@ -25,7 +25,7 @@ _$CreateCategoryDtoImpl _$$CreateCategoryDtoImplFromJson(
     _$CreateCategoryDtoImpl(
       outletId: json['outletId'] as String?,
       name: json['name'] as String,
-      icon: json['icon'] as String,
+      icon: json['icon'] as String?,
     );
 
 Map<String, dynamic> _$$CreateCategoryDtoImplToJson(

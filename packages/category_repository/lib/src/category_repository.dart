@@ -9,6 +9,7 @@ abstract class CategoryRepository {
   Future<List<CategoryModel>> findAll(FindAllCategoryDto dto);
   Future<CategoryModel> create(CreateCategoryDto dto);
   Future<CategoryModel> update(int id, UpdateCategoryDto dto);
+  Future<CategoryModel> delete(int id);
 }
 
 class CategoryRepositoryImpl implements CategoryRepository {
@@ -51,6 +52,14 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
     final response =
         await _dio.patch("$_baseURL/$id", data: dto.toJson(), options: options);
+    return CategoryModel.fromJson(response.data);
+  }
+
+  @override
+  Future<CategoryModel> delete(int id) async {
+    final options = await _getOptions();
+
+    final response = await _dio.delete("$_baseURL/$id", options: options);
     return CategoryModel.fromJson(response.data);
   }
 }

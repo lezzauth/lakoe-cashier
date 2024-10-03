@@ -12,8 +12,8 @@ class PopupConfirmation extends StatefulWidget {
     required this.message,
     required this.labelButtonPrimary,
     required this.labelButtonSecondary,
-    required this.discardAction,
-    required this.saveAction,
+    required this.primaryAction,
+    required this.secondaryAction,
     this.isDiscardActionLoading = false,
     this.isSaveActionLoading = false,
   });
@@ -22,8 +22,8 @@ class PopupConfirmation extends StatefulWidget {
   final String message;
   final String labelButtonPrimary;
   final String labelButtonSecondary;
-  final Function() discardAction;
-  final Function() saveAction;
+  final Function() primaryAction;
+  final Function() secondaryAction;
   final bool isDiscardActionLoading;
   final bool isSaveActionLoading;
 
@@ -80,7 +80,7 @@ class _ChangesConfirmationState extends State<PopupConfirmation> {
                   child: SizedBox(
                     height: 48,
                     child: OutlinedButton(
-                      onPressed: widget.discardAction,
+                      onPressed: widget.secondaryAction,
                       child: widget.isDiscardActionLoading
                           ? const SizedBox(
                               height: 16,
@@ -101,7 +101,7 @@ class _ChangesConfirmationState extends State<PopupConfirmation> {
                   child: SizedBox(
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: widget.saveAction,
+                      onPressed: widget.primaryAction,
                       child: widget.isSaveActionLoading
                           ? const SizedBox(
                               height: 16,

@@ -50,15 +50,15 @@ class _ChargeMasterState extends State<ChargeMaster> {
               labelButtonPrimary: "Simpan",
               labelButtonSecondary: "Abaikan",
               isSaveActionLoading: state is ChargeMasterActionInProgress,
-              discardAction: () {
-                Navigator.pop(context);
-                Navigator.of(context, rootNavigator: true).pop();
-              },
-              saveAction: () async {
+              primaryAction: () async {
                 await _onSubmitted();
 
                 if (!context.mounted) return;
                 Navigator.pop(context);
+              },
+              secondaryAction: () {
+                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop();
               },
             );
           },

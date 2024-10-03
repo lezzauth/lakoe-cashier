@@ -96,15 +96,19 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
                                           "Kamu yakin ingin keluar aplikasi?",
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 48,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor: TColors.error),
-                                          onPressed: _onLogout,
-                                          child: const TextActionL("Keluar"),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 20),
+                                        child: SizedBox(
+                                          height: 48,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: TColors.error),
+                                            onPressed: _onLogout,
+                                            child: const TextActionL("Keluar"),
+                                          ),
                                         ),
                                       ),
                                     ],
