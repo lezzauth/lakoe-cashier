@@ -40,4 +40,14 @@ class CategoryMasterCubit extends Cubit<CategoryMasterState> {
       emit(CategoryMasterActionFailure(e.toString()));
     }
   }
+
+  Future<void> delete(int id) async {
+    try {
+      emit(CategoryMasterActionInProgress());
+      await _categoryRepository.delete(id);
+      emit(CategoryMasterActionSuccess());
+    } catch (e) {
+      emit(CategoryMasterActionFailure(e.toString()));
+    }
+  }
 }

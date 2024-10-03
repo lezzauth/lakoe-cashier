@@ -50,11 +50,11 @@ class _TaxMasterState extends State<TaxMaster> {
               labelButtonPrimary: "Simpan",
               labelButtonSecondary: "Abaikan",
               isSaveActionLoading: state is TaxMasterActionInProgress,
-              discardAction: () {
+              primaryAction: () {
                 Navigator.pop(context);
                 Navigator.of(context, rootNavigator: true).pop();
               },
-              saveAction: () async {
+              secondaryAction: () async {
                 await _onSubmitted();
 
                 if (!context.mounted) return;

@@ -36,14 +36,13 @@ class _CategoryEditScreenState extends State<CategoryEditScreen> {
             icon: value["icon"],
           ),
         );
-    Navigator.pop(context);
   }
 
   Future<void> _onDelete(int categoryId) async {
-    //
+    await context.read<CategoryMasterCubit>().delete(categoryId);
   }
 
-  void _showPopupConfirmation(BuildContext context) {
+  void _showPopupConfirmation(BuildContext context, int categoryId) {
     showModalBottomSheet(
       context: context,
       isDismissible: false,
@@ -57,10 +56,11 @@ class _CategoryEditScreenState extends State<CategoryEditScreen> {
               "Semua produk dalam kategori ini akan masuk kategori Umum. Kamu yakin ingin menghapus meja ini?",
           labelButtonPrimary: "Tidak",
           labelButtonSecondary: "Ya, Hapus",
-          discardAction: () {
+          primaryAction: () {
             Navigator.pop(context);
           },
-          saveAction: () {
+          secondaryAction: () async {
+            await _onDelete(categoryId);
             Navigator.pop(context);
           },
         );
@@ -73,53 +73,65 @@ class _CategoryEditScreenState extends State<CategoryEditScreen> {
     final arguments =
         ModalRoute.of(context)!.settings.arguments as CategoryModel;
 
-    return BlocBuilder<CategoryMasterCubit, CategoryMasterState>(
-        builder: (context, state) {
-      return Scaffold(
-        appBar: CustomAppbar(
-          title: "Ubah Kategori",
-          actions: [
-            TextButton(
-              onPressed: state is CategoryMasterActionInProgress
-                  ? null
-                  : () {
-                      _onSubmit(arguments.id);
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<CategoryMasterCubit, CategoryMasterState>(
+          listener: (context, state) {
+            if (state is CategoryMasterActionSuccess) {
+              Navigator.pop(context, true);
+            }
+          },
+        )
+      ],
+      child: BlocBuilder<CategoryMasterCubit, CategoryMasterState>(
+          builder: (context, state) {
+        return Scaffold(
+          appBar: CustomAppbar(
+            title: "Ubah Kategori",
+            actions: [
+              TextButton(
+                onPressed: state is CategoryMasterActionInProgress
+                    ? null
+                    : () {
+                        _onSubmit(arguments.id);
+                      },
+                child: state is CategoryMasterActionInProgress
+                    ? const SizedBox(
+                        height: 16,
+                        width: 16,
+                        child: CircularProgressIndicator(),
+                      )
+                    : const TextActionL(
+                        "SIMPAN",
+                        color: TColors.primary,
+                      ),
+              )
+            ],
+          ),
+          body: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  CategoryForm(
+                    formKey: _formKey,
+                    initialValue: {
+                      "name": arguments.name,
+                      "icon": arguments.icon,
                     },
-              child: state is CategoryMasterActionInProgress
-                  ? const SizedBox(
-                      height: 16,
-                      width: 16,
-                      child: CircularProgressIndicator(),
-                    )
-                  : const TextActionL(
-                      "SIMPAN",
-                      color: TColors.primary,
-                    ),
-            )
-          ],
-        ),
-        body: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              children: [
-                CategoryForm(
-                  formKey: _formKey,
-                  initialValue: {
-                    "name": arguments.name,
-                    "icon": arguments.icon,
-                  },
-                ),
-                // if ((arguments.count?.products ?? 0) == 0)
-                TextButton(
-                  onPressed: () => _showPopupConfirmation(context),
-                  child: const TextActionL(
-                    "Hapus Kategori",
-                    color: TColors.error,
                   ),
-                )
-              ],
-            )),
-      );
-    });
+                  // if ((arguments.count?.products ?? 0) == 0)
+                  TextButton(
+                    onPressed: () =>
+                        _showPopupConfirmation(context, arguments.id),
+                    child: const TextActionL(
+                      "Hapus Kategori",
+                      color: TColors.error,
+                    ),
+                  )
+                ],
+              )),
+        );
+      }),
+    );
   }
 }

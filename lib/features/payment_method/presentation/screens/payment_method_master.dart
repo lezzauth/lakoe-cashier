@@ -75,11 +75,11 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
               'Kamu telah melakukan perubahan pengaturan metode pembayaran.\nMau disimpan atau diabaikan?',
           labelButtonPrimary: "Simpan",
           labelButtonSecondary: "Abaikan",
-          discardAction: () {
+          primaryAction: () {
             Navigator.pop(context);
             Navigator.pop(context);
           },
-          saveAction: () {
+          secondaryAction: () {
             Navigator.pop(context);
           },
         );

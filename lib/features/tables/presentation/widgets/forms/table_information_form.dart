@@ -42,7 +42,7 @@ class _TableInformationFormState extends State<TableInformationForm> {
           labelButtonPrimary: "Tidak",
           labelButtonSecondary: "Ya, Hapus",
           isDiscardActionLoading: widget.isLoading,
-          discardAction: () async {
+          primaryAction: () async {
             if (widget.onDeleted != null) {
               await widget.onDeleted!();
             }
@@ -50,7 +50,7 @@ class _TableInformationFormState extends State<TableInformationForm> {
             if (!context.mounted) return;
             Navigator.pop(context);
           },
-          saveAction: () {
+          secondaryAction: () {
             Navigator.pop(context);
           },
         );
