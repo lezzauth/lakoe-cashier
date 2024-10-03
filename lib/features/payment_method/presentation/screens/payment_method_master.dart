@@ -81,6 +81,7 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
           },
           secondaryAction: () {
             Navigator.pop(context);
+            Navigator.pop(context);
           },
         );
       },
