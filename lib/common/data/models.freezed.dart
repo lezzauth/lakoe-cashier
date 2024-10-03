@@ -19,7 +19,9 @@ mixin _$LabelValue<T> {
   String get label => throw _privateConstructorUsedError;
   T get value => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of LabelValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $LabelValueCopyWith<T, LabelValue<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -43,6 +45,8 @@ class _$LabelValueCopyWithImpl<T, $Res, $Val extends LabelValue<T>>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of LabelValue
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,6 +85,8 @@ class __$$LabelValueImplCopyWithImpl<T, $Res>
       _$LabelValueImpl<T> _value, $Res Function(_$LabelValueImpl<T>) _then)
       : super(_value, _then);
 
+  /// Create a copy of LabelValue
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -128,7 +134,9 @@ class _$LabelValueImpl<T> implements _LabelValue<T> {
   int get hashCode => Object.hash(
       runtimeType, label, const DeepCollectionEquality().hash(value));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of LabelValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LabelValueImplCopyWith<T, _$LabelValueImpl<T>> get copyWith =>
@@ -144,8 +152,11 @@ abstract class _LabelValue<T> implements LabelValue<T> {
   String get label;
   @override
   T get value;
+
+  /// Create a copy of LabelValue
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LabelValueImplCopyWith<T, _$LabelValueImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

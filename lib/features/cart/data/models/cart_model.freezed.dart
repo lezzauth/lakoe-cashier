@@ -20,7 +20,9 @@ mixin _$CartModel {
   String? get notes => throw _privateConstructorUsedError;
   ProductModel get product => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CartModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CartModelCopyWith<CartModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -45,6 +47,8 @@ class _$CartModelCopyWithImpl<$Res, $Val extends CartModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CartModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -68,6 +72,8 @@ class _$CartModelCopyWithImpl<$Res, $Val extends CartModel>
     ) as $Val);
   }
 
+  /// Create a copy of CartModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ProductModelCopyWith<$Res> get product {
@@ -99,6 +105,8 @@ class __$$CartModelImplCopyWithImpl<$Res>
       _$CartModelImpl _value, $Res Function(_$CartModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CartModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -155,7 +163,9 @@ class _$CartModelImpl implements _CartModel {
   @override
   int get hashCode => Object.hash(runtimeType, quantity, notes, product);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CartModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CartModelImplCopyWith<_$CartModelImpl> get copyWith =>
@@ -174,8 +184,11 @@ abstract class _CartModel implements CartModel {
   String? get notes;
   @override
   ProductModel get product;
+
+  /// Create a copy of CartModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CartModelImplCopyWith<_$CartModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

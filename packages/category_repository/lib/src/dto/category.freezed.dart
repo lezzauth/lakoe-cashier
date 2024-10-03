@@ -191,7 +191,7 @@ CreateCategoryDto _$CreateCategoryDtoFromJson(Map<String, dynamic> json) {
 mixin _$CreateCategoryDto {
   String? get outletId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get icon => throw _privateConstructorUsedError;
+  String? get icon => throw _privateConstructorUsedError;
 
   /// Serializes this CreateCategoryDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -209,7 +209,7 @@ abstract class $CreateCategoryDtoCopyWith<$Res> {
           CreateCategoryDto value, $Res Function(CreateCategoryDto) then) =
       _$CreateCategoryDtoCopyWithImpl<$Res, CreateCategoryDto>;
   @useResult
-  $Res call({String? outletId, String name, String icon});
+  $Res call({String? outletId, String name, String? icon});
 }
 
 /// @nodoc
@@ -229,7 +229,7 @@ class _$CreateCategoryDtoCopyWithImpl<$Res, $Val extends CreateCategoryDto>
   $Res call({
     Object? outletId = freezed,
     Object? name = null,
-    Object? icon = null,
+    Object? icon = freezed,
   }) {
     return _then(_value.copyWith(
       outletId: freezed == outletId
@@ -240,10 +240,10 @@ class _$CreateCategoryDtoCopyWithImpl<$Res, $Val extends CreateCategoryDto>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      icon: null == icon
+      icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -256,7 +256,7 @@ abstract class _$$CreateCategoryDtoImplCopyWith<$Res>
       __$$CreateCategoryDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? outletId, String name, String icon});
+  $Res call({String? outletId, String name, String? icon});
 }
 
 /// @nodoc
@@ -274,7 +274,7 @@ class __$$CreateCategoryDtoImplCopyWithImpl<$Res>
   $Res call({
     Object? outletId = freezed,
     Object? name = null,
-    Object? icon = null,
+    Object? icon = freezed,
   }) {
     return _then(_$CreateCategoryDtoImpl(
       outletId: freezed == outletId
@@ -285,10 +285,10 @@ class __$$CreateCategoryDtoImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      icon: null == icon
+      icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -296,8 +296,7 @@ class __$$CreateCategoryDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CreateCategoryDtoImpl implements _CreateCategoryDto {
-  const _$CreateCategoryDtoImpl(
-      {this.outletId, required this.name, required this.icon});
+  const _$CreateCategoryDtoImpl({this.outletId, required this.name, this.icon});
 
   factory _$CreateCategoryDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateCategoryDtoImplFromJson(json);
@@ -307,7 +306,7 @@ class _$CreateCategoryDtoImpl implements _CreateCategoryDto {
   @override
   final String name;
   @override
-  final String icon;
+  final String? icon;
 
   @override
   String toString() {
@@ -350,7 +349,7 @@ abstract class _CreateCategoryDto implements CreateCategoryDto {
   const factory _CreateCategoryDto(
       {final String? outletId,
       required final String name,
-      required final String icon}) = _$CreateCategoryDtoImpl;
+      final String? icon}) = _$CreateCategoryDtoImpl;
 
   factory _CreateCategoryDto.fromJson(Map<String, dynamic> json) =
       _$CreateCategoryDtoImpl.fromJson;
@@ -360,7 +359,7 @@ abstract class _CreateCategoryDto implements CreateCategoryDto {
   @override
   String get name;
   @override
-  String get icon;
+  String? get icon;
 
   /// Create a copy of CreateCategoryDto
   /// with the given fields replaced by the non-null parameter values.
