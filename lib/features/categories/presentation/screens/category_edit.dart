@@ -53,7 +53,7 @@ class _CategoryEditScreenState extends State<CategoryEditScreen> {
         return PopupConfirmation(
           title: "Hapus kategori?",
           message:
-              "Semua produk dalam kategori ini akan masuk kategori Umum. Kamu yakin ingin menghapus meja ini?",
+              "Semua produk dalam kategori ini akan masuk kategori Umum. Kamu yakin ingin menghapus kategori ini?",
           labelButtonPrimary: "Tidak",
           labelButtonSecondary: "Ya, Hapus",
           primaryAction: () {
