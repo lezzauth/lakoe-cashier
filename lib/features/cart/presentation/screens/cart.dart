@@ -39,6 +39,31 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  final ScrollController _scrollController = ScrollController();
+  bool _isScrolled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.offset > 0 && !_isScrolled) {
+        setState(() {
+          _isScrolled = true;
+        });
+      } else if (_scrollController.offset <= 0 && _isScrolled) {
+        setState(() {
+          _isScrolled = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   Future<void> _onCartSaved() async {
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
@@ -171,17 +196,20 @@ class _CartState extends State<Cart> {
         ),
       ],
       child: Scaffold(
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
           child: CustomAppbar(
             title: "Pesanan Baru",
+            isScrolled: _isScrolled,
           ),
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Expanded(
-              child: CartContent(),
+            Expanded(
+              child: CartContent(
+                controller: _scrollController,
+              ),
             ),
             Container(
               decoration: const BoxDecoration(

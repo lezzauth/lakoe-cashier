@@ -25,7 +25,9 @@ import 'package:product_repository/product_repository.dart';
 import 'package:table_repository/table_repository.dart';
 
 class CartContent extends StatefulWidget {
-  const CartContent({super.key});
+  const CartContent({super.key, this.controller});
+
+  final ScrollController? controller;
 
   @override
   State<CartContent> createState() => _CartContentState();
@@ -117,6 +119,7 @@ class _CartContentState extends State<CartContent> {
               children: [
                 Expanded(
                   child: CustomScrollView(
+                    controller: widget.controller,
                     slivers: [
                       SliverToBoxAdapter(
                         child: Container(

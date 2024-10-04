@@ -75,6 +75,9 @@ class OrderDetail extends StatefulWidget {
 }
 
 class _OrderDetailState extends State<OrderDetail> {
+  final ScrollController _scrollController = ScrollController();
+  bool _isScrolled = false;
+
   List<_BillPriceItem> listBillPriceItem = [
     _BillPriceItem(label: "Subtotal", price: "Rp20.000"),
     _BillPriceItem(label: "Pajak (5%)", price: "Rp1.000"),
@@ -94,6 +97,24 @@ class _OrderDetailState extends State<OrderDetail> {
   void initState() {
     super.initState();
     _onRefresh();
+
+    _scrollController.addListener(() {
+      if (_scrollController.offset > 0 && !_isScrolled) {
+        setState(() {
+          _isScrolled = true;
+        });
+      } else if (_scrollController.offset <= 0 && _isScrolled) {
+        setState(() {
+          _isScrolled = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   Future<void> _onCashPaid({
@@ -349,6 +370,7 @@ class _OrderDetailState extends State<OrderDetail> {
                 OrderDetailLoadSuccess(:final order) => Scaffold(
                     appBar: CustomAppbar(
                       title: "Order #${order.no}",
+                      isScrolled: _isScrolled,
                     ),
                     body: Scrollbar(
                       child: RefreshIndicator(
@@ -359,6 +381,7 @@ class _OrderDetailState extends State<OrderDetail> {
                           children: [
                             Expanded(
                               child: CustomScrollView(
+                                controller: _scrollController,
                                 slivers: [
                                   SliverToBoxAdapter(
                                     child: Padding(
@@ -501,34 +524,42 @@ class _OrderDetailState extends State<OrderDetail> {
                               ),
                             ),
                             if (order.source == "CASHIER")
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 20,
-                                  horizontal: 16,
+                              Container(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(
+                                      color: TColors.neutralLightMedium,
+                                      width: 1.0,
+                                    ),
+                                  ),
                                 ),
-                                child: OrderOutletAction(
-                                  isPaid: order.paymentStatus == "PAID",
-                                  type: order.type,
-                                  onAddMoreItem: () async {
-                                    await Navigator.pushNamed(
-                                      context,
-                                      "/orders/add-item",
-                                      arguments:
-                                          OrderAddItemArgument(order: order),
-                                    );
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(16, 12, 16, 20),
+                                  child: OrderOutletAction(
+                                    isPaid: order.paymentStatus == "PAID",
+                                    type: order.type,
+                                    onAddMoreItem: () async {
+                                      await Navigator.pushNamed(
+                                        context,
+                                        "/orders/add-item",
+                                        arguments:
+                                            OrderAddItemArgument(order: order),
+                                      );
 
-                                    _onRefresh();
-                                  },
-                                  onComplete: () {
-                                    _onCompleteOrder(
-                                      amount: double.parse(order.price),
-                                      order: order,
-                                    );
-                                  },
-                                  onPrint: () {
-                                    print("Print Bill");
-                                  },
-                                  onShare: () => _showDetailBill(context),
+                                      _onRefresh();
+                                    },
+                                    onComplete: () {
+                                      _onCompleteOrder(
+                                        amount: double.parse(order.price),
+                                        order: order,
+                                      );
+                                    },
+                                    onPrint: () {
+                                      print("Print Bill");
+                                    },
+                                    onShare: () => _showDetailBill(context),
+                                  ),
                                 ),
                               ),
                             if (order.source == "QRONLINE")
