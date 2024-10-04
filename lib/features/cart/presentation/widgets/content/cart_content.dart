@@ -111,7 +111,7 @@ class _CartContentState extends State<CartContent> {
           onRefresh: _onRefresh,
           backgroundColor: TColors.neutralLightLightest,
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [

@@ -17,6 +17,7 @@ import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
 import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -182,11 +183,21 @@ class _CartState extends State<Cart> {
             const Expanded(
               child: CartContent(),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              child: CartFooter(
-                onCompleted: onCompleteOrder,
-                onSaved: _onCartSaved,
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: TColors.neutralLightMedium,
+                    width: 1.0,
+                  ),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
+                child: CartFooter(
+                  onCompleted: onCompleteOrder,
+                  onSaved: _onCartSaved,
+                ),
               ),
             ),
           ],
