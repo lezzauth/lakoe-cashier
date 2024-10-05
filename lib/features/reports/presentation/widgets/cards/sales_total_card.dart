@@ -84,7 +84,7 @@ class SalesTotalCard extends StatelessWidget {
                       children: [
                         StatsBadge(
                           type: getType(),
-                          value: "${totalSalesDiff ?? 0}%",
+                          value: "${totalSalesDiff?.abs() ?? 0}%",
                         ),
                         Container(
                           margin: const EdgeInsets.only(left: 8),
