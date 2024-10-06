@@ -48,7 +48,7 @@ class ItemPageView extends StatelessWidget {
                     SizedBox(height: 20),
                     TextHeading2(
                       "Aplikasi Kasir Untuk UMKM",
-                      color: TColors.neutralDarkLight,
+                      color: TColors.neutralDarkDark,
                       textAlign: TextAlign.center,
                       fontWeight: FontWeight.w400,
                     ),
@@ -94,58 +94,52 @@ class ItemPageView extends StatelessWidget {
                   ),
                 ],
               ),
-        tablet: isTextInputActive == true
-            ? Center(
-                child: SvgPicture.asset(
-                  TImages.primaryLogoLakoe,
-                  height: 28,
-                ),
-              )
-            : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 100),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 52),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            if (withLogo)
-                              SvgPicture.asset(
-                                TImages.primaryLogoLakoe,
-                                height: 32,
-                              ),
-                            if (title != null)
-                              TextHeading1(
-                                title!,
-                                color: TColors.neutralDarkDark,
-                                textAlign: TextAlign.center,
-                                fontWeight: FontWeight.w900,
-                              ),
-                            SizedBox(height: 16),
-                            TextBodyXL(
-                              description!,
-                              color: TColors.neutralDarkDark,
-                            ),
-                          ],
+        tablet: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 100),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 100),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (withLogo)
+                        SvgPicture.asset(
+                          TImages.primaryLogoLakoe,
+                          height: 32,
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Image.asset(
-                          asset,
-                          height: 320,
+                      if (title != null)
+                        TextHeading1(
+                          title!,
+                          color: TColors.neutralDarkDark,
+                          textAlign: TextAlign.center,
+                          fontWeight: FontWeight.w900,
                         ),
+                      SizedBox(height: 16),
+                      TextBodyXL(
+                        description!,
+                        color: TColors.neutralDarkDark,
+                        textAlign: TextAlign.center,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Image.asset(
+                    asset,
+                    height: 320,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
