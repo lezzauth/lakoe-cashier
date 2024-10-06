@@ -10,6 +10,7 @@ class TextHeading3 extends StatelessWidget {
   final Color? color;
   final int? maxLines;
   final TextOverflow? overflow;
+  final TextAlign? textAlign;
 
   const TextHeading3(
     this.data, {
@@ -18,6 +19,7 @@ class TextHeading3 extends StatelessWidget {
     this.color = TColors.neutralDarkDarkest,
     this.maxLines,
     this.overflow,
+    this.textAlign,
   });
 
   @override
@@ -31,6 +33,7 @@ class TextHeading3 extends StatelessWidget {
       ),
       maxLines: maxLines,
       overflow: overflow,
+      textAlign: textAlign,
     );
   }
 }

@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/dotted_pin.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/number_pad.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_screen_cubit.dart';
 
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -26,7 +28,8 @@ class _PinInputPageState extends State<PinInputPage> {
   final TextEditingController _pinController = TextEditingController();
   String firstValue = "";
   bool isRepeat = false;
-  bool isPinWrong = false;
+  bool loading = false;
+  bool isPinNotMatch = false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,66 +48,90 @@ class _PinInputPageState extends State<PinInputPage> {
                 child: Column(
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(bottom: 40),
+                      margin: const EdgeInsets.only(bottom: 40, top: 56),
                       child: Column(
                         children: [
                           Container(
                             margin: const EdgeInsets.only(bottom: 8.0),
-                            child: Text(
+                            child: TextHeading3(
                               !isRepeat
                                   ? "Buat kode akses (PIN)"
                                   : "Masukan ulang kode akses (PIN)",
-                              style: GoogleFonts.inter(
-                                fontSize: TSizes.fontSizeHeading3,
-                                fontWeight: FontWeight.w700,
-                              ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                          Text(
+                          const TextBodyS(
                             "Kode akses ini akan digunakan untuk setiap kali akan melakukan transaksi.",
-                            style: GoogleFonts.inter(
-                              fontSize: TSizes.fontSizeBodyS,
-                              color: TColors.neutralDarkMedium,
-                            ),
+                            color: TColors.neutralDarkMedium,
                             textAlign: TextAlign.center,
                           ),
                         ],
                       ),
                     ),
-                    DottedPin(
-                      length: 6,
-                      controller: _pinController,
-                      onCompleted: (value) {
-                        if (isRepeat) {
-                          if (value != firstValue) {
+                    if (!loading || isPinNotMatch)
+                      DottedPin(
+                        length: 6,
+                        controller: _pinController,
+                        onCompleted: (value) async {
+                          if (isRepeat) {
                             setState(() {
-                              isPinWrong = true;
+                              loading = true;
                             });
+
+                            await Future.delayed(Duration(seconds: 1));
+
+                            if (value != firstValue) {
+                              setState(() {
+                                isPinNotMatch = true;
+                                loading = false;
+                              });
+                              _pinController.clear();
+                              return;
+                            }
+
+                            setState(() {
+                              isPinNotMatch = false;
+                            });
+
+                            if (widget.onPinValid != null) {
+                              widget.onPinValid!(value);
+                            }
+
+                            setState(() {
+                              loading = false;
+                              isRepeat = false;
+                            });
+                          } else {
+                            setState(() {
+                              loading = true;
+                            });
+
+                            await Future.delayed(Duration(seconds: 1));
+
+                            setState(() {
+                              firstValue = value;
+                              isRepeat = true;
+                              loading = false;
+                            });
+
                             _pinController.clear();
-
-                            return;
                           }
-
-                          setState(() {
-                            isPinWrong = false;
-                          });
-                          if (widget.onPinValid != null) {
-                            widget.onPinValid!(value);
-                          }
-                        }
-
-                        setState(() {
-                          firstValue = value;
-                          isRepeat = true;
-                        });
-                        _pinController.clear();
-                      },
-                    ),
-                    if (isPinWrong)
+                        },
+                      ),
+                    if (loading) // Menampilkan spinner jika loading
+                      const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(TColors.primary),
+                        ),
+                      ),
+                    if (isPinNotMatch)
                       Container(
                         margin: const EdgeInsets.only(top: 12),
                         child: Text(
-                          "PIN Salah. Coba Lagi.",
+                          "Masukan PIN yang sama dengan sebelumnya.",
                           style: GoogleFonts.inter(
                             fontSize: TSizes.fontSizeBodyS,
                             color: TColors.error,
