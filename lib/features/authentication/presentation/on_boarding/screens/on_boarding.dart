@@ -43,6 +43,8 @@ class _OnBoardingState extends State<OnBoarding> {
   int pageIndex = 0;
   final _formKey = GlobalKey<FormBuilderState>();
   PageController pageController = PageController();
+  final FocusNode _focusNode = FocusNode();
+  bool _isTextInputActive = false;
   bool _isFormValid = false;
   late Timer _timer;
 
@@ -59,6 +61,12 @@ class _OnBoardingState extends State<OnBoarding> {
         );
       }
     });
+
+    _focusNode.addListener(() {
+      setState(() {
+        _isTextInputActive = _focusNode.hasFocus;
+      });
+    });
   }
 
   onPageUpdate(int index) {
@@ -72,6 +80,7 @@ class _OnBoardingState extends State<OnBoarding> {
   }
 
   onSubmit() {
+    FocusScope.of(context).unfocus();
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
@@ -97,6 +106,7 @@ class _OnBoardingState extends State<OnBoarding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: BlocConsumer<OnBoardingCubit, OnBoardingState>(
         listener: (context, state) {
           if (state is OnBoardingActionFailure) {
@@ -147,18 +157,21 @@ class _OnBoardingState extends State<OnBoarding> {
                         description:
                             "Solusi POS Terbaik untuk Bisnis F&B. Kelola bisnis Anda dengan lebih mudah, efisien, dan menguntungkan.",
                         asset: TImages.onboarding1,
+                        isTextInputActive: _isTextInputActive,
                       ),
                       ItemPageView(
                         title: "Jualan Makin Gampang!",
                         description:
                             "Atur penjualan toko fisik dan online secara bersamaan. Semua lebih praktis!",
                         asset: TImages.onboarding2,
+                        isTextInputActive: _isTextInputActive,
                       ),
                       ItemPageView(
                         title: "Hasil Jualan Saat Ini",
                         description:
                             "Semua data penjualan dan keuntungan ada di tanganmu, lebih mudah dan cepat.",
                         asset: TImages.onboarding2,
+                        isTextInputActive: _isTextInputActive,
                       ),
                     ],
                   ),
@@ -231,6 +244,7 @@ class _OnBoardingState extends State<OnBoarding> {
                             Expanded(
                               child: FormBuilderTextField(
                                 name: "phoneNumber",
+                                focusNode: _focusNode,
                                 decoration: const InputDecoration(
                                   hintText: "Masukan nomor WA",
                                 ),
@@ -298,6 +312,7 @@ class _OnBoardingState extends State<OnBoarding> {
   @override
   void dispose() {
     _timer.cancel();
+    _focusNode.dispose();
     pageController.dispose();
     super.dispose();
   }

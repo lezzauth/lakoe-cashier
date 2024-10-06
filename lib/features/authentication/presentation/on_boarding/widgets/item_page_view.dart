@@ -14,13 +14,15 @@ class ItemPageView extends StatelessWidget {
     this.withLogo = false,
     this.title,
     this.description,
-    this.asset,
+    required this.asset,
+    this.isTextInputActive = false,
   });
 
   final bool withLogo;
   final String? title;
   final String? description;
-  final String? asset;
+  final String asset;
+  final bool isTextInputActive;
 
   @override
   Widget build(BuildContext context) {
@@ -32,92 +34,118 @@ class ItemPageView extends StatelessWidget {
           colors: [Color(0xFFFFF3EA), Color(0xFFFFD4B3)],
         ),
       ),
-      padding: const EdgeInsets.only(top: 84),
+      padding: EdgeInsets.only(top: isTextInputActive == true ? 20 : 84),
       child: ResponsiveLayout(
-        mobile: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 52),
-              child: Column(
-                children: [
-                  if (withLogo)
+        mobile: isTextInputActive == true
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     SvgPicture.asset(
                       TImages.primaryLogoLakoe,
-                      height: 28,
+                      height: 40,
                     ),
-                  if (title != null)
+                    SizedBox(height: 20),
                     TextHeading2(
-                      title!,
-                      color: TColors.neutralDarkDark,
+                      "Aplikasi Kasir Untuk UMKM",
+                      color: TColors.neutralDarkLight,
                       textAlign: TextAlign.center,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w400,
                     ),
-                  SizedBox(height: !withLogo ? 4 : 12),
-                  TextBodyM(
-                    description!,
-                    color: TColors.neutralDarkDark,
-                    textAlign: TextAlign.center,
+                  ],
+                ),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 52),
+                    child: Column(
+                      children: [
+                        if (withLogo)
+                          SvgPicture.asset(
+                            TImages.primaryLogoLakoe,
+                            height: 28,
+                          ),
+                        if (title != null)
+                          TextHeading2(
+                            title!,
+                            color: TColors.neutralDarkDark,
+                            textAlign: TextAlign.center,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        SizedBox(height: !withLogo ? 4 : 12),
+                        TextBodyM(
+                          description!,
+                          color: TColors.neutralDarkDark,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Image.asset(
+                        asset,
+                        height: 320,
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Image.asset(
-                  asset!,
-                  height: 320,
+        tablet: isTextInputActive == true
+            ? Center(
+                child: SvgPicture.asset(
+                  TImages.primaryLogoLakoe,
+                  height: 28,
                 ),
-              ),
-            ),
-          ],
-        ),
-        tablet: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 100),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 52),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (withLogo)
-                        SvgPicture.asset(
-                          TImages.primaryLogoLakoe,
-                          height: 32,
+              )
+            : Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 100),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 52),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (withLogo)
+                              SvgPicture.asset(
+                                TImages.primaryLogoLakoe,
+                                height: 32,
+                              ),
+                            if (title != null)
+                              TextHeading1(
+                                title!,
+                                color: TColors.neutralDarkDark,
+                                textAlign: TextAlign.center,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            SizedBox(height: 16),
+                            TextBodyXL(
+                              description!,
+                              color: TColors.neutralDarkDark,
+                            ),
+                          ],
                         ),
-                      if (title != null)
-                        TextHeading1(
-                          title!,
-                          color: TColors.neutralDarkDark,
-                          textAlign: TextAlign.center,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      SizedBox(height: 16),
-                      TextBodyXL(
-                        description!,
-                        color: TColors.neutralDarkDark,
                       ),
-                    ],
-                  ),
+                    ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Image.asset(
+                          asset,
+                          height: 320,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Image.asset(
-                    asset!,
-                    height: 320,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
