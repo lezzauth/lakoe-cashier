@@ -14,6 +14,7 @@ class TIcons {
   static const String cashier = "assets/icons/cashier.svg";
   static const String lock = "assets/icons/lock.svg";
   static const String calendar = "assets/icons/calendar.svg";
+  static const String copy = "assets/icons/copy.svg";
   static const String filter = "assets/icons/filter.svg";
   static const String camera = "assets/icons/camera.svg";
   static const String download = "assets/icons/download.svg";
