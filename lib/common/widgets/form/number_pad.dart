@@ -52,14 +52,14 @@ class _NumberPadState extends State<NumberPad> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
+      child: Wrap(
+        direction: Axis.vertical,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        alignment: WrapAlignment.center,
+        runAlignment: WrapAlignment.center,
         children: [
-          Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            alignment: WrapAlignment.center,
-            runAlignment: WrapAlignment.center,
-            spacing: 12.0,
-            runSpacing: 4.0,
+          Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Pad(
                   onTap: () {
@@ -94,8 +94,13 @@ class _NumberPadState extends State<NumberPad> {
                   ),
                 ),
               ),
+            ],
+          ),
 
-              // New Row
+          // New Row
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
               Pad(
                   onTap: () {
                     handleChange("4");
@@ -129,8 +134,14 @@ class _NumberPadState extends State<NumberPad> {
                   ),
                 ),
               ),
+            ],
+          ),
 
-              // New row
+          // New row
+
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
               Pad(
                   onTap: () {
                     handleChange("7");
@@ -164,8 +175,14 @@ class _NumberPadState extends State<NumberPad> {
                   ),
                 ),
               ),
+            ],
+          ),
 
-              //New row
+          //New row
+
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
               Pad(
                 onTap: () {
                   // Navigator.pop(context);

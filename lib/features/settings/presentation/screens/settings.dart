@@ -13,6 +13,31 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  final ScrollController _scrollController = ScrollController();
+  bool _isScrolled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.offset > 0 && !_isScrolled) {
+        setState(() {
+          _isScrolled = true;
+        });
+      } else if (_scrollController.offset <= 0 && _isScrolled) {
+        setState(() {
+          _isScrolled = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   List<_SettingItem> productServiceSettingItems = [
     // _SettingItem(
     //   title: "Kategori",
@@ -71,11 +96,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       isNewItem: true,
     ),
     // _SettingItem(
-    //   title: "Print",
-    //   routeName: "/",
-    //   iconSrc: TIcons.printer,
-    // ),
-    // _SettingItem(
     //   title: "Singkronisasi Data",
     //   routeName: "/",
     //   iconSrc: TIcons.smartphoneUpdate,
@@ -90,13 +110,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppbar(
+      appBar: CustomAppbar(
         title: "Pengaturan",
         backgroundColor: TColors.neutralLightLightest,
-        actions: [],
+        isScrolled: _isScrolled,
+        actions: const [],
       ),
       backgroundColor: TColors.neutralLightLight,
       body: SingleChildScrollView(
+        controller: _scrollController,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,

@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
+import 'package:point_of_sales_cashier/features/orders/common/widgets/filters/order_date_filter.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_online/filter/order_online_filter.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_online/order_list/order_online_list_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 
-class OrderOnlineTab extends StatefulWidget {
-  const OrderOnlineTab({super.key});
+class OrderOnlineCompletedTab extends StatefulWidget {
+  const OrderOnlineCompletedTab({super.key});
 
   @override
-  State<OrderOnlineTab> createState() => _OrderOnlineTabState();
+  State<OrderOnlineCompletedTab> createState() =>
+      _OrderOnlineCompletedTabState();
 }
 
-class _OrderOnlineTabState extends State<OrderOnlineTab> {
+class _OrderOnlineCompletedTabState extends State<OrderOnlineCompletedTab> {
   String? previousScreen;
   List<dynamic> _orders = [];
 
   @override
   void initState() {
     super.initState();
+    // context.read<OrderMasterCubit>().init();
   }
 
   @override
@@ -38,7 +40,14 @@ class _OrderOnlineTabState extends State<OrderOnlineTab> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: OrderOnlineFilter(),
+                child: IntrinsicWidth(
+                  child: OrderDateFilter(
+                    // from: "",
+                    template: "ALL",
+                    // to: "",
+                    onChanged: (template, from, to) {},
+                  ),
+                ),
               ),
               Expanded(
                 child: CustomScrollView(

@@ -91,7 +91,11 @@ class _CategoryFormState extends State<CategoryForm> {
                           selected: field.value == icon,
                           icon: icon,
                           onSelected: () {
-                            field.didChange(icon);
+                            if (field.value == icon) {
+                              field.didChange(null);
+                            } else {
+                              field.didChange(icon);
+                            }
                           },
                         );
                       }).toList(),

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -17,15 +19,13 @@ import 'package:point_of_sales_cashier/common/widgets/access_permission/photo_pe
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/detail_receipt.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_xs.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/bill_view.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_price.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_state.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card_order.dart';
@@ -75,6 +75,9 @@ class OrderDetail extends StatefulWidget {
 }
 
 class _OrderDetailState extends State<OrderDetail> {
+  final ScrollController _scrollController = ScrollController();
+  bool _isScrolled = false;
+
   List<_BillPriceItem> listBillPriceItem = [
     _BillPriceItem(label: "Subtotal", price: "Rp20.000"),
     _BillPriceItem(label: "Pajak (5%)", price: "Rp1.000"),
@@ -94,6 +97,24 @@ class _OrderDetailState extends State<OrderDetail> {
   void initState() {
     super.initState();
     _onRefresh();
+
+    _scrollController.addListener(() {
+      if (_scrollController.offset > 0 && !_isScrolled) {
+        setState(() {
+          _isScrolled = true;
+        });
+      } else if (_scrollController.offset <= 0 && _isScrolled) {
+        setState(() {
+          _isScrolled = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   Future<void> _onCashPaid({
@@ -191,12 +212,12 @@ class _OrderDetailState extends State<OrderDetail> {
     });
   }
 
-  final GlobalKey _billWidgetKey = GlobalKey();
+  final GlobalKey receiptWidgetKey = GlobalKey();
 
   Future<void> captureImage({bool save = true, bool share = false}) async {
     try {
       // Capture widget as image
-      RenderRepaintBoundary boundary = _billWidgetKey.currentContext!
+      RenderRepaintBoundary boundary = receiptWidgetKey.currentContext!
           .findRenderObject() as RenderRepaintBoundary;
       ui.Image image = await boundary.toImage(pixelRatio: 3.0);
       ByteData? byteData =
@@ -290,6 +311,7 @@ class _OrderDetailState extends State<OrderDetail> {
           );
         }
       } catch (e) {
+        // ignore: avoid_print
         print('Error saving image: $e');
       }
     }
@@ -315,164 +337,12 @@ class _OrderDetailState extends State<OrderDetail> {
       useSafeArea: true,
       isScrollControlled: true,
       builder: (context) {
-        return CustomBottomsheet(
-          child: Expanded(
-            child: Column(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: TColors.neutralLightMedium,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                      child: const TextHeading2("Tampilan Struk"),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: Container(
-                    color: TColors.neutralLightLight,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      child: RepaintBoundary(
-                        key: _billWidgetKey,
-                        child: Column(
-                          children: [
-                            BillView(
-                              outletName: "Warmindo Cak Tho",
-                              outletAddress:
-                                  "Tebet,Jakarta Selatan, DKI Jakarta",
-                              orderNumber: "9849",
-                              cashierName: "Dimas",
-                              noBill: "LK-0001",
-                              orderType: "Take Away",
-                              dateTime: "28/12/2024, 20:18",
-                              paymentMetod: 'Cash (Tunai)',
-                              totalPrice: "Rp21.400",
-                              moneyReceived: "Rp50.000",
-                              changeMoney: "Rp28.600",
-                              closeBill: "Close Bill: 28/12/2024, 21:37",
-                              greeting:
-                                  "Terimakasih\nDitunggu kembali kedatangannya",
-                              children: listBillPriceItem
-                                  .map(
-                                    (item) => BillListPrice(
-                                      label: item.label,
-                                      price: item.price,
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        color: TColors.neutralLightMedium,
-                        width: 1.0,
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () async {
-                            await captureImage();
-                            Navigator.pop(context);
-                          },
-                          style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              UiIcons(
-                                TIcons.download,
-                                width: 20,
-                                height: 20,
-                                color: TColors.primary,
-                              ),
-                              SizedBox(width: 8),
-                              const TextActionL(
-                                "Unduh",
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 12),
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () => print("Print"),
-                          style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              UiIcons(
-                                TIcons.printer,
-                                width: 20,
-                                height: 20,
-                                color: TColors.primary,
-                              ),
-                              SizedBox(width: 8),
-                              const TextActionL(
-                                "Print",
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 12),
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () {
-                            captureImage(save: false, share: true);
-                            Navigator.pop(context);
-                          },
-                          style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              UiIcons(
-                                TIcons.share,
-                                width: 20,
-                                height: 20,
-                                color: TColors.primary,
-                              ),
-                              SizedBox(width: 8),
-                              const TextActionL(
-                                "Bagikan",
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+        return DetailReceiptBottomSheet(
+          controller: scrollController,
+          widgetKey: receiptWidgetKey,
+          listBillPriceItem: listBillPriceItem,
+          saveAction: captureImage(),
+          shareAction: captureImage(save: false, share: true),
         );
       },
     );
@@ -500,6 +370,7 @@ class _OrderDetailState extends State<OrderDetail> {
                 OrderDetailLoadSuccess(:final order) => Scaffold(
                     appBar: CustomAppbar(
                       title: "Order #${order.no}",
+                      isScrolled: _isScrolled,
                     ),
                     body: Scrollbar(
                       child: RefreshIndicator(
@@ -510,6 +381,7 @@ class _OrderDetailState extends State<OrderDetail> {
                           children: [
                             Expanded(
                               child: CustomScrollView(
+                                controller: _scrollController,
                                 slivers: [
                                   SliverToBoxAdapter(
                                     child: Padding(
@@ -652,34 +524,42 @@ class _OrderDetailState extends State<OrderDetail> {
                               ),
                             ),
                             if (order.source == "CASHIER")
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 20,
-                                  horizontal: 16,
+                              Container(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(
+                                      color: TColors.neutralLightMedium,
+                                      width: 1.0,
+                                    ),
+                                  ),
                                 ),
-                                child: OrderOutletAction(
-                                  isPaid: order.paymentStatus == "PAID",
-                                  type: order.type,
-                                  onAddMoreItem: () async {
-                                    await Navigator.pushNamed(
-                                      context,
-                                      "/orders/add-item",
-                                      arguments:
-                                          OrderAddItemArgument(order: order),
-                                    );
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(16, 12, 16, 20),
+                                  child: OrderOutletAction(
+                                    isPaid: order.paymentStatus == "PAID",
+                                    type: order.type,
+                                    onAddMoreItem: () async {
+                                      await Navigator.pushNamed(
+                                        context,
+                                        "/orders/add-item",
+                                        arguments:
+                                            OrderAddItemArgument(order: order),
+                                      );
 
-                                    _onRefresh();
-                                  },
-                                  onComplete: () {
-                                    _onCompleteOrder(
-                                      amount: double.parse(order.price),
-                                      order: order,
-                                    );
-                                  },
-                                  onPrint: () {
-                                    print("Print Bill");
-                                  },
-                                  onShare: () => _showDetailBill(context),
+                                      _onRefresh();
+                                    },
+                                    onComplete: () {
+                                      _onCompleteOrder(
+                                        amount: double.parse(order.price),
+                                        order: order,
+                                      );
+                                    },
+                                    onPrint: () {
+                                      print("Print Bill");
+                                    },
+                                    onShare: () => _showDetailBill(context),
+                                  ),
                                 ),
                               ),
                             if (order.source == "QRONLINE")

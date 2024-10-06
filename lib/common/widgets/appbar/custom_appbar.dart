@@ -17,6 +17,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.backgroundColor,
     this.handleBackButton,
     this.flexibleSpace,
+    this.isScrolled = false,
   });
 
   final Widget? leading;
@@ -28,6 +29,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final Color? backgroundColor;
   final Function()? handleBackButton;
   final Widget? flexibleSpace;
+  final bool? isScrolled;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,18 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
         children: [
           Container(
             height: 56,
-            color: backgroundColor,
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              border: Border(
+                bottom: BorderSide(
+                  color: isScrolled == false
+                      ? Colors.transparent
+                      : TColors.neutralLightMedium,
+                  // color: TColors.neutralLightMedium,
+                  width: 1.0,
+                ),
+              ),
+            ),
             padding: EdgeInsets.only(
               right: (actions == null && search != null) ? 20.0 : 8.0,
               left: leading == null ? 4.0 : 16.0,

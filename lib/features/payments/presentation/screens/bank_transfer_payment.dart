@@ -4,6 +4,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
@@ -54,19 +55,16 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
     );
   }
 
-  Future<void> _onCopy({required String title, required String text}) async {
+  Future<void> _onCopy({required String text}) async {
     await THelper.copyToClipboard(text);
 
     if (!mounted) return;
-    // SnackBar snackBar = SnackBar(
-    //   content: Text(title),
-    //   showCloseIcon: true,
-    // );
-    // ScaffoldMessenger.of(context)
-    //   ..hideCurrentSnackBar()
-    //   ..showSnackBar(
-    //     snackBar,
-    //   );
+
+    CustomToast.show(
+      context,
+      "Berhasil disalin.",
+      icon: TIcons.copy,
+    );
   }
 
   @override
@@ -188,8 +186,6 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
                                         child: OutlinedButton(
                                           onPressed: () {
                                             _onCopy(
-                                              title:
-                                                  "Nomor rekening sudah tersalin",
                                               text: arguments
                                                   .account.accountNumber,
                                             );
@@ -257,8 +253,6 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
                                         child: OutlinedButton(
                                           onPressed: () {
                                             _onCopy(
-                                              title:
-                                                  "Jumlah transfer sudah tersalin",
                                               text: arguments.amount
                                                   .toInt()
                                                   .toString(),

@@ -83,11 +83,13 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
                               margin: const EdgeInsets.only(bottom: 8.0),
                               child: const TextHeading3(
                                 "Masukan PIN kamu",
+                                textAlign: TextAlign.center,
                               ),
                             ),
                             const TextBodyS(
                               "Jika Anda lupa PIN, hubungi manajer Anda",
                               color: TColors.neutralDarkMedium,
+                              textAlign: TextAlign.center,
                             )
                           ],
                         ),
