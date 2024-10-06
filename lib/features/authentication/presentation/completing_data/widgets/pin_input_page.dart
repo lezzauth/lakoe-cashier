@@ -68,7 +68,7 @@ class _PinInputPageState extends State<PinInputPage> {
                         ],
                       ),
                     ),
-                    if (!loading || isPinNotMatch)
+                    if (!loading)
                       DottedPin(
                         length: 6,
                         controller: _pinController,
@@ -127,7 +127,7 @@ class _PinInputPageState extends State<PinInputPage> {
                               AlwaysStoppedAnimation<Color>(TColors.primary),
                         ),
                       ),
-                    if (isPinNotMatch)
+                    if (isPinNotMatch && !loading)
                       Container(
                         margin: const EdgeInsets.only(top: 12),
                         child: Text(
