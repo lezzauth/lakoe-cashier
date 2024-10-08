@@ -10,7 +10,7 @@ class ChargeModel with _$ChargeModel {
     required String name,
     required String value,
     required String ownerId,
-    required bool isPrecentage,
+    required bool isPercentage,
   }) = _ChargeModel;
 
   factory ChargeModel.fromJson(Map<String, Object?> json) =>

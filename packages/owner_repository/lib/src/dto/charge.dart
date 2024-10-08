@@ -8,7 +8,7 @@ class CreateChargeDto with _$CreateChargeDto {
   const factory CreateChargeDto({
     required String name,
     required double value,
-    required bool isPrecentage,
+    required bool isPercentage,
   }) = _CreateChargeDto;
 
   factory CreateChargeDto.fromJson(Map<String, Object?> json) =>
@@ -20,7 +20,7 @@ class UpdateChargeDto with _$UpdateChargeDto {
   const factory UpdateChargeDto({
     String? name,
     double? value,
-    bool? isPrecentage,
+    bool? isPercentage,
   }) = _UpdateChargeDto;
 
   factory UpdateChargeDto.fromJson(Map<String, Object?> json) =>

@@ -12,7 +12,7 @@ _$ChargeModelImpl _$$ChargeModelImplFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       value: json['value'] as String,
       ownerId: json['ownerId'] as String,
-      isPrecentage: json['isPrecentage'] as bool,
+      isPercentage: json['isPercentage'] as bool,
     );
 
 Map<String, dynamic> _$$ChargeModelImplToJson(_$ChargeModelImpl instance) =>
@@ -21,5 +21,5 @@ Map<String, dynamic> _$$ChargeModelImplToJson(_$ChargeModelImpl instance) =>
       'name': instance.name,
       'value': instance.value,
       'ownerId': instance.ownerId,
-      'isPrecentage': instance.isPrecentage,
+      'isPercentage': instance.isPercentage,
     };

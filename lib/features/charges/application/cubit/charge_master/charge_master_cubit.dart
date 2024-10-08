@@ -31,7 +31,7 @@ class ChargeMasterCubit extends Cubit<ChargeMasterState> {
             dto: CreateChargeDto(
           name: e.name,
           value: double.parse(e.value),
-          isPrecentage: e.unit == "percentage",
+          isPercentage: e.unit == "percentage",
         ));
       });
       final updateChargesExecute = updatedCharges.map((e) {
@@ -40,7 +40,7 @@ class ChargeMasterCubit extends Cubit<ChargeMasterState> {
             dto: UpdateChargeDto(
               name: e.name,
               value: double.parse(e.value),
-              isPrecentage: e.unit == "percentage",
+              isPercentage: e.unit == "percentage",
             ));
       });
 
