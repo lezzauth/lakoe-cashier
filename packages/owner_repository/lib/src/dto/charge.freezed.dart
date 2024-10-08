@@ -22,7 +22,7 @@ CreateChargeDto _$CreateChargeDtoFromJson(Map<String, dynamic> json) {
 mixin _$CreateChargeDto {
   String get name => throw _privateConstructorUsedError;
   double get value => throw _privateConstructorUsedError;
-  bool get isPrecentage => throw _privateConstructorUsedError;
+  bool get isPercentage => throw _privateConstructorUsedError;
 
   /// Serializes this CreateChargeDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $CreateChargeDtoCopyWith<$Res> {
           CreateChargeDto value, $Res Function(CreateChargeDto) then) =
       _$CreateChargeDtoCopyWithImpl<$Res, CreateChargeDto>;
   @useResult
-  $Res call({String name, double value, bool isPrecentage});
+  $Res call({String name, double value, bool isPercentage});
 }
 
 /// @nodoc
@@ -60,7 +60,7 @@ class _$CreateChargeDtoCopyWithImpl<$Res, $Val extends CreateChargeDto>
   $Res call({
     Object? name = null,
     Object? value = null,
-    Object? isPrecentage = null,
+    Object? isPercentage = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -71,9 +71,9 @@ class _$CreateChargeDtoCopyWithImpl<$Res, $Val extends CreateChargeDto>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as double,
-      isPrecentage: null == isPrecentage
-          ? _value.isPrecentage
-          : isPrecentage // ignore: cast_nullable_to_non_nullable
+      isPercentage: null == isPercentage
+          ? _value.isPercentage
+          : isPercentage // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -87,7 +87,7 @@ abstract class _$$CreateChargeDtoImplCopyWith<$Res>
       __$$CreateChargeDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, double value, bool isPrecentage});
+  $Res call({String name, double value, bool isPercentage});
 }
 
 /// @nodoc
@@ -105,7 +105,7 @@ class __$$CreateChargeDtoImplCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? value = null,
-    Object? isPrecentage = null,
+    Object? isPercentage = null,
   }) {
     return _then(_$CreateChargeDtoImpl(
       name: null == name
@@ -116,9 +116,9 @@ class __$$CreateChargeDtoImplCopyWithImpl<$Res>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as double,
-      isPrecentage: null == isPrecentage
-          ? _value.isPrecentage
-          : isPrecentage // ignore: cast_nullable_to_non_nullable
+      isPercentage: null == isPercentage
+          ? _value.isPercentage
+          : isPercentage // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -128,7 +128,7 @@ class __$$CreateChargeDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CreateChargeDtoImpl implements _CreateChargeDto {
   const _$CreateChargeDtoImpl(
-      {required this.name, required this.value, required this.isPrecentage});
+      {required this.name, required this.value, required this.isPercentage});
 
   factory _$CreateChargeDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateChargeDtoImplFromJson(json);
@@ -138,11 +138,11 @@ class _$CreateChargeDtoImpl implements _CreateChargeDto {
   @override
   final double value;
   @override
-  final bool isPrecentage;
+  final bool isPercentage;
 
   @override
   String toString() {
-    return 'CreateChargeDto(name: $name, value: $value, isPrecentage: $isPrecentage)';
+    return 'CreateChargeDto(name: $name, value: $value, isPercentage: $isPercentage)';
   }
 
   @override
@@ -152,13 +152,13 @@ class _$CreateChargeDtoImpl implements _CreateChargeDto {
             other is _$CreateChargeDtoImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.value, value) || other.value == value) &&
-            (identical(other.isPrecentage, isPrecentage) ||
-                other.isPrecentage == isPrecentage));
+            (identical(other.isPercentage, isPercentage) ||
+                other.isPercentage == isPercentage));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, value, isPrecentage);
+  int get hashCode => Object.hash(runtimeType, name, value, isPercentage);
 
   /// Create a copy of CreateChargeDto
   /// with the given fields replaced by the non-null parameter values.
@@ -181,7 +181,7 @@ abstract class _CreateChargeDto implements CreateChargeDto {
   const factory _CreateChargeDto(
       {required final String name,
       required final double value,
-      required final bool isPrecentage}) = _$CreateChargeDtoImpl;
+      required final bool isPercentage}) = _$CreateChargeDtoImpl;
 
   factory _CreateChargeDto.fromJson(Map<String, dynamic> json) =
       _$CreateChargeDtoImpl.fromJson;
@@ -191,7 +191,7 @@ abstract class _CreateChargeDto implements CreateChargeDto {
   @override
   double get value;
   @override
-  bool get isPrecentage;
+  bool get isPercentage;
 
   /// Create a copy of CreateChargeDto
   /// with the given fields replaced by the non-null parameter values.
@@ -209,7 +209,7 @@ UpdateChargeDto _$UpdateChargeDtoFromJson(Map<String, dynamic> json) {
 mixin _$UpdateChargeDto {
   String? get name => throw _privateConstructorUsedError;
   double? get value => throw _privateConstructorUsedError;
-  bool? get isPrecentage => throw _privateConstructorUsedError;
+  bool? get isPercentage => throw _privateConstructorUsedError;
 
   /// Serializes this UpdateChargeDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -227,7 +227,7 @@ abstract class $UpdateChargeDtoCopyWith<$Res> {
           UpdateChargeDto value, $Res Function(UpdateChargeDto) then) =
       _$UpdateChargeDtoCopyWithImpl<$Res, UpdateChargeDto>;
   @useResult
-  $Res call({String? name, double? value, bool? isPrecentage});
+  $Res call({String? name, double? value, bool? isPercentage});
 }
 
 /// @nodoc
@@ -247,7 +247,7 @@ class _$UpdateChargeDtoCopyWithImpl<$Res, $Val extends UpdateChargeDto>
   $Res call({
     Object? name = freezed,
     Object? value = freezed,
-    Object? isPrecentage = freezed,
+    Object? isPercentage = freezed,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
@@ -258,9 +258,9 @@ class _$UpdateChargeDtoCopyWithImpl<$Res, $Val extends UpdateChargeDto>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as double?,
-      isPrecentage: freezed == isPrecentage
-          ? _value.isPrecentage
-          : isPrecentage // ignore: cast_nullable_to_non_nullable
+      isPercentage: freezed == isPercentage
+          ? _value.isPercentage
+          : isPercentage // ignore: cast_nullable_to_non_nullable
               as bool?,
     ) as $Val);
   }
@@ -274,7 +274,7 @@ abstract class _$$UpdateChargeDtoImplCopyWith<$Res>
       __$$UpdateChargeDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? name, double? value, bool? isPrecentage});
+  $Res call({String? name, double? value, bool? isPercentage});
 }
 
 /// @nodoc
@@ -292,7 +292,7 @@ class __$$UpdateChargeDtoImplCopyWithImpl<$Res>
   $Res call({
     Object? name = freezed,
     Object? value = freezed,
-    Object? isPrecentage = freezed,
+    Object? isPercentage = freezed,
   }) {
     return _then(_$UpdateChargeDtoImpl(
       name: freezed == name
@@ -303,9 +303,9 @@ class __$$UpdateChargeDtoImplCopyWithImpl<$Res>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as double?,
-      isPrecentage: freezed == isPrecentage
-          ? _value.isPrecentage
-          : isPrecentage // ignore: cast_nullable_to_non_nullable
+      isPercentage: freezed == isPercentage
+          ? _value.isPercentage
+          : isPercentage // ignore: cast_nullable_to_non_nullable
               as bool?,
     ));
   }
@@ -314,7 +314,7 @@ class __$$UpdateChargeDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UpdateChargeDtoImpl implements _UpdateChargeDto {
-  const _$UpdateChargeDtoImpl({this.name, this.value, this.isPrecentage});
+  const _$UpdateChargeDtoImpl({this.name, this.value, this.isPercentage});
 
   factory _$UpdateChargeDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$UpdateChargeDtoImplFromJson(json);
@@ -324,11 +324,11 @@ class _$UpdateChargeDtoImpl implements _UpdateChargeDto {
   @override
   final double? value;
   @override
-  final bool? isPrecentage;
+  final bool? isPercentage;
 
   @override
   String toString() {
-    return 'UpdateChargeDto(name: $name, value: $value, isPrecentage: $isPrecentage)';
+    return 'UpdateChargeDto(name: $name, value: $value, isPercentage: $isPercentage)';
   }
 
   @override
@@ -338,13 +338,13 @@ class _$UpdateChargeDtoImpl implements _UpdateChargeDto {
             other is _$UpdateChargeDtoImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.value, value) || other.value == value) &&
-            (identical(other.isPrecentage, isPrecentage) ||
-                other.isPrecentage == isPrecentage));
+            (identical(other.isPercentage, isPercentage) ||
+                other.isPercentage == isPercentage));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, value, isPrecentage);
+  int get hashCode => Object.hash(runtimeType, name, value, isPercentage);
 
   /// Create a copy of UpdateChargeDto
   /// with the given fields replaced by the non-null parameter values.
@@ -367,7 +367,7 @@ abstract class _UpdateChargeDto implements UpdateChargeDto {
   const factory _UpdateChargeDto(
       {final String? name,
       final double? value,
-      final bool? isPrecentage}) = _$UpdateChargeDtoImpl;
+      final bool? isPercentage}) = _$UpdateChargeDtoImpl;
 
   factory _UpdateChargeDto.fromJson(Map<String, dynamic> json) =
       _$UpdateChargeDtoImpl.fromJson;
@@ -377,7 +377,7 @@ abstract class _UpdateChargeDto implements UpdateChargeDto {
   @override
   double? get value;
   @override
-  bool? get isPrecentage;
+  bool? get isPercentage;
 
   /// Create a copy of UpdateChargeDto
   /// with the given fields replaced by the non-null parameter values.

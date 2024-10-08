@@ -38,8 +38,12 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<List<ProductModel>> findAll(FindAllProductDto dto) async {
     final outletId = await _appDataProvider.outletId;
 
+    final Options options = await _getOptions();
+
     final response = await _dio.get<List<dynamic>>(
-        "$_baseURL?outletId=$outletId&${dto.toQueryString()}");
+      "$_baseURL?outletId=$outletId&${dto.toQueryString()}",
+      options: options,
+    );
     return response.data!
         .map((element) => ProductModel.fromJson(element))
         .toList();

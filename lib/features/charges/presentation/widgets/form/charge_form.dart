@@ -61,7 +61,7 @@ class _ChargeFormState extends State<ChargeForm> {
                           initialValue: {
                             "name": charge.name.toString(),
                             "value": charge.value.toString(),
-                            "unit": charge.isPrecentage == true
+                            "unit": charge.isPercentage == true
                                 ? "percentage"
                                 : "static"
                           },
