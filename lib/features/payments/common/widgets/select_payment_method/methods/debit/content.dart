@@ -25,21 +25,15 @@ class DebitPaymentContentState extends State<DebitPaymentContent> {
 
   bool _isFormValid = false;
 
-  void _onFormChanged(bool isValid) {
-    setState(() {
-      _isFormValid = isValid;
-    });
-  }
-
   void _onSubmitted() {
-    // bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
-    // if (!isFormValid) return;
+    FocusScope.of(context).unfocus();
 
-    if (_isFormValid) {
+    if (_isFormValid && _formKey.currentState?.saveAndValidate() == true) {
       dynamic value = _formKey.currentState?.value;
       context.read<PaymentCubit>().setDebitCreditPayment(
-            accountNumber: value["accountNumber"],
+            accountNumber: "",
             paidAmount: widget.amount,
+            approvalCode: value["codeApproval"],
           );
     }
   }
@@ -80,7 +74,7 @@ class DebitPaymentContentState extends State<DebitPaymentContent> {
                     );
                   },
                 ),
-                DebitPaymentForm(onFormChanged: _onFormChanged),
+                DebitPaymentForm(),
               ],
             ),
           ),

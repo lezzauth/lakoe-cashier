@@ -160,6 +160,8 @@ class _OrderDetailState extends State<OrderDetail> {
           paidAmount: data.paidAmount,
           accountNumber: data.accountNumber,
           change: 0,
+          paidFrom: "EDC",
+          approvalCode: data.approvalCode,
         ));
   }
 
@@ -173,6 +175,8 @@ class _OrderDetailState extends State<OrderDetail> {
           paymentMethod: "QR_CODE",
           paidAmount: data.paidAmount,
           change: data.change,
+          paidFrom: data.paidFrom,
+          approvalCode: data.approvalCode,
         ));
   }
 
