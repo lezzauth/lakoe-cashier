@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:flutter_svg/svg.dart';
 import 'package:path/path.dart' as p;
 
 import 'package:cashier_repository/cashier_repository.dart';
@@ -44,6 +45,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/pr
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -474,8 +476,6 @@ class _OrderDetailState extends State<OrderDetail> {
                                           orderItem.product;
                                       String? image =
                                           product.images.elementAtOrNull(0);
-                                      image ??=
-                                          "https://placehold.co/88/png?text=[...]";
 
                                       return Container(
                                         padding: const EdgeInsets.symmetric(
@@ -491,12 +491,18 @@ class _OrderDetailState extends State<OrderDetail> {
                                           ),
                                         ),
                                         child: BaseProductItem(
-                                          image: Image.network(
-                                            image,
-                                            height: 44,
-                                            width: 44,
-                                            fit: BoxFit.cover,
-                                          ),
+                                          image: image != null
+                                              ? Image.network(
+                                                  image,
+                                                  height: 44,
+                                                  width: 44,
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : SvgPicture.asset(
+                                                  TImages.productAvatar,
+                                                  height: 44,
+                                                  width: 44,
+                                                ),
                                           name: product.name,
                                           price: int.parse(product.price),
                                           noteAction: ProductNoteAction(
