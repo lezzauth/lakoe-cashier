@@ -148,7 +148,9 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                         "modal": arguments.modal,
                         "categoryId": arguments.categoryId,
                         "unit": arguments.unit,
-                        "images": ImagePickerValue(url: arguments.images[0])
+                        "images": arguments.images.isEmpty
+                            ? null
+                            : ImagePickerValue(url: arguments.images[0]),
                       },
                     ),
                   ),
