@@ -223,8 +223,6 @@ _$PreviewOrderPriceResponseImpl _$$PreviewOrderPriceResponseImplFromJson(
           .map((e) => PreviewOrderCharge.fromJson(e as Map<String, dynamic>))
           .toList(),
       orderItemTotal: json['orderItemTotal'] as String,
-      totalCharges: json['totalCharges'] as String,
-      totalTaxes: json['totalTaxes'] as String,
     );
 
 Map<String, dynamic> _$$PreviewOrderPriceResponseImplToJson(
@@ -234,8 +232,6 @@ Map<String, dynamic> _$$PreviewOrderPriceResponseImplToJson(
       'orderItems': instance.orderItems,
       'charges': instance.charges,
       'orderItemTotal': instance.orderItemTotal,
-      'totalCharges': instance.totalCharges,
-      'totalTaxes': instance.totalTaxes,
     };
 
 _$OrderModelWithoutIncludeImpl _$$OrderModelWithoutIncludeImplFromJson(

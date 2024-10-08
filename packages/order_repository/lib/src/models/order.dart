@@ -145,8 +145,6 @@ class PreviewOrderPriceResponse with _$PreviewOrderPriceResponse {
     required List<PreviewOrderItem> orderItems,
     required List<PreviewOrderCharge> charges,
     required String orderItemTotal,
-    required String totalCharges,
-    required String totalTaxes,
   }) = _PreviewOrderPriceResponse;
 
   factory PreviewOrderPriceResponse.fromJson(Map<String, Object?> json) =>

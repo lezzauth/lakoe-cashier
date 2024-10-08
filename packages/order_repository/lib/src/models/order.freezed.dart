@@ -2352,8 +2352,6 @@ mixin _$PreviewOrderPriceResponse {
   List<PreviewOrderItem> get orderItems => throw _privateConstructorUsedError;
   List<PreviewOrderCharge> get charges => throw _privateConstructorUsedError;
   String get orderItemTotal => throw _privateConstructorUsedError;
-  String get totalCharges => throw _privateConstructorUsedError;
-  String get totalTaxes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -2371,9 +2369,7 @@ abstract class $PreviewOrderPriceResponseCopyWith<$Res> {
       {String total,
       List<PreviewOrderItem> orderItems,
       List<PreviewOrderCharge> charges,
-      String orderItemTotal,
-      String totalCharges,
-      String totalTaxes});
+      String orderItemTotal});
 }
 
 /// @nodoc
@@ -2394,8 +2390,6 @@ class _$PreviewOrderPriceResponseCopyWithImpl<$Res,
     Object? orderItems = null,
     Object? charges = null,
     Object? orderItemTotal = null,
-    Object? totalCharges = null,
-    Object? totalTaxes = null,
   }) {
     return _then(_value.copyWith(
       total: null == total
@@ -2414,14 +2408,6 @@ class _$PreviewOrderPriceResponseCopyWithImpl<$Res,
           ? _value.orderItemTotal
           : orderItemTotal // ignore: cast_nullable_to_non_nullable
               as String,
-      totalCharges: null == totalCharges
-          ? _value.totalCharges
-          : totalCharges // ignore: cast_nullable_to_non_nullable
-              as String,
-      totalTaxes: null == totalTaxes
-          ? _value.totalTaxes
-          : totalTaxes // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -2439,9 +2425,7 @@ abstract class _$$PreviewOrderPriceResponseImplCopyWith<$Res>
       {String total,
       List<PreviewOrderItem> orderItems,
       List<PreviewOrderCharge> charges,
-      String orderItemTotal,
-      String totalCharges,
-      String totalTaxes});
+      String orderItemTotal});
 }
 
 /// @nodoc
@@ -2461,8 +2445,6 @@ class __$$PreviewOrderPriceResponseImplCopyWithImpl<$Res>
     Object? orderItems = null,
     Object? charges = null,
     Object? orderItemTotal = null,
-    Object? totalCharges = null,
-    Object? totalTaxes = null,
   }) {
     return _then(_$PreviewOrderPriceResponseImpl(
       total: null == total
@@ -2481,14 +2463,6 @@ class __$$PreviewOrderPriceResponseImplCopyWithImpl<$Res>
           ? _value.orderItemTotal
           : orderItemTotal // ignore: cast_nullable_to_non_nullable
               as String,
-      totalCharges: null == totalCharges
-          ? _value.totalCharges
-          : totalCharges // ignore: cast_nullable_to_non_nullable
-              as String,
-      totalTaxes: null == totalTaxes
-          ? _value.totalTaxes
-          : totalTaxes // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -2500,9 +2474,7 @@ class _$PreviewOrderPriceResponseImpl implements _PreviewOrderPriceResponse {
       {required this.total,
       required final List<PreviewOrderItem> orderItems,
       required final List<PreviewOrderCharge> charges,
-      required this.orderItemTotal,
-      required this.totalCharges,
-      required this.totalTaxes})
+      required this.orderItemTotal})
       : _orderItems = orderItems,
         _charges = charges;
 
@@ -2529,14 +2501,10 @@ class _$PreviewOrderPriceResponseImpl implements _PreviewOrderPriceResponse {
 
   @override
   final String orderItemTotal;
-  @override
-  final String totalCharges;
-  @override
-  final String totalTaxes;
 
   @override
   String toString() {
-    return 'PreviewOrderPriceResponse(total: $total, orderItems: $orderItems, charges: $charges, orderItemTotal: $orderItemTotal, totalCharges: $totalCharges, totalTaxes: $totalTaxes)';
+    return 'PreviewOrderPriceResponse(total: $total, orderItems: $orderItems, charges: $charges, orderItemTotal: $orderItemTotal)';
   }
 
   @override
@@ -2549,11 +2517,7 @@ class _$PreviewOrderPriceResponseImpl implements _PreviewOrderPriceResponse {
                 .equals(other._orderItems, _orderItems) &&
             const DeepCollectionEquality().equals(other._charges, _charges) &&
             (identical(other.orderItemTotal, orderItemTotal) ||
-                other.orderItemTotal == orderItemTotal) &&
-            (identical(other.totalCharges, totalCharges) ||
-                other.totalCharges == totalCharges) &&
-            (identical(other.totalTaxes, totalTaxes) ||
-                other.totalTaxes == totalTaxes));
+                other.orderItemTotal == orderItemTotal));
   }
 
   @JsonKey(ignore: true)
@@ -2563,9 +2527,7 @@ class _$PreviewOrderPriceResponseImpl implements _PreviewOrderPriceResponse {
       total,
       const DeepCollectionEquality().hash(_orderItems),
       const DeepCollectionEquality().hash(_charges),
-      orderItemTotal,
-      totalCharges,
-      totalTaxes);
+      orderItemTotal);
 
   @JsonKey(ignore: true)
   @override
@@ -2587,9 +2549,7 @@ abstract class _PreviewOrderPriceResponse implements PreviewOrderPriceResponse {
       {required final String total,
       required final List<PreviewOrderItem> orderItems,
       required final List<PreviewOrderCharge> charges,
-      required final String orderItemTotal,
-      required final String totalCharges,
-      required final String totalTaxes}) = _$PreviewOrderPriceResponseImpl;
+      required final String orderItemTotal}) = _$PreviewOrderPriceResponseImpl;
 
   factory _PreviewOrderPriceResponse.fromJson(Map<String, dynamic> json) =
       _$PreviewOrderPriceResponseImpl.fromJson;
@@ -2602,10 +2562,6 @@ abstract class _PreviewOrderPriceResponse implements PreviewOrderPriceResponse {
   List<PreviewOrderCharge> get charges;
   @override
   String get orderItemTotal;
-  @override
-  String get totalCharges;
-  @override
-  String get totalTaxes;
   @override
   @JsonKey(ignore: true)
   _$$PreviewOrderPriceResponseImplCopyWith<_$PreviewOrderPriceResponseImpl>
