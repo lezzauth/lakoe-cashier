@@ -13,6 +13,8 @@ _$OrderChargeImpl _$$OrderChargeImplFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       type: json['type'] as String,
       amount: json['amount'] as String,
+      isPercentage: json['isPercentage'] as bool,
+      percentageValue: (json['percentageValue'] as num?)?.toInt(),
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
     );
@@ -24,6 +26,8 @@ Map<String, dynamic> _$$OrderChargeImplToJson(_$OrderChargeImpl instance) =>
       'name': instance.name,
       'type': instance.type,
       'amount': instance.amount,
+      'isPercentage': instance.isPercentage,
+      'percentageValue': instance.percentageValue,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };
@@ -191,17 +195,21 @@ Map<String, dynamic> _$$PreviewOrderItemImplToJson(
 _$PreviewOrderChargeImpl _$$PreviewOrderChargeImplFromJson(
         Map<String, dynamic> json) =>
     _$PreviewOrderChargeImpl(
-      name: json['name'] as String,
       type: json['type'] as String,
+      name: json['name'] as String,
       amount: json['amount'] as String,
+      isPercentage: json['isPercentage'] as bool,
+      percentageValue: json['percentageValue'] as String?,
     );
 
 Map<String, dynamic> _$$PreviewOrderChargeImplToJson(
         _$PreviewOrderChargeImpl instance) =>
     <String, dynamic>{
-      'name': instance.name,
       'type': instance.type,
+      'name': instance.name,
       'amount': instance.amount,
+      'isPercentage': instance.isPercentage,
+      'percentageValue': instance.percentageValue,
     };
 
 _$PreviewOrderPriceResponseImpl _$$PreviewOrderPriceResponseImplFromJson(
@@ -215,6 +223,8 @@ _$PreviewOrderPriceResponseImpl _$$PreviewOrderPriceResponseImplFromJson(
           .map((e) => PreviewOrderCharge.fromJson(e as Map<String, dynamic>))
           .toList(),
       orderItemTotal: json['orderItemTotal'] as String,
+      totalCharges: json['totalCharges'] as String,
+      totalTaxes: json['totalTaxes'] as String,
     );
 
 Map<String, dynamic> _$$PreviewOrderPriceResponseImplToJson(
@@ -224,6 +234,8 @@ Map<String, dynamic> _$$PreviewOrderPriceResponseImplToJson(
       'orderItems': instance.orderItems,
       'charges': instance.charges,
       'orderItemTotal': instance.orderItemTotal,
+      'totalCharges': instance.totalCharges,
+      'totalTaxes': instance.totalTaxes,
     };
 
 _$OrderModelWithoutIncludeImpl _$$OrderModelWithoutIncludeImplFromJson(

@@ -25,6 +25,8 @@ mixin _$OrderCharge {
   String get name => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   String get amount => throw _privateConstructorUsedError;
+  bool get isPercentage => throw _privateConstructorUsedError;
+  int? get percentageValue => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
 
@@ -46,6 +48,8 @@ abstract class $OrderChargeCopyWith<$Res> {
       String name,
       String type,
       String amount,
+      bool isPercentage,
+      int? percentageValue,
       String createdAt,
       String updatedAt});
 }
@@ -68,6 +72,8 @@ class _$OrderChargeCopyWithImpl<$Res, $Val extends OrderCharge>
     Object? name = null,
     Object? type = null,
     Object? amount = null,
+    Object? isPercentage = null,
+    Object? percentageValue = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -92,6 +98,14 @@ class _$OrderChargeCopyWithImpl<$Res, $Val extends OrderCharge>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as String,
+      isPercentage: null == isPercentage
+          ? _value.isPercentage
+          : isPercentage // ignore: cast_nullable_to_non_nullable
+              as bool,
+      percentageValue: freezed == percentageValue
+          ? _value.percentageValue
+          : percentageValue // ignore: cast_nullable_to_non_nullable
+              as int?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -118,6 +132,8 @@ abstract class _$$OrderChargeImplCopyWith<$Res>
       String name,
       String type,
       String amount,
+      bool isPercentage,
+      int? percentageValue,
       String createdAt,
       String updatedAt});
 }
@@ -138,6 +154,8 @@ class __$$OrderChargeImplCopyWithImpl<$Res>
     Object? name = null,
     Object? type = null,
     Object? amount = null,
+    Object? isPercentage = null,
+    Object? percentageValue = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -162,6 +180,14 @@ class __$$OrderChargeImplCopyWithImpl<$Res>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as String,
+      isPercentage: null == isPercentage
+          ? _value.isPercentage
+          : isPercentage // ignore: cast_nullable_to_non_nullable
+              as bool,
+      percentageValue: freezed == percentageValue
+          ? _value.percentageValue
+          : percentageValue // ignore: cast_nullable_to_non_nullable
+              as int?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -183,6 +209,8 @@ class _$OrderChargeImpl implements _OrderCharge {
       required this.name,
       required this.type,
       required this.amount,
+      required this.isPercentage,
+      this.percentageValue,
       required this.createdAt,
       required this.updatedAt});
 
@@ -200,13 +228,17 @@ class _$OrderChargeImpl implements _OrderCharge {
   @override
   final String amount;
   @override
+  final bool isPercentage;
+  @override
+  final int? percentageValue;
+  @override
   final String createdAt;
   @override
   final String updatedAt;
 
   @override
   String toString() {
-    return 'OrderCharge(id: $id, orderId: $orderId, name: $name, type: $type, amount: $amount, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'OrderCharge(id: $id, orderId: $orderId, name: $name, type: $type, amount: $amount, isPercentage: $isPercentage, percentageValue: $percentageValue, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -219,6 +251,10 @@ class _$OrderChargeImpl implements _OrderCharge {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.isPercentage, isPercentage) ||
+                other.isPercentage == isPercentage) &&
+            (identical(other.percentageValue, percentageValue) ||
+                other.percentageValue == percentageValue) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -227,8 +263,8 @@ class _$OrderChargeImpl implements _OrderCharge {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, orderId, name, type, amount, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, orderId, name, type, amount,
+      isPercentage, percentageValue, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -251,6 +287,8 @@ abstract class _OrderCharge implements OrderCharge {
       required final String name,
       required final String type,
       required final String amount,
+      required final bool isPercentage,
+      final int? percentageValue,
       required final String createdAt,
       required final String updatedAt}) = _$OrderChargeImpl;
 
@@ -267,6 +305,10 @@ abstract class _OrderCharge implements OrderCharge {
   String get type;
   @override
   String get amount;
+  @override
+  bool get isPercentage;
+  @override
+  int? get percentageValue;
   @override
   String get createdAt;
   @override
@@ -2081,9 +2123,11 @@ PreviewOrderCharge _$PreviewOrderChargeFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PreviewOrderCharge {
-  String get name => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   String get amount => throw _privateConstructorUsedError;
+  bool get isPercentage => throw _privateConstructorUsedError;
+  String? get percentageValue => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -2097,7 +2141,12 @@ abstract class $PreviewOrderChargeCopyWith<$Res> {
           PreviewOrderCharge value, $Res Function(PreviewOrderCharge) then) =
       _$PreviewOrderChargeCopyWithImpl<$Res, PreviewOrderCharge>;
   @useResult
-  $Res call({String name, String type, String amount});
+  $Res call(
+      {String type,
+      String name,
+      String amount,
+      bool isPercentage,
+      String? percentageValue});
 }
 
 /// @nodoc
@@ -2113,23 +2162,33 @@ class _$PreviewOrderChargeCopyWithImpl<$Res, $Val extends PreviewOrderCharge>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
     Object? type = null,
+    Object? name = null,
     Object? amount = null,
+    Object? isPercentage = null,
+    Object? percentageValue = freezed,
   }) {
     return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as String,
+      isPercentage: null == isPercentage
+          ? _value.isPercentage
+          : isPercentage // ignore: cast_nullable_to_non_nullable
+              as bool,
+      percentageValue: freezed == percentageValue
+          ? _value.percentageValue
+          : percentageValue // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -2142,7 +2201,12 @@ abstract class _$$PreviewOrderChargeImplCopyWith<$Res>
       __$$PreviewOrderChargeImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String type, String amount});
+  $Res call(
+      {String type,
+      String name,
+      String amount,
+      bool isPercentage,
+      String? percentageValue});
 }
 
 /// @nodoc
@@ -2156,23 +2220,33 @@ class __$$PreviewOrderChargeImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
     Object? type = null,
+    Object? name = null,
     Object? amount = null,
+    Object? isPercentage = null,
+    Object? percentageValue = freezed,
   }) {
     return _then(_$PreviewOrderChargeImpl(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as String,
+      isPercentage: null == isPercentage
+          ? _value.isPercentage
+          : isPercentage // ignore: cast_nullable_to_non_nullable
+              as bool,
+      percentageValue: freezed == percentageValue
+          ? _value.percentageValue
+          : percentageValue // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -2181,21 +2255,29 @@ class __$$PreviewOrderChargeImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PreviewOrderChargeImpl implements _PreviewOrderCharge {
   const _$PreviewOrderChargeImpl(
-      {required this.name, required this.type, required this.amount});
+      {required this.type,
+      required this.name,
+      required this.amount,
+      required this.isPercentage,
+      this.percentageValue});
 
   factory _$PreviewOrderChargeImpl.fromJson(Map<String, dynamic> json) =>
       _$$PreviewOrderChargeImplFromJson(json);
 
   @override
-  final String name;
-  @override
   final String type;
   @override
+  final String name;
+  @override
   final String amount;
+  @override
+  final bool isPercentage;
+  @override
+  final String? percentageValue;
 
   @override
   String toString() {
-    return 'PreviewOrderCharge(name: $name, type: $type, amount: $amount)';
+    return 'PreviewOrderCharge(type: $type, name: $name, amount: $amount, isPercentage: $isPercentage, percentageValue: $percentageValue)';
   }
 
   @override
@@ -2203,14 +2285,19 @@ class _$PreviewOrderChargeImpl implements _PreviewOrderCharge {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PreviewOrderChargeImpl &&
-            (identical(other.name, name) || other.name == name) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.amount, amount) || other.amount == amount));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.isPercentage, isPercentage) ||
+                other.isPercentage == isPercentage) &&
+            (identical(other.percentageValue, percentageValue) ||
+                other.percentageValue == percentageValue));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, type, amount);
+  int get hashCode => Object.hash(
+      runtimeType, type, name, amount, isPercentage, percentageValue);
 
   @JsonKey(ignore: true)
   @override
@@ -2229,19 +2316,25 @@ class _$PreviewOrderChargeImpl implements _PreviewOrderCharge {
 
 abstract class _PreviewOrderCharge implements PreviewOrderCharge {
   const factory _PreviewOrderCharge(
-      {required final String name,
-      required final String type,
-      required final String amount}) = _$PreviewOrderChargeImpl;
+      {required final String type,
+      required final String name,
+      required final String amount,
+      required final bool isPercentage,
+      final String? percentageValue}) = _$PreviewOrderChargeImpl;
 
   factory _PreviewOrderCharge.fromJson(Map<String, dynamic> json) =
       _$PreviewOrderChargeImpl.fromJson;
 
   @override
-  String get name;
-  @override
   String get type;
   @override
+  String get name;
+  @override
   String get amount;
+  @override
+  bool get isPercentage;
+  @override
+  String? get percentageValue;
   @override
   @JsonKey(ignore: true)
   _$$PreviewOrderChargeImplCopyWith<_$PreviewOrderChargeImpl> get copyWith =>
@@ -2259,6 +2352,8 @@ mixin _$PreviewOrderPriceResponse {
   List<PreviewOrderItem> get orderItems => throw _privateConstructorUsedError;
   List<PreviewOrderCharge> get charges => throw _privateConstructorUsedError;
   String get orderItemTotal => throw _privateConstructorUsedError;
+  String get totalCharges => throw _privateConstructorUsedError;
+  String get totalTaxes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -2276,7 +2371,9 @@ abstract class $PreviewOrderPriceResponseCopyWith<$Res> {
       {String total,
       List<PreviewOrderItem> orderItems,
       List<PreviewOrderCharge> charges,
-      String orderItemTotal});
+      String orderItemTotal,
+      String totalCharges,
+      String totalTaxes});
 }
 
 /// @nodoc
@@ -2297,6 +2394,8 @@ class _$PreviewOrderPriceResponseCopyWithImpl<$Res,
     Object? orderItems = null,
     Object? charges = null,
     Object? orderItemTotal = null,
+    Object? totalCharges = null,
+    Object? totalTaxes = null,
   }) {
     return _then(_value.copyWith(
       total: null == total
@@ -2315,6 +2414,14 @@ class _$PreviewOrderPriceResponseCopyWithImpl<$Res,
           ? _value.orderItemTotal
           : orderItemTotal // ignore: cast_nullable_to_non_nullable
               as String,
+      totalCharges: null == totalCharges
+          ? _value.totalCharges
+          : totalCharges // ignore: cast_nullable_to_non_nullable
+              as String,
+      totalTaxes: null == totalTaxes
+          ? _value.totalTaxes
+          : totalTaxes // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -2332,7 +2439,9 @@ abstract class _$$PreviewOrderPriceResponseImplCopyWith<$Res>
       {String total,
       List<PreviewOrderItem> orderItems,
       List<PreviewOrderCharge> charges,
-      String orderItemTotal});
+      String orderItemTotal,
+      String totalCharges,
+      String totalTaxes});
 }
 
 /// @nodoc
@@ -2352,6 +2461,8 @@ class __$$PreviewOrderPriceResponseImplCopyWithImpl<$Res>
     Object? orderItems = null,
     Object? charges = null,
     Object? orderItemTotal = null,
+    Object? totalCharges = null,
+    Object? totalTaxes = null,
   }) {
     return _then(_$PreviewOrderPriceResponseImpl(
       total: null == total
@@ -2370,6 +2481,14 @@ class __$$PreviewOrderPriceResponseImplCopyWithImpl<$Res>
           ? _value.orderItemTotal
           : orderItemTotal // ignore: cast_nullable_to_non_nullable
               as String,
+      totalCharges: null == totalCharges
+          ? _value.totalCharges
+          : totalCharges // ignore: cast_nullable_to_non_nullable
+              as String,
+      totalTaxes: null == totalTaxes
+          ? _value.totalTaxes
+          : totalTaxes // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -2381,7 +2500,9 @@ class _$PreviewOrderPriceResponseImpl implements _PreviewOrderPriceResponse {
       {required this.total,
       required final List<PreviewOrderItem> orderItems,
       required final List<PreviewOrderCharge> charges,
-      required this.orderItemTotal})
+      required this.orderItemTotal,
+      required this.totalCharges,
+      required this.totalTaxes})
       : _orderItems = orderItems,
         _charges = charges;
 
@@ -2408,10 +2529,14 @@ class _$PreviewOrderPriceResponseImpl implements _PreviewOrderPriceResponse {
 
   @override
   final String orderItemTotal;
+  @override
+  final String totalCharges;
+  @override
+  final String totalTaxes;
 
   @override
   String toString() {
-    return 'PreviewOrderPriceResponse(total: $total, orderItems: $orderItems, charges: $charges, orderItemTotal: $orderItemTotal)';
+    return 'PreviewOrderPriceResponse(total: $total, orderItems: $orderItems, charges: $charges, orderItemTotal: $orderItemTotal, totalCharges: $totalCharges, totalTaxes: $totalTaxes)';
   }
 
   @override
@@ -2424,7 +2549,11 @@ class _$PreviewOrderPriceResponseImpl implements _PreviewOrderPriceResponse {
                 .equals(other._orderItems, _orderItems) &&
             const DeepCollectionEquality().equals(other._charges, _charges) &&
             (identical(other.orderItemTotal, orderItemTotal) ||
-                other.orderItemTotal == orderItemTotal));
+                other.orderItemTotal == orderItemTotal) &&
+            (identical(other.totalCharges, totalCharges) ||
+                other.totalCharges == totalCharges) &&
+            (identical(other.totalTaxes, totalTaxes) ||
+                other.totalTaxes == totalTaxes));
   }
 
   @JsonKey(ignore: true)
@@ -2434,7 +2563,9 @@ class _$PreviewOrderPriceResponseImpl implements _PreviewOrderPriceResponse {
       total,
       const DeepCollectionEquality().hash(_orderItems),
       const DeepCollectionEquality().hash(_charges),
-      orderItemTotal);
+      orderItemTotal,
+      totalCharges,
+      totalTaxes);
 
   @JsonKey(ignore: true)
   @override
@@ -2456,7 +2587,9 @@ abstract class _PreviewOrderPriceResponse implements PreviewOrderPriceResponse {
       {required final String total,
       required final List<PreviewOrderItem> orderItems,
       required final List<PreviewOrderCharge> charges,
-      required final String orderItemTotal}) = _$PreviewOrderPriceResponseImpl;
+      required final String orderItemTotal,
+      required final String totalCharges,
+      required final String totalTaxes}) = _$PreviewOrderPriceResponseImpl;
 
   factory _PreviewOrderPriceResponse.fromJson(Map<String, dynamic> json) =
       _$PreviewOrderPriceResponseImpl.fromJson;
@@ -2469,6 +2602,10 @@ abstract class _PreviewOrderPriceResponse implements PreviewOrderPriceResponse {
   List<PreviewOrderCharge> get charges;
   @override
   String get orderItemTotal;
+  @override
+  String get totalCharges;
+  @override
+  String get totalTaxes;
   @override
   @JsonKey(ignore: true)
   _$$PreviewOrderPriceResponseImplCopyWith<_$PreviewOrderPriceResponseImpl>

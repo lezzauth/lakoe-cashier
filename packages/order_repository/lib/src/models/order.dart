@@ -11,6 +11,8 @@ class OrderCharge with _$OrderCharge {
     required String name,
     required String type,
     required String amount,
+    required bool isPercentage,
+    int? percentageValue,
     required String createdAt,
     required String updatedAt,
   }) = _OrderCharge;
@@ -125,9 +127,11 @@ class PreviewOrderItem with _$PreviewOrderItem {
 @freezed
 class PreviewOrderCharge with _$PreviewOrderCharge {
   const factory PreviewOrderCharge({
-    required String name,
     required String type,
+    required String name,
     required String amount,
+    required bool isPercentage,
+    String? percentageValue,
   }) = _PreviewOrderCharge;
 
   factory PreviewOrderCharge.fromJson(Map<String, Object?> json) =>
@@ -141,6 +145,8 @@ class PreviewOrderPriceResponse with _$PreviewOrderPriceResponse {
     required List<PreviewOrderItem> orderItems,
     required List<PreviewOrderCharge> charges,
     required String orderItemTotal,
+    required String totalCharges,
+    required String totalTaxes,
   }) = _PreviewOrderPriceResponse;
 
   factory PreviewOrderPriceResponse.fromJson(Map<String, Object?> json) =>

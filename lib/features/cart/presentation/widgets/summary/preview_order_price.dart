@@ -50,9 +50,11 @@ class CartDetailToSummary extends StatelessWidget {
       total: double.parse(previewOrderPrice.total),
       charges: previewOrderPrice.charges
           .map((e) => OrderSummaryChargeModel(
-                amount: e.amount,
-                name: e.name,
                 type: e.type,
+                name: e.name,
+                amount: e.amount,
+                isPercentage: e.isPercentage,
+                percentageValue: e.percentageValue,
               ))
           .toList(),
     );

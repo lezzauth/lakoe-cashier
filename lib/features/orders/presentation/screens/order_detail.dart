@@ -513,8 +513,12 @@ class _OrderDetailState extends State<OrderDetail> {
                                         charges: order.charges
                                             .map((e) => OrderSummaryChargeModel(
                                                   type: e.type,
-                                                  amount: e.amount,
                                                   name: e.name,
+                                                  amount: e.amount,
+                                                  isPercentage: e.isPercentage,
+                                                  percentageValue: e
+                                                      .percentageValue
+                                                      .toString(),
                                                 ))
                                             .toList(),
                                       ),
