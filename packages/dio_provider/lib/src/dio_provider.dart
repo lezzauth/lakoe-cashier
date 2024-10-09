@@ -1,9 +1,12 @@
+import 'package:app_config_provider/app_config_provider.dart';
 import 'package:dio/dio.dart';
 
 class DioProvider {
-  static final Dio _dio = Dio(BaseOptions(
-      baseUrl:
-          "https://7796-2404-8000-1005-e48c-6891-d0a0-cfa1-8674.ngrok-free.app"));
+  static final Dio _dio = Dio(
+    BaseOptions(
+      baseUrl: AppConfigProvider.apiUrl,
+    ),
+  );
 
   Dio get dio {
     _dio.interceptors.add(LogInterceptor(

@@ -62,6 +62,8 @@ dependencies:
     path: packages/dio_provider
   app_data_provider:
     path: packages/app_data_provider
+  app_config_provider:
+    path: packages/app_config_provider
 
   flutter:
     sdk: flutter

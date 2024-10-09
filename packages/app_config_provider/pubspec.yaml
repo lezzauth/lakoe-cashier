@@ -1,0 +1,9 @@
+name: app_config_provider
+description: Dart package which manages the application config.
+publish_to: none
+
+environment:
+  sdk: ">=3.4.4 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
