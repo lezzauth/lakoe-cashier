@@ -636,6 +636,472 @@ abstract class _OrderItem implements OrderItem {
       throw _privateConstructorUsedError;
 }
 
+Transactions _$TransactionsFromJson(Map<String, dynamic> json) {
+  return _Transactions.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Transactions {
+  String get id => throw _privateConstructorUsedError;
+  int get no => throw _privateConstructorUsedError;
+  String get paymentMethod => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  String get paidAmount => throw _privateConstructorUsedError;
+  String get paidFrom => throw _privateConstructorUsedError;
+  String get amount => throw _privateConstructorUsedError;
+  String get change => throw _privateConstructorUsedError;
+  String? get accountNumber => throw _privateConstructorUsedError;
+  String? get photo => throw _privateConstructorUsedError;
+  String? get externalId => throw _privateConstructorUsedError;
+  String? get approvalCode => throw _privateConstructorUsedError;
+  String get orderId => throw _privateConstructorUsedError;
+  String get outletId => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
+  String get updatedAt => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TransactionsCopyWith<Transactions> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TransactionsCopyWith<$Res> {
+  factory $TransactionsCopyWith(
+          Transactions value, $Res Function(Transactions) then) =
+      _$TransactionsCopyWithImpl<$Res, Transactions>;
+  @useResult
+  $Res call(
+      {String id,
+      int no,
+      String paymentMethod,
+      String status,
+      String paidAmount,
+      String paidFrom,
+      String amount,
+      String change,
+      String? accountNumber,
+      String? photo,
+      String? externalId,
+      String? approvalCode,
+      String orderId,
+      String outletId,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class _$TransactionsCopyWithImpl<$Res, $Val extends Transactions>
+    implements $TransactionsCopyWith<$Res> {
+  _$TransactionsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? no = null,
+    Object? paymentMethod = null,
+    Object? status = null,
+    Object? paidAmount = null,
+    Object? paidFrom = null,
+    Object? amount = null,
+    Object? change = null,
+    Object? accountNumber = freezed,
+    Object? photo = freezed,
+    Object? externalId = freezed,
+    Object? approvalCode = freezed,
+    Object? orderId = null,
+    Object? outletId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as int,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidAmount: null == paidAmount
+          ? _value.paidAmount
+          : paidAmount // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidFrom: null == paidFrom
+          ? _value.paidFrom
+          : paidFrom // ignore: cast_nullable_to_non_nullable
+              as String,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as String,
+      change: null == change
+          ? _value.change
+          : change // ignore: cast_nullable_to_non_nullable
+              as String,
+      accountNumber: freezed == accountNumber
+          ? _value.accountNumber
+          : accountNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      externalId: freezed == externalId
+          ? _value.externalId
+          : externalId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      approvalCode: freezed == approvalCode
+          ? _value.approvalCode
+          : approvalCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$TransactionsImplCopyWith<$Res>
+    implements $TransactionsCopyWith<$Res> {
+  factory _$$TransactionsImplCopyWith(
+          _$TransactionsImpl value, $Res Function(_$TransactionsImpl) then) =
+      __$$TransactionsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      int no,
+      String paymentMethod,
+      String status,
+      String paidAmount,
+      String paidFrom,
+      String amount,
+      String change,
+      String? accountNumber,
+      String? photo,
+      String? externalId,
+      String? approvalCode,
+      String orderId,
+      String outletId,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class __$$TransactionsImplCopyWithImpl<$Res>
+    extends _$TransactionsCopyWithImpl<$Res, _$TransactionsImpl>
+    implements _$$TransactionsImplCopyWith<$Res> {
+  __$$TransactionsImplCopyWithImpl(
+      _$TransactionsImpl _value, $Res Function(_$TransactionsImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? no = null,
+    Object? paymentMethod = null,
+    Object? status = null,
+    Object? paidAmount = null,
+    Object? paidFrom = null,
+    Object? amount = null,
+    Object? change = null,
+    Object? accountNumber = freezed,
+    Object? photo = freezed,
+    Object? externalId = freezed,
+    Object? approvalCode = freezed,
+    Object? orderId = null,
+    Object? outletId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_$TransactionsImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as int,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidAmount: null == paidAmount
+          ? _value.paidAmount
+          : paidAmount // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidFrom: null == paidFrom
+          ? _value.paidFrom
+          : paidFrom // ignore: cast_nullable_to_non_nullable
+              as String,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as String,
+      change: null == change
+          ? _value.change
+          : change // ignore: cast_nullable_to_non_nullable
+              as String,
+      accountNumber: freezed == accountNumber
+          ? _value.accountNumber
+          : accountNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      externalId: freezed == externalId
+          ? _value.externalId
+          : externalId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      approvalCode: freezed == approvalCode
+          ? _value.approvalCode
+          : approvalCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TransactionsImpl implements _Transactions {
+  const _$TransactionsImpl(
+      {required this.id,
+      required this.no,
+      required this.paymentMethod,
+      required this.status,
+      required this.paidAmount,
+      required this.paidFrom,
+      required this.amount,
+      required this.change,
+      this.accountNumber,
+      this.photo,
+      this.externalId,
+      this.approvalCode,
+      required this.orderId,
+      required this.outletId,
+      required this.createdAt,
+      required this.updatedAt});
+
+  factory _$TransactionsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TransactionsImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final int no;
+  @override
+  final String paymentMethod;
+  @override
+  final String status;
+  @override
+  final String paidAmount;
+  @override
+  final String paidFrom;
+  @override
+  final String amount;
+  @override
+  final String change;
+  @override
+  final String? accountNumber;
+  @override
+  final String? photo;
+  @override
+  final String? externalId;
+  @override
+  final String? approvalCode;
+  @override
+  final String orderId;
+  @override
+  final String outletId;
+  @override
+  final String createdAt;
+  @override
+  final String updatedAt;
+
+  @override
+  String toString() {
+    return 'Transactions(id: $id, no: $no, paymentMethod: $paymentMethod, status: $status, paidAmount: $paidAmount, paidFrom: $paidFrom, amount: $amount, change: $change, accountNumber: $accountNumber, photo: $photo, externalId: $externalId, approvalCode: $approvalCode, orderId: $orderId, outletId: $outletId, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TransactionsImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.no, no) || other.no == no) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.paidAmount, paidAmount) ||
+                other.paidAmount == paidAmount) &&
+            (identical(other.paidFrom, paidFrom) ||
+                other.paidFrom == paidFrom) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.change, change) || other.change == change) &&
+            (identical(other.accountNumber, accountNumber) ||
+                other.accountNumber == accountNumber) &&
+            (identical(other.photo, photo) || other.photo == photo) &&
+            (identical(other.externalId, externalId) ||
+                other.externalId == externalId) &&
+            (identical(other.approvalCode, approvalCode) ||
+                other.approvalCode == approvalCode) &&
+            (identical(other.orderId, orderId) || other.orderId == orderId) &&
+            (identical(other.outletId, outletId) ||
+                other.outletId == outletId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      no,
+      paymentMethod,
+      status,
+      paidAmount,
+      paidFrom,
+      amount,
+      change,
+      accountNumber,
+      photo,
+      externalId,
+      approvalCode,
+      orderId,
+      outletId,
+      createdAt,
+      updatedAt);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TransactionsImplCopyWith<_$TransactionsImpl> get copyWith =>
+      __$$TransactionsImplCopyWithImpl<_$TransactionsImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TransactionsImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Transactions implements Transactions {
+  const factory _Transactions(
+      {required final String id,
+      required final int no,
+      required final String paymentMethod,
+      required final String status,
+      required final String paidAmount,
+      required final String paidFrom,
+      required final String amount,
+      required final String change,
+      final String? accountNumber,
+      final String? photo,
+      final String? externalId,
+      final String? approvalCode,
+      required final String orderId,
+      required final String outletId,
+      required final String createdAt,
+      required final String updatedAt}) = _$TransactionsImpl;
+
+  factory _Transactions.fromJson(Map<String, dynamic> json) =
+      _$TransactionsImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  int get no;
+  @override
+  String get paymentMethod;
+  @override
+  String get status;
+  @override
+  String get paidAmount;
+  @override
+  String get paidFrom;
+  @override
+  String get amount;
+  @override
+  String get change;
+  @override
+  String? get accountNumber;
+  @override
+  String? get photo;
+  @override
+  String? get externalId;
+  @override
+  String? get approvalCode;
+  @override
+  String get orderId;
+  @override
+  String get outletId;
+  @override
+  String get createdAt;
+  @override
+  String get updatedAt;
+  @override
+  @JsonKey(ignore: true)
+  _$$TransactionsImplCopyWith<_$TransactionsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 OrderItemProduct _$OrderItemProductFromJson(Map<String, dynamic> json) {
   return _OrderItemProduct.fromJson(json);
 }
@@ -1392,6 +1858,7 @@ mixin _$OrderModel {
   OrderCustomer? get customer => throw _privateConstructorUsedError;
   List<OrderCharge> get charges => throw _privateConstructorUsedError;
   OrderTable? get table => throw _privateConstructorUsedError;
+  List<Transactions> get transactions => throw _privateConstructorUsedError;
   List<OrderItem> get items => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1424,6 +1891,7 @@ abstract class $OrderModelCopyWith<$Res> {
       OrderCustomer? customer,
       List<OrderCharge> charges,
       OrderTable? table,
+      List<Transactions> transactions,
       List<OrderItem> items});
 
   $OrderCustomerCopyWith<$Res>? get customer;
@@ -1460,6 +1928,7 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
     Object? customer = freezed,
     Object? charges = null,
     Object? table = freezed,
+    Object? transactions = null,
     Object? items = null,
   }) {
     return _then(_value.copyWith(
@@ -1531,6 +2000,10 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
           ? _value.table
           : table // ignore: cast_nullable_to_non_nullable
               as OrderTable?,
+      transactions: null == transactions
+          ? _value.transactions
+          : transactions // ignore: cast_nullable_to_non_nullable
+              as List<Transactions>,
       items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
@@ -1589,6 +2062,7 @@ abstract class _$$OrderModelImplCopyWith<$Res>
       OrderCustomer? customer,
       List<OrderCharge> charges,
       OrderTable? table,
+      List<Transactions> transactions,
       List<OrderItem> items});
 
   @override
@@ -1625,6 +2099,7 @@ class __$$OrderModelImplCopyWithImpl<$Res>
     Object? customer = freezed,
     Object? charges = null,
     Object? table = freezed,
+    Object? transactions = null,
     Object? items = null,
   }) {
     return _then(_$OrderModelImpl(
@@ -1696,6 +2171,10 @@ class __$$OrderModelImplCopyWithImpl<$Res>
           ? _value.table
           : table // ignore: cast_nullable_to_non_nullable
               as OrderTable?,
+      transactions: null == transactions
+          ? _value._transactions
+          : transactions // ignore: cast_nullable_to_non_nullable
+              as List<Transactions>,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -1725,8 +2204,10 @@ class _$OrderModelImpl implements _OrderModel {
       this.customer,
       required final List<OrderCharge> charges,
       this.table,
+      required final List<Transactions> transactions,
       required final List<OrderItem> items})
       : _charges = charges,
+        _transactions = transactions,
         _items = items;
 
   factory _$OrderModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -1772,6 +2253,14 @@ class _$OrderModelImpl implements _OrderModel {
 
   @override
   final OrderTable? table;
+  final List<Transactions> _transactions;
+  @override
+  List<Transactions> get transactions {
+    if (_transactions is EqualUnmodifiableListView) return _transactions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_transactions);
+  }
+
   final List<OrderItem> _items;
   @override
   List<OrderItem> get items {
@@ -1782,7 +2271,7 @@ class _$OrderModelImpl implements _OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, no: $no, status: $status, price: $price, customerId: $customerId, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, outletId: $outletId, tableId: $tableId, cashierId: $cashierId, createdAt: $createdAt, updatedAt: $updatedAt, customer: $customer, charges: $charges, table: $table, items: $items)';
+    return 'OrderModel(id: $id, no: $no, status: $status, price: $price, customerId: $customerId, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, outletId: $outletId, tableId: $tableId, cashierId: $cashierId, createdAt: $createdAt, updatedAt: $updatedAt, customer: $customer, charges: $charges, table: $table, transactions: $transactions, items: $items)';
   }
 
   @override
@@ -1815,31 +2304,35 @@ class _$OrderModelImpl implements _OrderModel {
                 other.customer == customer) &&
             const DeepCollectionEquality().equals(other._charges, _charges) &&
             (identical(other.table, table) || other.table == table) &&
+            const DeepCollectionEquality()
+                .equals(other._transactions, _transactions) &&
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      no,
-      status,
-      price,
-      customerId,
-      paymentStatus,
-      customerType,
-      type,
-      source,
-      outletId,
-      tableId,
-      cashierId,
-      createdAt,
-      updatedAt,
-      customer,
-      const DeepCollectionEquality().hash(_charges),
-      table,
-      const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        no,
+        status,
+        price,
+        customerId,
+        paymentStatus,
+        customerType,
+        type,
+        source,
+        outletId,
+        tableId,
+        cashierId,
+        createdAt,
+        updatedAt,
+        customer,
+        const DeepCollectionEquality().hash(_charges),
+        table,
+        const DeepCollectionEquality().hash(_transactions),
+        const DeepCollectionEquality().hash(_items)
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -1874,6 +2367,7 @@ abstract class _OrderModel implements OrderModel {
       final OrderCustomer? customer,
       required final List<OrderCharge> charges,
       final OrderTable? table,
+      required final List<Transactions> transactions,
       required final List<OrderItem> items}) = _$OrderModelImpl;
 
   factory _OrderModel.fromJson(Map<String, dynamic> json) =
@@ -1913,6 +2407,8 @@ abstract class _OrderModel implements OrderModel {
   List<OrderCharge> get charges;
   @override
   OrderTable? get table;
+  @override
+  List<Transactions> get transactions;
   @override
   List<OrderItem> get items;
   @override

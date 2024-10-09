@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
@@ -13,6 +14,8 @@ class OrderSummary extends StatelessWidget {
   final double total;
   final double orderTotal;
   final bool isPaid;
+  final List<Transactions>? paymentInfo;
+  // final List<Transactions>? paymentInfo;
   final Function()? onDiscountChanged;
 
   final List<OrderSummaryChargeModel> charges;
@@ -24,6 +27,7 @@ class OrderSummary extends StatelessWidget {
     required this.charges,
     this.onDiscountChanged,
     this.isPaid = false,
+    this.paymentInfo,
   });
 
   List<OrderSummaryChargeModel> _taxCharges() =>
@@ -32,10 +36,47 @@ class OrderSummary extends StatelessWidget {
   List<OrderSummaryChargeModel> _serviceFeeCharges() =>
       charges.where((e) => e.type == "CHARGE").toList();
 
+  Map<String, dynamic> _getPaymentInfo(Transactions payment) {
+    String modifiedPaymentMethod = payment.paymentMethod;
+
+    if (payment.paymentMethod == 'QR_CODE' && payment.paidFrom == 'EDC') {
+      modifiedPaymentMethod = 'QRIS Dinamis';
+    } else if (payment.paymentMethod == 'QR_CODE' &&
+        payment.paidFrom == 'CASHIER') {
+      modifiedPaymentMethod = 'QRIS Statis';
+    } else if (payment.paymentMethod == 'CASH') {
+      modifiedPaymentMethod = 'Cash (Tunai)';
+    } else if (payment.paymentMethod == 'DEBIT') {
+      modifiedPaymentMethod = 'Debit/Credit';
+    } else if (payment.paymentMethod == 'BANK_TRANSFER') {
+      modifiedPaymentMethod = 'Transfer Bank';
+    }
+
+    double paidAmount = 0.0;
+    if (payment.paidAmount.isNotEmpty) {
+      paidAmount = double.tryParse(payment.paidAmount) ?? 0.0;
+    }
+
+    double changeAmount = 0.0;
+    if (payment.change.isNotEmpty) {
+      changeAmount = double.tryParse(payment.change) ?? 0.0;
+    }
+
+    return {
+      'paidAmount': paidAmount,
+      'paymentMethod': modifiedPaymentMethod,
+      'change': changeAmount,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     double discount = 0;
     double totalBill = (total - discount);
+    Map<String, dynamic> paymentDetails = {};
+    if (isPaid && paymentInfo != null) {
+      paymentDetails = _getPaymentInfo(paymentInfo![0]);
+    }
 
     return Stack(
       children: [
@@ -60,26 +101,13 @@ class OrderSummary extends StatelessWidget {
                       TextHeading4(TFormatter.formatToRupiah(orderTotal)),
                     ],
                   ),
-                  const SizedBox(height: 10),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     const TextBodyM("Diskon"),
-                  //     GestureDetector(
-                  //       child: const TextHeading4(
-                  //         "Gunakan Poin",
-                  //         color: TColors.primary,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   const Separator(
                     color: TColors.neutralLightDark,
                     height: 1,
                     dashWidth: 5.0,
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   if (_taxCharges().isNotEmpty) ...[
                     ..._taxCharges().map(
                       (e) => Column(
@@ -100,7 +128,7 @@ class OrderSummary extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 8),
                         ],
                       ),
                     ),
@@ -109,7 +137,7 @@ class OrderSummary extends StatelessWidget {
                       height: 1,
                       dashWidth: 5.0,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8),
                   ],
                   if (_serviceFeeCharges().isNotEmpty) ...[
                     ..._serviceFeeCharges().map(
@@ -131,7 +159,7 @@ class OrderSummary extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 8),
                         ],
                       ),
                     ),
@@ -140,7 +168,7 @@ class OrderSummary extends StatelessWidget {
                       height: 1,
                       dashWidth: 5.0,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8),
                   ],
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -149,6 +177,19 @@ class OrderSummary extends StatelessWidget {
                       TextHeading4(TFormatter.formatToRupiah(totalBill)),
                     ],
                   ),
+                  const SizedBox(height: 8),
+                  if (isPaid && paymentInfo != null)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextBodyM(paymentDetails['paymentMethod']),
+                        TextHeading4(
+                          TFormatter.formatToRupiah(
+                            paymentDetails['paidAmount'],
+                          ),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
@@ -166,11 +207,42 @@ class OrderSummary extends StatelessWidget {
                 color: TColors.neutralLightLight,
                 borderRadius: BorderRadius.circular(12.0),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  const TextHeading3("Yang harus dibayar"),
-                  TextHeading2(TFormatter.formatToRupiah(totalBill)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const TextHeading3("Yang harus dibayar"),
+                      TextHeading2(TFormatter.formatToRupiah(totalBill)),
+                    ],
+                  ),
+                  if (isPaid && paymentInfo != null)
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 12.0, vertical: 8.0),
+                          child: Separator(
+                            color: TColors.neutralLightDark,
+                            height: 1,
+                            dashWidth: 5.0,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const TextBodyM("Kembalian"),
+                            TextHeading4(
+                              TFormatter.formatToRupiah(
+                                paymentDetails['change'],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),

@@ -8,6 +8,7 @@ class BaseProductItem extends StatelessWidget {
   final String notes;
   final String name;
   final Widget image;
+  final int qty;
   final int price;
   final Widget? noteAction;
   final Widget? counter;
@@ -18,6 +19,7 @@ class BaseProductItem extends StatelessWidget {
     this.notes = "",
     this.name = "",
     required this.image,
+    this.qty = 0,
     this.price = 0,
     this.noteAction,
     this.counter,
@@ -59,10 +61,15 @@ class BaseProductItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 2.0),
-                        TextBodyM(
-                          TFormatter.formatToRupiah(price),
-                          color: TColors.neutralDarkLight,
-                        ),
+                        (qty != 0)
+                            ? TextBodyM(
+                                "$qty x ${TFormatter.formatToRupiah(price)}",
+                                color: TColors.neutralDarkLight,
+                              )
+                            : TextBodyM(
+                                TFormatter.formatToRupiah(price),
+                                color: TColors.neutralDarkLight,
+                              ),
                       ],
                     ),
                   ),
