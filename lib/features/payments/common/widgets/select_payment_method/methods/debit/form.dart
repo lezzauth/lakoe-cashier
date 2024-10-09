@@ -5,6 +5,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class DebitPaymentForm extends StatefulWidget {
   const DebitPaymentForm({super.key});
@@ -45,18 +46,26 @@ class _DebitPaymentFormState extends State<DebitPaymentForm> {
                       ),
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(
-                          errorText: 'Kode approval wajib diisi',
+                          errorText: ErrorTextStrings.required(),
                         ),
                         FormBuilderValidators.numeric(
-                          errorText: 'Kode approval hanya boleh angka',
+                          errorText: ErrorTextStrings.numeric(),
                         ),
                         FormBuilderValidators.minLength(
                           6,
-                          errorText: 'Kode approval harus 6 digit',
+                          errorText: ErrorTextStrings.minLength(
+                            name: "Kode approval",
+                            minLength: 6,
+                            isNumber: true,
+                          ),
                         ),
                         FormBuilderValidators.maxLength(
                           6,
-                          errorText: 'Kode approval harus 6 digit',
+                          errorText: ErrorTextStrings.maxLength(
+                            name: "Kode approval",
+                            maxLength: 6,
+                            isNumber: true,
+                          ),
                         ),
                       ]),
                     ),
