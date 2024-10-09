@@ -7,7 +7,7 @@ import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 class BaseProductItem extends StatelessWidget {
   final String notes;
   final String name;
-  final Image image;
+  final Widget image;
   final int price;
   final Widget? noteAction;
   final Widget? counter;

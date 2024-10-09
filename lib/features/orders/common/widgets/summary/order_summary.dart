@@ -88,7 +88,9 @@ class OrderSummary extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              TextBodyM(e.name),
+                              TextBodyM((e.isPercentage)
+                                  ? "${e.name} (${e.percentageValue}%)"
+                                  : e.name),
                               TextHeading4(
                                 TFormatter.formatToRupiah(
                                   double.parse(
@@ -117,7 +119,9 @@ class OrderSummary extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              TextBodyM(e.name),
+                              TextBodyM((e.isPercentage)
+                                  ? "${e.name} (${e.percentageValue}%)"
+                                  : e.name),
                               TextHeading4(
                                 TFormatter.formatToRupiah(
                                   double.parse(

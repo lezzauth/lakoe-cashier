@@ -2298,6 +2298,10 @@ mixin _$CompleteOrderResponse {
   String get paidFrom => throw _privateConstructorUsedError;
   String get amount => throw _privateConstructorUsedError;
   String get change => throw _privateConstructorUsedError;
+  String? get accountNumber => throw _privateConstructorUsedError;
+  String? get photo => throw _privateConstructorUsedError;
+  String? get externalId => throw _privateConstructorUsedError;
+  String? get approvalCode => throw _privateConstructorUsedError;
   String get orderId => throw _privateConstructorUsedError;
   String get outletId => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
@@ -2328,6 +2332,10 @@ abstract class $CompleteOrderResponseCopyWith<$Res> {
       String paidFrom,
       String amount,
       String change,
+      String? accountNumber,
+      String? photo,
+      String? externalId,
+      String? approvalCode,
       String orderId,
       String outletId,
       String createdAt,
@@ -2358,6 +2366,10 @@ class _$CompleteOrderResponseCopyWithImpl<$Res,
     Object? paidFrom = null,
     Object? amount = null,
     Object? change = null,
+    Object? accountNumber = freezed,
+    Object? photo = freezed,
+    Object? externalId = freezed,
+    Object? approvalCode = freezed,
     Object? orderId = null,
     Object? outletId = null,
     Object? createdAt = null,
@@ -2396,6 +2408,22 @@ class _$CompleteOrderResponseCopyWithImpl<$Res,
           ? _value.change
           : change // ignore: cast_nullable_to_non_nullable
               as String,
+      accountNumber: freezed == accountNumber
+          ? _value.accountNumber
+          : accountNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      externalId: freezed == externalId
+          ? _value.externalId
+          : externalId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      approvalCode: freezed == approvalCode
+          ? _value.approvalCode
+          : approvalCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       orderId: null == orderId
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
@@ -2434,6 +2462,10 @@ abstract class _$$CompleteOrderResponseImplCopyWith<$Res>
       String paidFrom,
       String amount,
       String change,
+      String? accountNumber,
+      String? photo,
+      String? externalId,
+      String? approvalCode,
       String orderId,
       String outletId,
       String createdAt,
@@ -2462,6 +2494,10 @@ class __$$CompleteOrderResponseImplCopyWithImpl<$Res>
     Object? paidFrom = null,
     Object? amount = null,
     Object? change = null,
+    Object? accountNumber = freezed,
+    Object? photo = freezed,
+    Object? externalId = freezed,
+    Object? approvalCode = freezed,
     Object? orderId = null,
     Object? outletId = null,
     Object? createdAt = null,
@@ -2500,6 +2536,22 @@ class __$$CompleteOrderResponseImplCopyWithImpl<$Res>
           ? _value.change
           : change // ignore: cast_nullable_to_non_nullable
               as String,
+      accountNumber: freezed == accountNumber
+          ? _value.accountNumber
+          : accountNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      externalId: freezed == externalId
+          ? _value.externalId
+          : externalId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      approvalCode: freezed == approvalCode
+          ? _value.approvalCode
+          : approvalCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       orderId: null == orderId
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
@@ -2532,6 +2584,10 @@ class _$CompleteOrderResponseImpl implements _CompleteOrderResponse {
       required this.paidFrom,
       required this.amount,
       required this.change,
+      required this.accountNumber,
+      required this.photo,
+      required this.externalId,
+      required this.approvalCode,
       required this.orderId,
       required this.outletId,
       required this.createdAt,
@@ -2557,6 +2613,14 @@ class _$CompleteOrderResponseImpl implements _CompleteOrderResponse {
   @override
   final String change;
   @override
+  final String? accountNumber;
+  @override
+  final String? photo;
+  @override
+  final String? externalId;
+  @override
+  final String? approvalCode;
+  @override
   final String orderId;
   @override
   final String outletId;
@@ -2567,7 +2631,7 @@ class _$CompleteOrderResponseImpl implements _CompleteOrderResponse {
 
   @override
   String toString() {
-    return 'CompleteOrderResponse(id: $id, no: $no, paymentMethod: $paymentMethod, status: $status, paidAmount: $paidAmount, paidFrom: $paidFrom, amount: $amount, change: $change, orderId: $orderId, outletId: $outletId, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'CompleteOrderResponse(id: $id, no: $no, paymentMethod: $paymentMethod, status: $status, paidAmount: $paidAmount, paidFrom: $paidFrom, amount: $amount, change: $change, accountNumber: $accountNumber, photo: $photo, externalId: $externalId, approvalCode: $approvalCode, orderId: $orderId, outletId: $outletId, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -2586,6 +2650,13 @@ class _$CompleteOrderResponseImpl implements _CompleteOrderResponse {
                 other.paidFrom == paidFrom) &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.change, change) || other.change == change) &&
+            (identical(other.accountNumber, accountNumber) ||
+                other.accountNumber == accountNumber) &&
+            (identical(other.photo, photo) || other.photo == photo) &&
+            (identical(other.externalId, externalId) ||
+                other.externalId == externalId) &&
+            (identical(other.approvalCode, approvalCode) ||
+                other.approvalCode == approvalCode) &&
             (identical(other.orderId, orderId) || other.orderId == orderId) &&
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
@@ -2607,6 +2678,10 @@ class _$CompleteOrderResponseImpl implements _CompleteOrderResponse {
       paidFrom,
       amount,
       change,
+      accountNumber,
+      photo,
+      externalId,
+      approvalCode,
       orderId,
       outletId,
       createdAt,
@@ -2639,6 +2714,10 @@ abstract class _CompleteOrderResponse implements CompleteOrderResponse {
       required final String paidFrom,
       required final String amount,
       required final String change,
+      required final String? accountNumber,
+      required final String? photo,
+      required final String? externalId,
+      required final String? approvalCode,
       required final String orderId,
       required final String outletId,
       required final String createdAt,
@@ -2663,6 +2742,14 @@ abstract class _CompleteOrderResponse implements CompleteOrderResponse {
   String get amount;
   @override
   String get change;
+  @override
+  String? get accountNumber;
+  @override
+  String? get photo;
+  @override
+  String? get externalId;
+  @override
+  String? get approvalCode;
   @override
   String get orderId;
   @override

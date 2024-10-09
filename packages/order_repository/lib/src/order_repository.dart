@@ -47,6 +47,7 @@ class OrderRepositoryImpl implements OrderRepository {
       data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );
+
     return PreviewOrderPriceResponse.fromJson(response.data);
   }
 

@@ -66,6 +66,8 @@ class CompleteDebitCreditOrderDto extends CompleteOrderDto
   const factory CompleteDebitCreditOrderDto({
     required String paymentMethod,
     required double paidAmount,
+    required String paidFrom,
+    required String? approvalCode,
     @Default(0) double? change,
     required String accountNumber,
   }) = _CompleteDebitCreditOrderDto;
@@ -80,6 +82,8 @@ class CompleteQRCodeOrderDto extends CompleteOrderDto
   const factory CompleteQRCodeOrderDto({
     required String paymentMethod,
     required double paidAmount,
+    required String paidFrom,
+    required String? approvalCode,
     @Default(0) double? change,
   }) = _CompleteQRCodeOrderDto;
 

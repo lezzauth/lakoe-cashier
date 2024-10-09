@@ -7,111 +7,108 @@ import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class QrisPaymentForm extends StatefulWidget {
   const QrisPaymentForm({
     super.key,
-    required this.onFormChanged,
     this.useQRISStatic = false,
     required this.onChanged,
   });
 
-  final Function(bool) onFormChanged;
   final bool useQRISStatic;
-  final ValueChanged<bool?> onChanged;
+  final ValueChanged<bool> onChanged;
 
   @override
   State<QrisPaymentForm> createState() => _QrisPaymentFormState();
 }
 
 class _QrisPaymentFormState extends State<QrisPaymentForm> {
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
-
   @override
   Widget build(BuildContext context) {
-    return FormBuilder(
-      key: _formKey,
-      onChanged: () {
-        widget.onFormChanged(
-          _formKey.currentState?.validate() ?? false,
-        );
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            margin: const EdgeInsets.only(bottom: 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Row(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          margin: const EdgeInsets.only(bottom: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Row(
+                  children: [
+                    CustomCheckbox(
+                      value: widget.useQRISStatic,
+                      onChanged: widget.onChanged,
+                    ),
+                    SizedBox(width: 12),
+                    TextBodyL(
+                      "Menggunakan QRIS Statis",
+                      color: TColors.neutralDarkDark,
+                    ),
+                  ],
+                ),
+              ),
+              if (!widget.useQRISStatic)
+                Container(
+                  margin: const EdgeInsets.only(top: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      CustomCheckbox(
-                        value: widget.useQRISStatic,
-                        onChanged: widget.onChanged,
+                      const FormLabel("Kode Approval"),
+                      FormBuilderTextField(
+                        name: "codeApproval",
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(6),
+                        ],
+                        decoration: const InputDecoration(
+                          hintText: 'Masukkan kode approval',
+                        ),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                            errorText: ErrorTextStrings.required(),
+                          ),
+                          FormBuilderValidators.numeric(
+                            errorText: ErrorTextStrings.numeric(),
+                          ),
+                          FormBuilderValidators.minLength(
+                            6,
+                            errorText: ErrorTextStrings.minLength(
+                              name: "Kode approval",
+                              minLength: 6,
+                              isNumber: true,
+                            ),
+                          ),
+                          FormBuilderValidators.maxLength(
+                            6,
+                            errorText: ErrorTextStrings.maxLength(
+                              name: "Kode approval",
+                              maxLength: 6,
+                              isNumber: true,
+                            ),
+                          ),
+                        ]),
                       ),
-                      SizedBox(width: 12),
-                      TextBodyL(
-                        "Menggunakan QRIS Statis",
-                        color: TColors.neutralDarkDark,
+                      Container(
+                        margin: const EdgeInsets.only(top: 8.0),
+                        child: const TextBodyS(
+                          "Gunakan Kode Approval yang ada di struk dari mesin EDC. Biasanya terdiri dari 6 digit angka.",
+                          color: TColors.neutralDarkLightest,
+                        ),
                       ),
                     ],
                   ),
                 ),
-                if (!widget.useQRISStatic)
-                  Container(
-                    margin: const EdgeInsets.only(top: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const FormLabel("Kode Approval"),
-                        FormBuilderTextField(
-                          name: "codeApproval",
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(6),
-                          ],
-                          decoration: const InputDecoration(
-                            hintText: 'Masukkan kode approval',
-                          ),
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                              errorText: 'Kode approval wajib diisi',
-                            ),
-                            FormBuilderValidators.numeric(
-                              errorText: 'Kode approval hanya boleh angka',
-                            ),
-                            FormBuilderValidators.minLength(
-                              6,
-                              errorText: 'Kode approval harus 6 digit',
-                            ),
-                            FormBuilderValidators.maxLength(
-                              6,
-                              errorText: 'Kode approval harus 6 digit',
-                            ),
-                          ]),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 8.0),
-                          child: const TextBodyS(
-                            "Gunakan Kode Approval yang ada di struk dari mesin EDC. Biasanya terdiri dari 6 digit angka.",
-                            color: TColors.neutralDarkLightest,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
