@@ -22,6 +22,7 @@ OwnerProfileModel _$OwnerProfileModelFromJson(Map<String, dynamic> json) {
 mixin _$OwnerProfileModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String get phoneNumber => throw _privateConstructorUsedError;
 
   /// Serializes this OwnerProfileModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +40,7 @@ abstract class $OwnerProfileModelCopyWith<$Res> {
           OwnerProfileModel value, $Res Function(OwnerProfileModel) then) =
       _$OwnerProfileModelCopyWithImpl<$Res, OwnerProfileModel>;
   @useResult
-  $Res call({String id, String name});
+  $Res call({String id, String name, String phoneNumber});
 }
 
 /// @nodoc
@@ -59,6 +60,7 @@ class _$OwnerProfileModelCopyWithImpl<$Res, $Val extends OwnerProfileModel>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? phoneNumber = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -68,6 +70,10 @@ class _$OwnerProfileModelCopyWithImpl<$Res, $Val extends OwnerProfileModel>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -81,7 +87,7 @@ abstract class _$$OwnerProfileModelImplCopyWith<$Res>
       __$$OwnerProfileModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name});
+  $Res call({String id, String name, String phoneNumber});
 }
 
 /// @nodoc
@@ -99,6 +105,7 @@ class __$$OwnerProfileModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? phoneNumber = null,
   }) {
     return _then(_$OwnerProfileModelImpl(
       id: null == id
@@ -109,6 +116,10 @@ class __$$OwnerProfileModelImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -116,7 +127,8 @@ class __$$OwnerProfileModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$OwnerProfileModelImpl implements _OwnerProfileModel {
-  const _$OwnerProfileModelImpl({required this.id, required this.name});
+  const _$OwnerProfileModelImpl(
+      {required this.id, required this.name, required this.phoneNumber});
 
   factory _$OwnerProfileModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$OwnerProfileModelImplFromJson(json);
@@ -125,10 +137,12 @@ class _$OwnerProfileModelImpl implements _OwnerProfileModel {
   final String id;
   @override
   final String name;
+  @override
+  final String phoneNumber;
 
   @override
   String toString() {
-    return 'OwnerProfileModel(id: $id, name: $name)';
+    return 'OwnerProfileModel(id: $id, name: $name, phoneNumber: $phoneNumber)';
   }
 
   @override
@@ -137,12 +151,14 @@ class _$OwnerProfileModelImpl implements _OwnerProfileModel {
         (other.runtimeType == runtimeType &&
             other is _$OwnerProfileModelImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name);
+  int get hashCode => Object.hash(runtimeType, id, name, phoneNumber);
 
   /// Create a copy of OwnerProfileModel
   /// with the given fields replaced by the non-null parameter values.
@@ -164,7 +180,8 @@ class _$OwnerProfileModelImpl implements _OwnerProfileModel {
 abstract class _OwnerProfileModel implements OwnerProfileModel {
   const factory _OwnerProfileModel(
       {required final String id,
-      required final String name}) = _$OwnerProfileModelImpl;
+      required final String name,
+      required final String phoneNumber}) = _$OwnerProfileModelImpl;
 
   factory _OwnerProfileModel.fromJson(Map<String, dynamic> json) =
       _$OwnerProfileModelImpl.fromJson;
@@ -173,6 +190,8 @@ abstract class _OwnerProfileModel implements OwnerProfileModel {
   String get id;
   @override
   String get name;
+  @override
+  String get phoneNumber;
 
   /// Create a copy of OwnerProfileModel
   /// with the given fields replaced by the non-null parameter values.

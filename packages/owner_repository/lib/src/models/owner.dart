@@ -8,6 +8,7 @@ class OwnerProfileModel with _$OwnerProfileModel {
   const factory OwnerProfileModel({
     required String id,
     required String name,
+    required String phoneNumber,
   }) = _OwnerProfileModel;
 
   factory OwnerProfileModel.fromJson(Map<String, Object?> json) =>

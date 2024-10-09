@@ -11,6 +11,7 @@ _$OwnerProfileModelImpl _$$OwnerProfileModelImplFromJson(
     _$OwnerProfileModelImpl(
       id: json['id'] as String,
       name: json['name'] as String,
+      phoneNumber: json['phoneNumber'] as String,
     );
 
 Map<String, dynamic> _$$OwnerProfileModelImplToJson(
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$OwnerProfileModelImplToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'phoneNumber': instance.phoneNumber,
     };

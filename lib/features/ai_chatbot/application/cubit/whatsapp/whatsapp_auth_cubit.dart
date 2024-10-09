@@ -7,13 +7,14 @@ class WhatsappAuthCubit extends Cubit<WhatsappAuthState> {
 
   WhatsappAuthCubit() : super(WhatsappAuthInitial());
 
-  Future<void> getQR() async {
+  Future<void> getCode(WAAuthRequestCodeDto dto) async {
     try {
-      emit(WhatsappAuthQRLoadInProgress());
-      final response = await _whatsappRepository.auth.getQR();
-      emit(WhatsappAuthQRLoadSuccess(response: response));
+      emit(WhatsappAuthRequestCodeInProgress());
+      final response = await _whatsappRepository.auth.requestCode(
+          dto: dto.copyWith(phoneNumber: dto.phoneNumber.substring(1)));
+      emit(WhatsappAuthRequestCodeSuccess(response: response));
     } catch (e) {
-      emit(WhatsappAuthQRLoadFailure(e.toString()));
+      emit(WhatsappAuthRequestCodeFailure(e.toString()));
     }
   }
 }
