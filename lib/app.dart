@@ -8,6 +8,8 @@ import 'package:point_of_sales_cashier/features/account/presentation/screens/for
 import 'package:point_of_sales_cashier/features/account/presentation/screens/form/name_edit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/form/phone_number_edit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/form/pin_edit.dart';
+import 'package:point_of_sales_cashier/features/ai_chatbot/application/cubit/whatsapp/whatsapp_session_cubit.dart';
+import 'package:point_of_sales_cashier/features/ai_chatbot/presentation/screens/ai_chatbot_master.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/data/arguments/completing_data_argument.dart';
 import 'package:point_of_sales_cashier/features/authentication/data/arguments/otp_input_argument.dart';
@@ -166,6 +168,9 @@ class App extends StatelessWidget {
 
         // Bill Master
         BlocProvider(create: (context) => BillMasterCubit()),
+
+        // Whatsapp
+        BlocProvider(create: (context) => WhatsappSessionCubit()),
       ],
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -331,6 +336,8 @@ class App extends StatelessWidget {
 
             // Checkout
             "/checkout": (context) => const ChekcoutMasterScreen(),
+
+            "/ai_chatbot": (context) => const AIChatbotMasterScreen(),
           },
         ),
       ),

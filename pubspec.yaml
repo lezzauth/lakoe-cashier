@@ -53,6 +53,8 @@ dependencies:
     path: packages/public_repository
   employee_repository:
     path: packages/employee_repository
+  whatsapp_repository:
+    path: packages/whatsapp_repository
 
   token_provider:
     path: packages/token_provider
@@ -102,6 +104,8 @@ dependencies:
   image_picker: ^1.1.2
   share_plus: ^10.0.2
   image_gallery_saver: ^2.0.3
+  google_maps_flutter: ^2.9.0
+  geocoding: ^3.0.0
   # flutter_bluetooth_serial: ^0.4.0
 
 dev_dependencies:
