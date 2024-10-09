@@ -40,6 +40,31 @@ class OrderItem with _$OrderItem {
 }
 
 @freezed
+class Transactions with _$Transactions {
+  const factory Transactions({
+    required String id,
+    required int no,
+    required String paymentMethod,
+    required String status,
+    required String paidAmount,
+    required String paidFrom,
+    required String amount,
+    required String change,
+    String? accountNumber,
+    String? photo,
+    String? externalId,
+    String? approvalCode,
+    required String orderId,
+    required String outletId,
+    required String createdAt,
+    required String updatedAt,
+  }) = _Transactions;
+
+  factory Transactions.fromJson(Map<String, Object?> json) =>
+      _$TransactionsFromJson(json);
+}
+
+@freezed
 class OrderItemProduct with _$OrderItemProduct {
   const factory OrderItemProduct({
     required String name,
@@ -104,6 +129,7 @@ class OrderModel with _$OrderModel {
     OrderCustomer? customer,
     required List<OrderCharge> charges,
     OrderTable? table,
+    required List<Transactions> transactions,
     required List<OrderItem> items,
   }) = _OrderModel;
 

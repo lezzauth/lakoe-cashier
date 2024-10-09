@@ -504,6 +504,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                                   width: 44,
                                                 ),
                                           name: product.name,
+                                          qty: orderItem.quantity,
                                           price: int.parse(product.price),
                                           noteAction: ProductNoteAction(
                                             notes: orderItem.notes ?? "",
@@ -520,6 +521,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                         orderTotal: _getOrderTotal(order),
                                         total: double.parse(order.price),
                                         isPaid: order.paymentStatus == "PAID",
+                                        paymentInfo: order.transactions,
                                         charges: order.charges
                                             .map((e) => OrderSummaryChargeModel(
                                                   type: e.type,
