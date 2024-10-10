@@ -55,6 +55,8 @@ dependencies:
     path: packages/employee_repository
   whatsapp_repository:
     path: packages/whatsapp_repository
+  online_shop_repository:
+    path: packages/online_shop_repository
 
   token_provider:
     path: packages/token_provider

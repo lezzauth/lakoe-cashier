@@ -30,9 +30,11 @@ import 'package:point_of_sales_cashier/features/employees/data/arguments/employe
 import 'package:point_of_sales_cashier/features/employees/presentation/screens/employee_edit.dart';
 import 'package:point_of_sales_cashier/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/onboarding_transaction.dart';
-import 'package:point_of_sales_cashier/features/online_store/presentation/screens/online_store_ai_config.dart';
-import 'package:point_of_sales_cashier/features/online_store/presentation/screens/online_store_cs_master.dart';
-import 'package:point_of_sales_cashier/features/online_store/presentation/screens/online_store_master.dart';
+import 'package:point_of_sales_cashier/features/online_shop/application/cubit/shop_order_master_cubit/shop_order_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_cs_master.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_master.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_master.dart';
 import 'package:point_of_sales_cashier/features/packages/boost/presentation/screens/boost_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/grow_package_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_master.dart';
@@ -175,7 +177,8 @@ class App extends StatelessWidget {
         // Whatsapp
         BlocProvider(create: (context) => WhatsappSessionCubit()),
 
-        // Online Store
+        // Online Shop
+        BlocProvider(create: (context) => ShopOrderMasterCubit()),
       ],
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -346,11 +349,13 @@ class App extends StatelessWidget {
             "/ai_chatbot": (context) => const AIChatbotMasterScreen(),
 
             // Online Store
-            "/online_store": (context) => const OnlineStoreMasterScreen(),
-            "/online_store/customer_service": (context) =>
-                const OnlineStoreCsMaster(),
-            "/online_store/ai_configuration": (context) =>
-                const OnlineStoreAiConfigScreen(),
+            "/online_shop": (context) => const OnlineShopMasterScreen(),
+            "/online_shop/customer_service": (context) =>
+                const OnlineShopCsMaster(),
+            "/online_shop/ai_configuration": (context) =>
+                const OnlineShopAIConfigScreen(),
+            "/online_shop/orders": (context) =>
+                const OnlineShopOrderMasterScreen()
           },
         ),
       ),

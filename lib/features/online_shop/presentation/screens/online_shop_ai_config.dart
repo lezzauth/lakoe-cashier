@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 
-class OnlineStoreAiConfigScreen extends StatefulWidget {
-  const OnlineStoreAiConfigScreen({super.key});
+class OnlineShopAIConfigScreen extends StatefulWidget {
+  const OnlineShopAIConfigScreen({super.key});
 
   @override
-  State<OnlineStoreAiConfigScreen> createState() =>
-      _OnlineStoreAiConfigScreenState();
+  State<OnlineShopAIConfigScreen> createState() =>
+      _OnlineShopAIConfigScreenState();
 }
 
-class _OnlineStoreAiConfigScreenState extends State<OnlineStoreAiConfigScreen> {
+class _OnlineShopAIConfigScreenState extends State<OnlineShopAIConfigScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -61,7 +61,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   List<_SettingItem> otherSettingItems = [
     _SettingItem(
       title: "Kelola Toko Online",
-      routeName: "/online_store",
+      routeName: "/online_shop",
       iconSrc: TIcons.shop,
       isNewItem: true,
     ),
