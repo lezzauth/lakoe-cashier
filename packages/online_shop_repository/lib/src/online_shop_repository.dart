@@ -69,7 +69,7 @@ class OnlineShopRepositoryImpl implements OnlineShopRepository {
   }) async {
     final outlet = await _getOutletId(outletId: outletId);
 
-    final response = await _dio.get("$_baseURL/$outlet/$orderId");
+    final response = await _dio.get("$_baseURL/$outlet/orders/$orderId");
 
     return OrderDetailModel.fromJson(response.data);
   }

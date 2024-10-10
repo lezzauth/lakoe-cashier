@@ -84,6 +84,7 @@ _$OrderDetailProductImpl _$$OrderDetailProductImplFromJson(
       name: json['name'] as String,
       images:
           (json['images'] as List<dynamic>).map((e) => e as String).toList(),
+      price: json['price'] as String,
     );
 
 Map<String, dynamic> _$$OrderDetailProductImplToJson(
@@ -91,6 +92,7 @@ Map<String, dynamic> _$$OrderDetailProductImplToJson(
     <String, dynamic>{
       'name': instance.name,
       'images': instance.images,
+      'price': instance.price,
     };
 
 _$OrderDetailChargeImpl _$$OrderDetailChargeImplFromJson(

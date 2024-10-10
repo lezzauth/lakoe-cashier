@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:online_shop_repository/online_shop_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
@@ -8,9 +9,11 @@ import 'package:point_of_sales_cashier/features/online_shop/application/cubit/sh
 import 'package:point_of_sales_cashier/features/online_shop/application/cubit/shop_order_master_cubit/shop_order_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/online_shop/application/cubit/shop_order_master_cubit/shop_order_master_filter_state.dart';
 import 'package:point_of_sales_cashier/features/online_shop/application/cubit/shop_order_master_cubit/shop_order_master_state.dart';
+import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/cards/order_item_card.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/filter/order_status_filter.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 
 class OnlineShopOrderMasterScreen extends StatelessWidget {
   const OnlineShopOrderMasterScreen({super.key});
@@ -42,6 +45,11 @@ class _OnlineShopOrderMasterState extends State<OnlineShopOrderMaster> {
     context
         .read<ShopOrderMasterCubit>()
         .findAll(dto: FindAllOrderDto(status: filterState.status));
+  }
+
+  Future<void> _onGoToDetailScreen(OrderModel order) async {
+    Navigator.pushNamed(context, "/online_shop/orders/detail",
+        arguments: OnlineShopOrderDetailArgument(order: order));
   }
 
   @override
@@ -89,7 +97,13 @@ class _OnlineShopOrderMasterState extends State<OnlineShopOrderMaster> {
                     ? EmptyList(
                         title: "Belum ada pesanan, nih!",
                         subTitle:
-                            "Hari ini belum ada pesanan dari toko online kamu. Yuk! promosikan lagi.")
+                            "Hari ini belum ada pesanan dari toko online kamu. Yuk! promosikan lagi.",
+                        image: SvgPicture.asset(
+                          TImages.catBox,
+                          width: 276,
+                          height: 200,
+                        ),
+                      )
                     : Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: ListView.builder(
@@ -102,7 +116,7 @@ class _OnlineShopOrderMasterState extends State<OnlineShopOrderMaster> {
                               child: OrderItemCard(
                                 order: order,
                                 onTap: () {
-                                  //
+                                  _onGoToDetailScreen(order);
                                 },
                               ),
                             );

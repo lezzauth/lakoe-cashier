@@ -20,7 +20,7 @@ class OrderItemCard extends StatelessWidget {
     String? image = firstProduct.images.elementAtOrNull(0);
     image ??= "https://placehold.co/88/png?text=[...]";
 
-    return Ink(
+    return Container(
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,

@@ -53,6 +53,7 @@ class OrderDetailProduct with _$OrderDetailProduct {
   const factory OrderDetailProduct({
     required String name,
     required List<String> images,
+    required String price,
   }) = _OrderDetailProduct;
 
   factory OrderDetailProduct.fromJson(Map<String, dynamic> json) =>

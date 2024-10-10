@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:point_of_sales_cashier/utils/constants/bank_name_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class THelper {
   THelper._();
@@ -111,6 +112,17 @@ class THelper {
 
   static Future<void> copyToClipboard(String text) async {
     await Clipboard.setData(ClipboardData(text: text));
+  }
+
+  static Future<void> openWhatsappNumber(String phoneNumber) async {
+    final modifiedPhoneNumber =
+        phoneNumber.startsWith("+") ? phoneNumber.substring(1) : phoneNumber;
+
+    final Uri url = Uri.parse(
+      'https://wa.me/$modifiedPhoneNumber',
+    );
+
+    await launchUrl(url);
   }
 }
 
