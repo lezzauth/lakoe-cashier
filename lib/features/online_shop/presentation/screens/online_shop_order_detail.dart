@@ -6,9 +6,11 @@ import 'package:point_of_sales_cashier/features/online_shop/application/cubit/sh
 import 'package:point_of_sales_cashier/features/online_shop/application/cubit/shop_order_detail_cubit/shop_order_detail_state.dart';
 import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/sections/order_info_section/order_info_section.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/sections/order_price_breakdown_section/order_price_breakdown_section.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/sections/order_product_detail_section/order_product_detail_section.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/sections/order_shipping_detail_section/order_shipping_detail_section.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/sections/order_status_section/order_status_section.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class OnlineShopOrderDetailScreen extends StatelessWidget {
   const OnlineShopOrderDetailScreen({super.key, required this.arguments});
@@ -40,6 +42,12 @@ class _OnlineShopOrderDetailState extends State<OnlineShopOrderDetail> {
         .findOne(orderId: widget.arguments.order.id);
   }
 
+  Future<void> _onRefresh() async {
+    await context
+        .read<ShopOrderDetailCubit>()
+        .findOne(orderId: widget.arguments.order.id);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -58,26 +66,41 @@ class _OnlineShopOrderDetailState extends State<OnlineShopOrderDetail> {
             ShopOrderDetailLoadSuccess(:final order) => Column(
                 children: [
                   Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: OrderStatusSection(order: order),
+                    child: Scrollbar(
+                      child: RefreshIndicator(
+                        onRefresh: _onRefresh,
+                        backgroundColor: TColors.neutralLightLight,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: OrderStatusSection(order: order),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: OrderInfoSection(order: order),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: OrderProductDetailSection(order: order),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: OrderShippingDetailSection(order: order),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: OrderPriceBreakdownSection(order: order),
+                              ),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: OrderInfoSection(order: order),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: OrderProductDetailSection(order: order),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: OrderShippingDetailSection(order: order),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ),

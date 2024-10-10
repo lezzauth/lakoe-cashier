@@ -48,8 +48,9 @@ class _OnlineShopOrderMasterState extends State<OnlineShopOrderMaster> {
   }
 
   Future<void> _onGoToDetailScreen(OrderModel order) async {
-    Navigator.pushNamed(context, "/online_shop/orders/detail",
+    await Navigator.pushNamed(context, "/online_shop/orders/detail",
         arguments: OnlineShopOrderDetailArgument(order: order));
+    _onRefresh();
   }
 
   @override
