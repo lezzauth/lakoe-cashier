@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
+import 'package:point_of_sales_cashier/common/widgets/form/pinpoint/pinpoint.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
@@ -103,6 +106,36 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
                 maxLines: 2,
                 validator: FormBuilderValidators.required(
                     errorText: ErrorTextStrings.required()),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const FormLabel(
+                "Pinpoint Lokasi",
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 8),
+                child: TextBodyS(
+                  "Tandai lokasi untuk mempermudah pemintaan pickup kurir",
+                  color: TColors.neutralDarkLightest,
+                ),
+              ),
+              FormBuilderField<LatLng>(
+                builder: (field) => Pinpoint(
+                  onChanged: field.didChange,
+                  value: field.value,
+                  errorText: field.errorText ?? "",
+                  hasError: field.hasError,
+                ),
+                name: "outletPinpoint",
+                validator: FormBuilderValidators.required(
+                  errorText: ErrorTextStrings.required(),
+                ),
               ),
             ],
           ),

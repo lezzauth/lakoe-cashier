@@ -36,6 +36,7 @@ class TImages {
   static const String lakoeQrIcon = "assets/images/lakoe-qr-icon.svg";
   static const String placeholderBannerNotification =
       "assets/images/placeholder-banner-notification.png";
+  static const String pinpoint = "assets/images/pinpoint.png";
 
   // empty list
   static const String bankAccountEmpty = "assets/images/bank-account-empty.svg";

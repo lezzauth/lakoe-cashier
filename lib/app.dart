@@ -30,6 +30,9 @@ import 'package:point_of_sales_cashier/features/employees/data/arguments/employe
 import 'package:point_of_sales_cashier/features/employees/presentation/screens/employee_edit.dart';
 import 'package:point_of_sales_cashier/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/onboarding_transaction.dart';
+import 'package:point_of_sales_cashier/features/online_store/presentation/screens/online_store_ai_config.dart';
+import 'package:point_of_sales_cashier/features/online_store/presentation/screens/online_store_cs_master.dart';
+import 'package:point_of_sales_cashier/features/online_store/presentation/screens/online_store_master.dart';
 import 'package:point_of_sales_cashier/features/packages/boost/presentation/screens/boost_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/grow_package_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_master.dart';
@@ -171,6 +174,8 @@ class App extends StatelessWidget {
 
         // Whatsapp
         BlocProvider(create: (context) => WhatsappSessionCubit()),
+
+        // Online Store
       ],
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -337,7 +342,15 @@ class App extends StatelessWidget {
             // Checkout
             "/checkout": (context) => const ChekcoutMasterScreen(),
 
+            // AI Chatbot
             "/ai_chatbot": (context) => const AIChatbotMasterScreen(),
+
+            // Online Store
+            "/online_store": (context) => const OnlineStoreMasterScreen(),
+            "/online_store/customer_service": (context) =>
+                const OnlineStoreCsMaster(),
+            "/online_store/ai_configuration": (context) =>
+                const OnlineStoreAiConfigScreen(),
           },
         ),
       ),
