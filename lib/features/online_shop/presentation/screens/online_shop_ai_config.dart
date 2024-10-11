@@ -14,7 +14,7 @@ const List<LabelValue> configs = [
       value: "/online_shop/ai_configuration/language_style"),
   LabelValue(label: "SOP", value: "/online_shop/ai_configuration/sop"),
   LabelValue(
-      label: "Kata istilah", value: "/online_shop/ai_configuration/glossary"),
+      label: "Kata Istilah", value: "/online_shop/ai_configuration/glossary"),
   LabelValue(
     label: "FAQ",
     value: "/online_shop/ai_configuration/faq",
