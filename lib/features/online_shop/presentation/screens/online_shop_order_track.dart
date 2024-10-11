@@ -162,33 +162,25 @@ class _OnlineShopOrderTrackState extends State<OnlineShopOrderTrack> {
                                 children: [
                                   Container(
                                     margin: const EdgeInsets.only(bottom: 4),
-                                    child: TextBodyM("Pengirim"),
+                                    child: TextBodyM("Penjual"),
                                   ),
                                   TextActionL(track.origin.contactName)
                                 ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          children: [
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
                                     margin: const EdgeInsets.only(bottom: 4),
-                                    child: TextBodyM("Penerima"),
+                                    child: TextBodyM("Pembeli"),
                                   ),
                                   Container(
                                     margin: const EdgeInsets.only(bottom: 4),
                                     child: TextActionL(
                                         track.destination.contactName),
                                   ),
-                                  TextBodyM(track.destination.address),
                                 ],
                               ),
                             ),
