@@ -1,0 +1,22 @@
+import 'package:flutter/material.dart';
+import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+
+class OnlineShopAILanguageStyleScreen extends StatefulWidget {
+  const OnlineShopAILanguageStyleScreen({super.key});
+
+  @override
+  State<OnlineShopAILanguageStyleScreen> createState() =>
+      _OnlineShopAILanguageStyleScreenState();
+}
+
+class _OnlineShopAILanguageStyleScreenState
+    extends State<OnlineShopAILanguageStyleScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppbar(
+        title: "Gaya bahasa",
+      ),
+    );
+  }
+}

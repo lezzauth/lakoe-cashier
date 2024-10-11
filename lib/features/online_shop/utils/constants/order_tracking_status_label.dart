@@ -20,20 +20,20 @@ class OrderTrackingStatusLabel {
   static Map<String, String> statuses = {
     "confirmed": confirmed,
     "allocated": allocated,
-    "pickingUp": pickingUp,
+    "picking_up": pickingUp,
     "picked": picked,
-    "droppingOff": droppingOff,
-    "returnInTransit": returnInTransit,
-    "onHold": onHold,
+    "dropping_off": droppingOff,
+    "return_in_transit": returnInTransit,
+    "on_hold": onHold,
     "delivered": delivered,
     "rejected": rejected,
-    "courierNotFound": courierNotFound,
+    "courier_notfound": courierNotFound,
     "returned": returned,
     "cancelled": cancelled,
     "disposed": disposed,
   };
 
   static String getLabel(String status) {
-    return statuses[status]!;
+    return statuses[status] ?? status;
   }
 }

@@ -34,6 +34,11 @@ import 'package:point_of_sales_cashier/features/online_shop/application/cubit/sh
 import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_track_argument.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_description.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_faq.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_glossary.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_language_style.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_sop.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_cs_master.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_master.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_detail.dart';
@@ -358,6 +363,16 @@ class App extends StatelessWidget {
                 const OnlineShopCsMaster(),
             "/online_shop/ai_configuration": (context) =>
                 const OnlineShopAIConfigScreen(),
+            "/online_shop/ai_configuration/description": (context) =>
+                const OnlineShopAIDescriptionScreen(),
+            "/online_shop/ai_configuration/language_style": (context) =>
+                const OnlineShopAILanguageStyleScreen(),
+            "/online_shop/ai_configuration/sop": (context) =>
+                const OnlineShopAISOPScreen(),
+            "/online_shop/ai_configuration/glossary": (context) =>
+                const OnlineShopAIGlossaryScreen(),
+            "/online_shop/ai_configuration/faq": (context) =>
+                const OnlineShopAIFAQScreen(),
             "/online_shop/orders": (context) =>
                 const OnlineShopOrderMasterScreen(),
             "/online_shop/orders/detail": (context) =>
