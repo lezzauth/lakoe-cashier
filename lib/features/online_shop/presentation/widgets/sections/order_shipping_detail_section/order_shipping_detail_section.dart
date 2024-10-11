@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:online_shop_repository/online_shop_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_track_argument.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
@@ -19,6 +21,11 @@ class OrderShippingDetailSection extends StatefulWidget {
 
 class _OrderShippingDetailSectionState
     extends State<OrderShippingDetailSection> {
+  Future<void> _onGoToTracking() async {
+    await Navigator.pushNamed(context, "/online_shop/orders/detail/track",
+        arguments: OnlineShopOrderTrackArgument(order: widget.order));
+  }
+
   @override
   Widget build(BuildContext context) {
     final isShowShipmentDetail =
@@ -44,7 +51,19 @@ class _OrderShippingDetailSectionState
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 12),
-                  child: TextHeading4("Detail Pengiriman"),
+                  child: Row(
+                    children: [
+                      Expanded(child: TextHeading4("Detail Pengiriman")),
+                      if (isShowShipmentDetail)
+                        GestureDetector(
+                          onTap: _onGoToTracking,
+                          child: TextActionM(
+                            "Lacak Pengiriman",
+                            color: TColors.primary,
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 12),

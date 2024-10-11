@@ -32,11 +32,13 @@ import 'package:point_of_sales_cashier/features/home/application/cubit/onboardin
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/onboarding_transaction.dart';
 import 'package:point_of_sales_cashier/features/online_shop/application/cubit/shop_order_master_cubit/shop_order_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_detail_argument.dart';
+import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_track_argument.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_cs_master.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_master.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_detail.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_master.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_track.dart';
 import 'package:point_of_sales_cashier/features/packages/boost/presentation/screens/boost_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/grow_package_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_master.dart';
@@ -362,6 +364,11 @@ class App extends StatelessWidget {
                 OnlineShopOrderDetailScreen(
                   arguments: ModalRoute.of(context)!.settings.arguments
                       as OnlineShopOrderDetailArgument,
+                ),
+            "/online_shop/orders/detail/track": (context) =>
+                OnlineShopOrderTrackScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as OnlineShopOrderTrackArgument,
                 ),
           },
         ),

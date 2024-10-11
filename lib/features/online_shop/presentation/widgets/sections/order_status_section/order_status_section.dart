@@ -51,25 +51,25 @@ class _OrderStatusSectionState extends State<OrderStatusSection> {
                     order: widget.order,
                   ),
                 ),
-                if (isShowHistory)
-                  GestureDetector(
-                    onTap: () {
-                      //
-                    },
-                    child: Row(
-                      children: [
-                        TextActionL(
-                          "Lihat Riwayat Pesanan",
-                          color: TColors.primary,
-                        ),
-                        SizedBox(width: 4),
-                        UiIcons(
-                          TIcons.arrowDown,
-                          color: TColors.primary,
-                        )
-                      ],
-                    ),
-                  ),
+                // if (isShowHistory)
+                //   GestureDetector(
+                //     onTap: () {
+                //       //
+                //     },
+                //     child: Row(
+                //       children: [
+                //         TextActionL(
+                //           "Lihat Riwayat Pesanan",
+                //           color: TColors.primary,
+                //         ),
+                //         SizedBox(width: 4),
+                //         UiIcons(
+                //           TIcons.arrowDown,
+                //           color: TColors.primary,
+                //         )
+                //       ],
+                //     ),
+                //   ),
               ],
             ),
           ),
