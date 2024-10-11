@@ -8,6 +8,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_track_argument.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
 
 class OrderShippingDetailSection extends StatefulWidget {
   const OrderShippingDetailSection({super.key, required this.order});
@@ -24,6 +25,21 @@ class _OrderShippingDetailSectionState
   Future<void> _onGoToTracking() async {
     await Navigator.pushNamed(context, "/online_shop/orders/detail/track",
         arguments: OnlineShopOrderTrackArgument(order: widget.order));
+  }
+
+  Future<void> _onCopy({required String title, required String text}) async {
+    await THelper.copyToClipboard(text);
+
+    if (!mounted) return;
+    SnackBar snackBar = SnackBar(
+      content: Text(title),
+      showCloseIcon: true,
+    );
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        snackBar,
+      );
   }
 
   @override
@@ -96,6 +112,12 @@ class _OrderShippingDetailSectionState
                             Container(
                               margin: const EdgeInsets.only(left: 4),
                               child: UiIcons(
+                                onTap: () {
+                                  _onCopy(
+                                    title: "Nomor resi berhasil disalin",
+                                    text: widget.order.shipment.waybillId ?? "",
+                                  );
+                                },
                                 TIcons.copy,
                                 height: 18,
                                 width: 18,
