@@ -239,80 +239,90 @@ class _OnlineShopOrderTrackState extends State<OnlineShopOrderTrack> {
                               color: TColors.neutralLightMedium,
                             ),
                           ),
-                          child: FixedTimeline.tileBuilder(
-                            theme: TimelineThemeData(
-                              nodePosition: 0,
-                              color: Color(0xff989898),
-                              indicatorTheme: IndicatorThemeData(
-                                position: 0,
-                                size: 20.0,
-                              ),
-                              connectorTheme: ConnectorThemeData(
-                                thickness: 2.5,
-                              ),
-                            ),
-                            builder: TimelineTileBuilder.connected(
-                              connectionDirection: ConnectionDirection.before,
-                              itemCount: track.history.length,
-                              contentsBuilder: (_, index) {
-                                final history =
-                                    track.history.reversed.elementAt(index);
-
-                                return Padding(
-                                  padding: EdgeInsets.only(left: 8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Container(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 4),
-                                        child: TextHeading4(history.note),
-                                      ),
-                                      Container(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 4),
-                                        child: TextBodyS(
-                                          TFormatter.orderDate(
-                                            history.updatedAt,
-                                            withDay: true,
-                                          ),
-                                          color: TColors.neutralDarkLight,
-                                        ),
-                                      )
-                                      // _InnerTimeline(
-                                      //     messages: processes[index].messages),
-                                    ],
+                          child: track.history.isEmpty
+                              ? Center(
+                                  child: TextBodyS(
+                                    "Riwayat pengiriman masih kosong",
+                                    color: TColors.neutralDarkLight,
                                   ),
-                                );
-                              },
-                              indicatorBuilder: (_, index) {
-                                if (index == 0) {
-                                  return OutlinedDotIndicator(
-                                    borderWidth: 5,
-                                    color: TColors.highlightLight,
-                                    backgroundColor: TColors.highlightDarkest,
-                                  );
-                                } else {
-                                  return OutlinedDotIndicator(
-                                    borderWidth: 5,
-                                    color: TColors.neutralLightMedium,
-                                    backgroundColor: TColors.neutralLightDark,
-                                  );
-                                }
-                              },
-                              connectorBuilder: (_, index, ___) =>
-                                  SolidLineConnector(
-                                thickness: 1.5,
-                                color: index == 0
-                                    ? Color(0xff66c97f)
-                                    : TColors.neutralLightMedium,
-                                indent: 4,
-                                endIndent: 4,
-                              ),
-                            ),
-                          ),
+                                )
+                              : FixedTimeline.tileBuilder(
+                                  theme: TimelineThemeData(
+                                    nodePosition: 0,
+                                    color: Color(0xff989898),
+                                    indicatorTheme: IndicatorThemeData(
+                                      position: 0,
+                                      size: 20.0,
+                                    ),
+                                    connectorTheme: ConnectorThemeData(
+                                      thickness: 2.5,
+                                    ),
+                                  ),
+                                  builder: TimelineTileBuilder.connected(
+                                    connectionDirection:
+                                        ConnectionDirection.before,
+                                    itemCount: track.history.length,
+                                    contentsBuilder: (_, index) {
+                                      final history = track.history.reversed
+                                          .elementAt(index);
+
+                                      return Padding(
+                                        padding: EdgeInsets.only(left: 8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 4),
+                                              child: TextHeading4(history.note),
+                                            ),
+                                            Container(
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 4),
+                                              child: TextBodyS(
+                                                TFormatter.orderDate(
+                                                  history.updatedAt,
+                                                  withDay: true,
+                                                ),
+                                                color: TColors.neutralDarkLight,
+                                              ),
+                                            )
+                                            // _InnerTimeline(
+                                            //     messages: processes[index].messages),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    indicatorBuilder: (_, index) {
+                                      if (index == 0) {
+                                        return OutlinedDotIndicator(
+                                          borderWidth: 5,
+                                          color: TColors.highlightLight,
+                                          backgroundColor:
+                                              TColors.highlightDarkest,
+                                        );
+                                      } else {
+                                        return OutlinedDotIndicator(
+                                          borderWidth: 5,
+                                          color: TColors.neutralLightMedium,
+                                          backgroundColor:
+                                              TColors.neutralLightDark,
+                                        );
+                                      }
+                                    },
+                                    connectorBuilder: (_, index, ___) =>
+                                        SolidLineConnector(
+                                      thickness: 1.5,
+                                      color: index == 0
+                                          ? Color(0xff66c97f)
+                                          : TColors.neutralLightMedium,
+                                      indent: 4,
+                                      endIndent: 4,
+                                    ),
+                                  ),
+                                ),
                         ),
                       ),
                     ],

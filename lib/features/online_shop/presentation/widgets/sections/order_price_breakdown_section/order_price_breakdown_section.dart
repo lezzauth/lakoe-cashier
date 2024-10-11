@@ -146,7 +146,7 @@ class _OrderPriceBreakdownSectionState
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: TextHeading3("Rincian Pembayaran"),
+                        child: TextHeading3("Total Penjualan"),
                       ),
                       TextHeading3(TFormatter.formatToRupiah(
                           double.parse(widget.order.price))),

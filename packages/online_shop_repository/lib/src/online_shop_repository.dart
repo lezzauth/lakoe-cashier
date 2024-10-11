@@ -79,7 +79,7 @@ class OnlineShopRepositoryImpl implements OnlineShopRepository {
     final outlet = await _getOutletId(outletId: outletId);
 
     final response =
-        await _dio.post("$_baseURL/$outlet/orders/$orderId/proceed");
+        await _dio.post("$_baseURL/$outlet/orders/$orderId/procced");
 
     return response.data;
   }
