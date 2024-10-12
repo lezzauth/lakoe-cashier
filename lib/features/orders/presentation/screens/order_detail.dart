@@ -530,7 +530,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                         orderTotal: _getOrderTotal(order),
                                         total: double.parse(order.price),
                                         isPaid: order.paymentStatus == "PAID",
-                                        // paymentInfo: order.transactions,
+                                        paymentInfo: order.transactions,
                                         charges: order.charges!
                                             .map((e) => OrderSummaryChargeModel(
                                                   type: e.type,

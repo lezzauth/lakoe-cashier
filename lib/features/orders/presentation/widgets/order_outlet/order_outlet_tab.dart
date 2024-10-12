@@ -80,68 +80,70 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
                 ),
                 Expanded(
                   child: BlocBuilder<OrderMasterCubit, OrderMasterState>(
-                      builder: (context, state) => switch (state) {
-                            OrderMasterLoadSuccess(:final orders) =>
-                              CustomScrollView(
-                                slivers: [
-                                  if (orders.isNotEmpty) ...[
-                                    SliverList.builder(
-                                      itemCount: orders.length,
-                                      itemBuilder: (context, index) {
-                                        OrderItemResponse order =
-                                            orders.elementAt(index);
-                                        bool isPaid =
-                                            order.paymentStatus == "PAID";
+                    builder: (context, state) => switch (state) {
+                      OrderMasterLoadSuccess(:final orders) => CustomScrollView(
+                          slivers: [
+                            if (orders.isNotEmpty) ...[
+                              SliverList.builder(
+                                itemCount: orders.length,
+                                itemBuilder: (context, index) {
+                                  final reversedIndex =
+                                      orders.length - 1 - index;
 
-                                        return OrderListItem(
-                                          // isWithQR: index % 2 == 0,
-                                          isPaid: isPaid,
-                                          type: order.type,
-                                          no: order.no,
-                                          onTap: () {
-                                            Navigator.pushNamed(
-                                              context,
-                                              "/orders/detail",
-                                              arguments: OrderDetailArgument(
-                                                id: order.id,
-                                              ),
-                                            );
-                                          },
-                                          price: order.price,
-                                          customerName:
-                                              order.customer?.name ?? "Umum",
-                                          tableName: order.table?.no ?? "-",
-                                        );
-                                      },
-                                    ),
-                                    const SliverToBoxAdapter(
-                                        child: SizedBox(height: 72))
-                                  ],
-                                  if (orders.isEmpty)
-                                    SliverToBoxAdapter(
-                                      child: EmptyList(
-                                        image: SvgPicture.asset(
-                                          TImages.catBox,
-                                          width: 276,
-                                          height: 200,
+                                  OrderItemResponse order =
+                                      orders.elementAt(reversedIndex);
+                                  bool isPaid = order.paymentStatus == "PAID";
+
+                                  return OrderListItem(
+                                    isPaid: isPaid,
+                                    type: order.type,
+                                    no: order.no,
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        "/orders/detail",
+                                        arguments: OrderDetailArgument(
+                                          id: order.id,
                                         ),
-                                        title: "Belum ada pesanan, nih!",
-                                        subTitle:
-                                            "Saat ini belum ada pesanan masuk. Yuk, bikin pesanan pertama untuk hari ini.",
-                                      ),
-                                    ),
-                                ],
+                                      );
+                                    },
+                                    price: order.price,
+                                    customerName:
+                                        order.customer?.name ?? "Umum",
+                                    tableName: order.table?.no ?? "-",
+                                  );
+                                },
                               ),
-                            OrderMasterLoadFailure(:final error) => Center(
-                                child: TextBodyS(
-                                  error,
-                                  color: TColors.error,
+                              const SliverToBoxAdapter(
+                                child: SizedBox(height: 72),
+                              ),
+                            ],
+                            if (orders.isEmpty)
+                              SliverToBoxAdapter(
+                                child: EmptyList(
+                                  image: SvgPicture.asset(
+                                    TImages.catBox,
+                                    width: 276,
+                                    height: 200,
+                                  ),
+                                  title: "Belum ada pesanan, nih!",
+                                  subTitle:
+                                      "Saat ini belum ada pesanan masuk. Yuk, bikin pesanan pertama untuk hari ini.",
                                 ),
                               ),
-                            _ => const Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                          }),
+                          ],
+                        ),
+                      OrderMasterLoadFailure(:final error) => Center(
+                          child: TextBodyS(
+                            error,
+                            color: TColors.error,
+                          ),
+                        ),
+                      _ => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                    },
+                  ),
                 )
               ],
             ),
