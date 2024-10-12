@@ -89,7 +89,6 @@ class TIcons {
   static const String logout = "assets/icons/logout.svg";
   static const String share = "assets/icons/share.svg";
   static const String barcode = "assets/icons/barcode.svg";
-  static const String copy = "assets/icons/copy.svg";
   static const String whatsappSolid = "assets/icons/whatsapp-solid.svg";
   static const String box2 = "assets/icons/box-2.svg";
   static const String calendar2 = "assets/icons/calendar-2.svg";
