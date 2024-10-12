@@ -80,11 +80,11 @@ class _DashboardState extends State<Dashboard> {
                 margin: const EdgeInsets.only(bottom: 12),
                 child: const DashboardBanner(),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                margin: const EdgeInsets.only(bottom: 12),
-                child: const AIBanner(),
-              ),
+              // Container(
+              //   padding: const EdgeInsets.symmetric(horizontal: 24),
+              //   margin: const EdgeInsets.only(bottom: 12),
+              //   child: const AIBanner(),
+              // ),
               Container(
                 margin: const EdgeInsets.only(bottom: 12),
                 child: const DashboardFilter(),

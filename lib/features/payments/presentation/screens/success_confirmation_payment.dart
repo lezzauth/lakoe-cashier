@@ -164,7 +164,7 @@ class _SuccessConfirmationPaymentContentState
                                 children: [
                                   const TextReceipt("No. Order"),
                                   TextReceipt(
-                                    arguments.payment.no.toString(),
+                                    "#${arguments.payment.no}",
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ],

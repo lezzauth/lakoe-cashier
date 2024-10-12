@@ -5,6 +5,8 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_sm
 class BillListPrice extends StatelessWidget {
   final String label;
   final String price;
+  final bool isPercentage;
+  final String? percentageValue;
   final bool isLarge;
   final bool isBold;
 
@@ -12,6 +14,8 @@ class BillListPrice extends StatelessWidget {
     super.key,
     required this.label,
     required this.price,
+    this.isPercentage = false,
+    this.percentageValue,
     this.isLarge = false,
     this.isBold = false,
   });
@@ -25,7 +29,7 @@ class BillListPrice extends StatelessWidget {
           child: isLarge
               ? TextLarge(label)
               : TextSmall(
-                  label,
+                  "${label} ${isPercentage ? '(${percentageValue}%)' : ''}",
                   isBold: isBold,
                 ),
         ),

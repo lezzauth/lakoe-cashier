@@ -1835,6 +1835,464 @@ abstract class _OrderTable implements OrderTable {
       throw _privateConstructorUsedError;
 }
 
+OrderCashier _$OrderCashierFromJson(Map<String, dynamic> json) {
+  return _OrderCashier.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OrderCashier {
+  String get id => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  String get initialBalance => throw _privateConstructorUsedError;
+  String get finalBalance => throw _privateConstructorUsedError;
+  String get outletId => throw _privateConstructorUsedError;
+  String get operatorId => throw _privateConstructorUsedError;
+  String get openedAt => throw _privateConstructorUsedError;
+  String? get closedAt => throw _privateConstructorUsedError;
+  OrderOperator get operator => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OrderCashierCopyWith<OrderCashier> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OrderCashierCopyWith<$Res> {
+  factory $OrderCashierCopyWith(
+          OrderCashier value, $Res Function(OrderCashier) then) =
+      _$OrderCashierCopyWithImpl<$Res, OrderCashier>;
+  @useResult
+  $Res call(
+      {String id,
+      String status,
+      String initialBalance,
+      String finalBalance,
+      String outletId,
+      String operatorId,
+      String openedAt,
+      String? closedAt,
+      OrderOperator operator});
+
+  $OrderOperatorCopyWith<$Res> get operator;
+}
+
+/// @nodoc
+class _$OrderCashierCopyWithImpl<$Res, $Val extends OrderCashier>
+    implements $OrderCashierCopyWith<$Res> {
+  _$OrderCashierCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? status = null,
+    Object? initialBalance = null,
+    Object? finalBalance = null,
+    Object? outletId = null,
+    Object? operatorId = null,
+    Object? openedAt = null,
+    Object? closedAt = freezed,
+    Object? operator = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      initialBalance: null == initialBalance
+          ? _value.initialBalance
+          : initialBalance // ignore: cast_nullable_to_non_nullable
+              as String,
+      finalBalance: null == finalBalance
+          ? _value.finalBalance
+          : finalBalance // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      operatorId: null == operatorId
+          ? _value.operatorId
+          : operatorId // ignore: cast_nullable_to_non_nullable
+              as String,
+      openedAt: null == openedAt
+          ? _value.openedAt
+          : openedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      closedAt: freezed == closedAt
+          ? _value.closedAt
+          : closedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      operator: null == operator
+          ? _value.operator
+          : operator // ignore: cast_nullable_to_non_nullable
+              as OrderOperator,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OrderOperatorCopyWith<$Res> get operator {
+    return $OrderOperatorCopyWith<$Res>(_value.operator, (value) {
+      return _then(_value.copyWith(operator: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$OrderCashierImplCopyWith<$Res>
+    implements $OrderCashierCopyWith<$Res> {
+  factory _$$OrderCashierImplCopyWith(
+          _$OrderCashierImpl value, $Res Function(_$OrderCashierImpl) then) =
+      __$$OrderCashierImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String status,
+      String initialBalance,
+      String finalBalance,
+      String outletId,
+      String operatorId,
+      String openedAt,
+      String? closedAt,
+      OrderOperator operator});
+
+  @override
+  $OrderOperatorCopyWith<$Res> get operator;
+}
+
+/// @nodoc
+class __$$OrderCashierImplCopyWithImpl<$Res>
+    extends _$OrderCashierCopyWithImpl<$Res, _$OrderCashierImpl>
+    implements _$$OrderCashierImplCopyWith<$Res> {
+  __$$OrderCashierImplCopyWithImpl(
+      _$OrderCashierImpl _value, $Res Function(_$OrderCashierImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? status = null,
+    Object? initialBalance = null,
+    Object? finalBalance = null,
+    Object? outletId = null,
+    Object? operatorId = null,
+    Object? openedAt = null,
+    Object? closedAt = freezed,
+    Object? operator = null,
+  }) {
+    return _then(_$OrderCashierImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      initialBalance: null == initialBalance
+          ? _value.initialBalance
+          : initialBalance // ignore: cast_nullable_to_non_nullable
+              as String,
+      finalBalance: null == finalBalance
+          ? _value.finalBalance
+          : finalBalance // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      operatorId: null == operatorId
+          ? _value.operatorId
+          : operatorId // ignore: cast_nullable_to_non_nullable
+              as String,
+      openedAt: null == openedAt
+          ? _value.openedAt
+          : openedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      closedAt: freezed == closedAt
+          ? _value.closedAt
+          : closedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      operator: null == operator
+          ? _value.operator
+          : operator // ignore: cast_nullable_to_non_nullable
+              as OrderOperator,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OrderCashierImpl implements _OrderCashier {
+  const _$OrderCashierImpl(
+      {required this.id,
+      required this.status,
+      required this.initialBalance,
+      required this.finalBalance,
+      required this.outletId,
+      required this.operatorId,
+      required this.openedAt,
+      this.closedAt,
+      required this.operator});
+
+  factory _$OrderCashierImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OrderCashierImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String status;
+  @override
+  final String initialBalance;
+  @override
+  final String finalBalance;
+  @override
+  final String outletId;
+  @override
+  final String operatorId;
+  @override
+  final String openedAt;
+  @override
+  final String? closedAt;
+  @override
+  final OrderOperator operator;
+
+  @override
+  String toString() {
+    return 'OrderCashier(id: $id, status: $status, initialBalance: $initialBalance, finalBalance: $finalBalance, outletId: $outletId, operatorId: $operatorId, openedAt: $openedAt, closedAt: $closedAt, operator: $operator)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OrderCashierImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.initialBalance, initialBalance) ||
+                other.initialBalance == initialBalance) &&
+            (identical(other.finalBalance, finalBalance) ||
+                other.finalBalance == finalBalance) &&
+            (identical(other.outletId, outletId) ||
+                other.outletId == outletId) &&
+            (identical(other.operatorId, operatorId) ||
+                other.operatorId == operatorId) &&
+            (identical(other.openedAt, openedAt) ||
+                other.openedAt == openedAt) &&
+            (identical(other.closedAt, closedAt) ||
+                other.closedAt == closedAt) &&
+            (identical(other.operator, operator) ||
+                other.operator == operator));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, status, initialBalance,
+      finalBalance, outletId, operatorId, openedAt, closedAt, operator);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OrderCashierImplCopyWith<_$OrderCashierImpl> get copyWith =>
+      __$$OrderCashierImplCopyWithImpl<_$OrderCashierImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OrderCashierImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OrderCashier implements OrderCashier {
+  const factory _OrderCashier(
+      {required final String id,
+      required final String status,
+      required final String initialBalance,
+      required final String finalBalance,
+      required final String outletId,
+      required final String operatorId,
+      required final String openedAt,
+      final String? closedAt,
+      required final OrderOperator operator}) = _$OrderCashierImpl;
+
+  factory _OrderCashier.fromJson(Map<String, dynamic> json) =
+      _$OrderCashierImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get status;
+  @override
+  String get initialBalance;
+  @override
+  String get finalBalance;
+  @override
+  String get outletId;
+  @override
+  String get operatorId;
+  @override
+  String get openedAt;
+  @override
+  String? get closedAt;
+  @override
+  OrderOperator get operator;
+  @override
+  @JsonKey(ignore: true)
+  _$$OrderCashierImplCopyWith<_$OrderCashierImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+OrderOperator _$OrderOperatorFromJson(Map<String, dynamic> json) {
+  return _OrderOperator.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OrderOperator {
+  String get name => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OrderOperatorCopyWith<OrderOperator> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OrderOperatorCopyWith<$Res> {
+  factory $OrderOperatorCopyWith(
+          OrderOperator value, $Res Function(OrderOperator) then) =
+      _$OrderOperatorCopyWithImpl<$Res, OrderOperator>;
+  @useResult
+  $Res call({String name});
+}
+
+/// @nodoc
+class _$OrderOperatorCopyWithImpl<$Res, $Val extends OrderOperator>
+    implements $OrderOperatorCopyWith<$Res> {
+  _$OrderOperatorCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$OrderOperatorImplCopyWith<$Res>
+    implements $OrderOperatorCopyWith<$Res> {
+  factory _$$OrderOperatorImplCopyWith(
+          _$OrderOperatorImpl value, $Res Function(_$OrderOperatorImpl) then) =
+      __$$OrderOperatorImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name});
+}
+
+/// @nodoc
+class __$$OrderOperatorImplCopyWithImpl<$Res>
+    extends _$OrderOperatorCopyWithImpl<$Res, _$OrderOperatorImpl>
+    implements _$$OrderOperatorImplCopyWith<$Res> {
+  __$$OrderOperatorImplCopyWithImpl(
+      _$OrderOperatorImpl _value, $Res Function(_$OrderOperatorImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+  }) {
+    return _then(_$OrderOperatorImpl(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OrderOperatorImpl implements _OrderOperator {
+  const _$OrderOperatorImpl({required this.name});
+
+  factory _$OrderOperatorImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OrderOperatorImplFromJson(json);
+
+  @override
+  final String name;
+
+  @override
+  String toString() {
+    return 'OrderOperator(name: $name)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OrderOperatorImpl &&
+            (identical(other.name, name) || other.name == name));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OrderOperatorImplCopyWith<_$OrderOperatorImpl> get copyWith =>
+      __$$OrderOperatorImplCopyWithImpl<_$OrderOperatorImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OrderOperatorImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OrderOperator implements OrderOperator {
+  const factory _OrderOperator({required final String name}) =
+      _$OrderOperatorImpl;
+
+  factory _OrderOperator.fromJson(Map<String, dynamic> json) =
+      _$OrderOperatorImpl.fromJson;
+
+  @override
+  String get name;
+  @override
+  @JsonKey(ignore: true)
+  _$$OrderOperatorImplCopyWith<_$OrderOperatorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 OrderModel _$OrderModelFromJson(Map<String, dynamic> json) {
   return _OrderModel.fromJson(json);
 }
@@ -1854,11 +2312,14 @@ mixin _$OrderModel {
   String? get tableId => throw _privateConstructorUsedError;
   String get cashierId => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
+  String? get closedAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
   OrderCustomer? get customer => throw _privateConstructorUsedError;
-  List<OrderCharge> get charges => throw _privateConstructorUsedError;
+  List<OrderCharge>? get charges => throw _privateConstructorUsedError;
+  List<dynamic>? get discount => throw _privateConstructorUsedError;
+  OrderCashier? get cashier => throw _privateConstructorUsedError;
   OrderTable? get table => throw _privateConstructorUsedError;
-  List<Transactions> get transactions => throw _privateConstructorUsedError;
+  List<Transactions>? get transactions => throw _privateConstructorUsedError;
   List<OrderItem> get items => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1887,14 +2348,18 @@ abstract class $OrderModelCopyWith<$Res> {
       String? tableId,
       String cashierId,
       String createdAt,
+      String? closedAt,
       String updatedAt,
       OrderCustomer? customer,
-      List<OrderCharge> charges,
+      List<OrderCharge>? charges,
+      List<dynamic>? discount,
+      OrderCashier? cashier,
       OrderTable? table,
-      List<Transactions> transactions,
+      List<Transactions>? transactions,
       List<OrderItem> items});
 
   $OrderCustomerCopyWith<$Res>? get customer;
+  $OrderCashierCopyWith<$Res>? get cashier;
   $OrderTableCopyWith<$Res>? get table;
 }
 
@@ -1924,11 +2389,14 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
     Object? tableId = freezed,
     Object? cashierId = null,
     Object? createdAt = null,
+    Object? closedAt = freezed,
     Object? updatedAt = null,
     Object? customer = freezed,
-    Object? charges = null,
+    Object? charges = freezed,
+    Object? discount = freezed,
+    Object? cashier = freezed,
     Object? table = freezed,
-    Object? transactions = null,
+    Object? transactions = freezed,
     Object? items = null,
   }) {
     return _then(_value.copyWith(
@@ -1984,6 +2452,10 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String,
+      closedAt: freezed == closedAt
+          ? _value.closedAt
+          : closedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
       updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -1992,18 +2464,26 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
           ? _value.customer
           : customer // ignore: cast_nullable_to_non_nullable
               as OrderCustomer?,
-      charges: null == charges
+      charges: freezed == charges
           ? _value.charges
           : charges // ignore: cast_nullable_to_non_nullable
-              as List<OrderCharge>,
+              as List<OrderCharge>?,
+      discount: freezed == discount
+          ? _value.discount
+          : discount // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      cashier: freezed == cashier
+          ? _value.cashier
+          : cashier // ignore: cast_nullable_to_non_nullable
+              as OrderCashier?,
       table: freezed == table
           ? _value.table
           : table // ignore: cast_nullable_to_non_nullable
               as OrderTable?,
-      transactions: null == transactions
+      transactions: freezed == transactions
           ? _value.transactions
           : transactions // ignore: cast_nullable_to_non_nullable
-              as List<Transactions>,
+              as List<Transactions>?,
       items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
@@ -2020,6 +2500,18 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
 
     return $OrderCustomerCopyWith<$Res>(_value.customer!, (value) {
       return _then(_value.copyWith(customer: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OrderCashierCopyWith<$Res>? get cashier {
+    if (_value.cashier == null) {
+      return null;
+    }
+
+    return $OrderCashierCopyWith<$Res>(_value.cashier!, (value) {
+      return _then(_value.copyWith(cashier: value) as $Val);
     });
   }
 
@@ -2058,15 +2550,20 @@ abstract class _$$OrderModelImplCopyWith<$Res>
       String? tableId,
       String cashierId,
       String createdAt,
+      String? closedAt,
       String updatedAt,
       OrderCustomer? customer,
-      List<OrderCharge> charges,
+      List<OrderCharge>? charges,
+      List<dynamic>? discount,
+      OrderCashier? cashier,
       OrderTable? table,
-      List<Transactions> transactions,
+      List<Transactions>? transactions,
       List<OrderItem> items});
 
   @override
   $OrderCustomerCopyWith<$Res>? get customer;
+  @override
+  $OrderCashierCopyWith<$Res>? get cashier;
   @override
   $OrderTableCopyWith<$Res>? get table;
 }
@@ -2095,11 +2592,14 @@ class __$$OrderModelImplCopyWithImpl<$Res>
     Object? tableId = freezed,
     Object? cashierId = null,
     Object? createdAt = null,
+    Object? closedAt = freezed,
     Object? updatedAt = null,
     Object? customer = freezed,
-    Object? charges = null,
+    Object? charges = freezed,
+    Object? discount = freezed,
+    Object? cashier = freezed,
     Object? table = freezed,
-    Object? transactions = null,
+    Object? transactions = freezed,
     Object? items = null,
   }) {
     return _then(_$OrderModelImpl(
@@ -2155,6 +2655,10 @@ class __$$OrderModelImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String,
+      closedAt: freezed == closedAt
+          ? _value.closedAt
+          : closedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
       updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -2163,18 +2667,26 @@ class __$$OrderModelImplCopyWithImpl<$Res>
           ? _value.customer
           : customer // ignore: cast_nullable_to_non_nullable
               as OrderCustomer?,
-      charges: null == charges
+      charges: freezed == charges
           ? _value._charges
           : charges // ignore: cast_nullable_to_non_nullable
-              as List<OrderCharge>,
+              as List<OrderCharge>?,
+      discount: freezed == discount
+          ? _value._discount
+          : discount // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      cashier: freezed == cashier
+          ? _value.cashier
+          : cashier // ignore: cast_nullable_to_non_nullable
+              as OrderCashier?,
       table: freezed == table
           ? _value.table
           : table // ignore: cast_nullable_to_non_nullable
               as OrderTable?,
-      transactions: null == transactions
+      transactions: freezed == transactions
           ? _value._transactions
           : transactions // ignore: cast_nullable_to_non_nullable
-              as List<Transactions>,
+              as List<Transactions>?,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -2200,13 +2712,17 @@ class _$OrderModelImpl implements _OrderModel {
       this.tableId,
       required this.cashierId,
       required this.createdAt,
+      this.closedAt,
       required this.updatedAt,
       this.customer,
-      required final List<OrderCharge> charges,
+      final List<OrderCharge>? charges,
+      final List<dynamic>? discount,
+      this.cashier,
       this.table,
-      required final List<Transactions> transactions,
+      final List<Transactions>? transactions,
       required final List<OrderItem> items})
       : _charges = charges,
+        _discount = discount,
         _transactions = transactions,
         _items = items;
 
@@ -2240,25 +2756,43 @@ class _$OrderModelImpl implements _OrderModel {
   @override
   final String createdAt;
   @override
+  final String? closedAt;
+  @override
   final String updatedAt;
   @override
   final OrderCustomer? customer;
-  final List<OrderCharge> _charges;
+  final List<OrderCharge>? _charges;
   @override
-  List<OrderCharge> get charges {
+  List<OrderCharge>? get charges {
+    final value = _charges;
+    if (value == null) return null;
     if (_charges is EqualUnmodifiableListView) return _charges;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_charges);
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<dynamic>? _discount;
+  @override
+  List<dynamic>? get discount {
+    final value = _discount;
+    if (value == null) return null;
+    if (_discount is EqualUnmodifiableListView) return _discount;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
   }
 
   @override
-  final OrderTable? table;
-  final List<Transactions> _transactions;
+  final OrderCashier? cashier;
   @override
-  List<Transactions> get transactions {
+  final OrderTable? table;
+  final List<Transactions>? _transactions;
+  @override
+  List<Transactions>? get transactions {
+    final value = _transactions;
+    if (value == null) return null;
     if (_transactions is EqualUnmodifiableListView) return _transactions;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_transactions);
+    return EqualUnmodifiableListView(value);
   }
 
   final List<OrderItem> _items;
@@ -2271,7 +2805,7 @@ class _$OrderModelImpl implements _OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, no: $no, status: $status, price: $price, customerId: $customerId, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, outletId: $outletId, tableId: $tableId, cashierId: $cashierId, createdAt: $createdAt, updatedAt: $updatedAt, customer: $customer, charges: $charges, table: $table, transactions: $transactions, items: $items)';
+    return 'OrderModel(id: $id, no: $no, status: $status, price: $price, customerId: $customerId, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, outletId: $outletId, tableId: $tableId, cashierId: $cashierId, createdAt: $createdAt, closedAt: $closedAt, updatedAt: $updatedAt, customer: $customer, charges: $charges, discount: $discount, cashier: $cashier, table: $table, transactions: $transactions, items: $items)';
   }
 
   @override
@@ -2298,11 +2832,15 @@ class _$OrderModelImpl implements _OrderModel {
                 other.cashierId == cashierId) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.closedAt, closedAt) ||
+                other.closedAt == closedAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.customer, customer) ||
                 other.customer == customer) &&
             const DeepCollectionEquality().equals(other._charges, _charges) &&
+            const DeepCollectionEquality().equals(other._discount, _discount) &&
+            (identical(other.cashier, cashier) || other.cashier == cashier) &&
             (identical(other.table, table) || other.table == table) &&
             const DeepCollectionEquality()
                 .equals(other._transactions, _transactions) &&
@@ -2326,9 +2864,12 @@ class _$OrderModelImpl implements _OrderModel {
         tableId,
         cashierId,
         createdAt,
+        closedAt,
         updatedAt,
         customer,
         const DeepCollectionEquality().hash(_charges),
+        const DeepCollectionEquality().hash(_discount),
+        cashier,
         table,
         const DeepCollectionEquality().hash(_transactions),
         const DeepCollectionEquality().hash(_items)
@@ -2363,11 +2904,14 @@ abstract class _OrderModel implements OrderModel {
       final String? tableId,
       required final String cashierId,
       required final String createdAt,
+      final String? closedAt,
       required final String updatedAt,
       final OrderCustomer? customer,
-      required final List<OrderCharge> charges,
+      final List<OrderCharge>? charges,
+      final List<dynamic>? discount,
+      final OrderCashier? cashier,
       final OrderTable? table,
-      required final List<Transactions> transactions,
+      final List<Transactions>? transactions,
       required final List<OrderItem> items}) = _$OrderModelImpl;
 
   factory _OrderModel.fromJson(Map<String, dynamic> json) =
@@ -2400,15 +2944,21 @@ abstract class _OrderModel implements OrderModel {
   @override
   String get createdAt;
   @override
+  String? get closedAt;
+  @override
   String get updatedAt;
   @override
   OrderCustomer? get customer;
   @override
-  List<OrderCharge> get charges;
+  List<OrderCharge>? get charges;
+  @override
+  List<dynamic>? get discount;
+  @override
+  OrderCashier? get cashier;
   @override
   OrderTable? get table;
   @override
-  List<Transactions> get transactions;
+  List<Transactions>? get transactions;
   @override
   List<OrderItem> get items;
   @override

@@ -337,18 +337,27 @@ class _OrderDetailState extends State<OrderDetail> {
     return false;
   }
 
-  void _showDetailBill(BuildContext context) {
+  void _showDetailBill(
+    BuildContext context, {
+    required OrderModel order,
+  }) {
     showModalBottomSheet(
       context: context,
       useSafeArea: true,
       isScrollControlled: true,
-      builder: (context) {
+      builder: (BuildContext context) {
         return DetailReceiptBottomSheet(
           controller: scrollController,
           widgetKey: receiptWidgetKey,
-          listBillPriceItem: listBillPriceItem,
-          saveAction: captureImage(),
-          shareAction: captureImage(save: false, share: true),
+          data: order,
+          saveAction: () async {
+            await captureImage();
+            Navigator.pop(context);
+          },
+          shareAction: () {
+            captureImage(save: false, share: true);
+            Navigator.pop(context);
+          },
         );
       },
     );
@@ -399,7 +408,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            padding: const EdgeInsets.fromLTRB(
+                                            padding: EdgeInsets.fromLTRB(
                                                 8, 8, 12, 8),
                                             margin: const EdgeInsets.only(
                                                 bottom: 13),
@@ -504,7 +513,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                                   width: 44,
                                                 ),
                                           name: product.name,
-                                          qty: orderItem.quantity,
+                                          // qty: orderItem.quantity,
                                           price: int.parse(product.price),
                                           noteAction: ProductNoteAction(
                                             notes: orderItem.notes ?? "",
@@ -521,8 +530,8 @@ class _OrderDetailState extends State<OrderDetail> {
                                         orderTotal: _getOrderTotal(order),
                                         total: double.parse(order.price),
                                         isPaid: order.paymentStatus == "PAID",
-                                        paymentInfo: order.transactions,
-                                        charges: order.charges
+                                        // paymentInfo: order.transactions,
+                                        charges: order.charges!
                                             .map((e) => OrderSummaryChargeModel(
                                                   type: e.type,
                                                   name: e.name,
@@ -574,7 +583,10 @@ class _OrderDetailState extends State<OrderDetail> {
                                     onPrint: () {
                                       print("Print Bill");
                                     },
-                                    onShare: () => _showDetailBill(context),
+                                    onShare: () => _showDetailBill(
+                                      context,
+                                      order: order,
+                                    ),
                                   ),
                                 ),
                               ),

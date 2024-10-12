@@ -110,6 +110,34 @@ class OrderTable with _$OrderTable {
 }
 
 @freezed
+class OrderCashier with _$OrderCashier {
+  const factory OrderCashier({
+    required String id,
+    required String status,
+    required String initialBalance,
+    required String finalBalance,
+    required String outletId,
+    required String operatorId,
+    required String openedAt,
+    String? closedAt,
+    required OrderOperator operator,
+  }) = _OrderCashier;
+
+  factory OrderCashier.fromJson(Map<String, Object?> json) =>
+      _$OrderCashierFromJson(json);
+}
+
+@freezed
+class OrderOperator with _$OrderOperator {
+  const factory OrderOperator({
+    required String name,
+  }) = _OrderOperator;
+
+  factory OrderOperator.fromJson(Map<String, Object?> json) =>
+      _$OrderOperatorFromJson(json);
+}
+
+@freezed
 class OrderModel with _$OrderModel {
   const factory OrderModel({
     required String id,
@@ -125,11 +153,14 @@ class OrderModel with _$OrderModel {
     String? tableId,
     required String cashierId,
     required String createdAt,
+    String? closedAt,
     required String updatedAt,
     OrderCustomer? customer,
-    required List<OrderCharge> charges,
+    List<OrderCharge>? charges,
+    List<dynamic>? discount,
+    OrderCashier? cashier,
     OrderTable? table,
-    required List<Transactions> transactions,
+    List<Transactions>? transactions,
     required List<OrderItem> items,
   }) = _OrderModel;
 

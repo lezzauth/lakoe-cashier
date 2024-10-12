@@ -100,10 +100,12 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
                                           no: order.no,
                                           onTap: () {
                                             Navigator.pushNamed(
-                                                context, "/orders/detail",
-                                                arguments: OrderDetailArgument(
-                                                  id: order.id,
-                                                ));
+                                              context,
+                                              "/orders/detail",
+                                              arguments: OrderDetailArgument(
+                                                id: order.id,
+                                              ),
+                                            );
                                           },
                                           price: order.price,
                                           customerName:

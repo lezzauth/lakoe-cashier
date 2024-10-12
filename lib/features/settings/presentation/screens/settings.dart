@@ -76,20 +76,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
       routeName: "/charges",
       iconSrc: TIcons.handMoney,
     ),
-    _SettingItem(
-      title: "Print & Struk (Bill)",
-      routeName: "/print",
-      iconSrc: TIcons.bill,
-    ),
   ];
   List<_SettingItem> employeeSettingItems = [];
   List<_SettingItem> otherSettingItems = [
-    _SettingItem(
-      title: "Kelola Toko Online",
-      routeName: "/online_shop",
-      iconSrc: TIcons.shop,
-      isNewItem: true,
-    ),
+    // _SettingItem(
+    //   title: "Kelola Toko Online",
+    //   routeName: "/online_shop",
+    //   iconSrc: TIcons.shop,
+    //   isNewItem: true,
+    // ),
     _SettingItem(
       title: "Kategori",
       routeName: "/categories",
@@ -100,16 +95,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
       routeName: "/tables",
       iconSrc: TIcons.tableRestaurant,
     ),
+    _SettingItem(
+      title: "Print & Struk (Bill)",
+      routeName: "/print",
+      iconSrc: TIcons.bill,
+    ),
     // _SettingItem(
     //   title: "Singkronisasi Data",
     //   routeName: "/",
     //   iconSrc: TIcons.smartphoneUpdate,
     // ),
-    _SettingItem(
-      title: "Sambungkan Aplikasi",
-      routeName: "/",
-      iconSrc: TIcons.linkSquare,
-    ),
+    // _SettingItem(
+    //   title: "Sambungkan Aplikasi",
+    //   routeName: "/",
+    //   iconSrc: TIcons.linkSquare,
+    // ),
   ];
 
   @override

@@ -1,134 +1,177 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_small.dart';
+import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_state.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_master.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/section/section_heading.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/section/section_list_item.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/section/section_price_info.dart';
+import 'package:point_of_sales_cashier/features/bill/presentation/widgets/section/section_charges.dart';
+import 'package:point_of_sales_cashier/features/orders/data/models.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class BillView extends StatelessWidget {
   final String outletName;
   final String outletAddress;
-  final String orderNumber;
-  final String cashierName;
   final String noBill;
-  final String orderType;
-  final String? noTable;
-  final String dateTime;
-  final String paymentMetod;
-  final String totalPrice;
-  final String moneyReceived;
-  final String changeMoney;
-  final List<Widget> children;
-  final String? closeBill;
-  final String greeting;
   final bool isEdit;
+  final OrderModel order;
 
   const BillView({
     super.key,
     required this.outletName,
     required this.outletAddress,
-    required this.orderNumber,
-    required this.cashierName,
     required this.noBill,
-    required this.orderType,
-    this.noTable,
-    required this.dateTime,
-    required this.paymentMetod,
-    required this.totalPrice,
-    required this.moneyReceived,
-    required this.changeMoney,
-    required this.children,
-    this.closeBill,
-    required this.greeting,
     this.isEdit = false,
+    required this.order,
   });
+
+  double _getOrderTotal(OrderModel order) {
+    return order.items.fold(0, (sum, item) {
+      return sum + double.parse(item.price);
+    });
+  }
+
+  Map<String, dynamic> _getPaymentInfo(Transactions payment) {
+    String modifiedPaymentMethod = payment.paymentMethod;
+
+    if (payment.paymentMethod == 'QR_CODE' && payment.paidFrom == 'EDC') {
+      modifiedPaymentMethod = 'QRIS Dinamis';
+    } else if (payment.paymentMethod == 'QR_CODE' &&
+        payment.paidFrom == 'CASHIER') {
+      modifiedPaymentMethod = 'QRIS Statis';
+    } else if (payment.paymentMethod == 'CASH') {
+      modifiedPaymentMethod = 'Cash (Tunai)';
+    } else if (payment.paymentMethod == 'DEBIT') {
+      modifiedPaymentMethod = 'Debit/Credit';
+    } else if (payment.paymentMethod == 'BANK_TRANSFER') {
+      modifiedPaymentMethod = 'Transfer Bank';
+    }
+
+    double paidAmount = 0.0;
+    if (payment.paidAmount.isNotEmpty) {
+      paidAmount = double.tryParse(payment.paidAmount) ?? 0.0;
+    }
+
+    double changeAmount = 0.0;
+    if (payment.change.isNotEmpty) {
+      changeAmount = double.tryParse(payment.change) ?? 0.0;
+    }
+
+    return {
+      'paidAmount': paidAmount,
+      'paymentMethod': modifiedPaymentMethod,
+      'change': changeAmount,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-      child: Center(
-        child: Container(
-          alignment: Alignment.bottomCenter,
-          clipBehavior: Clip.hardEdge,
-          decoration: BoxDecoration(
-            color: isEdit == false
-                ? TColors.neutralLightLightest
-                : TColors.neutralLightLight,
-            border: Border.all(
-              color: TColors.neutralLightMedium,
-              width: isEdit == false ? 0.0 : 1.0,
+    Map<String, dynamic> paymentDetails = {};
+
+    paymentDetails = _getPaymentInfo(order.transactions![0]);
+
+    return BlocBuilder<BillMasterCubit, BillMasterState>(
+        builder: (context, state) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        child: Center(
+          child: Container(
+            alignment: Alignment.bottomCenter,
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              color: isEdit == false
+                  ? TColors.neutralLightLightest
+                  : TColors.neutralLightLight,
+              border: Border.all(
+                color: TColors.neutralLightMedium,
+                width: isEdit == false ? 0.0 : 1.0,
+              ),
             ),
-          ),
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            runSpacing: 4.0,
-            children: [
-              BillSectionHeading(
-                outletName: outletName,
-                outletAddress: outletAddress,
-                orderNumber: orderNumber,
-                orderType: orderType,
-                noTable: noTable,
-              ),
-              SectionBillInformation(
-                cashierName: cashierName,
-                noBill: noBill,
-                dateTime: dateTime,
-              ),
-              const BillSectionListItem(),
-              BillPriceInfo(
-                paymentMetod: paymentMetod,
-                totalPrice: totalPrice,
-                moneyReceived: moneyReceived,
-                changeMoney: changeMoney,
-                children: children,
-              ),
-              closeBill != null
-                  ? SizedBox(
-                      child: TextSmall(
-                        closeBill!,
-                        isBold: true,
-                      ),
-                    )
-                  : const SizedBox(),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Separator(
-                  color: TColors.neutralDarkDarkest,
-                  height: 0.5,
-                  dashWidth: 4.0,
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              runSpacing: 4.0,
+              children: [
+                BillSectionHeading(
+                  outletName: outletName,
+                  outletAddress: outletAddress,
+                  orderNumber: order.no.toString(),
+                  orderType: order.type,
+                  noTable: order.table?.no,
                 ),
-              ),
-              BillGreeting(
-                greeting: greeting,
-              ),
-              const SizedBox(height: 52),
-              const SizedBox(
-                width: double.infinity,
-                child: TextSmall(
-                  "Supported by",
+                SectionBillInformation(
+                  cashierName: order.cashier!.operator.name,
+                  noBill: noBill,
+                  orderDate: TFormatter.billDate(order.createdAt),
+                ),
+                BillSectionListItem(
+                  items: order.items,
+                  subtotal: _getOrderTotal(order),
+                ),
+                BillSectionCharges(
+                  paymentMethod: paymentDetails['paymentMethod'],
+                  totalPrice: order.transactions![0].amount,
+                  moneyReceived: paymentDetails['paidAmount'].toString(),
+                  changeMoney: paymentDetails['change'].toString(),
+                  charges: order.charges!
+                      .map((e) => OrderSummaryChargeModel(
+                            type: e.type,
+                            name: e.name,
+                            amount: e.amount,
+                            isPercentage: e.isPercentage,
+                            percentageValue: e.percentageValue.toString(),
+                          ))
+                      .toList(),
+                  // children: children,
+                ),
+                order.closedAt!.isNotEmpty
+                    ? SizedBox(
+                        child: TextSmall(
+                          "Close Bill: ${TFormatter.billDate(order.closedAt!)}",
+                          isBold: true,
+                        ),
+                      )
+                    : const SizedBox(),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: Separator(
+                    color: TColors.neutralDarkDarkest,
+                    height: 0.5,
+                    dashWidth: 4.0,
+                  ),
+                ),
+                TextSmall(
+                  state.footNote,
                   textAlign: TextAlign.center,
                 ),
-              ),
-              SizedBox(
-                child: SvgPicture.asset(
-                  TImages.primaryLogoLakoe,
-                  height: 12,
-                  // ignore: deprecated_member_use
-                  color: TColors.neutralDarkDarkest,
+                const SizedBox(height: 52),
+                const SizedBox(
+                  width: double.infinity,
+                  child: TextSmall(
+                    "Supported by",
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  child: SvgPicture.asset(
+                    TImages.primaryLogoLakoe,
+                    height: 12,
+                    // ignore: deprecated_member_use
+                    color: TColors.neutralDarkDarkest,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

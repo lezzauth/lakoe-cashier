@@ -24,6 +24,14 @@ class TFormatter {
     return formattedDate;
   }
 
+  static String billDate(String dateStr) {
+    DateTime dateTime = DateTime.parse(dateStr);
+
+    String formattedDate = DateFormat('dd/MM/yyyy, HH:mm').format(dateTime);
+
+    return formattedDate;
+  }
+
   static String censoredText(String text) {
     List<String> splittedText = text.split(" ");
     splittedText = splittedText.map((split) {
