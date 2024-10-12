@@ -8,6 +8,9 @@ class TIcons {
   static const String dashboardSettings = "assets/icons/settings.svg";
 
   static const String bell = "assets/icons/bell.svg";
+  static const String data = "assets/icons/data.svg";
+  static const String homeOutline = "assets/icons/home-outline.svg";
+  static const String peopleOutline = "assets/icons/people-outline.svg";
   static const String shop = "assets/icons/shop.svg";
   static const String gps = "assets/icons/gps.svg";
   static const String homeLock = "assets/icons/home-lock.svg";

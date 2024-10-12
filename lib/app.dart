@@ -31,6 +31,7 @@ import 'package:point_of_sales_cashier/features/employees/presentation/screens/e
 import 'package:point_of_sales_cashier/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/onboarding_transaction.dart';
 import 'package:point_of_sales_cashier/features/online_shop/application/cubit/shop_order_master_cubit/shop_order_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_ai_sop_new_argument.dart';
 import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_track_argument.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config.dart';
@@ -39,6 +40,7 @@ import 'package:point_of_sales_cashier/features/online_shop/presentation/screens
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_glossary.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_language_style.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_sop.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_sop_new.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_cs_master.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_master.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_detail.dart';
@@ -369,6 +371,11 @@ class App extends StatelessWidget {
                 const OnlineShopAILanguageStyleScreen(),
             "/online_shop/ai_configuration/sop": (context) =>
                 const OnlineShopAISOPScreen(),
+            "/online_shop/ai_configuration/sop/new": (context) =>
+                OnlineShopAISOPNewScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as OnlineShopAISopNewArgument,
+                ),
             "/online_shop/ai_configuration/glossary": (context) =>
                 const OnlineShopAIGlossaryScreen(),
             "/online_shop/ai_configuration/faq": (context) =>
