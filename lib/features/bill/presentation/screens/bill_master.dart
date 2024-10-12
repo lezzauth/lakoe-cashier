@@ -4,6 +4,8 @@ import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dar
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_small.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/bill/data/arguments/template_order_model.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/bill_view.dart';
@@ -55,11 +57,23 @@ class _BillMasterState extends State<BillMaster> {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              BillView(
-                outletName: "Warmindo Cak Tho",
-                outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
-                noBill: "LK-0001",
-                order: templateOrder.order,
+              BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  if (state is AuthReady) {
+                    final outletName = state.profile.outlets.first.name;
+                    final outletAddress = state.profile.outlets.first.address;
+
+                    return BillView(
+                      outletName: outletName,
+                      outletAddress: outletAddress,
+                      noBill: "LK-0001",
+                      order: templateOrder.order,
+                    );
+                  } else if (state is AuthNotReady) {
+                    return Center(child: Text('Failed to load outlet info.'));
+                  }
+                  return CircularProgressIndicator();
+                },
               ),
               const TextBodyS(
                 "Ini hanya contoh tampilan struk",
