@@ -53,6 +53,10 @@ dependencies:
     path: packages/public_repository
   employee_repository:
     path: packages/employee_repository
+  whatsapp_repository:
+    path: packages/whatsapp_repository
+  online_shop_repository:
+    path: packages/online_shop_repository
 
   token_provider:
     path: packages/token_provider
@@ -60,6 +64,8 @@ dependencies:
     path: packages/dio_provider
   app_data_provider:
     path: packages/app_data_provider
+  app_config_provider:
+    path: packages/app_config_provider
 
   flutter:
     sdk: flutter
@@ -103,6 +109,11 @@ dependencies:
   share_plus: ^10.0.2
   image_gallery_saver: ^2.0.3
   connectivity_plus: ^6.0.5
+  google_maps_flutter: ^2.9.0
+  geocoding: ^3.0.0
+  geolocator: ^13.0.1
+  url_launcher: ^6.3.1
+  timelines_plus: ^1.0.3
   # flutter_bluetooth_serial: ^0.4.0
 
 dev_dependencies:

@@ -7,9 +7,19 @@ class TextActionM extends StatelessWidget {
   final FontWeight fontWeight;
   final double fontSize = TSizes.fontSizeActionM;
   final Color? color;
+  final TextOverflow? overflow;
+  final int? maxLines;
+  final TextAlign? textAlign;
 
-  const TextActionM(this.data,
-      {super.key, this.fontWeight = FontWeight.w600, this.color});
+  const TextActionM(
+    this.data, {
+    super.key,
+    this.fontWeight = FontWeight.w600,
+    this.color,
+    this.overflow,
+    this.maxLines,
+    this.textAlign,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +30,9 @@ class TextActionM extends StatelessWidget {
         fontWeight: fontWeight,
         fontSize: fontSize,
       ),
+      maxLines: maxLines,
+      overflow: overflow,
+      textAlign: textAlign,
     );
   }
 }

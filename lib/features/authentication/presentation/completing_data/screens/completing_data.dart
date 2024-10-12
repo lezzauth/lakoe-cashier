@@ -1,6 +1,7 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_form_cubit.dart';
@@ -46,6 +47,7 @@ class _CompletingDataState extends State<CompletingData> {
     final formValue = formState.value;
 
     if (currentPage == 1) {
+      final outletPinpoint = formValue["outletPinpoint"] as LatLng;
       return PinInputPage(
         isError: state is CompletingDataActionFailure,
         onPinValid: (value) {
@@ -59,6 +61,8 @@ class _CompletingDataState extends State<CompletingData> {
                     name: formValue["outletName"],
                     address: formValue["outletAddress"],
                     type: formValue["outletType"],
+                    latitude: outletPinpoint.latitude,
+                    longitude: outletPinpoint.longitude,
                   ),
                 ),
               );

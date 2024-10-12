@@ -85,6 +85,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   List<_SettingItem> employeeSettingItems = [];
   List<_SettingItem> otherSettingItems = [
     _SettingItem(
+      title: "Kelola Toko Online",
+      routeName: "/online_shop",
+      iconSrc: TIcons.shop,
+      isNewItem: true,
+    ),
+    _SettingItem(
       title: "Kategori",
       routeName: "/categories",
       iconSrc: TIcons.box,
@@ -93,7 +99,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       title: "Meja & QR Order",
       routeName: "/tables",
       iconSrc: TIcons.tableRestaurant,
-      isNewItem: true,
     ),
     // _SettingItem(
     //   title: "Singkronisasi Data",

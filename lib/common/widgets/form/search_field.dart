@@ -11,7 +11,9 @@ class SearchField extends StatefulWidget {
   final String? hintText;
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
+  final FocusNode? focusNode;
   final int debounceTime;
+  final Function(String)? onSubmitted;
 
   const SearchField({
     super.key,
@@ -19,6 +21,8 @@ class SearchField extends StatefulWidget {
     this.controller,
     this.onChanged,
     this.debounceTime = 500,
+    this.focusNode,
+    this.onSubmitted,
   });
 
   @override
@@ -85,6 +89,8 @@ class _SearchFieldState extends State<SearchField> {
                 ),
                 style: GoogleFonts.inter(fontSize: TSizes.fontSizeBodyL),
                 onChanged: _onSearchChanged,
+                onSubmitted: widget.onSubmitted,
+                focusNode: widget.focusNode,
               ),
             ),
           )

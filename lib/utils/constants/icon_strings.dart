@@ -1,4 +1,6 @@
 class TIcons {
+  TIcons._();
+
   static const String dashboardCustomer = "assets/icons/contact.svg";
   static const String dashboardProduct = "assets/icons/product.svg";
   static const String dashboardQROrder = "assets/icons/qr-order.svg";
@@ -6,6 +8,11 @@ class TIcons {
   static const String dashboardSettings = "assets/icons/settings.svg";
 
   static const String bell = "assets/icons/bell.svg";
+  static const String data = "assets/icons/data.svg";
+  static const String homeOutline = "assets/icons/home-outline.svg";
+  static const String peopleOutline = "assets/icons/people-outline.svg";
+  static const String shop = "assets/icons/shop.svg";
+  static const String gps = "assets/icons/gps.svg";
   static const String homeLock = "assets/icons/home-lock.svg";
   static const String warning = "assets/icons/warning.svg";
   static const String check = "assets/icons/check.svg";
@@ -81,4 +88,13 @@ class TIcons {
   static const String infinity = "assets/icons/infinity.svg";
   static const String logout = "assets/icons/logout.svg";
   static const String share = "assets/icons/share.svg";
+  static const String barcode = "assets/icons/barcode.svg";
+  static const String copy = "assets/icons/copy.svg";
+  static const String whatsappSolid = "assets/icons/whatsapp-solid.svg";
+  static const String box2 = "assets/icons/box-2.svg";
+  static const String calendar2 = "assets/icons/calendar-2.svg";
+  static const String document2 = "assets/icons/document-2.svg";
+  static const String profileCircle = "assets/icons/profile-circle.svg";
+  static const String truckFast = "assets/icons/truck-fast.svg";
+  static const String wallet2 = "assets/icons/wallet-2.svg";
 }

@@ -1,3 +1,4 @@
+import 'package:app_config_provider/app_config_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
@@ -5,8 +6,11 @@ import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class DioProvider {
-  static final Dio _dio =
-      Dio(BaseOptions(baseUrl: "https://api.staging.lakoe.id"));
+  static final Dio _dio = Dio(
+    BaseOptions(
+      baseUrl: AppConfigProvider.apiUrl,
+    ),
+  );
 
   DioProvider() {
     _dio.interceptors.add(LogInterceptor(

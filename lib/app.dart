@@ -9,6 +9,8 @@ import 'package:point_of_sales_cashier/features/account/presentation/screens/for
 import 'package:point_of_sales_cashier/features/account/presentation/screens/form/name_edit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/form/phone_number_edit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/form/pin_edit.dart';
+import 'package:point_of_sales_cashier/features/ai_chatbot/application/cubit/whatsapp/whatsapp_session_cubit.dart';
+import 'package:point_of_sales_cashier/features/ai_chatbot/presentation/screens/ai_chatbot_master.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/data/arguments/completing_data_argument.dart';
 import 'package:point_of_sales_cashier/features/authentication/data/arguments/otp_input_argument.dart';
@@ -29,6 +31,22 @@ import 'package:point_of_sales_cashier/features/employees/data/arguments/employe
 import 'package:point_of_sales_cashier/features/employees/presentation/screens/employee_edit.dart';
 import 'package:point_of_sales_cashier/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/onboarding_transaction.dart';
+import 'package:point_of_sales_cashier/features/online_shop/application/cubit/shop_order_master_cubit/shop_order_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_ai_sop_new_argument.dart';
+import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_detail_argument.dart';
+import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_track_argument.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_description.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_faq.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_glossary.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_language_style.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_sop.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_sop_new.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_cs_master.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_master.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_detail.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_master.dart';
+import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_track.dart';
 import 'package:point_of_sales_cashier/features/packages/boost/presentation/screens/boost_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/grow_package_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_master.dart';
@@ -167,6 +185,12 @@ class App extends StatelessWidget {
 
         // Bill Master
         BlocProvider(create: (context) => BillMasterCubit()),
+
+        // Whatsapp
+        BlocProvider(create: (context) => WhatsappSessionCubit()),
+
+        // Online Shop
+        BlocProvider(create: (context) => ShopOrderMasterCubit()),
       ],
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -333,6 +357,43 @@ class App extends StatelessWidget {
 
             // Checkout
             "/checkout": (context) => const ChekcoutMasterScreen(),
+
+            // AI Chatbot
+            "/ai_chatbot": (context) => const AIChatbotMasterScreen(),
+
+            // Online Store
+            "/online_shop": (context) => const OnlineShopMasterScreen(),
+            "/online_shop/customer_service": (context) =>
+                const OnlineShopCsMaster(),
+            "/online_shop/ai_configuration": (context) =>
+                const OnlineShopAIConfigScreen(),
+            "/online_shop/ai_configuration/description": (context) =>
+                const OnlineShopAIDescriptionScreen(),
+            "/online_shop/ai_configuration/language_style": (context) =>
+                const OnlineShopAILanguageStyleScreen(),
+            "/online_shop/ai_configuration/sop": (context) =>
+                const OnlineShopAISOPScreen(),
+            "/online_shop/ai_configuration/sop/new": (context) =>
+                OnlineShopAISOPNewScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as OnlineShopAISopNewArgument,
+                ),
+            "/online_shop/ai_configuration/glossary": (context) =>
+                const OnlineShopAIGlossaryScreen(),
+            "/online_shop/ai_configuration/faq": (context) =>
+                const OnlineShopAIFAQScreen(),
+            "/online_shop/orders": (context) =>
+                const OnlineShopOrderMasterScreen(),
+            "/online_shop/orders/detail": (context) =>
+                OnlineShopOrderDetailScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as OnlineShopOrderDetailArgument,
+                ),
+            "/online_shop/orders/detail/track": (context) =>
+                OnlineShopOrderTrackScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as OnlineShopOrderTrackArgument,
+                ),
           },
         ),
       ),
