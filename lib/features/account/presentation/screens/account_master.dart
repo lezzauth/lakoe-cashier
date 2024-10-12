@@ -1,4 +1,6 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/list_item_card.dart';
@@ -9,9 +11,12 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/light_appbar.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:random_avatar/random_avatar.dart';
 
 class AccountMasterScreen extends StatefulWidget {
   const AccountMasterScreen({super.key});
@@ -109,101 +114,133 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: TColors.highlightLightest,
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          InkWell(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () => Navigator.pushNamed(context, "/account/edit"),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.0),
-                color: TColors.neutralLightLightest,
-              ),
-              padding: const EdgeInsets.symmetric(
-                vertical: 16.0,
-                horizontal: 20.0,
-              ),
-              child: Row(
-                children: [
-                  Container(
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        if (state is AuthReady) {
+          final profile = state.profile;
+          final AppDataProvider _appDataProvider = AppDataProvider();
+
+          return Container(
+            decoration: BoxDecoration(
+              color: TColors.highlightLightest,
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () => Navigator.pushNamed(context, "/account/edit"),
+                  child: Container(
                     decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: TColors.neutralLightDark,
-                        width: 1.0,
-                      ),
+                      borderRadius: BorderRadius.circular(16.0),
+                      color: TColors.neutralLightLightest,
                     ),
-                    child: const CircleAvatar(
-                      backgroundImage: AssetImage(TImages.defaultAvatar),
-                      radius: 46 / 2,
-                      backgroundColor: TColors.neutralLightLight,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 16.0,
+                      horizontal: 20.0,
                     ),
-                  ),
-                  const SizedBox(width: 16.0),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
                       children: [
-                        TextHeading3(
-                          "Tauhid",
-                          color: TColors.neutralDarkDark,
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: TColors.neutralLightDark,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: FutureBuilder<String?>(
+                            future: _appDataProvider
+                                .avatarSvg, // Retrieve avatar from SharedPreferences
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return CircularProgressIndicator(); // Show a loading spinner while fetching avatar
+                              }
+                              if (snapshot.hasData &&
+                                  snapshot.data != null &&
+                                  snapshot.data!.isNotEmpty) {
+                                return SvgPicture.string(
+                                  snapshot
+                                      .data!, // Display the stored avatar SVG
+                                  height: 46,
+                                  width: 46,
+                                );
+                              } else {
+                                return RandomAvatar(
+                                  // Fallback to generating a new avatar if none is stored
+                                  profile.id,
+                                  height: 46,
+                                  width: 46,
+                                );
+                              }
+                            },
+                          ),
                         ),
-                        SizedBox(height: 2.0),
-                        TextBodyS(
-                          "62812-3456-7890",
-                          color: TColors.neutralDarkLight,
+                        const SizedBox(width: 16.0),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextHeading3(
+                                profile.name,
+                                color: TColors.neutralDarkDark,
+                              ),
+                              const SizedBox(height: 2.0),
+                              TextBodyS(
+                                profile.phoneNumber.replaceFirst('+', ''),
+                                color: TColors.neutralDarkLight,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const UiIcons(
+                          TIcons.arrowRight,
+                          height: 20,
+                          width: 20,
+                          color: TColors.primary,
                         ),
                       ],
                     ),
                   ),
-                  const UiIcons(
-                    TIcons.arrowRight,
-                    height: 20,
-                    width: 20,
-                    color: TColors.primary,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          InkWell(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () => Navigator.pushNamed(context, "/packages"),
-            child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(16),
-                  bottomRight: Radius.circular(16),
                 ),
-                color: TColors.highlightLightest,
-              ),
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const TextBodyM(
-                    "Paket aktif kamu saat ini",
-                    color: TColors.neutralDarkDarkest,
+                InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () => Navigator.pushNamed(context, "/packages"),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(16),
+                        bottomRight: Radius.circular(16),
+                      ),
+                      color: TColors.highlightLightest,
+                    ),
+                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const TextBodyM(
+                          "Paket aktif kamu saat ini",
+                          color: TColors.neutralDarkDarkest,
+                        ),
+                        const SizedBox(width: 8.0),
+                        Image.asset(
+                          TImages.liteLogoPackage,
+                          height: 24,
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(width: 8.0),
-                  Image.asset(
-                    TImages.liteLogoPackage,
-                    height: 24,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
+          );
+        }
+        return const CircularProgressIndicator(); // Handle loading state
+      },
     );
   }
 }
