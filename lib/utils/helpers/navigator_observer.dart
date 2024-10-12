@@ -63,6 +63,13 @@ class CustomNavigatorObserver extends NavigatorObserver {
           systemNavigationBarColor: TColors.neutralLightLight,
         ),
       );
+    } else if (route?.settings.name == "/orders/proof") {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.light.copyWith(
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: Colors.black,
+        ),
+      );
     } else {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.dark.copyWith(
