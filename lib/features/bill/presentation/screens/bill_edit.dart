@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_state.dart';
+import 'package:point_of_sales_cashier/features/bill/data/arguments/template_order_model.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/bill_view.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_price.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
@@ -22,6 +23,52 @@ class BillEditScreen extends StatefulWidget {
 
 class _BillEditScreenState extends State<BillEditScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
+
+  List<OrderItem> orderItems = [
+    OrderItem(
+      id: "1",
+      notes: "Gulanya sedikit",
+      price: "5000",
+      quantity: 1,
+      orderId: "order_1",
+      productId: "product_1",
+      createdAt: "2024-10-09T03:30:09.531Z",
+      updatedAt: "2024-10-09T03:30:09.531Z",
+      product: OrderItemProduct(
+        name: "Kopi Hitam",
+        price: "5000",
+        images: [],
+      ),
+    ),
+    OrderItem(
+      id: "2",
+      price: "5000",
+      quantity: 1,
+      orderId: "order_2",
+      productId: "product_2",
+      createdAt: "2024-10-09T03:32:09.531Z",
+      updatedAt: "2024-10-09T03:32:09.531Z",
+      product: OrderItemProduct(
+        name: "Es Teh",
+        price: "5000",
+        images: [],
+      ),
+    ),
+    OrderItem(
+      id: "3",
+      price: "10000",
+      quantity: 1,
+      orderId: "order_2",
+      productId: "product_2",
+      createdAt: "2024-10-09T03:32:09.531Z",
+      updatedAt: "2024-10-09T03:32:09.531Z",
+      product: OrderItemProduct(
+        name: "Mie Goreng",
+        price: "10000",
+        images: [],
+      ),
+    ),
+  ];
 
   List<_BillPriceItem> listBillPriceItem = [
     _BillPriceItem(label: "Subtotal", price: "Rp20.000"),
@@ -52,6 +99,7 @@ class _BillEditScreenState extends State<BillEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    TemplateOrderModel templateOrder = TemplateOrderModel();
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -135,29 +183,10 @@ class _BillEditScreenState extends State<BillEditScreen> {
                           reverse: true,
                           physics: const NeverScrollableScrollPhysics(),
                           child: BillView(
-                            isEdit: true,
                             outletName: "Warmindo Cak Tho",
                             outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
-                            orderNumber: "2563",
-                            cashierName: "Dimas",
-                            noBill: "GS731",
-                            orderType: "DineIn",
-                            noTable: "T-12",
-                            dateTime: "28/12/2024 - 20:18",
-                            paymentMetod: 'Cash (Tunai)',
-                            totalPrice: "Rp20.000",
-                            moneyReceived: "Rp50.000",
-                            changeMoney: "Rp30.000",
-                            closeBill: "Close Bill: 28/12/2024 - 21:37",
-                            greeting: state.footNote,
-                            children: listBillPriceItem
-                                .map(
-                                  (item) => BillListPrice(
-                                    label: item.label,
-                                    price: item.price,
-                                  ),
-                                )
-                                .toList(),
+                            noBill: "LK-0001",
+                            order: templateOrder.order,
                           ),
                         ),
                       ),

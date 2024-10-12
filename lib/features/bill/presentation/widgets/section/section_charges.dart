@@ -1,29 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_price.dart';
+import 'package:point_of_sales_cashier/features/orders/data/models.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
-class BillPriceInfo extends StatelessWidget {
-  final List<Widget> children;
+class BillSectionCharges extends StatelessWidget {
+  final List<OrderSummaryChargeModel> charges;
   final String totalPrice;
-  final String paymentMetod;
+  final String paymentMethod;
   final String moneyReceived;
   final String changeMoney;
 
-  const BillPriceInfo({
+  const BillSectionCharges({
     super.key,
-    required this.children,
+    required this.charges,
     required this.totalPrice,
-    required this.paymentMetod,
+    required this.paymentMethod,
     required this.moneyReceived,
     required this.changeMoney,
   });
+
+  List<OrderSummaryChargeModel> _taxCharges() =>
+      charges.where((e) => e.type == "TAX").toList();
+
+  List<OrderSummaryChargeModel> _serviceFeeCharges() =>
+      charges.where((e) => e.type == "CHARGE").toList();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ...children,
+        if (_taxCharges().isNotEmpty)
+          ..._taxCharges().map(
+            (e) => BillListPrice(
+              label: e.name,
+              isPercentage: e.isPercentage,
+              percentageValue: e.percentageValue,
+              price: TFormatter.formatToRupiah(double.parse(e.amount)),
+            ),
+          ),
+        if (_serviceFeeCharges().isNotEmpty)
+          ..._serviceFeeCharges().map(
+            (e) => BillListPrice(
+              label: e.name,
+              isPercentage: e.isPercentage,
+              percentageValue: e.percentageValue,
+              price: TFormatter.formatToRupiah(double.parse(e.amount)),
+            ),
+          ),
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 4),
           child: Separator(
@@ -35,11 +60,11 @@ class BillPriceInfo extends StatelessWidget {
         BillListPrice(
           isLarge: true,
           label: "Total",
-          price: totalPrice,
+          price: TFormatter.formatToRupiah(double.parse(totalPrice)),
         ),
         BillListPrice(
-          label: paymentMetod,
-          price: moneyReceived,
+          label: paymentMethod,
+          price: TFormatter.formatToRupiah(double.parse(moneyReceived)),
         ),
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 4),
@@ -50,8 +75,8 @@ class BillPriceInfo extends StatelessWidget {
           ),
         ),
         BillListPrice(
-          label: "Kembalian",
-          price: changeMoney,
+          label: "Change",
+          price: TFormatter.formatToRupiah(double.parse(changeMoney)),
           isBold: true,
         ),
         const Padding(

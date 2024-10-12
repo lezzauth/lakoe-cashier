@@ -5,9 +5,8 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_sm
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_state.dart';
+import 'package:point_of_sales_cashier/features/bill/data/arguments/template_order_model.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/bill_view.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_price.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,11 +27,7 @@ class BillMaster extends StatefulWidget {
 }
 
 class _BillMasterState extends State<BillMaster> {
-  List<_BillPriceItem> listBillPriceItem = [
-    _BillPriceItem(label: "Subtotal", price: "Rp20.000"),
-    _BillPriceItem(label: "Pajak (5%)", price: "Rp1.000"),
-    _BillPriceItem(label: "Service Charge (2%)", price: "Rp400"),
-  ];
+  // late TemplateOrderModel templateOrder;
 
   void _onInit() {
     context.read<BillMasterCubit>().init();
@@ -47,69 +42,49 @@ class _BillMasterState extends State<BillMaster> {
 
   @override
   Widget build(BuildContext context) {
+    TemplateOrderModel templateOrder = TemplateOrderModel();
+
     return Scaffold(
       backgroundColor: TColors.neutralLightLight,
       appBar: const CustomAppbar(
         title: "Tampilan Struk (Bill)",
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                BlocBuilder<BillMasterCubit, BillMasterState>(
-                  builder: (context, state) {
-                    return BillView(
-                      outletName: "Warmindo Cak Tho",
-                      outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
-                      orderNumber: "9849",
-                      cashierName: "Dimas",
-                      noBill: "LK-0001",
-                      orderType: "Take Away",
-                      dateTime: "28/12/2024, 20:18",
-                      paymentMetod: 'Cash (Tunai)',
-                      totalPrice: "Rp21.400",
-                      moneyReceived: "Rp50.000",
-                      changeMoney: "Rp28.600",
-                      closeBill: "Close Bill: 28/12/2024, 21:37",
-                      greeting: state.footNote,
-                      children: listBillPriceItem
-                          .map(
-                            (item) => BillListPrice(
-                              label: item.label,
-                              price: item.price,
-                            ),
-                          )
-                          .toList(),
-                    );
-                  },
-                ),
-                const TextBodyS(
-                  "Ini hanya contoh tampilan struk",
-                  color: TColors.neutralDarkLightest,
-                  fontStyle: FontStyle.italic,
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              child: SizedBox(
-                height: 48,
-                width: double.infinity,
-                child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/bill/edit");
-                  },
-                  child: const TextActionL(
-                    "Ubah Catatan Kaki",
-                    color: TColors.primary,
-                  ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              BillView(
+                outletName: "Warmindo Cak Tho",
+                outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
+                noBill: "LK-0001",
+                order: templateOrder.order,
+              ),
+              const TextBodyS(
+                "Ini hanya contoh tampilan struk",
+                color: TColors.neutralDarkLightest,
+                fontStyle: FontStyle.italic,
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            child: SizedBox(
+              height: 48,
+              width: double.infinity,
+              child: OutlinedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/bill/edit");
+                },
+                child: const TextActionL(
+                  "Ubah Catatan Kaki",
+                  color: TColors.primary,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -118,13 +93,13 @@ class _BillMasterState extends State<BillMaster> {
 class SectionBillInformation extends StatelessWidget {
   final String cashierName;
   final String noBill;
-  final String dateTime;
+  final String orderDate;
 
   const SectionBillInformation({
     super.key,
     required this.cashierName,
     required this.noBill,
-    required this.dateTime,
+    required this.orderDate,
   });
 
   @override
@@ -182,7 +157,7 @@ class SectionBillInformation extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: TextSmall(
-                dateTime,
+                orderDate,
                 textAlign: TextAlign.right,
                 isBold: true,
                 maxLines: 1,
@@ -212,17 +187,4 @@ class _BillPriceItem {
     required this.label,
     required this.price,
   });
-}
-
-class BillGreeting extends StatelessWidget {
-  final String greeting;
-  const BillGreeting({super.key, required this.greeting});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextSmall(
-      greeting,
-      textAlign: TextAlign.center,
-    );
-  }
 }

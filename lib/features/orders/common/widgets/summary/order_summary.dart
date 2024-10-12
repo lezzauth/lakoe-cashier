@@ -15,7 +15,6 @@ class OrderSummary extends StatelessWidget {
   final double orderTotal;
   final bool isPaid;
   final List<Transactions>? paymentInfo;
-  // final List<Transactions>? paymentInfo;
   final Function()? onDiscountChanged;
 
   final List<OrderSummaryChargeModel> charges;

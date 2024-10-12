@@ -162,6 +162,43 @@ Map<String, dynamic> _$$OrderTableImplToJson(_$OrderTableImpl instance) =>
       'updatedAt': instance.updatedAt,
     };
 
+_$OrderCashierImpl _$$OrderCashierImplFromJson(Map<String, dynamic> json) =>
+    _$OrderCashierImpl(
+      id: json['id'] as String,
+      status: json['status'] as String,
+      initialBalance: json['initialBalance'] as String,
+      finalBalance: json['finalBalance'] as String,
+      outletId: json['outletId'] as String,
+      operatorId: json['operatorId'] as String,
+      openedAt: json['openedAt'] as String,
+      closedAt: json['closedAt'] as String?,
+      operator:
+          OrderOperator.fromJson(json['operator'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$OrderCashierImplToJson(_$OrderCashierImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'status': instance.status,
+      'initialBalance': instance.initialBalance,
+      'finalBalance': instance.finalBalance,
+      'outletId': instance.outletId,
+      'operatorId': instance.operatorId,
+      'openedAt': instance.openedAt,
+      'closedAt': instance.closedAt,
+      'operator': instance.operator,
+    };
+
+_$OrderOperatorImpl _$$OrderOperatorImplFromJson(Map<String, dynamic> json) =>
+    _$OrderOperatorImpl(
+      name: json['name'] as String,
+    );
+
+Map<String, dynamic> _$$OrderOperatorImplToJson(_$OrderOperatorImpl instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+    };
+
 _$OrderModelImpl _$$OrderModelImplFromJson(Map<String, dynamic> json) =>
     _$OrderModelImpl(
       id: json['id'] as String,
@@ -177,18 +214,23 @@ _$OrderModelImpl _$$OrderModelImplFromJson(Map<String, dynamic> json) =>
       tableId: json['tableId'] as String?,
       cashierId: json['cashierId'] as String,
       createdAt: json['createdAt'] as String,
+      closedAt: json['closedAt'] as String?,
       updatedAt: json['updatedAt'] as String,
       customer: json['customer'] == null
           ? null
           : OrderCustomer.fromJson(json['customer'] as Map<String, dynamic>),
-      charges: (json['charges'] as List<dynamic>)
-          .map((e) => OrderCharge.fromJson(e as Map<String, dynamic>))
+      charges: (json['charges'] as List<dynamic>?)
+          ?.map((e) => OrderCharge.fromJson(e as Map<String, dynamic>))
           .toList(),
+      discount: json['discount'] as List<dynamic>?,
+      cashier: json['cashier'] == null
+          ? null
+          : OrderCashier.fromJson(json['cashier'] as Map<String, dynamic>),
       table: json['table'] == null
           ? null
           : OrderTable.fromJson(json['table'] as Map<String, dynamic>),
-      transactions: (json['transactions'] as List<dynamic>)
-          .map((e) => Transactions.fromJson(e as Map<String, dynamic>))
+      transactions: (json['transactions'] as List<dynamic>?)
+          ?.map((e) => Transactions.fromJson(e as Map<String, dynamic>))
           .toList(),
       items: (json['items'] as List<dynamic>)
           .map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
@@ -210,9 +252,12 @@ Map<String, dynamic> _$$OrderModelImplToJson(_$OrderModelImpl instance) =>
       'tableId': instance.tableId,
       'cashierId': instance.cashierId,
       'createdAt': instance.createdAt,
+      'closedAt': instance.closedAt,
       'updatedAt': instance.updatedAt,
       'customer': instance.customer,
       'charges': instance.charges,
+      'discount': instance.discount,
+      'cashier': instance.cashier,
       'table': instance.table,
       'transactions': instance.transactions,
       'items': instance.items,

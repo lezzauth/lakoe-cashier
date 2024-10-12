@@ -1,35 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_item.dart';
+import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_price.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class BillSectionListItem extends StatefulWidget {
-  const BillSectionListItem({super.key});
+  const BillSectionListItem({
+    super.key,
+    required this.subtotal,
+    required this.items,
+  });
+
+  final double subtotal;
+  final List<OrderItem> items;
 
   @override
   State<BillSectionListItem> createState() => _BillSectionListItemState();
 }
 
 class _BillSectionListItemState extends State<BillSectionListItem> {
-  List<_BillListItem> listBillListItem = [
-    _BillListItem(
-      itemName: "Kopi Hitam",
-      qty: "1",
-      price: "5.000",
-      note: "Gulanya sedikit",
-    ),
-    _BillListItem(
-      itemName: "Es Teh",
-      qty: "1",
-      price: "5.000",
-    ),
-    _BillListItem(
-      itemName: "Mie Goreng",
-      qty: "1",
-      price: "10.000",
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,7 +30,7 @@ class _BillSectionListItemState extends State<BillSectionListItem> {
           itemName: "Item",
           qty: "Qty",
           price: "Harga",
-          isBold: true,
+          note: '',
         ),
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 4),
@@ -49,13 +40,12 @@ class _BillSectionListItemState extends State<BillSectionListItem> {
             dashWidth: 4.0,
           ),
         ),
-        ...listBillListItem.map(
+        ...widget.items.map(
           (item) => BillListItem(
-            itemName: item.itemName,
-            qty: item.qty,
+            itemName: item.product.name,
+            qty: item.quantity.toString(),
             price: item.price,
-            hasNote: item.note != null,
-            note: item.note,
+            note: item.notes!,
           ),
         ),
         const Padding(
@@ -65,22 +55,12 @@ class _BillSectionListItemState extends State<BillSectionListItem> {
             height: 0.5,
             dashWidth: 4.0,
           ),
+        ),
+        BillListPrice(
+          label: "Subtotal",
+          price: TFormatter.formatToRupiah(widget.subtotal),
         ),
       ],
     );
   }
-}
-
-class _BillListItem {
-  final String itemName;
-  final String qty;
-  final String price;
-  final String? note;
-
-  _BillListItem({
-    required this.itemName,
-    required this.qty,
-    required this.price,
-    this.note,
-  });
 }

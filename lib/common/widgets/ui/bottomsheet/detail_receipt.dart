@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/bill_view.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_price.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
@@ -13,15 +13,15 @@ class DetailReceiptBottomSheet extends StatelessWidget {
     super.key,
     required this.controller,
     required this.widgetKey,
-    required this.listBillPriceItem,
+    required this.data,
     required this.saveAction,
     required this.shareAction,
   });
   final ScrollController controller;
   final GlobalKey widgetKey;
-  final List listBillPriceItem;
-  final Future<void> saveAction;
-  final Future<void> shareAction;
+  final OrderModel data;
+  final Function() saveAction;
+  final Function() shareAction;
 
   @override
   Widget build(BuildContext context) {
@@ -59,26 +59,8 @@ class DetailReceiptBottomSheet extends StatelessWidget {
                         BillView(
                           outletName: "Warmindo Cak Tho",
                           outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
-                          orderNumber: "9849",
-                          cashierName: "Dimas",
                           noBill: "LK-0001",
-                          orderType: "Take Away",
-                          dateTime: "28/12/2024, 20:18",
-                          paymentMetod: 'Cash (Tunai)',
-                          totalPrice: "Rp21.400",
-                          moneyReceived: "Rp50.000",
-                          changeMoney: "Rp28.600",
-                          closeBill: "Close Bill: 28/12/2024, 21:37",
-                          greeting:
-                              "Terimakasih\nDitunggu kembali kedatangannya",
-                          children: listBillPriceItem
-                              .map(
-                                (item) => BillListPrice(
-                                  label: item.label,
-                                  price: item.price,
-                                ),
-                              )
-                              .toList(),
+                          order: data,
                         ),
                       ],
                     ),
@@ -101,10 +83,7 @@ class DetailReceiptBottomSheet extends StatelessWidget {
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: () async {
-                        await saveAction;
-                        Navigator.pop(context);
-                      },
+                      onPressed: saveAction,
                       style: OutlinedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 8.0),
                       ),
@@ -152,10 +131,7 @@ class DetailReceiptBottomSheet extends StatelessWidget {
                   SizedBox(width: 12),
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: () async {
-                        await shareAction;
-                        Navigator.pop(context);
-                      },
+                      onPressed: shareAction,
                       style: OutlinedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 8.0),
                       ),
