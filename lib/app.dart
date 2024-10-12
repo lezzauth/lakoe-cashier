@@ -1,3 +1,4 @@
+import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -198,6 +199,7 @@ class App extends StatelessWidget {
           theme: TAppTheme.lightTheme,
           darkTheme: TAppTheme.darkTheme,
           themeMode: ThemeMode.light,
+          navigatorKey: navigatorKey,
           navigatorObservers: [
             CustomNavigatorObserver(),
           ],

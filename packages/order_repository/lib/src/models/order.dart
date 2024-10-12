@@ -11,6 +11,8 @@ class OrderCharge with _$OrderCharge {
     required String name,
     required String type,
     required String amount,
+    required bool isPercentage,
+    int? percentageValue,
     required String createdAt,
     required String updatedAt,
   }) = _OrderCharge;
@@ -35,6 +37,31 @@ class OrderItem with _$OrderItem {
 
   factory OrderItem.fromJson(Map<String, Object?> json) =>
       _$OrderItemFromJson(json);
+}
+
+@freezed
+class Transactions with _$Transactions {
+  const factory Transactions({
+    required String id,
+    required int no,
+    required String paymentMethod,
+    required String status,
+    required String paidAmount,
+    required String paidFrom,
+    required String amount,
+    required String change,
+    String? accountNumber,
+    String? photo,
+    String? externalId,
+    String? approvalCode,
+    required String orderId,
+    required String outletId,
+    required String createdAt,
+    required String updatedAt,
+  }) = _Transactions;
+
+  factory Transactions.fromJson(Map<String, Object?> json) =>
+      _$TransactionsFromJson(json);
 }
 
 @freezed
@@ -102,6 +129,7 @@ class OrderModel with _$OrderModel {
     OrderCustomer? customer,
     required List<OrderCharge> charges,
     OrderTable? table,
+    required List<Transactions> transactions,
     required List<OrderItem> items,
   }) = _OrderModel;
 
@@ -125,9 +153,11 @@ class PreviewOrderItem with _$PreviewOrderItem {
 @freezed
 class PreviewOrderCharge with _$PreviewOrderCharge {
   const factory PreviewOrderCharge({
-    required String name,
     required String type,
+    required String name,
     required String amount,
+    required bool isPercentage,
+    String? percentageValue,
   }) = _PreviewOrderCharge;
 
   factory PreviewOrderCharge.fromJson(Map<String, Object?> json) =>

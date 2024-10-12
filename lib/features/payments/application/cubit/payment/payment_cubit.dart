@@ -19,20 +19,37 @@ class PaymentCubit extends Cubit<PaymentState> {
     required File photo,
   }) {
     emit(PaymentBankTransfer(
-        accountNumber: accountNumber, paidAmount: paidAmount, photo: photo));
+      accountNumber: accountNumber,
+      paidAmount: paidAmount,
+      photo: photo,
+    ));
   }
 
   void setDebitCreditPayment({
     required String accountNumber,
     required double paidAmount,
+    String? paidFrom,
+    required String? approvalCode,
   }) {
     emit(PaymentDebitCredit(
-        accountNumber: accountNumber, paidAmount: paidAmount, change: 0));
+      accountNumber: accountNumber,
+      paidAmount: paidAmount,
+      change: 0,
+      paidFrom: "EDC",
+      approvalCode: approvalCode,
+    ));
   }
 
   void setQRCodePayment({
     required double paidAmount,
+    required String paidFrom,
+    required String? approvalCode,
   }) {
-    emit(PaymentQRCode(paidAmount: paidAmount, change: 0));
+    emit(PaymentQRCode(
+      paidAmount: paidAmount,
+      change: 0,
+      paidFrom: paidFrom,
+      approvalCode: approvalCode,
+    ));
   }
 }

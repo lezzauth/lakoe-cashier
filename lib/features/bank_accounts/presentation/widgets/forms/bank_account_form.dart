@@ -73,14 +73,15 @@ class _BankAccountFormState extends State<BankAccountForm> {
           labelButtonPrimary: "Tidak",
           labelButtonSecondary: "Ya, Hapus",
           isDiscardActionLoading: widget.isLoading,
-          discardAction: () async {
+          primaryAction: () async {
+            Navigator.pop(context);
+          },
+          secondaryAction: () async {
             if (widget.onDeleted != null) {
               await widget.onDeleted!();
             }
             if (!context.mounted) return;
-            Navigator.pop(context);
-          },
-          saveAction: () async {
+
             Navigator.pop(context);
           },
         );

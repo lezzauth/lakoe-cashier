@@ -7,14 +7,21 @@ class TextBodyXL extends StatelessWidget {
   final FontWeight fontWeight;
   final double fontSize = TSizes.fontSizeBodyXL;
   final Color? color;
+  final TextAlign? textAlign;
 
-  const TextBodyXL(this.data,
-      {super.key, this.fontWeight = FontWeight.w400, this.color});
+  const TextBodyXL(
+    this.data, {
+    super.key,
+    this.fontWeight = FontWeight.w400,
+    this.color,
+    this.textAlign,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       data,
+      textAlign: textAlign,
       style: GoogleFonts.inter(
         color: color,
         fontWeight: fontWeight,

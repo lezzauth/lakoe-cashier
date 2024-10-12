@@ -13,6 +13,8 @@ _$OrderChargeImpl _$$OrderChargeImplFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       type: json['type'] as String,
       amount: json['amount'] as String,
+      isPercentage: json['isPercentage'] as bool,
+      percentageValue: (json['percentageValue'] as num?)?.toInt(),
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
     );
@@ -24,6 +26,8 @@ Map<String, dynamic> _$$OrderChargeImplToJson(_$OrderChargeImpl instance) =>
       'name': instance.name,
       'type': instance.type,
       'amount': instance.amount,
+      'isPercentage': instance.isPercentage,
+      'percentageValue': instance.percentageValue,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };
@@ -53,6 +57,46 @@ Map<String, dynamic> _$$OrderItemImplToJson(_$OrderItemImpl instance) =>
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
       'product': instance.product,
+    };
+
+_$TransactionsImpl _$$TransactionsImplFromJson(Map<String, dynamic> json) =>
+    _$TransactionsImpl(
+      id: json['id'] as String,
+      no: (json['no'] as num).toInt(),
+      paymentMethod: json['paymentMethod'] as String,
+      status: json['status'] as String,
+      paidAmount: json['paidAmount'] as String,
+      paidFrom: json['paidFrom'] as String,
+      amount: json['amount'] as String,
+      change: json['change'] as String,
+      accountNumber: json['accountNumber'] as String?,
+      photo: json['photo'] as String?,
+      externalId: json['externalId'] as String?,
+      approvalCode: json['approvalCode'] as String?,
+      orderId: json['orderId'] as String,
+      outletId: json['outletId'] as String,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
+    );
+
+Map<String, dynamic> _$$TransactionsImplToJson(_$TransactionsImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'no': instance.no,
+      'paymentMethod': instance.paymentMethod,
+      'status': instance.status,
+      'paidAmount': instance.paidAmount,
+      'paidFrom': instance.paidFrom,
+      'amount': instance.amount,
+      'change': instance.change,
+      'accountNumber': instance.accountNumber,
+      'photo': instance.photo,
+      'externalId': instance.externalId,
+      'approvalCode': instance.approvalCode,
+      'orderId': instance.orderId,
+      'outletId': instance.outletId,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
     };
 
 _$OrderItemProductImpl _$$OrderItemProductImplFromJson(
@@ -143,6 +187,9 @@ _$OrderModelImpl _$$OrderModelImplFromJson(Map<String, dynamic> json) =>
       table: json['table'] == null
           ? null
           : OrderTable.fromJson(json['table'] as Map<String, dynamic>),
+      transactions: (json['transactions'] as List<dynamic>)
+          .map((e) => Transactions.fromJson(e as Map<String, dynamic>))
+          .toList(),
       items: (json['items'] as List<dynamic>)
           .map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -167,6 +214,7 @@ Map<String, dynamic> _$$OrderModelImplToJson(_$OrderModelImpl instance) =>
       'customer': instance.customer,
       'charges': instance.charges,
       'table': instance.table,
+      'transactions': instance.transactions,
       'items': instance.items,
     };
 
@@ -191,17 +239,21 @@ Map<String, dynamic> _$$PreviewOrderItemImplToJson(
 _$PreviewOrderChargeImpl _$$PreviewOrderChargeImplFromJson(
         Map<String, dynamic> json) =>
     _$PreviewOrderChargeImpl(
-      name: json['name'] as String,
       type: json['type'] as String,
+      name: json['name'] as String,
       amount: json['amount'] as String,
+      isPercentage: json['isPercentage'] as bool,
+      percentageValue: json['percentageValue'] as String?,
     );
 
 Map<String, dynamic> _$$PreviewOrderChargeImplToJson(
         _$PreviewOrderChargeImpl instance) =>
     <String, dynamic>{
-      'name': instance.name,
       'type': instance.type,
+      'name': instance.name,
       'amount': instance.amount,
+      'isPercentage': instance.isPercentage,
+      'percentageValue': instance.percentageValue,
     };
 
 _$PreviewOrderPriceResponseImpl _$$PreviewOrderPriceResponseImplFromJson(

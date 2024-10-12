@@ -34,12 +34,17 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
       title: "Transfer Bank",
       subTitle: "Memerlukan bukti transfer",
       isActive: true,
+    ),
+    _PaymentItem(
+      title: "QRIS Statis",
+      subTitle: "QRIS yang dicetak atau dipajang",
+      isActive: true,
       lastItem: true,
     ),
   ];
   List<_PaymentItem> listPaymentMethodSecondary = [
     _PaymentItem(
-      title: "QRIS",
+      title: "QRIS Dinamis",
       subTitle: "Cetak dan tampilkan untuk bayar",
       isActive: false,
     ),
@@ -70,11 +75,12 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
               'Kamu telah melakukan perubahan pengaturan metode pembayaran.\nMau disimpan atau diabaikan?',
           labelButtonPrimary: "Simpan",
           labelButtonSecondary: "Abaikan",
-          discardAction: () {
+          primaryAction: () {
             Navigator.pop(context);
             Navigator.pop(context);
           },
-          saveAction: () {
+          secondaryAction: () {
+            Navigator.pop(context);
             Navigator.pop(context);
           },
         );

@@ -9,7 +9,6 @@ import 'package:point_of_sales_cashier/features/orders/application/cubit/order_m
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_filter_state.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_state.dart';
-import 'package:point_of_sales_cashier/features/orders/common/widgets/filters/order_date_filter.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/order_list_item/order_list_item.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_outlet/filter/order_outlet_filter.dart';
@@ -38,25 +37,7 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
   @override
   void initState() {
     super.initState();
-    // context.read<OrderMasterCubit>().init();
-    // context.read<OrderMasterCubit>().initCompletedOrder();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final args =
-          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
-      if (args != null) {
-        setState(() {
-          previousScreen = args['previousScreen'];
-        });
-
-        if (previousScreen == 'ExploreProduct') {
-          context.read<OrderMasterCubit>().init();
-        } else if (previousScreen == 'Settings') {
-          context.read<OrderMasterCubit>().initCompletedOrder();
-        }
-      }
-    });
+    context.read<OrderMasterCubit>().init();
   }
 
   @override
@@ -80,33 +61,22 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: (previousScreen == 'ExploreProduct')
-                      ? BlocBuilder<OrderMasterFilterCubit,
-                          OrderMasterFilterState>(
-                          builder: (context, state) {
-                            return OrderOutletFilter(
-                              value: state.toFindAllOrderDto,
-                              onChanged: (value) {
-                                context
-                                    .read<OrderMasterFilterCubit>()
-                                    .setFilter(
-                                      sort: value.sort,
-                                      source: value.source,
-                                      status: value.status,
-                                      type: value.type,
-                                    );
-                              },
-                            );
-                          },
-                        )
-                      : IntrinsicWidth(
-                          child: OrderDateFilter(
-                            // from: "",
-                            template: "ALL",
-                            // to: "",
-                            onChanged: (template, from, to) {},
-                          ),
-                        ),
+                  child: BlocBuilder<OrderMasterFilterCubit,
+                      OrderMasterFilterState>(
+                    builder: (context, state) {
+                      return OrderOutletFilter(
+                        value: state.toFindAllOrderDto,
+                        onChanged: (value) {
+                          context.read<OrderMasterFilterCubit>().setFilter(
+                                sort: value.sort,
+                                source: value.source,
+                                status: value.status,
+                                type: value.type,
+                              );
+                        },
+                      );
+                    },
+                  ),
                 ),
                 Expanded(
                   child: BlocBuilder<OrderMasterCubit, OrderMasterState>(
@@ -175,25 +145,23 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
             ),
           ),
         ),
-        floatingActionButton: (previousScreen == 'ExploreProduct')
-            ? SizedBox(
-                height: 40,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  style: const ButtonStyle(
-                    padding: WidgetStatePropertyAll(
-                      EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-                    ),
-                  ),
-                  child: const TextActionL(
-                    "Buat Pesanan Baru",
-                    color: TColors.neutralLightLightest,
-                  ),
-                ),
-              )
-            : SizedBox(),
+        floatingActionButton: SizedBox(
+          height: 40,
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: const ButtonStyle(
+              padding: WidgetStatePropertyAll(
+                EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+              ),
+            ),
+            child: const TextActionL(
+              "Buat Pesanan Baru",
+              color: TColors.neutralLightLightest,
+            ),
+          ),
+        ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );

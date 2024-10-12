@@ -17,6 +17,7 @@ import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
 import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
+import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -38,6 +39,31 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  final ScrollController _scrollController = ScrollController();
+  bool _isScrolled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.offset > 0 && !_isScrolled) {
+        setState(() {
+          _isScrolled = true;
+        });
+      } else if (_scrollController.offset <= 0 && _isScrolled) {
+        setState(() {
+          _isScrolled = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   Future<void> _onCartSaved() async {
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
@@ -103,6 +129,8 @@ class _CartState extends State<Cart> {
             paidAmount: data.paidAmount,
             accountNumber: data.accountNumber,
             change: 0,
+            paidFrom: data.paidFrom,
+            approvalCode: data.approvalCode,
           ),
           type: filterState.type,
           customerId: filterState.customer?.id,
@@ -121,6 +149,8 @@ class _CartState extends State<Cart> {
             paymentMethod: "QR_CODE",
             paidAmount: data.paidAmount,
             change: data.change,
+            paidFrom: data.paidFrom,
+            approvalCode: data.approvalCode,
           ),
           type: filterState.type,
           customerId: filterState.customer?.id,
@@ -170,23 +200,36 @@ class _CartState extends State<Cart> {
         ),
       ],
       child: Scaffold(
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
           child: CustomAppbar(
             title: "Pesanan Baru",
+            isScrolled: _isScrolled,
           ),
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Expanded(
-              child: CartContent(),
+            Expanded(
+              child: CartContent(
+                controller: _scrollController,
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              child: CartFooter(
-                onCompleted: onCompleteOrder,
-                onSaved: _onCartSaved,
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: TColors.neutralLightMedium,
+                    width: 1.0,
+                  ),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
+                child: CartFooter(
+                  onCompleted: onCompleteOrder,
+                  onSaved: _onCartSaved,
+                ),
               ),
             ),
           ],

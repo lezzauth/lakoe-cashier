@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/counter.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ExploreProductItem extends StatelessWidget {
@@ -27,7 +29,6 @@ class ExploreProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     bool selected = qty > 0;
     String? image = product.images.elementAtOrNull(0);
-    image ??= "https://placehold.co/88/png?text=[...]";
 
     return InkWell(
       onTap: onTap,
@@ -48,12 +49,18 @@ class ExploreProductItem extends StatelessWidget {
           ),
           margin: const EdgeInsets.only(bottom: 8.0),
           child: BaseProductItem(
-            image: Image.network(
-              image,
-              height: 60,
-              width: 60,
-              fit: BoxFit.cover,
-            ),
+            image: image != null
+                ? Image.network(
+                    image,
+                    height: 60,
+                    width: 60,
+                    fit: BoxFit.cover,
+                  )
+                : SvgPicture.asset(
+                    TImages.productAvatar,
+                    height: 60,
+                    width: 60,
+                  ),
             name: product.name,
             price: int.parse(product.price),
             notes: notes,

@@ -67,6 +67,8 @@ _$CompleteDebitCreditOrderDtoImpl _$$CompleteDebitCreditOrderDtoImplFromJson(
     _$CompleteDebitCreditOrderDtoImpl(
       paymentMethod: json['paymentMethod'] as String,
       paidAmount: (json['paidAmount'] as num).toDouble(),
+      paidFrom: json['paidFrom'] as String,
+      approvalCode: json['approvalCode'] as String?,
       change: (json['change'] as num?)?.toDouble() ?? 0,
       accountNumber: json['accountNumber'] as String,
     );
@@ -76,6 +78,8 @@ Map<String, dynamic> _$$CompleteDebitCreditOrderDtoImplToJson(
     <String, dynamic>{
       'paymentMethod': instance.paymentMethod,
       'paidAmount': instance.paidAmount,
+      'paidFrom': instance.paidFrom,
+      'approvalCode': instance.approvalCode,
       'change': instance.change,
       'accountNumber': instance.accountNumber,
     };
@@ -85,6 +89,8 @@ _$CompleteQRCodeOrderDtoImpl _$$CompleteQRCodeOrderDtoImplFromJson(
     _$CompleteQRCodeOrderDtoImpl(
       paymentMethod: json['paymentMethod'] as String,
       paidAmount: (json['paidAmount'] as num).toDouble(),
+      paidFrom: json['paidFrom'] as String,
+      approvalCode: json['approvalCode'] as String?,
       change: (json['change'] as num?)?.toDouble() ?? 0,
     );
 
@@ -93,6 +99,8 @@ Map<String, dynamic> _$$CompleteQRCodeOrderDtoImplToJson(
     <String, dynamic>{
       'paymentMethod': instance.paymentMethod,
       'paidAmount': instance.paidAmount,
+      'paidFrom': instance.paidFrom,
+      'approvalCode': instance.approvalCode,
       'change': instance.change,
     };
 

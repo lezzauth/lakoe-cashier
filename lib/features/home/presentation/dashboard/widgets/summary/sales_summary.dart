@@ -86,7 +86,7 @@ class SalesSummary extends StatelessWidget {
                             children: [
                               StatsBadge(
                                 type: getType(),
-                                value: "${totalSales.diff ?? 0}%",
+                                value: "${totalSales.diff?.abs() ?? 0}%",
                               ),
                               Text(
                                 "vs ${getComparisonText(state)}",

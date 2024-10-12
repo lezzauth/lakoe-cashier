@@ -11,7 +11,7 @@ _$CreateChargeDtoImpl _$$CreateChargeDtoImplFromJson(
     _$CreateChargeDtoImpl(
       name: json['name'] as String,
       value: (json['value'] as num).toDouble(),
-      isPrecentage: json['isPrecentage'] as bool,
+      isPercentage: json['isPercentage'] as bool,
     );
 
 Map<String, dynamic> _$$CreateChargeDtoImplToJson(
@@ -19,7 +19,7 @@ Map<String, dynamic> _$$CreateChargeDtoImplToJson(
     <String, dynamic>{
       'name': instance.name,
       'value': instance.value,
-      'isPrecentage': instance.isPrecentage,
+      'isPercentage': instance.isPercentage,
     };
 
 _$UpdateChargeDtoImpl _$$UpdateChargeDtoImplFromJson(
@@ -27,7 +27,7 @@ _$UpdateChargeDtoImpl _$$UpdateChargeDtoImplFromJson(
     _$UpdateChargeDtoImpl(
       name: json['name'] as String?,
       value: (json['value'] as num?)?.toDouble(),
-      isPrecentage: json['isPrecentage'] as bool?,
+      isPercentage: json['isPercentage'] as bool?,
     );
 
 Map<String, dynamic> _$$UpdateChargeDtoImplToJson(
@@ -35,5 +35,5 @@ Map<String, dynamic> _$$UpdateChargeDtoImplToJson(
     <String, dynamic>{
       'name': instance.name,
       'value': instance.value,
-      'isPrecentage': instance.isPrecentage,
+      'isPercentage': instance.isPercentage,
     };

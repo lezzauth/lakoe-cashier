@@ -9,7 +9,10 @@ import 'package:point_of_sales_cashier/features/payments/common/widgets/select_p
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/radio_group.dart';
 
 class QrisPaymentContent extends StatefulWidget {
-  const QrisPaymentContent({super.key, required this.amount});
+  const QrisPaymentContent({
+    super.key,
+    required this.amount,
+  });
 
   final double amount;
 
@@ -20,16 +23,18 @@ class QrisPaymentContent extends StatefulWidget {
 class _QrisPaymentContentState extends State<QrisPaymentContent> {
   final _formKey = GlobalKey<FormBuilderState>();
   bool _isFormValid = false;
-
-  void _onFormChanged(bool isValid) {
-    setState(() {
-      _isFormValid = isValid;
-    });
-  }
+  bool useQRISStatic = false;
 
   void _onSubmitted() {
-    if (_isFormValid) {
-      context.read<PaymentCubit>().setQRCodePayment(paidAmount: widget.amount);
+    FocusScope.of(context).unfocus();
+    if (_isFormValid && _formKey.currentState?.saveAndValidate() == true) {
+      dynamic value = _formKey.currentState?.value;
+
+      context.read<PaymentCubit>().setQRCodePayment(
+            paidAmount: widget.amount,
+            paidFrom: useQRISStatic ? "CASHIER" : "EDC",
+            approvalCode: useQRISStatic ? null : value["codeApproval"],
+          );
     }
   }
 
@@ -37,6 +42,12 @@ class _QrisPaymentContentState extends State<QrisPaymentContent> {
   Widget build(BuildContext context) {
     return FormBuilder(
       key: _formKey,
+      onChanged: () {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          _isFormValid = _formKey.currentState?.isValid ?? false;
+          setState(() {});
+        });
+      },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Stack(
         alignment: AlignmentDirectional.topCenter,
@@ -66,7 +77,13 @@ class _QrisPaymentContentState extends State<QrisPaymentContent> {
                   },
                 ),
                 QrisPaymentForm(
-                  onFormChanged: _onFormChanged,
+                  useQRISStatic: useQRISStatic,
+                  onChanged: (bool value) {
+                    setState(() {
+                      useQRISStatic = value;
+                      _isFormValid = value;
+                    });
+                  },
                 ),
               ],
             ),

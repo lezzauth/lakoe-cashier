@@ -99,7 +99,6 @@ class _ProductMasterState extends State<ProductMaster> {
       itemBuilder: (context, index) {
         ProductModel product = products[index];
         String? image = product.images.elementAtOrNull(0);
-        image ??= "https://placehold.co/88/png?text=[...]";
         bool isNotAvailable = product.availability != "AVAILABLE";
 
         return InkWell(
@@ -122,12 +121,18 @@ class _ProductMasterState extends State<ProductMaster> {
             child: BaseProductItem(
               name: product.name,
               price: int.parse(product.price),
-              image: Image.network(
-                image,
-                height: 44,
-                width: 44,
-                fit: BoxFit.cover,
-              ),
+              image: image != null
+                  ? Image.network(
+                      image,
+                      height: 44,
+                      width: 44,
+                      fit: BoxFit.cover,
+                    )
+                  : SvgPicture.asset(
+                      TImages.productAvatar,
+                      height: 44,
+                      width: 44,
+                    ),
               notes: product.description ?? "",
               tag: isNotAvailable
                   ? Container(

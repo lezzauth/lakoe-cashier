@@ -24,7 +24,7 @@ mixin _$ChargeModel {
   String get name => throw _privateConstructorUsedError;
   String get value => throw _privateConstructorUsedError;
   String get ownerId => throw _privateConstructorUsedError;
-  bool get isPrecentage => throw _privateConstructorUsedError;
+  bool get isPercentage => throw _privateConstructorUsedError;
 
   /// Serializes this ChargeModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,7 +47,7 @@ abstract class $ChargeModelCopyWith<$Res> {
       String name,
       String value,
       String ownerId,
-      bool isPrecentage});
+      bool isPercentage});
 }
 
 /// @nodoc
@@ -69,7 +69,7 @@ class _$ChargeModelCopyWithImpl<$Res, $Val extends ChargeModel>
     Object? name = null,
     Object? value = null,
     Object? ownerId = null,
-    Object? isPrecentage = null,
+    Object? isPercentage = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -88,9 +88,9 @@ class _$ChargeModelCopyWithImpl<$Res, $Val extends ChargeModel>
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
-      isPrecentage: null == isPrecentage
-          ? _value.isPrecentage
-          : isPrecentage // ignore: cast_nullable_to_non_nullable
+      isPercentage: null == isPercentage
+          ? _value.isPercentage
+          : isPercentage // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -109,7 +109,7 @@ abstract class _$$ChargeModelImplCopyWith<$Res>
       String name,
       String value,
       String ownerId,
-      bool isPrecentage});
+      bool isPercentage});
 }
 
 /// @nodoc
@@ -129,7 +129,7 @@ class __$$ChargeModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? value = null,
     Object? ownerId = null,
-    Object? isPrecentage = null,
+    Object? isPercentage = null,
   }) {
     return _then(_$ChargeModelImpl(
       id: null == id
@@ -148,9 +148,9 @@ class __$$ChargeModelImplCopyWithImpl<$Res>
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
-      isPrecentage: null == isPrecentage
-          ? _value.isPrecentage
-          : isPrecentage // ignore: cast_nullable_to_non_nullable
+      isPercentage: null == isPercentage
+          ? _value.isPercentage
+          : isPercentage // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -164,7 +164,7 @@ class _$ChargeModelImpl implements _ChargeModel {
       required this.name,
       required this.value,
       required this.ownerId,
-      required this.isPrecentage});
+      required this.isPercentage});
 
   factory _$ChargeModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChargeModelImplFromJson(json);
@@ -178,11 +178,11 @@ class _$ChargeModelImpl implements _ChargeModel {
   @override
   final String ownerId;
   @override
-  final bool isPrecentage;
+  final bool isPercentage;
 
   @override
   String toString() {
-    return 'ChargeModel(id: $id, name: $name, value: $value, ownerId: $ownerId, isPrecentage: $isPrecentage)';
+    return 'ChargeModel(id: $id, name: $name, value: $value, ownerId: $ownerId, isPercentage: $isPercentage)';
   }
 
   @override
@@ -194,14 +194,14 @@ class _$ChargeModelImpl implements _ChargeModel {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.value, value) || other.value == value) &&
             (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
-            (identical(other.isPrecentage, isPrecentage) ||
-                other.isPrecentage == isPrecentage));
+            (identical(other.isPercentage, isPercentage) ||
+                other.isPercentage == isPercentage));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, name, value, ownerId, isPrecentage);
+      Object.hash(runtimeType, id, name, value, ownerId, isPercentage);
 
   /// Create a copy of ChargeModel
   /// with the given fields replaced by the non-null parameter values.
@@ -225,7 +225,7 @@ abstract class _ChargeModel implements ChargeModel {
       required final String name,
       required final String value,
       required final String ownerId,
-      required final bool isPrecentage}) = _$ChargeModelImpl;
+      required final bool isPercentage}) = _$ChargeModelImpl;
 
   factory _ChargeModel.fromJson(Map<String, dynamic> json) =
       _$ChargeModelImpl.fromJson;
@@ -239,7 +239,7 @@ abstract class _ChargeModel implements ChargeModel {
   @override
   String get ownerId;
   @override
-  bool get isPrecentage;
+  bool get isPercentage;
 
   /// Create a copy of ChargeModel
   /// with the given fields replaced by the non-null parameter values.

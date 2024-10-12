@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/counter.dart';
 import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
@@ -21,11 +22,14 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/pr
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:product_repository/product_repository.dart';
 import 'package:table_repository/table_repository.dart';
 
 class CartContent extends StatefulWidget {
-  const CartContent({super.key});
+  const CartContent({super.key, this.controller});
+
+  final ScrollController? controller;
 
   @override
   State<CartContent> createState() => _CartContentState();
@@ -111,12 +115,13 @@ class _CartContentState extends State<CartContent> {
           onRefresh: _onRefresh,
           backgroundColor: TColors.neutralLightLightest,
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Expanded(
                   child: CustomScrollView(
+                    controller: widget.controller,
                     slivers: [
                       SliverToBoxAdapter(
                         child: Container(
@@ -203,8 +208,7 @@ class _CartContentState extends State<CartContent> {
                               CartModel cart = cartState.carts[index];
                               String? image =
                                   cart.product.images.elementAtOrNull(0);
-                              image ??=
-                                  "https://placehold.co/88/png?text=[...]";
+                              // image ??= "https://placehold.co/88/png?text=[...]";
 
                               return Container(
                                 padding:
@@ -220,12 +224,18 @@ class _CartContentState extends State<CartContent> {
                                 child: BaseProductItem(
                                   name: cart.product.name,
                                   price: int.parse(cart.product.price),
-                                  image: Image.network(
-                                    image,
-                                    height: 44,
-                                    width: 44,
-                                    fit: BoxFit.cover,
-                                  ),
+                                  image: image != null
+                                      ? Image.network(
+                                          image,
+                                          height: 44,
+                                          width: 44,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : SvgPicture.asset(
+                                          TImages.productAvatar,
+                                          height: 44,
+                                          width: 44,
+                                        ),
                                   counter: Counter(
                                     value: cart.quantity,
                                     onChanged: (quantity) {
