@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/bill_view.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -53,34 +50,16 @@ class DetailReceiptBottomSheet extends StatelessWidget {
               child: Container(
                 color: TColors.neutralLightLight,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: BlocBuilder<AuthCubit, AuthState>(
-                  builder: (context, state) {
-                    if (state is AuthReady) {
-                      final outletName = state.profile.outlets.first.name;
-                      final outletAddress = state.profile.outlets.first.address;
-
-                      return SingleChildScrollView(
-                        controller: controller,
-                        child: RepaintBoundary(
-                          key: widgetKey,
-                          child: Column(
-                            children: [
-                              BillView(
-                                outletName: outletName,
-                                outletAddress: outletAddress,
-                                noBill: "LK-0001",
-                                order: data,
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    } else if (state is AuthNotReady) {
-                      return Center(child: Text('Failed to load profile.'));
-                    }
-                    return Center(
-                        child: CircularProgressIndicator()); // Loading state
-                  },
+                child: SingleChildScrollView(
+                  controller: controller,
+                  child: RepaintBoundary(
+                    key: widgetKey,
+                    child: Column(
+                      children: [
+                        BillView(order: data),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),

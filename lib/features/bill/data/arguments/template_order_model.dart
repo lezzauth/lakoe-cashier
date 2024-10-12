@@ -50,7 +50,7 @@ class TemplateOrderModel {
           transactions: [
             Transactions(
               id: "1f72f594-9708-4065-8f9f-1c967c89d75b",
-              no: 25,
+              no: 1,
               paymentMethod: "Cash (Tunai)",
               status: "PAID",
               paidAmount: "25000",
