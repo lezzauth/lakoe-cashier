@@ -271,8 +271,10 @@ class _ReportMasterState extends State<ReportMaster> {
                             int index =
                                 report.bestSalesProduct.indexOf(product);
 
+                            String? image = product.images.elementAtOrNull(0);
+
                             return BestSellerProductTile(
-                              imageSrc: product.images[0],
+                              imageSrc: image,
                               sold: product.soldCount,
                               name: product.name,
                               rank: index + 1,
