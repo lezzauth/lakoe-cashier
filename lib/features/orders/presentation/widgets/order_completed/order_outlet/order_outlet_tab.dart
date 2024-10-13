@@ -72,12 +72,13 @@ class _OrderOutletCompletedTabState extends State<OrderOutletCompletedTab> {
                             SliverList.builder(
                               itemCount: orders.length,
                               itemBuilder: (context, index) {
+                                final reversedIndex = orders.length - 1 - index;
+
                                 OrderItemResponse order =
-                                    orders.elementAt(index);
+                                    orders.elementAt(reversedIndex);
                                 bool isPaid = order.paymentStatus == "PAID";
 
                                 return OrderListItem(
-                                  // isWithQR: index % 2 == 0,
                                   isPaid: isPaid,
                                   type: order.type,
                                   no: order.no,
@@ -92,12 +93,12 @@ class _OrderOutletCompletedTabState extends State<OrderOutletCompletedTab> {
                                   },
                                   price: order.price,
                                   customerName: order.customer?.name ?? "Umum",
-                                  tableName: order.table?.no ?? "-",
+                                  tableName: order.table?.no ?? "Bebas",
                                 );
                               },
                             ),
                             const SliverToBoxAdapter(
-                                child: SizedBox(height: 72))
+                                child: SizedBox(height: 72)),
                           ],
                           if (orders.isEmpty)
                             SliverToBoxAdapter(

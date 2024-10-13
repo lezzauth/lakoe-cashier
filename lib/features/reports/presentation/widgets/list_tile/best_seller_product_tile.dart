@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
@@ -6,6 +7,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class BestSellerProductTile extends StatelessWidget {
@@ -18,7 +20,7 @@ class BestSellerProductTile extends StatelessWidget {
     this.onTap,
   });
 
-  final String imageSrc;
+  final String? imageSrc;
   final int sold;
   final String name;
   final int rank;
@@ -66,12 +68,18 @@ class BestSellerProductTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         clipBehavior: Clip.antiAlias,
-        child: Image.network(
-          imageSrc,
-          height: 44,
-          width: 44,
-          fit: BoxFit.cover,
-        ),
+        child: imageSrc != null
+            ? Image.network(
+                imageSrc!,
+                height: 44,
+                width: 44,
+                fit: BoxFit.cover,
+              )
+            : SvgPicture.asset(
+                TImages.productAvatar,
+                height: 44,
+                width: 44,
+              ),
       ),
       title: TextHeading4(
         name,

@@ -90,10 +90,10 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                             },
                           );
                         },
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(
-                              errorText: ErrorTextStrings.required()),
-                        ]),
+                        // validator: FormBuilderValidators.compose([
+                        //   FormBuilderValidators.required(
+                        //       errorText: ErrorTextStrings.required()),
+                        // ]),
                       ),
                       const SizedBox(width: 16),
                       Expanded(

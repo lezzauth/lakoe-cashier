@@ -4,15 +4,19 @@ import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_mast
 
 class BillMasterCubit extends Cubit<BillMasterState> {
   final AppDataProvider _appDataProvider = AppDataProvider();
+  static const String defaultFootNote =
+      'Terimakasih\nDitunggu kembali kedatangannya';
 
   BillMasterCubit()
       : super(BillMasterState(
-          footNote: 'Terimakasih\nDitunggu kembali kedatangannya',
+          footNote: defaultFootNote,
         ));
 
   Future<void> init() async {
     final footNote = await _appDataProvider.footNote;
-    emit(BillMasterState(footNote: footNote));
+
+    emit(BillMasterState(
+        footNote: footNote.isEmpty ? defaultFootNote : footNote));
   }
 
   void setFootNote(String footNote) {

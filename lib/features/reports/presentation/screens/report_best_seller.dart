@@ -51,6 +51,8 @@ class ReportBestSeller extends StatelessWidget {
                     OutletReportBestSalesProductModel product =
                         bestSalesProduct.elementAt(index);
 
+                    String? image = product.images.elementAtOrNull(0);
+
                     return Container(
                       decoration: const BoxDecoration(
                         border: Border(
@@ -61,7 +63,7 @@ class ReportBestSeller extends StatelessWidget {
                         ),
                       ),
                       child: BestSellerProductTile(
-                        imageSrc: product.images[0],
+                        imageSrc: image,
                         sold: product.soldCount,
                         name: product.name,
                         rank: index + 1,

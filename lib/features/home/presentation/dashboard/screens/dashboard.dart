@@ -8,7 +8,6 @@ import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashie
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_state.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/appbar/dashboard_appbar.dart';
-import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/banner/ai_banner.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/banner/dashboard_banner.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/filter/dashboard_day_select_filter.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/filter/dashboard_filter.dart';

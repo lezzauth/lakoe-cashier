@@ -46,6 +46,24 @@ class TFormatter {
     return text.replaceRange(
         text.length - 7, text.length - 3, List.filled(4, "*").join());
   }
+
+  static String formatBillNumber(int billNumber, String outletName) {
+    String initials = getInitials(outletName);
+
+    String formattedBillNumber = billNumber < 100000
+        ? billNumber.toString().padLeft(5, '0')
+        : billNumber.toString();
+
+    return "$initials-$formattedBillNumber";
+  }
+
+  static String getInitials(String name) {
+    List<String> words = name.split(' ');
+
+    String initials = words.map((word) => word[0]).join();
+
+    return initials.toUpperCase();
+  }
 }
 
 class CreditCardFormatter extends TextInputFormatter {

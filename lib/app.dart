@@ -47,6 +47,7 @@ import 'package:point_of_sales_cashier/features/online_shop/presentation/screens
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_detail.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_master.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_track.dart';
+import 'package:point_of_sales_cashier/features/orders/presentation/screens/preview_proof_transfer.dart';
 import 'package:point_of_sales_cashier/features/packages/boost/presentation/screens/boost_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/grow_package_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_master.dart';
@@ -200,9 +201,7 @@ class App extends StatelessWidget {
           darkTheme: TAppTheme.darkTheme,
           themeMode: ThemeMode.light,
           navigatorKey: navigatorKey,
-          navigatorObservers: [
-            CustomNavigatorObserver(),
-          ],
+          navigatorObservers: [CustomNavigatorObserver()],
           initialRoute: "/",
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
@@ -265,6 +264,7 @@ class App extends StatelessWidget {
                   arguments: ModalRoute.of(context)!.settings.arguments
                       as OrderAddItemArgument,
                 ),
+            "/orders/proof": (context) => const PreviewProofTransfer(),
 
             // payments
             "/payments/qris": (context) => const QrisPaymentScreen(),

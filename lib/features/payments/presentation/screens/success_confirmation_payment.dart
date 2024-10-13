@@ -15,6 +15,7 @@ import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:point_of_sales_cashier/utils/helpers/receipt_helpers.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SuccessConfirmationPaymentScreen extends StatefulWidget {
@@ -74,6 +75,8 @@ class SuccessConfirmationPaymentContent extends StatefulWidget {
 
 class _SuccessConfirmationPaymentContentState
     extends State<SuccessConfirmationPaymentContent> {
+  final ScrollController _scrollController = ScrollController();
+
   void _onInit() {
     context.read<OrderDetailCubit>().findOne(widget.arguments.payment.orderId);
   }
@@ -267,20 +270,20 @@ class _SuccessConfirmationPaymentContentState
                       ],
                     ),
                   ),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
-                    child: TextButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                          shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)))),
-                      child: const TextActionL(
-                        "Download Struk",
-                        color: TColors.primary,
-                      ),
-                    ),
-                  )
+                  // Container(
+                  //   width: double.infinity,
+                  //   padding: const EdgeInsets.symmetric(horizontal: 32),
+                  //   child: TextButton(
+                  //     onPressed: () {},
+                  //     style: ButtonStyle(
+                  //         shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                  //             borderRadius: BorderRadius.circular(12)))),
+                  //     child: const TextActionL(
+                  //       "Download Struk",
+                  //       color: TColors.primary,
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             ),
@@ -294,13 +297,19 @@ class _SuccessConfirmationPaymentContentState
                   margin: const EdgeInsets.only(bottom: 12),
                   child: BlocBuilder<OrderDetailCubit, OrderDetailState>(
                     builder: (context, state) => switch (state) {
-                      OrderDetailLoadSuccess() => Row(
+                      OrderDetailLoadSuccess(:final order) => Row(
                           children: [
                             Expanded(
                               child: SizedBox(
                                 height: 48,
                                 child: OutlinedButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    ReceiptHelper.showDetailBill(
+                                      context,
+                                      order: order,
+                                      scrollController: _scrollController,
+                                    );
+                                  },
                                   style: const ButtonStyle(
                                     padding: WidgetStatePropertyAll(
                                       EdgeInsets.symmetric(

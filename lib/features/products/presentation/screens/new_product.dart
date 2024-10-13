@@ -89,27 +89,28 @@ class _NewProductScreenState extends State<NewProductScreen>
     dynamic stockInformationValue =
         _stockInformationFormKey.currentState?.value;
 
-    ImagePickerValue images =
-        productInformationValue["images"] as ImagePickerValue;
+    ImagePickerValue? images =
+        productInformationValue["images"] as ImagePickerValue?;
+
     String? stock =
         stockInformationValue != null ? stockInformationValue["stock"] : null;
     String? sku =
         stockInformationValue != null ? stockInformationValue["sku"] : null;
 
     context.read<ProductMasterCubit>().create(
-      [images.file!],
-      CreateProductDto(
-        name: productInformationValue["name"],
-        price: productInformationValue["price"],
-        description: productInformationValue["description"],
-        modal: productInformationValue["modal"],
-        categoryId: productInformationValue["categoryId"],
-        unit: productInformationValue["unit"],
-        sku: sku,
-        stock: stock != null ? int.parse(stock) : null,
-        availability: stockInformationValue?["availability"] ?? "AVAILABLE",
-      ),
-    );
+          images?.file != null ? [images!.file!] : [], // Gambar opsional
+          CreateProductDto(
+            name: productInformationValue["name"],
+            price: productInformationValue["price"],
+            description: productInformationValue["description"],
+            modal: productInformationValue["modal"],
+            categoryId: productInformationValue["categoryId"],
+            unit: productInformationValue["unit"],
+            sku: sku,
+            stock: stock != null ? int.parse(stock) : null,
+            availability: stockInformationValue?["availability"] ?? "AVAILABLE",
+          ),
+        );
   }
 
   @override

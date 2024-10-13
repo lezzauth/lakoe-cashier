@@ -55,12 +55,7 @@ class _BillMasterState extends State<BillMaster> {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              BillView(
-                outletName: "Warmindo Cak Tho",
-                outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
-                noBill: "LK-0001",
-                order: templateOrder.order,
-              ),
+              BillView(order: templateOrder.order),
               const TextBodyS(
                 "Ini hanya contoh tampilan struk",
                 color: TColors.neutralDarkLightest,

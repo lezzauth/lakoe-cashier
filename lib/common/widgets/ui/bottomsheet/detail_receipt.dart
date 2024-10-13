@@ -56,12 +56,7 @@ class DetailReceiptBottomSheet extends StatelessWidget {
                     key: widgetKey,
                     child: Column(
                       children: [
-                        BillView(
-                          outletName: "Warmindo Cak Tho",
-                          outletAddress: "Tebet,Jakarta Selatan, DKI Jakarta",
-                          noBill: "LK-0001",
-                          order: data,
-                        ),
+                        BillView(order: data),
                       ],
                     ),
                   ),

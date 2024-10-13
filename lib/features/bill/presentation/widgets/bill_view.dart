@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_small.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_state.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_master.dart';
@@ -16,17 +18,11 @@ import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class BillView extends StatelessWidget {
-  final String outletName;
-  final String outletAddress;
-  final String noBill;
   final bool isEdit;
   final OrderModel order;
 
   const BillView({
     super.key,
-    required this.outletName,
-    required this.outletAddress,
-    required this.noBill,
     this.isEdit = false,
     required this.order,
   });
@@ -99,17 +95,35 @@ class BillView extends StatelessWidget {
               alignment: WrapAlignment.center,
               runSpacing: 4.0,
               children: [
-                BillSectionHeading(
-                  outletName: outletName,
-                  outletAddress: outletAddress,
-                  orderNumber: order.no.toString(),
-                  orderType: order.type,
-                  noTable: order.table?.no,
-                ),
-                SectionBillInformation(
-                  cashierName: order.cashier!.operator.name,
-                  noBill: noBill,
-                  orderDate: TFormatter.billDate(order.createdAt),
+                BlocBuilder<AuthCubit, AuthState>(
+                  builder: (context, state) {
+                    if (state is AuthReady) {
+                      String outletName = state.profile.outlets.first.name;
+                      String outletAddress =
+                          state.profile.outlets.first.address;
+
+                      return Column(
+                        children: [
+                          BillSectionHeading(
+                            outletName: outletName,
+                            outletAddress: outletAddress,
+                            orderNumber: order.no.toString(),
+                            orderType: order.type,
+                            noTable: order.table?.no,
+                          ),
+                          SectionBillInformation(
+                            cashierName: order.cashier!.operator.name,
+                            noBill: TFormatter.formatBillNumber(
+                              order.transactions![0].no,
+                              outletName,
+                            ),
+                            orderDate: TFormatter.billDate(order.createdAt),
+                          ),
+                        ],
+                      );
+                    }
+                    return CircularProgressIndicator();
+                  },
                 ),
                 BillSectionListItem(
                   items: order.items,

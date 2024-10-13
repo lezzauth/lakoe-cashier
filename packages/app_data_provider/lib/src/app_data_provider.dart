@@ -6,6 +6,7 @@ enum AppDataKeys {
   ownerId,
   footNote,
   isBillAutoPrint,
+  avatarSvg,
 }
 
 class AppDataProvider {
@@ -25,6 +26,10 @@ class AppDataProvider {
 
   Future<void> setIsBillAutoPrint(bool value) async {
     return await _storage.setBool(AppDataKeys.isBillAutoPrint.name, value);
+  }
+
+  Future<void> setAvatar(String svgData) async {
+    await _storage.setString(AppDataKeys.avatarSvg.name, svgData);
   }
 
   Future<void> setValues(AppDataModel values) async {
@@ -51,18 +56,25 @@ class AppDataProvider {
     return await _storage.getString(AppDataKeys.isBillAutoPrint.name) ?? "";
   }
 
+  Future<String?> get avatarSvg async {
+    return await _storage.getString(AppDataKeys.avatarSvg.name);
+  }
+
   Future<AppDataModel> get values async {
     final outletId = await _storage.getString(AppDataKeys.outletId.name) ?? "";
     final ownerId = await _storage.getString(AppDataKeys.ownerId.name) ?? "";
     final footNote = await _storage.getString(AppDataKeys.footNote.name) ?? "";
     final isBillAutoPrint =
         await _storage.getBool(AppDataKeys.isBillAutoPrint.name) ?? false;
+    final avatarSvg =
+        await _storage.getString(AppDataKeys.avatarSvg.name) ?? "";
 
     return AppDataModel(
       footNote: footNote,
       isBillAutoPrint: isBillAutoPrint,
       outletId: outletId,
       ownerId: ownerId,
+      avatarSvg: avatarSvg,
     );
   }
 }

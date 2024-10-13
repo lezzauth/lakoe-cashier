@@ -4,12 +4,15 @@ import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:app_data_provider/app_data_provider.dart';
 
 class DashboardAppbar extends StatelessWidget implements PreferredSizeWidget {
   const DashboardAppbar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final AppDataProvider _appDataProvider = AppDataProvider();
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
@@ -34,42 +37,57 @@ class DashboardAppbar extends StatelessWidget implements PreferredSizeWidget {
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () => Navigator.pushNamed(context, "/account"),
-                  child: Container(
-                    width: 32,
-                    height: 32,
-                    decoration: const ShapeDecoration(
-                      color: Color(0xFFD3D5DD),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16),
-                          topRight: Radius.circular(16),
-                          bottomLeft: Radius.circular(16),
-                          bottomRight: Radius.circular(4),
-                        ),
-                      ),
-                    ),
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          left: 1,
-                          top: 1,
-                          child: Image.asset(
-                            TImages.defaultAvatar,
-                            width: 30,
-                            height: 30,
+                  child: FutureBuilder<String?>(
+                    future: _appDataProvider.avatarSvg,
+                    builder: (context, snapshot) {
+                      return Container(
+                        width: 32,
+                        height: 32,
+                        decoration: const ShapeDecoration(
+                          color: Color(0xFFD3D5DD),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
+                              bottomLeft: Radius.circular(16),
+                              bottomRight: Radius.circular(4),
+                            ),
                           ),
                         ),
-                        Positioned(
-                          left: 20,
-                          top: 20,
-                          child: Image.asset(
-                            TImages.liteLogo,
-                            width: 12,
-                            height: 12,
-                          ),
+                        child: Stack(
+                          children: [
+                            if (snapshot.hasData &&
+                                snapshot.data != null &&
+                                snapshot.data!.isNotEmpty)
+                              SvgPicture.string(
+                                snapshot.data!,
+                                height: 30,
+                                width: 30,
+                                fit: BoxFit.cover,
+                              )
+                            else
+                              Positioned(
+                                left: 1,
+                                top: 1,
+                                child: Image.asset(
+                                  TImages.defaultAvatar,
+                                  width: 30,
+                                  height: 30,
+                                ),
+                              ),
+                            Positioned(
+                              left: 20,
+                              top: 20,
+                              child: Image.asset(
+                                TImages.liteLogo,
+                                width: 12,
+                                height: 12,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ),
               ],
