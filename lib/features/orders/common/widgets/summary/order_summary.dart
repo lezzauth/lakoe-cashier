@@ -187,18 +187,22 @@ class OrderSummary extends StatelessWidget {
                         Row(
                           children: [
                             paymentDetails['paymentMethod'] == 'Transfer Bank'
-                                ? UiIcons(
-                                    TIcons.image,
-                                    width: 16,
-                                    height: 16,
-                                    color: TColors.primary,
+                                ? GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(
                                           context, "/orders/proof");
                                     },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: UiIcons(
+                                        TIcons.image,
+                                        width: 16,
+                                        height: 16,
+                                        color: TColors.primary,
+                                      ),
+                                    ),
                                   )
                                 : SizedBox(),
-                            SizedBox(width: 8),
                             TextHeading4(
                               TFormatter.formatToRupiah(
                                 paymentDetails['paidAmount'],
