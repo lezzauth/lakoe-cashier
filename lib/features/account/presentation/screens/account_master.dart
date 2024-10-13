@@ -306,68 +306,156 @@ class BalanceCard extends StatelessWidget {
   }
 }
 
+// class OutletCard extends StatelessWidget {
+//   const OutletCard({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+//       clipBehavior: Clip.antiAlias,
+//       decoration: ShapeDecoration(
+//         color: TColors.neutralLightLightest,
+//         shape: RoundedRectangleBorder(
+//           side: const BorderSide(
+//             width: 1,
+//             color: TColors.neutralLightMedium,
+//           ),
+//           borderRadius: BorderRadius.circular(16),
+//         ),
+//       ),
+//       child: Row(
+//         mainAxisSize: MainAxisSize.min,
+//         mainAxisAlignment: MainAxisAlignment.start,
+//         crossAxisAlignment: CrossAxisAlignment.center,
+//         children: [
+//           Container(
+//             decoration: BoxDecoration(
+//               shape: BoxShape.circle,
+//               border: Border.all(
+//                 color: TColors.neutralLightMedium,
+//                 width: 1.0,
+//               ),
+//             ),
+//             child: CircleAvatar(
+//               radius: 44 / 2,
+//               backgroundColor: TColors.neutralLightLight,
+//               child: Image.asset(
+//                 TImages.lakoeLetterPrimary,
+//                 height: 24,
+//                 width: 24,
+//               ),
+//             ),
+//           ),
+//           const SizedBox(width: 16),
+//           const Expanded(
+//             child: Column(
+//               mainAxisSize: MainAxisSize.min,
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 TextHeading3(
+//                   "Warmindo Cak Tho",
+//                   color: TColors.neutralDarkDark,
+//                 ),
+//                 SizedBox(height: 2),
+//                 TextBodyS(
+//                   "Tebet, Jakarta Selatan",
+//                   color: TColors.neutralDarkLightest,
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
 class OutletCard extends StatelessWidget {
   const OutletCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-      clipBehavior: Clip.antiAlias,
-      decoration: ShapeDecoration(
-        color: TColors.neutralLightLightest,
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            width: 1,
-            color: TColors.neutralLightMedium,
-          ),
-          borderRadius: BorderRadius.circular(16),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: TColors.neutralLightMedium,
-                width: 1.0,
-              ),
-            ),
-            child: CircleAvatar(
-              radius: 44 / 2,
-              backgroundColor: TColors.neutralLightLight,
-              child: Image.asset(
-                TImages.lakoeLetterPrimary,
-                height: 24,
-                width: 24,
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          const Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextHeading3(
-                  "Warmindo Cak Tho",
-                  color: TColors.neutralDarkDark,
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        if (state is AuthReady) {
+          String outletName = state.profile.outlets.first.name;
+          String outletAddress = state.profile.outlets.first.address;
+          String outletLogo = state.profile.outlets.first.logo;
+
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            clipBehavior: Clip.antiAlias,
+            decoration: ShapeDecoration(
+              color: TColors.neutralLightLightest,
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(
+                  width: 1,
+                  color: TColors.neutralLightMedium,
                 ),
-                SizedBox(height: 2),
-                TextBodyS(
-                  "Tebet, Jakarta Selatan",
-                  color: TColors.neutralDarkLightest,
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: TColors.neutralLightMedium,
+                      width: 1.0,
+                    ),
+                  ),
+                  child: CircleAvatar(
+                    radius: 22,
+                    backgroundColor: TColors.neutralLightLight,
+                    child: Image.network(
+                      outletLogo,
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          TImages.lakoeLetterPrimary,
+                          width: 24,
+                          height: 24,
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextHeading3(
+                        outletName,
+                        color: TColors.neutralDarkDark,
+                      ),
+                      const SizedBox(height: 2),
+                      TextBodyS(
+                        outletAddress,
+                        color: TColors.neutralDarkLightest,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
+          );
+        } else if (state is AuthLoadInProgress) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          return const Text('Unable to load outlet data');
+        }
+      },
     );
   }
 }
