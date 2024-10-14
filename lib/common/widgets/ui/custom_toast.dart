@@ -37,32 +37,37 @@ class CustomToast {
           left: 0,
           right: 0,
           child: Center(
-            child: Material(
-              color: Colors.transparent,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 12.0),
-                decoration: BoxDecoration(
-                  color: backgroundColor,
-                  borderRadius: BorderRadius.circular(100.0),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (icon != null)
-                      UiIcons(
-                        icon,
-                        width: 18,
-                        height: 18,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 12.0,
+                  ),
+                  decoration: BoxDecoration(
+                    color: backgroundColor,
+                    borderRadius: BorderRadius.circular(100.0),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (icon != null)
+                        UiIcons(
+                          icon,
+                          width: 18,
+                          height: 18,
+                          color: TColors.neutralLightLightest,
+                        ),
+                      SizedBox(width: icon != null ? 8 : 0),
+                      TextBodyL(
+                        message,
                         color: TColors.neutralLightLightest,
                       ),
-                    SizedBox(width: icon != null ? 8 : 0),
-                    TextBodyL(
-                      message,
-                      color: TColors.neutralLightLightest,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
