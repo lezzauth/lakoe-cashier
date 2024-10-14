@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
@@ -9,7 +10,10 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/packages/application/cubit/package_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/packages/application/cubit/package_master_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -26,61 +30,6 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
   // int _selectedIndex = 0;
-
-  List<_CardItemPackage> listCardItemPackage = [
-    _CardItemPackage(
-      name: "LITE",
-      logo: TImages.liteLogoPackage,
-      description:
-          "Untuk bisnis baru, fitur lengkap dengan batasan penggunaan.",
-      price: 0,
-      color: Color(0xFFFC4100),
-      isActive: true,
-    ),
-    _CardItemPackage(
-      name: "GROW",
-      logo: TImages.growLogoPackage,
-      description: "Tingkatkan kapasitas bisnis dengan kuota yang lebih besar",
-      price: 30000,
-      color: Color(0xFF00712D),
-      isActive: false,
-      routeName: "/packages/grow",
-    ),
-    _CardItemPackage(
-      name: "PRO",
-      logo: TImages.proLogoPackage,
-      description:
-          "Bebaskan potensi bisnis dengan akses tanpa terbatas ke semua fitur Lakoe.",
-      price: 56000,
-      color: Color(0xFF9306AF),
-      isActive: false,
-      routeName: "/packages/pro",
-    ),
-  ];
-
-  List<_CardItemBoost> listCardItemBoost = [
-    _CardItemBoost(
-      id: 1,
-      title: "Boost Transaksi",
-      subtitle: "Tambah kuota order dan produk",
-      price: 3500,
-      routeName: "/boost",
-    ),
-    _CardItemBoost(
-      id: 2,
-      title: "Boost Loyalty",
-      subtitle: "Raih pelanggan lebih banyak lagi",
-      price: 2500,
-      routeName: "/boost",
-    ),
-    _CardItemBoost(
-      id: 3,
-      title: "Boost Operasional",
-      subtitle: "Tambah karyawan dan QR meja",
-      price: 4500,
-      routeName: "/boost",
-    ),
-  ];
 
   @override
   void initState() {
@@ -102,6 +51,45 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
     super.dispose();
   }
 
+  String _getPackageLogo(String packageName) {
+    switch (packageName) {
+      case 'LITE':
+        return TImages.liteLogoPackage;
+      case 'GROW':
+        return TImages.growLogoPackage;
+      case 'PRO':
+        return TImages.proLogoPackage;
+      default:
+        return TImages.liteLogoPackage;
+    }
+  }
+
+  Color _getPackageColor(String packageName) {
+    switch (packageName) {
+      case 'LITE':
+        return const Color(0xFFFC4100);
+      case 'GROW':
+        return const Color(0xFF00712D);
+      case 'PRO':
+        return const Color(0xFF9306AF);
+      default:
+        return Colors.grey;
+    }
+  }
+
+  String _getPackageDesc(String packageName) {
+    switch (packageName) {
+      case 'LITE':
+        return "Untuk bisnis baru, fitur lengkap dengan batasan penggunaan.";
+      case 'GROW':
+        return "Tingkatkan kapasitas bisnis dengan kuota yang lebih besar";
+      case 'PRO':
+        return "Bebaskan potensi bisnis dengan akses tanpa terbatas ke semua fitur Lakoe.";
+      default:
+        return "Deskripsi tidak tersedia";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,50 +106,91 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 112),
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextHeading2("Saatnya Naik Level,\nSaatnya Upgrade Lakoe."),
-                // SizedBox(height: 8),
-                PackageTabView(data: listCardItemPackage),
-                // TabContainer(
-                //   hasPadding: true,
-                //   controller: _tabController,
-                //   tabs: [
-                //     const TabItem(
-                //       title: "Paket",
-                //       fontSize: TSizes.fontSizeHeading3,
-                //     ),
-                //     TabItem(
-                //       title: "Boost",
-                //       labelAssets: _selectedIndex != 1
-                //           ? SvgPicture.asset(
-                //               TImages.boostLogoSvg,
-                //               height: 16,
-                //               width: 62,
-                //             )
-                //           : SvgPicture.asset(
-                //               TImages.boostLogoSvgWhite,
-                //               height: 16,
-                //               width: 62,
-                //             ),
-                //     ),
-                //   ],
-                // ),
-                // Expanded(
-                //   child: TabBarView(
-                //     controller: _tabController,
-                //     children: [
-                //       PackageTabView(data: listCardItemPackage),
-                //       BoostTabView(data: listCardItemBoost),
-                //     ],
-                //   ),
-                // ),
-              ],
-            ),
+          BlocBuilder<AuthCubit, AuthState>(
+            builder: (context, authState) {
+              if (authState is AuthReady) {
+                final OwnerProfileModel profile = authState.profile;
+                return BlocBuilder<PackageMasterCubit, PackageMasterState>(
+                  builder: (context, state) {
+                    if (state is PackageMasterLoadSuccess) {
+                      final List<ModelItemPackage> listCardItemPackage =
+                          state.packages.map((package) {
+                        return ModelItemPackage(
+                          name: package.name,
+                          logo: _getPackageLogo(package.name),
+                          description: _getPackageDesc(package.name),
+                          price: package.price,
+                          color: _getPackageColor(package.name),
+                          isActive: package.name == profile.packageName,
+                        );
+                      }).toList();
+
+                      return Container(
+                        margin: const EdgeInsets.only(top: 112),
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const TextHeading2(
+                                "Saatnya Naik Level,\nSaatnya Upgrade Lakoe."),
+                            // SizedBox(height: 8),
+                            PackageTabView(data: listCardItemPackage),
+                            // TabContainer(
+                            //   hasPadding: true,
+                            //   controller: _tabController,
+                            //   tabs: [
+                            //     const TabItem(
+                            //       title: "Paket",
+                            //       fontSize: TSizes.fontSizeHeading3,
+                            //     ),
+                            //     TabItem(
+                            //       title: "Boost",
+                            //       labelAssets: _selectedIndex != 1
+                            //           ? SvgPicture.asset(
+                            //               TImages.boostLogoSvg,
+                            //               height: 16,
+                            //               width: 62,
+                            //             )
+                            //           : SvgPicture.asset(
+                            //               TImages.boostLogoSvgWhite,
+                            //               height: 16,
+                            //               width: 62,
+                            //             ),
+                            //     ),
+                            //   ],
+                            // ),
+                            // Expanded(
+                            //   child: TabBarView(
+                            //     controller: _tabController,
+                            //     children: [
+                            //       PackageTabView(data: listCardItemPackage),
+                            //       BoostTabView(data: listCardItemBoost),
+                            //     ],
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                      );
+                    } else if (state is PackageMasterLoadFailure) {
+                      return Center(
+                        child: TextBodyS(
+                          state.error,
+                          color: TColors.error,
+                        ),
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
           ),
         ],
       ),
@@ -172,7 +201,7 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
 class PackageTabView extends StatelessWidget {
   const PackageTabView({super.key, required this.data});
 
-  final List data;
+  final List<ModelItemPackage> data;
 
   @override
   Widget build(BuildContext context) {
@@ -243,7 +272,10 @@ class PackageTabView extends StatelessWidget {
                                   ElevatedButton(
                                     onPressed: () {
                                       Navigator.pushNamed(
-                                          context, item.routeName);
+                                        context,
+                                        "/packages/grow",
+                                        arguments: {'packageName': item.name},
+                                      );
                                     },
                                     style: ButtonStyle(
                                       minimumSize: WidgetStateProperty.all(
@@ -415,23 +447,21 @@ class PackageAppbar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(68.0);
 }
 
-class _CardItemPackage {
+class ModelItemPackage {
   final String name;
   final String logo;
   final String description;
   final bool isActive;
   final int price;
   final Color color;
-  final String? routeName;
 
-  _CardItemPackage({
+  ModelItemPackage({
     required this.name,
     required this.logo,
     required this.description,
     this.isActive = false,
     required this.price,
     required this.color,
-    this.routeName,
   });
 }
 

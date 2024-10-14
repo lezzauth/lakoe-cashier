@@ -51,9 +51,8 @@ import 'package:point_of_sales_cashier/features/orders/presentation/screens/prev
 import 'package:point_of_sales_cashier/features/packages/application/cubit/package_detail/package_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/packages/application/cubit/package_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/packages/boost/presentation/screens/boost_detail.dart';
-import 'package:point_of_sales_cashier/features/packages/presentation/screens/grow_package_detail.dart';
+import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_master.dart';
-import 'package:point_of_sales_cashier/features/packages/presentation/screens/pro_package_detail.dart';
 import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
 import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/print/presentation/screens/print_master.dart';
@@ -357,8 +356,7 @@ class App extends StatelessWidget {
 
             // Package
             "/packages": (context) => const PackageMasterScreen(),
-            "/packages/grow": (context) => const GrowPackageDetailScreen(),
-            "/packages/pro": (context) => const ProPackageDetailScreen(),
+            "/packages/grow": (context) => const PackageDetailScreen(),
             "/boost": (context) => const BoostDetailScreen(),
 
             // Checkout

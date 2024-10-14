@@ -24,10 +24,7 @@ class PackageRepositoryImpl implements PackageRepository {
   Future<List<PackageModel>> findAll() async {
     final Options options = await _getOptions();
 
-    final response = await _dio.get<List<dynamic>>(
-      _baseURL,
-      options: options,
-    );
+    final response = await _dio.get<List<dynamic>>(_baseURL, options: options);
     return response.data!
         .map((element) => PackageModel.fromJson(element))
         .toList();
@@ -36,7 +33,9 @@ class PackageRepositoryImpl implements PackageRepository {
   @override
   Future<List<PackagePriceModel>> findOne(String name) async {
     final Options options = await _getOptions();
-    final response = await _dio.get("$_baseURL/$name", options: options);
+
+    final response =
+        await _dio.get<List<dynamic>>("$_baseURL/$name", options: options);
 
     return response.data!
         .map((element) => PackagePriceModel.fromJson(element))
