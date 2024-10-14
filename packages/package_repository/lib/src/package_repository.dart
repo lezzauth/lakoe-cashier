@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
+import 'package:package_repository/package_repository.dart';
 import 'package:package_repository/src/models/package.dart';
 import 'package:token_provider/token_provider.dart';
 
@@ -40,5 +41,20 @@ class PackageRepositoryImpl implements PackageRepository {
     return response.data!
         .map((element) => PackagePriceModel.fromJson(element))
         .toList();
+  }
+
+  @override
+  Future<PurchaseModel> create({
+    required PurchaseDto dto,
+    required String? packageName,
+  }) async {
+    final Options options = await _getOptions();
+
+    final response = await _dio.post(
+      "$_baseURL/$packageName/purchase",
+      data: dto.toJson(),
+      options: options,
+    );
+    return PurchaseModel.fromJson(response.data);
   }
 }

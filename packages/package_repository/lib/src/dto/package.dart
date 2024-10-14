@@ -12,3 +12,14 @@ class DetailPakcageDto with _$DetailPakcageDto {
   factory DetailPakcageDto.fromJson(Map<String, dynamic> json) =>
       _$DetailPakcageDtoFromJson(json);
 }
+
+@freezed
+class PurchaseDto with _$PurchaseDto {
+  const factory PurchaseDto({
+    required int period,
+    required String paymentMethod,
+  }) = _PurchaseDto;
+
+  factory PurchaseDto.fromJson(Map<String, dynamic> json) =>
+      _$PurchaseDtoFromJson(json);
+}

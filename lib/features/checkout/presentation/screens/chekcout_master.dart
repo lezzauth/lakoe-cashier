@@ -451,9 +451,11 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                   ],
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    print("object");
-                  },
+                  onPressed: selectedMethod == null
+                      ? null
+                      : () {
+                          print("PRINT");
+                        },
                   style: ButtonStyle(
                     minimumSize: WidgetStateProperty.all(
                       Size(160, 0),

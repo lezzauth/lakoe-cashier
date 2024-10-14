@@ -164,3 +164,171 @@ abstract class _DetailPakcageDto implements DetailPakcageDto {
   _$$DetailPakcageDtoImplCopyWith<_$DetailPakcageDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+PurchaseDto _$PurchaseDtoFromJson(Map<String, dynamic> json) {
+  return _PurchaseDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PurchaseDto {
+  int get period => throw _privateConstructorUsedError;
+  String get paymentMethod => throw _privateConstructorUsedError;
+
+  /// Serializes this PurchaseDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of PurchaseDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $PurchaseDtoCopyWith<PurchaseDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PurchaseDtoCopyWith<$Res> {
+  factory $PurchaseDtoCopyWith(
+          PurchaseDto value, $Res Function(PurchaseDto) then) =
+      _$PurchaseDtoCopyWithImpl<$Res, PurchaseDto>;
+  @useResult
+  $Res call({int period, String paymentMethod});
+}
+
+/// @nodoc
+class _$PurchaseDtoCopyWithImpl<$Res, $Val extends PurchaseDto>
+    implements $PurchaseDtoCopyWith<$Res> {
+  _$PurchaseDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of PurchaseDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? period = null,
+    Object? paymentMethod = null,
+  }) {
+    return _then(_value.copyWith(
+      period: null == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as int,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$PurchaseDtoImplCopyWith<$Res>
+    implements $PurchaseDtoCopyWith<$Res> {
+  factory _$$PurchaseDtoImplCopyWith(
+          _$PurchaseDtoImpl value, $Res Function(_$PurchaseDtoImpl) then) =
+      __$$PurchaseDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int period, String paymentMethod});
+}
+
+/// @nodoc
+class __$$PurchaseDtoImplCopyWithImpl<$Res>
+    extends _$PurchaseDtoCopyWithImpl<$Res, _$PurchaseDtoImpl>
+    implements _$$PurchaseDtoImplCopyWith<$Res> {
+  __$$PurchaseDtoImplCopyWithImpl(
+      _$PurchaseDtoImpl _value, $Res Function(_$PurchaseDtoImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of PurchaseDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? period = null,
+    Object? paymentMethod = null,
+  }) {
+    return _then(_$PurchaseDtoImpl(
+      period: null == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as int,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$PurchaseDtoImpl implements _PurchaseDto {
+  const _$PurchaseDtoImpl({required this.period, required this.paymentMethod});
+
+  factory _$PurchaseDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PurchaseDtoImplFromJson(json);
+
+  @override
+  final int period;
+  @override
+  final String paymentMethod;
+
+  @override
+  String toString() {
+    return 'PurchaseDto(period: $period, paymentMethod: $paymentMethod)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PurchaseDtoImpl &&
+            (identical(other.period, period) || other.period == period) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, period, paymentMethod);
+
+  /// Create a copy of PurchaseDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PurchaseDtoImplCopyWith<_$PurchaseDtoImpl> get copyWith =>
+      __$$PurchaseDtoImplCopyWithImpl<_$PurchaseDtoImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$PurchaseDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _PurchaseDto implements PurchaseDto {
+  const factory _PurchaseDto(
+      {required final int period,
+      required final String paymentMethod}) = _$PurchaseDtoImpl;
+
+  factory _PurchaseDto.fromJson(Map<String, dynamic> json) =
+      _$PurchaseDtoImpl.fromJson;
+
+  @override
+  int get period;
+  @override
+  String get paymentMethod;
+
+  /// Create a copy of PurchaseDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PurchaseDtoImplCopyWith<_$PurchaseDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
