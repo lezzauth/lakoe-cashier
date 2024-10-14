@@ -48,6 +48,8 @@ import 'package:point_of_sales_cashier/features/online_shop/presentation/screens
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_master.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_track.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/preview_proof_transfer.dart';
+import 'package:point_of_sales_cashier/features/packages/application/cubit/package_detail/package_detail_cubit.dart';
+import 'package:point_of_sales_cashier/features/packages/application/cubit/package_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/packages/boost/presentation/screens/boost_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/grow_package_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_master.dart';
@@ -192,6 +194,10 @@ class App extends StatelessWidget {
 
         // Online Shop
         BlocProvider(create: (context) => ShopOrderMasterCubit()),
+
+        // Package Plan
+        BlocProvider(create: (context) => PackageMasterCubit()),
+        BlocProvider(create: (context) => PackageDetailCubit()),
       ],
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
