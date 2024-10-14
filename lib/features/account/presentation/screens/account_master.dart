@@ -26,6 +26,13 @@ class AccountMasterScreen extends StatefulWidget {
 }
 
 class _AccountMasterScreenState extends State<AccountMasterScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<AuthCubit>().initialize();
+  }
+
   List<_OtherItem> otherSettingItems = [
     _OtherItem(
       title: "Paket & Riwayat",
@@ -63,47 +70,60 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       appBar: const CustomAppbarLight(
         title: "Profil & Akun",
       ),
-      body: Stack(
-        children: [
-          Positioned(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: SvgPicture.asset(
-                TImages.liteLevelHero,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 120),
-                  ProfileCard(),
-                  // const SizedBox(height: 12),
-                  // const BalanceCard(),
-                  const SizedBox(height: 12),
-                  const OutletCard(),
-                  const SizedBox(height: 12),
-                  OtherCard(
-                    children: otherSettingItems
-                        .map(
-                          (item) => ListItemCard(
-                            iconSrc: item.iconSrc,
-                            title: item.title,
-                            routeName: item.routeName,
-                            isNewItem: item.isNewItem,
-                            textTrailing: item.textTrailing,
-                          ),
-                        )
-                        .toList(),
+      body: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) {
+          if (state is AuthReady) {
+            final profile = state.profile;
+
+            return Stack(
+              children: [
+                Positioned(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: SvgPicture.asset(
+                      profile.packageName == "GROW"
+                          ? TImages.growLevelHero
+                          : profile.packageName == "PRO"
+                              ? TImages.liteLevelHero
+                              : TImages.liteLevelHero,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ],
-              ),
-            ),
-          ),
-        ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 120),
+                        ProfileCard(),
+                        // const SizedBox(height: 12),
+                        // const BalanceCard(),
+                        const SizedBox(height: 12),
+                        const OutletCard(),
+                        const SizedBox(height: 12),
+                        OtherCard(
+                          children: otherSettingItems
+                              .map(
+                                (item) => ListItemCard(
+                                  iconSrc: item.iconSrc,
+                                  title: item.title,
+                                  routeName: item.routeName,
+                                  isNewItem: item.isNewItem,
+                                  textTrailing: item.textTrailing,
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+          return const CircularProgressIndicator();
+        },
       ),
     );
   }
@@ -152,25 +172,22 @@ class ProfileCard extends StatelessWidget {
                             ),
                           ),
                           child: FutureBuilder<String?>(
-                            future: _appDataProvider
-                                .avatarSvg, // Retrieve avatar from SharedPreferences
+                            future: _appDataProvider.avatarSvg,
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return CircularProgressIndicator(); // Show a loading spinner while fetching avatar
+                                return CircularProgressIndicator();
                               }
                               if (snapshot.hasData &&
                                   snapshot.data != null &&
                                   snapshot.data!.isNotEmpty) {
                                 return SvgPicture.string(
-                                  snapshot
-                                      .data!, // Display the stored avatar SVG
+                                  snapshot.data!,
                                   height: 46,
                                   width: 46,
                                 );
                               } else {
                                 return RandomAvatar(
-                                  // Fallback to generating a new avatar if none is stored
                                   profile.id,
                                   height: 46,
                                   width: 46,
@@ -211,12 +228,16 @@ class ProfileCard extends StatelessWidget {
                   highlightColor: Colors.transparent,
                   onTap: () => Navigator.pushNamed(context, "/packages"),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(16),
                         bottomRight: Radius.circular(16),
                       ),
-                      color: TColors.highlightLightest,
+                      color: profile.packageName == "GROW"
+                          ? TColors.successLight
+                          : profile.packageName == "PRO"
+                              ? Color(0xFFF4DEF8)
+                              : TColors.highlightLightest,
                     ),
                     padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
                     child: Row(
@@ -228,7 +249,11 @@ class ProfileCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 8.0),
                         Image.asset(
-                          TImages.liteLogoPackage,
+                          profile.packageName == "GROW"
+                              ? TImages.growLogoPackage
+                              : profile.packageName == "PRO"
+                                  ? TImages.proLogoPackage
+                                  : TImages.liteLogoPackage,
                           height: 24,
                         ),
                       ],
@@ -239,7 +264,7 @@ class ProfileCard extends StatelessWidget {
             ),
           );
         }
-        return const CircularProgressIndicator(); // Handle loading state
+        return const CircularProgressIndicator();
       },
     );
   }

@@ -268,7 +268,8 @@ class PackageTabView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                if (item.isActive == false)
+                                if (item.isActive == false &&
+                                    item.name != "LITE")
                                   ElevatedButton(
                                     onPressed: () {
                                       Navigator.pushNamed(
