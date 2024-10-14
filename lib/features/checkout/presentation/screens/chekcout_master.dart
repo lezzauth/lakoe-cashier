@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:package_repository/package_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
@@ -11,6 +13,8 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/checkout/application/purchase_cubit.dart';
 import 'package:point_of_sales_cashier/features/checkout/presentation/widget/payment_bottom_sheet.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -50,8 +54,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
             logo: arg?['logo'] ?? TImages.growLogoPackage,
             colorWave: arg?['colorWave'] ?? Color(0xFF00712D),
             bgColor: arg?['bgColor'] ?? TColors.successLight,
-            name:
-                "Lakoe ${capitalize(arg?['packageName'] ?? 'Unknown Package')}",
+            name: arg?['packageName'] ?? 'Unknown Package',
             period: arg?['period'] ?? 'Unknown',
             pricePerMonth: arg?['pricePerMonth'] ?? 0,
             totalPrice: arg?['finalPrice'] ?? 0,
@@ -107,8 +110,8 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
         });
   }
 
-  PaymentMethod? selectedMethod;
   PaymentCategory? selectedCategory;
+  PaymentMethod? selectedMethod;
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +178,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                       Expanded(
                                         flex: 2,
                                         child: TextHeading4(
-                                          package!.name,
+                                          "Lakoe ${capitalize(package!.name)}",
                                           color: TColors.neutralDarkDark,
                                           fontWeight: FontWeight.w700,
                                         ),
@@ -451,10 +454,18 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                   ],
                 ),
                 ElevatedButton(
-                  onPressed: selectedMethod == null
+                  onPressed: selectedMethod == null || package == null
                       ? null
                       : () {
                           print("PRINT");
+                          context.read<PurchaseCubit>().create(
+                                dto: PurchaseDto(
+                                  period: package!.period,
+                                  paymentMethod:
+                                      selectedMethod!.name.toUpperCase(),
+                                ),
+                                packageName: package!.name,
+                              );
                         },
                   style: ButtonStyle(
                     minimumSize: WidgetStateProperty.all(
