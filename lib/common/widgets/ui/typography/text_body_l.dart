@@ -11,6 +11,7 @@ class TextBodyL extends StatelessWidget {
   final TextAlign? textAlign;
   final int? maxLines;
   final TextDecoration? decoration;
+  final TextOverflow? overflow;
 
   const TextBodyL(
     this.data, {
@@ -20,6 +21,7 @@ class TextBodyL extends StatelessWidget {
     this.textAlign,
     this.maxLines,
     this.decoration,
+    this.overflow,
   });
 
   @override
@@ -35,6 +37,7 @@ class TextBodyL extends StatelessWidget {
       ),
       textAlign: textAlign,
       maxLines: maxLines,
+      overflow: overflow,
     );
   }
 }

@@ -65,6 +65,8 @@ class CustomToast {
                       TextBodyL(
                         message,
                         color: TColors.neutralLightLightest,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
