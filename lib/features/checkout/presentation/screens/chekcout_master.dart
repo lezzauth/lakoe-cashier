@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
@@ -10,6 +11,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/features/checkout/presentation/widget/payment_bottom_sheet.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -59,8 +61,58 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
     });
   }
 
+  List<PaymentCategory> paymentCategories = [
+    PaymentCategory(
+      categoryName: "Dompet Digital",
+      methods: [
+        PaymentMethod(name: "LinkAja", logo: TImages.linkaja),
+        PaymentMethod(name: "OVO", logo: TImages.ovo),
+        PaymentMethod(name: "ShopeePay", logo: TImages.shopee),
+        PaymentMethod(name: "Dana", logo: TImages.dana),
+      ],
+    ),
+    PaymentCategory(
+      categoryName: "Bank Transfer",
+      methods: [
+        PaymentMethod(name: "BCA", logo: TImages.bca),
+        PaymentMethod(name: "Mandiri", logo: TImages.mandiri),
+        PaymentMethod(name: "BRI", logo: TImages.bri),
+        PaymentMethod(name: "BNI", logo: TImages.bni),
+      ],
+    ),
+  ];
+
+  void showPaymentMethodBottomSheet(
+      BuildContext context,
+      List<PaymentCategory> paymentCategories,
+      PaymentCategory? selectedCategory,
+      PaymentMethod? selectedMethod,
+      Function(PaymentCategory, PaymentMethod?) onSelected) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        useSafeArea: true,
+        builder: (context) {
+          return CustomBottomsheet(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.7,
+              child: PaymentBottomSheet(
+                paymentCategories: paymentCategories,
+                selectedCategory: selectedCategory,
+                selectedMethod: selectedMethod,
+                onSelected: onSelected,
+              ),
+            ),
+          );
+        });
+  }
+
+  PaymentMethod? selectedMethod;
+  PaymentCategory? selectedCategory;
+
   @override
   Widget build(BuildContext context) {
+    print("xxx ${selectedMethod?.name.toUpperCase()}");
     return Scaffold(
       appBar: CustomAppbar(
         title: "Pembelian Paket",
@@ -260,42 +312,110 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                       InkWell(
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
-                        onTap: () {},
-                        child: Container(
-                          padding: EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: TColors.neutralLightLightest,
-                            borderRadius: BorderRadius.circular(12.0),
-                            border: Border.all(
-                              width: 1,
-                              color: TColors.neutralLightMedium,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              UiIcons(
-                                TIcons.wallet,
-                                width: 24,
-                                height: 24,
-                                color: TColors.neutralDarkDark,
-                              ),
-                              SizedBox(width: 12),
-                              Expanded(
-                                child: TextHeading4(
-                                  "Pilih metode pembayaran",
-                                  color: TColors.neutralDarkDark,
+                        onTap: () {
+                          showPaymentMethodBottomSheet(
+                            context,
+                            paymentCategories,
+                            selectedCategory,
+                            selectedMethod,
+                            (PaymentCategory category, PaymentMethod? method) {
+                              setState(() {
+                                selectedCategory = category;
+                                selectedMethod = method;
+                              });
+                            },
+                          );
+                        },
+                        child: (selectedMethod != null)
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  border: Border.all(
+                                    width: 1,
+                                    color: TColors.neutralLightMedium,
+                                  ),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(16),
+                                      color: TColors.neutralLightLight,
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: TextBodyM(
+                                              selectedCategory!.categoryName,
+                                              color: TColors.neutralDarkDark,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(16),
+                                      color: TColors.neutralLightLightest,
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            selectedMethod!.logo,
+                                            width: 24,
+                                            height: 24,
+                                          ),
+                                          SizedBox(width: 12),
+                                          Expanded(
+                                            child: TextHeading4(
+                                              selectedMethod!.name,
+                                              color: TColors.neutralDarkDark,
+                                            ),
+                                          ),
+                                          SizedBox(width: 12),
+                                          UiIcons(
+                                            TIcons.arrowRight,
+                                            width: 16,
+                                            height: 16,
+                                            color: TColors.neutralDarkLightest,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Container(
+                                padding: EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: TColors.neutralLightLightest,
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  border: Border.all(
+                                    width: 1,
+                                    color: TColors.neutralLightMedium,
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    UiIcons(
+                                      TIcons.wallet,
+                                      width: 24,
+                                      height: 24,
+                                      color: TColors.neutralDarkDark,
+                                    ),
+                                    SizedBox(width: 12),
+                                    Expanded(
+                                      child: TextHeading4(
+                                        "Pilih metode pembayaran",
+                                        color: TColors.neutralDarkDark,
+                                      ),
+                                    ),
+                                    SizedBox(width: 12),
+                                    UiIcons(
+                                      TIcons.arrowRight,
+                                      width: 16,
+                                      height: 16,
+                                      color: TColors.neutralDarkLightest,
+                                    ),
+                                  ],
                                 ),
                               ),
-                              SizedBox(width: 12),
-                              UiIcons(
-                                TIcons.arrowRight,
-                                width: 16,
-                                height: 16,
-                                color: TColors.neutralDarkLightest,
-                              ),
-                            ],
-                          ),
-                        ),
                       ),
                     ],
                   ),
@@ -380,6 +500,28 @@ class _PackageInfoCard {
     required this.period,
     required this.pricePerMonth,
     required this.totalPrice,
+  });
+}
+
+class PaymentMethod {
+  final String name;
+  final String logo;
+  bool isSelected;
+
+  PaymentMethod({
+    required this.name,
+    required this.logo,
+    this.isSelected = false,
+  });
+}
+
+class PaymentCategory {
+  final String categoryName;
+  final List<PaymentMethod> methods;
+
+  PaymentCategory({
+    required this.categoryName,
+    required this.methods,
   });
 }
 

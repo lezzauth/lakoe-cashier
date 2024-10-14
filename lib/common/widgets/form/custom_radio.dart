@@ -3,7 +3,7 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class CustomRadio<T> extends StatefulWidget {
   final T value;
-  final T groupValue;
+  final T? groupValue;
   final ValueChanged<T?> onChanged;
 
   const CustomRadio({

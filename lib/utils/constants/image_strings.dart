@@ -104,4 +104,14 @@ class TImages {
       "assets/images/onboarding/onboarding-2.webp";
   static const String onboarding3 =
       "assets/images/onboarding/onboarding-3.webp";
+
+  // Payment Method
+  static const String bca = "assets/images/payment-method/bca.png";
+  static const String bni = "assets/images/payment-method/bni.png";
+  static const String bri = "assets/images/payment-method/bri.png";
+  static const String mandiri = "assets/images/payment-method/mandiri.png";
+  static const String dana = "assets/images/payment-method/dana.png";
+  static const String linkaja = "assets/images/payment-method/linkaja.png";
+  static const String ovo = "assets/images/payment-method/ovo.png";
+  static const String shopee = "assets/images/payment-method/shopee.png";
 }

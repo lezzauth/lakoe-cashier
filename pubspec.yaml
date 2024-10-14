@@ -151,6 +151,7 @@ flutter:
     - assets/images/access-permission/
     - assets/images/hero/
     - assets/images/onboarding/
+    - assets/images/payment-method/
     - assets/logos/
     - assets/logos/package/
     - assets/flags/

@@ -6,6 +6,7 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 class CustomRadioTile<T> extends StatelessWidget {
   final T value;
   final T groupValue;
+  final Widget? leading;
   final String title;
   final ValueChanged<T?> onChanged;
   final BoxDecoration? decoration;
@@ -15,6 +16,7 @@ class CustomRadioTile<T> extends StatelessWidget {
     required this.value,
     required this.groupValue,
     required this.onChanged,
+    this.leading,
     required this.title,
     this.decoration,
   });
@@ -30,6 +32,7 @@ class CustomRadioTile<T> extends StatelessWidget {
             title,
             color: TColors.neutralDarkDarkest,
           ),
+          leading: leading,
           trailing: CustomRadio(
             value: value,
             groupValue: groupValue,
