@@ -60,6 +60,22 @@ Map<String, dynamic> _$$PackagePriceModelImplToJson(
       'endPeriod': instance.endPeriod.toIso8601String(),
     };
 
+_$PurchaseResponseModelImpl _$$PurchaseResponseModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$PurchaseResponseModelImpl(
+      purchase:
+          PurchaseModel.fromJson(json['purchase'] as Map<String, dynamic>),
+      paymentRequest: PaymentRequestModel.fromJson(
+          json['paymentRequest'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$PurchaseResponseModelImplToJson(
+        _$PurchaseResponseModelImpl instance) =>
+    <String, dynamic>{
+      'purchase': instance.purchase,
+      'paymentRequest': instance.paymentRequest,
+    };
+
 _$PurchaseModelImpl _$$PurchaseModelImplFromJson(Map<String, dynamic> json) =>
     _$PurchaseModelImpl(
       id: json['id'] as String,
@@ -229,10 +245,10 @@ Map<String, dynamic> _$$ChannelPropertiesModelImplToJson(
 _$PaymentActionModelImpl _$$PaymentActionModelImplFromJson(
         Map<String, dynamic> json) =>
     _$PaymentActionModelImpl(
-      action: json['action'] as String,
-      urlType: json['urlType'] as String,
-      method: json['method'] as String,
-      url: json['url'] as String,
+      action: json['action'] as String?,
+      urlType: json['urlType'] as String?,
+      method: json['method'] as String?,
+      url: json['url'] as String?,
       qrCode: json['qrCode'] as String?,
     );
 

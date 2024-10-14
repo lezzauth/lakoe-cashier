@@ -13,8 +13,8 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/checkout/application/purchase_cubit.dart';
+import 'package:point_of_sales_cashier/features/checkout/application/purchase_state.dart';
 import 'package:point_of_sales_cashier/features/checkout/presentation/widget/payment_bottom_sheet.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -115,384 +115,469 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("xxx ${selectedMethod?.name.toUpperCase()}");
-    return Scaffold(
-      appBar: CustomAppbar(
-        title: "Pembelian Paket",
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 20,
+    return BlocConsumer<PurchaseCubit, PurchaseState>(
+        listener: (context, state) {
+      if (state is PurchaseActionSuccess) {
+        final PurchaseResponseModel response = state.response;
+
+        if (response.paymentRequest.paymentMethod.type == "EWALLET") {
+          // Logika untuk memilih action berdasarkan prioritas (DEEPLINK -> MOBILE -> WEB -> QR Code)
+          PaymentActionModel selectedAction;
+
+          // Prioritaskan berdasarkan urutan Deeplink -> Mobile -> Web
+          selectedAction = response.paymentRequest.actions.firstWhere(
+            (action) => action.urlType == "DEEPLINK",
+            orElse: () => response.paymentRequest.actions.firstWhere(
+              (action) => action.urlType == "MOBILE",
+              orElse: () => response.paymentRequest.actions.firstWhere(
+                (action) => action.urlType == "WEB",
+                orElse: () => response.paymentRequest.actions.firstWhere(
+                  (action) =>
+                      action.qrCode != null, // Fallback terakhir untuk QR code
+                  orElse: () => PaymentActionModel(
+                    action: null,
+                    urlType: null,
+                    method: null,
+                    url: null,
+                    qrCode: null, // Fallback terakhir
                   ),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: package!.bgColor,
-                      borderRadius: BorderRadius.circular(12.0), // Radius sudut
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          top: 0,
-                          right: 0,
-                          child: SvgPicture.asset(
-                            TImages.pakcageWaves,
-                            colorFilter: ColorFilter.mode(
-                              // Color(0xFF00712D),
-                              package!.colorWave,
-                              BlendMode.srcIn,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 16,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                package!.logo,
-                                height: type == 'boost' ? 24 : 32,
-                              ),
-                              SizedBox(height: 16),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: TextBodyM(
-                                          "Jenis Paket",
-                                          color: TColors.neutralDarkDark,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: TextHeading4(
-                                          "Lakoe ${capitalize(package!.name)}",
-                                          color: TColors.neutralDarkDark,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 12),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: TextBodyM(
-                                          "Periode",
-                                          color: TColors.neutralDarkDark,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            TextHeading4(
-                                              package!.period == "12"
-                                                  ? "1 Tahun"
-                                                  : "${package!.period} Bulan",
-                                              color: TColors.neutralDarkDark,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                            TextBodyS(
-                                              getFormattedDateRange(
-                                                  package!.period),
-                                              color: TColors.neutralDarkLight,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 12),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: TextBodyM(
-                                          "Harga Paket",
-                                          color: TColors.neutralDarkDark,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            TextHeading4(
-                                              TFormatter.formatToRupiah(
-                                                  package!.totalPrice),
-                                              color: TColors.neutralDarkDark,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                            TextBodyS(
-                                              "${TFormatter.formatToRupiah(package!.pricePerMonth)}/bulan",
-                                              color: TColors.neutralDarkLight,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Divider(
-                  thickness: 4,
-                  color: TColors.neutralLightMedium,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 20,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextHeading3(
-                        "Ringkasan Tagihan",
-                        color: TColors.neutralDarkDark,
-                      ),
-                      SizedBox(height: 12),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextBodyL(
-                            "Subtotal",
-                            color: TColors.neutralDarkDark,
-                          ),
-                          TextHeading3(
-                            TFormatter.formatToRupiah(package!.totalPrice),
-                            color: TColors.neutralDarkDark,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Divider(
-                  thickness: 4,
-                  color: TColors.neutralLightMedium,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 20,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextHeading3(
-                        "Metode Pembayaran",
-                        color: TColors.neutralDarkDark,
-                      ),
-                      SizedBox(height: 12),
-                      InkWell(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () {
-                          showPaymentMethodBottomSheet(
-                            context,
-                            paymentCategories,
-                            selectedCategory,
-                            selectedMethod,
-                            (PaymentCategory category, PaymentMethod? method) {
-                              setState(() {
-                                selectedCategory = category;
-                                selectedMethod = method;
-                              });
-                            },
-                          );
-                        },
-                        child: (selectedMethod != null)
-                            ? Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  border: Border.all(
-                                    width: 1,
-                                    color: TColors.neutralLightMedium,
-                                  ),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(16),
-                                      color: TColors.neutralLightLight,
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: TextBodyM(
-                                              selectedCategory!.categoryName,
-                                              color: TColors.neutralDarkDark,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(16),
-                                      color: TColors.neutralLightLightest,
-                                      child: Row(
-                                        children: [
-                                          Image.asset(
-                                            selectedMethod!.logo,
-                                            width: 24,
-                                            height: 24,
-                                          ),
-                                          SizedBox(width: 12),
-                                          Expanded(
-                                            child: TextHeading4(
-                                              selectedMethod!.name,
-                                              color: TColors.neutralDarkDark,
-                                            ),
-                                          ),
-                                          SizedBox(width: 12),
-                                          UiIcons(
-                                            TIcons.arrowRight,
-                                            width: 16,
-                                            height: 16,
-                                            color: TColors.neutralDarkLightest,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Container(
-                                padding: EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: TColors.neutralLightLightest,
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  border: Border.all(
-                                    width: 1,
-                                    color: TColors.neutralLightMedium,
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    UiIcons(
-                                      TIcons.wallet,
-                                      width: 24,
-                                      height: 24,
-                                      color: TColors.neutralDarkDark,
-                                    ),
-                                    SizedBox(width: 12),
-                                    Expanded(
-                                      child: TextHeading4(
-                                        "Pilih metode pembayaran",
-                                        color: TColors.neutralDarkDark,
-                                      ),
-                                    ),
-                                    SizedBox(width: 12),
-                                    UiIcons(
-                                      TIcons.arrowRight,
-                                      width: 16,
-                                      height: 16,
-                                      color: TColors.neutralDarkLightest,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
-            decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color: TColors.neutralLightMedium,
-                  width: 1.0,
                 ),
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextBodyM(
-                      "Total",
-                      color: TColors.neutralDarkLight,
-                    ),
-                    TextHeading2(
-                      TFormatter.formatToRupiah(package!.totalPrice),
-                      color: TColors.neutralDarkDark,
+          );
+
+          if (selectedAction.url != null) {
+            print(
+                'URL ditemukan: ${selectedAction.url}, tipe URL: ${selectedAction.urlType}');
+            // Menampilkan dialog untuk URL
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text("URL Ditemukan"),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text("URL: ${selectedAction.url}"),
+                      Text("Tipe URL: ${selectedAction.urlType}"),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text("OK"),
                     ),
                   ],
-                ),
-                ElevatedButton(
-                  onPressed: selectedMethod == null || package == null
-                      ? null
-                      : () {
-                          print("PRINT");
-                          context.read<PurchaseCubit>().create(
-                                dto: PurchaseDto(
-                                  period: package!.period,
-                                  paymentMethod:
-                                      selectedMethod!.name.toUpperCase(),
+                );
+              },
+            );
+          } else if (selectedAction.qrCode != null) {
+            print('QR Code ditemukan: ${selectedAction.qrCode}');
+            // Menampilkan dialog untuk QR code
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text("QR Code Ditemukan"),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text("QR Code: ${selectedAction.qrCode}"),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text("OK"),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+        }
+      }
+    }, builder: (context, state) {
+      return Scaffold(
+        appBar: CustomAppbar(
+          title: "Pembelian Paket",
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 20,
+                    ),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: package!.bgColor,
+                        borderRadius:
+                            BorderRadius.circular(12.0), // Radius sudut
+                      ),
+                      clipBehavior: Clip.hardEdge,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: SvgPicture.asset(
+                              TImages.pakcageWaves,
+                              colorFilter: ColorFilter.mode(
+                                // Color(0xFF00712D),
+                                package!.colorWave,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 12,
+                              horizontal: 16,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.asset(
+                                  package!.logo,
+                                  height: type == 'boost' ? 24 : 32,
                                 ),
-                                packageName: package!.name,
-                              );
-                        },
-                  style: ButtonStyle(
-                    minimumSize: WidgetStateProperty.all(
-                      Size(160, 0),
+                                SizedBox(height: 16),
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: TextBodyM(
+                                            "Jenis Paket",
+                                            color: TColors.neutralDarkDark,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: TextHeading4(
+                                            "Lakoe ${capitalize(package!.name)}",
+                                            color: TColors.neutralDarkDark,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 12),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: TextBodyM(
+                                            "Periode",
+                                            color: TColors.neutralDarkDark,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              TextHeading4(
+                                                package!.period == "12"
+                                                    ? "1 Tahun"
+                                                    : "${package!.period} Bulan",
+                                                color: TColors.neutralDarkDark,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                              TextBodyS(
+                                                getFormattedDateRange(
+                                                    package!.period),
+                                                color: TColors.neutralDarkLight,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 12),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: TextBodyM(
+                                            "Harga Paket",
+                                            color: TColors.neutralDarkDark,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              TextHeading4(
+                                                TFormatter.formatToRupiah(
+                                                    package!.totalPrice),
+                                                color: TColors.neutralDarkDark,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                              TextBodyS(
+                                                "${TFormatter.formatToRupiah(package!.pricePerMonth)}/bulan",
+                                                color: TColors.neutralDarkLight,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                  child: Row(
+                  Divider(
+                    thickness: 4,
+                    color: TColors.neutralLightMedium,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 20,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextHeading3(
+                          "Ringkasan Tagihan",
+                          color: TColors.neutralDarkDark,
+                        ),
+                        SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextBodyL(
+                              "Subtotal",
+                              color: TColors.neutralDarkDark,
+                            ),
+                            TextHeading3(
+                              TFormatter.formatToRupiah(package!.totalPrice),
+                              color: TColors.neutralDarkDark,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    thickness: 4,
+                    color: TColors.neutralLightMedium,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 20,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextHeading3(
+                          "Metode Pembayaran",
+                          color: TColors.neutralDarkDark,
+                        ),
+                        SizedBox(height: 12),
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () {
+                            showPaymentMethodBottomSheet(
+                              context,
+                              paymentCategories,
+                              selectedCategory,
+                              selectedMethod,
+                              (PaymentCategory category,
+                                  PaymentMethod? method) {
+                                setState(() {
+                                  selectedCategory = category;
+                                  selectedMethod = method;
+                                });
+                              },
+                            );
+                          },
+                          child: (selectedMethod != null)
+                              ? Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    border: Border.all(
+                                      width: 1,
+                                      color: TColors.neutralLightMedium,
+                                    ),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(16),
+                                        color: TColors.neutralLightLight,
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: TextBodyM(
+                                                selectedCategory!.categoryName,
+                                                color: TColors.neutralDarkDark,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.all(16),
+                                        color: TColors.neutralLightLightest,
+                                        child: Row(
+                                          children: [
+                                            Image.asset(
+                                              selectedMethod!.logo,
+                                              width: 24,
+                                              height: 24,
+                                            ),
+                                            SizedBox(width: 12),
+                                            Expanded(
+                                              child: TextHeading4(
+                                                selectedMethod!.name,
+                                                color: TColors.neutralDarkDark,
+                                              ),
+                                            ),
+                                            SizedBox(width: 12),
+                                            UiIcons(
+                                              TIcons.arrowRight,
+                                              width: 16,
+                                              height: 16,
+                                              color:
+                                                  TColors.neutralDarkLightest,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Container(
+                                  padding: EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: TColors.neutralLightLightest,
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    border: Border.all(
+                                      width: 1,
+                                      color: TColors.neutralLightMedium,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      UiIcons(
+                                        TIcons.wallet,
+                                        width: 24,
+                                        height: 24,
+                                        color: TColors.neutralDarkDark,
+                                      ),
+                                      SizedBox(width: 12),
+                                      Expanded(
+                                        child: TextHeading4(
+                                          "Pilih metode pembayaran",
+                                          color: TColors.neutralDarkDark,
+                                        ),
+                                      ),
+                                      SizedBox(width: 12),
+                                      UiIcons(
+                                        TIcons.arrowRight,
+                                        width: 16,
+                                        height: 16,
+                                        color: TColors.neutralDarkLightest,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: TColors.neutralLightMedium,
+                    width: 1.0,
+                  ),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      UiIcons(
-                        TIcons.shieldKeyhole,
-                        width: 20,
-                        height: 20,
-                        color: TColors.neutralLightLightest,
+                      TextBodyM(
+                        "Total",
+                        color: TColors.neutralDarkLight,
                       ),
-                      SizedBox(width: 8),
-                      const TextActionL(
-                        "Bayar",
+                      TextHeading2(
+                        TFormatter.formatToRupiah(package!.totalPrice),
+                        color: TColors.neutralDarkDark,
                       ),
                     ],
                   ),
-                ),
-              ],
+                  ElevatedButton(
+                    onPressed: selectedMethod == null || package == null
+                        ? null
+                        : () {
+                            context.read<PurchaseCubit>().create(
+                                  dto: PurchaseDto(
+                                    period: package!.period,
+                                    paymentMethod:
+                                        selectedMethod!.name.toUpperCase(),
+                                  ),
+                                  packageName: package!.name,
+                                );
+                          },
+                    style: ButtonStyle(
+                      minimumSize: WidgetStateProperty.all(
+                        Size(160, 0),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        UiIcons(
+                          TIcons.shieldKeyhole,
+                          width: 20,
+                          height: 20,
+                          color: TColors.neutralLightLightest,
+                        ),
+                        SizedBox(width: 8),
+                        const TextActionL(
+                          "Bayar",
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }
 

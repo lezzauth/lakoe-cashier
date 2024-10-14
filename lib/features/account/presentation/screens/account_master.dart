@@ -84,7 +84,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
                       profile.packageName == "GROW"
                           ? TImages.growLevelHero
                           : profile.packageName == "PRO"
-                              ? TImages.liteLevelHero
+                              ? TImages.proLevelHero
                               : TImages.liteLevelHero,
                       fit: BoxFit.fill,
                     ),

@@ -40,6 +40,17 @@ class PackagePriceModel with _$PackagePriceModel {
 }
 
 @freezed
+class PurchaseResponseModel with _$PurchaseResponseModel {
+  const factory PurchaseResponseModel({
+    required PurchaseModel purchase,
+    required PaymentRequestModel paymentRequest,
+  }) = _PurchaseResponseModel;
+
+  factory PurchaseResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$PurchaseResponseModelFromJson(json);
+}
+
+@freezed
 class PurchaseModel with _$PurchaseModel {
   const factory PurchaseModel({
     required String id,
@@ -86,13 +97,12 @@ class PaymentRequestModel with _$PaymentRequestModel {
 class PaymentMethodModel with _$PaymentMethodModel {
   const factory PaymentMethodModel({
     required String id,
-    required String type, // e.g., "VIRTUAL_ACCOUNT" or "EWALLET"
+    required String type,
     required DateTime created,
     required DateTime updated,
     required String referenceId,
-    EWalletModel? ewallet, // Nullable field for EWallet payments
-    VirtualAccountModel?
-        virtualAccount, // Nullable field for Virtual Account payments
+    EWalletModel? ewallet,
+    VirtualAccountModel? virtualAccount,
     required String reusability,
     required String status,
   }) = _PaymentMethodModel;
@@ -118,7 +128,7 @@ class VirtualAccountModel with _$VirtualAccountModel {
   const factory VirtualAccountModel({
     required int amount,
     required String currency,
-    required String channelCode, // BCA, BNI, etc.
+    required String channelCode,
     required VirtualAccountPropertiesModel channelProperties,
   }) = _VirtualAccountModel;
 
@@ -151,10 +161,10 @@ class ChannelPropertiesModel with _$ChannelPropertiesModel {
 @freezed
 class PaymentActionModel with _$PaymentActionModel {
   const factory PaymentActionModel({
-    required String action,
-    required String urlType,
-    required String method,
-    required String url,
+    required String? action,
+    required String? urlType,
+    required String? method,
+    required String? url,
     String? qrCode,
   }) = _PaymentActionModel;
 

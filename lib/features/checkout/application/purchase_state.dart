@@ -14,7 +14,7 @@ final class PurchaseActionInProgress extends PurchaseState {
 }
 
 final class PurchaseActionSuccess extends PurchaseState {
-  final PurchaseModel response;
+  final PurchaseResponseModel response;
 
   PurchaseActionSuccess({required this.response});
 

@@ -5,7 +5,7 @@ import 'package:package_repository/src/models/package.dart';
 import 'package:token_provider/token_provider.dart';
 
 abstract class PurchaseRepository {
-  Future<PurchaseModel> create({
+  Future<PurchaseResponseModel> create({
     required PurchaseDto dto,
     required String? packageName,
   });
@@ -24,7 +24,7 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
   }
 
   @override
-  Future<PurchaseModel> create({
+  Future<PurchaseResponseModel> create({
     required PurchaseDto dto,
     required String? packageName,
   }) async {
@@ -35,6 +35,6 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
       data: dto.toJson(),
       options: options,
     );
-    return PurchaseModel.fromJson(response.data);
+    return PurchaseResponseModel.fromJson(response.data);
   }
 }
