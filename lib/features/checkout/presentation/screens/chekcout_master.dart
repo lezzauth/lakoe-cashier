@@ -23,27 +23,36 @@ class ChekcoutMasterScreen extends StatefulWidget {
 }
 
 class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
-  Map<String, dynamic>? arguments;
+  Map<String, dynamic>? arg;
   _PackageInfoCard? package;
   String? type;
+
+  String capitalize(String text) {
+    if (text.isEmpty) return text;
+    return text[0].toUpperCase() + text.substring(1).toLowerCase();
+  }
 
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        arguments =
+        arg =
             ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-        if (arguments != null) {
-          type = arguments?['type'];
+
+        if (arg != null) {
+          type = arg?['type'];
+
           package = _PackageInfoCard(
-            logo: arguments?['logo'],
-            colorWave: arguments?['colorWave'],
-            bgColor: arguments?['bgColor'],
-            name: "Lakoe ${arguments?['packageName']}",
-            period: arguments?['period'],
-            pricePerMonth: arguments?['pricePerMonth'],
-            totalPrice: arguments?['finalPrice'],
+            logo: arg?['logo'] ?? TImages.growLogoPackage,
+            colorWave: arg?['colorWave'] ?? Color(0xFF00712D),
+            bgColor: arg?['bgColor'] ?? TColors.successLight,
+            name:
+                "Lakoe ${capitalize(arg?['packageName'] ?? 'Unknown Package')}",
+            period: arg?['period'] ?? 'Unknown',
+            pricePerMonth: arg?['pricePerMonth'] ?? 0,
+            totalPrice: arg?['finalPrice'] ?? 0,
           );
         }
       });
@@ -148,7 +157,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                             ),
                                             TextBodyS(
                                               getFormattedDateRange(
-                                                  int.parse(package!.period)),
+                                                  package!.period),
                                               color: TColors.neutralDarkLight,
                                             ),
                                           ],
@@ -359,7 +368,7 @@ class _PackageInfoCard {
   final Color colorWave;
   final Color bgColor;
   final String name;
-  final String period;
+  final int period;
   final int pricePerMonth;
   final int totalPrice;
 
