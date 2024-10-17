@@ -37,7 +37,7 @@ class CustomNavigatorObserver extends NavigatorObserver {
       );
     } else if (route?.settings.name == "/manage_account") {
       SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle.light.copyWith(
+        SystemUiOverlayStyle.dark.copyWith(
           statusBarColor: TColors.neutralLightLightest,
           systemNavigationBarColor: TColors.neutralLightLight,
         ),
@@ -68,6 +68,19 @@ class CustomNavigatorObserver extends NavigatorObserver {
         SystemUiOverlayStyle.light.copyWith(
           statusBarColor: Colors.transparent,
           systemNavigationBarColor: Colors.black,
+        ),
+      );
+    } else if (route?.settings.name == "/payment/confirmation") {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.dark.copyWith(
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: TColors.neutralLightLight,
+        ),
+      );
+    } else if (route?.settings.name == "/payment/success") {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.light.copyWith(
+          statusBarColor: Colors.transparent,
         ),
       );
     } else {

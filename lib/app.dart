@@ -27,6 +27,8 @@ import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_e
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_master.dart';
 import 'package:point_of_sales_cashier/features/checkout/application/purchase_cubit.dart';
 import 'package:point_of_sales_cashier/features/checkout/presentation/screens/chekcout_master.dart';
+import 'package:point_of_sales_cashier/features/checkout/presentation/screens/payment_confirmation.dart';
+import 'package:point_of_sales_cashier/features/checkout/presentation/screens/payment_success.dart';
 import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
 import 'package:point_of_sales_cashier/features/employees/presentation/screens/employee_edit.dart';
@@ -363,6 +365,9 @@ class App extends StatelessWidget {
 
             // Checkout
             "/checkout": (context) => const ChekcoutMasterScreen(),
+            "/payment/confirmation": (context) =>
+                const PaymentConfirmationScreen(),
+            "/payment/success": (context) => const PaymentSuccessScreen(),
 
             // AI Chatbot
             "/ai_chatbot": (context) => const AIChatbotMasterScreen(),

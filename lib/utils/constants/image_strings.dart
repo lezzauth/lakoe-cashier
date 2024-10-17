@@ -50,6 +50,11 @@ class TImages {
   static const String packageHero = "assets/images/hero/package.svg";
   static const String boostHero = "assets/images/hero/boost.svg";
 
+  static const String growSuccessUpgraded =
+      "assets/images/ilustration-success-grow.webp";
+  static const String proSuccessUpgraded =
+      "assets/images/ilustration-success-pro.webp";
+
   // logo package level
   static const String liteLogoPackage =
       "assets/logos/package/lite-logo-level.png";

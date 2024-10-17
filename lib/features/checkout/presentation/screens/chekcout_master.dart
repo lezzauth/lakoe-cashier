@@ -422,51 +422,57 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                       color: TColors.neutralLightMedium,
                                     ),
                                   ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.all(16),
-                                        color: TColors.neutralLightLight,
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: TextBodyM(
-                                                selectedCategory!.categoryName,
-                                                color: TColors.neutralDarkDark,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(16),
+                                          color: TColors.neutralLightLight,
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: TextBodyM(
+                                                  selectedCategory!
+                                                      .categoryName,
+                                                  color:
+                                                      TColors.neutralDarkDark,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(16),
-                                        color: TColors.neutralLightLightest,
-                                        child: Row(
-                                          children: [
-                                            Image.asset(
-                                              selectedMethod!.logo,
-                                              width: 24,
-                                              height: 24,
-                                            ),
-                                            SizedBox(width: 12),
-                                            Expanded(
-                                              child: TextHeading4(
-                                                selectedMethod!.name,
-                                                color: TColors.neutralDarkDark,
+                                        Container(
+                                          padding: EdgeInsets.all(16),
+                                          color: TColors.neutralLightLightest,
+                                          child: Row(
+                                            children: [
+                                              Image.asset(
+                                                selectedMethod!.logo,
+                                                width: 24,
+                                                height: 24,
                                               ),
-                                            ),
-                                            SizedBox(width: 12),
-                                            UiIcons(
-                                              TIcons.arrowRight,
-                                              width: 16,
-                                              height: 16,
-                                              color:
-                                                  TColors.neutralDarkLightest,
-                                            ),
-                                          ],
+                                              SizedBox(width: 12),
+                                              Expanded(
+                                                child: TextHeading4(
+                                                  selectedMethod!.name,
+                                                  color:
+                                                      TColors.neutralDarkDark,
+                                                ),
+                                              ),
+                                              SizedBox(width: 12),
+                                              UiIcons(
+                                                TIcons.arrowRight,
+                                                width: 16,
+                                                height: 16,
+                                                color:
+                                                    TColors.neutralDarkLightest,
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 )
                               : Container(
@@ -539,18 +545,20 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                     ],
                   ),
                   ElevatedButton(
-                    onPressed: selectedMethod == null || package == null
-                        ? null
-                        : () {
-                            context.read<PurchaseCubit>().create(
-                                  dto: PurchaseDto(
-                                    period: package!.period,
-                                    paymentMethod:
-                                        selectedMethod!.name.toUpperCase(),
-                                  ),
-                                  packageName: package!.name,
-                                );
-                          },
+                    onPressed: () =>
+                        Navigator.pushNamed(context, "/payment/confirmation"),
+                    // selectedMethod == null || package == null
+                    //     ? null
+                    //     : () {
+                    //         context.read<PurchaseCubit>().create(
+                    //               dto: PurchaseDto(
+                    //                 period: package!.period,
+                    //                 paymentMethod:
+                    //                     selectedMethod!.name.toUpperCase(),
+                    //               ),
+                    //               packageName: package!.name,
+                    //             );
+                    //       },
                     style: ButtonStyle(
                       minimumSize: WidgetStateProperty.all(
                         Size(160, 0),
