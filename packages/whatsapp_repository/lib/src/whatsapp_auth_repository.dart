@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:app_data_provider/app_data_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:whatsapp_repository/src/dto/auth.dart';
