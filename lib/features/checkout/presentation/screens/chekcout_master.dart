@@ -70,7 +70,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
       methods: [
         PaymentMethod(name: "LinkAja", logo: TImages.linkaja),
         PaymentMethod(name: "OVO", logo: TImages.ovo),
-        PaymentMethod(name: "ShopeePay", logo: TImages.shopee),
+        PaymentMethod(name: "ShopeePay", logo: TImages.shopeepay),
         PaymentMethod(name: "Dana", logo: TImages.dana),
       ],
     ),
