@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop_repository/online_shop_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/sections/order_status_section/order_status_description.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/tags/order_item_status_tag.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -22,9 +21,6 @@ class OrderStatusSection extends StatefulWidget {
 class _OrderStatusSectionState extends State<OrderStatusSection> {
   @override
   Widget build(BuildContext context) {
-    final isShowHistory =
-        !["WAITING_FOR_PAYMENT", "CONFIRMED"].contains(widget.order.status);
-
     return Padding(
       padding: const EdgeInsets.only(top: 12),
       child: Row(

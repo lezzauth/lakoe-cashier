@@ -1,8 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:authentication_repository/src/dto/auth.dart';
 import 'package:authentication_repository/src/models/auth.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:token_provider/token_provider.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
+import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 abstract class AuthenticationRepository {
   Future<RegisterResponse> register(RegisterDto dto);
@@ -21,6 +24,17 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         onError: (DioException error, handler) async {
           if (error.response?.statusCode == 401) {
             // Handle token refresh logic here
+          } else if (error.response?.statusCode == 429) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (navigatorKey.currentContext != null) {
+                CustomToast.show(
+                  navigatorKey.currentContext!,
+                  "Terlalu banyak permintaan.",
+                  icon: TIcons.warning,
+                  position: "bottom",
+                );
+              }
+            });
           }
           handler.next(error);
         },

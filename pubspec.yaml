@@ -57,6 +57,8 @@ dependencies:
     path: packages/whatsapp_repository
   online_shop_repository:
     path: packages/online_shop_repository
+  package_repository:
+    path: packages/package_repository
 
   token_provider:
     path: packages/token_provider
@@ -115,6 +117,7 @@ dependencies:
   url_launcher: ^6.3.1
   timelines_plus: ^1.0.3
   random_avatar: ^0.0.8
+  uni_links: ^0.5.1
   # flutter_bluetooth_serial: ^0.4.0
 
 dev_dependencies:
@@ -149,6 +152,7 @@ flutter:
     - assets/images/access-permission/
     - assets/images/hero/
     - assets/images/onboarding/
+    - assets/images/payment-method/
     - assets/logos/
     - assets/logos/package/
     - assets/flags/

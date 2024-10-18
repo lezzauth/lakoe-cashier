@@ -115,7 +115,7 @@ class _BankAccountFormState extends State<BankAccountForm> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const FormLabel("Nomor Bank"),
+                        const FormLabel("Pilih Bank"),
                         FormBuilderField<String>(
                           name: "name",
                           builder: (field) {

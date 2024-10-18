@@ -124,6 +124,15 @@ class THelper {
 
     await launchUrl(url);
   }
+
+  static Future<void> openUrl(String url) async {
+    final Uri parsedUrl = Uri.parse(url);
+    if (await canLaunchUrl(parsedUrl)) {
+      await launchUrl(parsedUrl, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }
 
 class HexColor extends Color {

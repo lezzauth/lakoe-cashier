@@ -37,8 +37,7 @@ class ErrorDisplay extends StatelessWidget {
                   margin: const EdgeInsets.only(bottom: 20),
                   child: Image.asset(
                     imageSrc,
-                    height: 72.46,
-                    width: 100,
+                    height: 90,
                   ),
                 ),
                 Container(

@@ -25,7 +25,11 @@ import 'package:point_of_sales_cashier/features/bank_accounts/presentation/scree
 import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_edit.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_master.dart';
+import 'package:point_of_sales_cashier/features/checkout/application/purchase_cubit.dart';
 import 'package:point_of_sales_cashier/features/checkout/presentation/screens/chekcout_master.dart';
+import 'package:point_of_sales_cashier/features/checkout/presentation/screens/payment_confirmation.dart';
+import 'package:point_of_sales_cashier/features/checkout/presentation/screens/payment_prepared.dart';
+import 'package:point_of_sales_cashier/features/checkout/presentation/screens/payment_success.dart';
 import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
 import 'package:point_of_sales_cashier/features/employees/presentation/screens/employee_edit.dart';
@@ -48,10 +52,11 @@ import 'package:point_of_sales_cashier/features/online_shop/presentation/screens
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_master.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_track.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/preview_proof_transfer.dart';
+import 'package:point_of_sales_cashier/features/packages/application/cubit/package_detail/package_detail_cubit.dart';
+import 'package:point_of_sales_cashier/features/packages/application/cubit/package_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/packages/boost/presentation/screens/boost_detail.dart';
-import 'package:point_of_sales_cashier/features/packages/presentation/screens/grow_package_detail.dart';
+import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_detail.dart';
 import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_master.dart';
-import 'package:point_of_sales_cashier/features/packages/presentation/screens/pro_package_detail.dart';
 import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
 import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/print/presentation/screens/print_master.dart';
@@ -192,6 +197,11 @@ class App extends StatelessWidget {
 
         // Online Shop
         BlocProvider(create: (context) => ShopOrderMasterCubit()),
+
+        // Package Plan
+        BlocProvider(create: (context) => PackageMasterCubit()),
+        BlocProvider(create: (context) => PackageDetailCubit()),
+        BlocProvider(create: (context) => PurchaseCubit()),
       ],
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -351,12 +361,15 @@ class App extends StatelessWidget {
 
             // Package
             "/packages": (context) => const PackageMasterScreen(),
-            "/packages/grow": (context) => const GrowPackageDetailScreen(),
-            "/packages/pro": (context) => const ProPackageDetailScreen(),
+            "/packages/grow": (context) => const PackageDetailScreen(),
             "/boost": (context) => const BoostDetailScreen(),
 
             // Checkout
             "/checkout": (context) => const ChekcoutMasterScreen(),
+            "/payment/confirmation": (context) =>
+                const PaymentConfirmationScreen(),
+            "/payment/prepared": (context) => const PaymentPreparedScreen(),
+            "/payment/success": (context) => const PaymentSuccessScreen(),
 
             // AI Chatbot
             "/ai_chatbot": (context) => const AIChatbotMasterScreen(),

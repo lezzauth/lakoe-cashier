@@ -22,6 +22,7 @@ class TImages {
   static const String growLogo = "assets/images/grow-logo.png";
   static const String proLogo = "assets/images/pro-logo.png";
   static const String defaultAvatar = "assets/images/default-avatar.png";
+  static const String badRequest = "assets/images/502-illustration.png";
   static const String noPrintIllustration =
       "assets/images/no-print-ilustration.svg";
   static const String successIllustration =
@@ -43,11 +44,17 @@ class TImages {
   static const String bankAccountEmpty = "assets/images/bank-account-empty.svg";
 
   // hero
+  static const String placeholderHero = "assets/images/hero/placeholder.svg";
   static const String liteLevelHero = "assets/images/hero/lite.svg";
   static const String growLevelHero = "assets/images/hero/grow.svg";
   static const String proLevelHero = "assets/images/hero/pro.svg";
   static const String packageHero = "assets/images/hero/package.svg";
   static const String boostHero = "assets/images/hero/boost.svg";
+
+  static const String growSuccessUpgraded =
+      "assets/images/ilustration-success-grow.webp";
+  static const String proSuccessUpgraded =
+      "assets/images/ilustration-success-pro.webp";
 
   // logo package level
   static const String liteLogoPackage =
@@ -104,4 +111,14 @@ class TImages {
       "assets/images/onboarding/onboarding-2.webp";
   static const String onboarding3 =
       "assets/images/onboarding/onboarding-3.webp";
+
+  // Payment Method
+  static const String bca = "assets/images/payment-method/bca.webp";
+  static const String bni = "assets/images/payment-method/bni.webp";
+  static const String bri = "assets/images/payment-method/bri.webp";
+  static const String mandiri = "assets/images/payment-method/mandiri.webp";
+  static const String dana = "assets/images/payment-method/dana.webp";
+  static const String linkaja = "assets/images/payment-method/linkaja.webp";
+  static const String ovo = "assets/images/payment-method/ovo.webp";
+  static const String shopeepay = "assets/images/payment-method/shopeepay.webp";
 }
