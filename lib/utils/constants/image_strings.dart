@@ -44,6 +44,7 @@ class TImages {
   static const String bankAccountEmpty = "assets/images/bank-account-empty.svg";
 
   // hero
+  static const String placeholderHero = "assets/images/hero/placeholder.svg";
   static const String liteLevelHero = "assets/images/hero/lite.svg";
   static const String growLevelHero = "assets/images/hero/grow.svg";
   static const String proLevelHero = "assets/images/hero/pro.svg";

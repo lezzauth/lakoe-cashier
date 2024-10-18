@@ -17,6 +17,7 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:random_avatar/random_avatar.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AccountMasterScreen extends StatefulWidget {
   const AccountMasterScreen({super.key});
@@ -122,7 +123,56 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
               ],
             );
           }
-          return const CircularProgressIndicator();
+          return Stack(
+            children: [
+              Positioned(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: SvgPicture.asset(
+                    TImages.placeholderHero,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Shimmer.fromColors(
+                baseColor: const Color(0xFFE8E9F1),
+                highlightColor: const Color(0xFFF8F9FE),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 120),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: TColors.highlightLightest,
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          height: 120,
+                        ),
+                        const SizedBox(height: 12),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: TColors.highlightLightest,
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          height: 80,
+                        ),
+                        const SizedBox(height: 12),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: TColors.highlightLightest,
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          height: 200,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
         },
       ),
     );
@@ -176,7 +226,13 @@ class ProfileCard extends StatelessWidget {
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return CircularProgressIndicator();
+                                return SizedBox(
+                                  height: 12,
+                                  width: 12,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 1.0,
+                                  ),
+                                );
                               }
                               if (snapshot.hasData &&
                                   snapshot.data != null &&
