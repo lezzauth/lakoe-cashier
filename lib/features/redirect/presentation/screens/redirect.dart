@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,10 +23,27 @@ class RedirectScreen extends StatefulWidget {
 }
 
 class _RedirectScreenState extends State<RedirectScreen> {
+  bool isBottomSheetVisible = false;
+  late final StreamSubscription<List<ConnectivityResult>>
+      _connectivitySubscription;
+
   @override
   void initState() {
     super.initState();
     context.read<AuthCubit>().initialize();
+
+    _connectivitySubscription =
+        Connectivity().onConnectivityChanged.listen((result) {
+      if (result != ConnectivityResult.none) {
+        context.read<AuthCubit>().initialize();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
   }
 
   Future<void> openWifiSettings() async {
@@ -51,28 +70,32 @@ class _RedirectScreenState extends State<RedirectScreen> {
         final TokenProvider tokenProvider = TokenProvider();
         final token = await tokenProvider.getAuthToken();
 
-        if (state is AuthNotReady) {
+        if (state is AuthNotReady && !isBottomSheetVisible) {
           if (token!.isNotEmpty) {
+            isBottomSheetVisible = true;
             showModalBottomSheet(
               context: context,
-              enableDrag: true,
-              isDismissible: true,
+              enableDrag: false,
+              isDismissible: false,
               builder: (context) {
                 return CustomBottomsheet(
+                  hasGrabber: false,
                   child: ErrorDisplay(
                     imageSrc: TImages.noConnection,
                     title: "Yah, internetnya mati…",
                     description:
-                        "Coba cek WiFi atau kuota internet kamu dan nanti  coba lagi ya.",
+                        "Coba cek WiFi atau kuota internet kamu dan nanti coba lagi ya.",
                     actionTitlePrimary: "Pengaturan",
                     onActionPrimary: () async {
                       openWifiSettings();
                       Navigator.pop(context);
+                      isBottomSheetVisible = false;
                     },
                     actionTitleSecondary: "Coba Lagi",
                     onActionSecondary: () {
                       context.read<AuthCubit>().initialize();
                       Navigator.pop(context);
+                      isBottomSheetVisible = false;
                     },
                   ),
                 );
