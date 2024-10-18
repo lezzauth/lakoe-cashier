@@ -5,9 +5,9 @@ import 'package:point_of_sales_cashier/application/cubit/bank_list_state.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/bank_select/bank_radio_tile.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
 import 'package:public_repository/public_repository.dart';
@@ -61,6 +61,12 @@ class _BankSelectListState extends State<BankSelectList> {
     context.read<BankListCubit>().findAll();
   }
 
+  Future<void> onRefresh() async {
+    if (!mounted) return;
+
+    context.read<BankListCubit>().findAll();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -93,30 +99,17 @@ class _BankSelectListState extends State<BankSelectList> {
           Expanded(
             child: BlocBuilder<BankListCubit, BankListState>(
               builder: (context, state) => switch (state) {
-                BankListLoadSuccess(:final banks) => ListView.builder(
-                    itemCount: _getFilteredBanks(banks).length,
-                    itemBuilder: (context, index) {
-                      BankListModel bank =
-                          _getFilteredBanks(banks).elementAt(index);
+                BankListLoadSuccess(:final banks) => ErrorWrapper(
+                    fetchError: state is BankListLoadFailure,
+                    onRefresh: onRefresh,
+                    child: ListView.builder(
+                      itemCount: _getFilteredBanks(banks).length,
+                      itemBuilder: (context, index) {
+                        BankListModel bank =
+                            _getFilteredBanks(banks).elementAt(index);
 
-                      if (search.isNotEmpty) {
-                        return BankRadioTile<String?>(
-                          value: bank.name,
-                          title: bank.name,
-                          groupValue: _value,
-                          onChanged: (value) {
-                            setState(() {
-                              _value = value;
-                            });
-                          },
-                        );
-                      }
-
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          BankRadioTile<String?>(
+                        if (search.isNotEmpty) {
+                          return BankRadioTile<String?>(
                             value: bank.name,
                             title: bank.name,
                             groupValue: _value,
@@ -125,24 +118,35 @@ class _BankSelectListState extends State<BankSelectList> {
                                 _value = value;
                               });
                             },
-                          ),
-                          if (index == 4)
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  left: 16, right: 16, top: 20, bottom: 4),
-                              child: const TextHeading5(
-                                "BANK LAINNYA",
-                                color: TColors.neutralDarkLightest,
-                              ),
+                          );
+                        }
+
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            BankRadioTile<String?>(
+                              value: bank.name,
+                              title: bank.name,
+                              groupValue: _value,
+                              onChanged: (value) {
+                                setState(() {
+                                  _value = value;
+                                });
+                              },
                             ),
-                        ],
-                      );
-                    },
-                  ),
-                BankListLoadFailure(:final error) => Center(
-                    child: TextBodyS(
-                      error,
-                      color: TColors.error,
+                            if (index == 4)
+                              Container(
+                                padding: const EdgeInsets.only(
+                                    left: 16, right: 16, top: 20, bottom: 4),
+                                child: const TextHeading5(
+                                  "BANK LAINNYA",
+                                  color: TColors.neutralDarkLightest,
+                                ),
+                              ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 _ => const Center(child: CircularProgressIndicator()),

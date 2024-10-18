@@ -295,6 +295,14 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
                     FormBuilderField<TransferAttachment>(
                       name: "photo",
                       builder: (field) {
+                        bool isValid = field.value?.file != null ||
+                            field.value?.url != null;
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          setState(() {
+                            _isFormValid = isValid;
+                          });
+                        });
+
                         return TransferAttachmentField(
                           value: field.value,
                           onChanged: field.didChange,

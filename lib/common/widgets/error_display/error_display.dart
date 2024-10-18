@@ -62,17 +62,23 @@ class ErrorDisplay extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Row(
               children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: OutlinedButton(
-                      onPressed: onActionSecondary,
-                      child: TextActionL(
-                          actionTitleSecondary ?? "Secondary Action"),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 12),
+                onActionSecondary != null
+                    ? Row(
+                        children: [
+                          Expanded(
+                            child: SizedBox(
+                              height: 48,
+                              child: OutlinedButton(
+                                onPressed: onActionSecondary,
+                                child: TextActionL(
+                                    actionTitleSecondary ?? "Secondary Action"),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                        ],
+                      )
+                    : SizedBox(),
                 Expanded(
                   child: SizedBox(
                     height: 48,

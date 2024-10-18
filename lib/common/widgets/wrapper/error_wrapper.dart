@@ -65,12 +65,11 @@ class _ErrorWrapperState extends State<ErrorWrapper> {
                     "Kamu bisa mencobanya lagi dengan tekan tombol dibawah ini, ya",
                 actionTitlePrimary: "Coba Lagi",
                 onActionPrimary: () async {
+                  Navigator.pop(context);
+
                   if (widget.onRefresh != null) {
                     await widget.onRefresh!();
                   }
-
-                  if (!context.mounted) return;
-                  Navigator.pop(context);
                 },
               ),
         );

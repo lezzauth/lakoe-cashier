@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/data/arguments/bank_account_detail_argument.dart';
@@ -38,43 +38,55 @@ class _BankAccountListState extends State<BankAccountList> {
     widget.onEdit!(bankAccount, isUpdated ?? false);
   }
 
+  Future<void> onRefresh() async {
+    if (!mounted) return;
+
+    context.read<BankAccountMasterCubit>().findAll();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BankAccountMasterCubit, BankAccountMasterState>(
       builder: (context, state) => switch (state) {
         BankAccountMasterLoadSuccess(:final bankAccounts) => bankAccounts
                 .isNotEmpty
-            ? ListView.builder(
-                itemCount: bankAccounts.length,
-                itemBuilder: (context, index) {
-                  OwnerBankModel bankAccount = bankAccounts.elementAt(index);
-                  bool isLastElement = bankAccounts.last == bankAccount;
+            ? ErrorWrapper(
+                fetchError: state is BankAccountMasterLoadFailure,
+                onRefresh: onRefresh,
+                child: ListView.builder(
+                  itemCount: bankAccounts.length,
+                  itemBuilder: (context, index) {
+                    OwnerBankModel bankAccount = bankAccounts.elementAt(index);
+                    bool isLastElement = bankAccounts.last == bankAccount;
 
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 12),
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        BankAccountItem(
-                          bankAccount: bankAccount,
-                          onTap: () {
-                            _onGoToEditScreen(bankAccount, bankAccounts.length);
-                          },
-                        ),
-                        if (bankAccounts.length >= 3 && isLastElement)
-                          Container(
-                            margin: const EdgeInsets.only(top: 12),
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            child: const TextBodyM(
-                              "Kamu hanya bisa menyimpan sebanyak 3 rekening bank",
-                              color: TColors.neutralDarkLightest,
-                              textAlign: TextAlign.center,
-                            ),
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          BankAccountItem(
+                            bankAccount: bankAccount,
+                            onTap: () {
+                              _onGoToEditScreen(
+                                  bankAccount, bankAccounts.length);
+                            },
                           ),
-                      ],
-                    ),
-                  );
-                },
+                          if (bankAccounts.length >= 3 && isLastElement)
+                            Container(
+                              margin: const EdgeInsets.only(top: 12),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 24),
+                              child: const TextBodyM(
+                                "Kamu hanya bisa menyimpan sebanyak 3 rekening bank",
+                                color: TColors.neutralDarkLightest,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               )
             : EmptyList(
                 title: "Belum ada bank tersimpan, nih!",
@@ -86,12 +98,6 @@ class _BankAccountListState extends State<BankAccountList> {
                   height: 181.74,
                 ),
               ),
-        BankAccountMasterLoadFailure(:final error) => Center(
-            child: TextBodyS(
-              error,
-              color: TColors.error,
-            ),
-          ),
         _ => const Center(child: CircularProgressIndicator()),
       },
     );
