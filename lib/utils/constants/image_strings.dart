@@ -22,7 +22,9 @@ class TImages {
   static const String growLogo = "assets/images/grow-logo.png";
   static const String proLogo = "assets/images/pro-logo.png";
   static const String defaultAvatar = "assets/images/default-avatar.png";
-  static const String badRequest = "assets/images/502-illustration.png";
+  static const String badRequest = "assets/images/502-illustration.webp";
+  static const String noConnection =
+      "assets/images/no-connection-ilustration.webp";
   static const String noPrintIllustration =
       "assets/images/no-print-ilustration.svg";
   static const String successIllustration =

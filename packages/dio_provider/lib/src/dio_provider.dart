@@ -63,8 +63,8 @@ class DioProvider {
                       title: "Lagi di-tune up, sebentar lagi beres!",
                       description:
                           "Tenang, akan segera kembali. Kamu bisa mencobanya sebentar lagi. Terimakasih udah sabar ya!",
-                      actionTitle: "Oke. Mengerti",
-                      onAction: () async {
+                      actionTitlePrimary: "Oke. Mengerti",
+                      onActionPrimary: () async {
                         Navigator.pop(context);
                         isShowingBottomSheet = false;
                       },

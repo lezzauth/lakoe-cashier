@@ -1,12 +1,17 @@
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:android_intent_plus/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:token_provider/token_provider.dart';
 
 class RedirectScreen extends StatefulWidget {
   const RedirectScreen({super.key});
@@ -22,14 +27,60 @@ class _RedirectScreenState extends State<RedirectScreen> {
     context.read<AuthCubit>().initialize();
   }
 
+  Future<void> openWifiSettings() async {
+    final intent = AndroidIntent(
+      action: 'android.settings.WIFI_SETTINGS',
+      flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+    );
+    await intent.launch();
+  }
+
+  Future<void> openMobileDataSettings() async {
+    final intent = AndroidIntent(
+      action: 'android.settings.DATA_ROAMING_SETTINGS',
+      flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+    );
+    await intent.launch();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (!mounted) return;
+        final TokenProvider tokenProvider = TokenProvider();
+        final token = await tokenProvider.getAuthToken();
 
         if (state is AuthNotReady) {
-          Navigator.popAndPushNamed(context, "/on-boarding");
+          if (token!.isNotEmpty) {
+            showModalBottomSheet(
+              context: context,
+              enableDrag: true,
+              isDismissible: true,
+              builder: (context) {
+                return CustomBottomsheet(
+                  child: ErrorDisplay(
+                    imageSrc: TImages.noConnection,
+                    title: "Yah, internetnya mati…",
+                    description:
+                        "Coba cek WiFi atau kuota internet kamu dan nanti  coba lagi ya.",
+                    actionTitlePrimary: "Pengaturan",
+                    onActionPrimary: () async {
+                      openWifiSettings();
+                      Navigator.pop(context);
+                    },
+                    actionTitleSecondary: "Coba Lagi",
+                    onActionSecondary: () {
+                      context.read<AuthCubit>().initialize();
+                      Navigator.pop(context);
+                    },
+                  ),
+                );
+              },
+            );
+          } else {
+            Navigator.popAndPushNamed(context, "/on-boarding");
+          }
         } else if (state is AuthReady) {
           Navigator.popAndPushNamed(context, "/cashier");
         }

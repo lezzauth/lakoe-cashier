@@ -63,8 +63,8 @@ class _ErrorWrapperState extends State<ErrorWrapper> {
                 title: "Ups, Terjadi sedikit kesalahan!",
                 description:
                     "Kamu bisa mencobanya lagi dengan tekan tombol dibawah ini, ya",
-                actionTitle: "Coba Lagi",
-                onAction: () async {
+                actionTitlePrimary: "Coba Lagi",
+                onActionPrimary: () async {
                   if (widget.onRefresh != null) {
                     await widget.onRefresh!();
                   }
@@ -90,8 +90,8 @@ class _ErrorWrapperState extends State<ErrorWrapper> {
                 imageSrc: TImages.generalIllustration,
                 title: "Maaf, servernya lagi sibuk, nih!",
                 description: "Kamu bisa mencobanya beberapa saat lagi, ya",
-                actionTitle: "Tutup",
-                onAction: () {
+                actionTitlePrimary: "Tutup",
+                onActionPrimary: () {
                   Navigator.pop(context);
                 },
               ),

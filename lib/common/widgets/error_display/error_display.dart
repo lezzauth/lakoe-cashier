@@ -10,15 +10,19 @@ class ErrorDisplay extends StatelessWidget {
     required this.description,
     required this.imageSrc,
     required this.title,
-    required this.onAction,
-    this.actionTitle,
+    required this.onActionPrimary,
+    this.actionTitlePrimary,
+    this.onActionSecondary,
+    this.actionTitleSecondary,
   });
 
   final String imageSrc;
   final String title;
   final String description;
-  final Function() onAction;
-  final String? actionTitle;
+  final Function() onActionPrimary;
+  final String? actionTitlePrimary;
+  final Function()? onActionSecondary;
+  final String? actionTitleSecondary;
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +65,20 @@ class ErrorDisplay extends StatelessWidget {
                 Expanded(
                   child: SizedBox(
                     height: 48,
+                    child: OutlinedButton(
+                      onPressed: onActionSecondary,
+                      child: TextActionL(
+                          actionTitleSecondary ?? "Secondary Action"),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: SizedBox(
+                    height: 48,
                     child: ElevatedButton(
-                      onPressed: onAction,
-                      child: TextActionL(actionTitle ?? "Tutup"),
+                      onPressed: onActionPrimary,
+                      child: TextActionL(actionTitlePrimary ?? "Tutup"),
                     ),
                   ),
                 ),
