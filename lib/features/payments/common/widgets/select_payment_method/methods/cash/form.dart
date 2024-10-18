@@ -16,10 +16,15 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class CashPaymentForm extends StatefulWidget {
-  const CashPaymentForm({super.key, this.amount = 0, required this.formKey});
+  const CashPaymentForm(
+      {super.key,
+      this.amount = 0,
+      required this.formKey,
+      required this.onPaidAmountChanged});
 
   final double amount;
   final GlobalKey<FormBuilderState> formKey;
+  final Function(double) onPaidAmountChanged;
 
   @override
   State<CashPaymentForm> createState() => _CashPaymentFormState();
@@ -120,6 +125,7 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
                               .getUnformattedValue()
                               .toDouble();
                         });
+                        widget.onPaidAmountChanged(_paidAmount);
                       },
                       decoration: InputDecoration(
                         hintText: 'Rp Uang yang diterima',
@@ -132,6 +138,7 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
                                   setState(() {
                                     _paidAmount = 0;
                                   });
+                                  widget.onPaidAmountChanged(0);
                                 },
                                 icon: const Icon(
                                   Icons.close,

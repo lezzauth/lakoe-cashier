@@ -22,6 +22,7 @@ class CashPaymentContent extends StatefulWidget {
 
 class _CashPaymentContentState extends State<CashPaymentContent> {
   final _formKey = GlobalKey<FormBuilderState>();
+  bool _isFormValid = false;
 
   void _onSubmitted() {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
@@ -50,11 +51,18 @@ class _CashPaymentContentState extends State<CashPaymentContent> {
         );
   }
 
+  void _onPaidAmountChanged(double paidAmount) {
+    setState(() {
+      _isFormValid = paidAmount >= widget.amount;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
       key: _formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      // onChanged: _onFormChanged,
       child: Stack(
         alignment: AlignmentDirectional.topCenter,
         children: [
@@ -84,6 +92,7 @@ class _CashPaymentContentState extends State<CashPaymentContent> {
                 CashPaymentForm(
                   formKey: _formKey,
                   amount: widget.amount,
+                  onPaidAmountChanged: _onPaidAmountChanged,
                 ),
               ],
             ),
@@ -96,7 +105,7 @@ class _CashPaymentContentState extends State<CashPaymentContent> {
               onCanceled: () {
                 Navigator.pop(context);
               },
-              onSubmitted: _onSubmitted,
+              onSubmitted: _isFormValid ? _onSubmitted : null,
             ),
           ),
         ],

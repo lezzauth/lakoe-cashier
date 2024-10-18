@@ -13,7 +13,7 @@ class CashPaymentFooter extends StatelessWidget {
     required this.onSubmitted,
   });
 
-  final Function() onSubmitted;
+  final void Function()? onSubmitted;
   final Function()? onCanceled;
 
   @override
