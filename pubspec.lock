@@ -22,6 +22,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.7.0"
+  android_intent_plus:
+    dependency: "direct main"
+    description:
+      name: android_intent_plus
+      sha256: "38921ec22ebb3b9a7eb678792cf6fab0b6f458b61b9d327688573449c9b47db3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.2.0"
   app_config_provider:
     dependency: "direct main"
     description:
@@ -229,10 +237,10 @@ packages:
     dependency: "direct main"
     description:
       name: connectivity_plus
-      sha256: "2056db5241f96cdc0126bd94459fc4cdc13876753768fc7a31c425e50a7177d0"
+      sha256: "876849631b0c7dc20f8b471a2a03142841b482438e3b707955464f5ffca3e4c3"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.5"
+    version: "6.1.0"
   connectivity_plus_platform_interface:
     dependency: transitive
     description:

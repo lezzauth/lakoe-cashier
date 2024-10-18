@@ -212,7 +212,8 @@ class _TransferAttachmentFieldState extends State<TransferAttachmentField> {
               child: GestureDetector(
                 onTap: () {
                   if (widget.onChanged != null) {
-                    widget.onChanged!(TransferAttachment());
+                    widget
+                        .onChanged!(TransferAttachment(file: null, url: null));
                     setState(() {
                       _selectedFile = null;
                     });

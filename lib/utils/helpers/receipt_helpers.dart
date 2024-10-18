@@ -5,13 +5,17 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:order_repository/order_repository.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:point_of_sales_cashier/common/widgets/access_permission/photo_denied_permission.dart';
 import 'package:point_of_sales_cashier/common/widgets/access_permission/photo_permission.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/detail_receipt.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -28,6 +32,13 @@ class ReceiptHelper {
     bool save = true,
     bool share = false,
   }) async {
+    final authState = context.read<AuthCubit>().state;
+    OwnerProfileModel? ownerProfile;
+
+    if (authState is AuthReady) {
+      ownerProfile = authState.profile;
+    }
+
     try {
       RenderRepaintBoundary boundary = receiptWidgetKey.currentContext!
           .findRenderObject() as RenderRepaintBoundary;
@@ -50,7 +61,7 @@ class ReceiptHelper {
       if (share) {
         await Share.shareXFiles([XFile(file.path)],
             text:
-                "Terima kasih sudah mampir di [Nama Caffe Anda]! 😊\n\nSampai jumpa lagi di kunjungan berikutnya! ❤️");
+                "Terimakasih sudah mampir di ${ownerProfile!.outlets[0].name}! 😊\n\nSampai jumpa lagi di kunjungan berikutnya! ❤️");
       }
     } catch (e) {
       print(e.toString());
