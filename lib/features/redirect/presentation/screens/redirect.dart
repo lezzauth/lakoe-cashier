@@ -106,6 +106,8 @@ class _RedirectScreenState extends State<RedirectScreen> {
           }
         } else if (state is AuthReady) {
           Navigator.popAndPushNamed(context, "/cashier");
+        } else {
+          Navigator.popAndPushNamed(context, "/on-boarding");
         }
       },
       child: BlocListener<CashierCubit, CashierState>(
