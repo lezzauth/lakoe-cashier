@@ -7,6 +7,7 @@ import 'package:point_of_sales_cashier/common/widgets/access_permission/contact_
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
@@ -49,12 +50,19 @@ class _NewCustomerFormState extends State<NewCustomerForm> {
 
     if (await Permission.contacts.isGranted) {
       final contact = await FlutterContacts.openExternalPick();
-
       if (contact != null) {
-        widget.formKey.currentState?.patchValue({
-          "name": contact.displayName,
-          "phoneNumber": contact.phones.first.number,
-        });
+        if (contact.phones.isNotEmpty) {
+          widget.formKey.currentState?.patchValue({
+            "name": contact.displayName,
+            "phoneNumber": contact.phones.first.number,
+          });
+        } else {
+          CustomToast.show(
+            context,
+            "Kontak tidak memiliki nomor telepon.",
+            position: 'bottom',
+          );
+        }
       }
     }
   }

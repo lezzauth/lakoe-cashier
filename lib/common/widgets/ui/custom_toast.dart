@@ -62,11 +62,13 @@ class CustomToast {
                           color: TColors.neutralLightLightest,
                         ),
                       SizedBox(width: icon != null ? 8 : 0),
-                      TextBodyL(
-                        message,
-                        color: TColors.neutralLightLightest,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      Flexible(
+                        child: TextBodyL(
+                          message,
+                          color: TColors.neutralLightLightest,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),
