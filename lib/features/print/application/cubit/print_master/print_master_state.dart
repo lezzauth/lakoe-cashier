@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
+import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
 sealed class PrintMasterState extends Equatable {}
 
@@ -14,7 +14,7 @@ final class PrintMasterLoadInProgress extends PrintMasterState {
 }
 
 final class PrintMasterPermissionDenied extends PrintMasterState {
-  // if any of this values is true then it's been denied
+  // If any of this values is true, it's been denied
   final bool bluetoothScan;
   final bool bluetoothConnect;
   final bool nearbyDevices;
@@ -34,18 +34,25 @@ final class PrintMasterPermissionDenied extends PrintMasterState {
 }
 
 final class PrintMasterLoadSuccess extends PrintMasterState {
-  final List<BluetoothInfo> devices;
-  final List<BluetoothInfo> connectedDevices;
+  final List<BluetoothDevice> devices;
+  final List<BluetoothDevice> connectedDevices;
   final List<String> connectingDevices;
+  final bool isDiscovering; // Tambahkan flag isDiscovering
 
   PrintMasterLoadSuccess({
     required this.devices,
     this.connectedDevices = const [],
     this.connectingDevices = const [],
+    this.isDiscovering = false, // Default-nya false
   });
 
   @override
-  List<Object?> get props => [devices, connectedDevices, connectingDevices];
+  List<Object?> get props => [
+        devices,
+        connectedDevices,
+        connectingDevices,
+        isDiscovering, // Tambahkan flag ini di props
+      ];
 }
 
 final class PrintMasterLoadFailure extends PrintMasterState {
@@ -55,4 +62,9 @@ final class PrintMasterLoadFailure extends PrintMasterState {
 
   @override
   List<Object?> get props => [error];
+}
+
+final class PrintMasterBluetoothDisabled extends PrintMasterState {
+  @override
+  List<Object?> get props => [];
 }

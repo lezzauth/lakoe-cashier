@@ -59,6 +59,13 @@ class TBill {
     log('profiles: $profiles');
     bytes += generator.reset();
 
+    bytes += generator.text(
+      "[Testing Mode]",
+      styles: const PosStyles(
+        align: PosAlign.center,
+        height: PosTextSize.size3,
+      ),
+    );
     bytes += generator.emptyLines(1);
 
     bytes += generator.text(
@@ -323,6 +330,14 @@ class TBill {
     final Uint8List bytesImg = data.buffer.asUint8List();
     final img = image.decodeImage(bytesImg);
     bytes += generator.image(img!);
+    bytes += generator.emptyLines(1);
+    bytes += generator.text(
+      "[Testing Mode]",
+      styles: const PosStyles(
+        align: PosAlign.center,
+        height: PosTextSize.size3,
+      ),
+    );
 
     bytes += generator.cut(mode: PosCutMode.full);
     return bytes;
