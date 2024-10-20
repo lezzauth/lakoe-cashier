@@ -232,7 +232,7 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                               padding: const EdgeInsets.only(top: 20),
                               margin: const EdgeInsets.only(bottom: 8),
                               child: const TextHeading5(
-                                "PAIRED",
+                                "PERNAH TERHUBUNG",
                                 color: TColors.neutralDarkLightest,
                               ),
                             ),
