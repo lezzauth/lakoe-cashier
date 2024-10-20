@@ -10,10 +10,6 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
   StreamSubscription<BluetoothDiscoveryResult>? discoveryStream;
   bool isDiscoveryRunning = false;
 
-  List<BluetoothDevice> _connectedDevices = [];
-  List<BluetoothDevice> _bondedDevices = [];
-  List<String> _connectingDevices = [];
-
   PrintMasterCubit() : super(PrintMasterInitial());
 
   Future<void> checkBluetoothStatus() async {
@@ -45,8 +41,8 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
         return;
       }
 
-      List<BluetoothDevice> bondDevices =
-          await FlutterBluetoothSerial.instance.getBondedDevices();
+      // List<BluetoothDevice> bondDevices =
+      //     await FlutterBluetoothSerial.instance.getBondedDevices();
 
       emit(PrintMasterLoadSuccess(
         // devices: bondDevices
@@ -210,11 +206,18 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
     }
   }
 
+  Future<bool> isDeviceBonded(BluetoothDevice device) async {
+    List<BluetoothDevice> bondedDevices =
+        await FlutterBluetoothSerial.instance.getBondedDevices();
+
+    return bondedDevices
+        .any((bondedDevice) => bondedDevice.address == device.address);
+  }
+
   Future<bool> connectToDevice(BluetoothDevice device) async {
     if (state is! PrintMasterLoadSuccess) return false;
 
     try {
-      log('Connecting to device: ${device.name} (${device.address})');
       final currentState = state as PrintMasterLoadSuccess;
 
       List<String> connectingDevices =
@@ -227,6 +230,19 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
         availableDevices: currentState.availableDevices,
         connectingDevices: connectingDevices,
       ));
+
+      // bool isBonded = await isDeviceBonded(device);
+
+      // if (!isBonded) {
+      //   log('Device is not bonded. Pairing now...');
+
+      //   await BluetoothConnection.toAddress(device.address);
+
+      // } else {
+      //   log('Device is already bonded.');
+      // }
+
+      log('Connecting to device: ${device.name} (${device.address})');
 
       await Future.delayed(const Duration(seconds: 1));
 
