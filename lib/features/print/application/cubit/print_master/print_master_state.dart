@@ -14,7 +14,6 @@ final class PrintMasterLoadInProgress extends PrintMasterState {
 }
 
 final class PrintMasterPermissionDenied extends PrintMasterState {
-  // If any of this values is true, it's been denied
   final bool bluetoothScan;
   final bool bluetoothConnect;
   final bool nearbyDevices;
@@ -36,22 +35,31 @@ final class PrintMasterPermissionDenied extends PrintMasterState {
 final class PrintMasterLoadSuccess extends PrintMasterState {
   final List<BluetoothDevice> devices;
   final List<BluetoothDevice> connectedDevices;
+  final List<BluetoothDevice> availableDevices;
+  final List<String> pairingDevices;
   final List<String> connectingDevices;
-  final bool isDiscovering; // Tambahkan flag isDiscovering
+  final List<String> disconnectingDevices;
+  final bool isDiscovering;
 
   PrintMasterLoadSuccess({
     required this.devices,
     this.connectedDevices = const [],
+    this.availableDevices = const [],
+    this.pairingDevices = const [],
     this.connectingDevices = const [],
-    this.isDiscovering = false, // Default-nya false
+    this.disconnectingDevices = const [],
+    this.isDiscovering = false,
   });
 
   @override
   List<Object?> get props => [
         devices,
         connectedDevices,
+        availableDevices,
+        pairingDevices,
         connectingDevices,
-        isDiscovering, // Tambahkan flag ini di props
+        disconnectingDevices,
+        isDiscovering,
       ];
 }
 

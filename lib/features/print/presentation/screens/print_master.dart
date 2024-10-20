@@ -31,26 +31,33 @@ class PrintMasterScreen extends StatefulWidget {
 
 class _PrintMasterScreenState extends State<PrintMasterScreen> {
   void _onInit() {
-    context.read<PrintMasterCubit>().init();
-    _onRefresh();
-  }
-
-  Future<void> _onRefresh() async {
-    context.read<PrintMasterCubit>().startDeviceDiscovery();
-  }
-
-  Future<void> _onConnectToDevice(BluetoothDevice device) async {
-    await context.read<PrintMasterCubit>().connectToDevice(device);
-  }
-
-  Future<void> _onDisconnectDevice(BluetoothDevice device) async {
-    await context.read<PrintMasterCubit>().disconnectDevice(device);
+    context.read<PrintMasterCubit>().init().then((_) {
+      context.read<PrintMasterCubit>().discoverDevices();
+    });
   }
 
   @override
   void initState() {
     super.initState();
     _onInit();
+  }
+
+  Future<void> _onRefresh() async {
+    context.read<PrintMasterCubit>().init().then((_) {
+      context.read<PrintMasterCubit>().discoverDevices();
+    });
+  }
+
+  Future<void> _onConnectToDevice(BluetoothDevice device) async {
+    await context.read<PrintMasterCubit>().connectToDevice(device);
+  }
+
+  Future<void> _onUnpairDevice(BluetoothDevice device) async {
+    await context.read<PrintMasterCubit>().unpairDevice(device);
+  }
+
+  Future<void> _onDisconnectDevice(BluetoothDevice device) async {
+    await context.read<PrintMasterCubit>().disconnectDevice(device);
   }
 
   @override
@@ -93,18 +100,32 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
       appBar: const CustomAppbar(
         title: "Print & Struk (Bill)",
       ),
-      body: BlocBuilder<PrintMasterCubit, PrintMasterState>(
-        builder: (context, state) {
+      body: BlocConsumer<PrintMasterCubit, PrintMasterState>(
+        listener: (context, state) {
           if (state is PrintMasterBluetoothDisabled) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _showBluetoothDisabledBottomSheet();
             });
-            return const SizedBox.shrink();
-          } else if (state is PrintMasterLoadSuccess) {
-            final devices = state.devices;
-            final connectedDevices = state.connectedDevices;
-            final connectingDevices = state.connectingDevices;
-            final isDiscovering = state.isDiscovering;
+          }
+        },
+        builder: (context, state) {
+          if (state is PrintMasterLoadSuccess ||
+              state is PrintMasterLoadInProgress) {
+            final devices =
+                state is PrintMasterLoadSuccess ? state.devices : [];
+            final connectedDevices =
+                state is PrintMasterLoadSuccess ? state.connectedDevices : [];
+            final availableDevices =
+                state is PrintMasterLoadSuccess ? state.availableDevices : [];
+            final connectingDevices =
+                state is PrintMasterLoadSuccess ? state.connectingDevices : [];
+            final pairingDevices =
+                state is PrintMasterLoadSuccess ? state.pairingDevices : [];
+            final disconnectingDevices = state is PrintMasterLoadSuccess
+                ? state.disconnectingDevices
+                : [];
+            final isDiscovering =
+                state is PrintMasterLoadSuccess && state.isDiscovering;
 
             return Column(
               children: [
@@ -164,7 +185,9 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                     ),
                   ),
                 ),
-                if (devices.isNotEmpty || connectedDevices.isNotEmpty)
+                if (devices.isNotEmpty ||
+                    connectedDevices.isNotEmpty ||
+                    availableDevices.isNotEmpty)
                   Expanded(
                     child: ListView(
                       padding: const EdgeInsets.only(bottom: 16.0),
@@ -192,6 +215,8 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                               return BluetoothDeviceTile(
                                 device: device,
                                 isConnected: true,
+                                isDisconnecting: disconnectingDevices
+                                    .contains(device.address),
                                 onConnectPressed: () {
                                   _onDisconnectDevice(device);
                                 },
@@ -199,7 +224,46 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                             },
                           ),
                         ],
-                        if (devices.isNotEmpty || connectedDevices.isNotEmpty)
+                        if (devices.isNotEmpty) ...[
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Container(
+                              padding: const EdgeInsets.only(top: 20),
+                              margin: const EdgeInsets.only(bottom: 8),
+                              child: const TextHeading5(
+                                "PAIRED",
+                                color: TColors.neutralDarkLightest,
+                              ),
+                            ),
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: devices.length,
+                            itemBuilder: (context, index) {
+                              BluetoothDevice device = devices.elementAt(index);
+                              return GestureDetector(
+                                onLongPress: () {
+                                  _onUnpairDevice(device);
+                                },
+                                child: BluetoothDeviceTile(
+                                  device: device,
+                                  isConnected: false,
+                                  isPaired: true,
+                                  isPairing:
+                                      pairingDevices.contains(device.address),
+                                  isConnecting: connectingDevices
+                                      .contains(device.address),
+                                  onConnectPressed: () {
+                                    _onConnectToDevice(device);
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                        if (availableDevices.isNotEmpty) ...[
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 16.0),
@@ -212,17 +276,17 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                               ),
                             ),
                           ),
-                        if (devices.isNotEmpty)
                           ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: devices.length,
+                            itemCount: availableDevices.length,
                             itemBuilder: (context, index) {
-                              BluetoothDevice device = devices.elementAt(index);
+                              BluetoothDevice device =
+                                  availableDevices.elementAt(index);
                               return BluetoothDeviceTile(
                                 device: device,
                                 isConnected: false,
-                                isLoading:
+                                isConnecting:
                                     connectingDevices.contains(device.address),
                                 onConnectPressed: () {
                                   _onConnectToDevice(device);
@@ -230,11 +294,12 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                               );
                             },
                           ),
+                        ],
                         const SizedBox(height: 12),
                         if (!isDiscovering)
                           Center(
                             child: TextButton(
-                              onPressed: isDiscovering ? null : _onRefresh,
+                              onPressed: _onRefresh,
                               child: const Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -271,6 +336,7 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                   ),
                 if (connectedDevices.isEmpty &&
                     devices.isEmpty &&
+                    availableDevices.isEmpty &&
                     !isDiscovering)
                   Expanded(
                     child: Padding(
@@ -287,20 +353,38 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                             "Silahkan klik refresh untuk dapat menemukan printer di sekitarmu.",
                         action: TextButton(
                           onPressed: _onRefresh,
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
+                          child: Stack(
                             children: [
-                              UiIcons(
-                                TIcons.refresh,
-                                width: 24,
-                                height: 24,
-                                color: TColors.primary,
-                              ),
-                              SizedBox(width: 8),
-                              TextActionL(
-                                "Refresh",
-                                color: TColors.primary,
-                              ),
+                              if (!isDiscovering)
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const UiIcons(
+                                      TIcons.refresh,
+                                      width: 24,
+                                      height: 24,
+                                      color: TColors.primary,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    TextActionL(
+                                      "Refresh",
+                                      color: TColors.primary,
+                                    ),
+                                  ],
+                                ),
+                              if (isDiscovering)
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 8),
+                                  child: Center(
+                                    child: SizedBox(
+                                      height: 16,
+                                      width: 16,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                             ],
                           ),
                         ),
@@ -326,12 +410,42 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                 ),
               ],
             );
-          } else if (state is PrintMasterPermissionDenied) {
-            return const Center(
-              child: TextBodyS("permission denied"),
-            );
           } else if (state is PrintMasterLoadFailure) {
-            return const SizedBox.shrink();
+            return Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: EmptyList(
+                  image: SvgPicture.asset(
+                    TImages.noPrintIllustration,
+                    width: 140,
+                    height: 101.45,
+                    fit: BoxFit.cover,
+                  ),
+                  title: "Perangkat tidak ditemukan",
+                  subTitle:
+                      "Silahkan klik refresh untuk dapat menemukan printer di sekitarmu.",
+                  action: TextButton(
+                    onPressed: _onRefresh,
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        UiIcons(
+                          TIcons.refresh,
+                          width: 24,
+                          height: 24,
+                          color: TColors.primary,
+                        ),
+                        SizedBox(width: 8),
+                        TextActionL(
+                          "Refresh",
+                          color: TColors.primary,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
           } else {
             return const Center(
               child: CircularProgressIndicator(),
@@ -348,13 +462,19 @@ class BluetoothDeviceTile extends StatelessWidget {
     super.key,
     required this.device,
     required this.isConnected,
+    this.isPaired = false,
     required this.onConnectPressed,
-    this.isLoading = false,
+    this.isPairing = false,
+    this.isConnecting = false,
+    this.isDisconnecting = false,
   });
 
   final BluetoothDevice device;
   final bool isConnected;
-  final bool isLoading;
+  final bool isPaired;
+  final bool isPairing;
+  final bool isConnecting;
+  final bool isDisconnecting;
   final VoidCallback onConnectPressed;
 
   @override
@@ -362,7 +482,7 @@ class BluetoothDeviceTile extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          onTap: !isLoading ? onConnectPressed : null,
+          onTap: !isConnecting ? onConnectPressed : null,
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
           leading: const CircleAvatar(
             radius: 20,
@@ -372,16 +492,28 @@ class BluetoothDeviceTile extends StatelessWidget {
               color: TColors.primary,
             ),
           ),
-          title: TextHeading4(device.name ?? "Unknown Device"),
+          title: TextHeading4(device.name ?? "Unnamed Device"),
           subtitle: TextBodyS(
-            device.address,
+            isPairing
+                ? "Melepaskan perangkat…"
+                : isConnecting
+                    ? "Menyambungkan…"
+                    : isDisconnecting
+                        ? 'Memutuskan…'
+                        : device.address,
             color: TColors.neutralDarkLight,
           ),
           trailing: TextButton(
-            onPressed: !isLoading ? onConnectPressed : null,
-            child: !isLoading
+            onPressed: !isConnecting && !isDisconnecting && !isPairing
+                ? onConnectPressed
+                : null,
+            child: !isConnecting && !isDisconnecting && !isPairing
                 ? TextActionM(
-                    isConnected ? 'Putuskan' : 'Sambungkan',
+                    isConnected
+                        ? 'Putuskan'
+                        : isPaired
+                            ? 'Sambungkan'
+                            : '',
                     color: TColors.primary,
                   )
                 : const SizedBox(
