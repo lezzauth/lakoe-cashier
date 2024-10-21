@@ -5,6 +5,7 @@ import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
@@ -15,6 +16,9 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_state.dart';
 import 'package:point_of_sales_cashier/features/print/common/helpers/animated_dots_text.dart';
@@ -403,7 +407,31 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                         onTestPrint: connectedDevices.isEmpty
                             ? null
                             : () {
-                                TBill.testPrint();
+                                final billMasterState =
+                                    context.read<BillMasterCubit>().state;
+
+                                String footNote = "";
+                                footNote = billMasterState.footNote;
+
+                                final authState =
+                                    context.read<AuthCubit>().state;
+
+                                OwnerProfileModel profile;
+                                if (authState is AuthReady) {
+                                  profile = authState.profile;
+                                } else {
+                                  profile = OwnerProfileModel(
+                                    id: '',
+                                    name: '',
+                                    phoneNumber: '',
+                                    packageName: '',
+                                    outlets: [],
+                                  );
+                                  print(
+                                      'AuthState is not ready, using default profile.');
+                                }
+
+                                TBill.testPrint(profile, footNote);
                               },
                         onShowBill: () {
                           Navigator.pushNamed(context, "/bill");
@@ -576,7 +604,7 @@ class BillAction extends StatelessWidget {
                     onTap: () {},
                   ),
                   const TextActionL(
-                    "Test Print",
+                    "Tes Print",
                     color: TColors.neutralLightLightest,
                   ),
                 ],

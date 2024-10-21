@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:order_repository/order_repository.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_state.dart';
@@ -16,6 +21,7 @@ import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.da
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:point_of_sales_cashier/utils/helpers/receipt_helpers.dart';
+import 'package:point_of_sales_cashier/utils/print/bill.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SuccessConfirmationPaymentScreen extends StatefulWidget {
@@ -85,6 +91,36 @@ class _SuccessConfirmationPaymentContentState
   void initState() {
     super.initState();
     _onInit();
+  }
+
+  void _handlePrintReceipt(
+    BuildContext context,
+    OrderModel order,
+    Function(BuildContext, OwnerProfileModel, OrderModel, String,
+            ScrollController)
+        action,
+  ) {
+    final billMasterState = context.read<BillMasterCubit>().state;
+
+    String footNote = billMasterState.footNote;
+
+    final authState = context.read<AuthCubit>().state;
+
+    OwnerProfileModel profile;
+    if (authState is AuthReady) {
+      profile = authState.profile;
+    } else {
+      profile = OwnerProfileModel(
+        id: '',
+        name: '',
+        phoneNumber: '',
+        packageName: '',
+        outlets: [],
+      );
+      print('AuthState is not ready, using default profile.');
+    }
+
+    action(context, profile, order, footNote, _scrollController);
   }
 
   @override
@@ -194,6 +230,7 @@ class _SuccessConfirmationPaymentContentState
                                   TextReceipt(
                                     TPaymentMethodName.getName(
                                       arguments.payment.paymentMethod,
+                                      arguments.payment.paidFrom,
                                     ),
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -304,10 +341,19 @@ class _SuccessConfirmationPaymentContentState
                                 height: 48,
                                 child: OutlinedButton(
                                   onPressed: () async {
-                                    ReceiptHelper.showDetailBill(
+                                    _handlePrintReceipt(
                                       context,
-                                      order: order,
-                                      scrollController: _scrollController,
+                                      order,
+                                      (context, profile, order, footNote,
+                                          scrollController) {
+                                        ReceiptHelper.showDetailBill(
+                                          context,
+                                          profile: profile,
+                                          order: order,
+                                          footNote: footNote,
+                                          scrollController: scrollController,
+                                        );
+                                      },
                                     );
                                   },
                                   style: const ButtonStyle(
@@ -329,7 +375,20 @@ class _SuccessConfirmationPaymentContentState
                               child: SizedBox(
                                 height: 48,
                                 child: OutlinedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _handlePrintReceipt(
+                                      context,
+                                      order,
+                                      (context, profile, order, footNote,
+                                          scrollController) {
+                                        TBill.printReceipt(
+                                          profile,
+                                          order,
+                                          footNote,
+                                        );
+                                      },
+                                    );
+                                  },
                                   style: const ButtonStyle(
                                     padding: WidgetStatePropertyAll(
                                       EdgeInsets.symmetric(horizontal: 16),

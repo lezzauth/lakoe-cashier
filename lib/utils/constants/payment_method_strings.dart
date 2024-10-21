@@ -4,9 +4,10 @@ class TPaymentMethodName {
   static String cash = "Cash (Tunai)";
   static String debit = "Debit/Credit";
   static String bankTransfer = "Transfer Bank";
-  static String qris = "QRIS";
+  static String qrisStatic = "QRIS Statis";
+  static String qrisDinamis = "QRIS Dinamis";
 
-  static String getName(String paymentMethod) {
+  static String getName(String paymentMethod, String? paymentSource) {
     switch (paymentMethod) {
       case "CASH":
         return cash;
@@ -15,10 +16,15 @@ class TPaymentMethodName {
       case "BANK_TRANSFER":
         return bankTransfer;
       case "QR_CODE":
-        return qris;
-
+        if (paymentSource == 'EDC') {
+          return qrisDinamis;
+        } else if (paymentSource == 'CASHIER') {
+          return qrisStatic;
+        }
+        break;
       default:
         return "";
     }
+    return "";
   }
 }

@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_repository/order_repository.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
@@ -14,6 +15,9 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_xs.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_state.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card_order.dart';
@@ -35,6 +39,7 @@ import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:point_of_sales_cashier/utils/helpers/receipt_helpers.dart';
+import 'package:point_of_sales_cashier/utils/print/bill.dart';
 
 class OrderDetailScreen extends StatelessWidget {
   const OrderDetailScreen({
@@ -203,6 +208,36 @@ class _OrderDetailState extends State<OrderDetail> {
     return order.items.fold(0, (sum, item) {
       return sum + double.parse(item.price);
     });
+  }
+
+  void _handlePrintReceipt(
+    BuildContext context,
+    OrderModel order,
+    Function(BuildContext, OwnerProfileModel, OrderModel, String,
+            ScrollController)
+        action,
+  ) {
+    final billMasterState = context.read<BillMasterCubit>().state;
+
+    String footNote = billMasterState.footNote;
+
+    final authState = context.read<AuthCubit>().state;
+
+    OwnerProfileModel profile;
+    if (authState is AuthReady) {
+      profile = authState.profile;
+    } else {
+      profile = OwnerProfileModel(
+        id: '',
+        name: '',
+        phoneNumber: '',
+        packageName: '',
+        outlets: [],
+      );
+      print('AuthState is not ready, using default profile.');
+    }
+
+    action(context, profile, order, footNote, _scrollController);
   }
 
   @override
@@ -423,13 +458,34 @@ class _OrderDetailState extends State<OrderDetail> {
                                         );
                                       },
                                       onPrint: () {
-                                        print("Print Bill");
+                                        _handlePrintReceipt(
+                                          context,
+                                          order,
+                                          (context, profile, order, footNote,
+                                              scrollController) {
+                                            TBill.printReceipt(
+                                              profile,
+                                              order,
+                                              footNote,
+                                            );
+                                          },
+                                        );
                                       },
                                       onShare: () {
-                                        ReceiptHelper.showDetailBill(
+                                        _handlePrintReceipt(
                                           context,
-                                          order: order,
-                                          scrollController: _scrollController,
+                                          order,
+                                          (context, profile, order, footNote,
+                                              scrollController) {
+                                            ReceiptHelper.showDetailBill(
+                                              context,
+                                              profile: profile,
+                                              order: order,
+                                              footNote: footNote,
+                                              scrollController:
+                                                  scrollController,
+                                            );
+                                          },
                                         );
                                       }),
                                 ),
@@ -581,9 +637,21 @@ class OrderOutlinePaidAction extends StatelessWidget {
             height: 48,
             child: ElevatedButton(
               onPressed: onPrint,
-              child: const TextActionL(
-                "Cetak",
-                color: TColors.neutralLightLightest,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  UiIcons(
+                    TIcons.printer,
+                    width: 20,
+                    height: 20,
+                    color: TColors.highlightLightest,
+                  ),
+                  SizedBox(width: 8),
+                  const TextActionL(
+                    "Cetak",
+                    color: TColors.neutralLightLightest,
+                  ),
+                ],
               ),
             ),
           ),
