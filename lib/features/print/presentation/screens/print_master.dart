@@ -1,22 +1,32 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_state.dart';
+import 'package:point_of_sales_cashier/features/print/common/helpers/animated_dots_text.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/print/bill.dart';
-import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
 class PrintMasterScreen extends StatefulWidget {
   const PrintMasterScreen({super.key});
@@ -26,204 +36,270 @@ class PrintMasterScreen extends StatefulWidget {
 }
 
 class _PrintMasterScreenState extends State<PrintMasterScreen> {
-  void _onInit() {
-    context.read<PrintMasterCubit>().init();
-  }
-
-  Future<void> _onRefresh() async {
-    await context.read<PrintMasterCubit>().init();
-  }
-
-  Future<void> _onConnectToDevice(BluetoothInfo device) async {
-    await context.read<PrintMasterCubit>().connectToDevice(device);
-  }
-
-  Future<void> _onDisconnectDevice(BluetoothInfo device) async {
-    await context.read<PrintMasterCubit>().disconnectDevice(device);
-  }
-
   @override
   void initState() {
     super.initState();
     _onInit();
   }
 
+  void _onInit() {
+    context.read<PrintMasterCubit>().init().then((_) {
+      context.read<PrintMasterCubit>().discoverDevices();
+    });
+  }
+
+  Future<void> _onRefresh() async {
+    context.read<PrintMasterCubit>().discoverDevices();
+  }
+
+  Future<void> _onConnectToDevice(BluetoothDevice device) async {
+    await context.read<PrintMasterCubit>().connectToDevice(device);
+  }
+
+  Future<void> _onUnpairDevice(BluetoothDevice device) async {
+    await context.read<PrintMasterCubit>().unpairDevice(device);
+  }
+
+  Future<void> _onDisconnectDevice(BluetoothDevice device) async {
+    await context.read<PrintMasterCubit>().disconnectDevice(device);
+  }
+
+  @override
+  void dispose() {
+    context.read<PrintMasterCubit>().stopDiscovery();
+    super.dispose();
+  }
+
+  void _showBluetoothDisabledBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (context) {
+        return CustomBottomsheet(
+          hasGrabber: false,
+          child: ErrorDisplay(
+            imageSrc: TImages.bluetoothPermission,
+            title: "Izin akses bluetooth HP kamu, ya",
+            description:
+                "Dengan ini, kamu akan bisa menggunakan fitur aplikasi yang membutuhkan bluetooth.",
+            actionTitlePrimary: "Aktifkan Bluetooth",
+            onActionPrimary: () async {
+              Navigator.pop(context);
+              bool? isEnabled =
+                  await FlutterBluetoothSerial.instance.requestEnable();
+              if (isEnabled == true) {
+                _onRefresh();
+              }
+            },
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppbar(
-          title: "Print & Struk (Bill)",
-        ),
-        body: BlocBuilder<PrintMasterCubit, PrintMasterState>(
-          builder: (context, state) => switch (state) {
-            PrintMasterLoadSuccess(
-              :final devices,
-              :final connectedDevices,
-              :final connectingDevices
-            ) =>
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 16,
+      appBar: const CustomAppbar(
+        title: "Print & Struk (Bill)",
+      ),
+      body: BlocConsumer<PrintMasterCubit, PrintMasterState>(
+        listener: (context, state) {
+          if (state is PrintMasterBluetoothDisabled) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _showBluetoothDisabledBottomSheet();
+            });
+          }
+        },
+        builder: (context, state) {
+          if (state is PrintMasterLoadSuccess ||
+              state is PrintMasterLoadInProgress) {
+            final devices =
+                state is PrintMasterLoadSuccess ? state.devices : [];
+            final connectedDevices =
+                state is PrintMasterLoadSuccess ? state.connectedDevices : [];
+            final availableDevices =
+                state is PrintMasterLoadSuccess ? state.availableDevices : [];
+            final connectingDevices =
+                state is PrintMasterLoadSuccess ? state.connectingDevices : [];
+            final pairingDevices =
+                state is PrintMasterLoadSuccess ? state.pairingDevices : [];
+            final disconnectingDevices = state is PrintMasterLoadSuccess
+                ? state.disconnectingDevices
+                : [];
+            final isDiscovering =
+                state is PrintMasterLoadSuccess && state.isDiscovering;
+
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 16,
+                    ),
+                    decoration: BoxDecoration(
+                      color: TColors.neutralLightLightest,
+                      borderRadius: BorderRadius.circular(12.0),
+                      border: Border.all(
+                        width: 1,
+                        color: TColors.neutralLightMedium,
                       ),
-                      decoration: BoxDecoration(
-                        color: TColors.neutralLightLightest,
-                        borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(
-                          width: 1,
-                          color: TColors.neutralLightMedium,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                child: const TextHeading4(
+                                  "Print Otomatis",
+                                  color: TColors.neutralDarkDarkest,
+                                ),
+                              ),
+                              const TextBodyS(
+                                "Setiap kali transaksi selesai (lunas) secara otomatis akan melakukan print struk.",
+                                color: TColors.neutralDarkLight,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(bottom: 8),
-                                  child: const TextHeading4(
-                                    "Print Otomatis",
-                                    color: TColors.neutralDarkDarkest,
-                                  ),
-                                ),
-                                const TextBodyS(
-                                  "Setiap kali transaksi selesai (lunas) secara otomatis akan melakukan print struk.",
-                                  color: TColors.neutralDarkLight,
-                                ),
-                              ],
-                            ),
-                          ),
-                          FormBuilderField<bool>(
-                            name: "isServiceChargeActive",
-                            initialValue: false,
-                            builder: (FormFieldState<bool> field) {
-                              return FittedBox(
-                                fit: BoxFit.cover,
-                                child: Switch(
-                                  value: field.value ?? false,
-                                  onChanged: (value) {
-                                    field.didChange(value);
-                                  },
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                        FormBuilderField<bool>(
+                          name: "isServiceChargeActive",
+                          initialValue: false,
+                          builder: (FormFieldState<bool> field) {
+                            return FittedBox(
+                              fit: BoxFit.cover,
+                              child: Switch(
+                                value: field.value ?? false,
+                                onChanged: (value) {
+                                  field.didChange(value);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                  if (devices.isNotEmpty || connectedDevices.isNotEmpty)
-                    Flexible(
-                      child: ListView(
-                        children: [
-                          if (connectedDevices.isNotEmpty) ...[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Container(
-                                padding: const EdgeInsets.only(top: 20),
-                                margin: const EdgeInsets.only(bottom: 8),
-                                child: const TextHeading5(
-                                  "TERSAMBUNG",
-                                  color: TColors.neutralDarkLightest,
-                                ),
-                              ),
+                ),
+                // if (devices.isNotEmpty ||
+                //     connectedDevices.isNotEmpty ||
+                //     availableDevices.isNotEmpty)
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    children: [
+                      if (connectedDevices.isNotEmpty) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 20),
+                            margin: const EdgeInsets.only(bottom: 8),
+                            child: const TextHeading5(
+                              "TERSAMBUNG",
+                              color: TColors.neutralDarkLightest,
                             ),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: connectedDevices.length,
-                              itemBuilder: (context, index) {
-                                BluetoothInfo device =
-                                    connectedDevices.elementAt(index);
-                                return BluetoothDeviceTile(
-                                  device: device,
-                                  isConnected: true,
-                                  onConnectPressed: () {
-                                    _onDisconnectDevice(device);
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                          if (devices.isNotEmpty || connectedDevices.isNotEmpty)
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Container(
-                                padding: const EdgeInsets.only(top: 20),
-                                margin: const EdgeInsets.only(bottom: 8),
-                                child: const TextHeading5(
-                                  "PERANGKAT TERSEDIA",
-                                  color: TColors.neutralDarkLightest,
-                                ),
-                              ),
-                            ),
-                          if (devices.isNotEmpty) ...[
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: devices.length,
-                              itemBuilder: (context, index) {
-                                BluetoothInfo device = devices.elementAt(index);
-                                return BluetoothDeviceTile(
-                                  device: device,
-                                  isConnected: false,
-                                  isLoading: connectingDevices
-                                      .contains(device.macAdress),
-                                  onConnectPressed: () {
-                                    _onConnectToDevice(device);
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                          const SizedBox(height: 12),
-                          if (devices.isNotEmpty || connectedDevices.isNotEmpty)
-                            TextButton(
-                              onPressed: _onRefresh,
-                              child: const Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  UiIcons(
-                                    TIcons.refresh,
-                                    width: 24,
-                                    height: 24,
-                                    color: TColors.primary,
-                                  ),
-                                  SizedBox(width: 8),
-                                  TextActionL(
-                                    "Refresh",
-                                    color: TColors.primary,
-                                  ),
-                                ],
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  if (connectedDevices.isEmpty && devices.isEmpty)
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: EmptyList(
-                          image: SvgPicture.asset(
-                            TImages.noPrintIllustration,
-                            width: 140,
-                            height: 101.45,
-                            fit: BoxFit.cover,
                           ),
-                          title: "Perangkat tidak ditemukan",
-                          subTitle:
-                              "Silahkan klik refresh untuk dapat menemukan printer di sekitarmu.",
-                          action: TextButton(
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: connectedDevices.length,
+                          itemBuilder: (context, index) {
+                            BluetoothDevice device =
+                                connectedDevices.elementAt(index);
+                            return BluetoothDeviceTile(
+                              device: device,
+                              isConnected: true,
+                              isDisconnecting:
+                                  disconnectingDevices.contains(device.address),
+                              onConnectPressed: () {
+                                _onDisconnectDevice(device);
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                      if (devices.isNotEmpty) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 20),
+                            margin: const EdgeInsets.only(bottom: 8),
+                            child: const TextHeading5(
+                              "PERNAH TERSAMBUNG",
+                              color: TColors.neutralDarkLightest,
+                            ),
+                          ),
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: devices.length,
+                          itemBuilder: (context, index) {
+                            BluetoothDevice device = devices.elementAt(index);
+                            return GestureDetector(
+                              onLongPress: () {
+                                _onUnpairDevice(device);
+                              },
+                              child: BluetoothDeviceTile(
+                                device: device,
+                                isConnected: false,
+                                isPaired: true,
+                                isPairing:
+                                    pairingDevices.contains(device.address),
+                                isConnecting:
+                                    connectingDevices.contains(device.address),
+                                onConnectPressed: () {
+                                  _onConnectToDevice(device);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                      if (availableDevices.isNotEmpty) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 20),
+                            margin: const EdgeInsets.only(bottom: 8),
+                            child: const TextHeading5(
+                              "PERANGKAT TERSEDIA",
+                              color: TColors.neutralDarkLightest,
+                            ),
+                          ),
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: availableDevices.length,
+                          itemBuilder: (context, index) {
+                            BluetoothDevice device =
+                                availableDevices.elementAt(index);
+                            return BluetoothDeviceTile(
+                              device: device,
+                              isConnected: false,
+                              isConnecting:
+                                  connectingDevices.contains(device.address),
+                              onConnectPressed: () {
+                                _onConnectToDevice(device);
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                      const SizedBox(height: 12),
+                      if (!isDiscovering)
+                        Center(
+                          child: TextButton(
                             onPressed: _onRefresh,
                             child: const Row(
                               mainAxisSize: MainAxisSize.min,
@@ -243,38 +319,170 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                             ),
                           ),
                         ),
+                      if (isDiscovering)
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8),
+                          child: Center(
+                            child: SizedBox(
+                              height: 16,
+                              width: 16,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                if (connectedDevices.isEmpty &&
+                    devices.isEmpty &&
+                    availableDevices.isEmpty &&
+                    !isDiscovering)
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: EmptyList(
+                        image: SvgPicture.asset(
+                          TImages.noPrintIllustrationSvg,
+                          width: 140,
+                          height: 101.45,
+                          fit: BoxFit.cover,
+                        ),
+                        title: "Perangkat tidak ditemukan",
+                        subTitle:
+                            "Silahkan klik refresh untuk dapat menemukan printer di sekitarmu.",
+                        action: TextButton(
+                          onPressed: _onRefresh,
+                          child: Stack(
+                            children: [
+                              if (!isDiscovering)
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const UiIcons(
+                                      TIcons.refresh,
+                                      width: 24,
+                                      height: 24,
+                                      color: TColors.primary,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    TextActionL(
+                                      "Refresh",
+                                      color: TColors.primary,
+                                    ),
+                                  ],
+                                ),
+                              if (isDiscovering)
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 8),
+                                  child: Center(
+                                    child: SizedBox(
+                                      height: 16,
+                                      width: 16,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
-                    child: BillAction(
-                      onTestPrint: connectedDevices.isEmpty
-                          ? null
-                          : () {
-                              TBill.testPrint();
-                            },
-                      onShowBill: () {
-                        Navigator.pushNamed(context, "/bill");
-                      },
+                  ),
+                Positioned(
+                  child: Visibility(
+                    visible: devices.isNotEmpty ||
+                        connectedDevices.isNotEmpty ||
+                        availableDevices.isNotEmpty,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 16),
+                      child: BillAction(
+                        onTestPrint: connectedDevices.isEmpty
+                            ? null
+                            : () {
+                                final billMasterState =
+                                    context.read<BillMasterCubit>().state;
+
+                                String footNote = "";
+                                footNote = billMasterState.footNote;
+
+                                final authState =
+                                    context.read<AuthCubit>().state;
+
+                                OwnerProfileModel profile;
+                                if (authState is AuthReady) {
+                                  profile = authState.profile;
+                                } else {
+                                  profile = OwnerProfileModel(
+                                    id: '',
+                                    name: '',
+                                    phoneNumber: '',
+                                    packageName: '',
+                                    outlets: [],
+                                  );
+                                  print(
+                                      'AuthState is not ready, using default profile.');
+                                }
+
+                                TBill.testPrint(context, profile, footNote);
+                              },
+                        onShowBill: () {
+                          Navigator.pushNamed(context, "/bill");
+                        },
+                      ),
                     ),
                   ),
-                ],
-              ),
-            PrintMasterPermissionDenied() => const Center(
-                child: TextBodyS("permission denied"),
-              ),
-            PrintMasterLoadFailure(:final error) => Center(
-                child: TextBodyS(
-                  error,
-                  color: TColors.error,
+                ),
+              ],
+            );
+          } else if (state is PrintMasterLoadFailure) {
+            return Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: EmptyList(
+                  image: SvgPicture.asset(
+                    TImages.noPrintIllustrationSvg,
+                    width: 140,
+                    height: 101.45,
+                    fit: BoxFit.cover,
+                  ),
+                  title: "Perangkat tidak ditemukan",
+                  subTitle:
+                      "Silahkan klik refresh untuk dapat menemukan printer di sekitarmu.",
+                  action: TextButton(
+                    onPressed: _onRefresh,
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        UiIcons(
+                          TIcons.refresh,
+                          width: 24,
+                          height: 24,
+                          color: TColors.primary,
+                        ),
+                        SizedBox(width: 8),
+                        TextActionL(
+                          "Refresh",
+                          color: TColors.primary,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            _ => const Center(
-                child: CircularProgressIndicator(),
-              ),
-          },
-        ));
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    );
   }
 }
 
@@ -283,13 +491,19 @@ class BluetoothDeviceTile extends StatelessWidget {
     super.key,
     required this.device,
     required this.isConnected,
+    this.isPaired = false,
     required this.onConnectPressed,
-    this.isLoading = false,
+    this.isPairing = false,
+    this.isConnecting = false,
+    this.isDisconnecting = false,
   });
 
-  final BluetoothInfo device;
+  final BluetoothDevice device;
   final bool isConnected;
-  final bool isLoading;
+  final bool isPaired;
+  final bool isPairing;
+  final bool isConnecting;
+  final bool isDisconnecting;
   final VoidCallback onConnectPressed;
 
   @override
@@ -297,7 +511,7 @@ class BluetoothDeviceTile extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          onTap: !isLoading ? onConnectPressed : null,
+          onTap: !isConnecting ? onConnectPressed : null,
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
           leading: const CircleAvatar(
             radius: 20,
@@ -307,16 +521,34 @@ class BluetoothDeviceTile extends StatelessWidget {
               color: TColors.primary,
             ),
           ),
-          title: TextHeading4(device.name),
-          subtitle: TextBodyS(
-            device.macAdress,
-            color: TColors.neutralDarkLight,
-          ),
+          title: TextHeading4(device.name ?? "Unnamed Device"),
+          subtitle: (isConnecting || isDisconnecting || isPairing)
+              ? AnimatedLoadingText(
+                  isPairing
+                      ? "Melepaskan perangkat"
+                      : isConnecting
+                          ? "Menyambungkan"
+                          : 'Memutuskan',
+                  style: TextStyle(
+                    fontSize: TSizes.fontSizeBodyS,
+                    color: TColors.neutralDarkLight,
+                  ),
+                )
+              : TextBodyS(
+                  device.address,
+                  color: TColors.neutralDarkLight,
+                ),
           trailing: TextButton(
-            onPressed: !isLoading ? onConnectPressed : null,
-            child: !isLoading
+            onPressed: !isConnecting && !isDisconnecting && !isPairing
+                ? onConnectPressed
+                : null,
+            child: !isConnecting && !isDisconnecting && !isPairing
                 ? TextActionM(
-                    isConnected ? 'Putuskan' : 'Sambungkan',
+                    isConnected
+                        ? 'Putuskan'
+                        : isPaired
+                            ? 'Sambungkan'
+                            : '',
                     color: TColors.primary,
                   )
                 : const SizedBox(
@@ -369,7 +601,7 @@ class BillAction extends StatelessWidget {
                     onTap: () {},
                   ),
                   const TextActionL(
-                    "Test Print",
+                    "Tes Print",
                     color: TColors.neutralLightLightest,
                   ),
                 ],

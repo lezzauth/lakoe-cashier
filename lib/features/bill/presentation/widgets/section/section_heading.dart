@@ -55,7 +55,9 @@ class BillSectionHeading extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: TextSmall(
-                "$orderType ${noTable ?? ""}",
+                orderType == "DINEIN"
+                    ? "Dine-In ${noTable ?? ""}"
+                    : "Take Away",
                 textAlign: TextAlign.right,
                 isBold: true,
                 maxLines: 1,

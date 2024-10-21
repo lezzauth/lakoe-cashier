@@ -22,7 +22,7 @@ class CustomToast {
           topPosition = MediaQuery.of(context).size.height * 0.4;
           break;
         case 'bottom':
-          bottomPosition = 10.0;
+          bottomPosition = 100.0;
           break;
         case 'top':
         default:
@@ -62,11 +62,13 @@ class CustomToast {
                           color: TColors.neutralLightLightest,
                         ),
                       SizedBox(width: icon != null ? 8 : 0),
-                      TextBodyL(
-                        message,
-                        color: TColors.neutralLightLightest,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      Flexible(
+                        child: TextBodyL(
+                          message,
+                          color: TColors.neutralLightLightest,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),

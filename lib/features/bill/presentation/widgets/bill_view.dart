@@ -15,6 +15,7 @@ import 'package:point_of_sales_cashier/features/bill/presentation/widgets/sectio
 import 'package:point_of_sales_cashier/features/orders/data/models.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class BillView extends StatelessWidget {
@@ -34,21 +35,6 @@ class BillView extends StatelessWidget {
   }
 
   Map<String, dynamic> _getPaymentInfo(Transactions payment) {
-    String modifiedPaymentMethod = payment.paymentMethod;
-
-    if (payment.paymentMethod == 'QR_CODE' && payment.paidFrom == 'EDC') {
-      modifiedPaymentMethod = 'QRIS Dinamis';
-    } else if (payment.paymentMethod == 'QR_CODE' &&
-        payment.paidFrom == 'CASHIER') {
-      modifiedPaymentMethod = 'QRIS Statis';
-    } else if (payment.paymentMethod == 'CASH') {
-      modifiedPaymentMethod = 'Cash (Tunai)';
-    } else if (payment.paymentMethod == 'DEBIT') {
-      modifiedPaymentMethod = 'Debit/Credit';
-    } else if (payment.paymentMethod == 'BANK_TRANSFER') {
-      modifiedPaymentMethod = 'Transfer Bank';
-    }
-
     double paidAmount = 0.0;
     if (payment.paidAmount.isNotEmpty) {
       paidAmount = double.tryParse(payment.paidAmount) ?? 0.0;
@@ -61,7 +47,10 @@ class BillView extends StatelessWidget {
 
     return {
       'paidAmount': paidAmount,
-      'paymentMethod': modifiedPaymentMethod,
+      'paymentMethod': TPaymentMethodName.getName(
+        payment.paymentMethod,
+        payment.paidFrom,
+      ),
       'change': changeAmount,
     };
   }

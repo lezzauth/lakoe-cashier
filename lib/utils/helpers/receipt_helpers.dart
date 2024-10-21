@@ -17,6 +17,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/detail_rece
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/print/bill.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
 // ignore: depend_on_referenced_packages
@@ -153,7 +154,9 @@ class ReceiptHelper {
 
   static void showDetailBill(
     BuildContext context, {
+    required OwnerProfileModel profile,
     required OrderModel order,
+    required String footNote,
     required ScrollController scrollController,
   }) {
     showModalBottomSheet(
@@ -162,29 +165,31 @@ class ReceiptHelper {
       isScrollControlled: true,
       builder: (BuildContext context) {
         return DetailReceiptBottomSheet(
-          controller: scrollController,
-          widgetKey: receiptWidgetKey,
-          data: order,
-          saveAction: () async {
-            await ReceiptHelper.captureImage(
-              context: context,
-              order: order,
-              receiptWidgetKey: receiptWidgetKey,
-            );
-            // ignore: use_build_context_synchronously
-            Navigator.pop(context);
-          },
-          shareAction: () {
-            ReceiptHelper.captureImage(
-              context: context,
-              order: order,
-              receiptWidgetKey: receiptWidgetKey,
-              save: false,
-              share: true,
-            );
-            Navigator.pop(context);
-          },
-        );
+            controller: scrollController,
+            widgetKey: receiptWidgetKey,
+            data: order,
+            saveAction: () async {
+              await ReceiptHelper.captureImage(
+                context: context,
+                order: order,
+                receiptWidgetKey: receiptWidgetKey,
+              );
+              // ignore: use_build_context_synchronously
+              Navigator.pop(context);
+            },
+            shareAction: () {
+              ReceiptHelper.captureImage(
+                context: context,
+                order: order,
+                receiptWidgetKey: receiptWidgetKey,
+                save: false,
+                share: true,
+              );
+              Navigator.pop(context);
+            },
+            printAction: () {
+              TBill.printReceipt(context, profile, order, footNote);
+            });
       },
     );
   }

@@ -1,8 +1,16 @@
 import 'dart:developer';
 
 import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
+import 'package:order_repository/order_repository.dart';
+import 'package:owner_repository/owner_repository.dart';
+import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
+import 'package:point_of_sales_cashier/features/bill/data/arguments/template_order_model.dart';
+import 'package:point_of_sales_cashier/features/orders/data/models.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:image/image.dart' as image;
@@ -12,7 +20,7 @@ class TBill {
   TBill._();
 
   static double _getOrderTotal(
-    List<BillItem> items,
+    List<OrderItem> items,
   ) {
     return items.fold(0, (sum, item) {
       return sum + double.parse(item.price);
@@ -41,28 +49,32 @@ class TBill {
   }
 
   static Future<List<int>> print({
-    required BillOrder order,
-    BillTable? table,
-    required BillOutlet outlet,
-    required BillOperator operator,
-    required List<BillItem> items,
-    required List<BillCharge> charges,
-    required List<BillTax> taxes,
-    required BillPayment payment,
+    required OwnerProfileModel profileOwner,
+    required OrderModel order,
+    required String footNote,
+    required bool isTestingMode,
   }) async {
     List<int> bytes = [];
     int maxLength = 32;
 
     final profile = await CapabilityProfile.load();
-    final generator = Generator(PaperSize.mm58, profile);
-    final profiles = await CapabilityProfile.getAvailableProfiles();
-    log('profiles: $profiles');
+    final generator = Generator(PaperSize.mm58, profile, spaceBetweenRows: 1);
+    final profileDevice = await CapabilityProfile.getAvailableProfiles();
+    log('profileDevice: $profileDevice');
     bytes += generator.reset();
-
-    bytes += generator.emptyLines(1);
+    if (isTestingMode) {
+      bytes += generator.text(
+        "[Testing Mode]",
+        styles: const PosStyles(
+          align: PosAlign.center,
+          height: PosTextSize.size3,
+        ),
+      );
+      bytes += generator.emptyLines(1);
+    }
 
     bytes += generator.text(
-      "warmindo cak tho".toUpperCase(),
+      profileOwner.outlets[0].name.toUpperCase(),
       styles: const PosStyles(
         bold: true,
         align: PosAlign.center,
@@ -71,8 +83,7 @@ class TBill {
       ),
     );
 
-    String addressOutlet =
-        wordWrap("Tebet, Jakarta Selatan, DKI Jakarta", maxLength);
+    String addressOutlet = wordWrap(profileOwner.outlets[0].address, maxLength);
 
     bytes += generator.text(
       addressOutlet,
@@ -89,7 +100,9 @@ class TBill {
         styles: const PosStyles(align: PosAlign.left, bold: true),
       ),
       PosColumn(
-        text: table == null ? "Take Away" : "Dine In ${table.no}",
+        text: order.type == "DINEIN"
+            ? "Dine-In ${order.table?.no ?? ""}"
+            : "Take Away",
         width: 6,
         styles: const PosStyles(align: PosAlign.right, bold: true),
       ),
@@ -102,7 +115,7 @@ class TBill {
           width: 4,
           styles: const PosStyles(align: PosAlign.left)),
       PosColumn(
-          text: operator.name,
+          text: order.cashier!.operator.name,
           width: 8,
           styles: const PosStyles(align: PosAlign.right, bold: true)),
     ]);
@@ -112,7 +125,10 @@ class TBill {
           width: 5,
           styles: const PosStyles(align: PosAlign.left)),
       PosColumn(
-          text: "LK-00001",
+          text: TFormatter.formatBillNumber(
+            order.transactions![0].no,
+            profileOwner.outlets[0].name,
+          ),
           width: 7,
           styles: const PosStyles(align: PosAlign.right, bold: true)),
     ]);
@@ -122,9 +138,7 @@ class TBill {
           width: 5,
           styles: const PosStyles(align: PosAlign.left)),
       PosColumn(
-        text: DateFormat("dd/MM/yyyy, HH:mm").format(
-          DateTime.parse(order.createdAt).toLocal(),
-        ),
+        text: TFormatter.billDate(order.createdAt),
         width: 7,
         styles: const PosStyles(align: PosAlign.right, bold: true),
       ),
@@ -151,7 +165,7 @@ class TBill {
     bytes += generator.hr();
 
     // Item loop start
-    for (var item in items) {
+    for (var item in order.items) {
       bytes += generator.row([
         PosColumn(
           text: item.product.name,
@@ -192,7 +206,7 @@ class TBill {
         ),
       ),
       PosColumn(
-        text: TFormatter.formatToRupiah(_getOrderTotal(items)),
+        text: TFormatter.formatToRupiah(_getOrderTotal(order.items)),
         width: 6,
         styles: const PosStyles(
           align: PosAlign.right,
@@ -200,42 +214,64 @@ class TBill {
       ),
     ]);
 
-    for (var tax in taxes) {
-      bytes += generator.row([
-        PosColumn(
-          text: "${tax.name} (${tax.percentage})",
-          width: 6,
-          styles: const PosStyles(
-            align: PosAlign.left,
+    List<OrderSummaryChargeModel> charges = order.charges!
+        .map((e) => OrderSummaryChargeModel(
+              type: e.type,
+              name: e.name,
+              amount: e.amount,
+              isPercentage: e.isPercentage,
+              percentageValue: e.percentageValue.toString(),
+            ))
+        .toList();
+
+    List<OrderSummaryChargeModel> taxCharges() =>
+        charges.where((e) => e.type == "TAX").toList();
+
+    List<OrderSummaryChargeModel> serviceFeeCharges() =>
+        charges.where((e) => e.type == "CHARGE").toList();
+
+    if (taxCharges().isNotEmpty) {
+      for (var tax in order.charges!) {
+        bytes += generator.row([
+          PosColumn(
+            text:
+                "${tax.name} ${tax.isPercentage ? '(${tax.percentageValue}%)' : ''}",
+            width: 6,
+            styles: const PosStyles(
+              align: PosAlign.left,
+            ),
           ),
-        ),
-        PosColumn(
-          text: TFormatter.formatToRupiah(double.parse(tax.amount)),
-          width: 6,
-          styles: const PosStyles(
-            align: PosAlign.right,
+          PosColumn(
+            text: TFormatter.formatToRupiah(double.parse(tax.amount)),
+            width: 6,
+            styles: const PosStyles(
+              align: PosAlign.right,
+            ),
           ),
-        ),
-      ]);
+        ]);
+      }
     }
 
-    for (var charge in charges) {
-      bytes += generator.row([
-        PosColumn(
-          text: "${charge.name} (${charge.percentage})",
-          width: 6,
-          styles: const PosStyles(
-            align: PosAlign.left,
+    if (serviceFeeCharges().isNotEmpty) {
+      for (var charge in order.charges!) {
+        bytes += generator.row([
+          PosColumn(
+            text:
+                "${charge.name}  ${charge.isPercentage ? '(${charge.percentageValue}%)' : ''}",
+            width: 6,
+            styles: const PosStyles(
+              align: PosAlign.left,
+            ),
           ),
-        ),
-        PosColumn(
-          text: TFormatter.formatToRupiah(double.parse(charge.amount)),
-          width: 6,
-          styles: const PosStyles(
-            align: PosAlign.right,
+          PosColumn(
+            text: TFormatter.formatToRupiah(double.parse(charge.amount)),
+            width: 6,
+            styles: const PosStyles(
+              align: PosAlign.right,
+            ),
           ),
-        ),
-      ]);
+        ]);
+      }
     }
 
     bytes += generator.hr();
@@ -263,9 +299,15 @@ class TBill {
         ),
       ),
     ]);
+
+    Transactions payment = order.transactions![0];
+
     bytes += generator.row([
       PosColumn(
-        text: TPaymentMethodName.getName(payment.paymentMethod),
+        text: TPaymentMethodName.getName(
+          payment.paymentMethod,
+          payment.paidFrom,
+        ),
         width: 6,
         styles: const PosStyles(
           align: PosAlign.left,
@@ -282,7 +324,7 @@ class TBill {
     bytes += generator.hr();
     bytes += generator.row([
       PosColumn(
-        text: "Kembalian",
+        text: "Change",
         width: 6,
         styles: const PosStyles(align: PosAlign.left, bold: true),
       ),
@@ -296,18 +338,16 @@ class TBill {
       ),
     ]);
     bytes += generator.hr();
-    bytes += generator.text(
-        "Close Bill: ${DateFormat("dd/MM/yyyy, HH:mm").format(
-          DateTime.parse(payment.createdAt).toLocal(),
-        )}",
-        styles: const PosStyles(
-          align: PosAlign.center,
-          bold: true,
-        ));
+    bytes +=
+        generator.text("Close Bill: ${TFormatter.billDate(payment.createdAt)}",
+            styles: const PosStyles(
+              align: PosAlign.center,
+              bold: true,
+            ));
     bytes += generator.hr();
 
     bytes += generator.text(
-      "Terimakasih\nDitunggu kembali kedatangannya",
+      footNote,
       styles: const PosStyles(
         align: PosAlign.center,
       ),
@@ -324,62 +364,91 @@ class TBill {
     final img = image.decodeImage(bytesImg);
     bytes += generator.image(img!);
 
+    if (isTestingMode) {
+      bytes += generator.emptyLines(1);
+      bytes += generator.text(
+        "[Testing Mode]",
+        styles: const PosStyles(
+          align: PosAlign.center,
+          height: PosTextSize.size3,
+        ),
+      );
+    }
+
     bytes += generator.cut(mode: PosCutMode.full);
     return bytes;
   }
 
-  static Future<void> testPrint() async {
+  static Future<void> printReceipt(
+    BuildContext context,
+    OwnerProfileModel profile,
+    OrderModel order,
+    String footNote,
+  ) async {
     bool connectionStatus = await PrintBluetoothThermal.connectionStatus;
+
     if (connectionStatus) {
       List<int> ticket = await print(
-        items: [
-          BillItem(
-              quantity: 1,
-              product: BillItemProduct(name: "Kopi Hitam", price: "5000"),
-              price: "39517",
-              notes: "Gulanya sedikit"),
-          BillItem(
-            quantity: 1,
-            product: BillItemProduct(name: "Es Teh", price: "5000"),
-            price: "41308",
-          ),
-          BillItem(
-            quantity: 1,
-            product: BillItemProduct(name: "Mie Goreng", price: "10000"),
-            price: "39517",
-          ),
-        ],
-        operator: BillOperator(name: "Iruha"),
-        order: BillOrder(
-            no: "9849", createdAt: "2024-09-23T17:34:59.086Z", price: "21400"),
-        outlet: BillOutlet(name: "Warung Iruha"),
-        payment: BillPayment(
-          paymentMethod: "CASH",
-          change: "28600",
-          paidAmount: "50000",
-          createdAt: "2024-09-23T17:34:59.131Z",
-        ),
-        taxes: [
-          BillTax(
-            type: "TAX",
-            name: "PB1",
-            percentage: "5%",
-            amount: "1000",
-          ),
-        ],
-        charges: [
-          BillCharge(
-            type: "CHARGE",
-            name: "Service",
-            percentage: "2%",
-            amount: "4000",
-          ),
-        ],
+        profileOwner: profile,
+        order: order,
+        footNote: footNote,
+        isTestingMode: false,
+      );
+
+      final result = await PrintBluetoothThermal.writeBytes(ticket);
+      log("print result: $result");
+    } else {
+      showModalBottomSheet(
+        context: context,
+        enableDrag: false,
+        isDismissible: false,
+        builder: (context) {
+          return CustomBottomsheet(
+            hasGrabber: false,
+            child: ErrorDisplay(
+              imageSrc: TImages.noPrintIllustration,
+              title: "Belum ada print yang connect, nih!",
+              description:
+                  "Yuk! Sambungkan dulu print kamu di halaman Setting.",
+              actionTitlePrimary: "Atur Print",
+              onActionPrimary: () async {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/print");
+              },
+              actionTitleSecondary: "Nanti Saja",
+              onActionSecondary: () {
+                Navigator.pop(context);
+              },
+            ),
+          );
+        },
+      );
+    }
+  }
+
+  static Future<void> testPrint(
+    BuildContext context,
+    OwnerProfileModel profile,
+    String footNote,
+  ) async {
+    bool connectionStatus = await PrintBluetoothThermal.connectionStatus;
+    if (connectionStatus) {
+      TemplateOrderModel templateOrder = TemplateOrderModel();
+
+      List<int> ticket = await print(
+        profileOwner: profile,
+        order: templateOrder.order,
+        footNote: footNote,
+        isTestingMode: true,
       );
       final result = await PrintBluetoothThermal.writeBytes(ticket);
       log("print result: $result");
     } else {
-      log("the printer is disconnected ($connectionStatus)");
+      CustomToast.show(
+        context,
+        "Tidak ada printer yang tersambung.",
+        position: 'bottom',
+      );
     }
   }
 }

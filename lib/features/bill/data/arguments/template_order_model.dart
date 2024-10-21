@@ -1,7 +1,9 @@
 import 'package:order_repository/order_repository.dart';
+import 'package:owner_repository/owner_repository.dart';
 
 class TemplateOrderModel {
   OrderModel order;
+  OwnerProfileModel ownerProfile;
 
   TemplateOrderModel()
       : order = OrderModel(
@@ -112,6 +114,19 @@ class TemplateOrderModel {
                 price: "10000",
                 images: [],
               ),
+            ),
+          ],
+        ),
+        ownerProfile = OwnerProfileModel(
+          id: "owner_001",
+          name: "Najib",
+          phoneNumber: "+628123456789",
+          packageName: "LITE",
+          outlets: [
+            Outlet(
+              logo: "",
+              name: "Warmindo Cak Tho",
+              address: "Tebet,Jakarta Selatan, DKI Jakarta",
             ),
           ],
         );

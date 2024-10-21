@@ -1,15 +1,30 @@
+import 'dart:async';
 import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_state.dart';
 import 'package:point_of_sales_cashier/utils/helpers/bluetooth_permission.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
 class PrintMasterCubit extends Cubit<PrintMasterState> {
+  StreamSubscription<BluetoothDiscoveryResult>? discoveryStream;
+  bool isDiscoveryRunning = false;
+
   PrintMasterCubit() : super(PrintMasterInitial());
+
+  Future<void> checkBluetoothStatus() async {
+    bool? isBluetoothEnabled = await FlutterBluetoothSerial.instance.isEnabled;
+    if (!isBluetoothEnabled!) {
+      log('Bluetooth tidak aktif. Menghentikan proses...');
+      emit(PrintMasterBluetoothDisabled());
+      return;
+    }
+  }
 
   Future<void> init() async {
     try {
+      emit(PrintMasterLoadInProgress());
+
       final permissions = await TBluetoothPermission.checkPermissions();
       bool isPermissionsAllowed = ![
         permissions.bluetoothConnect,
@@ -18,93 +33,422 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
       ].contains(true);
 
       if (!isPermissionsAllowed) {
-        return emit(PrintMasterPermissionDenied(
+        emit(PrintMasterPermissionDenied(
           bluetoothConnect: permissions.bluetoothConnect,
           bluetoothScan: permissions.bluetoothScan,
           nearbyDevices: permissions.nearbyDevices,
         ));
+        return;
       }
 
-      final List<BluetoothInfo> devices =
-          await PrintBluetoothThermal.pairedBluetooths;
+      // List<BluetoothDevice> bondDevices =
+      //     await FlutterBluetoothSerial.instance.getBondedDevices();
 
-      if (state is PrintMasterLoadSuccess) {
-        final currentState = state as PrintMasterLoadSuccess;
-        final List<String> connectedDeviceMacs =
-            currentState.connectedDevices.map((e) => e.macAdress).toList();
-
-        emit(PrintMasterLoadSuccess(
-          devices: devices
-              .where((e) => !connectedDeviceMacs.contains(e.macAdress))
-              .toList(),
-          connectedDevices: currentState.connectedDevices,
-        ));
-      } else {
-        emit(PrintMasterLoadInProgress());
-        emit(PrintMasterLoadSuccess(devices: devices));
-      }
+      emit(PrintMasterLoadSuccess(
+        // devices: bondDevices
+        //     .where((device) => device.isBonded && !device.isConnected)
+        //     .toList(),
+        // connectedDevices: bondDevices
+        //     .where((device) => device.isBonded && device.isConnected)
+        //     .toList(),
+        devices: [],
+        connectedDevices: [],
+        availableDevices: [],
+        connectingDevices: [],
+        isDiscovering: true,
+      ));
     } catch (e) {
       emit(PrintMasterLoadFailure(e.toString()));
     }
   }
 
-  Future<bool> connectToDevice(BluetoothInfo device) async {
+  Future<void> someFunction() async {
+    if (state is PrintMasterLoadSuccess) {
+      final currentState = state as PrintMasterLoadSuccess;
+
+      // Log isi dari connectingDevices
+      for (var address in currentState.connectingDevices) {
+        print('xxx connectingDevices: ${address} (${address})');
+      }
+
+      // Log isi dari pairingDevices
+      for (var address in currentState.pairingDevices) {
+        print('xxx pairingDevices: ${address} (${address})');
+      }
+
+      // Log isi dari disconnectingDevices
+      for (var address in currentState.disconnectingDevices) {
+        print('xxx disconnectingDevices: ${address} (${address})');
+      }
+    }
+  }
+
+  Future<void> discoverDevices() async {
+    await checkBluetoothStatus();
+
+    if (isDiscoveryRunning) {
+      log('Discovery sudah berjalan. Menghentikan discovery yang lama dan memulai ulang...');
+      await stopDiscovery();
+    }
+
+    isDiscoveryRunning = true;
+    log('Memulai discovery...');
+
+    if (state is! PrintMasterLoadSuccess) {
+      log('State belum siap untuk melakukan discovery.');
+      isDiscoveryRunning = false;
+      return;
+    }
+
+    final currentState = state as PrintMasterLoadSuccess;
+
+    try {
+      emit(PrintMasterLoadSuccess(
+        devices: currentState.devices,
+        connectedDevices: currentState.connectedDevices,
+        availableDevices: currentState.availableDevices,
+        connectingDevices: currentState.connectingDevices,
+        pairingDevices: currentState.pairingDevices,
+        disconnectingDevices: currentState.disconnectingDevices,
+        isDiscovering: true,
+      ));
+      discoveryStream = FlutterBluetoothSerial.instance.startDiscovery().listen(
+        (result) async {
+          if (result.device.name != null &&
+              result.device.name!.isNotEmpty &&
+              !currentState.availableDevices
+                  .any((device) => device.address == result.device.address)) {
+            currentState.availableDevices.add(result.device);
+
+            List<BluetoothDevice> bondDevices =
+                await FlutterBluetoothSerial.instance.getBondedDevices();
+
+            bool isBonded = bondDevices.any((bondedDevice) =>
+                bondedDevice.address == result.device.address);
+
+            if (isBonded) {
+              if (result.device.isBonded && !result.device.isConnected) {
+                currentState.devices.removeWhere(
+                    (device) => device.address == result.device.address);
+
+                currentState.devices.add(result.device);
+              } else if (result.device.isBonded && result.device.isConnected) {
+                currentState.connectedDevices.removeWhere(
+                    (device) => device.address == result.device.address);
+
+                currentState.connectedDevices.add(result.device);
+              } else {
+                currentState.devices.addAll(currentState.devices);
+                currentState.connectedDevices
+                    .addAll(currentState.connectedDevices);
+              }
+            }
+
+            List<BluetoothDevice> availableDevices =
+                currentState.availableDevices.where((device) {
+              return !currentState.devices
+                      .any((bonded) => bonded.address == device.address) &&
+                  !currentState.connectedDevices
+                      .any((connected) => connected.address == device.address);
+            }).toList();
+
+            emit(PrintMasterLoadSuccess(
+              devices: currentState.devices,
+              connectedDevices: currentState.connectedDevices,
+              availableDevices: availableDevices,
+              connectingDevices: currentState.connectingDevices,
+              pairingDevices: currentState.pairingDevices,
+              disconnectingDevices: currentState.disconnectingDevices,
+              isDiscovering: true,
+            ));
+
+            someFunction();
+          } else {}
+        },
+        onError: (error) {
+          log('Terjadi error saat discovery: $error');
+          isDiscoveryRunning = false;
+        },
+        cancelOnError: true,
+      );
+
+      discoveryStream?.onDone(() async {
+        log('Discovery selesai, ditemukan ${currentState.availableDevices.length} perangkat');
+        isDiscoveryRunning = false;
+
+        if (currentState.availableDevices.isEmpty) {
+          log('No available devices found. Restarting discovery...');
+          // Memanggil kembali discoverDevices
+          discoverDevices();
+        } else {
+          List<BluetoothDevice> availableDevices =
+              currentState.availableDevices.where((device) {
+            return !currentState.devices
+                    .any((bonded) => bonded.address == device.address) &&
+                !currentState.connectedDevices
+                    .any((connected) => connected.address == device.address);
+          }).toList();
+
+          emit(PrintMasterLoadSuccess(
+            devices: currentState.devices,
+            connectedDevices: currentState.connectedDevices,
+            availableDevices: availableDevices,
+            connectingDevices: currentState.connectingDevices,
+            pairingDevices: currentState.pairingDevices,
+            disconnectingDevices: currentState.disconnectingDevices,
+            isDiscovering: false,
+          ));
+        }
+
+        // updateDevices();
+      });
+    } catch (e) {
+      log('Error selama proses discovery: $e');
+      isDiscoveryRunning = false;
+    }
+  }
+
+  Future<void> updateDevices() async {
+    List<BluetoothDevice> bondDevices =
+        await FlutterBluetoothSerial.instance.getBondedDevices();
+
+    if (state is PrintMasterLoadSuccess) {
+      final currentState = state as PrintMasterLoadSuccess;
+
+      for (BluetoothDevice bondDevice in bondDevices) {
+        if (!currentState.availableDevices.any((availableDevice) =>
+            availableDevice.address == bondDevice.address)) {
+          currentState.devices
+              .removeWhere((device) => device.address == bondDevice.address);
+          currentState.connectedDevices
+              .removeWhere((device) => device.address == bondDevice.address);
+        }
+      }
+
+      emit(PrintMasterLoadSuccess(
+        devices: currentState.devices,
+        connectedDevices: currentState.connectedDevices,
+        availableDevices: currentState.availableDevices,
+        isDiscovering: currentState.isDiscovering,
+      ));
+    }
+  }
+
+  Future<void> stopDiscovery() async {
+    if (discoveryStream != null) {
+      log('Stopping discovery...');
+      await discoveryStream!.cancel();
+      discoveryStream = null;
+      isDiscoveryRunning = false;
+      log('Discovery stopped');
+
+      final currentState = state as PrintMasterLoadSuccess;
+
+      emit(PrintMasterLoadSuccess(
+        devices: currentState.devices,
+        connectedDevices: currentState.connectedDevices,
+        availableDevices: currentState.availableDevices,
+        isDiscovering: false,
+        connectingDevices: [],
+        disconnectingDevices: [],
+      ));
+    }
+  }
+
+  Future<bool> isDeviceBonded(BluetoothDevice device) async {
+    List<BluetoothDevice> bondedDevices =
+        await FlutterBluetoothSerial.instance.getBondedDevices();
+
+    return bondedDevices
+        .any((bondedDevice) => bondedDevice.address == device.address);
+  }
+
+  Future<bool> connectToDevice(BluetoothDevice device) async {
     if (state is! PrintMasterLoadSuccess) return false;
+
     final currentState = state as PrintMasterLoadSuccess;
 
     List<String> connectingDevices = List.from(currentState.connectingDevices);
-    connectingDevices.add(device.macAdress);
+    connectingDevices.add(device.address);
 
     emit(PrintMasterLoadSuccess(
       devices: currentState.devices,
       connectedDevices: currentState.connectedDevices,
+      availableDevices: currentState.availableDevices,
       connectingDevices: connectingDevices,
     ));
 
-    final bool result = await PrintBluetoothThermal.connect(
-        macPrinterAddress: device.macAdress);
+    try {
+      // bool isBonded = await isDeviceBonded(device);
 
-    log('result: $result');
+      // if (!isBonded) {
+      //   log('Device is not bonded. Pairing now...');
 
-    List<BluetoothInfo> connectedDevices =
-        List.from(currentState.connectedDevices);
+      //   await BluetoothConnection.toAddress(device.address);
 
-    if (result == true) {
-      connectedDevices.add(device);
+      // } else {
+      //   log('Device is already bonded.');
+      // }
+
+      log('Connecting to device: ${device.name} (${device.address})');
+
+      await Future.delayed(const Duration(seconds: 1));
+
+      final bool result = await PrintBluetoothThermal.connect(
+          macPrinterAddress: device.address);
+
+      List<BluetoothDevice> connectedDevices =
+          List.from(currentState.connectedDevices);
+
+      if (result) {
+        log('Successfully connected to: ${device.name} (${device.address})');
+
+        connectedDevices.add(device);
+
+        List<BluetoothDevice> updatedDevices = currentState.devices
+            .where((d) => d.address != device.address)
+            .toList();
+        List<BluetoothDevice> updatedAvailableDevices = currentState
+            .availableDevices
+            .where((d) => d.address != device.address)
+            .toList();
+
+        emit(PrintMasterLoadSuccess(
+          devices: updatedDevices,
+          connectedDevices: connectedDevices,
+          availableDevices: updatedAvailableDevices,
+          connectingDevices: [],
+        ));
+        return true;
+      } else {
+        log('Failed to connect to: ${device.name} (${device.address})');
+
+        return false;
+      }
+    } catch (e) {
+      log('Error connecting to device: $e');
+      return false;
+    } finally {
+      final currentState = state as PrintMasterLoadSuccess;
       emit(PrintMasterLoadSuccess(
         devices: currentState.devices,
-        connectedDevices: connectedDevices,
+        connectedDevices: currentState.connectedDevices,
+        availableDevices: currentState.availableDevices,
+        connectingDevices: [],
       ));
-    } else {
-      await PrintBluetoothThermal.disconnect;
-      disconnectDevice(device);
     }
-
-    await init();
-
-    return result;
   }
 
-  Future<bool> disconnectDevice(BluetoothInfo device) async {
+  Future<bool> disconnectDevice(BluetoothDevice device) async {
     if (state is! PrintMasterLoadSuccess) return false;
     final currentState = state as PrintMasterLoadSuccess;
 
-    List<BluetoothInfo> connectedDevices =
+    List<BluetoothDevice> connectedDevices =
         List.from(currentState.connectedDevices);
 
-    final result = await PrintBluetoothThermal.disconnect;
+    try {
+      List<String> disconnectingDevices =
+          List.from(currentState.disconnectingDevices);
+      disconnectingDevices.add(device.address);
 
-    connectedDevices.removeWhere(
-      (element) => element.macAdress == device.macAdress,
-    );
+      emit(PrintMasterLoadSuccess(
+        devices: currentState.devices,
+        connectedDevices: currentState.connectedDevices,
+        availableDevices: currentState.availableDevices,
+        disconnectingDevices: disconnectingDevices,
+      ));
 
-    emit(PrintMasterLoadSuccess(
-      devices: currentState.devices,
-      connectedDevices: connectedDevices,
-    ));
+      await Future.delayed(const Duration(seconds: 2));
 
-    await init();
+      final result = await PrintBluetoothThermal.disconnect;
 
-    return result;
+      if (result) {
+        connectedDevices
+            .removeWhere((element) => element.address == device.address);
+
+        List<BluetoothDevice> updatedDevices = List.from(currentState.devices)
+          ..add(device);
+
+        emit(PrintMasterLoadSuccess(
+          devices: updatedDevices,
+          connectedDevices: connectedDevices,
+          availableDevices: currentState.availableDevices,
+          connectingDevices: [],
+          disconnectingDevices: [],
+          isDiscovering: false,
+        ));
+
+        log('Successfully disconnected from: ${device.address}');
+      }
+
+      return result;
+    } catch (e) {
+      log('Error disconnecting device: $e');
+      return false;
+    }
+  }
+
+  Future<void> unpairDeviceByAddress(String address) async {
+    try {
+      log('Unpairing device with address: $address');
+      bool? unpaired = await FlutterBluetoothSerial.instance
+          .removeDeviceBondWithAddress(address);
+      if (unpaired!) {
+        log('Successfully unpaired device with address: $address');
+      } else {
+        log('Failed to unpair device with address: $address');
+      }
+    } catch (e) {
+      log('Error unpairing device: $e');
+    }
+  }
+
+  Future<void> unpairDevice(BluetoothDevice device) async {
+    try {
+      final currentState = state as PrintMasterLoadSuccess;
+
+      List<String> pairingDevices = List.from(currentState.pairingDevices);
+      pairingDevices.add(device.address);
+
+      emit(PrintMasterLoadSuccess(
+        devices: currentState.devices,
+        connectedDevices: currentState.connectedDevices,
+        availableDevices: currentState.availableDevices,
+        pairingDevices: pairingDevices,
+      ));
+
+      await Future.delayed(const Duration(seconds: 2));
+
+      log('Unpairing device: ${device.name} (${device.address})');
+      await unpairDeviceByAddress(device.address);
+
+      if (state is PrintMasterLoadSuccess) {
+        final currentState = state as PrintMasterLoadSuccess;
+
+        List<BluetoothDevice> updatedDevices = List.from(currentState.devices)
+          ..removeWhere((d) => d.address == device.address);
+
+        List<BluetoothDevice> updatedAvailableDevices =
+            List.from(currentState.availableDevices)..add(device);
+
+        emit(PrintMasterLoadSuccess(
+          devices: updatedDevices,
+          connectedDevices: currentState.connectedDevices,
+          availableDevices: updatedAvailableDevices,
+          connectingDevices: [],
+          pairingDevices: [],
+          disconnectingDevices: [],
+          isDiscovering: false,
+        ));
+      }
+    } catch (e) {
+      log('Error unpairing device: $e');
+    }
+  }
+
+  @override
+  Future<void> close() {
+    stopDiscovery();
+    return super.close();
   }
 }
