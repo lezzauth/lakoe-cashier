@@ -189,156 +189,156 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                     ),
                   ),
                 ),
-                // if (devices.isNotEmpty ||
-                //     connectedDevices.isNotEmpty ||
-                //     availableDevices.isNotEmpty)
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    children: [
-                      if (connectedDevices.isNotEmpty) ...[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Container(
-                            padding: const EdgeInsets.only(top: 20),
-                            margin: const EdgeInsets.only(bottom: 8),
-                            child: const TextHeading5(
-                              "TERSAMBUNG",
-                              color: TColors.neutralDarkLightest,
+                if (devices.isNotEmpty ||
+                    connectingDevices.isNotEmpty ||
+                    availableDevices.isNotEmpty)
+                  Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      children: [
+                        if (connectedDevices.isNotEmpty) ...[
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Container(
+                              padding: const EdgeInsets.only(top: 20),
+                              margin: const EdgeInsets.only(bottom: 8),
+                              child: const TextHeading5(
+                                "TERSAMBUNG",
+                                color: TColors.neutralDarkLightest,
+                              ),
                             ),
                           ),
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: connectedDevices.length,
-                          itemBuilder: (context, index) {
-                            BluetoothDevice device =
-                                connectedDevices.elementAt(index);
-                            return BluetoothDeviceTile(
-                              device: device,
-                              isConnected: true,
-                              isDisconnecting:
-                                  disconnectingDevices.contains(device.address),
-                              onConnectPressed: () {
-                                _onDisconnectDevice(device);
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                      if (devices.isNotEmpty) ...[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Container(
-                            padding: const EdgeInsets.only(top: 20),
-                            margin: const EdgeInsets.only(bottom: 8),
-                            child: const TextHeading5(
-                              "PERNAH TERSAMBUNG",
-                              color: TColors.neutralDarkLightest,
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: connectedDevices.length,
+                            itemBuilder: (context, index) {
+                              BluetoothDevice device =
+                                  connectedDevices.elementAt(index);
+                              return BluetoothDeviceTile(
+                                device: device,
+                                isConnected: true,
+                                isDisconnecting: disconnectingDevices
+                                    .contains(device.address),
+                                onConnectPressed: () {
+                                  _onDisconnectDevice(device);
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                        if (devices.isNotEmpty) ...[
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Container(
+                              padding: const EdgeInsets.only(top: 20),
+                              margin: const EdgeInsets.only(bottom: 8),
+                              child: const TextHeading5(
+                                "PERNAH TERSAMBUNG",
+                                color: TColors.neutralDarkLightest,
+                              ),
                             ),
                           ),
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: devices.length,
-                          itemBuilder: (context, index) {
-                            BluetoothDevice device = devices.elementAt(index);
-                            return GestureDetector(
-                              onLongPress: () {
-                                _onUnpairDevice(device);
-                              },
-                              child: BluetoothDeviceTile(
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: devices.length,
+                            itemBuilder: (context, index) {
+                              BluetoothDevice device = devices.elementAt(index);
+                              return GestureDetector(
+                                onLongPress: () {
+                                  _onUnpairDevice(device);
+                                },
+                                child: BluetoothDeviceTile(
+                                  device: device,
+                                  isConnected: false,
+                                  isPaired: true,
+                                  isPairing:
+                                      pairingDevices.contains(device.address),
+                                  isConnecting: connectingDevices
+                                      .contains(device.address),
+                                  onConnectPressed: () {
+                                    _onConnectToDevice(device);
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                        if (availableDevices.isNotEmpty) ...[
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Container(
+                              padding: const EdgeInsets.only(top: 20),
+                              margin: const EdgeInsets.only(bottom: 8),
+                              child: const TextHeading5(
+                                "PERANGKAT TERSEDIA",
+                                color: TColors.neutralDarkLightest,
+                              ),
+                            ),
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: availableDevices.length,
+                            itemBuilder: (context, index) {
+                              BluetoothDevice device =
+                                  availableDevices.elementAt(index);
+                              return BluetoothDeviceTile(
                                 device: device,
                                 isConnected: false,
-                                isPaired: true,
-                                isPairing:
-                                    pairingDevices.contains(device.address),
                                 isConnecting:
                                     connectingDevices.contains(device.address),
                                 onConnectPressed: () {
                                   _onConnectToDevice(device);
                                 },
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                      if (availableDevices.isNotEmpty) ...[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Container(
-                            padding: const EdgeInsets.only(top: 20),
-                            margin: const EdgeInsets.only(bottom: 8),
-                            child: const TextHeading5(
-                              "PERANGKAT TERSEDIA",
-                              color: TColors.neutralDarkLightest,
-                            ),
+                              );
+                            },
                           ),
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: availableDevices.length,
-                          itemBuilder: (context, index) {
-                            BluetoothDevice device =
-                                availableDevices.elementAt(index);
-                            return BluetoothDeviceTile(
-                              device: device,
-                              isConnected: false,
-                              isConnecting:
-                                  connectingDevices.contains(device.address),
-                              onConnectPressed: () {
-                                _onConnectToDevice(device);
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                      const SizedBox(height: 12),
-                      if (!isDiscovering)
-                        Center(
-                          child: TextButton(
-                            onPressed: _onRefresh,
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                UiIcons(
-                                  TIcons.refresh,
-                                  width: 24,
-                                  height: 24,
-                                  color: TColors.primary,
-                                ),
-                                SizedBox(width: 8),
-                                TextActionL(
-                                  "Refresh",
-                                  color: TColors.primary,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      if (isDiscovering)
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8),
-                          child: Center(
-                            child: SizedBox(
-                              height: 16,
-                              width: 16,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2.0,
+                        ],
+                        const SizedBox(height: 12),
+                        if (!isDiscovering)
+                          Center(
+                            child: TextButton(
+                              onPressed: _onRefresh,
+                              child: const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  UiIcons(
+                                    TIcons.refresh,
+                                    width: 24,
+                                    height: 24,
+                                    color: TColors.primary,
+                                  ),
+                                  SizedBox(width: 8),
+                                  TextActionL(
+                                    "Refresh",
+                                    color: TColors.primary,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        ),
-                    ],
+                        if (isDiscovering)
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8),
+                            child: Center(
+                              child: SizedBox(
+                                height: 16,
+                                width: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
-                ),
-                if (connectedDevices.isEmpty &&
-                    devices.isEmpty &&
-                    availableDevices.isEmpty &&
-                    !isDiscovering)
+                if (availableDevices.isEmpty)
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -349,9 +349,12 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                           height: 101.45,
                           fit: BoxFit.cover,
                         ),
-                        title: "Perangkat tidak ditemukan",
-                        subTitle:
-                            "Silahkan klik refresh untuk dapat menemukan printer di sekitarmu.",
+                        title: !isDiscovering
+                            ? "Perangkat tidak ditemukan"
+                            : "Mencari perangkat…",
+                        subTitle: !isDiscovering
+                            ? "Silahkan klik refresh untuk dapat menemukan printer di sekitarmu."
+                            : "",
                         action: TextButton(
                           onPressed: _onRefresh,
                           child: Stack(
