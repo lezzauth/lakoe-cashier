@@ -382,6 +382,7 @@ class _SuccessConfirmationPaymentContentState
                                       (context, profile, order, footNote,
                                           scrollController) {
                                         TBill.printReceipt(
+                                          context,
                                           profile,
                                           order,
                                           footNote,

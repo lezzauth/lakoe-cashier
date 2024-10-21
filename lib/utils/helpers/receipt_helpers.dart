@@ -188,8 +188,7 @@ class ReceiptHelper {
               Navigator.pop(context);
             },
             printAction: () {
-              TBill.printReceipt(profile, order, footNote);
-              print("XXX PRINT");
+              TBill.printReceipt(context, profile, order, footNote);
             });
       },
     );

@@ -26,6 +26,8 @@ class TImages {
   static const String noConnection =
       "assets/images/no-connection-ilustration.webp";
   static const String noPrintIllustration =
+      "assets/images/no-print-ilustration.webp";
+  static const String noPrintIllustrationSvg =
       "assets/images/no-print-ilustration.svg";
   static const String successIllustration =
       "assets/images/success-illustration.png";

@@ -22,7 +22,7 @@ class CustomToast {
           topPosition = MediaQuery.of(context).size.height * 0.4;
           break;
         case 'bottom':
-          bottomPosition = 10.0;
+          bottomPosition = 100.0;
           break;
         case 'top':
         default:

@@ -1,11 +1,16 @@
 import 'dart:developer';
 
 import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:owner_repository/owner_repository.dart';
+import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/features/bill/data/arguments/template_order_model.dart';
 import 'package:point_of_sales_cashier/features/orders/data/models.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:image/image.dart' as image;
@@ -375,6 +380,7 @@ class TBill {
   }
 
   static Future<void> printReceipt(
+    BuildContext context,
     OwnerProfileModel profile,
     OrderModel order,
     String footNote,
@@ -392,11 +398,36 @@ class TBill {
       final result = await PrintBluetoothThermal.writeBytes(ticket);
       log("print result: $result");
     } else {
-      log("the printer is disconnected ($connectionStatus)");
+      showModalBottomSheet(
+        context: context,
+        enableDrag: false,
+        isDismissible: false,
+        builder: (context) {
+          return CustomBottomsheet(
+            hasGrabber: false,
+            child: ErrorDisplay(
+              imageSrc: TImages.noPrintIllustration,
+              title: "Belum ada print yang connect, nih!",
+              description:
+                  "Yuk! Sambungkan dulu print kamu di halaman Setting.",
+              actionTitlePrimary: "Atur Print",
+              onActionPrimary: () async {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/print");
+              },
+              actionTitleSecondary: "Nanti Saja",
+              onActionSecondary: () {
+                Navigator.pop(context);
+              },
+            ),
+          );
+        },
+      );
     }
   }
 
   static Future<void> testPrint(
+    BuildContext context,
     OwnerProfileModel profile,
     String footNote,
   ) async {
@@ -413,7 +444,11 @@ class TBill {
       final result = await PrintBluetoothThermal.writeBytes(ticket);
       log("print result: $result");
     } else {
-      log("the printer is disconnected ($connectionStatus)");
+      CustomToast.show(
+        context,
+        "Tidak ada printer yang tersambung.",
+        position: 'bottom',
+      );
     }
   }
 }

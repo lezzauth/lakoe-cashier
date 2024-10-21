@@ -464,6 +464,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                           (context, profile, order, footNote,
                                               scrollController) {
                                             TBill.printReceipt(
+                                              context,
                                               profile,
                                               order,
                                               footNote,
