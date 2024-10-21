@@ -17,9 +17,11 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_state.dart';
+import 'package:point_of_sales_cashier/features/print/common/helpers/animated_dots_text.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/print/bill.dart';
 
 class PrintMasterScreen extends StatefulWidget {
@@ -30,22 +32,20 @@ class PrintMasterScreen extends StatefulWidget {
 }
 
 class _PrintMasterScreenState extends State<PrintMasterScreen> {
-  void _onInit() {
-    context.read<PrintMasterCubit>().init().then((_) {
-      context.read<PrintMasterCubit>().discoverDevices();
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     _onInit();
   }
 
-  Future<void> _onRefresh() async {
+  void _onInit() {
     context.read<PrintMasterCubit>().init().then((_) {
       context.read<PrintMasterCubit>().discoverDevices();
     });
+  }
+
+  Future<void> _onRefresh() async {
+    context.read<PrintMasterCubit>().discoverDevices();
   }
 
   Future<void> _onConnectToDevice(BluetoothDevice device) async {
@@ -232,7 +232,7 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                               padding: const EdgeInsets.only(top: 20),
                               margin: const EdgeInsets.only(bottom: 8),
                               child: const TextHeading5(
-                                "PERNAH TERHUBUNG",
+                                "PERNAH TERSAMBUNG",
                                 color: TColors.neutralDarkLightest,
                               ),
                             ),
@@ -391,20 +391,24 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                       ),
                     ),
                   ),
-                Visibility(
-                  visible: devices.isNotEmpty || connectedDevices.isNotEmpty,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
-                    child: BillAction(
-                      onTestPrint: connectedDevices.isEmpty
-                          ? null
-                          : () {
-                              TBill.testPrint();
-                            },
-                      onShowBill: () {
-                        Navigator.pushNamed(context, "/bill");
-                      },
+                Positioned(
+                  child: Visibility(
+                    visible: devices.isNotEmpty ||
+                        connectedDevices.isNotEmpty ||
+                        availableDevices.isNotEmpty,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 16),
+                      child: BillAction(
+                        onTestPrint: connectedDevices.isEmpty
+                            ? null
+                            : () {
+                                TBill.testPrint();
+                              },
+                        onShowBill: () {
+                          Navigator.pushNamed(context, "/bill");
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -493,16 +497,22 @@ class BluetoothDeviceTile extends StatelessWidget {
             ),
           ),
           title: TextHeading4(device.name ?? "Unnamed Device"),
-          subtitle: TextBodyS(
-            isPairing
-                ? "Melepaskan perangkat…"
-                : isConnecting
-                    ? "Menyambungkan…"
-                    : isDisconnecting
-                        ? 'Memutuskan…'
-                        : device.address,
-            color: TColors.neutralDarkLight,
-          ),
+          subtitle: (isConnecting || isDisconnecting || isPairing)
+              ? AnimatedLoadingText(
+                  isPairing
+                      ? "Melepaskan perangkat"
+                      : isConnecting
+                          ? "Menyambungkan"
+                          : 'Memutuskan',
+                  style: TextStyle(
+                    fontSize: TSizes.fontSizeBodyS,
+                    color: TColors.neutralDarkLight,
+                  ),
+                )
+              : TextBodyS(
+                  device.address,
+                  color: TColors.neutralDarkLight,
+                ),
           trailing: TextButton(
             onPressed: !isConnecting && !isDisconnecting && !isPairing
                 ? onConnectPressed

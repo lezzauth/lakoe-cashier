@@ -55,10 +55,31 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
         connectedDevices: [],
         availableDevices: [],
         connectingDevices: [],
-        isDiscovering: false,
+        isDiscovering: true,
       ));
     } catch (e) {
       emit(PrintMasterLoadFailure(e.toString()));
+    }
+  }
+
+  Future<void> someFunction() async {
+    if (state is PrintMasterLoadSuccess) {
+      final currentState = state as PrintMasterLoadSuccess;
+
+      // Log isi dari connectingDevices
+      for (var address in currentState.connectingDevices) {
+        print('xxx connectingDevices: ${address} (${address})');
+      }
+
+      // Log isi dari pairingDevices
+      for (var address in currentState.pairingDevices) {
+        print('xxx pairingDevices: ${address} (${address})');
+      }
+
+      // Log isi dari disconnectingDevices
+      for (var address in currentState.disconnectingDevices) {
+        print('xxx disconnectingDevices: ${address} (${address})');
+      }
     }
   }
 
@@ -80,9 +101,17 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
     }
 
     final currentState = state as PrintMasterLoadSuccess;
-    ;
 
     try {
+      emit(PrintMasterLoadSuccess(
+        devices: currentState.devices,
+        connectedDevices: currentState.connectedDevices,
+        availableDevices: currentState.availableDevices,
+        connectingDevices: currentState.connectingDevices,
+        pairingDevices: currentState.pairingDevices,
+        disconnectingDevices: currentState.disconnectingDevices,
+        isDiscovering: true,
+      ));
       discoveryStream = FlutterBluetoothSerial.instance.startDiscovery().listen(
         (result) async {
           if (result.device.name != null &&
@@ -99,8 +128,14 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
 
             if (isBonded) {
               if (result.device.isBonded && !result.device.isConnected) {
+                currentState.devices.removeWhere(
+                    (device) => device.address == result.device.address);
+
                 currentState.devices.add(result.device);
               } else if (result.device.isBonded && result.device.isConnected) {
+                currentState.connectedDevices.removeWhere(
+                    (device) => device.address == result.device.address);
+
                 currentState.connectedDevices.add(result.device);
               } else {
                 currentState.devices.addAll(currentState.devices);
@@ -121,8 +156,13 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
               devices: currentState.devices,
               connectedDevices: currentState.connectedDevices,
               availableDevices: availableDevices,
+              connectingDevices: currentState.connectingDevices,
+              pairingDevices: currentState.pairingDevices,
+              disconnectingDevices: currentState.disconnectingDevices,
               isDiscovering: true,
             ));
+
+            someFunction();
           } else {}
         },
         onError: (error) {
@@ -136,22 +176,31 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
         log('Discovery selesai, ditemukan ${currentState.availableDevices.length} perangkat');
         isDiscoveryRunning = false;
 
-        updateDevices();
+        if (currentState.availableDevices.isEmpty) {
+          log('No available devices found. Restarting discovery...');
+          // Memanggil kembali discoverDevices
+          discoverDevices();
+        } else {
+          List<BluetoothDevice> availableDevices =
+              currentState.availableDevices.where((device) {
+            return !currentState.devices
+                    .any((bonded) => bonded.address == device.address) &&
+                !currentState.connectedDevices
+                    .any((connected) => connected.address == device.address);
+          }).toList();
 
-        List<BluetoothDevice> availableDevices =
-            currentState.availableDevices.where((device) {
-          return !currentState.devices
-                  .any((bonded) => bonded.address == device.address) &&
-              !currentState.connectedDevices
-                  .any((connected) => connected.address == device.address);
-        }).toList();
+          emit(PrintMasterLoadSuccess(
+            devices: currentState.devices,
+            connectedDevices: currentState.connectedDevices,
+            availableDevices: availableDevices,
+            connectingDevices: currentState.connectingDevices,
+            pairingDevices: currentState.pairingDevices,
+            disconnectingDevices: currentState.disconnectingDevices,
+            isDiscovering: false,
+          ));
+        }
 
-        emit(PrintMasterLoadSuccess(
-          devices: currentState.devices,
-          connectedDevices: currentState.connectedDevices,
-          availableDevices: availableDevices,
-          isDiscovering: false,
-        ));
+        // updateDevices();
       });
     } catch (e) {
       log('Error selama proses discovery: $e');
@@ -217,20 +266,19 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
   Future<bool> connectToDevice(BluetoothDevice device) async {
     if (state is! PrintMasterLoadSuccess) return false;
 
+    final currentState = state as PrintMasterLoadSuccess;
+
+    List<String> connectingDevices = List.from(currentState.connectingDevices);
+    connectingDevices.add(device.address);
+
+    emit(PrintMasterLoadSuccess(
+      devices: currentState.devices,
+      connectedDevices: currentState.connectedDevices,
+      availableDevices: currentState.availableDevices,
+      connectingDevices: connectingDevices,
+    ));
+
     try {
-      final currentState = state as PrintMasterLoadSuccess;
-
-      List<String> connectingDevices =
-          List.from(currentState.connectingDevices);
-      connectingDevices.add(device.address);
-
-      emit(PrintMasterLoadSuccess(
-        devices: currentState.devices,
-        connectedDevices: currentState.connectedDevices,
-        availableDevices: currentState.availableDevices,
-        connectingDevices: connectingDevices,
-      ));
-
       // bool isBonded = await isDeviceBonded(device);
 
       // if (!isBonded) {
