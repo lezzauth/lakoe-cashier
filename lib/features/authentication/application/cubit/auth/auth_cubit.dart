@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:app_data_provider/app_data_provider.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owner_repository/owner_repository.dart';
@@ -36,6 +38,16 @@ class AuthCubit extends Cubit<AuthState> {
       ));
     } catch (e, stackTrace) {
       log('AuthCubit.initialize err: ${e.toString()}', stackTrace: stackTrace);
+      if (e is DioException) {
+        if (e.error is TokenExpiredException) {
+          final tokenExpiredException = e.error as TokenExpiredException;
+          emit(TokenExpired(
+              code: tokenExpiredException.code,
+              message: tokenExpiredException.message));
+          return;
+        }
+      }
+
       emit(AuthNotReady());
     }
   }

@@ -14,3 +14,10 @@ final class AuthReady extends AuthState {
 }
 
 final class AuthNotReady extends AuthState {}
+
+final class TokenExpired extends AuthState {
+  final int? code;
+  final String? message;
+
+  TokenExpired({required this.code, required this.message});
+}
