@@ -57,15 +57,15 @@ class _NewProductScreenState extends State<NewProductScreen>
         _stockInformationFormKey.currentState?.saveAndValidate() ?? false;
 
     if (!isProductInformationValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
+      // SnackBar snackBar = SnackBar(
+      //   content: Text(ErrorTextStrings.formInvalid()),
+      //   showCloseIcon: true,
+      // );
+      // ScaffoldMessenger.of(context)
+      //   ..hideCurrentSnackBar()
+      //   ..showSnackBar(
+      //     snackBar,
+      //   );
       changeTabIndex(0);
 
       return;
