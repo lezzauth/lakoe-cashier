@@ -1,4 +1,6 @@
 import 'package:customer_repository/customer_repository.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_state.dart';
 
@@ -32,6 +34,11 @@ class CustomerMasterCubit extends Cubit<CustomerMasterState> {
       await customerRepository.create(dto);
       emit(CustomerMasterActionSuccess());
     } catch (e) {
+      if (e is DioException) {
+        final limit = e.error as DioExceptionModel;
+        emit(CustomerReachesLimit(limit));
+        return;
+      }
       emit(CustomerMasterActionFailure(e.toString()));
     }
   }

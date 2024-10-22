@@ -1,4 +1,5 @@
 import 'package:customer_repository/customer_repository.dart';
+import 'package:dio_provider/dio_provider.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class CustomerMasterState extends Equatable {}
@@ -58,4 +59,13 @@ final class CustomerMasterActionFailure extends CustomerMasterState {
 
   @override
   List<Object?> get props => [error];
+}
+
+final class CustomerReachesLimit extends CustomerMasterState {
+  final DioExceptionModel res;
+
+  CustomerReachesLimit(this.res);
+
+  @override
+  List<Object?> get props => [res];
 }
