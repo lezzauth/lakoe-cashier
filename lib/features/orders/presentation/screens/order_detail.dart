@@ -18,6 +18,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
+import 'package:point_of_sales_cashier/features/bill/data/arguments/template_order_model.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_state.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card_order.dart';
@@ -218,7 +219,6 @@ class _OrderDetailState extends State<OrderDetail> {
         action,
   ) {
     final billMasterState = context.read<BillMasterCubit>().state;
-
     String footNote = billMasterState.footNote;
 
     final authState = context.read<AuthCubit>().state;
@@ -227,13 +227,7 @@ class _OrderDetailState extends State<OrderDetail> {
     if (authState is AuthReady) {
       profile = authState.profile;
     } else {
-      profile = OwnerProfileModel(
-        id: '',
-        name: '',
-        phoneNumber: '',
-        packageName: '',
-        outlets: [],
-      );
+      profile = TemplateOrderModel().ownerProfile;
       print('AuthState is not ready, using default profile.');
     }
 

@@ -140,8 +140,6 @@ class App extends StatelessWidget {
 
         // Order Master
         BlocProvider(create: (context) => OrderMasterCubit()),
-
-        // Order Detail
         BlocProvider(create: (context) => OrderDetailCubit()),
 
         // Customer Master
@@ -201,6 +199,7 @@ class App extends StatelessWidget {
         // Package Plan
         BlocProvider(create: (context) => PackageMasterCubit()),
         BlocProvider(create: (context) => PackageDetailCubit()),
+        BlocProvider(create: (context) => PurchaseCubit()),
         BlocProvider(create: (context) => PurchaseCubit()),
       ],
       child: GestureDetector(

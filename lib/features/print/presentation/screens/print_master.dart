@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -36,6 +36,8 @@ class PrintMasterScreen extends StatefulWidget {
 }
 
 class _PrintMasterScreenState extends State<PrintMasterScreen> {
+  final AppDataProvider _appDataProvider = AppDataProvider();
+
   @override
   void initState() {
     super.initState();
@@ -170,18 +172,24 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                             ],
                           ),
                         ),
-                        FormBuilderField<bool>(
-                          name: "isServiceChargeActive",
-                          initialValue: false,
-                          builder: (FormFieldState<bool> field) {
-                            return FittedBox(
-                              fit: BoxFit.cover,
-                              child: Switch(
-                                value: field.value ?? false,
-                                onChanged: (value) {
-                                  field.didChange(value);
-                                },
-                              ),
+                        FutureBuilder<bool?>(
+                          future: _appDataProvider.isBillAutoPrint,
+                          builder: (context, snapshot) {
+                            return FormBuilderField<bool>(
+                              name: "isServiceChargeActive",
+                              builder: (FormFieldState<bool> field) {
+                                return FittedBox(
+                                  fit: BoxFit.cover,
+                                  child: Switch(
+                                    value: field.value ?? snapshot.data!,
+                                    onChanged: (value) async {
+                                      field.didChange(value);
+                                      await _appDataProvider
+                                          .setIsBillAutoPrint(value);
+                                    },
+                                  ),
+                                );
+                              },
                             );
                           },
                         ),
