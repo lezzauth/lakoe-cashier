@@ -14,47 +14,45 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-TokenExpiredException _$TokenExpiredExceptionFromJson(
-    Map<String, dynamic> json) {
-  return _TokenExpiredException.fromJson(json);
+DioExceptionModel _$DioExceptionModelFromJson(Map<String, dynamic> json) {
+  return _DioExceptionModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$TokenExpiredException {
+mixin _$DioExceptionModel {
   int? get code => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
 
-  /// Serializes this TokenExpiredException to a JSON map.
+  /// Serializes this DioExceptionModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of TokenExpiredException
+  /// Create a copy of DioExceptionModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $TokenExpiredExceptionCopyWith<TokenExpiredException> get copyWith =>
+  $DioExceptionModelCopyWith<DioExceptionModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TokenExpiredExceptionCopyWith<$Res> {
-  factory $TokenExpiredExceptionCopyWith(TokenExpiredException value,
-          $Res Function(TokenExpiredException) then) =
-      _$TokenExpiredExceptionCopyWithImpl<$Res, TokenExpiredException>;
+abstract class $DioExceptionModelCopyWith<$Res> {
+  factory $DioExceptionModelCopyWith(
+          DioExceptionModel value, $Res Function(DioExceptionModel) then) =
+      _$DioExceptionModelCopyWithImpl<$Res, DioExceptionModel>;
   @useResult
   $Res call({int? code, String message});
 }
 
 /// @nodoc
-class _$TokenExpiredExceptionCopyWithImpl<$Res,
-        $Val extends TokenExpiredException>
-    implements $TokenExpiredExceptionCopyWith<$Res> {
-  _$TokenExpiredExceptionCopyWithImpl(this._value, this._then);
+class _$DioExceptionModelCopyWithImpl<$Res, $Val extends DioExceptionModel>
+    implements $DioExceptionModelCopyWith<$Res> {
+  _$DioExceptionModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of TokenExpiredException
+  /// Create a copy of DioExceptionModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -76,27 +74,25 @@ class _$TokenExpiredExceptionCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$TokenExpiredExceptionImplCopyWith<$Res>
-    implements $TokenExpiredExceptionCopyWith<$Res> {
-  factory _$$TokenExpiredExceptionImplCopyWith(
-          _$TokenExpiredExceptionImpl value,
-          $Res Function(_$TokenExpiredExceptionImpl) then) =
-      __$$TokenExpiredExceptionImplCopyWithImpl<$Res>;
+abstract class _$$DioExceptionModelImplCopyWith<$Res>
+    implements $DioExceptionModelCopyWith<$Res> {
+  factory _$$DioExceptionModelImplCopyWith(_$DioExceptionModelImpl value,
+          $Res Function(_$DioExceptionModelImpl) then) =
+      __$$DioExceptionModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? code, String message});
 }
 
 /// @nodoc
-class __$$TokenExpiredExceptionImplCopyWithImpl<$Res>
-    extends _$TokenExpiredExceptionCopyWithImpl<$Res,
-        _$TokenExpiredExceptionImpl>
-    implements _$$TokenExpiredExceptionImplCopyWith<$Res> {
-  __$$TokenExpiredExceptionImplCopyWithImpl(_$TokenExpiredExceptionImpl _value,
-      $Res Function(_$TokenExpiredExceptionImpl) _then)
+class __$$DioExceptionModelImplCopyWithImpl<$Res>
+    extends _$DioExceptionModelCopyWithImpl<$Res, _$DioExceptionModelImpl>
+    implements _$$DioExceptionModelImplCopyWith<$Res> {
+  __$$DioExceptionModelImplCopyWithImpl(_$DioExceptionModelImpl _value,
+      $Res Function(_$DioExceptionModelImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of TokenExpiredException
+  /// Create a copy of DioExceptionModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -104,7 +100,7 @@ class __$$TokenExpiredExceptionImplCopyWithImpl<$Res>
     Object? code = freezed,
     Object? message = null,
   }) {
-    return _then(_$TokenExpiredExceptionImpl(
+    return _then(_$DioExceptionModelImpl(
       code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -119,12 +115,11 @@ class __$$TokenExpiredExceptionImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TokenExpiredExceptionImpl implements _TokenExpiredException {
-  const _$TokenExpiredExceptionImpl(
-      {required this.code, required this.message});
+class _$DioExceptionModelImpl implements _DioExceptionModel {
+  const _$DioExceptionModelImpl({required this.code, required this.message});
 
-  factory _$TokenExpiredExceptionImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TokenExpiredExceptionImplFromJson(json);
+  factory _$DioExceptionModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DioExceptionModelImplFromJson(json);
 
   @override
   final int? code;
@@ -133,14 +128,14 @@ class _$TokenExpiredExceptionImpl implements _TokenExpiredException {
 
   @override
   String toString() {
-    return 'TokenExpiredException(code: $code, message: $message)';
+    return 'DioExceptionModel(code: $code, message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TokenExpiredExceptionImpl &&
+            other is _$DioExceptionModelImpl &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message));
   }
@@ -149,40 +144,40 @@ class _$TokenExpiredExceptionImpl implements _TokenExpiredException {
   @override
   int get hashCode => Object.hash(runtimeType, code, message);
 
-  /// Create a copy of TokenExpiredException
+  /// Create a copy of DioExceptionModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$TokenExpiredExceptionImplCopyWith<_$TokenExpiredExceptionImpl>
-      get copyWith => __$$TokenExpiredExceptionImplCopyWithImpl<
-          _$TokenExpiredExceptionImpl>(this, _$identity);
+  _$$DioExceptionModelImplCopyWith<_$DioExceptionModelImpl> get copyWith =>
+      __$$DioExceptionModelImplCopyWithImpl<_$DioExceptionModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TokenExpiredExceptionImplToJson(
+    return _$$DioExceptionModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _TokenExpiredException implements TokenExpiredException {
-  const factory _TokenExpiredException(
+abstract class _DioExceptionModel implements DioExceptionModel {
+  const factory _DioExceptionModel(
       {required final int? code,
-      required final String message}) = _$TokenExpiredExceptionImpl;
+      required final String message}) = _$DioExceptionModelImpl;
 
-  factory _TokenExpiredException.fromJson(Map<String, dynamic> json) =
-      _$TokenExpiredExceptionImpl.fromJson;
+  factory _DioExceptionModel.fromJson(Map<String, dynamic> json) =
+      _$DioExceptionModelImpl.fromJson;
 
   @override
   int? get code;
   @override
   String get message;
 
-  /// Create a copy of TokenExpiredException
+  /// Create a copy of DioExceptionModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TokenExpiredExceptionImplCopyWith<_$TokenExpiredExceptionImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$DioExceptionModelImplCopyWith<_$DioExceptionModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

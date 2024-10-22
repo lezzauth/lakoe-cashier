@@ -11,10 +11,7 @@ abstract class ProductRepository {
   Future<ProductModel> findOne(String id);
   Future<ProductModel> create(List<File> images, CreateProductDto dto);
   Future<ProductModel> update(
-    String id, {
-    List<File>? images,
-    required UpdateProductDto dto,
-  });
+      String id, List<File> images, UpdateProductDto dto);
   Future<ListOrderByProductResponse> listOrderByProduct(
     String id,
     ListOrderByProductDto dto,
@@ -83,22 +80,20 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   Future<ProductModel> update(
-    String id, {
-    List<File>? images,
-    required UpdateProductDto dto,
-  }) async {
+    String id,
+    List<File> images,
+    UpdateProductDto dto,
+  ) async {
     final Options options = await _getOptions();
     final outletId = await _appDataProvider.outletId;
 
     FormData formData =
         FormData.fromMap({...dto.copyWith(outletId: outletId).toJsonFilter()});
-    if (images != null) {
-      for (var image in images) {
-        formData.files.add(MapEntry(
-            "images",
-            await MultipartFile.fromFile(image.path,
-                filename: image.path.split("/").last)));
-      }
+    for (var image in images) {
+      formData.files.add(MapEntry(
+          "images",
+          await MultipartFile.fromFile(image.path,
+              filename: image.path.split("/").last)));
     }
 
     final response = await _dio.patch(

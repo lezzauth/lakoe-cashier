@@ -51,11 +51,21 @@ class DioProvider {
         if (e.response?.statusCode == 401) {
           return handler.reject(DioException(
             requestOptions: e.requestOptions,
-            error: TokenExpiredException(
+            error: DioExceptionModel(
               code: e.response?.statusCode,
               message: "jwt expired",
             ),
             message: "Token has expired",
+            type: DioExceptionType.unknown,
+          ));
+        } else if (e.response?.statusCode == 402) {
+          return handler.reject(DioException(
+            requestOptions: e.requestOptions,
+            error: DioExceptionModel(
+              code: e.response?.statusCode,
+              message: "insufficient quota of products",
+            ),
+            message: "Quota limit has been reached",
             type: DioExceptionType.unknown,
           ));
         } else if (e.response?.statusCode == 502 && !isShowingBottomSheet) {

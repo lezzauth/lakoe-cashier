@@ -25,6 +25,7 @@ class TImages {
   static const String badRequest = "assets/images/502-illustration.webp";
   static const String noConnection =
       "assets/images/no-connection-ilustration.webp";
+  static const String limitQuota = "assets/images/limit-quota.webp";
   static const String noPrintIllustration =
       "assets/images/no-print-ilustration.webp";
   static const String noPrintIllustrationSvg =

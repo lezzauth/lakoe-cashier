@@ -106,7 +106,7 @@ class _RedirectScreenState extends State<RedirectScreen> {
             Navigator.popAndPushNamed(context, "/cashier");
           } else if (state is TokenExpired) {
             final TokenProvider tokenProvider0 = TokenProvider();
-            if (state.code == 401) {
+            if (state.res.code == 401) {
               await tokenProvider0.clearAll();
               Navigator.popAndPushNamed(context, "/on-boarding");
             }

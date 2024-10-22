@@ -39,11 +39,9 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e, stackTrace) {
       log('AuthCubit.initialize err: ${e.toString()}', stackTrace: stackTrace);
       if (e is DioException) {
-        if (e.error is TokenExpiredException) {
-          final tokenExpiredException = e.error as TokenExpiredException;
-          emit(TokenExpired(
-              code: tokenExpiredException.code,
-              message: tokenExpiredException.message));
+        if (e.error is DioExceptionModel) {
+          final tokenExpiredException = e.error as DioExceptionModel;
+          emit(TokenExpired(tokenExpiredException));
           return;
         }
       }

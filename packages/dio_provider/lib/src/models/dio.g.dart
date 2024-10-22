@@ -6,15 +6,15 @@ part of 'dio.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TokenExpiredExceptionImpl _$$TokenExpiredExceptionImplFromJson(
+_$DioExceptionModelImpl _$$DioExceptionModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$TokenExpiredExceptionImpl(
+    _$DioExceptionModelImpl(
       code: (json['code'] as num?)?.toInt(),
       message: json['message'] as String,
     );
 
-Map<String, dynamic> _$$TokenExpiredExceptionImplToJson(
-        _$TokenExpiredExceptionImpl instance) =>
+Map<String, dynamic> _$$DioExceptionModelImplToJson(
+        _$DioExceptionModelImpl instance) =>
     <String, dynamic>{
       'code': instance.code,
       'message': instance.message,
