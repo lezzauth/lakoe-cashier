@@ -365,6 +365,8 @@ class TBill {
     final img = image.decodeImage(bytesImg);
     bytes += generator.image(img!);
 
+    bytes += generator.emptyLines(0);
+
     if (isTestingMode) {
       bytes += generator.emptyLines(1);
       bytes += generator.text(

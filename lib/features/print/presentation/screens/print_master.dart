@@ -344,7 +344,9 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: EmptyList(
                         image: SvgPicture.asset(
-                          TImages.noPrintIllustrationSvg,
+                          !isDiscovering
+                              ? TImages.noPrintIllustrationSvg
+                              : TImages.scanPrintIllustrationSvg,
                           width: 140,
                           height: 101.45,
                           fit: BoxFit.cover,
@@ -395,48 +397,45 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                       ),
                     ),
                   ),
-                Positioned(
-                  child: Visibility(
-                    visible: devices.isNotEmpty ||
-                        connectedDevices.isNotEmpty ||
-                        availableDevices.isNotEmpty,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 16),
-                      child: BillAction(
-                        onTestPrint: connectedDevices.isEmpty
-                            ? null
-                            : () {
-                                final billMasterState =
-                                    context.read<BillMasterCubit>().state;
+                Visibility(
+                  visible: devices.isNotEmpty ||
+                      connectedDevices.isNotEmpty ||
+                      availableDevices.isNotEmpty,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 16),
+                    child: BillAction(
+                      onTestPrint: connectedDevices.isEmpty
+                          ? null
+                          : () {
+                              final billMasterState =
+                                  context.read<BillMasterCubit>().state;
 
-                                String footNote = "";
-                                footNote = billMasterState.footNote;
+                              String footNote = "";
+                              footNote = billMasterState.footNote;
 
-                                final authState =
-                                    context.read<AuthCubit>().state;
+                              final authState = context.read<AuthCubit>().state;
 
-                                OwnerProfileModel profile;
-                                if (authState is AuthReady) {
-                                  profile = authState.profile;
-                                } else {
-                                  profile = OwnerProfileModel(
-                                    id: '',
-                                    name: '',
-                                    phoneNumber: '',
-                                    packageName: '',
-                                    outlets: [],
-                                  );
-                                  print(
-                                      'AuthState is not ready, using default profile.');
-                                }
+                              OwnerProfileModel profile;
+                              if (authState is AuthReady) {
+                                profile = authState.profile;
+                              } else {
+                                profile = OwnerProfileModel(
+                                  id: '',
+                                  name: '',
+                                  phoneNumber: '',
+                                  packageName: '',
+                                  outlets: [],
+                                );
+                                print(
+                                    'AuthState is not ready, using default profile.');
+                              }
 
-                                TBill.testPrint(context, profile, footNote);
-                              },
-                        onShowBill: () {
-                          Navigator.pushNamed(context, "/bill");
-                        },
-                      ),
+                              TBill.testPrint(context, profile, footNote);
+                            },
+                      onShowBill: () {
+                        Navigator.pushNamed(context, "/bill");
+                      },
                     ),
                   ),
                 ),

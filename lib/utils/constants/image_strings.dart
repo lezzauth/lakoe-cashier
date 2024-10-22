@@ -29,6 +29,8 @@ class TImages {
       "assets/images/no-print-ilustration.webp";
   static const String noPrintIllustrationSvg =
       "assets/images/no-print-ilustration.svg";
+  static const String scanPrintIllustrationSvg =
+      "assets/images/scan-printer.svg";
   static const String successIllustration =
       "assets/images/success-illustration.png";
   static const String generalIllustration =

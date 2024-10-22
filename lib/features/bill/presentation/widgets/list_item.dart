@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_small.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_xsmall.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class BillListItem extends StatelessWidget {
@@ -59,7 +58,7 @@ class BillListItem extends StatelessWidget {
             ? Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: TextXSmall(
+                child: TextSmall(
                   note,
                   textAlign: TextAlign.left,
                   maxLines: 1,

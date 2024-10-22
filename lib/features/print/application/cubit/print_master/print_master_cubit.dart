@@ -99,11 +99,13 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
       ));
       discoveryStream = FlutterBluetoothSerial.instance.startDiscovery().listen(
         (result) async {
-          if (result.device.name != null &&
-              result.device.name!.isNotEmpty &&
+          BluetoothDevice newDevice = result.device;
+
+          if (newDevice.name != null &&
+              newDevice.name!.isNotEmpty &&
               !currentState.availableDevices
-                  .any((device) => device.address == result.device.address)) {
-            currentState.availableDevices.add(result.device);
+                  .any((device) => device.address == newDevice.address)) {
+            currentState.availableDevices.add(newDevice);
 
             List<BluetoothDevice> bondDevices =
                 await FlutterBluetoothSerial.instance.getBondedDevices();
