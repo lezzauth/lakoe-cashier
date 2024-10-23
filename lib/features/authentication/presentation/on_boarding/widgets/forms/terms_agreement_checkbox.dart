@@ -40,30 +40,34 @@ class TermsAgreementCheckbox extends StatelessWidget {
             text: TextSpan(
               text: 'Saya telah membaca dan menyetujui ',
               style: GoogleFonts.inter(
-                color: Colors.black,
+                color: TColors.neutralDarkDark,
               ),
               children: [
                 TextSpan(
                   text: 'Syarat & Ketentuan',
-                  style: const TextStyle(
+                  style: GoogleFonts.inter(
                     color: TColors.primary,
                   ),
                   recognizer: TapGestureRecognizer()..onTap = onTermsPressed,
                 ),
-                const TextSpan(
+                TextSpan(
                   text: ' dan ',
-                  style: TextStyle(color: Colors.black),
+                  style: GoogleFonts.inter(
+                    color: TColors.neutralDarkDark,
+                  ),
                 ),
                 TextSpan(
                   text: 'Kebijakan Privasi',
-                  style: const TextStyle(
+                  style: GoogleFonts.inter(
                     color: TColors.primary,
                   ),
                   recognizer: TapGestureRecognizer()..onTap = onPrivacyPressed,
                 ),
-                const TextSpan(
+                TextSpan(
                   text: '.',
-                  style: TextStyle(color: Colors.black),
+                  style: GoogleFonts.inter(
+                    color: TColors.neutralDarkDark,
+                  ),
                 ),
               ],
             ),

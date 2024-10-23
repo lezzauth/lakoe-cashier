@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
@@ -65,7 +66,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
 
   List<PaymentCategory> paymentCategories = [
     PaymentCategory(
-      categoryName: "Dompet Digital",
+      categoryName: "E-Wallet",
       methods: [
         PaymentMethod(name: "LinkAja", logo: TImages.linkaja),
         PaymentMethod(name: "OVO", logo: TImages.ovo),
@@ -76,10 +77,138 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
     PaymentCategory(
       categoryName: "Bank Transfer",
       methods: [
-        PaymentMethod(name: "BCA", logo: TImages.bca),
-        PaymentMethod(name: "Mandiri", logo: TImages.mandiri),
-        PaymentMethod(name: "BRI", logo: TImages.bri),
-        PaymentMethod(name: "BNI", logo: TImages.bni),
+        PaymentMethod(
+          name: "BCA",
+          logo: TImages.bca,
+          paymentMedia: [
+            PaymentMedia(
+              mediaName: "BCA Mobile",
+              steps: """
+Buka aplikasi **BCA Mobile**, lalu login.
+Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Send**.
+Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+""",
+            ),
+            PaymentMedia(
+              mediaName: "myBCA",
+              steps: """
+Buka aplikasi **myBCA**, lalu login.
+Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Send**.
+Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+""",
+            ),
+            PaymentMedia(
+              mediaName: "ATM",
+              steps: """
+Buka aplikasi **ATM**, lalu login.
+Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Send**.
+Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+""",
+            ),
+          ],
+        ),
+        PaymentMethod(
+          name: "Mandiri",
+          logo: TImages.mandiri,
+          paymentMedia: [
+            PaymentMedia(
+              mediaName: "Livin",
+              steps: """
+Buka aplikasi **BCA Mobile**, lalu login.
+Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Send**.
+Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+""",
+            ),
+            PaymentMedia(
+              mediaName: "Mandiri",
+              steps: """
+Buka aplikasi **BCA Mobile**, lalu login.
+Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Send**.
+Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+""",
+            ),
+            PaymentMedia(
+              mediaName: "ATM",
+              steps: """
+Buka aplikasi **BCA Mobile**, lalu login.
+Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Send**.
+Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+""",
+            ),
+          ],
+        ),
+        PaymentMethod(
+          name: "BRI",
+          logo: TImages.bri,
+          paymentMedia: [
+            PaymentMedia(
+              mediaName: "BRImo",
+              steps: """
+Buka aplikasi **BCA Mobile**, lalu login.
+Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Send**.
+Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+""",
+            ),
+            PaymentMedia(
+              mediaName: "BRI",
+              steps: """
+Buka aplikasi **BCA Mobile**, lalu login.
+Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Send**.
+Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+""",
+            ),
+            PaymentMedia(
+              mediaName: "ATM",
+              steps: """
+Buka aplikasi **BCA Mobile**, lalu login.
+Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Send**.
+Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+""",
+            ),
+          ],
+        ),
+        PaymentMethod(
+          name: "BNI",
+          logo: TImages.bni,
+          paymentMedia: [
+            PaymentMedia(
+              mediaName: "BNI",
+              steps: """
+Buka aplikasi **BCA Mobile**, lalu login.
+Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Send**.
+Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+""",
+            ),
+            PaymentMedia(
+              mediaName: "BNI Mobile",
+              steps: """
+Buka aplikasi **BCA Mobile**, lalu login.
+Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Send**.
+Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+""",
+            ),
+            PaymentMedia(
+              mediaName: "ATM",
+              steps: """
+Buka aplikasi **BCA Mobile**, lalu login.
+Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Send**.
+Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+""",
+            ),
+          ],
+        ),
       ],
     ),
   ];
@@ -475,15 +604,27 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                         onPressed: selectedMethod == null || package == null
                             ? null
                             : () {
-                                Navigator.pushNamed(
-                                  context,
-                                  "/payment/prepared",
-                                  arguments: {
-                                    'package': package,
-                                    'selectedCategory': selectedCategory,
-                                    'selectedMethod': selectedMethod,
-                                  },
-                                );
+                                if (selectedCategory!.categoryName ==
+                                    "Bank Transfer") {
+                                  Navigator.pushNamed(
+                                    context,
+                                    "/payment/confirmation",
+                                    arguments: {
+                                      'selectedCategory': selectedCategory,
+                                      'selectedMethod': selectedMethod,
+                                    },
+                                  );
+                                } else {
+                                  Navigator.pushNamed(
+                                    context,
+                                    "/payment/prepared",
+                                    arguments: {
+                                      'package': package,
+                                      'selectedCategory': selectedCategory,
+                                      'selectedMethod': selectedMethod,
+                                    },
+                                  );
+                                }
                               },
                         style: ButtonStyle(
                           minimumSize: WidgetStateProperty.all(
@@ -532,28 +673,6 @@ class _PackageInfoCard {
     required this.period,
     required this.pricePerMonth,
     required this.totalPrice,
-  });
-}
-
-class PaymentMethod {
-  final String name;
-  final String logo;
-  bool isSelected;
-
-  PaymentMethod({
-    required this.name,
-    required this.logo,
-    this.isSelected = false,
-  });
-}
-
-class PaymentCategory {
-  final String categoryName;
-  final List<PaymentMethod> methods;
-
-  PaymentCategory({
-    required this.categoryName,
-    required this.methods,
   });
 }
 

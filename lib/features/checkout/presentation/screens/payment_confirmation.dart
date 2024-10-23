@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
@@ -18,7 +23,124 @@ class PaymentConfirmationScreen extends StatefulWidget {
       _PaymentConfirmationScreenState();
 }
 
-class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen> {
+class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
+    with SingleTickerProviderStateMixin {
+  TabController? _tabController;
+  Map<String, dynamic>? args;
+
+  List<PaymentMedia> paymentMedia = [];
+  List<TextSpan> textSpans = [];
+  List<String> stepsList = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(length: 3, vsync: this);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+      if (args != null) {
+        final selectedCategory = args?['selectedCategory'];
+        final selectedMethod = args?['selectedMethod'];
+
+        if (selectedMethod != null && selectedCategory != null) {
+          paymentMedia = selectedMethod.paymentMedia;
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController?.dispose();
+    super.dispose();
+  }
+
+  Widget _buildStepsText(String steps) {
+    List<String> stepsList = steps.split('\n');
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: stepsList
+            .asMap()
+            .entries
+            .where((entry) => entry.value.isNotEmpty)
+            .map((entry) {
+          int index = entry.key;
+          String step = entry.value;
+
+          final RegExp regex = RegExp(r'\*\*(.*?)\*\*');
+          final List<TextSpan> spans = [];
+          int startIndex = 0;
+
+          for (final match in regex.allMatches(step)) {
+            if (match.start > startIndex) {
+              spans.add(
+                TextSpan(
+                  text: step.substring(startIndex, match.start),
+                  style: GoogleFonts.inter(
+                    color: TColors.neutralDarkDark,
+                    fontSize: 16.0,
+                  ),
+                ),
+              );
+            }
+            spans.add(TextSpan(
+              text: match.group(1)!,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: TColors.neutralDarkDark,
+                fontSize: 16.0,
+              ),
+            ));
+            startIndex = match.end;
+          }
+
+          if (startIndex < step.length) {
+            spans.add(
+              TextSpan(
+                text: step.substring(startIndex),
+                style: GoogleFonts.inter(
+                  color: TColors.neutralDarkDark,
+                  fontSize: 16.0,
+                ),
+              ),
+            );
+          }
+
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 20,
+                  child: Text(
+                    '${index + 1}. ',
+                    style: GoogleFonts.inter(
+                      color: TColors.neutralDarkDark,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Text.rich(
+                    TextSpan(children: spans),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -222,7 +344,71 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen> {
                     ),
                   ],
                 ),
-              )
+              ),
+              SizedBox(height: 12),
+              TextButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    useSafeArea: true,
+                    isScrollControlled: true,
+                    builder: (context) {
+                      final screenHeight = MediaQuery.of(context).size.height;
+
+                      final customHeight = screenHeight * 0.32; // 50% - 10%
+
+                      return CustomBottomsheet(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 16,
+                              ),
+                              child: const TextHeading2(
+                                "Cara bayar tagihan",
+                              ),
+                            ),
+                            TabContainer(
+                              controller: _tabController,
+                              tabs: paymentMedia
+                                  .map((e) => TabItem(title: e.mediaName))
+                                  .toList(),
+                            ),
+                            SizedBox(
+                              height: customHeight,
+                              child: TabBarView(
+                                controller: _tabController,
+                                children: paymentMedia
+                                    .map(
+                                      (e) => _buildStepsText(e.steps),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(20),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: OutlinedButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const TextActionL("Oke! Paham"),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: TextActionL("Lihat Cara Bayar"),
+              ),
             ],
           ),
         ),
