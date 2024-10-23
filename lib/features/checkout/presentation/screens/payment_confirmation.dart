@@ -13,7 +13,6 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/features/checkout/data/payment_method_model.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 
 class PaymentConfirmationScreen extends StatefulWidget {
   const PaymentConfirmationScreen({super.key});
@@ -28,29 +27,26 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
   TabController? _tabController;
   Map<String, dynamic>? args;
 
-  List<PaymentMedia> paymentMedia = [];
-  List<TextSpan> textSpans = [];
+  PaymentCategory? selectedCategory;
+  PaymentMethod? selectedMethod;
   List<String> stepsList = [];
 
   @override
   void initState() {
     super.initState();
-
     _tabController = TabController(length: 3, vsync: this);
+  }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      args =
-          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-      if (args != null) {
-        final selectedCategory = args?['selectedCategory'];
-        final selectedMethod = args?['selectedMethod'];
+    args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-        if (selectedMethod != null && selectedCategory != null) {
-          paymentMedia = selectedMethod.paymentMedia;
-        }
-      }
-    });
+    if (args != null) {
+      selectedCategory = args!['selectedCategory'];
+      selectedMethod = args!['selectedMethod'];
+    }
   }
 
   @override
@@ -243,14 +239,14 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                                     child: Row(
                                       children: [
                                         Image.asset(
-                                          TImages.bca,
+                                          selectedMethod!.logo,
                                           width: 32,
                                           height: 32,
                                         ),
                                         SizedBox(width: 12),
                                         Expanded(
                                           child: TextHeading4(
-                                            "Bank BCA",
+                                            "Bank ${selectedMethod!.name}",
                                             color: TColors.neutralDarkDark,
                                           ),
                                         ),
@@ -386,7 +382,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                               ),
                               TabContainer(
                                 controller: _tabController,
-                                tabs: paymentMedia
+                                tabs: selectedMethod!.paymentMedia
                                     .map((e) => TabItem(title: e.mediaName))
                                     .toList(),
                               ),
@@ -394,7 +390,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                                 height: customHeight,
                                 child: TabBarView(
                                   controller: _tabController,
-                                  children: paymentMedia
+                                  children: selectedMethod!.paymentMedia
                                       .map(
                                         (e) => _buildStepsText(e.steps),
                                       )

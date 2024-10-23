@@ -4,6 +4,7 @@ import 'package:package_repository/package_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
 import 'package:point_of_sales_cashier/features/checkout/application/purchase_cubit.dart';
 import 'package:point_of_sales_cashier/features/checkout/application/purchase_state.dart';
+import 'package:point_of_sales_cashier/features/checkout/data/payment_method_model.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
 
@@ -17,6 +18,9 @@ class PaymentPreparedScreen extends StatefulWidget {
 class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
   Map<String, dynamic>? args;
 
+  PaymentCategory? selectedCategory;
+  PaymentMethod? selectedMethod;
+
   @override
   void initState() {
     super.initState();
@@ -27,8 +31,8 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
 
       if (args != null) {
         final package = args?['package'];
-        final selectedCategory = args?['selectedCategory'];
-        final selectedMethod = args?['selectedMethod'];
+        selectedCategory = args?['selectedCategory'];
+        selectedMethod = args?['selectedMethod'];
 
         if (selectedMethod != null && selectedCategory != null) {
           context.read<PurchaseCubit>().create(
@@ -98,6 +102,16 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
                 },
               );
             }
+          } else if (response.paymentRequest.paymentMethod.type ==
+              "VIRTUAL_ACCOUNT") {
+            Navigator.pushNamed(
+              context,
+              "/payment/confirmation",
+              arguments: {
+                'selectedCategory': selectedCategory,
+                'selectedMethod': selectedMethod,
+              },
+            );
           }
         }
       },

@@ -456,27 +456,15 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                         onPressed: selectedMethod == null || package == null
                             ? null
                             : () {
-                                if (selectedCategory!.categoryName ==
-                                    "Bank Transfer") {
-                                  Navigator.pushNamed(
-                                    context,
-                                    "/payment/confirmation",
-                                    arguments: {
-                                      'selectedCategory': selectedCategory,
-                                      'selectedMethod': selectedMethod,
-                                    },
-                                  );
-                                } else {
-                                  Navigator.pushNamed(
-                                    context,
-                                    "/payment/prepared",
-                                    arguments: {
-                                      'package': package,
-                                      'selectedCategory': selectedCategory,
-                                      'selectedMethod': selectedMethod,
-                                    },
-                                  );
-                                }
+                                Navigator.pushNamed(
+                                  context,
+                                  "/payment/prepared",
+                                  arguments: {
+                                    'package': package,
+                                    'selectedCategory': selectedCategory,
+                                    'selectedMethod': selectedMethod,
+                                  },
+                                );
                               },
                         style: ButtonStyle(
                           minimumSize: WidgetStateProperty.all(
