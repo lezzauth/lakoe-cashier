@@ -93,8 +93,8 @@ class _OtpInputState extends State<OtpInput> {
           Navigator.pushNamedAndRemoveUntil(
               context, "/cashier", ModalRoute.withName("/cashier"));
         } else if (state is OtpInputActionRegister) {
-          Navigator.pushNamedAndRemoveUntil(context, "/completing-data",
-              ModalRoute.withName("/completing-data"),
+          Navigator.pushNamed(context, "/completing-data",
+              // ModalRoute.withName("/completing-data"),
               arguments: CompletingDataArgument(
                 token: state.response.token,
                 phoneNumber: widget.arguments.target,

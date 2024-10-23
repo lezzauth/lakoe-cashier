@@ -23,8 +23,9 @@ class AuthCubit extends Cubit<AuthState> {
       final authToken = await _tokenProvider.getAuthToken();
       if (authToken == null) throw ErrorDescription("no authToken");
 
-      final outlets = await _ownerRepository.listOutlets();
       final profile = await _ownerRepository.getProfile();
+
+      final outlets = await _ownerRepository.listOutlets();
 
       await _appDataProvider.setOutletId(outlets.first.id);
       await _appDataProvider.setOwnerId(profile.id);
@@ -38,12 +39,15 @@ class AuthCubit extends Cubit<AuthState> {
       ));
     } catch (e, stackTrace) {
       log('AuthCubit.initialize err: ${e.toString()}', stackTrace: stackTrace);
+
       if (e is DioException) {
         if (e.error is DioExceptionModel) {
           final tokenExpiredException = e.error as DioExceptionModel;
           emit(TokenExpired(tokenExpiredException));
           return;
         }
+      } else if (e.toString().contains("Null")) {
+        emit(UncompletedProfile(message: e.toString()));
       }
 
       emit(AuthNotReady());

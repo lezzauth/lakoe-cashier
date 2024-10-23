@@ -21,3 +21,9 @@ final class TokenExpired extends AuthState {
 
   TokenExpired(this.res);
 }
+
+final class UncompletedProfile extends AuthState {
+  final String message;
+
+  UncompletedProfile({required this.message});
+}

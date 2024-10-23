@@ -8,7 +8,6 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:point_of_sales_cashier/features/authentication/data/arguments/otp_input_argument.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/mobile/mobile_on_boarding.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/tablet/tablet_on_boarding.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -45,15 +44,15 @@ class _OnBoardingState extends State<OnBoarding> {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
+      // SnackBar snackBar = SnackBar(
+      //   content: Text(ErrorTextStrings.formInvalid()),
+      //   showCloseIcon: true,
+      // );
+      // ScaffoldMessenger.of(context)
+      //   ..hideCurrentSnackBar()
+      //   ..showSnackBar(
+      //     snackBar,
+      //   );
 
       return;
     }

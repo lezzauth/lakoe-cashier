@@ -10,8 +10,6 @@ class OutletDto with _$OutletDto {
     required String name,
     required String address,
     required String type,
-    required double latitude,
-    required double longitude,
   }) = _OutletDto;
 
   factory OutletDto.fromJson(Map<String, Object?> json) =>

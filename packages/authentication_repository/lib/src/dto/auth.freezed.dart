@@ -23,8 +23,6 @@ mixin _$OutletDto {
   String get name => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
-  double get latitude => throw _privateConstructorUsedError;
-  double get longitude => throw _privateConstructorUsedError;
 
   /// Serializes this OutletDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,12 +39,7 @@ abstract class $OutletDtoCopyWith<$Res> {
   factory $OutletDtoCopyWith(OutletDto value, $Res Function(OutletDto) then) =
       _$OutletDtoCopyWithImpl<$Res, OutletDto>;
   @useResult
-  $Res call(
-      {String name,
-      String address,
-      String type,
-      double latitude,
-      double longitude});
+  $Res call({String name, String address, String type});
 }
 
 /// @nodoc
@@ -67,8 +60,6 @@ class _$OutletDtoCopyWithImpl<$Res, $Val extends OutletDto>
     Object? name = null,
     Object? address = null,
     Object? type = null,
-    Object? latitude = null,
-    Object? longitude = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -83,14 +74,6 @@ class _$OutletDtoCopyWithImpl<$Res, $Val extends OutletDto>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      latitude: null == latitude
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
-              as double,
-      longitude: null == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
-              as double,
     ) as $Val);
   }
 }
@@ -103,12 +86,7 @@ abstract class _$$OutletDtoImplCopyWith<$Res>
       __$$OutletDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String name,
-      String address,
-      String type,
-      double latitude,
-      double longitude});
+  $Res call({String name, String address, String type});
 }
 
 /// @nodoc
@@ -127,8 +105,6 @@ class __$$OutletDtoImplCopyWithImpl<$Res>
     Object? name = null,
     Object? address = null,
     Object? type = null,
-    Object? latitude = null,
-    Object? longitude = null,
   }) {
     return _then(_$OutletDtoImpl(
       name: null == name
@@ -143,14 +119,6 @@ class __$$OutletDtoImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      latitude: null == latitude
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
-              as double,
-      longitude: null == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
-              as double,
     ));
   }
 }
@@ -159,11 +127,7 @@ class __$$OutletDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OutletDtoImpl implements _OutletDto {
   const _$OutletDtoImpl(
-      {required this.name,
-      required this.address,
-      required this.type,
-      required this.latitude,
-      required this.longitude});
+      {required this.name, required this.address, required this.type});
 
   factory _$OutletDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$OutletDtoImplFromJson(json);
@@ -174,14 +138,10 @@ class _$OutletDtoImpl implements _OutletDto {
   final String address;
   @override
   final String type;
-  @override
-  final double latitude;
-  @override
-  final double longitude;
 
   @override
   String toString() {
-    return 'OutletDto(name: $name, address: $address, type: $type, latitude: $latitude, longitude: $longitude)';
+    return 'OutletDto(name: $name, address: $address, type: $type)';
   }
 
   @override
@@ -191,17 +151,12 @@ class _$OutletDtoImpl implements _OutletDto {
             other is _$OutletDtoImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.address, address) || other.address == address) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude));
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, name, address, type, latitude, longitude);
+  int get hashCode => Object.hash(runtimeType, name, address, type);
 
   /// Create a copy of OutletDto
   /// with the given fields replaced by the non-null parameter values.
@@ -223,9 +178,7 @@ abstract class _OutletDto implements OutletDto {
   const factory _OutletDto(
       {required final String name,
       required final String address,
-      required final String type,
-      required final double latitude,
-      required final double longitude}) = _$OutletDtoImpl;
+      required final String type}) = _$OutletDtoImpl;
 
   factory _OutletDto.fromJson(Map<String, dynamic> json) =
       _$OutletDtoImpl.fromJson;
@@ -236,10 +189,6 @@ abstract class _OutletDto implements OutletDto {
   String get address;
   @override
   String get type;
-  @override
-  double get latitude;
-  @override
-  double get longitude;
 
   /// Create a copy of OutletDto
   /// with the given fields replaced by the non-null parameter values.

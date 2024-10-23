@@ -104,10 +104,13 @@ class _RedirectScreenState extends State<RedirectScreen> {
             );
           } else if (state is AuthReady) {
             Navigator.popAndPushNamed(context, "/cashier");
+          } else if (state is UncompletedProfile) {
+            await tokenProvider.clearAll();
+            Navigator.popAndPushNamed(context, "/on-boarding");
           } else if (state is TokenExpired) {
-            final TokenProvider tokenProvider0 = TokenProvider();
+            final TokenProvider tokenProvider = TokenProvider();
             if (state.res.code == 401) {
-              await tokenProvider0.clearAll();
+              await tokenProvider.clearAll();
               Navigator.popAndPushNamed(context, "/on-boarding");
             }
           }
