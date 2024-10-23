@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_repository/package_repository.dart';
@@ -8,7 +6,6 @@ import 'package:point_of_sales_cashier/features/checkout/application/purchase_cu
 import 'package:point_of_sales_cashier/features/checkout/application/purchase_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
-import 'package:uni_links/uni_links.dart';
 
 class PaymentPreparedScreen extends StatefulWidget {
   const PaymentPreparedScreen({super.key});
@@ -19,13 +16,10 @@ class PaymentPreparedScreen extends StatefulWidget {
 
 class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
   Map<String, dynamic>? args;
-  StreamSubscription? _sub;
 
   @override
   void initState() {
     super.initState();
-
-    handleDeeplink();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       args =
@@ -47,25 +41,6 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
         }
       }
     });
-  }
-
-  void handleDeeplink() {
-    _sub = uriLinkStream.listen((Uri? uri) {
-      if (uri != null &&
-          uri.scheme == 'lakoe' &&
-          uri.host == 'payment' &&
-          uri.path == '/success') {
-        Navigator.pushNamed(context, "/payment/success");
-      }
-    }, onError: (err) {
-      // Error handling
-    });
-  }
-
-  @override
-  void dispose() {
-    _sub?.cancel();
-    super.dispose();
   }
 
   @override

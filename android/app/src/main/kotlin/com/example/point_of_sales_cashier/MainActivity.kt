@@ -1,4 +1,4 @@
-package com.example.point_of_sales_cashier
+package com.lakoe.app
 
 import io.flutter.embedding.android.FlutterActivity
 

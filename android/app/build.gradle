@@ -31,7 +31,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace = "com.example.point_of_sales_cashier"
+    namespace = "com.lakoe.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -41,7 +41,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.point_of_sales_cashier"
+        applicationId = "com.lakoe.app"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
