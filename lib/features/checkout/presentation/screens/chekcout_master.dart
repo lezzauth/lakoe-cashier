@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
@@ -15,6 +14,8 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/checkout/application/purchase_cubit.dart';
 import 'package:point_of_sales_cashier/features/checkout/application/purchase_state.dart';
+import 'package:point_of_sales_cashier/features/checkout/data/payment_method.dart';
+import 'package:point_of_sales_cashier/features/checkout/data/payment_method_model.dart';
 import 'package:point_of_sales_cashier/features/checkout/presentation/widget/payment_bottom_sheet.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -63,155 +64,6 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
       });
     });
   }
-
-  List<PaymentCategory> paymentCategories = [
-    PaymentCategory(
-      categoryName: "E-Wallet",
-      methods: [
-        PaymentMethod(name: "LinkAja", logo: TImages.linkaja),
-        PaymentMethod(name: "OVO", logo: TImages.ovo),
-        PaymentMethod(name: "ShopeePay", logo: TImages.shopeepay),
-        PaymentMethod(name: "Dana", logo: TImages.dana),
-      ],
-    ),
-    PaymentCategory(
-      categoryName: "Bank Transfer",
-      methods: [
-        PaymentMethod(
-          name: "BCA",
-          logo: TImages.bca,
-          paymentMedia: [
-            PaymentMedia(
-              mediaName: "BCA Mobile",
-              steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
-""",
-            ),
-            PaymentMedia(
-              mediaName: "myBCA",
-              steps: """
-Buka aplikasi **myBCA**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
-""",
-            ),
-            PaymentMedia(
-              mediaName: "ATM",
-              steps: """
-Buka aplikasi **ATM**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
-""",
-            ),
-          ],
-        ),
-        PaymentMethod(
-          name: "Mandiri",
-          logo: TImages.mandiri,
-          paymentMedia: [
-            PaymentMedia(
-              mediaName: "Livin",
-              steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
-""",
-            ),
-            PaymentMedia(
-              mediaName: "Mandiri",
-              steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
-""",
-            ),
-            PaymentMedia(
-              mediaName: "ATM",
-              steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
-""",
-            ),
-          ],
-        ),
-        PaymentMethod(
-          name: "BRI",
-          logo: TImages.bri,
-          paymentMedia: [
-            PaymentMedia(
-              mediaName: "BRImo",
-              steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
-""",
-            ),
-            PaymentMedia(
-              mediaName: "BRI",
-              steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
-""",
-            ),
-            PaymentMedia(
-              mediaName: "ATM",
-              steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
-""",
-            ),
-          ],
-        ),
-        PaymentMethod(
-          name: "BNI",
-          logo: TImages.bni,
-          paymentMedia: [
-            PaymentMedia(
-              mediaName: "BNI",
-              steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
-""",
-            ),
-            PaymentMedia(
-              mediaName: "BNI Mobile",
-              steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
-""",
-            ),
-            PaymentMedia(
-              mediaName: "ATM",
-              steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
-""",
-            ),
-          ],
-        ),
-      ],
-    ),
-  ];
 
   void showPaymentMethodBottomSheet(
       BuildContext context,
@@ -454,7 +306,7 @@ Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
                               onTap: () {
                                 showPaymentMethodBottomSheet(
                                   context,
-                                  paymentCategories,
+                                  paymentMethod,
                                   selectedCategory,
                                   selectedMethod,
                                   (PaymentCategory category,
