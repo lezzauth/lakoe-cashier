@@ -14,6 +14,8 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/checkout/application/purchase_cubit.dart';
 import 'package:point_of_sales_cashier/features/checkout/application/purchase_state.dart';
+import 'package:point_of_sales_cashier/features/checkout/data/payment_method.dart';
+import 'package:point_of_sales_cashier/features/checkout/data/payment_method_model.dart';
 import 'package:point_of_sales_cashier/features/checkout/presentation/widget/payment_bottom_sheet.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -62,27 +64,6 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
       });
     });
   }
-
-  List<PaymentCategory> paymentCategories = [
-    PaymentCategory(
-      categoryName: "Dompet Digital",
-      methods: [
-        PaymentMethod(name: "LinkAja", logo: TImages.linkaja),
-        PaymentMethod(name: "OVO", logo: TImages.ovo),
-        PaymentMethod(name: "ShopeePay", logo: TImages.shopeepay),
-        PaymentMethod(name: "Dana", logo: TImages.dana),
-      ],
-    ),
-    PaymentCategory(
-      categoryName: "Bank Transfer",
-      methods: [
-        PaymentMethod(name: "BCA", logo: TImages.bca),
-        PaymentMethod(name: "Mandiri", logo: TImages.mandiri),
-        PaymentMethod(name: "BRI", logo: TImages.bri),
-        PaymentMethod(name: "BNI", logo: TImages.bni),
-      ],
-    ),
-  ];
 
   void showPaymentMethodBottomSheet(
       BuildContext context,
@@ -325,7 +306,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                               onTap: () {
                                 showPaymentMethodBottomSheet(
                                   context,
-                                  paymentCategories,
+                                  paymentMethod,
                                   selectedCategory,
                                   selectedMethod,
                                   (PaymentCategory category,
@@ -532,28 +513,6 @@ class _PackageInfoCard {
     required this.period,
     required this.pricePerMonth,
     required this.totalPrice,
-  });
-}
-
-class PaymentMethod {
-  final String name;
-  final String logo;
-  bool isSelected;
-
-  PaymentMethod({
-    required this.name,
-    required this.logo,
-    this.isSelected = false,
-  });
-}
-
-class PaymentCategory {
-  final String categoryName;
-  final List<PaymentMethod> methods;
-
-  PaymentCategory({
-    required this.categoryName,
-    required this.methods,
   });
 }
 

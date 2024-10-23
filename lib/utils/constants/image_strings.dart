@@ -25,10 +25,13 @@ class TImages {
   static const String badRequest = "assets/images/502-illustration.webp";
   static const String noConnection =
       "assets/images/no-connection-ilustration.webp";
+  static const String limitQuota = "assets/images/limit-quota.webp";
   static const String noPrintIllustration =
       "assets/images/no-print-ilustration.webp";
   static const String noPrintIllustrationSvg =
       "assets/images/no-print-ilustration.svg";
+  static const String scanPrintIllustrationSvg =
+      "assets/images/scan-printer.svg";
   static const String successIllustration =
       "assets/images/success-illustration.png";
   static const String generalIllustration =

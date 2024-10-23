@@ -36,12 +36,15 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
-  Future<void> update(String id,
-      {List<File>? images, required UpdateProductDto dto}) async {
+  Future<void> update(
+    String id,
+    List<File> images,
+    UpdateProductDto dto,
+  ) async {
     ProductState currentState = state;
     try {
       emit(ProductActionInProgress());
-      await productRepository.update(id, dto: dto, images: images);
+      await productRepository.update(id, images, dto);
       emit(ProductActionSuccess());
     } catch (e) {
       ProductActionFailure(e.toString());

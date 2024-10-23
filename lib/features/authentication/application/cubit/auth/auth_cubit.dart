@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:app_data_provider/app_data_provider.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owner_repository/owner_repository.dart';
@@ -21,8 +23,9 @@ class AuthCubit extends Cubit<AuthState> {
       final authToken = await _tokenProvider.getAuthToken();
       if (authToken == null) throw ErrorDescription("no authToken");
 
-      final outlets = await _ownerRepository.listOutlets();
       final profile = await _ownerRepository.getProfile();
+
+      final outlets = await _ownerRepository.listOutlets();
 
       await _appDataProvider.setOutletId(outlets.first.id);
       await _appDataProvider.setOwnerId(profile.id);
@@ -36,6 +39,17 @@ class AuthCubit extends Cubit<AuthState> {
       ));
     } catch (e, stackTrace) {
       log('AuthCubit.initialize err: ${e.toString()}', stackTrace: stackTrace);
+
+      if (e is DioException) {
+        if (e.error is DioExceptionModel) {
+          final tokenExpiredException = e.error as DioExceptionModel;
+          emit(TokenExpired(tokenExpiredException));
+          return;
+        }
+      } else if (e.toString().contains("Null")) {
+        emit(UncompletedProfile(message: e.toString()));
+      }
+
       emit(AuthNotReady());
     }
   }

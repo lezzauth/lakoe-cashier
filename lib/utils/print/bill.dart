@@ -14,6 +14,7 @@ import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:image/image.dart' as image;
+import 'package:point_of_sales_cashier/utils/helpers/bluetooth_permission.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
 class TBill {
@@ -48,7 +49,7 @@ class TBill {
     return wrappedText;
   }
 
-  static Future<List<int>> print({
+  static Future<List<int>> printAction({
     required OwnerProfileModel profileOwner,
     required OrderModel order,
     required String footNote,
@@ -364,6 +365,8 @@ class TBill {
     final img = image.decodeImage(bytesImg);
     bytes += generator.image(img!);
 
+    bytes += generator.emptyLines(0);
+
     if (isTestingMode) {
       bytes += generator.emptyLines(1);
       bytes += generator.text(
@@ -385,44 +388,56 @@ class TBill {
     OrderModel order,
     String footNote,
   ) async {
-    bool connectionStatus = await PrintBluetoothThermal.connectionStatus;
+    var permissions = await TBluetoothPermission.checkPermissions();
+    bool isPermissionsAllowed = ![
+      permissions.bluetoothConnect,
+      permissions.bluetoothScan,
+      permissions.nearbyDevices
+    ].contains(true);
 
-    if (connectionStatus) {
-      List<int> ticket = await print(
-        profileOwner: profile,
-        order: order,
-        footNote: footNote,
-        isTestingMode: false,
-      );
-
-      final result = await PrintBluetoothThermal.writeBytes(ticket);
-      log("print result: $result");
+    if (!isPermissionsAllowed) {
+      print("xxx isPermissionsAllowed is $isPermissionsAllowed");
     } else {
-      showModalBottomSheet(
-        context: context,
-        enableDrag: false,
-        isDismissible: false,
-        builder: (context) {
-          return CustomBottomsheet(
-            hasGrabber: false,
-            child: ErrorDisplay(
-              imageSrc: TImages.noPrintIllustration,
-              title: "Belum ada print yang connect, nih!",
-              description:
-                  "Yuk! Sambungkan dulu print kamu di halaman Setting.",
-              actionTitlePrimary: "Atur Print",
-              onActionPrimary: () async {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, "/print");
-              },
-              actionTitleSecondary: "Nanti Saja",
-              onActionSecondary: () {
-                Navigator.pop(context);
-              },
-            ),
-          );
-        },
-      );
+      bool connectionStatus = await PrintBluetoothThermal.connectionStatus;
+
+      if (connectionStatus) {
+        List<int> ticket = await printAction(
+          profileOwner: profile,
+          order: order,
+          footNote: footNote,
+          isTestingMode: false,
+        );
+
+        final result = await PrintBluetoothThermal.writeBytes(ticket);
+        log("print result: $result");
+      } else {
+        print("xxx connectionStatus is $connectionStatus");
+        showModalBottomSheet(
+          context: context,
+          enableDrag: false,
+          isDismissible: false,
+          builder: (context) {
+            return CustomBottomsheet(
+              hasGrabber: false,
+              child: ErrorDisplay(
+                imageSrc: TImages.noPrintIllustration,
+                title: "Belum ada print yang connect, nih!",
+                description:
+                    "Yuk! Sambungkan dulu print kamu di halaman Setting.",
+                actionTitlePrimary: "Atur Print",
+                onActionPrimary: () async {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, "/print");
+                },
+                actionTitleSecondary: "Nanti Saja",
+                onActionSecondary: () {
+                  Navigator.pop(context);
+                },
+              ),
+            );
+          },
+        );
+      }
     }
   }
 
@@ -435,7 +450,7 @@ class TBill {
     if (connectionStatus) {
       TemplateOrderModel templateOrder = TemplateOrderModel();
 
-      List<int> ticket = await print(
+      List<int> ticket = await printAction(
         profileOwner: profile,
         order: templateOrder.order,
         footNote: footNote,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
@@ -13,6 +15,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/fo
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/stock_information_form.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:product_repository/product_repository.dart';
 
 class NewProductScreen extends StatefulWidget {
@@ -54,15 +57,15 @@ class _NewProductScreenState extends State<NewProductScreen>
         _stockInformationFormKey.currentState?.saveAndValidate() ?? false;
 
     if (!isProductInformationValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
+      // SnackBar snackBar = SnackBar(
+      //   content: Text(ErrorTextStrings.formInvalid()),
+      //   showCloseIcon: true,
+      // );
+      // ScaffoldMessenger.of(context)
+      //   ..hideCurrentSnackBar()
+      //   ..showSnackBar(
+      //     snackBar,
+      //   );
       changeTabIndex(0);
 
       return;
@@ -98,7 +101,7 @@ class _NewProductScreenState extends State<NewProductScreen>
         stockInformationValue != null ? stockInformationValue["sku"] : null;
 
     context.read<ProductMasterCubit>().create(
-          images?.file != null ? [images!.file!] : [], // Gambar opsional
+          images?.file != null ? [images!.file!] : [],
           CreateProductDto(
             name: productInformationValue["name"],
             price: productInformationValue["price"],
@@ -119,6 +122,33 @@ class _NewProductScreenState extends State<NewProductScreen>
       listener: (context, state) {
         if (state is ProductMasterActionSuccess) {
           Navigator.pop(context, true);
+        } else if (state is ProductMasterReachesLimit) {
+          showModalBottomSheet(
+            context: context,
+            enableDrag: false,
+            isDismissible: false,
+            builder: (context) {
+              return CustomBottomsheet(
+                hasGrabber: false,
+                child: ErrorDisplay(
+                  imageSrc: TImages.limitQuota,
+                  title: "Yah! produk full, nih",
+                  description:
+                      "10 menu sudah ditambahkan. Upgrade paket untuk lebih banyak produk, yuk!",
+                  actionTitlePrimary: "Lihat Paket",
+                  onActionPrimary: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, "/packages");
+                  },
+                  actionTitleSecondary: "Nanti Saja",
+                  onActionSecondary: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context, true);
+                  },
+                ),
+              );
+            },
+          );
         }
       },
       child: BlocBuilder<ProductMasterCubit, ProductMasterState>(

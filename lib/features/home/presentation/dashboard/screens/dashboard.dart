@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outlet_repository/outlet_repository.dart';
@@ -17,6 +19,7 @@ import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widg
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/summary/transaction_summary.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:uni_links/uni_links.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -41,6 +44,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  StreamSubscription? _sub;
+
   Future<void> _onInit() async {
     context.read<CashierCubit>().getOpenCashier();
     context.read<CashierReportCubit>().init();
@@ -50,6 +55,29 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     _onInit();
+    handleDeeplink();
+  }
+
+  @override
+  void dispose() {
+    _sub?.cancel();
+    super.dispose();
+  }
+
+  void handleDeeplink() {
+    _sub = uriLinkStream.listen((Uri? uri) {
+      if (uri != null &&
+          uri.scheme == 'app.lakoe' &&
+          uri.host == 'payment' &&
+          uri.path == '/success') {
+        Navigator.pushNamed(context, "/payment/success");
+      } else {
+        print("xxx");
+      }
+    }, onError: (err) {
+      // Error handling
+      print("xxx $err");
+    });
   }
 
   @override

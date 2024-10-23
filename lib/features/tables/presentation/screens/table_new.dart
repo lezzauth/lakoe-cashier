@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
@@ -10,7 +12,7 @@ import 'package:point_of_sales_cashier/features/tables/application/cubit/table_m
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/forms/table_information_form.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/tabs/table_new_qr_order_tab.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableNewScreen extends StatelessWidget {
@@ -37,15 +39,15 @@ class _TableNewState extends State<TableNew> {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
+      // SnackBar snackBar = SnackBar(
+      //   content: Text(ErrorTextStrings.formInvalid()),
+      //   showCloseIcon: true,
+      // );
+      // ScaffoldMessenger.of(context)
+      //   ..hideCurrentSnackBar()
+      //   ..showSnackBar(
+      //     snackBar,
+      //   );
 
       return;
     }
@@ -67,6 +69,33 @@ class _TableNewState extends State<TableNew> {
           listener: (context, state) {
             if (state is TableMasterActionSuccess) {
               Navigator.pop(context, true);
+            } else if (state is TableMasterReachesLimit) {
+              showModalBottomSheet(
+                context: context,
+                enableDrag: false,
+                isDismissible: false,
+                builder: (context) {
+                  return CustomBottomsheet(
+                    hasGrabber: false,
+                    child: ErrorDisplay(
+                      imageSrc: TImages.limitQuota,
+                      title: "Meja maksimal, nih!",
+                      description:
+                          "Sudah 5 QR Meja. Upgrade untuk tambah meja QR!",
+                      actionTitlePrimary: "Lihat Paket",
+                      onActionPrimary: () {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, "/packages");
+                      },
+                      actionTitleSecondary: "Nanti Saja",
+                      onActionSecondary: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context, true);
+                      },
+                    ),
+                  );
+                },
+              );
             }
           },
         )

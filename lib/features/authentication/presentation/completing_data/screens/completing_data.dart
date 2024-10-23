@@ -1,7 +1,6 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_form_cubit.dart';
@@ -47,7 +46,7 @@ class _CompletingDataState extends State<CompletingData> {
     final formValue = formState.value;
 
     if (currentPage == 1) {
-      final outletPinpoint = formValue["outletPinpoint"] as LatLng;
+      // final outletPinpoint = formValue["outletPinpoint"] as LatLng;
       return PinInputPage(
         isError: state is CompletingDataActionFailure,
         onPinValid: (value) {
@@ -61,8 +60,8 @@ class _CompletingDataState extends State<CompletingData> {
                     name: formValue["outletName"],
                     address: formValue["outletAddress"],
                     type: formValue["outletType"],
-                    latitude: outletPinpoint.latitude,
-                    longitude: outletPinpoint.longitude,
+                    // latitude: outletPinpoint.latitude,
+                    // longitude: outletPinpoint.longitude,
                   ),
                 ),
               );
@@ -73,7 +72,7 @@ class _CompletingDataState extends State<CompletingData> {
     return CompletingDataFormPage(
       initialValue: {
         "phoneNumber": widget.arguments.phoneNumber,
-        "outletType": formValue["outletType"] ?? "Kuliner",
+        "outletType": formValue["outletType"] ?? "Lainnya",
         "name": formValue["name"],
         "email": formValue["email"],
         "outletName": formValue["outletName"],
@@ -108,37 +107,55 @@ class _CompletingDataState extends State<CompletingData> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MultiBlocListener(
-        listeners: [
-          BlocListener<CompletingDataCubit, CompletingDataState>(
-            listener: (context, state) async {
-              if (state is CompletingDataActionSuccess) {
-                await context.read<AuthCubit>().initialize();
-
-                if (!context.mounted) return;
-                Navigator.popAndPushNamed(context, "/cashier");
-              }
-            },
-          )
-        ],
-        child:
-            BlocBuilder<CompletingDataScreenCubit, CompletingDataScreenState>(
-          builder: (context, pageState) {
-            final currentPage = pageState.page;
-
-            return SafeArea(
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 14, vertical: 16),
-                    child: _buildPageIndicator(currentPage),
-                  ),
-                  _buildPage(currentPage)
-                ],
-              ),
+      body: PopScope(
+        onPopInvokedWithResult: (popDisposition, popResult) async {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              "/on-boarding",
+              (route) => false,
             );
-          },
+          });
+        },
+        child: MultiBlocListener(
+          listeners: [
+            BlocListener<CompletingDataCubit, CompletingDataState>(
+              listener: (context, state) async {
+                if (state is CompletingDataActionSuccess) {
+                  await context.read<AuthCubit>().initialize();
+
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      "/cashier",
+                      (route) => false,
+                    );
+                  });
+                }
+              },
+            )
+          ],
+          child:
+              BlocBuilder<CompletingDataScreenCubit, CompletingDataScreenState>(
+            builder: (context, pageState) {
+              final currentPage = pageState.page;
+
+              return SafeArea(
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 16,
+                      ),
+                      child: _buildPageIndicator(currentPage),
+                    ),
+                    _buildPage(currentPage)
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

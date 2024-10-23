@@ -11,8 +11,6 @@ _$OutletDtoImpl _$$OutletDtoImplFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       address: json['address'] as String,
       type: json['type'] as String,
-      latitude: (json['latitude'] as num).toDouble(),
-      longitude: (json['longitude'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$$OutletDtoImplToJson(_$OutletDtoImpl instance) =>
@@ -20,8 +18,6 @@ Map<String, dynamic> _$$OutletDtoImplToJson(_$OutletDtoImpl instance) =>
       'name': instance.name,
       'address': instance.address,
       'type': instance.type,
-      'latitude': instance.latitude,
-      'longitude': instance.longitude,
     };
 
 _$RegisterDtoImpl _$$RegisterDtoImplFromJson(Map<String, dynamic> json) =>

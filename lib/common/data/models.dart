@@ -3,11 +3,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'models.freezed.dart';
 
 @freezed
-class LabelValue<T> with _$LabelValue {
+class LabelValue<T> with _$LabelValue<T> {
   const factory LabelValue({
     required String label,
     required T value,
-  }) = _LabelValue;
+  }) = _LabelValue<T>;
 }
 
 class BankVerifyArgument {

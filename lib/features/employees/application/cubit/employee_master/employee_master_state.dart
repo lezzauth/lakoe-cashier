@@ -1,3 +1,4 @@
+import 'package:dio_provider/dio_provider.dart';
 import 'package:employee_repository/employee_repository.dart';
 import 'package:equatable/equatable.dart';
 
@@ -52,4 +53,13 @@ final class EmployeeMasterActionFailure extends EmployeeMasterState {
 
   @override
   List<Object?> get props => [];
+}
+
+final class EmployeeMasterReachesLimit extends EmployeeMasterState {
+  final DioExceptionModel res;
+
+  EmployeeMasterReachesLimit(this.res);
+
+  @override
+  List<Object?> get props => [res];
 }

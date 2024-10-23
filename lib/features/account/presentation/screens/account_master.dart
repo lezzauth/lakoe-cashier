@@ -48,12 +48,12 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
     ),
     _OtherItem(
       title: "Syarat & Ketentuan",
-      routeName: "/",
+      routeName: "/terms_conditions",
       iconSrc: TIcons.document,
     ),
     _OtherItem(
       title: "Kebijakan Privasi",
-      routeName: "/",
+      routeName: "/privacy_policy",
       iconSrc: TIcons.shieldKeyhole,
     ),
     _OtherItem(
@@ -188,7 +188,7 @@ class ProfileCard extends StatelessWidget {
       builder: (context, state) {
         if (state is AuthReady) {
           final profile = state.profile;
-          final AppDataProvider _appDataProvider = AppDataProvider();
+          final AppDataProvider appDataProvider = AppDataProvider();
 
           return Container(
             decoration: BoxDecoration(
@@ -222,7 +222,7 @@ class ProfileCard extends StatelessWidget {
                             ),
                           ),
                           child: FutureBuilder<String?>(
-                            future: _appDataProvider.avatarSvg,
+                            future: appDataProvider.avatarSvg,
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {

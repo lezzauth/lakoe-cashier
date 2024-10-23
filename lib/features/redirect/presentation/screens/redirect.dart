@@ -104,54 +104,19 @@ class _RedirectScreenState extends State<RedirectScreen> {
             );
           } else if (state is AuthReady) {
             Navigator.popAndPushNamed(context, "/cashier");
+          } else if (state is UncompletedProfile) {
+            await tokenProvider.clearAll();
+            Navigator.popAndPushNamed(context, "/on-boarding");
+          } else if (state is TokenExpired) {
+            final TokenProvider tokenProvider = TokenProvider();
+            if (state.res.code == 401) {
+              await tokenProvider.clearAll();
+              Navigator.popAndPushNamed(context, "/on-boarding");
+            }
           }
         } else {
           Navigator.popAndPushNamed(context, "/on-boarding");
         }
-
-        // if (!mounted) return;
-        // final TokenProvider tokenProvider = TokenProvider();
-        // final token = await tokenProvider.getAuthToken();
-
-        // if (state is AuthNotReady && !isBottomSheetVisible) {
-        //   if (token!.isNotEmpty) {
-        //     isBottomSheetVisible = true;
-        //     showModalBottomSheet(
-        //       context: context,
-        //       enableDrag: false,
-        //       isDismissible: false,
-        //       builder: (context) {
-        //         return CustomBottomsheet(
-        //           hasGrabber: false,
-        //           child: ErrorDisplay(
-        //             imageSrc: TImages.noConnection,
-        //             title: "Yah, internetnya mati…",
-        //             description:
-        //                 "Coba cek WiFi atau kuota internet kamu dan nanti coba lagi ya.",
-        //             actionTitlePrimary: "Pengaturan",
-        //             onActionPrimary: () async {
-        //               openWifiSettings();
-        //               Navigator.pop(context);
-        //               isBottomSheetVisible = false;
-        //             },
-        //             actionTitleSecondary: "Coba Lagi",
-        //             onActionSecondary: () {
-        //               context.read<AuthCubit>().initialize();
-        //               Navigator.pop(context);
-        //               isBottomSheetVisible = false;
-        //             },
-        //           ),
-        //         );
-        //       },
-        //     );
-        //   } else {
-        //     Navigator.popAndPushNamed(context, "/on-boarding");
-        //   }
-        // } else if (state is AuthReady) {
-        //   Navigator.popAndPushNamed(context, "/cashier");
-        // } else {
-        //   Navigator.popAndPushNamed(context, "/on-boarding");
-        // }
       },
       child: BlocListener<CashierCubit, CashierState>(
         listener: (context, state) {},

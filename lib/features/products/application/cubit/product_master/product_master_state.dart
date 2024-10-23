@@ -1,3 +1,4 @@
+import 'package:dio_provider/dio_provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:product_repository/product_repository.dart';
 
@@ -50,4 +51,13 @@ final class ProductMasterActionFailure extends ProductMasterState {
 
   @override
   List<Object?> get props => [error];
+}
+
+final class ProductMasterReachesLimit extends ProductMasterState {
+  final DioExceptionModel res;
+
+  ProductMasterReachesLimit(this.res);
+
+  @override
+  List<Object?> get props => [res];
 }

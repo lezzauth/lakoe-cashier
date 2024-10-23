@@ -23,13 +23,12 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       InterceptorsWrapper(
         onError: (DioException error, handler) async {
           if (error.response?.statusCode == 401) {
-            // Handle token refresh logic here
           } else if (error.response?.statusCode == 429) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (navigatorKey.currentContext != null) {
                 CustomToast.show(
                   navigatorKey.currentContext!,
-                  "Terlalu banyak permintaan.",
+                  "Tunggu sebentar ya…",
                   icon: TIcons.warning,
                   position: "bottom",
                 );

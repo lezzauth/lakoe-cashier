@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/tiles/custom_radio_tile.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/checkout/presentation/screens/chekcout_master.dart';
+import 'package:point_of_sales_cashier/features/checkout/data/payment_method_model.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class PaymentBottomSheet extends StatefulWidget {

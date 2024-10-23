@@ -52,8 +52,8 @@ class AppDataProvider {
     return await _storage.getString(AppDataKeys.footNote.name) ?? "";
   }
 
-  Future<String> get isBillAutoPrint async {
-    return await _storage.getString(AppDataKeys.isBillAutoPrint.name) ?? "";
+  Future<bool> get isBillAutoPrint async {
+    return await _storage.getBool(AppDataKeys.isBillAutoPrint.name) ?? false;
   }
 
   Future<String?> get avatarSvg async {

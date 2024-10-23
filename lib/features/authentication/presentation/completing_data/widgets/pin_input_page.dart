@@ -118,7 +118,7 @@ class _PinInputPageState extends State<PinInputPage> {
                           }
                         },
                       ),
-                    if (loading) // Menampilkan spinner jika loading
+                    if (loading)
                       const SizedBox(
                         height: 20,
                         width: 20,

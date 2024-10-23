@@ -1,3 +1,4 @@
+import 'package:dio_provider/dio_provider.dart';
 import 'package:owner_repository/owner_repository.dart';
 
 sealed class AuthState {}
@@ -14,3 +15,15 @@ final class AuthReady extends AuthState {
 }
 
 final class AuthNotReady extends AuthState {}
+
+final class TokenExpired extends AuthState {
+  final DioExceptionModel res;
+
+  TokenExpired(this.res);
+}
+
+final class UncompletedProfile extends AuthState {
+  final String message;
+
+  UncompletedProfile({required this.message});
+}

@@ -11,7 +11,7 @@ abstract class EmployeeRepository {
   Future<List<EmployeeModel>> findAll(FindAllEmployeeDto dto);
   Future<EmployeeModel> findOne(String id);
   Future<EmployeeModel> create({
-    required File profilePicture,
+    File? profilePicture,
     required CreateEmployeeDto dto,
   });
   Future<EmployeeModel> update(
@@ -57,7 +57,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
 
   @override
   Future<EmployeeModel> create({
-    required File profilePicture,
+    File? profilePicture,
     required CreateEmployeeDto dto,
   }) async {
     final Options options = await _getOptions();
@@ -65,10 +65,21 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
 
     FormData formData =
         FormData.fromMap({...dto.copyWith(outletId: outletId).toJsonFilter()});
-    formData.files.add(MapEntry(
+
+    if (profilePicture != null) {
+      formData.files.add(MapEntry(
         "profilePicture",
-        await MultipartFile.fromFile(profilePicture.path,
-            filename: profilePicture.path.split("/").last)));
+        await MultipartFile.fromFile(
+          profilePicture.path,
+          filename: profilePicture.path.split("/").last,
+        ),
+      ));
+    }
+
+    // formData.files.add(MapEntry(
+    //     "profilePicture",
+    //     await MultipartFile.fromFile(profilePicture!.path,
+    //         filename: profilePicture.path.split("/").last)));
 
     final response = await _dio.post(
       _baseURL,

@@ -62,27 +62,6 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
     }
   }
 
-  Future<void> someFunction() async {
-    if (state is PrintMasterLoadSuccess) {
-      final currentState = state as PrintMasterLoadSuccess;
-
-      // Log isi dari connectingDevices
-      for (var address in currentState.connectingDevices) {
-        print('xxx connectingDevices: ${address} (${address})');
-      }
-
-      // Log isi dari pairingDevices
-      for (var address in currentState.pairingDevices) {
-        print('xxx pairingDevices: ${address} (${address})');
-      }
-
-      // Log isi dari disconnectingDevices
-      for (var address in currentState.disconnectingDevices) {
-        print('xxx disconnectingDevices: ${address} (${address})');
-      }
-    }
-  }
-
   Future<void> discoverDevices() async {
     await checkBluetoothStatus();
 
@@ -97,7 +76,13 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
     if (state is! PrintMasterLoadSuccess) {
       log('State belum siap untuk melakukan discovery.');
       isDiscoveryRunning = false;
-      return;
+      emit(PrintMasterLoadSuccess(
+        devices: [],
+        connectedDevices: [],
+        availableDevices: [],
+        connectingDevices: [],
+        isDiscovering: true,
+      ));
     }
 
     final currentState = state as PrintMasterLoadSuccess;
@@ -114,11 +99,13 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
       ));
       discoveryStream = FlutterBluetoothSerial.instance.startDiscovery().listen(
         (result) async {
-          if (result.device.name != null &&
-              result.device.name!.isNotEmpty &&
+          BluetoothDevice newDevice = result.device;
+
+          if (newDevice.name != null &&
+              newDevice.name!.isNotEmpty &&
               !currentState.availableDevices
-                  .any((device) => device.address == result.device.address)) {
-            currentState.availableDevices.add(result.device);
+                  .any((device) => device.address == newDevice.address)) {
+            currentState.availableDevices.add(newDevice);
 
             List<BluetoothDevice> bondDevices =
                 await FlutterBluetoothSerial.instance.getBondedDevices();
@@ -161,13 +148,12 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
               disconnectingDevices: currentState.disconnectingDevices,
               isDiscovering: true,
             ));
-
-            someFunction();
           } else {}
         },
         onError: (error) {
           log('Terjadi error saat discovery: $error');
           isDiscoveryRunning = false;
+          discoverDevices();
         },
         cancelOnError: true,
       );
@@ -176,29 +162,23 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
         log('Discovery selesai, ditemukan ${currentState.availableDevices.length} perangkat');
         isDiscoveryRunning = false;
 
-        if (currentState.availableDevices.isEmpty) {
-          log('No available devices found. Restarting discovery...');
-          // Memanggil kembali discoverDevices
-          discoverDevices();
-        } else {
-          List<BluetoothDevice> availableDevices =
-              currentState.availableDevices.where((device) {
-            return !currentState.devices
-                    .any((bonded) => bonded.address == device.address) &&
-                !currentState.connectedDevices
-                    .any((connected) => connected.address == device.address);
-          }).toList();
+        List<BluetoothDevice> availableDevices =
+            currentState.availableDevices.where((device) {
+          return !currentState.devices
+                  .any((bonded) => bonded.address == device.address) &&
+              !currentState.connectedDevices
+                  .any((connected) => connected.address == device.address);
+        }).toList();
 
-          emit(PrintMasterLoadSuccess(
-            devices: currentState.devices,
-            connectedDevices: currentState.connectedDevices,
-            availableDevices: availableDevices,
-            connectingDevices: currentState.connectingDevices,
-            pairingDevices: currentState.pairingDevices,
-            disconnectingDevices: currentState.disconnectingDevices,
-            isDiscovering: false,
-          ));
-        }
+        emit(PrintMasterLoadSuccess(
+          devices: currentState.devices,
+          connectedDevices: currentState.connectedDevices,
+          availableDevices: availableDevices,
+          connectingDevices: currentState.connectingDevices,
+          pairingDevices: currentState.pairingDevices,
+          disconnectingDevices: currentState.disconnectingDevices,
+          isDiscovering: false,
+        ));
 
         // updateDevices();
       });

@@ -22,9 +22,28 @@ class ProductEditScreen extends StatefulWidget {
   State<ProductEditScreen> createState() => _ProductEditScreenState();
 }
 
-class _ProductEditScreenState extends State<ProductEditScreen> {
+class _ProductEditScreenState extends State<ProductEditScreen>
+    with SingleTickerProviderStateMixin {
   final _productInformationFormKey = GlobalKey<FormBuilderState>();
   final _stockInformationFormKey = GlobalKey<FormBuilderState>();
+
+  TabController? _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController?.dispose();
+    super.dispose();
+  }
+
+  void changeTabIndex(int index) {
+    _tabController?.animateTo(index);
+  }
 
   onSubmit(String productId) {
     FocusScope.of(context).unfocus();
@@ -44,7 +63,7 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
         ..showSnackBar(
           snackBar,
         );
-
+      changeTabIndex(0);
       return;
     }
 
@@ -59,6 +78,7 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
         ..showSnackBar(
           snackBar,
         );
+      changeTabIndex(1);
 
       return;
     }
@@ -78,8 +98,8 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
 
     context.read<ProductMasterCubit>().update(
           productId,
-          images: images.file != null ? [images.file!] : null,
-          dto: UpdateProductDto(
+          images.file != null ? [images.file!] : [],
+          UpdateProductDto(
             name: productInformationValue["name"],
             price: productInformationValue["price"],
             description: productInformationValue["description"],
@@ -126,7 +146,8 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                           ),
                   )
                 ],
-                bottom: const TabContainer(
+                bottom: TabContainer(
+                  controller: _tabController,
                   tabs: [
                     TabItem(
                       title: "Info Produk",
@@ -136,6 +157,7 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                 ),
               ),
               body: TabBarView(
+                controller: _tabController,
                 children: [
                   SingleChildScrollView(
                     padding: const EdgeInsets.only(top: 16.0),
@@ -149,7 +171,7 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                         "categoryId": arguments.categoryId,
                         "unit": arguments.unit,
                         "images": arguments.images.isEmpty
-                            ? null
+                            ? ImagePickerValue()
                             : ImagePickerValue(url: arguments.images[0]),
                       },
                     ),

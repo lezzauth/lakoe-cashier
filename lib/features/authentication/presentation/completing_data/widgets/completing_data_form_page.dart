@@ -7,7 +7,6 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/completing_data_form/business_information_form.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/completing_data_form/owner_information_form.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 
 class CompletingDataFormPage extends StatefulWidget {
@@ -31,15 +30,16 @@ class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
+      // SnackBar snackBar = SnackBar(
+      //   content: Text(ErrorTextStrings.formInvalid()),
+      //   showCloseIcon: true,
+      // );
+      // ScaffoldMessenger.of(context)
+      //   ..hideCurrentSnackBar()
+      //   ..showSnackBar(
+      //     snackBar,
+      //   );
+      print('Form complete data invalid');
       return;
     }
 

@@ -18,8 +18,13 @@ class TermsAgreementCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    onTermsPressed() {}
-    onPrivacyPressed() {}
+    onTermsPressed() {
+      Navigator.pushNamed(context, "/terms_conditions");
+    }
+
+    onPrivacyPressed() {
+      Navigator.pushNamed(context, "/privacy_policy");
+    }
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,30 +40,34 @@ class TermsAgreementCheckbox extends StatelessWidget {
             text: TextSpan(
               text: 'Saya telah membaca dan menyetujui ',
               style: GoogleFonts.inter(
-                color: Colors.black,
+                color: TColors.neutralDarkDark,
               ),
               children: [
                 TextSpan(
                   text: 'Syarat & Ketentuan',
-                  style: const TextStyle(
+                  style: GoogleFonts.inter(
                     color: TColors.primary,
                   ),
                   recognizer: TapGestureRecognizer()..onTap = onTermsPressed,
                 ),
-                const TextSpan(
+                TextSpan(
                   text: ' dan ',
-                  style: TextStyle(color: Colors.black),
+                  style: GoogleFonts.inter(
+                    color: TColors.neutralDarkDark,
+                  ),
                 ),
                 TextSpan(
                   text: 'Kebijakan Privasi',
-                  style: const TextStyle(
+                  style: GoogleFonts.inter(
                     color: TColors.primary,
                   ),
                   recognizer: TapGestureRecognizer()..onTap = onPrivacyPressed,
                 ),
-                const TextSpan(
+                TextSpan(
                   text: '.',
-                  style: TextStyle(color: Colors.black),
+                  style: GoogleFonts.inter(
+                    color: TColors.neutralDarkDark,
+                  ),
                 ),
               ],
             ),

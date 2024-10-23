@@ -1,5 +1,6 @@
 import 'package:app_config_provider/app_config_provider.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_provider/src/models/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
@@ -47,7 +48,27 @@ class DioProvider {
         handler.next(options);
       },
       onError: (DioException e, ErrorInterceptorHandler handler) {
-        if (e.response?.statusCode == 502 && !isShowingBottomSheet) {
+        if (e.response?.statusCode == 401) {
+          return handler.reject(DioException(
+            requestOptions: e.requestOptions,
+            error: DioExceptionModel(
+              code: e.response?.statusCode,
+              message: "jwt expired",
+            ),
+            message: "Token has expired",
+            type: DioExceptionType.unknown,
+          ));
+        } else if (e.response?.statusCode == 402) {
+          return handler.reject(DioException(
+            requestOptions: e.requestOptions,
+            error: DioExceptionModel(
+              code: e.response?.statusCode,
+              message: "insufficient quota of products",
+            ),
+            message: "Quota limit has been reached",
+            type: DioExceptionType.unknown,
+          ));
+        } else if (e.response?.statusCode == 502 && !isShowingBottomSheet) {
           isShowingBottomSheet = true;
 
           WidgetsBinding.instance.addPostFrameCallback((_) {

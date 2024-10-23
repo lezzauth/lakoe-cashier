@@ -1,3 +1,4 @@
+import 'package:dio_provider/dio_provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:table_repository/table_repository.dart';
 
@@ -52,4 +53,13 @@ final class TableMasterActionFailure extends TableMasterState {
 
   @override
   List<Object?> get props => [error];
+}
+
+final class TableMasterReachesLimit extends TableMasterState {
+  final DioExceptionModel res;
+
+  TableMasterReachesLimit(this.res);
+
+  @override
+  List<Object?> get props => [res];
 }
