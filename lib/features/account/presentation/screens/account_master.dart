@@ -48,12 +48,12 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
     ),
     _OtherItem(
       title: "Syarat & Ketentuan",
-      routeName: "/",
+      routeName: "/terms_conditions",
       iconSrc: TIcons.document,
     ),
     _OtherItem(
       title: "Kebijakan Privasi",
-      routeName: "/",
+      routeName: "/privacy_policy",
       iconSrc: TIcons.shieldKeyhole,
     ),
     _OtherItem(

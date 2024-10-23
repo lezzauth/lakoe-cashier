@@ -16,6 +16,8 @@ import 'package:point_of_sales_cashier/features/authentication/data/arguments/co
 import 'package:point_of_sales_cashier/features/authentication/data/arguments/otp_input_argument.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/screens/completing_data.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/on_boarding.dart';
+import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/privacy_policy.dart';
+import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/terms_condition.dart';
 import 'package:point_of_sales_cashier/features/authentication/presentation/otp_input/screens/otp_input.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/data/arguments/bank_account_detail_argument.dart';
@@ -369,6 +371,10 @@ class App extends StatelessWidget {
                 const PaymentConfirmationScreen(),
             "/payment/prepared": (context) => const PaymentPreparedScreen(),
             "/payment/success": (context) => const PaymentSuccessScreen(),
+
+            //Webview
+            "/terms_conditions": (context) => const TermsConditionScreen(),
+            "/privacy_policy": (context) => const PrivacyPolicyScreen(),
 
             // AI Chatbot
             "/ai_chatbot": (context) => const AIChatbotMasterScreen(),

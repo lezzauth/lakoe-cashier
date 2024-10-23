@@ -18,8 +18,13 @@ class TermsAgreementCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    onTermsPressed() {}
-    onPrivacyPressed() {}
+    onTermsPressed() {
+      Navigator.pushNamed(context, "/terms_conditions");
+    }
+
+    onPrivacyPressed() {
+      Navigator.pushNamed(context, "/privacy_policy");
+    }
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
