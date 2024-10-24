@@ -396,7 +396,6 @@ class TBill {
     ].contains(true);
 
     if (!isPermissionsAllowed) {
-      print("xxx isPermissionsAllowed is $isPermissionsAllowed");
     } else {
       bool connectionStatus = await PrintBluetoothThermal.connectionStatus;
 
@@ -411,7 +410,6 @@ class TBill {
         final result = await PrintBluetoothThermal.writeBytes(ticket);
         log("print result: $result");
       } else {
-        print("xxx connectionStatus is $connectionStatus");
         showModalBottomSheet(
           context: context,
           enableDrag: false,

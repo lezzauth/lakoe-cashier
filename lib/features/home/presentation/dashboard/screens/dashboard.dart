@@ -71,12 +71,9 @@ class _DashboardState extends State<Dashboard> {
           uri.host == 'payment' &&
           uri.path == '/success') {
         Navigator.pushNamed(context, "/payment/success");
-      } else {
-        print("xxx");
-      }
+      } else {}
     }, onError: (err) {
       // Error handling
-      print("xxx $err");
     });
   }
 

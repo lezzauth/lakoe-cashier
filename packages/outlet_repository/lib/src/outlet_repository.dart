@@ -16,6 +16,8 @@ abstract class OutletRepository {
   Future<OutletReportModel> getOutletReports({
     GetOutletReportDto? dto,
   });
+  Future<OutletModel> getDetailOutlet();
+  Future<OutletModel> update(UpdateOutletDto dto);
 }
 
 class OutletRepositoryImpl implements OutletRepository {
@@ -73,5 +75,34 @@ class OutletRepositoryImpl implements OutletRepository {
     );
 
     return OutletReportModel.fromJson(response.data);
+  }
+
+  @override
+  Future<OutletModel> getDetailOutlet() async {
+    final options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
+
+    final res = await _dio.get(
+      "$_baseURL/$outletId",
+      options: options,
+    );
+
+    return OutletModel.fromJson(res.data);
+  }
+
+  @override
+  Future<OutletModel> update(UpdateOutletDto dto) async {
+    final options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
+
+    FormData formData = FormData.fromMap({...dto.toJson()});
+
+    final res = await _dio.patch(
+      "$_baseURL/$outletId",
+      data: formData,
+      options: options,
+    );
+
+    return OutletModel.fromJson(res.data);
   }
 }
