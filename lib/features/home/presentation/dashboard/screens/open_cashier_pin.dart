@@ -25,6 +25,25 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
   String messsageError = "PIN Salah. Coba Lagi.";
   bool checkPIN = false;
   bool isPinWrong = false;
+  bool hasNavigated = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _pinController.addListener(() {
+      if (isPinWrong) {
+        setState(() {
+          isPinWrong = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _pinController.dispose();
+    super.dispose();
+  }
 
   onOpenCashierInitial(String value, int initialBalance) {
     context.read<CashierCubit>().openCashier(
@@ -60,10 +79,11 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
             checkPIN = false;
             isPinWrong = true;
             messsageError = (state.message.contains("expired")
-                ? "Kamu tidak ada akses membuka kasir"
+                ? "Kamu tidak memiliki akses membuka kasir.\n\nCoba PIN lain."
                 : "PIN Salah. Coba Lagi.");
           });
-        } else if (state is CashierOpened) {
+        } else if (state is CashierOpened && !hasNavigated) {
+          hasNavigated = true;
           Navigator.pushNamedAndRemoveUntil(
             context,
             "/cashier/explore-products",
