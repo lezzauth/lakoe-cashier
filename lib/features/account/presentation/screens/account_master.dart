@@ -11,6 +11,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/light_appbar.dart';
+import 'package:point_of_sales_cashier/features/account/presentation/widgets/shimmer/account_shimmer.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/outlets/application/outlet_cubit.dart';
@@ -145,43 +146,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
                   ),
                 ),
               ),
-              Shimmer.fromColors(
-                baseColor: const Color(0xFFE8E9F1),
-                highlightColor: const Color(0xFFF8F9FE),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 120),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: TColors.highlightLightest,
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          height: 120,
-                        ),
-                        const SizedBox(height: 12),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: TColors.highlightLightest,
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          height: 80,
-                        ),
-                        const SizedBox(height: 12),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: TColors.highlightLightest,
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          height: 200,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              AccountShimmer(),
             ],
           );
         },
