@@ -20,7 +20,7 @@ class OperatorModel with _$OperatorModel {
     required String role,
     required String name,
     required String phoneNumber,
-    required String email,
+    String? email,
     required bool emailVerified,
     required bool phoneVerified,
     required String outletId,

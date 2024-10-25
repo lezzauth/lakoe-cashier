@@ -15,11 +15,12 @@ class CashierCubit extends Cubit<CashierState> {
   Future<void> openCashier(OpenCashierDto dto) async {
     emit(CashierOpenInProgress());
     try {
-      final response = await _cashierRepository.openCashier(dto);
-      _tokenProvider.setCashierToken(response.token);
+      final res = await _cashierRepository.openCashier(dto);
+      _tokenProvider.setCashierToken(res.token);
 
       final cashier = await _cashierRepository.getOpenCashier();
-      if (cashier == null) throw ErrorDescription("cashier closed");
+      if (cashier == null) throw ErrorDescription("Cashier closed");
+
       emit(CashierOpened(operator: cashier.operator));
     } catch (e) {
       emit(CashierOpenFailure(message: e.toString()));

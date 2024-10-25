@@ -24,7 +24,7 @@ _$OperatorModelImpl _$$OperatorModelImplFromJson(Map<String, dynamic> json) =>
       role: json['role'] as String,
       name: json['name'] as String,
       phoneNumber: json['phoneNumber'] as String,
-      email: json['email'] as String,
+      email: json['email'] as String?,
       emailVerified: json['emailVerified'] as bool,
       phoneVerified: json['phoneVerified'] as bool,
       outletId: json['outletId'] as String,
