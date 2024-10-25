@@ -121,10 +121,19 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
                       width: double.maxFinite,
                       child: ElevatedButton(
                         onPressed: enabled ? onSubmit : null,
-                        child: const TextActionL(
-                          "Lanjutkan",
-                          color: TColors.neutralLightLightest,
-                        ),
+                        child: state is CashierCloseInProgress
+                            ? const SizedBox(
+                                height: 16,
+                                width: 16,
+                                child: CircularProgressIndicator(
+                                  color: TColors.neutralLightLightest,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const TextActionL(
+                                "Lanjutkan",
+                                color: TColors.neutralLightLightest,
+                              ),
                       ),
                     );
                   },
