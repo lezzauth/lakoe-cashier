@@ -8,6 +8,7 @@ import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart'
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
@@ -18,6 +19,7 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/fo
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 
 class OutletEditScreen extends StatefulWidget {
   const OutletEditScreen({super.key});
@@ -68,7 +70,7 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
         arg = args;
       });
 
-      if (args.color!.isNotEmpty) {
+      if (args.color != null) {
         int argColorInt =
             int.parse(args.color!.replaceFirst("0x", ""), radix: 16);
         bool isColorInList = colors.contains(argColorInt);
@@ -77,17 +79,29 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
           selectedColor = argColorInt;
           isCustomColor = !isColorInList;
         });
+      } else {
+        setState(() {
+          selectedColor = 0x10000000;
+        });
       }
     });
   }
 
   onSubmit() {
     String colorHex = '0x${selectedColor.toRadixString(16).toUpperCase()}';
-    context.read<OutletCubit>().update(
-          UpdateOutletDto(
-            color: colorHex.toString(),
-          ),
-        );
+
+    if (colorHex != "0x10000000") {
+      context.read<OutletCubit>().update(
+            UpdateOutletDto(
+              color: colorHex.toString(),
+            ),
+          );
+    } else {
+      CustomToast.show(
+        context,
+        "Kamu harus pilih warna dulu, ya!",
+      );
+    }
   }
 
   @override
@@ -236,19 +250,36 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                                       ? ImagePickerValue()
                                       : ImagePickerValue(url: arg!.logo),
                                   builder: (field) {
-                                    return ImagePickerField(
-                                      labelPicker: "Upload Logo",
-                                      sizes: 120,
-                                      isLogoImage: true,
-                                      bgColor: Color(selectedColor),
-                                      value: field.value,
-                                      onChanged: field.didChange,
-                                      errorText: field.errorText ?? "",
-                                      onError: (errorText) {
-                                        formKey
-                                            .currentState?.fields["image_logo"]
-                                            ?.invalidate(errorText);
-                                      },
+                                    return Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(12),
+                                          ),
+                                          child: Image.asset(
+                                            TImages.checkeredBg,
+                                            fit: BoxFit.cover,
+                                            width: 120,
+                                            height: 120,
+                                          ),
+                                        ),
+                                        Positioned.fill(
+                                          child: ImagePickerField(
+                                            labelPicker: "Upload Logo",
+                                            sizes: 120,
+                                            isLogoImage: true,
+                                            bgColor: Color(selectedColor),
+                                            value: field.value,
+                                            onChanged: field.didChange,
+                                            errorText: field.errorText ?? "",
+                                            onError: (errorText) {
+                                              formKey.currentState
+                                                  ?.fields["image_logo"]
+                                                  ?.invalidate(errorText);
+                                            },
+                                          ),
+                                        ),
+                                      ],
                                     );
                                   },
                                 ),

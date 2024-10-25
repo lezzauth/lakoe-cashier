@@ -2,7 +2,6 @@ import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/list_item_card.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/section_card.dart';
@@ -108,36 +107,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
                         // const SizedBox(height: 12),
                         // const BalanceCard(),
                         const SizedBox(height: 12),
-                        BlocBuilder<OutletCubit, OutletState>(
-                            builder: (context, state) => switch (state) {
-                                  OutletLoadSuccess(:final outlet) =>
-                                    OutletCard(outlet: outlet),
-                                  OutletLoadFailure() => Shimmer.fromColors(
-                                      baseColor: const Color(0xFFE8E9F1),
-                                      highlightColor: const Color(0xFFF8F9FE),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: TColors.highlightLightest,
-                                          borderRadius:
-                                              BorderRadius.circular(16.0),
-                                        ),
-                                        height: 80,
-                                      ),
-                                    ),
-                                  _ => Shimmer.fromColors(
-                                      baseColor: const Color(0xFFE8E9F1),
-                                      highlightColor: const Color(0xFFF8F9FE),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: TColors.highlightLightest,
-                                          borderRadius:
-                                              BorderRadius.circular(16.0),
-                                        ),
-                                        height: 80,
-                                      ),
-                                    ),
-                                }),
-
+                        OutletCard(),
                         const SizedBox(height: 12),
                         OtherCard(
                           children: otherSettingItems
@@ -424,18 +394,16 @@ class BalanceCard extends StatelessWidget {
 }
 
 class OutletCard extends StatelessWidget {
-  const OutletCard({super.key, required this.outlet});
-
-  final OutletModel outlet;
+  const OutletCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
+    return BlocBuilder<OutletCubit, OutletState>(
       builder: (context, state) {
-        if (state is AuthReady) {
-          String outletName = outlet.name;
-          String? outletAddress = outlet.address;
-          String? outletLogo = outlet.logo;
+        if (state is OutletLoadSuccess) {
+          String outletName = state.outlet.name;
+          String? outletAddress = state.outlet.address;
+          String? outletLogo = state.outlet.logo;
 
           return InkWell(
             splashColor: Colors.transparent,
@@ -443,7 +411,7 @@ class OutletCard extends StatelessWidget {
             onTap: () => Navigator.pushNamed(
               context,
               "/outlet/edit",
-              arguments: outlet,
+              arguments: state.outlet,
             ),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -512,10 +480,30 @@ class OutletCard extends StatelessWidget {
               ),
             ),
           );
-        } else if (state is AuthLoadInProgress) {
-          return const Center(child: CircularProgressIndicator());
+        } else if (state is OutletLoadInProgress) {
+          return Shimmer.fromColors(
+            baseColor: const Color(0xFFE8E9F1),
+            highlightColor: const Color(0xFFF8F9FE),
+            child: Container(
+              decoration: BoxDecoration(
+                color: TColors.highlightLightest,
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              height: 80,
+            ),
+          );
         } else {
-          return const Text('Unable to load outlet data');
+          return Shimmer.fromColors(
+            baseColor: const Color(0xFFE8E9F1),
+            highlightColor: const Color(0xFFF8F9FE),
+            child: Container(
+              decoration: BoxDecoration(
+                color: TColors.highlightLightest,
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              height: 80,
+            ),
+          );
         }
       },
     );
