@@ -180,7 +180,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 splashColor: TColors.neutralLightLight,
                 highlightColor: TColors.neutralLightLight,
                 child: SectionCard(
-                  iconSrc: TIcons.history,
+                  iconSrc: TIcons.bill,
                   title: "Riwayat Pesanan",
                   children: null,
                 ),

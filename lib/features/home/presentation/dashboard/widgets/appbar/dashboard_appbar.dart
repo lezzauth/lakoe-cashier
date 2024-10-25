@@ -36,9 +36,17 @@ class DashboardAppbar extends StatelessWidget implements PreferredSizeWidget {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       UiIcons(
-                        onTap: () =>
-                            Navigator.pushNamed(context, "/notifications"),
-                        TIcons.bell,
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            "/orders",
+                            arguments: {
+                              "previousScreen": "Homepage",
+                            },
+                          );
+                          // Navigator.pushNamed(context, "/notifications");
+                        },
+                        TIcons.bill,
                         color: TColors.neutralDarkDark,
                       ),
                       InkWell(

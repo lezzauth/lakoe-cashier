@@ -151,11 +151,6 @@ class _CashierProductListState extends State<CashierProductList> {
                       );
                     },
                   ),
-
-                  //  Container(
-                  //   margin: const EdgeInsets.symmetric(vertical: 24),
-                  //   child: const Center(child: CircularProgressIndicator()),
-                  // ),
                 ),
               ),
             ),

@@ -93,13 +93,13 @@ class _ExploreProductTabletContentState
         child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: TColors.neutralLightLightest,
-          endDrawer: const ExploreProductDrawerTablet(),
+          endDrawer: ExploreProductDrawerTablet(),
           body: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
                 child: Scaffold(
-                  appBar: const ExploreProductAppbar(),
+                  appBar: ExploreProductAppbar(),
                   body: Scrollbar(
                     child: RefreshIndicator(
                       onRefresh: _onRefresh,
@@ -109,16 +109,16 @@ class _ExploreProductTabletContentState
                           SliverToBoxAdapter(
                             child: Container(
                               color: TColors.neutralLightLight,
-                              padding: const EdgeInsets.symmetric(vertical: 6),
+                              padding: EdgeInsets.symmetric(vertical: 6),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.only(bottom: 12.0),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
-                                    child: const Row(
+                                    margin: EdgeInsets.only(bottom: 12.0),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16),
+                                    child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -126,7 +126,7 @@ class _ExploreProductTabletContentState
                                       ],
                                     ),
                                   ),
-                                  const CashierOpenOrderList(),
+                                  CashierOpenOrderList(),
                                 ],
                               ),
                             ),
@@ -166,7 +166,7 @@ class _ExploreProductTabletContentState
                                           ),
                                           Container(
                                             width: 360,
-                                            padding: const EdgeInsets.only(
+                                            padding: EdgeInsets.only(
                                                 right: 24, left: 12),
                                             child: SearchField(
                                               hintText: "Cari menu disini…",
@@ -187,7 +187,7 @@ class _ExploreProductTabletContentState
                               ),
                             ),
                           ),
-                          const ProductGrid()
+                          ProductGrid()
                         ],
                       ),
                     ),
@@ -203,12 +203,14 @@ class _ExploreProductTabletContentState
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: CartContentTablet(),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12, horizontal: 16),
+                            padding: EdgeInsets.symmetric(
+                              vertical: 12,
+                              horizontal: 16,
+                            ),
                             child: CartFooter(
                               onCompleted: (value) {
                                 _scaffoldKey.currentState!.openEndDrawer();
