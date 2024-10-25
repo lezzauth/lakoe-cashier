@@ -112,10 +112,15 @@ class _DashboardState extends State<Dashboard> {
               // ),
 
               Container(
+                height: 4,
+                color: TColors.neutralLightMedium,
+              ),
+
+              Container(
                 margin: EdgeInsets.only(bottom: 12, top: 20),
                 padding: EdgeInsets.symmetric(horizontal: 24),
                 child: TextHeading2(
-                  "Laporan Singkat",
+                  "Laporan singkat kamu, nih!",
                   color: TColors.neutralDarkDark,
                 ),
               ),
