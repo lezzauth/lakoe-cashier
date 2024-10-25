@@ -115,27 +115,39 @@ class _TableDetailPageState extends State<TableDetailPage> {
                           color: TColors.neutralDarkDarkest,
                         ),
                         const SizedBox(height: 12.0),
-                        FutureBuilder<String?>(
-                            future: _appDataProvider.colorBrand,
-                            builder: (context, snapshot) {
-                              if (snapshot.data != null) {
-                                int argColorInt = int.parse(
-                                    snapshot.data!.replaceFirst("0x", ""),
-                                    radix: 16);
+                        FutureBuilder<List<String?>>(
+                          future: Future.wait([
+                            _appDataProvider.colorBrand,
+                            _appDataProvider.logoBrand,
+                          ]),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData && snapshot.data != null) {
+                              final String? colorBrandData = snapshot.data![0];
+                              final String? logoBrandData = snapshot.data![1];
 
-                                return PreviewQrTable(
-                                  widget.table.id,
-                                  colorBrand: argColorInt,
-                                  tableNumber: widget.table.no,
-                                );
-                              } else {
-                                return PreviewQrTable(
-                                  widget.table.id,
-                                  colorBrand: 0xFFFD6E00,
-                                  tableNumber: widget.table.no,
-                                );
+                              int argColorInt = 0xFFFD6E00;
+                              if (colorBrandData != null) {
+                                argColorInt = int.parse(
+                                    colorBrandData.replaceFirst("0x", ""),
+                                    radix: 16);
                               }
-                            }),
+
+                              return PreviewQrTable(
+                                widget.table.id,
+                                logo: logoBrandData ?? "",
+                                colorBrand: argColorInt,
+                                tableNumber: widget.table.no,
+                              );
+                            } else {
+                              return PreviewQrTable(
+                                widget.table.id,
+                                logo: "",
+                                colorBrand: 0xFFFD6E00,
+                                tableNumber: widget.table.no,
+                              );
+                            }
+                          },
+                        ),
                       ],
                     ),
                   ),

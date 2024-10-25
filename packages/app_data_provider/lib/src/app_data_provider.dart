@@ -7,6 +7,7 @@ enum AppDataKeys {
   footNote,
   isAutoPrint,
   avatarSvg,
+  logoBrand,
   colorBrand,
 }
 
@@ -37,6 +38,10 @@ class AppDataProvider {
     await _storage.setString(AppDataKeys.colorBrand.name, color);
   }
 
+  Future<void> setLogoBrand(String url) async {
+    await _storage.setString(AppDataKeys.logoBrand.name, url);
+  }
+
   Future<void> setValues(AppDataModel values) async {
     await _storage.setString(AppDataKeys.outletId.name, values.outletId);
     await _storage.setString(AppDataKeys.ownerId.name, values.ownerId);
@@ -44,6 +49,7 @@ class AppDataProvider {
     await _storage.setBool(AppDataKeys.isAutoPrint.name, values.isAutoPrint);
     await _storage.setString(AppDataKeys.avatarSvg.name, values.avatarSvg);
     await _storage.setString(AppDataKeys.colorBrand.name, values.colorBrand);
+    await _storage.setString(AppDataKeys.logoBrand.name, values.logoBrand);
   }
 
   Future<String> get outletId async {
@@ -70,6 +76,10 @@ class AppDataProvider {
     return await _storage.getString(AppDataKeys.colorBrand.name);
   }
 
+  Future<String?> get logoBrand async {
+    return await _storage.getString(AppDataKeys.logoBrand.name);
+  }
+
   Future<AppDataModel> get values async {
     final outletId = await _storage.getString(AppDataKeys.outletId.name) ?? "";
     final ownerId = await _storage.getString(AppDataKeys.ownerId.name) ?? "";
@@ -80,6 +90,8 @@ class AppDataProvider {
         await _storage.getString(AppDataKeys.avatarSvg.name) ?? "";
     final colorBrand =
         await _storage.getString(AppDataKeys.colorBrand.name) ?? "";
+    final logoBrand =
+        await _storage.getString(AppDataKeys.logoBrand.name) ?? "";
 
     return AppDataModel(
       footNote: footNote,
@@ -88,6 +100,7 @@ class AppDataProvider {
       ownerId: ownerId,
       avatarSvg: avatarSvg,
       colorBrand: colorBrand,
+      logoBrand: logoBrand,
     );
   }
 }

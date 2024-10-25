@@ -253,7 +253,7 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                                     return Stack(
                                       children: [
                                         ClipRRect(
-                                          borderRadius: const BorderRadius.all(
+                                          borderRadius: BorderRadius.all(
                                             Radius.circular(12),
                                           ),
                                           child: Image.asset(

@@ -5,6 +5,7 @@ class AppDataModel {
   final String footNote;
   final String avatarSvg;
   final String colorBrand;
+  final String logoBrand;
 
   AppDataModel({
     required this.outletId,
@@ -13,5 +14,6 @@ class AppDataModel {
     required this.footNote,
     required this.avatarSvg,
     required this.colorBrand,
+    required this.logoBrand,
   });
 }

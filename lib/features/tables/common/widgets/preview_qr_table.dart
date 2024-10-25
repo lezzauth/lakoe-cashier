@@ -15,6 +15,7 @@ import 'package:point_of_sales_cashier/utils/helpers/preview_qr_table_helper.dar
 import 'package:qr_flutter/qr_flutter.dart';
 
 class PreviewQrTable extends StatelessWidget {
+  final String logo;
   final int colorBrand;
   final String data;
   final String tableNumber;
@@ -22,6 +23,7 @@ class PreviewQrTable extends StatelessWidget {
   const PreviewQrTable(
     this.data, {
     super.key,
+    required this.logo,
     this.colorBrand = 0xFFFD6E00,
     required this.tableNumber,
   });
@@ -49,7 +51,8 @@ class PreviewQrTable extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       child: SvgPicture.string(
                         PreviewQrTableHelper.getPreviewQrTable(
-                            Color(colorBrand)),
+                          Color(colorBrand),
+                        ),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -60,20 +63,29 @@ class PreviewQrTable extends StatelessWidget {
                       child: Wrap(
                         alignment: WrapAlignment.spaceBetween,
                         children: [
-                          Image.asset(
-                            TImages.lakoeLetterWhite,
-                            height: 60,
-                            width: 60,
+                          ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              Colors.white,
+                              BlendMode.srcATop,
+                            ),
+                            child: (logo.isEmpty)
+                                ? Image.asset(
+                                    TImages.lakoeLetterWhite,
+                                    height: 60,
+                                    width: 60,
+                                  )
+                                : Image.network(
+                                    logo,
+                                    height: 60,
+                                    width: 60,
+                                  ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Container(
-                                margin: const EdgeInsets.only(bottom: 4),
-                                child: const TextHeading4(
-                                  "No.Meja",
-                                  color: TColors.neutralLightLightest,
-                                ),
+                              const TextHeading4(
+                                "No. Meja",
+                                color: TColors.neutralLightLightest,
                               ),
                               TextHeading1(
                                 tableNumber,
@@ -115,9 +127,33 @@ class PreviewQrTable extends StatelessWidget {
                     child: Container(
                       color: TColors.neutralLightLightest,
                       padding: const EdgeInsets.all(4.0),
-                      child: Image.asset(
-                        TImages.lakoeLogoQRIS, // Change with logo merchant
-                        scale: 4,
+                      child: Container(
+                        width: 36,
+                        height: 36,
+                        padding: EdgeInsets.all(0),
+                        decoration: BoxDecoration(
+                          color: Color(colorBrand),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              Colors.white,
+                              BlendMode.srcATop,
+                            ),
+                            child: (logo.isEmpty)
+                                ? Image.asset(
+                                    TImages.defaultLogo,
+                                    width: 20,
+                                    height: 20,
+                                  )
+                                : Image.network(
+                                    logo,
+                                    width: 24,
+                                    height: 24,
+                                  ),
+                          ),
+                        ),
                       ),
                     ),
                   ),

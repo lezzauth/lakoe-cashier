@@ -1,3 +1,4 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/custom_radio.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
@@ -18,6 +19,8 @@ class TableNewQrOrderTab extends StatefulWidget {
 }
 
 class _TableNewQrOrderTabState extends State<TableNewQrOrderTab> {
+  final AppDataProvider _appDataProvider = AppDataProvider();
+
   @override
   Widget build(BuildContext context) {
     showDownloadQR() {
@@ -44,11 +47,39 @@ class _TableNewQrOrderTabState extends State<TableNewQrOrderTab> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [
-                PreviewQrTable(
-                  widget.table?.id ?? DateTime.timestamp().toString(),
-                  // color: HexColor("#06B6D4"),
-                  tableNumber: widget.table?.no ?? "Example",
-                )
+                FutureBuilder<List<String?>>(
+                  future: Future.wait([
+                    _appDataProvider.colorBrand,
+                    _appDataProvider.logoBrand,
+                  ]),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data != null) {
+                      final String? colorBrandData = snapshot.data![0];
+                      final String? logoBrandData = snapshot.data![1];
+
+                      int argColorInt = 0xFFFD6E00;
+                      if (colorBrandData != null) {
+                        argColorInt = int.parse(
+                            colorBrandData.replaceFirst("0x", ""),
+                            radix: 16);
+                      }
+
+                      return PreviewQrTable(
+                        widget.table?.id ?? DateTime.timestamp().toString(),
+                        logo: logoBrandData ?? "",
+                        colorBrand: argColorInt,
+                        tableNumber: widget.table?.no ?? "T-00",
+                      );
+                    } else {
+                      return PreviewQrTable(
+                        widget.table?.id ?? DateTime.timestamp().toString(),
+                        logo: "",
+                        colorBrand: 0xFFFD6E00,
+                        tableNumber: widget.table?.no ?? "T-01",
+                      );
+                    }
+                  },
+                ),
               ],
             ),
           ),

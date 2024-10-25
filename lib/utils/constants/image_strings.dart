@@ -22,6 +22,7 @@ class TImages {
   static const String growLogo = "assets/images/grow-logo.png";
   static const String proLogo = "assets/images/pro-logo.png";
   static const String defaultAvatar = "assets/images/default-avatar.png";
+  static const String defaultLogo = "assets/images/default-logo.png";
   static const String checkeredBg = "assets/images/checkered_background.webp";
   static const String badRequest = "assets/images/502-illustration.webp";
   static const String noConnection =
