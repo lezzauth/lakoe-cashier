@@ -70,6 +70,7 @@ class _DashboardState extends State<Dashboard> {
           uri.scheme == 'app.lakoe' &&
           uri.host == 'payment' &&
           uri.path == '/success') {
+        if (!mounted) return;
         Navigator.pushNamed(context, "/payment/success");
       } else {}
     }, onError: (err) {
@@ -126,11 +127,11 @@ class _DashboardState extends State<Dashboard> {
                     CashierReportLoadSuccess(:final report) => Column(
                         children: [
                           SalesSummary(
-                            totalSales: report.total_sales,
+                            totalSales: report.totalSales,
                           ),
                           const SizedBox(height: 12),
                           TransactionSummary(
-                            totalTransactions: report.total_transactions,
+                            totalTransactions: report.totalTransactions,
                           ),
                         ],
                       ),

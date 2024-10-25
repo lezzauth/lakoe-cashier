@@ -465,19 +465,3 @@ class ModelItemPackage {
     required this.color,
   });
 }
-
-class _CardItemBoost {
-  final int id;
-  final String title;
-  final String subtitle;
-  final int price;
-  final String? routeName;
-
-  _CardItemBoost({
-    required this.id,
-    required this.title,
-    required this.subtitle,
-    required this.price,
-    this.routeName,
-  });
-}

@@ -24,6 +24,7 @@ class _NewCustomerFormState extends State<NewCustomerForm> {
     if (!context.mounted) return;
 
     if (await Permission.contacts.isPermanentlyDenied) {
+      if (!mounted) return;
       showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -37,6 +38,7 @@ class _NewCustomerFormState extends State<NewCustomerForm> {
     }
 
     if (!(await Permission.contacts.isGranted)) {
+      if (!mounted) return;
       await showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -57,6 +59,7 @@ class _NewCustomerFormState extends State<NewCustomerForm> {
             "phoneNumber": contact.phones.first.number,
           });
         } else {
+          if (!mounted) return;
           CustomToast.show(
             context,
             "Kontak tidak memiliki nomor telepon.",

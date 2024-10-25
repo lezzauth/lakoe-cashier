@@ -45,27 +45,32 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       title: "Paket & Riwayat",
       routeName: "/",
       iconSrc: TIcons.billAlt,
+      isNewItem: false,
     ),
     _OtherItem(
       title: "Kasih Rating",
       routeName: "/",
       iconSrc: TIcons.star,
       textTrailing: "Versi 3.20.0",
+      isNewItem: false,
     ),
     _OtherItem(
       title: "Syarat & Ketentuan",
       routeName: "/terms_conditions",
       iconSrc: TIcons.document,
+      isNewItem: false,
     ),
     _OtherItem(
       title: "Kebijakan Privasi",
       routeName: "/privacy_policy",
       iconSrc: TIcons.shieldKeyhole,
+      isNewItem: false,
     ),
     _OtherItem(
       title: "Atur Akun",
       routeName: "/manage_account",
       iconSrc: TIcons.linkSquare,
+      isNewItem: false,
     ),
   ];
 
@@ -116,7 +121,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
                                   iconSrc: item.iconSrc,
                                   title: item.title,
                                   routeName: item.routeName,
-                                  isNewItem: item.isNewItem,
+                                  isNewItem: item.isNewItem!,
                                   textTrailing: item.textTrailing,
                                 ),
                               )
@@ -453,7 +458,7 @@ class OutletCard extends StatelessWidget {
                       backgroundColor: TColors.neutralLightLight,
                       child: ColorFiltered(
                         colorFilter: ColorFilter.mode(
-                          Color(colorBrand!),
+                          Color(colorBrand),
                           BlendMode.srcATop,
                         ),
                         child: Image.network(
@@ -546,13 +551,13 @@ class _OtherItem {
   final String routeName;
   final String iconSrc;
   final String? textTrailing;
-  final bool isNewItem;
+  final bool? isNewItem;
 
   _OtherItem({
     required this.title,
     required this.routeName,
     required this.iconSrc,
     this.textTrailing,
-    this.isNewItem = false,
+    this.isNewItem,
   });
 }

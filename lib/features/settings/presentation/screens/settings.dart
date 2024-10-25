@@ -229,12 +229,11 @@ class _SettingItem {
   final String title;
   final String routeName;
   final String iconSrc;
-  final bool isNewItem;
+  final bool isNewItem = false;
 
   _SettingItem({
     required this.title,
     required this.routeName,
     required this.iconSrc,
-    this.isNewItem = false,
   });
 }

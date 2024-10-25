@@ -1,4 +1,5 @@
 import 'package:dio_provider/dio_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
@@ -85,7 +86,9 @@ class CustomToast {
         overlayEntry.remove();
       });
     } else {
-      print("No overlay found. Unable to show toast.");
+      if (kDebugMode) {
+        print("No overlay found. Unable to show toast.");
+      }
     }
   }
 }

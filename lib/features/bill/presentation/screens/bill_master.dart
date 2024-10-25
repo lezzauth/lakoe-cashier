@@ -173,13 +173,3 @@ class SectionBillInformation extends StatelessWidget {
     );
   }
 }
-
-class _BillPriceItem {
-  final String label;
-  final String price;
-
-  _BillPriceItem({
-    required this.label,
-    required this.price,
-  });
-}

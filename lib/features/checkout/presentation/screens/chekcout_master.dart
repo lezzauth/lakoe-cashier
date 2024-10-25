@@ -187,7 +187,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   TextHeading4(
-                                                    package!.period == "12"
+                                                    package!.period == 12
                                                         ? "1 Tahun"
                                                         : "${package!.period} Bulan",
                                                     color:

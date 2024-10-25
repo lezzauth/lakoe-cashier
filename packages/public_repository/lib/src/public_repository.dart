@@ -9,8 +9,8 @@ abstract class PublicRepository {
 }
 
 class PublicRepositoryImpl implements PublicRepository {
-  String _baseURL = "/public";
-  Dio _dio = DioProvider().dio;
+  final String _baseURL = "/public";
+  final Dio _dio = DioProvider().dio;
 
   @override
   Future<List<BankListModel>> findAllBanks() async {

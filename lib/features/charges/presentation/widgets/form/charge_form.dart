@@ -33,7 +33,7 @@ class _ChargeFormState extends State<ChargeForm> {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = widget.formKey;
+    final formKey = widget.formKey;
 
     return BlocBuilder<ChargeFormCubit, ChargeFormState>(
       builder: (context, formState) {
@@ -95,19 +95,18 @@ class _ChargeFormState extends State<ChargeForm> {
 
             return switch (state) {
               ChargeMasterLoadSuccess() => FormBuilder(
-                  key: _formKey,
+                  key: formKey,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   initialValue: initialValue,
                   onChanged: () {
                     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                      bool isFormValid =
-                          _formKey.currentState?.isValid ?? false;
-                      _isServiceChargeActive = _formKey.currentState
+                      bool isFormValid = formKey.currentState?.isValid ?? false;
+                      _isServiceChargeActive = formKey.currentState
                               ?.instantValue["isServiceChargeActive"] ??
                           false;
 
                       context.read<ChargeFormCubit>().setValue(
-                            _formKey.currentState?.instantValue,
+                            formKey.currentState?.instantValue,
                             isFormValid,
                             true,
                           );
@@ -208,7 +207,7 @@ class _ChargeFormState extends State<ChargeForm> {
                                             r'^\d+\.?\d{0,2}|^\d+\,?\d{0,2}')),
                                       ],
                                       validator: (value) {
-                                        bool isServiceChargeActive = _formKey
+                                        bool isServiceChargeActive = formKey
                                                 .currentState
                                                 ?.fields[
                                                     "isServiceChargeActive"]

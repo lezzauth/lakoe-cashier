@@ -110,13 +110,3 @@ class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
     );
   }
 }
-
-class _EmployeeModel {
-  final String name;
-  final String role;
-
-  _EmployeeModel({
-    required this.name,
-    required this.role,
-  });
-}

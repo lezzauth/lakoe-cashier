@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
@@ -12,7 +13,9 @@ class LoyaltyProgramBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("loyalty program");
+        if (kDebugMode) {
+          print("loyalty program");
+        }
       },
       child: Container(
         clipBehavior: Clip.antiAlias,

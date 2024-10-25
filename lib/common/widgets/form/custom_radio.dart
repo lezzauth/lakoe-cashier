@@ -43,7 +43,7 @@ class _CustomRadioState extends State<CustomRadio> {
               ? const Icon(Icons.circle,
                   size: 10,
                   color: TColors.neutralLightLightest,
-                  key: const ValueKey(true))
+                  key: ValueKey(true))
               : const Icon(Icons.circle,
                   size: 24,
                   color: TColors.neutralLightLightest,

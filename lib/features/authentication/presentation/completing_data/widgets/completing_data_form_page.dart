@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -39,7 +40,9 @@ class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
       //   ..showSnackBar(
       //     snackBar,
       //   );
-      print('Form complete data invalid');
+      if (kDebugMode) {
+        print('Form complete data invalid');
+      }
       return;
     }
 

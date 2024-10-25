@@ -57,7 +57,7 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
     File? profilePictureFile = profilePicture?.file;
 
     await context.read<EmployeeMasterCubit>().create(
-          profilePictureFile ?? null,
+          profilePictureFile,
           CreateEmployeeDto(
             name: value["name"],
             pin: value["pin"],

@@ -2545,9 +2545,9 @@ OutletSalesModel _$OutletSalesModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OutletSalesModel {
-  OutletReportTotalSaleModel get total_sales =>
+  OutletReportTotalSaleModel get totalSales =>
       throw _privateConstructorUsedError;
-  OutletReportTotalTransactionModel get total_transactions =>
+  OutletReportTotalTransactionModel get totalTransactions =>
       throw _privateConstructorUsedError;
   OutletReportTimeWindow get timeWindow => throw _privateConstructorUsedError;
 
@@ -2568,12 +2568,12 @@ abstract class $OutletSalesModelCopyWith<$Res> {
       _$OutletSalesModelCopyWithImpl<$Res, OutletSalesModel>;
   @useResult
   $Res call(
-      {OutletReportTotalSaleModel total_sales,
-      OutletReportTotalTransactionModel total_transactions,
+      {OutletReportTotalSaleModel totalSales,
+      OutletReportTotalTransactionModel totalTransactions,
       OutletReportTimeWindow timeWindow});
 
-  $OutletReportTotalSaleModelCopyWith<$Res> get total_sales;
-  $OutletReportTotalTransactionModelCopyWith<$Res> get total_transactions;
+  $OutletReportTotalSaleModelCopyWith<$Res> get totalSales;
+  $OutletReportTotalTransactionModelCopyWith<$Res> get totalTransactions;
   $OutletReportTimeWindowCopyWith<$Res> get timeWindow;
 }
 
@@ -2592,18 +2592,18 @@ class _$OutletSalesModelCopyWithImpl<$Res, $Val extends OutletSalesModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? total_sales = null,
-    Object? total_transactions = null,
+    Object? totalSales = null,
+    Object? totalTransactions = null,
     Object? timeWindow = null,
   }) {
     return _then(_value.copyWith(
-      total_sales: null == total_sales
-          ? _value.total_sales
-          : total_sales // ignore: cast_nullable_to_non_nullable
+      totalSales: null == totalSales
+          ? _value.totalSales
+          : totalSales // ignore: cast_nullable_to_non_nullable
               as OutletReportTotalSaleModel,
-      total_transactions: null == total_transactions
-          ? _value.total_transactions
-          : total_transactions // ignore: cast_nullable_to_non_nullable
+      totalTransactions: null == totalTransactions
+          ? _value.totalTransactions
+          : totalTransactions // ignore: cast_nullable_to_non_nullable
               as OutletReportTotalTransactionModel,
       timeWindow: null == timeWindow
           ? _value.timeWindow
@@ -2616,10 +2616,10 @@ class _$OutletSalesModelCopyWithImpl<$Res, $Val extends OutletSalesModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $OutletReportTotalSaleModelCopyWith<$Res> get total_sales {
-    return $OutletReportTotalSaleModelCopyWith<$Res>(_value.total_sales,
+  $OutletReportTotalSaleModelCopyWith<$Res> get totalSales {
+    return $OutletReportTotalSaleModelCopyWith<$Res>(_value.totalSales,
         (value) {
-      return _then(_value.copyWith(total_sales: value) as $Val);
+      return _then(_value.copyWith(totalSales: value) as $Val);
     });
   }
 
@@ -2627,10 +2627,10 @@ class _$OutletSalesModelCopyWithImpl<$Res, $Val extends OutletSalesModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $OutletReportTotalTransactionModelCopyWith<$Res> get total_transactions {
+  $OutletReportTotalTransactionModelCopyWith<$Res> get totalTransactions {
     return $OutletReportTotalTransactionModelCopyWith<$Res>(
-        _value.total_transactions, (value) {
-      return _then(_value.copyWith(total_transactions: value) as $Val);
+        _value.totalTransactions, (value) {
+      return _then(_value.copyWith(totalTransactions: value) as $Val);
     });
   }
 
@@ -2654,14 +2654,14 @@ abstract class _$$OutletSalesModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {OutletReportTotalSaleModel total_sales,
-      OutletReportTotalTransactionModel total_transactions,
+      {OutletReportTotalSaleModel totalSales,
+      OutletReportTotalTransactionModel totalTransactions,
       OutletReportTimeWindow timeWindow});
 
   @override
-  $OutletReportTotalSaleModelCopyWith<$Res> get total_sales;
+  $OutletReportTotalSaleModelCopyWith<$Res> get totalSales;
   @override
-  $OutletReportTotalTransactionModelCopyWith<$Res> get total_transactions;
+  $OutletReportTotalTransactionModelCopyWith<$Res> get totalTransactions;
   @override
   $OutletReportTimeWindowCopyWith<$Res> get timeWindow;
 }
@@ -2679,18 +2679,18 @@ class __$$OutletSalesModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? total_sales = null,
-    Object? total_transactions = null,
+    Object? totalSales = null,
+    Object? totalTransactions = null,
     Object? timeWindow = null,
   }) {
     return _then(_$OutletSalesModelImpl(
-      total_sales: null == total_sales
-          ? _value.total_sales
-          : total_sales // ignore: cast_nullable_to_non_nullable
+      totalSales: null == totalSales
+          ? _value.totalSales
+          : totalSales // ignore: cast_nullable_to_non_nullable
               as OutletReportTotalSaleModel,
-      total_transactions: null == total_transactions
-          ? _value.total_transactions
-          : total_transactions // ignore: cast_nullable_to_non_nullable
+      totalTransactions: null == totalTransactions
+          ? _value.totalTransactions
+          : totalTransactions // ignore: cast_nullable_to_non_nullable
               as OutletReportTotalTransactionModel,
       timeWindow: null == timeWindow
           ? _value.timeWindow
@@ -2704,23 +2704,23 @@ class __$$OutletSalesModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OutletSalesModelImpl implements _OutletSalesModel {
   const _$OutletSalesModelImpl(
-      {required this.total_sales,
-      required this.total_transactions,
+      {required this.totalSales,
+      required this.totalTransactions,
       required this.timeWindow});
 
   factory _$OutletSalesModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$OutletSalesModelImplFromJson(json);
 
   @override
-  final OutletReportTotalSaleModel total_sales;
+  final OutletReportTotalSaleModel totalSales;
   @override
-  final OutletReportTotalTransactionModel total_transactions;
+  final OutletReportTotalTransactionModel totalTransactions;
   @override
   final OutletReportTimeWindow timeWindow;
 
   @override
   String toString() {
-    return 'OutletSalesModel(total_sales: $total_sales, total_transactions: $total_transactions, timeWindow: $timeWindow)';
+    return 'OutletSalesModel(totalSales: $totalSales, totalTransactions: $totalTransactions, timeWindow: $timeWindow)';
   }
 
   @override
@@ -2728,10 +2728,10 @@ class _$OutletSalesModelImpl implements _OutletSalesModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OutletSalesModelImpl &&
-            (identical(other.total_sales, total_sales) ||
-                other.total_sales == total_sales) &&
-            (identical(other.total_transactions, total_transactions) ||
-                other.total_transactions == total_transactions) &&
+            (identical(other.totalSales, totalSales) ||
+                other.totalSales == totalSales) &&
+            (identical(other.totalTransactions, totalTransactions) ||
+                other.totalTransactions == totalTransactions) &&
             (identical(other.timeWindow, timeWindow) ||
                 other.timeWindow == timeWindow));
   }
@@ -2739,7 +2739,7 @@ class _$OutletSalesModelImpl implements _OutletSalesModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, total_sales, total_transactions, timeWindow);
+      Object.hash(runtimeType, totalSales, totalTransactions, timeWindow);
 
   /// Create a copy of OutletSalesModel
   /// with the given fields replaced by the non-null parameter values.
@@ -2760,8 +2760,8 @@ class _$OutletSalesModelImpl implements _OutletSalesModel {
 
 abstract class _OutletSalesModel implements OutletSalesModel {
   const factory _OutletSalesModel(
-          {required final OutletReportTotalSaleModel total_sales,
-          required final OutletReportTotalTransactionModel total_transactions,
+          {required final OutletReportTotalSaleModel totalSales,
+          required final OutletReportTotalTransactionModel totalTransactions,
           required final OutletReportTimeWindow timeWindow}) =
       _$OutletSalesModelImpl;
 
@@ -2769,9 +2769,9 @@ abstract class _OutletSalesModel implements OutletSalesModel {
       _$OutletSalesModelImpl.fromJson;
 
   @override
-  OutletReportTotalSaleModel get total_sales;
+  OutletReportTotalSaleModel get totalSales;
   @override
-  OutletReportTotalTransactionModel get total_transactions;
+  OutletReportTotalTransactionModel get totalTransactions;
   @override
   OutletReportTimeWindow get timeWindow;
 

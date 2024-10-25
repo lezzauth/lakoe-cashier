@@ -150,14 +150,14 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
                             ),
                           ),
                           Positioned(
+                            bottom: 30,
+                            left: 24,
+                            right: 24,
                             child: QrImageView(
                               data: '123456789',
                               version: QrVersions.auto,
                               size: 247.0,
                             ),
-                            bottom: 30,
-                            left: 24,
-                            right: 24,
                           ),
                           Positioned(
                             bottom: 16,

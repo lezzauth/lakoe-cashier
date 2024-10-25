@@ -46,6 +46,7 @@ class _TransferAttachmentFieldState extends State<TransferAttachmentField> {
 
   Future<void> _getImageFromCamera() async {
     if (await Permission.camera.isPermanentlyDenied) {
+      if (!mounted) return;
       showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -59,6 +60,7 @@ class _TransferAttachmentFieldState extends State<TransferAttachmentField> {
     }
 
     if (!(await Permission.camera.isGranted)) {
+      if (!mounted) return;
       await showModalBottomSheet(
         context: context,
         isScrollControlled: true,

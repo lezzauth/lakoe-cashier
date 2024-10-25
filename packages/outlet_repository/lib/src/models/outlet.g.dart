@@ -220,10 +220,10 @@ Map<String, dynamic> _$$DetailCustomerOutletResponseImplToJson(
 _$OutletSalesModelImpl _$$OutletSalesModelImplFromJson(
         Map<String, dynamic> json) =>
     _$OutletSalesModelImpl(
-      total_sales: OutletReportTotalSaleModel.fromJson(
-          json['total_sales'] as Map<String, dynamic>),
-      total_transactions: OutletReportTotalTransactionModel.fromJson(
-          json['total_transactions'] as Map<String, dynamic>),
+      totalSales: OutletReportTotalSaleModel.fromJson(
+          json['totalSales'] as Map<String, dynamic>),
+      totalTransactions: OutletReportTotalTransactionModel.fromJson(
+          json['totalTransactions'] as Map<String, dynamic>),
       timeWindow: OutletReportTimeWindow.fromJson(
           json['timeWindow'] as Map<String, dynamic>),
     );
@@ -231,8 +231,8 @@ _$OutletSalesModelImpl _$$OutletSalesModelImplFromJson(
 Map<String, dynamic> _$$OutletSalesModelImplToJson(
         _$OutletSalesModelImpl instance) =>
     <String, dynamic>{
-      'total_sales': instance.total_sales,
-      'total_transactions': instance.total_transactions,
+      'totalSales': instance.totalSales,
+      'totalTransactions': instance.totalTransactions,
       'timeWindow': instance.timeWindow,
     };
 

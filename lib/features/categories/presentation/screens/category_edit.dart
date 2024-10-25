@@ -60,8 +60,8 @@ class _CategoryEditScreenState extends State<CategoryEditScreen> {
             Navigator.pop(context);
           },
           secondaryAction: () async {
-            await _onDelete(categoryId);
             Navigator.pop(context);
+            await _onDelete(categoryId);
           },
         );
       },

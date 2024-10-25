@@ -34,7 +34,7 @@ class _TaxFormState extends State<TaxForm> {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = widget.formKey;
+    final formKey = widget.formKey;
     return BlocBuilder<TaxFormCubit, TaxFormState>(
         builder: (context, formState) {
       return BlocConsumer<TaxMasterCubit, TaxMasterState>(
@@ -89,18 +89,18 @@ class _TaxFormState extends State<TaxForm> {
 
           return switch (state) {
             TaxMasterLoadSuccess() => FormBuilder(
-                key: _formKey,
+                key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 initialValue: initialValue,
                 onChanged: () {
                   log('onChanged');
                   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                    bool isFormValid = _formKey.currentState?.isValid ?? false;
+                    bool isFormValid = formKey.currentState?.isValid ?? false;
                     _isPB1Active =
-                        _formKey.currentState?.instantValue["isPB1Active"] ??
+                        formKey.currentState?.instantValue["isPB1Active"] ??
                             false;
                     context.read<TaxFormCubit>().setValue(
-                        _formKey.currentState?.instantValue, isFormValid, true);
+                        formKey.currentState?.instantValue, isFormValid, true);
                   });
                 },
                 child: Column(
@@ -196,7 +196,7 @@ class _TaxFormState extends State<TaxForm> {
                                       ),
                                     ],
                                     validator: (value) {
-                                      bool isPB1Active = _formKey.currentState
+                                      bool isPB1Active = formKey.currentState
                                               ?.fields["isPB1Active"]?.value ??
                                           false;
 

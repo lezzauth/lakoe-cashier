@@ -3,35 +3,35 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
-List<_LanguageStyleItem> items = [
-  _LanguageStyleItem(
+List<LanguageStyleItem> items = [
+  LanguageStyleItem(
     title: "Formal",
     description:
         'Contoh: "Selamat pagi, Bapak/Ibu. Ada yang bisa saya bantu hari ini?"',
     value: "formal",
   ),
-  _LanguageStyleItem(
+  LanguageStyleItem(
     title: "Santai",
     description: 'Contoh: "Hai! Ada yang bisa aku bantu hari ini?"',
     value: "casual",
   ),
-  _LanguageStyleItem(
+  LanguageStyleItem(
     title: "Ceria",
     description:
         'Contoh: "Halo! Terima kasih sudah mampir, ada yang bisa dibantu hari ini? 😊"',
     value: "cheerful",
   ),
-  _LanguageStyleItem(
+  LanguageStyleItem(
     title: "Profesional",
     description: 'Contoh: "Selamat siang, bagaimana saya bisa membantu Anda?"',
     value: "professional",
   ),
-  _LanguageStyleItem(
+  LanguageStyleItem(
     title: "Gaul",
     description: 'Contoh: "Halo, sob! Ada yang bisa dibantu nih?"',
     value: "trendy",
   ),
-  _LanguageStyleItem(
+  LanguageStyleItem(
     title: "Humoris",
     description:
         'Contoh: "Waduh, hari yang sibuk ya? Apa yang bisa aku bantu sebelum kopi kedua? 😄"',
@@ -99,12 +99,12 @@ class LanguageStyleField extends StatelessWidget {
   }
 }
 
-class _LanguageStyleItem {
+class LanguageStyleItem {
   final String title;
   final String description;
   final String value;
 
-  _LanguageStyleItem({
+  LanguageStyleItem({
     required this.title,
     required this.description,
     required this.value,

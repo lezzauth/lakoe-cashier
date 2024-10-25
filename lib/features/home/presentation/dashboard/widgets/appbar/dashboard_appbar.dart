@@ -11,7 +11,7 @@ class DashboardAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppDataProvider _appDataProvider = AppDataProvider();
+    final AppDataProvider appDataProvider = AppDataProvider();
 
     return SafeArea(
       child: Padding(
@@ -38,7 +38,7 @@ class DashboardAppbar extends StatelessWidget implements PreferredSizeWidget {
                   highlightColor: Colors.transparent,
                   onTap: () => Navigator.pushNamed(context, "/account"),
                   child: FutureBuilder<String?>(
-                    future: _appDataProvider.avatarSvg,
+                    future: appDataProvider.avatarSvg,
                     builder: (context, snapshot) {
                       return Container(
                         width: 32,

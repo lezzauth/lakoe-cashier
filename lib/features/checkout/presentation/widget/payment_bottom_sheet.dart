@@ -75,7 +75,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                         Navigator.pop(context);
                       },
                     );
-                  }).toList(),
+                  }),
                 ],
               );
             },
