@@ -25,7 +25,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
   String messsageError = "PIN Salah. Coba Lagi.";
   bool checkPIN = false;
   bool isPinWrong = false;
-  bool hasNavigated = false;
+  bool isListenerActive = true;
 
   @override
   void initState() {
@@ -67,6 +67,8 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
 
     return BlocListener<CashierCubit, CashierState>(
       listener: (context, state) {
+        if (!isListenerActive) return;
+
         if (state is CashierOpenInProgress) {
           setState(() {
             checkPIN = true;
@@ -82,8 +84,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
                 ? "Kamu tidak memiliki akses ke kasir."
                 : "PIN Salah. Coba Lagi.");
           });
-        } else if (state is CashierOpened && !hasNavigated) {
-          hasNavigated = true;
+        } else if (state is CashierOpened) {
           Navigator.pushNamedAndRemoveUntil(
             context,
             "/cashier/explore-products",
@@ -93,6 +94,10 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
       },
       child: PopScope(
         onPopInvokedWithResult: (popDisposition, popResult) async {
+          setState(() {
+            isListenerActive = false;
+          });
+
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.pushNamedAndRemoveUntil(
               context,
