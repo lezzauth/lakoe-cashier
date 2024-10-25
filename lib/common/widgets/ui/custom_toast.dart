@@ -12,6 +12,7 @@ class CustomToast {
     String? icon,
     String position = 'top',
     Color backgroundColor = TColors.neutralDarkDark,
+    int duration = 3,
   }) {
     final overlay = navigatorKey.currentState?.overlay;
     if (overlay != null) {
@@ -23,7 +24,7 @@ class CustomToast {
           topPosition = MediaQuery.of(context).size.height * 0.4;
           break;
         case 'bottom':
-          bottomPosition = 100.0;
+          bottomPosition = 40.0;
           break;
         case 'top':
         default:
@@ -82,7 +83,7 @@ class CustomToast {
 
       overlay.insert(overlayEntry);
 
-      Future.delayed(Duration(seconds: 3), () {
+      Future.delayed(Duration(seconds: duration), () {
         overlayEntry.remove();
       });
     } else {

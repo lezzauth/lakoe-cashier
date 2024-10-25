@@ -22,6 +22,7 @@ import 'package:point_of_sales_cashier/features/reports/presentation/widgets/car
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/cards/report_card.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/cards/sales_total_card.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/list_tile/best_seller_product_tile.dart';
+import 'package:point_of_sales_cashier/features/reports/presentation/widgets/shimmer/repost_master_shimmer.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -328,15 +329,9 @@ class _ReportMasterState extends State<ReportMaster> {
                         ),
                     ],
                   ),
-                ReportMasterLoadFailure(:final error) => Center(
-                    child: TextBodyS(
-                      error,
-                      color: TColors.error,
-                    ),
-                  ),
-                _ => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                ReportMasterLoadFailure(:final error) =>
+                  RepostMasterShimmer(errorText: error),
+                _ => RepostMasterShimmer(),
               },
             )),
           ),
