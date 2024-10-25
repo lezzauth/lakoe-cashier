@@ -118,15 +118,23 @@ class _TableDetailPageState extends State<TableDetailPage> {
                         FutureBuilder<String?>(
                             future: _appDataProvider.colorBrand,
                             builder: (context, snapshot) {
-                              int argColorInt = int.parse(
-                                  snapshot.data!.replaceFirst("0x", ""),
-                                  radix: 16);
+                              if (snapshot.data != null) {
+                                int argColorInt = int.parse(
+                                    snapshot.data!.replaceFirst("0x", ""),
+                                    radix: 16);
 
-                              return PreviewQrTable(
-                                widget.table.id,
-                                colorBrand: argColorInt,
-                                tableNumber: widget.table.no,
-                              );
+                                return PreviewQrTable(
+                                  widget.table.id,
+                                  colorBrand: argColorInt,
+                                  tableNumber: widget.table.no,
+                                );
+                              } else {
+                                return PreviewQrTable(
+                                  widget.table.id,
+                                  colorBrand: 0xFFFD6E00,
+                                  tableNumber: widget.table.no,
+                                );
+                              }
                             }),
                       ],
                     ),
