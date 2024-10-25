@@ -1,9 +1,11 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/features/outlets/application/outlet_state.dart';
 
 class OutletCubit extends Cubit<OutletState> {
   final OutletRepository outletRepository = OutletRepositoryImpl();
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   OutletCubit() : super(OutletInitial());
 
@@ -15,6 +17,11 @@ class OutletCubit extends Cubit<OutletState> {
     try {
       emit(OutletLoadInProgress());
       final res = await outletRepository.getDetailOutlet();
+
+      if (res.color != null) {
+        await _appDataProvider.setColorBrand(res.color!);
+      }
+
       emit(OutletLoadSuccess(outlet: res));
     } catch (e) {
       emit(OutletLoadFailure(e.toString()));

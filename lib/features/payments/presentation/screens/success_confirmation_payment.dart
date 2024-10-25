@@ -126,11 +126,11 @@ class _SuccessConfirmationPaymentContentState
     return BlocBuilder<OrderDetailCubit, OrderDetailState>(
         builder: (context, state) => switch (state) {
               OrderDetailLoadSuccess(:final order) => FutureBuilder<bool>(
-                  future: appDataProvider.isBillAutoPrint,
+                  future: appDataProvider.isAutoPrint,
                   builder: (context, snapshot) {
-                    bool isBillAutoPrint = snapshot.data ?? false;
+                    bool isAutoPrint = snapshot.data ?? false;
 
-                    if (isBillAutoPrint && !_doPrinting) {
+                    if (isAutoPrint && !_doPrinting) {
                       _doPrinting = true;
                       _handlePrintReceipt(
                         context,

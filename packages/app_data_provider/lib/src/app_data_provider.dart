@@ -5,8 +5,9 @@ enum AppDataKeys {
   outletId,
   ownerId,
   footNote,
-  isBillAutoPrint,
+  isAutoPrint,
   avatarSvg,
+  colorBrand,
 }
 
 class AppDataProvider {
@@ -25,19 +26,24 @@ class AppDataProvider {
   }
 
   Future<void> setIsBillAutoPrint(bool value) async {
-    return await _storage.setBool(AppDataKeys.isBillAutoPrint.name, value);
+    return await _storage.setBool(AppDataKeys.isAutoPrint.name, value);
   }
 
   Future<void> setAvatar(String svgData) async {
     await _storage.setString(AppDataKeys.avatarSvg.name, svgData);
   }
 
+  Future<void> setColorBrand(String color) async {
+    await _storage.setString(AppDataKeys.colorBrand.name, color);
+  }
+
   Future<void> setValues(AppDataModel values) async {
     await _storage.setString(AppDataKeys.outletId.name, values.outletId);
     await _storage.setString(AppDataKeys.ownerId.name, values.ownerId);
     await _storage.setString(AppDataKeys.footNote.name, values.footNote);
-    await _storage.setBool(
-        AppDataKeys.isBillAutoPrint.name, values.isBillAutoPrint);
+    await _storage.setBool(AppDataKeys.isAutoPrint.name, values.isAutoPrint);
+    await _storage.setString(AppDataKeys.avatarSvg.name, values.avatarSvg);
+    await _storage.setString(AppDataKeys.colorBrand.name, values.colorBrand);
   }
 
   Future<String> get outletId async {
@@ -52,29 +58,36 @@ class AppDataProvider {
     return await _storage.getString(AppDataKeys.footNote.name) ?? "";
   }
 
-  Future<bool> get isBillAutoPrint async {
-    return await _storage.getBool(AppDataKeys.isBillAutoPrint.name) ?? false;
+  Future<bool> get isAutoPrint async {
+    return await _storage.getBool(AppDataKeys.isAutoPrint.name) ?? false;
   }
 
   Future<String?> get avatarSvg async {
     return await _storage.getString(AppDataKeys.avatarSvg.name);
   }
 
+  Future<String?> get colorBrand async {
+    return await _storage.getString(AppDataKeys.colorBrand.name);
+  }
+
   Future<AppDataModel> get values async {
     final outletId = await _storage.getString(AppDataKeys.outletId.name) ?? "";
     final ownerId = await _storage.getString(AppDataKeys.ownerId.name) ?? "";
     final footNote = await _storage.getString(AppDataKeys.footNote.name) ?? "";
-    final isBillAutoPrint =
-        await _storage.getBool(AppDataKeys.isBillAutoPrint.name) ?? false;
+    final isAutoPrint =
+        await _storage.getBool(AppDataKeys.isAutoPrint.name) ?? false;
     final avatarSvg =
         await _storage.getString(AppDataKeys.avatarSvg.name) ?? "";
+    final colorBrand =
+        await _storage.getString(AppDataKeys.colorBrand.name) ?? "";
 
     return AppDataModel(
       footNote: footNote,
-      isBillAutoPrint: isBillAutoPrint,
+      isAutoPrint: isAutoPrint,
       outletId: outletId,
       ownerId: ownerId,
       avatarSvg: avatarSvg,
+      colorBrand: colorBrand,
     );
   }
 }

@@ -173,7 +173,7 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                           ),
                         ),
                         FutureBuilder<bool?>(
-                          future: _appDataProvider.isBillAutoPrint,
+                          future: _appDataProvider.isAutoPrint,
                           builder: (context, snapshot) {
                             return FormBuilderField<bool>(
                               name: "isServiceChargeActive",

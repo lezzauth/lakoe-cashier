@@ -1,3 +1,4 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,10 +14,16 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:table_repository/table_repository.dart';
 
-class TableDetailPage extends StatelessWidget {
+class TableDetailPage extends StatefulWidget {
   const TableDetailPage({super.key, required this.table});
-
   final TableModel table;
+
+  @override
+  State<TableDetailPage> createState() => _TableDetailPageState();
+}
+
+class _TableDetailPageState extends State<TableDetailPage> {
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +45,7 @@ class TableDetailPage extends StatelessWidget {
                       vertical: 16,
                     ),
                     child: TextHeading2(
-                      "Detail Meja ${table.no}",
+                      "Detail Meja ${widget.table.no}",
                       color: TColors.neutralDarkDarkest,
                     ),
                   ),
@@ -56,7 +63,7 @@ class TableDetailPage extends StatelessWidget {
                                 flex: 1,
                                 child: CardOrder(
                                   title: "Kapasitas",
-                                  subTitle: "${table.capacity} Orang",
+                                  subTitle: "${widget.table.capacity} Orang",
                                   icon: const UiIcons(
                                     TIcons.profile,
                                     height: 20,
@@ -81,7 +88,7 @@ class TableDetailPage extends StatelessWidget {
                                                       .firstWhereOrNull(
                                                           (item) =>
                                                               item.id ==
-                                                              table
+                                                              widget.table
                                                                   .outletRoomId)
                                                       ?.name ??
                                                   "-",
@@ -108,11 +115,19 @@ class TableDetailPage extends StatelessWidget {
                           color: TColors.neutralDarkDarkest,
                         ),
                         const SizedBox(height: 12.0),
-                        PreviewQrTable(
-                          table.id,
-                          // color: HexColor("#06B6D4"),
-                          tableNumber: table.no,
-                        ),
+                        FutureBuilder<String?>(
+                            future: _appDataProvider.colorBrand,
+                            builder: (context, snapshot) {
+                              int argColorInt = int.parse(
+                                  snapshot.data!.replaceFirst("0x", ""),
+                                  radix: 16);
+
+                              return PreviewQrTable(
+                                widget.table.id,
+                                colorBrand: argColorInt,
+                                tableNumber: widget.table.no,
+                              );
+                            }),
                       ],
                     ),
                   ),
@@ -147,7 +162,7 @@ class TableDetailPage extends StatelessWidget {
                         bool? editedProduct = await Navigator.pushNamed(
                           context,
                           "/tables/edit",
-                          arguments: table,
+                          arguments: widget.table,
                         ) as bool?;
                         if (editedProduct != true) return;
                         Navigator.pop(context, true);
