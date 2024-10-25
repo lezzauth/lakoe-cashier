@@ -413,23 +413,23 @@ class OutletCard extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(
-                        color: TColors.neutralLightMedium,
-                        width: 1.0,
-                      ),
+                      // border: Border.all(
+                      //   color: TColors.neutralLightMedium,
+                      //   width: 1.0,
+                      // ),
                     ),
                     child: CircleAvatar(
                       radius: 22,
-                      backgroundColor: TColors.neutralLightLight,
+                      backgroundColor: Color(colorBrand),
                       child: ColorFiltered(
                         colorFilter: ColorFilter.mode(
-                          Color(colorBrand),
+                          Colors.white,
                           BlendMode.srcATop,
                         ),
                         child: Image.network(
                           outletLogo!,
-                          width: 24,
-                          height: 24,
+                          width: 32,
+                          height: 32,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return Image.asset(

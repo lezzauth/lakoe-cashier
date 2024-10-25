@@ -99,10 +99,15 @@ class OutletRepositoryImpl implements OutletRepository {
 
     FormData formData = FormData.fromMap({...dto.toJson()});
 
-    // formData.files.add(MapEntry(
-    //     "logo",
-    //     await MultipartFile.fromFile(image!.path,
-    //         filename: image.path.split("/").last)));
+    if (image != null) {
+      formData.files.add(
+        MapEntry(
+          "logo",
+          await MultipartFile.fromFile(image.path,
+              filename: image.path.split("/").last),
+        ),
+      );
+    }
 
     final res = await _dio.patch(
       "$_baseURL/$outletId",

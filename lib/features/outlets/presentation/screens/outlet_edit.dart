@@ -1,4 +1,5 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -90,7 +91,9 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
     bool isFormValid = formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
-      print("xxx isFormValid $isFormValid");
+      if (kDebugMode) {
+        print("Is valid form: $isFormValid");
+      }
     }
 
     dynamic logoOutlet = formKey.currentState?.value;
@@ -102,7 +105,7 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
       context.read<OutletCubit>().update(
             image.file,
             UpdateOutletDto(
-              color: colorHex.toString(),
+              color: colorHex,
             ),
           );
     } else {

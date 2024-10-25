@@ -116,8 +116,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             color: package!.bgColor,
-                            borderRadius:
-                                BorderRadius.circular(12.0), // Radius sudut
+                            borderRadius: BorderRadius.circular(12.0),
                           ),
                           clipBehavior: Clip.hardEdge,
                           child: Stack(
