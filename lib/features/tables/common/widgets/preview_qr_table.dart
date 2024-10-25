@@ -68,17 +68,18 @@ class PreviewQrTable extends StatelessWidget {
                               Colors.white,
                               BlendMode.srcATop,
                             ),
-                            child: (logo.isEmpty)
-                                ? Image.asset(
-                                    TImages.lakoeLetterWhite,
-                                    height: 60,
-                                    width: 60,
-                                  )
-                                : Image.network(
-                                    logo,
-                                    height: 60,
-                                    width: 60,
-                                  ),
+                            child: Image.network(
+                              logo,
+                              height: 60,
+                              width: 60,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  TImages.lakoeLetterWhite,
+                                  height: 60,
+                                  width: 60,
+                                );
+                              },
+                            ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -141,17 +142,18 @@ class PreviewQrTable extends StatelessWidget {
                               Colors.white,
                               BlendMode.srcATop,
                             ),
-                            child: (logo.isEmpty)
-                                ? Image.asset(
-                                    TImages.defaultLogo,
-                                    width: 20,
-                                    height: 20,
-                                  )
-                                : Image.network(
-                                    logo,
-                                    width: 24,
-                                    height: 24,
-                                  ),
+                            child: Image.network(
+                              logo,
+                              width: 24,
+                              height: 24,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  TImages.defaultLogo,
+                                  width: 20,
+                                  height: 20,
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
