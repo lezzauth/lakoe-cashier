@@ -5,14 +5,13 @@ class AnimatedLoadingText extends StatefulWidget {
   final String text;
   final TextStyle? style;
 
-  const AnimatedLoadingText(this.text, {Key? key, this.style})
-      : super(key: key);
+  const AnimatedLoadingText(this.text, {super.key, this.style});
 
   @override
-  _AnimatedLoadingTextState createState() => _AnimatedLoadingTextState();
+  AnimatedLoadingTextState createState() => AnimatedLoadingTextState();
 }
 
-class _AnimatedLoadingTextState extends State<AnimatedLoadingText> {
+class AnimatedLoadingTextState extends State<AnimatedLoadingText> {
   int _dotCount = 0;
   late Timer _timer;
 

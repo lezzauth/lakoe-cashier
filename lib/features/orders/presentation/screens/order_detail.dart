@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:cashier_repository/cashier_repository.dart';
@@ -228,7 +229,9 @@ class _OrderDetailState extends State<OrderDetail> {
       profile = authState.profile;
     } else {
       profile = TemplateOrderModel().ownerProfile;
-      print('AuthState is not ready, using default profile.');
+      if (kDebugMode) {
+        print('AuthState is not ready, using default profile.');
+      }
     }
 
     action(context, profile, order, footNote, _scrollController);

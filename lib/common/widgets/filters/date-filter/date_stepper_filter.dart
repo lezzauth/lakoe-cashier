@@ -39,47 +39,37 @@ class _DateStepperFilterState extends State<DateStepperFilter> {
   String _getFormattedDateBasedOnFilter() {
     DateTime now = DateTime.now();
 
+    // Helper for date format
+    String formatDate(DateTime date, String pattern) =>
+        DateFormat(pattern, "id_ID").format(date);
+
+    // Check date range (from - to)
     if (widget.from != null && widget.to != null) {
       DateTime parsedFrom = DateTime.parse(widget.from!).toLocal();
       DateTime parsedTo = DateTime.parse(widget.to!).toLocal();
 
-      String formattedFrom =
-          DateFormat("dd MMM yyyy", "id_ID").format(parsedFrom);
-      String formattedTo = DateFormat("dd MMM yyyy", "id_ID").format(parsedTo);
-
-      if (widget.preset == "TODAY") {
-        return DateFormat("EEEE, dd MMMM yyyy", "id_ID").format(parsedFrom);
+      switch (widget.preset) {
+        case "TODAY":
+          return formatDate(parsedFrom, "EEEE, dd MMMM yyyy");
+        case "THISMONTH":
+          return formatDate(parsedFrom, "MMMM yyyy");
+        default:
+          return "${formatDate(parsedFrom, "dd MMM yyyy")} - ${formatDate(parsedTo, "dd MMM yyyy")}";
       }
-      if (widget.preset == "THISMONTH") {
-        return DateFormat("MMMM yyyy", "id_ID").format(parsedFrom);
-      }
-
-      return "$formattedFrom - $formattedTo";
     }
 
-    if (widget.template == "TODAY") {
-      return DateFormat("EEEE, dd MMMM yyyy", "id_ID").format(now);
+    // Check date template
+    switch (widget.template) {
+      case "TODAY":
+        return formatDate(now, "EEEE, dd MMMM yyyy");
+      case "THISWEEK":
+        List<DateTime> thisWeek = THelper.getStartEndWeek(now);
+        return "${formatDate(thisWeek[0], "dd MMM yyyy")} - ${formatDate(thisWeek[1], "dd MMM yyyy")}";
+      case "THISMONTH":
+        return formatDate(now, "MMMM yyyy");
+      default:
+        return "";
     }
-
-    if (widget.template == "THISWEEK") {
-      // Get the current weekday (1 is Monday, 7 is Sunday)
-      List<DateTime> thisWeek = THelper.getStartEndWeek(now);
-      DateTime startOfWeek = thisWeek.elementAt(0);
-      DateTime endOfWeek = thisWeek.elementAt(1);
-
-      String formattedStartOfWeek =
-          DateFormat("dd MMM yyyy").format(startOfWeek);
-      String formattedEndOfWeek =
-          DateFormat("dd MMM yyyy", "id_ID").format(endOfWeek);
-
-      return "$formattedStartOfWeek - $formattedEndOfWeek";
-    }
-
-    if (widget.template == "THISMONTH") {
-      return DateFormat("MMMM yyyy", "id_ID").format(now);
-    }
-
-    return "";
   }
 
   List<DateTime> _calculateDateRange(String action) {
@@ -156,53 +146,56 @@ class _DateStepperFilterState extends State<DateStepperFilter> {
 
     return SizedBox(
       height: 36,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            height: 36,
-            width: 36,
-            child: IconButton(
-              onPressed: () {
-                _onAction("previous");
-              },
-              icon: const UiIcons(
-                TIcons.arrowLeft,
-                height: 16,
-                width: 16,
-                color: TColors.primary,
-              ),
-            ),
-          ),
-          Text(
-            _getFormattedDateBasedOnFilter(),
-            style: GoogleFonts.inter(
-              color: TColors.neutralDarkDarkest,
-              fontSize: TSizes.fontSizeBodyM,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(
-            height: 36,
-            width: 36,
-            child: Opacity(
-              opacity: isNextDisabled ? 0.5 : 1,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              height: 36,
+              width: 36,
               child: IconButton(
-                onPressed: isNextDisabled
-                    ? null
-                    : () {
-                        _onAction("next");
-                      },
+                onPressed: () {
+                  _onAction("previous");
+                },
                 icon: const UiIcons(
-                  TIcons.arrowRight,
+                  TIcons.arrowLeft,
                   height: 16,
                   width: 16,
                   color: TColors.primary,
                 ),
               ),
             ),
-          )
-        ],
+            Text(
+              _getFormattedDateBasedOnFilter(),
+              style: GoogleFonts.inter(
+                color: TColors.neutralDarkDarkest,
+                fontSize: TSizes.fontSizeBodyM,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            SizedBox(
+              height: 36,
+              width: 36,
+              child: Opacity(
+                opacity: isNextDisabled ? 0.5 : 1,
+                child: IconButton(
+                  onPressed: isNextDisabled
+                      ? null
+                      : () {
+                          _onAction("next");
+                        },
+                  icon: const UiIcons(
+                    TIcons.arrowRight,
+                    height: 16,
+                    width: 16,
+                    color: TColors.primary,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

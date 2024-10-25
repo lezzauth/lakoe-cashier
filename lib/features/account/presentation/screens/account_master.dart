@@ -11,8 +11,11 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/light_appbar.dart';
+import 'package:point_of_sales_cashier/features/account/presentation/widgets/shimmer/account_shimmer.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:point_of_sales_cashier/features/outlets/application/outlet_cubit.dart';
+import 'package:point_of_sales_cashier/features/outlets/application/outlet_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -30,8 +33,12 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
   @override
   void initState() {
     super.initState();
-
     context.read<AuthCubit>().initialize();
+    _onInit();
+  }
+
+  void _onInit() {
+    context.read<OutletCubit>().init();
   }
 
   List<_OtherItem> otherSettingItems = [
@@ -39,27 +46,32 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       title: "Paket & Riwayat",
       routeName: "/",
       iconSrc: TIcons.billAlt,
+      isNewItem: false,
     ),
     _OtherItem(
       title: "Kasih Rating",
       routeName: "/",
       iconSrc: TIcons.star,
       textTrailing: "Versi 3.20.0",
+      isNewItem: false,
     ),
     _OtherItem(
       title: "Syarat & Ketentuan",
       routeName: "/terms_conditions",
       iconSrc: TIcons.document,
+      isNewItem: false,
     ),
     _OtherItem(
       title: "Kebijakan Privasi",
       routeName: "/privacy_policy",
       iconSrc: TIcons.shieldKeyhole,
+      isNewItem: false,
     ),
     _OtherItem(
       title: "Atur Akun",
       routeName: "/manage_account",
       iconSrc: TIcons.linkSquare,
+      isNewItem: false,
     ),
   ];
 
@@ -101,7 +113,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
                         // const SizedBox(height: 12),
                         // const BalanceCard(),
                         const SizedBox(height: 12),
-                        const OutletCard(),
+                        OutletCard(),
                         const SizedBox(height: 12),
                         OtherCard(
                           children: otherSettingItems
@@ -110,7 +122,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
                                   iconSrc: item.iconSrc,
                                   title: item.title,
                                   routeName: item.routeName,
-                                  isNewItem: item.isNewItem,
+                                  isNewItem: item.isNewItem!,
                                   textTrailing: item.textTrailing,
                                 ),
                               )
@@ -134,43 +146,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
                   ),
                 ),
               ),
-              Shimmer.fromColors(
-                baseColor: const Color(0xFFE8E9F1),
-                highlightColor: const Color(0xFFF8F9FE),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 120),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: TColors.highlightLightest,
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          height: 120,
-                        ),
-                        const SizedBox(height: 12),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: TColors.highlightLightest,
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          height: 80,
-                        ),
-                        const SizedBox(height: 12),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: TColors.highlightLightest,
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          height: 200,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              AccountShimmer(),
             ],
           );
         },
@@ -387,154 +363,132 @@ class BalanceCard extends StatelessWidget {
   }
 }
 
-// class OutletCard extends StatelessWidget {
-//   const OutletCard({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-//       clipBehavior: Clip.antiAlias,
-//       decoration: ShapeDecoration(
-//         color: TColors.neutralLightLightest,
-//         shape: RoundedRectangleBorder(
-//           side: const BorderSide(
-//             width: 1,
-//             color: TColors.neutralLightMedium,
-//           ),
-//           borderRadius: BorderRadius.circular(16),
-//         ),
-//       ),
-//       child: Row(
-//         mainAxisSize: MainAxisSize.min,
-//         mainAxisAlignment: MainAxisAlignment.start,
-//         crossAxisAlignment: CrossAxisAlignment.center,
-//         children: [
-//           Container(
-//             decoration: BoxDecoration(
-//               shape: BoxShape.circle,
-//               border: Border.all(
-//                 color: TColors.neutralLightMedium,
-//                 width: 1.0,
-//               ),
-//             ),
-//             child: CircleAvatar(
-//               radius: 44 / 2,
-//               backgroundColor: TColors.neutralLightLight,
-//               child: Image.asset(
-//                 TImages.lakoeLetterPrimary,
-//                 height: 24,
-//                 width: 24,
-//               ),
-//             ),
-//           ),
-//           const SizedBox(width: 16),
-//           const Expanded(
-//             child: Column(
-//               mainAxisSize: MainAxisSize.min,
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 TextHeading3(
-//                   "Warmindo Cak Tho",
-//                   color: TColors.neutralDarkDark,
-//                 ),
-//                 SizedBox(height: 2),
-//                 TextBodyS(
-//                   "Tebet, Jakarta Selatan",
-//                   color: TColors.neutralDarkLightest,
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class OutletCard extends StatelessWidget {
   const OutletCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
+    return BlocBuilder<OutletCubit, OutletState>(
       builder: (context, state) {
-        if (state is AuthReady) {
-          String outletName = state.profile.outlets.first.name;
-          String outletAddress = state.profile.outlets.first.address;
-          String outletLogo = state.profile.outlets.first.logo;
+        if (state is OutletLoadSuccess) {
+          int? colorBrand;
 
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            clipBehavior: Clip.antiAlias,
-            decoration: ShapeDecoration(
-              color: TColors.neutralLightLightest,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(
-                  width: 1,
-                  color: TColors.neutralLightMedium,
-                ),
-                borderRadius: BorderRadius.circular(16),
-              ),
+          if (state.outlet.color != null) {
+            colorBrand = int.parse(state.outlet.color!.replaceFirst("0x", ""),
+                radix: 16);
+          } else {
+            colorBrand = 0xFFFD6E00;
+          }
+
+          String outletName = state.outlet.name;
+          String? outletAddress = state.outlet.address;
+          String? outletLogo = state.outlet.logo;
+
+          return InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () => Navigator.pushNamed(
+              context,
+              "/outlet/edit",
+              arguments: state.outlet,
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: TColors.neutralLightMedium,
-                      width: 1.0,
-                    ),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              clipBehavior: Clip.antiAlias,
+              decoration: ShapeDecoration(
+                color: TColors.neutralLightLightest,
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(
+                    width: 1,
+                    color: TColors.neutralLightMedium,
                   ),
-                  child: CircleAvatar(
-                    radius: 22,
-                    backgroundColor: TColors.neutralLightLight,
-                    child: Image.network(
-                      outletLogo,
-                      width: 24,
-                      height: 24,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
-                          TImages.lakoeLetterPrimary,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: TColors.neutralLightMedium,
+                        width: 1.0,
+                      ),
+                    ),
+                    child: CircleAvatar(
+                      radius: 22,
+                      backgroundColor: TColors.neutralLightLight,
+                      child: ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                          Color(colorBrand),
+                          BlendMode.srcATop,
+                        ),
+                        child: Image.network(
+                          outletLogo!,
                           width: 24,
                           height: 24,
-                        );
-                      },
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              TImages.lakoeLetterPrimary,
+                              width: 24,
+                              height: 24,
+                            );
+                          },
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextHeading3(
-                        outletName,
-                        color: TColors.neutralDarkDark,
-                      ),
-                      const SizedBox(height: 2),
-                      TextBodyS(
-                        outletAddress,
-                        color: TColors.neutralDarkLightest,
-                      ),
-                    ],
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextHeading3(
+                          outletName,
+                          color: TColors.neutralDarkDark,
+                        ),
+                        const SizedBox(height: 2),
+                        TextBodyS(
+                          outletAddress!,
+                          color: TColors.neutralDarkLightest,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
-        } else if (state is AuthLoadInProgress) {
-          return const Center(child: CircularProgressIndicator());
+        } else if (state is OutletLoadInProgress) {
+          return Shimmer.fromColors(
+            baseColor: const Color(0xFFE8E9F1),
+            highlightColor: const Color(0xFFF8F9FE),
+            child: Container(
+              decoration: BoxDecoration(
+                color: TColors.highlightLightest,
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              height: 80,
+            ),
+          );
         } else {
-          return const Text('Unable to load outlet data');
+          return Shimmer.fromColors(
+            baseColor: const Color(0xFFE8E9F1),
+            highlightColor: const Color(0xFFF8F9FE),
+            child: Container(
+              decoration: BoxDecoration(
+                color: TColors.highlightLightest,
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              height: 80,
+            ),
+          );
         }
       },
     );
@@ -562,13 +516,13 @@ class _OtherItem {
   final String routeName;
   final String iconSrc;
   final String? textTrailing;
-  final bool isNewItem;
+  final bool? isNewItem;
 
   _OtherItem({
     required this.title,
     required this.routeName,
     required this.iconSrc,
     this.textTrailing,
-    this.isNewItem = false,
+    this.isNewItem,
   });
 }

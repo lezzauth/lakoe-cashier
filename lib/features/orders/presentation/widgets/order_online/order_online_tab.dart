@@ -16,7 +16,7 @@ class OrderOnlineTab extends StatefulWidget {
 
 class _OrderOnlineTabState extends State<OrderOnlineTab> {
   String? previousScreen;
-  List<dynamic> _orders = [];
+  List<dynamic> orders = [];
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _OrderOnlineTabState extends State<OrderOnlineTab> {
               Expanded(
                 child: CustomScrollView(
                   slivers: [
-                    if (_orders.isNotEmpty)
+                    if (orders.isNotEmpty)
                       SliverList.builder(
                         itemBuilder: (context, index) {
                           return OrderOnlineListItem(
@@ -60,7 +60,7 @@ class _OrderOnlineTabState extends State<OrderOnlineTab> {
                           );
                         },
                       ),
-                    if (_orders.isEmpty)
+                    if (orders.isEmpty)
                       SliverToBoxAdapter(
                         child: EmptyList(
                           image: SvgPicture.asset(

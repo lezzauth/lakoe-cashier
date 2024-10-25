@@ -54,6 +54,8 @@ import 'package:point_of_sales_cashier/features/online_shop/presentation/screens
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_master.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_track.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/preview_proof_transfer.dart';
+import 'package:point_of_sales_cashier/features/outlets/application/outlet_cubit.dart';
+import 'package:point_of_sales_cashier/features/outlets/presentation/screens/outlet_edit.dart';
 import 'package:point_of_sales_cashier/features/packages/application/cubit/package_detail/package_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/packages/application/cubit/package_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/packages/boost/presentation/screens/boost_detail.dart';
@@ -182,6 +184,9 @@ class App extends StatelessWidget {
 
         // Report Master
         BlocProvider(create: (context) => ReportMasterCubit()),
+
+        // Outlet
+        BlocProvider(create: (context) => OutletCubit()),
 
         // Employee Master
         BlocProvider(create: (context) => EmployeeMasterCubit()),
@@ -375,6 +380,9 @@ class App extends StatelessWidget {
             //Webview
             "/terms_conditions": (context) => const TermsConditionScreen(),
             "/privacy_policy": (context) => const PrivacyPolicyScreen(),
+
+            //Ourlets
+            "/outlet/edit": (context) => const OutletEditScreen(),
 
             // AI Chatbot
             "/ai_chatbot": (context) => const AIChatbotMasterScreen(),

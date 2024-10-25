@@ -35,15 +35,12 @@ class TBill {
 
     for (String word in words) {
       if ((currentLine + word).length > maxLength) {
-        // Jika kata berikutnya melebihi batas, pindahkan ke baris berikutnya
-        wrappedText += currentLine.trim() + '\n';
-        currentLine = word + ' ';
+        wrappedText += '${currentLine.trim()}\n';
+        currentLine = '$word ';
       } else {
-        // Tambahkan kata ke baris saat ini
-        currentLine += word + ' ';
+        currentLine += '$word ';
       }
     }
-    // Tambahkan baris terakhir
     wrappedText += currentLine.trim();
 
     return wrappedText;
@@ -396,7 +393,6 @@ class TBill {
     ].contains(true);
 
     if (!isPermissionsAllowed) {
-      print("xxx isPermissionsAllowed is $isPermissionsAllowed");
     } else {
       bool connectionStatus = await PrintBluetoothThermal.connectionStatus;
 
@@ -411,7 +407,6 @@ class TBill {
         final result = await PrintBluetoothThermal.writeBytes(ticket);
         log("print result: $result");
       } else {
-        print("xxx connectionStatus is $connectionStatus");
         showModalBottomSheet(
           context: context,
           enableDrag: false,

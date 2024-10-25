@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:app_data_provider/app_data_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -46,6 +47,7 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
 
   void _onInit() {
     context.read<PrintMasterCubit>().init().then((_) {
+      if (!mounted) return;
       context.read<PrintMasterCubit>().discoverDevices();
     });
   }
@@ -173,7 +175,7 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                           ),
                         ),
                         FutureBuilder<bool?>(
-                          future: _appDataProvider.isBillAutoPrint,
+                          future: _appDataProvider.isAutoPrint,
                           builder: (context, snapshot) {
                             return FormBuilderField<bool>(
                               name: "isServiceChargeActive",
@@ -435,8 +437,10 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                                   packageName: '',
                                   outlets: [],
                                 );
-                                print(
-                                    'AuthState is not ready, using default profile.');
+                                if (kDebugMode) {
+                                  print(
+                                      'AuthState is not ready, using default profile.');
+                                }
                               }
 
                               TBill.testPrint(context, profile, footNote);

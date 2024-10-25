@@ -22,14 +22,12 @@ class UiIcons extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.all(Radius.circular(height * width)),
-      child: GestureDetector(
-        child: SvgPicture.asset(
-          assetName,
-          height: height,
-          width: width,
-          fit: BoxFit.scaleDown,
-          colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-        ),
+      child: SvgPicture.asset(
+        assetName,
+        height: height,
+        width: width,
+        fit: BoxFit.scaleDown,
+        colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
       ),
     );
   }

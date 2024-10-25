@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_state.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/appbar/dashboard_appbar.dart';
-import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/banner/dashboard_banner.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/filter/dashboard_day_select_filter.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/filter/dashboard_filter.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/item_menu/item_menu_container.dart';
@@ -70,13 +70,11 @@ class _DashboardState extends State<Dashboard> {
           uri.scheme == 'app.lakoe' &&
           uri.host == 'payment' &&
           uri.path == '/success') {
+        if (!mounted) return;
         Navigator.pushNamed(context, "/payment/success");
-      } else {
-        print("xxx");
-      }
+      } else {}
     }, onError: (err) {
       // Error handling
-      print("xxx $err");
     });
   }
 
@@ -99,31 +97,40 @@ class _DashboardState extends State<Dashboard> {
             children: [
               const MainMenu(),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: const ItemMenuContainer(),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                margin: const EdgeInsets.only(bottom: 12),
-                child: const DashboardBanner(),
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: ItemMenuContainer(),
               ),
               // Container(
-              //   padding: const EdgeInsets.symmetric(horizontal: 24),
-              //   margin: const EdgeInsets.only(bottom: 12),
-              //   child: const AIBanner(),
+              //   padding: EdgeInsets.symmetric(horizontal: 24),
+              //   margin: EdgeInsets.only(bottom: 12),
+              //   child: DashboardBanner(),
               // ),
+              // Container(
+              //   padding: EdgeInsets.symmetric(horizontal: 24),
+              //   margin: EdgeInsets.only(bottom: 12),
+              //   child: AIBanner(),
+              // ),
+
               Container(
-                margin: const EdgeInsets.only(bottom: 12),
-                child: const DashboardFilter(),
+                margin: EdgeInsets.only(bottom: 12, top: 20),
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: TextHeading2(
+                  "Laporan Singkat",
+                  color: TColors.neutralDarkDark,
+                ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                margin: const EdgeInsets.only(bottom: 12),
-                child: const DashboardDaySelectFilter(),
+                margin: EdgeInsets.only(bottom: 12),
+                child: DashboardFilter(),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                margin: const EdgeInsets.only(bottom: 12),
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                margin: EdgeInsets.only(bottom: 12),
+                child: DashboardDaySelectFilter(),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                margin: EdgeInsets.only(bottom: 12),
                 child: BlocBuilder<CashierReportCubit, CashierReportState>(
                   builder: (context, state) => switch (state) {
                     CashierReportLoadSuccess(:final report) => Column(
@@ -131,7 +138,7 @@ class _DashboardState extends State<Dashboard> {
                           SalesSummary(
                             totalSales: report.total_sales,
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
                           TransactionSummary(
                             totalTransactions: report.total_transactions,
                           ),
@@ -144,8 +151,8 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ),
                     _ => Shimmer.fromColors(
-                        baseColor: const Color(0xFFE8E9F1),
-                        highlightColor: const Color(0xFFF8F9FE),
+                        baseColor: Color(0xFFE8E9F1),
+                        highlightColor: Color(0xFFF8F9FE),
                         child: Column(
                           children: [
                             Container(
@@ -159,7 +166,7 @@ class _DashboardState extends State<Dashboard> {
                                     width: 1),
                               ),
                             ),
-                            const SizedBox(height: 12),
+                            SizedBox(height: 12),
                             Container(
                               height: 127,
                               width: double.maxFinite,

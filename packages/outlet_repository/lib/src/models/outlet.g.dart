@@ -10,12 +10,26 @@ _$OutletModelImpl _$$OutletModelImplFromJson(Map<String, dynamic> json) =>
     _$OutletModelImpl(
       id: json['id'] as String,
       name: json['name'] as String,
+      address: json['address'] as String?,
+      type: json['type'] as String?,
+      ownerId: json['ownerId'] as String?,
+      logo: json['logo'] as String?,
+      color: json['color'] as String?,
+      createdAt: json['createdAt'] as String?,
+      updatedAt: json['updatedAt'] as String?,
     );
 
 Map<String, dynamic> _$$OutletModelImplToJson(_$OutletModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'address': instance.address,
+      'type': instance.type,
+      'ownerId': instance.ownerId,
+      'logo': instance.logo,
+      'color': instance.color,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
     };
 
 _$DetailCustomerCountImpl _$$DetailCustomerCountImplFromJson(
@@ -226,6 +240,7 @@ _$OutletReportTotalSaleModelImpl _$$OutletReportTotalSaleModelImplFromJson(
         Map<String, dynamic> json) =>
     _$OutletReportTotalSaleModelImpl(
       current: json['current'] as String,
+      currentAvg: (json['currentAvg'] as num?)?.toInt(),
       past: json['past'] as String,
       diff: (json['diff'] as num?)?.toInt(),
     );
@@ -234,6 +249,7 @@ Map<String, dynamic> _$$OutletReportTotalSaleModelImplToJson(
         _$OutletReportTotalSaleModelImpl instance) =>
     <String, dynamic>{
       'current': instance.current,
+      'currentAvg': instance.currentAvg,
       'past': instance.past,
       'diff': instance.diff,
     };

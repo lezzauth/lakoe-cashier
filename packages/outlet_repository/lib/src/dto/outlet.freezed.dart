@@ -25,8 +25,12 @@ mixin _$DetailCustomerOutletDto {
   String? get to => throw _privateConstructorUsedError;
   String? get template => throw _privateConstructorUsedError;
 
+  /// Serializes this DetailCustomerOutletDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DetailCustomerOutletDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DetailCustomerOutletDtoCopyWith<DetailCustomerOutletDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -51,6 +55,8 @@ class _$DetailCustomerOutletDtoCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DetailCustomerOutletDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -97,6 +103,8 @@ class __$$DetailCustomerOutletDtoImplCopyWithImpl<$Res>
       $Res Function(_$DetailCustomerOutletDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DetailCustomerOutletDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -152,11 +160,13 @@ class _$DetailCustomerOutletDtoImpl implements _DetailCustomerOutletDto {
                 other.template == template));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, from, to, template);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DetailCustomerOutletDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DetailCustomerOutletDtoImplCopyWith<_$DetailCustomerOutletDtoImpl>
@@ -186,8 +196,11 @@ abstract class _DetailCustomerOutletDto implements DetailCustomerOutletDto {
   String? get to;
   @override
   String? get template;
+
+  /// Create a copy of DetailCustomerOutletDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DetailCustomerOutletDtoImplCopyWith<_$DetailCustomerOutletDtoImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -202,8 +215,12 @@ mixin _$GetOutletReportDto {
   String? get to => throw _privateConstructorUsedError;
   String? get template => throw _privateConstructorUsedError;
 
+  /// Serializes this GetOutletReportDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetOutletReportDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetOutletReportDtoCopyWith<GetOutletReportDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -227,6 +244,8 @@ class _$GetOutletReportDtoCopyWithImpl<$Res, $Val extends GetOutletReportDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetOutletReportDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -270,6 +289,8 @@ class __$$GetOutletReportDtoImplCopyWithImpl<$Res>
       $Res Function(_$GetOutletReportDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetOutletReportDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -326,11 +347,13 @@ class _$GetOutletReportDtoImpl implements _GetOutletReportDto {
                 other.template == template));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, from, to, template);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetOutletReportDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetOutletReportDtoImplCopyWith<_$GetOutletReportDtoImpl> get copyWith =>
@@ -360,8 +383,11 @@ abstract class _GetOutletReportDto implements GetOutletReportDto {
   String? get to;
   @override
   String? get template;
+
+  /// Create a copy of GetOutletReportDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetOutletReportDtoImplCopyWith<_$GetOutletReportDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -376,8 +402,12 @@ mixin _$GetOutletSalesDto {
   String? get to => throw _privateConstructorUsedError;
   String? get template => throw _privateConstructorUsedError;
 
+  /// Serializes this GetOutletSalesDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetOutletSalesDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetOutletSalesDtoCopyWith<GetOutletSalesDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -401,6 +431,8 @@ class _$GetOutletSalesDtoCopyWithImpl<$Res, $Val extends GetOutletSalesDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetOutletSalesDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -444,6 +476,8 @@ class __$$GetOutletSalesDtoImplCopyWithImpl<$Res>
       $Res Function(_$GetOutletSalesDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetOutletSalesDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -500,11 +534,13 @@ class _$GetOutletSalesDtoImpl implements _GetOutletSalesDto {
                 other.template == template));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, from, to, template);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetOutletSalesDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetOutletSalesDtoImplCopyWith<_$GetOutletSalesDtoImpl> get copyWith =>
@@ -534,8 +570,161 @@ abstract class _GetOutletSalesDto implements GetOutletSalesDto {
   String? get to;
   @override
   String? get template;
+
+  /// Create a copy of GetOutletSalesDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetOutletSalesDtoImplCopyWith<_$GetOutletSalesDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+UpdateOutletDto _$UpdateOutletDtoFromJson(Map<String, dynamic> json) {
+  return _UpdateOutletDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UpdateOutletDto {
+  String? get color => throw _privateConstructorUsedError;
+
+  /// Serializes this UpdateOutletDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of UpdateOutletDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $UpdateOutletDtoCopyWith<UpdateOutletDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UpdateOutletDtoCopyWith<$Res> {
+  factory $UpdateOutletDtoCopyWith(
+          UpdateOutletDto value, $Res Function(UpdateOutletDto) then) =
+      _$UpdateOutletDtoCopyWithImpl<$Res, UpdateOutletDto>;
+  @useResult
+  $Res call({String? color});
+}
+
+/// @nodoc
+class _$UpdateOutletDtoCopyWithImpl<$Res, $Val extends UpdateOutletDto>
+    implements $UpdateOutletDtoCopyWith<$Res> {
+  _$UpdateOutletDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of UpdateOutletDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? color = freezed,
+  }) {
+    return _then(_value.copyWith(
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$UpdateOutletDtoImplCopyWith<$Res>
+    implements $UpdateOutletDtoCopyWith<$Res> {
+  factory _$$UpdateOutletDtoImplCopyWith(_$UpdateOutletDtoImpl value,
+          $Res Function(_$UpdateOutletDtoImpl) then) =
+      __$$UpdateOutletDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? color});
+}
+
+/// @nodoc
+class __$$UpdateOutletDtoImplCopyWithImpl<$Res>
+    extends _$UpdateOutletDtoCopyWithImpl<$Res, _$UpdateOutletDtoImpl>
+    implements _$$UpdateOutletDtoImplCopyWith<$Res> {
+  __$$UpdateOutletDtoImplCopyWithImpl(
+      _$UpdateOutletDtoImpl _value, $Res Function(_$UpdateOutletDtoImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of UpdateOutletDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? color = freezed,
+  }) {
+    return _then(_$UpdateOutletDtoImpl(
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UpdateOutletDtoImpl implements _UpdateOutletDto {
+  const _$UpdateOutletDtoImpl({this.color});
+
+  factory _$UpdateOutletDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UpdateOutletDtoImplFromJson(json);
+
+  @override
+  final String? color;
+
+  @override
+  String toString() {
+    return 'UpdateOutletDto(color: $color)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpdateOutletDtoImpl &&
+            (identical(other.color, color) || other.color == color));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, color);
+
+  /// Create a copy of UpdateOutletDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdateOutletDtoImplCopyWith<_$UpdateOutletDtoImpl> get copyWith =>
+      __$$UpdateOutletDtoImplCopyWithImpl<_$UpdateOutletDtoImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UpdateOutletDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UpdateOutletDto implements UpdateOutletDto {
+  const factory _UpdateOutletDto({final String? color}) = _$UpdateOutletDtoImpl;
+
+  factory _UpdateOutletDto.fromJson(Map<String, dynamic> json) =
+      _$UpdateOutletDtoImpl.fromJson;
+
+  @override
+  String? get color;
+
+  /// Create a copy of UpdateOutletDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UpdateOutletDtoImplCopyWith<_$UpdateOutletDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

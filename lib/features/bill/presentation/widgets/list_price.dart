@@ -29,7 +29,7 @@ class BillListPrice extends StatelessWidget {
           child: isLarge
               ? TextLarge(label)
               : TextSmall(
-                  "${label} ${isPercentage ? '(${percentageValue}%)' : ''}",
+                  "$label ${isPercentage ? '($percentageValue%)' : ''}",
                   isBold: isBold,
                 ),
         ),

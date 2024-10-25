@@ -8,6 +8,13 @@ class OutletModel with _$OutletModel {
   const factory OutletModel({
     required String id,
     required String name,
+    String? address,
+    String? type,
+    String? ownerId,
+    String? logo,
+    String? color,
+    String? createdAt,
+    String? updatedAt,
   }) = _OutletModel;
 
   factory OutletModel.fromJson(Map<String, Object?> json) =>
@@ -153,6 +160,7 @@ class OutletSalesModel with _$OutletSalesModel {
 class OutletReportTotalSaleModel with _$OutletReportTotalSaleModel {
   const factory OutletReportTotalSaleModel({
     required String current,
+    int? currentAvg,
     required String past,
     int? diff,
   }) = _OutletReportTotalSaleModel;

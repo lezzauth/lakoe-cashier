@@ -49,6 +49,7 @@ class _DashboardFilterState extends State<DashboardFilter> {
     DateTime from = ranges.elementAt(0);
     DateTime to = ranges.elementAt(1);
 
+    if (!mounted) return;
     context.read<CashierReportFilterCubit>().setFilter(
           template: null,
           from: from,

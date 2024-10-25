@@ -4,7 +4,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -17,17 +16,21 @@ class ImagePickerValue {
 }
 
 class ImagePickerField extends StatefulWidget {
+  final String labelPicker;
   final ImagePickerValue? value;
   final ValueChanged<ImagePickerValue>? onChanged;
   final String errorText;
   final ValueChanged<String>? onError;
+  final double sizes;
 
   const ImagePickerField({
     super.key,
+    this.labelPicker = "Tambah Foto",
     this.value,
     this.onChanged,
     this.errorText = "",
     this.onError,
+    this.sizes = 100,
   });
 
   @override
@@ -66,8 +69,8 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
       return Image.file(
         _selectedFile!.file!,
         fit: BoxFit.cover,
-        height: 100,
-        width: 100,
+        height: widget.sizes,
+        width: widget.sizes,
       );
     }
 
@@ -75,8 +78,8 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
       return Image.network(
         _selectedFile!.url!,
         fit: BoxFit.cover,
-        height: 100,
-        width: 100,
+        height: widget.sizes,
+        width: widget.sizes,
       );
     }
 
@@ -86,12 +89,12 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
         Container(
           margin: const EdgeInsets.only(bottom: 12.0),
           child: const UiIcons(
-            TIcons.image,
+            TIcons.imageAdd,
             color: TColors.primary,
           ),
         ),
-        const TextActionS(
-          "Tambah Foto",
+        TextBodyS(
+          widget.labelPicker,
           color: TColors.primary,
         ),
       ],
@@ -128,12 +131,9 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                   dashPattern: const [4],
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: TColors.highlightLightest,
-                      ),
-                      height: 100,
-                      width: 100,
+                    child: SizedBox(
+                      height: widget.sizes,
+                      width: widget.sizes,
                       child: _buildPreview(),
                     ),
                   ),
@@ -145,8 +145,8 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                     decoration: const BoxDecoration(
                       color: TColors.highlightLightest,
                     ),
-                    height: 100,
-                    width: 100,
+                    height: widget.sizes,
+                    width: widget.sizes,
                     child: _buildPreview(),
                   ),
                 ),
@@ -155,7 +155,7 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                 Container(
                   margin: const EdgeInsets.only(top: 4),
                   child: SizedBox(
-                    width: 100,
+                    width: widget.sizes,
                     child: TextBodyS(
                       widget.errorText,
                       color: TColors.error,

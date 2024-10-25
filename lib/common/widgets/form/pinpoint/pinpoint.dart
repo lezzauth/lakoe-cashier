@@ -33,6 +33,7 @@ class _PinpointState extends State<Pinpoint> {
     final isPassed = await LocationRequestPermission().request(context);
 
     if (isPassed == true) {
+      if (!mounted) return;
       await showModalBottomSheet(
         context: context,
         enableDrag: false,

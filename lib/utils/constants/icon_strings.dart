@@ -34,6 +34,7 @@ class TIcons {
       "assets/icons/graph-stats-descend.svg";
   static const String search = "assets/icons/search.svg";
   static const String bill = "assets/icons/bill.svg";
+  static const String pipette = "assets/icons/pipette.svg";
   static const String billAlt = "assets/icons/bill-alt.svg";
   static const String profile = "assets/icons/profile.svg";
   static const String trash = "assets/icons/trash.svg";
@@ -41,6 +42,7 @@ class TIcons {
   static const String minus = "assets/icons/minus.svg";
   static const String box = "assets/icons/box.svg";
   static const String image = "assets/icons/image.svg";
+  static const String imageAdd = "assets/icons/image-add.svg";
   static const String qr = "assets/icons/qr.svg";
   static const String close = "assets/icons/close.svg";
   static const String whatsapp = "assets/icons/whatsapp.svg";

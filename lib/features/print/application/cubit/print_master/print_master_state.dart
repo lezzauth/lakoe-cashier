@@ -78,9 +78,9 @@ final class PrintMasterBluetoothDisabled extends PrintMasterState {
 }
 
 final class PrintMasterAutoPrinting extends PrintMasterState {
-  final bool isBillAutoPrint;
+  final bool isAutoPrint;
 
-  PrintMasterAutoPrinting({required this.isBillAutoPrint});
+  PrintMasterAutoPrinting({required this.isAutoPrint});
 
   @override
   List<Object?> get props => [];

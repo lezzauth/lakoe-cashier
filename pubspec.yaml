@@ -121,6 +121,7 @@ dependencies:
   android_intent_plus: ^5.2.0
   flutter_bluetooth_serial: ^0.4.0
   flutter_inappwebview: ^6.1.5
+  flex_color_picker: ^3.6.0
 
 dev_dependencies:
   flutter_test:

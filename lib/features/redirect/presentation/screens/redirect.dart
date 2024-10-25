@@ -35,6 +35,7 @@ class _RedirectScreenState extends State<RedirectScreen> {
     _connectivitySubscription =
         Connectivity().onConnectivityChanged.listen((result) {
       if (result != ConnectivityResult.none) {
+        if (!mounted) return;
         context.read<AuthCubit>().initialize();
       }
     });
@@ -71,9 +72,12 @@ class _RedirectScreenState extends State<RedirectScreen> {
         final TokenProvider tokenProvider = TokenProvider();
         final token = await tokenProvider.getAuthToken();
 
+        if (!mounted) return;
+
         if (token != null && token.isNotEmpty) {
           if (state is AuthNotReady && !isBottomSheetVisible) {
             isBottomSheetVisible = true;
+            if (!mounted) return;
             showModalBottomSheet(
               context: context,
               enableDrag: false,

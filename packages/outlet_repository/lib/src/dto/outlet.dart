@@ -76,3 +76,26 @@ extension GetOutletSalesDtoQueryStringExtension on GetOutletSalesDto {
         .join('&');
   }
 }
+
+@freezed
+class UpdateOutletDto with _$UpdateOutletDto {
+  const factory UpdateOutletDto({
+    String? color,
+  }) = _UpdateOutletDto;
+
+  factory UpdateOutletDto.fromJson(Map<String, Object?> json) =>
+      _$UpdateOutletDtoFromJson(json);
+}
+
+extension UpdateOutletDtoQueryStringExtension on UpdateOutletDto {
+  String toQueryString() {
+    final Map<String, dynamic> queryParams = toJson();
+
+    queryParams.removeWhere((key, value) => value == null);
+
+    return queryParams.entries
+        .map((entry) =>
+            '${Uri.encodeComponent(entry.key)}=${Uri.encodeComponent(entry.value.toString())}')
+        .join('&');
+  }
+}

@@ -58,7 +58,7 @@ class _OrderProductDetailSectionState extends State<OrderProductDetailSection> {
 }
 
 class _ProductCard extends StatelessWidget {
-  const _ProductCard({super.key, required this.item});
+  const _ProductCard({required this.item});
 
   final OrderDetailItem item;
 

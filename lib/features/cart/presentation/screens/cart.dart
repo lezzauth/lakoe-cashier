@@ -75,6 +75,7 @@ class _CartState extends State<Cart> {
           customerId: filterState.customer?.id,
           tableId: filterState.table?.id,
         );
+    if (!mounted) return;
     Navigator.pop(context);
   }
 
