@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_data_provider/app_data_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
@@ -17,7 +19,7 @@ abstract class OutletRepository {
     GetOutletReportDto? dto,
   });
   Future<OutletModel> getDetailOutlet();
-  Future<OutletModel> update(UpdateOutletDto dto);
+  Future<OutletModel> update(File? image, UpdateOutletDto dto);
 }
 
 class OutletRepositoryImpl implements OutletRepository {
@@ -91,11 +93,16 @@ class OutletRepositoryImpl implements OutletRepository {
   }
 
   @override
-  Future<OutletModel> update(UpdateOutletDto dto) async {
+  Future<OutletModel> update(File? image, UpdateOutletDto dto) async {
     final options = await _getOptions();
     final outletId = await _appDataProvider.outletId;
 
     FormData formData = FormData.fromMap({...dto.toJson()});
+
+    // formData.files.add(MapEntry(
+    //     "logo",
+    //     await MultipartFile.fromFile(image!.path,
+    //         filename: image.path.split("/").last)));
 
     final res = await _dio.patch(
       "$_baseURL/$outletId",

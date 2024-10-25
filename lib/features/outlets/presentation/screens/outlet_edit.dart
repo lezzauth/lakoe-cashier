@@ -56,7 +56,6 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
 
   Color getColor(int index) {
     colors;
-
     return Color(colors[index % colors.length]);
   }
 
@@ -88,10 +87,20 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
   }
 
   onSubmit() {
+    bool isFormValid = formKey.currentState?.saveAndValidate() ?? false;
+
+    if (!isFormValid) {
+      print("xxx isFormValid $isFormValid");
+    }
+
+    dynamic logoOutlet = formKey.currentState?.value;
+    ImagePickerValue? image = logoOutlet["image_logo"] as ImagePickerValue;
+
     String colorHex = '0x${selectedColor.toRadixString(16).toUpperCase()}';
 
     if (colorHex != "0x10000000") {
       context.read<OutletCubit>().update(
+            image.file,
             UpdateOutletDto(
               color: colorHex.toString(),
             ),

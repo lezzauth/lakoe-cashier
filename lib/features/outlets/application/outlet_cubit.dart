@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outlet_repository/outlet_repository.dart';
@@ -32,11 +34,11 @@ class OutletCubit extends Cubit<OutletState> {
     }
   }
 
-  Future<void> update(UpdateOutletDto dto) async {
+  Future<void> update(File? image, UpdateOutletDto dto) async {
     OutletState currentState = state;
     try {
       emit(OutletActionInProgress());
-      await outletRepository.update(dto);
+      await outletRepository.update(image, dto);
       emit(OutletActionSuccess());
     } catch (e) {
       emit(OutletActionFailure(e.toString()));
