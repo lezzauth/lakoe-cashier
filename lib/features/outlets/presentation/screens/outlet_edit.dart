@@ -316,7 +316,7 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             FormLabel(
-                              "Warna Brand ${arg!.color}",
+                              "Warna Brand",
                               description:
                                   "Warna ini akan pakai sebagai warna utama di QR Meja, toko online dan kebutuhan branding lainnya.",
                             ),
