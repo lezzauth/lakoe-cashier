@@ -423,7 +423,8 @@ class OutletCard extends StatelessWidget {
                       backgroundColor: Color(colorBrand),
                       child: ColorFiltered(
                         colorFilter: ColorFilter.mode(
-                          Colors.white,
+                          // Colors.white,
+                          Colors.transparent,
                           BlendMode.srcATop,
                         ),
                         child: Image.network(
