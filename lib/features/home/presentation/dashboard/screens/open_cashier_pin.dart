@@ -79,7 +79,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
             checkPIN = false;
             isPinWrong = true;
             messsageError = (state.message.contains("expired")
-                ? "Kamu tidak memiliki akses membuka kasir.\n\nCoba PIN lain."
+                ? "Kamu tidak memiliki akses ke kasir."
                 : "PIN Salah. Coba Lagi.");
           });
         } else if (state is CashierOpened && !hasNavigated) {
