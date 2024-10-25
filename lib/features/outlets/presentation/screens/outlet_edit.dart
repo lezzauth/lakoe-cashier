@@ -15,7 +15,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/features/outlets/application/outlet_cubit.dart';
 import 'package:point_of_sales_cashier/features/outlets/application/outlet_state.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
+import 'package:point_of_sales_cashier/features/outlets/presentation/widgets/image_picker_field.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -265,9 +265,6 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                                         ),
                                         Positioned.fill(
                                           child: ImagePickerField(
-                                            labelPicker: "Upload Logo",
-                                            sizes: 120,
-                                            isLogoImage: true,
                                             bgColor: Color(selectedColor),
                                             value: field.value,
                                             onChanged: field.didChange,

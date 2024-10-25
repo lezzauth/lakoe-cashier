@@ -22,8 +22,6 @@ class ImagePickerField extends StatefulWidget {
   final String errorText;
   final ValueChanged<String>? onError;
   final double sizes;
-  final bool isLogoImage;
-  final Color bgColor;
 
   const ImagePickerField({
     super.key,
@@ -33,8 +31,6 @@ class ImagePickerField extends StatefulWidget {
     this.errorText = "",
     this.onError,
     this.sizes = 100,
-    this.isLogoImage = false,
-    this.bgColor = TColors.highlightLightest,
   });
 
   @override
@@ -70,32 +66,20 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
 
   Widget _buildPreview() {
     if (_selectedFile?.file != null) {
-      return ColorFiltered(
-        colorFilter: ColorFilter.mode(
-          widget.isLogoImage ? Colors.white : Colors.transparent,
-          BlendMode.srcATop,
-        ),
-        child: Image.file(
-          _selectedFile!.file!,
-          fit: BoxFit.cover,
-          height: widget.sizes,
-          width: widget.sizes,
-        ),
+      return Image.file(
+        _selectedFile!.file!,
+        fit: BoxFit.cover,
+        height: widget.sizes,
+        width: widget.sizes,
       );
     }
 
     if (_selectedFile?.url != null) {
-      return ColorFiltered(
-        colorFilter: ColorFilter.mode(
-          widget.isLogoImage ? Colors.white : Colors.transparent,
-          BlendMode.srcATop,
-        ),
-        child: Image.network(
-          _selectedFile!.url!,
-          fit: BoxFit.cover,
-          height: widget.sizes,
-          width: widget.sizes,
-        ),
+      return Image.network(
+        _selectedFile!.url!,
+        fit: BoxFit.cover,
+        height: widget.sizes,
+        width: widget.sizes,
       );
     }
 
@@ -147,10 +131,9 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                   dashPattern: const [4],
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    child: Container(
+                    child: SizedBox(
                       height: widget.sizes,
                       width: widget.sizes,
-                      padding: EdgeInsets.all(widget.isLogoImage ? 12 : 0),
                       child: _buildPreview(),
                     ),
                   ),
@@ -159,12 +142,11 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(12)),
                   child: Container(
-                    decoration: BoxDecoration(
-                      color: widget.bgColor,
+                    decoration: const BoxDecoration(
+                      color: TColors.highlightLightest,
                     ),
                     height: widget.sizes,
                     width: widget.sizes,
-                    padding: EdgeInsets.all(widget.isLogoImage ? 12 : 0),
                     child: _buildPreview(),
                   ),
                 ),
@@ -182,7 +164,7 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                 )
             ],
           ),
-          if (!isEmptyValue && !widget.isLogoImage)
+          if (!isEmptyValue)
             Positioned(
               top: -5,
               right: -5,
