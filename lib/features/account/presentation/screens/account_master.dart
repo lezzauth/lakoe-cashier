@@ -401,6 +401,15 @@ class OutletCard extends StatelessWidget {
     return BlocBuilder<OutletCubit, OutletState>(
       builder: (context, state) {
         if (state is OutletLoadSuccess) {
+          int? colorBrand;
+
+          if (state.outlet.color != null) {
+            colorBrand = int.parse(state.outlet.color!.replaceFirst("0x", ""),
+                radix: 16);
+          } else {
+            colorBrand = 0xFFFD6E00;
+          }
+
           String outletName = state.outlet.name;
           String? outletAddress = state.outlet.address;
           String? outletLogo = state.outlet.logo;
@@ -442,18 +451,24 @@ class OutletCard extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 22,
                       backgroundColor: TColors.neutralLightLight,
-                      child: Image.network(
-                        outletLogo!,
-                        width: 24,
-                        height: 24,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Image.asset(
-                            TImages.lakoeLetterPrimary,
-                            width: 24,
-                            height: 24,
-                          );
-                        },
+                      child: ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                          Color(colorBrand!),
+                          BlendMode.srcATop,
+                        ),
+                        child: Image.network(
+                          outletLogo!,
+                          width: 24,
+                          height: 24,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              TImages.lakoeLetterPrimary,
+                              width: 24,
+                              height: 24,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
