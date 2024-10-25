@@ -77,6 +77,11 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
                   child: FormBuilderTextField(
                     name: "initialBalance",
                     keyboardType: TextInputType.number,
+                    onSubmitted: (value) {
+                      if (_formKey.currentState?.saveAndValidate() ?? false) {
+                        onSubmit();
+                      }
+                    },
                     validator: FormBuilderValidators.required(
                         errorText: ErrorTextStrings.required()),
                     inputFormatters: [_currencyFormatter],

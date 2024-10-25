@@ -45,12 +45,13 @@ class CashierRepositoryImpl implements CashierRepository {
     final Options options = await _getOptions();
     final outletId = await _appDataProvider.outletId;
 
-    final response = await _dio.post(
+    final res = await _dio.post(
       "$_baseURL/open",
       data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );
-    return OpenCashierResponse.fromJson(response.data);
+
+    return OpenCashierResponse.fromJson(res.data);
   }
 
   @override

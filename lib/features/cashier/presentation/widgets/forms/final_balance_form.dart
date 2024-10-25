@@ -30,7 +30,7 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
     decimalDigits: 0,
   );
 
-  Future<void> _onSubmit() async {
+  Future<void> onSubmit() async {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
@@ -90,6 +90,11 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
                   child: FormBuilderTextField(
                     name: "finalBalance",
                     keyboardType: TextInputType.number,
+                    onSubmitted: (value) {
+                      if (_formKey.currentState?.saveAndValidate() ?? false) {
+                        onSubmit();
+                      }
+                    },
                     validator: FormBuilderValidators.required(
                         errorText: ErrorTextStrings.required()),
                     inputFormatters: [_finalBalance],
@@ -115,7 +120,7 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
                     return SizedBox(
                       width: double.maxFinite,
                       child: ElevatedButton(
-                        onPressed: enabled ? _onSubmit : null,
+                        onPressed: enabled ? onSubmit : null,
                         child: const TextActionL(
                           "Lanjutkan",
                           color: TColors.neutralLightLightest,
