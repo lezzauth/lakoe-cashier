@@ -220,10 +220,10 @@ Map<String, dynamic> _$$DetailCustomerOutletResponseImplToJson(
 _$OutletSalesModelImpl _$$OutletSalesModelImplFromJson(
         Map<String, dynamic> json) =>
     _$OutletSalesModelImpl(
-      totalSales: OutletReportTotalSaleModel.fromJson(
-          json['totalSales'] as Map<String, dynamic>),
-      totalTransactions: OutletReportTotalTransactionModel.fromJson(
-          json['totalTransactions'] as Map<String, dynamic>),
+      total_sales: OutletReportTotalSaleModel.fromJson(
+          json['total_sales'] as Map<String, dynamic>),
+      total_transactions: OutletReportTotalTransactionModel.fromJson(
+          json['total_transactions'] as Map<String, dynamic>),
       timeWindow: OutletReportTimeWindow.fromJson(
           json['timeWindow'] as Map<String, dynamic>),
     );
@@ -231,8 +231,8 @@ _$OutletSalesModelImpl _$$OutletSalesModelImplFromJson(
 Map<String, dynamic> _$$OutletSalesModelImplToJson(
         _$OutletSalesModelImpl instance) =>
     <String, dynamic>{
-      'totalSales': instance.totalSales,
-      'totalTransactions': instance.totalTransactions,
+      'total_sales': instance.total_sales,
+      'total_transactions': instance.total_transactions,
       'timeWindow': instance.timeWindow,
     };
 
@@ -240,6 +240,7 @@ _$OutletReportTotalSaleModelImpl _$$OutletReportTotalSaleModelImplFromJson(
         Map<String, dynamic> json) =>
     _$OutletReportTotalSaleModelImpl(
       current: json['current'] as String,
+      currentAvg: (json['currentAvg'] as num?)?.toInt(),
       past: json['past'] as String,
       diff: (json['diff'] as num?)?.toInt(),
     );
@@ -248,6 +249,7 @@ Map<String, dynamic> _$$OutletReportTotalSaleModelImplToJson(
         _$OutletReportTotalSaleModelImpl instance) =>
     <String, dynamic>{
       'current': instance.current,
+      'currentAvg': instance.currentAvg,
       'past': instance.past,
       'diff': instance.diff,
     };

@@ -147,8 +147,8 @@ class DetailCustomerOutletResponse with _$DetailCustomerOutletResponse {
 @freezed
 class OutletSalesModel with _$OutletSalesModel {
   const factory OutletSalesModel({
-    required OutletReportTotalSaleModel totalSales,
-    required OutletReportTotalTransactionModel totalTransactions,
+    required OutletReportTotalSaleModel total_sales,
+    required OutletReportTotalTransactionModel total_transactions,
     required OutletReportTimeWindow timeWindow,
   }) = _OutletSalesModel;
 
@@ -160,6 +160,7 @@ class OutletSalesModel with _$OutletSalesModel {
 class OutletReportTotalSaleModel with _$OutletReportTotalSaleModel {
   const factory OutletReportTotalSaleModel({
     required String current,
+    int? currentAvg,
     required String past,
     int? diff,
   }) = _OutletReportTotalSaleModel;
