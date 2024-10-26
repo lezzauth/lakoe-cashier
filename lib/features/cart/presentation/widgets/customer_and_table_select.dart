@@ -1,6 +1,5 @@
 import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/bottom_sheet/customer_list.dart';
@@ -8,7 +7,6 @@ import 'package:point_of_sales_cashier/features/cart/presentation/widgets/bottom
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/cards/card_order.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:table_repository/table_repository.dart';
 
 class CustomerAndTableSelect extends StatefulWidget {
@@ -86,13 +84,13 @@ class _CustomerAndTableSelectState extends State<CustomerAndTableSelect> {
               color: TColors.primary,
             ),
             onTap: _onCustomerOpened,
-            trailing: widget.customer == null
-                ? null
-                : SvgPicture.asset(
-                    TImages.lakoeCoin,
-                    height: 24,
-                    width: 24,
-                  ),
+            // trailing: widget.customer == null
+            //     ? null
+            //     : SvgPicture.asset(
+            //         TImages.lakoeCoin,
+            //         height: 24,
+            //         width: 24,
+            //       ),
           ),
         ),
         const SizedBox(width: 12.0),

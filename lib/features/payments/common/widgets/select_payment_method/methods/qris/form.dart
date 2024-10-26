@@ -46,7 +46,7 @@ class _QrisPaymentFormState extends State<QrisPaymentForm> {
                     ),
                     SizedBox(width: 12),
                     TextBodyL(
-                      "Menggunakan QRIS Statis",
+                      "Tidak menggunakan mesin EDC",
                       color: TColors.neutralDarkDark,
                     ),
                   ],

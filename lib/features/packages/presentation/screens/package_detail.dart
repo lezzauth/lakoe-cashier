@@ -4,10 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_repository/package_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/light_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
@@ -392,48 +394,56 @@ class PackageComparisonTable extends StatelessWidget {
               ],
             ),
             _buildTableRow(
+              context,
               0,
-              "Kuota transaksi perhari",
+              "Transaksi perhari",
               litePackage.orders,
               upgradedPackage.orders,
             ),
             _buildTableRow(
+              context,
               1,
-              "Kuota menu/produk",
+              "Data menu/produk",
               litePackage.products,
               upgradedPackage.products,
             ),
             _buildTableRow(
+              context,
               2,
               "Data Karyawan",
               litePackage.employees,
               upgradedPackage.employees,
             ),
             _buildTableRow(
+              context,
               3,
               "Data Pelanggan",
               litePackage.customers,
               upgradedPackage.customers,
             ),
             _buildTableRow(
+              context,
               4,
               "QR Meja",
               litePackage.tables,
               upgradedPackage.tables,
-            ),
-            _buildTableRow(
-              5,
-              "Integrasi Perangkat",
-              litePackage.hardwareIntergation,
-              upgradedPackage.hardwareIntergation,
-            ),
-            _buildTableRow(
-              6,
-              "Omni Channel",
-              0,
-              null,
               isLast: true,
             ),
+            // _buildTableRow(
+            //   context,
+            //   5,
+            //   "Integrasi Perangkat",
+            //   litePackage.hardwareIntergation,
+            //   upgradedPackage.hardwareIntergation,
+            // ),
+            // _buildTableRow(
+            //   context,
+            //   6,
+            //   "Omni Channel",
+            //   0,
+            //   null,
+            //   isLast: true,
+            // ),
           ],
         ),
         SizedBox(height: 20),
@@ -471,6 +481,7 @@ class PackageComparisonTable extends StatelessWidget {
 }
 
 TableRow _buildTableRow(
+  BuildContext context,
   int index,
   String label,
   int? liteValue,
@@ -580,6 +591,57 @@ TableRow _buildTableRow(
                     height: 20,
                     width: 20,
                     color: TColors.neutralDarkDark,
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) {
+                          return CustomBottomsheet(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 12,
+                              ),
+                              child: Column(
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SvgPicture.asset(
+                                        TImages.infinity,
+                                        height: 32,
+                                      ),
+                                      SizedBox(height: 16),
+                                      TextHeading3(
+                                        label,
+                                        color: TColors.neutralDarkDark,
+                                      ),
+                                      SizedBox(height: 4),
+                                      TextBodyM(
+                                        "Dengan kamu membeli paket Lakoe Pro, kamu bisa menambah ${label.toLowerCase()} tanpa batas.",
+                                        color: TColors.neutralDarkDark,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 24),
+                                  SizedBox(
+                                    height: 48,
+                                    width: double.infinity,
+                                    child: OutlinedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: TextActionL("Oke. Mengerti"),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
           ),
         ),

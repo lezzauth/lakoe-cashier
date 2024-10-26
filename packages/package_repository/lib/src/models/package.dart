@@ -9,9 +9,9 @@ class PackageModel with _$PackageModel {
     required String name,
     int? orders,
     int? products,
-    required int employees,
+    int? employees,
     int? customers,
-    required int tables,
+    int? tables,
     int? hardwareIntergation,
     required int price,
   }) = _PackageModel;

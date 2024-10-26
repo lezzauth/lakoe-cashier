@@ -122,6 +122,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       TextHeading4(customer.customer.name),
+                                      SizedBox(height: 4),
                                       TextBodyS(
                                         customer.customer.phoneNumber,
                                         color: TColors.neutralDarkLight,
@@ -131,31 +132,31 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                 ],
                               ),
                             ),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    SvgPicture.asset(
-                                      TImages.lakoeCoin,
-                                      height: 20,
-                                      width: 20,
-                                    ),
-                                    const SizedBox(width: 4),
-                                    TextHeading4(
-                                      customer.customer.owners.first.coin
-                                          .toString(),
-                                    ),
-                                  ],
-                                ),
-                                const TextBodyS(
-                                  "Poin",
-                                  color: TColors.neutralDarkLight,
-                                ),
-                              ],
-                            ),
+                            // Column(
+                            //   mainAxisSize: MainAxisSize.min,
+                            //   crossAxisAlignment: CrossAxisAlignment.end,
+                            //   children: [
+                            //     Row(
+                            //       mainAxisAlignment: MainAxisAlignment.end,
+                            //       children: [
+                            //         SvgPicture.asset(
+                            //           TImages.lakoeCoin,
+                            //           height: 20,
+                            //           width: 20,
+                            //         ),
+                            //         const SizedBox(width: 4),
+                            //         TextHeading4(
+                            //           customer.customer.owners.first.coin
+                            //               .toString(),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //     const TextBodyS(
+                            //       "Poin",
+                            //       color: TColors.neutralDarkLight,
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),

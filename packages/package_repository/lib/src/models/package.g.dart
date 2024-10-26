@@ -11,9 +11,9 @@ _$PackageModelImpl _$$PackageModelImplFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       orders: (json['orders'] as num?)?.toInt(),
       products: (json['products'] as num?)?.toInt(),
-      employees: (json['employees'] as num).toInt(),
+      employees: (json['employees'] as num?)?.toInt(),
       customers: (json['customers'] as num?)?.toInt(),
-      tables: (json['tables'] as num).toInt(),
+      tables: (json['tables'] as num?)?.toInt(),
       hardwareIntergation: (json['hardwareIntergation'] as num?)?.toInt(),
       price: (json['price'] as num).toInt(),
     );

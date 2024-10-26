@@ -23,9 +23,9 @@ mixin _$PackageModel {
   String get name => throw _privateConstructorUsedError;
   int? get orders => throw _privateConstructorUsedError;
   int? get products => throw _privateConstructorUsedError;
-  int get employees => throw _privateConstructorUsedError;
+  int? get employees => throw _privateConstructorUsedError;
   int? get customers => throw _privateConstructorUsedError;
-  int get tables => throw _privateConstructorUsedError;
+  int? get tables => throw _privateConstructorUsedError;
   int? get hardwareIntergation => throw _privateConstructorUsedError;
   int get price => throw _privateConstructorUsedError;
 
@@ -49,9 +49,9 @@ abstract class $PackageModelCopyWith<$Res> {
       {String name,
       int? orders,
       int? products,
-      int employees,
+      int? employees,
       int? customers,
-      int tables,
+      int? tables,
       int? hardwareIntergation,
       int price});
 }
@@ -74,9 +74,9 @@ class _$PackageModelCopyWithImpl<$Res, $Val extends PackageModel>
     Object? name = null,
     Object? orders = freezed,
     Object? products = freezed,
-    Object? employees = null,
+    Object? employees = freezed,
     Object? customers = freezed,
-    Object? tables = null,
+    Object? tables = freezed,
     Object? hardwareIntergation = freezed,
     Object? price = null,
   }) {
@@ -93,18 +93,18 @@ class _$PackageModelCopyWithImpl<$Res, $Val extends PackageModel>
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as int?,
-      employees: null == employees
+      employees: freezed == employees
           ? _value.employees
           : employees // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       customers: freezed == customers
           ? _value.customers
           : customers // ignore: cast_nullable_to_non_nullable
               as int?,
-      tables: null == tables
+      tables: freezed == tables
           ? _value.tables
           : tables // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       hardwareIntergation: freezed == hardwareIntergation
           ? _value.hardwareIntergation
           : hardwareIntergation // ignore: cast_nullable_to_non_nullable
@@ -129,9 +129,9 @@ abstract class _$$PackageModelImplCopyWith<$Res>
       {String name,
       int? orders,
       int? products,
-      int employees,
+      int? employees,
       int? customers,
-      int tables,
+      int? tables,
       int? hardwareIntergation,
       int price});
 }
@@ -152,9 +152,9 @@ class __$$PackageModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? orders = freezed,
     Object? products = freezed,
-    Object? employees = null,
+    Object? employees = freezed,
     Object? customers = freezed,
-    Object? tables = null,
+    Object? tables = freezed,
     Object? hardwareIntergation = freezed,
     Object? price = null,
   }) {
@@ -171,18 +171,18 @@ class __$$PackageModelImplCopyWithImpl<$Res>
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as int?,
-      employees: null == employees
+      employees: freezed == employees
           ? _value.employees
           : employees // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       customers: freezed == customers
           ? _value.customers
           : customers // ignore: cast_nullable_to_non_nullable
               as int?,
-      tables: null == tables
+      tables: freezed == tables
           ? _value.tables
           : tables // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       hardwareIntergation: freezed == hardwareIntergation
           ? _value.hardwareIntergation
           : hardwareIntergation // ignore: cast_nullable_to_non_nullable
@@ -202,9 +202,9 @@ class _$PackageModelImpl implements _PackageModel {
       {required this.name,
       this.orders,
       this.products,
-      required this.employees,
+      this.employees,
       this.customers,
-      required this.tables,
+      this.tables,
       this.hardwareIntergation,
       required this.price});
 
@@ -218,11 +218,11 @@ class _$PackageModelImpl implements _PackageModel {
   @override
   final int? products;
   @override
-  final int employees;
+  final int? employees;
   @override
   final int? customers;
   @override
-  final int tables;
+  final int? tables;
   @override
   final int? hardwareIntergation;
   @override
@@ -278,9 +278,9 @@ abstract class _PackageModel implements PackageModel {
       {required final String name,
       final int? orders,
       final int? products,
-      required final int employees,
+      final int? employees,
       final int? customers,
-      required final int tables,
+      final int? tables,
       final int? hardwareIntergation,
       required final int price}) = _$PackageModelImpl;
 
@@ -294,11 +294,11 @@ abstract class _PackageModel implements PackageModel {
   @override
   int? get products;
   @override
-  int get employees;
+  int? get employees;
   @override
   int? get customers;
   @override
-  int get tables;
+  int? get tables;
   @override
   int? get hardwareIntergation;
   @override
