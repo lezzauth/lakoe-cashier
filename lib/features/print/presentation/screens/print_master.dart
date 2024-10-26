@@ -200,7 +200,7 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                   ),
                 ),
                 if (devices.isNotEmpty ||
-                    connectingDevices.isNotEmpty ||
+                    connectedDevices.isNotEmpty ||
                     availableDevices.isNotEmpty)
                   Expanded(
                     child: ListView(
@@ -348,7 +348,9 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                       ],
                     ),
                   ),
-                if (availableDevices.isEmpty)
+                if (connectedDevices.isEmpty &&
+                    devices.isEmpty &&
+                    availableDevices.isEmpty)
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -367,88 +369,86 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                         subTitle: !isDiscovering
                             ? "Silahkan klik refresh untuk dapat menemukan printer di sekitarmu."
                             : "",
-                        action: TextButton(
-                          onPressed: _onRefresh,
-                          child: Stack(
-                            children: [
-                              if (!isDiscovering)
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const UiIcons(
-                                      TIcons.refresh,
-                                      width: 24,
-                                      height: 24,
-                                      color: TColors.primary,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    TextActionL(
-                                      "Refresh",
-                                      color: TColors.primary,
-                                    ),
-                                  ],
-                                ),
-                              if (isDiscovering)
-                                Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 8),
-                                  child: Center(
-                                    child: SizedBox(
-                                      height: 16,
-                                      width: 16,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2.0,
+                        action: SizedBox(
+                          width: 140,
+                          child: TextButton(
+                            onPressed: _onRefresh,
+                            child: Stack(
+                              children: [
+                                if (!isDiscovering)
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const UiIcons(
+                                        TIcons.refresh,
+                                        width: 24,
+                                        height: 24,
+                                        color: TColors.primary,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      TextActionL(
+                                        "Refresh",
+                                        color: TColors.primary,
+                                      ),
+                                    ],
+                                  ),
+                                if (isDiscovering)
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 8),
+                                    child: Center(
+                                      child: SizedBox(
+                                        height: 16,
+                                        width: 16,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2.0,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                Visibility(
-                  visible: devices.isNotEmpty ||
-                      connectedDevices.isNotEmpty ||
-                      availableDevices.isNotEmpty,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
-                    child: BillAction(
-                      onTestPrint: connectedDevices.isEmpty
-                          ? null
-                          : () {
-                              final billMasterState =
-                                  context.read<BillMasterCubit>().state;
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  child: BillAction(
+                    onTestPrint: connectedDevices.isEmpty
+                        ? null
+                        : () {
+                            final billMasterState =
+                                context.read<BillMasterCubit>().state;
 
-                              String footNote = "";
-                              footNote = billMasterState.footNote;
+                            String footNote = "";
+                            footNote = billMasterState.footNote;
 
-                              final authState = context.read<AuthCubit>().state;
+                            final authState = context.read<AuthCubit>().state;
 
-                              OwnerProfileModel profile;
-                              if (authState is AuthReady) {
-                                profile = authState.profile;
-                              } else {
-                                profile = OwnerProfileModel(
-                                  id: '',
-                                  name: '',
-                                  phoneNumber: '',
-                                  packageName: '',
-                                  outlets: [],
-                                );
-                                if (kDebugMode) {
-                                  print(
-                                      'AuthState is not ready, using default profile.');
-                                }
+                            OwnerProfileModel profile;
+                            if (authState is AuthReady) {
+                              profile = authState.profile;
+                            } else {
+                              profile = OwnerProfileModel(
+                                id: '',
+                                name: '',
+                                phoneNumber: '',
+                                packageName: '',
+                                outlets: [],
+                              );
+                              if (kDebugMode) {
+                                print(
+                                    'AuthState is not ready, using default profile.');
                               }
+                            }
 
-                              TBill.testPrint(context, profile, footNote);
-                            },
-                      onShowBill: () {
-                        Navigator.pushNamed(context, "/bill");
-                      },
-                    ),
+                            TBill.testPrint(context, profile, footNote);
+                          },
+                    onShowBill: () {
+                      Navigator.pushNamed(context, "/bill");
+                    },
                   ),
                 ),
               ],
