@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outlet_repository/outlet_repository.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
@@ -45,6 +47,8 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   StreamSubscription? _sub;
+  DateTime? lastBackPressed;
+  bool canPopNow = false;
 
   Future<void> _onInit() async {
     context.read<CashierCubit>().getOpenCashier();
@@ -80,116 +84,135 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CashierReportFilterCubit, CashierReportFilterState>(
-      listener: (context, state) {
-        context.read<CashierReportCubit>().getReport(
-              dto: GetOutletSalesDto(
-                from: state.from,
-                template: state.template,
-                to: state.to,
-              ),
-            );
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        final now = DateTime.now();
+        if (lastBackPressed == null ||
+            now.difference(lastBackPressed!) > const Duration(seconds: 2)) {
+          lastBackPressed = now;
+          CustomToast.show(
+            context,
+            "Tekan sekali lagi untuk keluar",
+            position: 'bottom',
+            duration: 2,
+          );
+          return;
+        } else {
+          SystemNavigator.pop();
+        }
       },
-      child: Scaffold(
-        appBar: const DashboardAppbar(),
-        body: SafeArea(
-          child: ListView(
-            children: [
-              const MainMenu(),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                child: ItemMenuContainer(),
-              ),
-              // Container(
-              //   padding: EdgeInsets.symmetric(horizontal: 24),
-              //   margin: EdgeInsets.only(bottom: 12),
-              //   child: DashboardBanner(),
-              // ),
-              // Container(
-              //   padding: EdgeInsets.symmetric(horizontal: 24),
-              //   margin: EdgeInsets.only(bottom: 12),
-              //   child: AIBanner(),
-              // ),
-
-              Container(
-                height: 4,
-                color: TColors.neutralLightMedium,
-              ),
-
-              Container(
-                margin: EdgeInsets.only(bottom: 12, top: 20),
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                child: TextHeading2(
-                  "Laporan singkat kamu, nih!",
-                  color: TColors.neutralDarkDark,
+      child: BlocListener<CashierReportFilterCubit, CashierReportFilterState>(
+        listener: (context, state) {
+          context.read<CashierReportCubit>().getReport(
+                dto: GetOutletSalesDto(
+                  from: state.from,
+                  template: state.template,
+                  to: state.to,
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(bottom: 12),
-                child: DashboardFilter(),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                margin: EdgeInsets.only(bottom: 12),
-                child: DashboardDaySelectFilter(),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                margin: EdgeInsets.only(bottom: 12),
-                child: BlocBuilder<CashierReportCubit, CashierReportState>(
-                  builder: (context, state) => switch (state) {
-                    CashierReportLoadSuccess(:final report) => Column(
-                        children: [
-                          SalesSummary(
-                            totalSales: report.total_sales,
-                          ),
-                          SizedBox(height: 12),
-                          TransactionSummary(
-                            totalTransactions: report.total_transactions,
-                          ),
-                        ],
-                      ),
-                    CashierReportLoadFailure(:final error) => Center(
-                        child: TextBodyS(
-                          error,
-                          color: TColors.error,
-                        ),
-                      ),
-                    _ => Shimmer.fromColors(
-                        baseColor: Color(0xFFE8E9F1),
-                        highlightColor: Color(0xFFF8F9FE),
-                        child: Column(
+              );
+        },
+        child: Scaffold(
+          appBar: const DashboardAppbar(),
+          body: SafeArea(
+            child: ListView(
+              children: [
+                const MainMenu(),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: ItemMenuContainer(),
+                ),
+                // Container(
+                //   padding: EdgeInsets.symmetric(horizontal: 24),
+                //   margin: EdgeInsets.only(bottom: 12),
+                //   child: DashboardBanner(),
+                // ),
+                // Container(
+                //   padding: EdgeInsets.symmetric(horizontal: 24),
+                //   margin: EdgeInsets.only(bottom: 12),
+                //   child: AIBanner(),
+                // ),
+
+                Container(
+                  height: 4,
+                  color: TColors.neutralLightMedium,
+                ),
+
+                Container(
+                  margin: EdgeInsets.only(bottom: 12, top: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: TextHeading2(
+                    "Laporan singkat kamu, nih!",
+                    color: TColors.neutralDarkDark,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: 12),
+                  child: DashboardFilter(),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  margin: EdgeInsets.only(bottom: 12),
+                  child: DashboardDaySelectFilter(),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  margin: EdgeInsets.only(bottom: 12),
+                  child: BlocBuilder<CashierReportCubit, CashierReportState>(
+                    builder: (context, state) => switch (state) {
+                      CashierReportLoadSuccess(:final report) => Column(
                           children: [
-                            Container(
-                              height: 127,
-                              width: double.maxFinite,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.0),
-                                color: TColors.neutralLightLightest,
-                                border: Border.all(
-                                    color: TColors.neutralLightMedium,
-                                    width: 1),
-                              ),
+                            SalesSummary(
+                              totalSales: report.total_sales,
                             ),
                             SizedBox(height: 12),
-                            Container(
-                              height: 127,
-                              width: double.maxFinite,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.0),
-                                color: TColors.neutralLightLightest,
-                                border: Border.all(
-                                    color: TColors.neutralLightMedium,
-                                    width: 1),
-                              ),
+                            TransactionSummary(
+                              totalTransactions: report.total_transactions,
                             ),
                           ],
                         ),
-                      ),
-                  },
+                      CashierReportLoadFailure(:final error) => Center(
+                          child: TextBodyS(
+                            error,
+                            color: TColors.error,
+                          ),
+                        ),
+                      _ => Shimmer.fromColors(
+                          baseColor: Color(0xFFE8E9F1),
+                          highlightColor: Color(0xFFF8F9FE),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 127,
+                                width: double.maxFinite,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  color: TColors.neutralLightLightest,
+                                  border: Border.all(
+                                      color: TColors.neutralLightMedium,
+                                      width: 1),
+                                ),
+                              ),
+                              SizedBox(height: 12),
+                              Container(
+                                height: 127,
+                                width: double.maxFinite,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  color: TColors.neutralLightLightest,
+                                  border: Border.all(
+                                      color: TColors.neutralLightMedium,
+                                      width: 1),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
