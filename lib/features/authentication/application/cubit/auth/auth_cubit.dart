@@ -43,7 +43,7 @@ class AuthCubit extends Cubit<AuthState> {
       if (e is DioException) {
         if (e.error is DioExceptionModel) {
           final resError = e.error as DioExceptionModel;
-          if (resError.code == 404) {
+          if (resError.statusCode == 404) {
             emit(NotFound(resError));
           } else {
             emit(TokenExpired(resError));

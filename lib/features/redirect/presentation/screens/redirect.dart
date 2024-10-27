@@ -117,8 +117,8 @@ class _RedirectScreenState extends State<RedirectScreen> {
         if (state is AuthReady) {
           Navigator.popAndPushNamed(context, "/cashier");
         } else if (state is UncompletedProfile ||
-            (state is TokenExpired && state.res.code == 401) ||
-            (state is NotFound && state.res.code == 404)) {
+            (state is TokenExpired && state.res.statusCode == 401) ||
+            (state is NotFound && state.res.statusCode == 404)) {
           await tokenProvider.clearAll();
           Navigator.popAndPushNamed(context, "/on-boarding");
         }
