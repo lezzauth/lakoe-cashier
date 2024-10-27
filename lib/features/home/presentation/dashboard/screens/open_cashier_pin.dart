@@ -130,7 +130,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
                                 ),
                               ),
                               const TextBodyS(
-                                "Jika Anda lupa PIN, hubungi manajer Anda",
+                                "Masukin PIN kasir yang sedang bertugas",
                                 color: TColors.neutralDarkMedium,
                                 textAlign: TextAlign.center,
                               )
