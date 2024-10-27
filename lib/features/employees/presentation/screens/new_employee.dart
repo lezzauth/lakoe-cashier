@@ -122,7 +122,7 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
           actionError: state is EmployeeMasterActionFailure,
           child: Scaffold(
             appBar: CustomAppbar(
-              title: "Karyawan Baru",
+              title: "Tambah Kasir Baru",
               actions: [
                 TextButton(
                     onPressed: !isLoading ? _onSubmitted : null,

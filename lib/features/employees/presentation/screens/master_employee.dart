@@ -45,7 +45,7 @@ class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
     return Scaffold(
       appBar: CustomAppbar(
         search: SearchField(
-          hintText: "Cari karyawan disini...",
+          hintText: "Cari kasir disini...",
           debounceTime: 500,
           onChanged: (value) {},
         ),

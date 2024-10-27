@@ -158,8 +158,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 splashColor: TColors.neutralLightLight,
                 highlightColor: TColors.neutralLightLight,
                 child: SectionCard(
-                  title: "Karyawan",
-                  description: "Manajemen, Hak akses atau PIN",
+                  title: "Daftar Kasir",
+                  description: "Kelola data kasir yang ditugaskan",
                   children: null,
                 ),
               ),

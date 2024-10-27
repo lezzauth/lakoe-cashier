@@ -21,6 +21,14 @@ class EmployeeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String roleName = "Kasir";
+
+    if (role == "OWNER") {
+      roleName = "Pemilik & Kasir";
+    } else {
+      roleName = "Kasir";
+    }
+
     return ListTile(
       onTap: onTap,
       leading: SvgPicture.asset(
@@ -30,7 +38,7 @@ class EmployeeItem extends StatelessWidget {
       ),
       title: TextHeading4(name),
       subtitle: TextBodyS(
-        role,
+        roleName,
         color: TColors.neutralDarkLight,
       ),
       trailing: const UiIcons(

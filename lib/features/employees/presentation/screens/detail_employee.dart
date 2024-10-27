@@ -54,7 +54,7 @@ class _DetailEmployeeState extends State<DetailEmployee> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppbar(
-        title: "Detail Karyawan",
+        title: "Detail Kasir",
       ),
       body: Scrollbar(
         child: RefreshIndicator(
@@ -128,7 +128,9 @@ class _DetailEmployeeState extends State<DetailEmployee> {
                                             flex: 3,
                                             fit: FlexFit.tight,
                                             child: TextBodyL(
-                                              employee.role,
+                                              employee.role == "OWNER"
+                                                  ? "Pemilik & Kasir"
+                                                  : "Kasir",
                                               color: TColors.neutralDarkDarkest,
                                             ),
                                           ),
@@ -162,6 +164,8 @@ class _DetailEmployeeState extends State<DetailEmployee> {
                                             child: TextBodyL(
                                               employee.phoneNumber,
                                               color: TColors.neutralDarkDarkest,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
                                         ],
@@ -196,6 +200,8 @@ class _DetailEmployeeState extends State<DetailEmployee> {
                                                   ? "-"
                                                   : employee.email!,
                                               color: TColors.neutralDarkDarkest,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
                                         ],

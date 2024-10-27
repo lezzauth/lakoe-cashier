@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -46,22 +48,24 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
     }
 
     dynamic value = _employeeFormKey.currentState?.value;
-    ImagePickerValue profilePicture =
-        value["profilePicture"] as ImagePickerValue;
+    ImagePickerValue? profilePicture =
+        value["profilePicture"] as ImagePickerValue?;
 
     String? email = value["email"];
     if (email == null || email.isEmpty) {
       email = null;
     }
 
+    File? profilePictureFile = profilePicture?.file;
+
     await context.read<EmployeeMasterCubit>().update(
           widget.arguments.employee.id,
-          profilePicture: profilePicture.file,
+          profilePicture: profilePictureFile,
           dto: UpdateEmployeeDto(
             name: value["name"],
             // pin: value["pin"],
             phoneNumber: value["phoneNumber"],
-            role: "CASHIER",
+            role: widget.arguments.employee.role,
             email: email,
           ),
         );
@@ -96,7 +100,7 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
           actionError: state is EmployeeMasterActionFailure,
           child: Scaffold(
             appBar: CustomAppbar(
-              title: "Ubah Data Karyawan",
+              title: "Ubah Data Kasir",
               actions: [
                 TextButton(
                     onPressed: !isLoading ? _onSubmitted : null,

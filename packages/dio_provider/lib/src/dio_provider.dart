@@ -68,6 +68,16 @@ class DioProvider {
             message: "Quota limit has been reached",
             type: DioExceptionType.unknown,
           ));
+        } else if (e.response?.statusCode == 404) {
+          return handler.reject(DioException(
+            requestOptions: e.requestOptions,
+            error: DioExceptionModel(
+              code: e.response?.statusCode,
+              message: "Client error - 404",
+            ),
+            message: "Client error - 404",
+            type: DioExceptionType.unknown,
+          ));
         } else if (e.response?.statusCode == 502 && !isShowingBottomSheet) {
           isShowingBottomSheet = true;
 

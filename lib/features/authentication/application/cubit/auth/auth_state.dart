@@ -27,3 +27,9 @@ final class UncompletedProfile extends AuthState {
 
   UncompletedProfile({required this.message});
 }
+
+final class NotFound extends AuthState {
+  final DioExceptionModel res;
+
+  NotFound(this.res);
+}
