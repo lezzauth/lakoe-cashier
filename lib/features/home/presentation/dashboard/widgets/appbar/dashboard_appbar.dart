@@ -59,8 +59,12 @@ class DashboardAppbar extends StatelessWidget implements PreferredSizeWidget {
                             return Container(
                               width: 32,
                               height: 32,
-                              decoration: const ShapeDecoration(
-                                color: Color(0xFFD3D5DD),
+                              decoration: ShapeDecoration(
+                                color: profile.packageName == "GROW"
+                                    ? Color(0xFF00712D)
+                                    : profile.packageName == "PRO"
+                                        ? Color(0xFF9306AF)
+                                        : Color(0xFFFD6E00),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(16),
