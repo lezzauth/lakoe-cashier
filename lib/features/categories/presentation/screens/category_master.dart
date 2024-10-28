@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
@@ -128,14 +129,21 @@ class _CategoryMasterState extends State<CategoryMaster> {
                                       color: TColors.neutralDarkLight,
                                     ),
                                     onTap: () async {
-                                      bool? updateCategory =
-                                          await Navigator.pushNamed(
-                                        context,
-                                        "/categories/edit",
-                                        arguments: category,
-                                      ) as bool?;
-                                      if (updateCategory != true) return;
-                                      onRefresh();
+                                      if (category.name.contains("Umum")) {
+                                        CustomToast.show(
+                                          "Kategori Umum tidak bisa diedit.",
+                                          position: "bottom",
+                                        );
+                                      } else {
+                                        bool? updateCategory =
+                                            await Navigator.pushNamed(
+                                          context,
+                                          "/categories/edit",
+                                          arguments: category,
+                                        ) as bool?;
+                                        if (updateCategory != true) return;
+                                        onRefresh();
+                                      }
                                     },
                                     leading: Container(
                                       height: 44,
