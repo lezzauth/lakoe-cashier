@@ -49,7 +49,7 @@ class _TaxMasterState extends State<TaxMaster> {
                   'Kamu telah melakukan perubahan pengaturan pajak.\nMau disimpan atau diabaikan?',
               labelButtonPrimary: "Simpan",
               labelButtonSecondary: "Abaikan",
-              isSaveActionLoading: state is TaxMasterActionInProgress,
+              isPrimaryActionLoading: state is TaxMasterActionInProgress,
               primaryAction: () async {
                 await _onSubmitted();
 

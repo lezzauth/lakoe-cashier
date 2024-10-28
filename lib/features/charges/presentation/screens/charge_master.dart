@@ -49,7 +49,7 @@ class _ChargeMasterState extends State<ChargeMaster> {
                   'Kamu telah melakukan perubahan pengaturan biaya lainnya.\nMau disimpan atau diabaikan?',
               labelButtonPrimary: "Simpan",
               labelButtonSecondary: "Abaikan",
-              isSaveActionLoading: state is ChargeMasterActionInProgress,
+              isPrimaryActionLoading: state is ChargeMasterActionInProgress,
               primaryAction: () async {
                 await _onSubmitted();
 

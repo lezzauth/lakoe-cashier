@@ -63,7 +63,7 @@ class _BankAccountFormState extends State<BankAccountForm> {
           message: "Kamu yakin ingin menghapus rekening ini?",
           labelButtonPrimary: "Tidak",
           labelButtonSecondary: "Ya, Hapus",
-          isDiscardActionLoading: widget.isLoading,
+          isSecondaryActionLoading: widget.isLoading,
           primaryAction: () async {
             Navigator.pop(context);
           },

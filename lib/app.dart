@@ -53,6 +53,7 @@ import 'package:point_of_sales_cashier/features/online_shop/presentation/screens
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_detail.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_master.dart';
 import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_track.dart';
+import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_action/order_action_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/preview_proof_transfer.dart';
 import 'package:point_of_sales_cashier/features/outlets/application/outlet_cubit.dart';
 import 'package:point_of_sales_cashier/features/outlets/presentation/screens/outlet_edit.dart';
@@ -145,6 +146,7 @@ class App extends StatelessWidget {
         // Order Master
         BlocProvider(create: (context) => OrderMasterCubit()),
         BlocProvider(create: (context) => OrderDetailCubit()),
+        BlocProvider(create: (context) => OrderActionCubit()),
 
         // Customer Master
         BlocProvider(create: (context) => CustomerMasterCubit()),

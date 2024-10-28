@@ -24,6 +24,7 @@ abstract class CashierRepository {
     String id,
     CompleteOrderDto dto,
   );
+  Future<CancelOrderResponse> cancelOrder(String id);
   Future<List<OrderItemResponse>> findAllOrder(FindAllOrderDto? dto);
 }
 
@@ -157,6 +158,17 @@ class CashierRepositoryImpl implements CashierRepository {
       options: options,
     );
     return CompleteOrderResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<CancelOrderResponse> cancelOrder(String id) async {
+    final Options options = await _getOptions();
+
+    final response = await _dio.post(
+      "$_baseURL/orders/$id/cancel",
+      options: options,
+    );
+    return CancelOrderResponse.fromJson(response.data);
   }
 
   @override

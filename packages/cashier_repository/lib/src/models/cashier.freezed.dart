@@ -2766,3 +2766,461 @@ abstract class _CompleteOrderResponse implements CompleteOrderResponse {
   _$$CompleteOrderResponseImplCopyWith<_$CompleteOrderResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+CancelOrderResponse _$CancelOrderResponseFromJson(Map<String, dynamic> json) {
+  return _CancelOrderResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CancelOrderResponse {
+  String get id => throw _privateConstructorUsedError;
+  int get no => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
+  String? get customerId => throw _privateConstructorUsedError;
+  String get paymentStatus => throw _privateConstructorUsedError;
+  String get customerType => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
+  String get source => throw _privateConstructorUsedError;
+  String get outletId => throw _privateConstructorUsedError;
+  String? get tableId => throw _privateConstructorUsedError;
+  String get cashierId => throw _privateConstructorUsedError;
+  String? get closedAt => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
+  String get updatedAt => throw _privateConstructorUsedError;
+
+  /// Serializes this CancelOrderResponse to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of CancelOrderResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $CancelOrderResponseCopyWith<CancelOrderResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CancelOrderResponseCopyWith<$Res> {
+  factory $CancelOrderResponseCopyWith(
+          CancelOrderResponse value, $Res Function(CancelOrderResponse) then) =
+      _$CancelOrderResponseCopyWithImpl<$Res, CancelOrderResponse>;
+  @useResult
+  $Res call(
+      {String id,
+      int no,
+      String status,
+      String price,
+      String? customerId,
+      String paymentStatus,
+      String customerType,
+      String type,
+      String source,
+      String outletId,
+      String? tableId,
+      String cashierId,
+      String? closedAt,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class _$CancelOrderResponseCopyWithImpl<$Res, $Val extends CancelOrderResponse>
+    implements $CancelOrderResponseCopyWith<$Res> {
+  _$CancelOrderResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of CancelOrderResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? no = null,
+    Object? status = null,
+    Object? price = null,
+    Object? customerId = freezed,
+    Object? paymentStatus = null,
+    Object? customerType = null,
+    Object? type = null,
+    Object? source = null,
+    Object? outletId = null,
+    Object? tableId = freezed,
+    Object? cashierId = null,
+    Object? closedAt = freezed,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as int,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      customerId: freezed == customerId
+          ? _value.customerId
+          : customerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String,
+      customerType: null == customerType
+          ? _value.customerType
+          : customerType // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      tableId: freezed == tableId
+          ? _value.tableId
+          : tableId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cashierId: null == cashierId
+          ? _value.cashierId
+          : cashierId // ignore: cast_nullable_to_non_nullable
+              as String,
+      closedAt: freezed == closedAt
+          ? _value.closedAt
+          : closedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CancelOrderResponseImplCopyWith<$Res>
+    implements $CancelOrderResponseCopyWith<$Res> {
+  factory _$$CancelOrderResponseImplCopyWith(_$CancelOrderResponseImpl value,
+          $Res Function(_$CancelOrderResponseImpl) then) =
+      __$$CancelOrderResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      int no,
+      String status,
+      String price,
+      String? customerId,
+      String paymentStatus,
+      String customerType,
+      String type,
+      String source,
+      String outletId,
+      String? tableId,
+      String cashierId,
+      String? closedAt,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class __$$CancelOrderResponseImplCopyWithImpl<$Res>
+    extends _$CancelOrderResponseCopyWithImpl<$Res, _$CancelOrderResponseImpl>
+    implements _$$CancelOrderResponseImplCopyWith<$Res> {
+  __$$CancelOrderResponseImplCopyWithImpl(_$CancelOrderResponseImpl _value,
+      $Res Function(_$CancelOrderResponseImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CancelOrderResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? no = null,
+    Object? status = null,
+    Object? price = null,
+    Object? customerId = freezed,
+    Object? paymentStatus = null,
+    Object? customerType = null,
+    Object? type = null,
+    Object? source = null,
+    Object? outletId = null,
+    Object? tableId = freezed,
+    Object? cashierId = null,
+    Object? closedAt = freezed,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_$CancelOrderResponseImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as int,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      customerId: freezed == customerId
+          ? _value.customerId
+          : customerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String,
+      customerType: null == customerType
+          ? _value.customerType
+          : customerType // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      tableId: freezed == tableId
+          ? _value.tableId
+          : tableId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cashierId: null == cashierId
+          ? _value.cashierId
+          : cashierId // ignore: cast_nullable_to_non_nullable
+              as String,
+      closedAt: freezed == closedAt
+          ? _value.closedAt
+          : closedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CancelOrderResponseImpl implements _CancelOrderResponse {
+  const _$CancelOrderResponseImpl(
+      {required this.id,
+      required this.no,
+      required this.status,
+      required this.price,
+      this.customerId,
+      required this.paymentStatus,
+      required this.customerType,
+      required this.type,
+      required this.source,
+      required this.outletId,
+      this.tableId,
+      required this.cashierId,
+      this.closedAt,
+      required this.createdAt,
+      required this.updatedAt});
+
+  factory _$CancelOrderResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CancelOrderResponseImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final int no;
+  @override
+  final String status;
+  @override
+  final String price;
+  @override
+  final String? customerId;
+  @override
+  final String paymentStatus;
+  @override
+  final String customerType;
+  @override
+  final String type;
+  @override
+  final String source;
+  @override
+  final String outletId;
+  @override
+  final String? tableId;
+  @override
+  final String cashierId;
+  @override
+  final String? closedAt;
+  @override
+  final String createdAt;
+  @override
+  final String updatedAt;
+
+  @override
+  String toString() {
+    return 'CancelOrderResponse(id: $id, no: $no, status: $status, price: $price, customerId: $customerId, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, outletId: $outletId, tableId: $tableId, cashierId: $cashierId, closedAt: $closedAt, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CancelOrderResponseImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.no, no) || other.no == no) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.customerId, customerId) ||
+                other.customerId == customerId) &&
+            (identical(other.paymentStatus, paymentStatus) ||
+                other.paymentStatus == paymentStatus) &&
+            (identical(other.customerType, customerType) ||
+                other.customerType == customerType) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.source, source) || other.source == source) &&
+            (identical(other.outletId, outletId) ||
+                other.outletId == outletId) &&
+            (identical(other.tableId, tableId) || other.tableId == tableId) &&
+            (identical(other.cashierId, cashierId) ||
+                other.cashierId == cashierId) &&
+            (identical(other.closedAt, closedAt) ||
+                other.closedAt == closedAt) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      no,
+      status,
+      price,
+      customerId,
+      paymentStatus,
+      customerType,
+      type,
+      source,
+      outletId,
+      tableId,
+      cashierId,
+      closedAt,
+      createdAt,
+      updatedAt);
+
+  /// Create a copy of CancelOrderResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CancelOrderResponseImplCopyWith<_$CancelOrderResponseImpl> get copyWith =>
+      __$$CancelOrderResponseImplCopyWithImpl<_$CancelOrderResponseImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CancelOrderResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CancelOrderResponse implements CancelOrderResponse {
+  const factory _CancelOrderResponse(
+      {required final String id,
+      required final int no,
+      required final String status,
+      required final String price,
+      final String? customerId,
+      required final String paymentStatus,
+      required final String customerType,
+      required final String type,
+      required final String source,
+      required final String outletId,
+      final String? tableId,
+      required final String cashierId,
+      final String? closedAt,
+      required final String createdAt,
+      required final String updatedAt}) = _$CancelOrderResponseImpl;
+
+  factory _CancelOrderResponse.fromJson(Map<String, dynamic> json) =
+      _$CancelOrderResponseImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  int get no;
+  @override
+  String get status;
+  @override
+  String get price;
+  @override
+  String? get customerId;
+  @override
+  String get paymentStatus;
+  @override
+  String get customerType;
+  @override
+  String get type;
+  @override
+  String get source;
+  @override
+  String get outletId;
+  @override
+  String? get tableId;
+  @override
+  String get cashierId;
+  @override
+  String? get closedAt;
+  @override
+  String get createdAt;
+  @override
+  String get updatedAt;
+
+  /// Create a copy of CancelOrderResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CancelOrderResponseImplCopyWith<_$CancelOrderResponseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

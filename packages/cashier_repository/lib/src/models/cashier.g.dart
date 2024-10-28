@@ -236,3 +236,43 @@ Map<String, dynamic> _$$CompleteOrderResponseImplToJson(
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };
+
+_$CancelOrderResponseImpl _$$CancelOrderResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CancelOrderResponseImpl(
+      id: json['id'] as String,
+      no: (json['no'] as num).toInt(),
+      status: json['status'] as String,
+      price: json['price'] as String,
+      customerId: json['customerId'] as String?,
+      paymentStatus: json['paymentStatus'] as String,
+      customerType: json['customerType'] as String,
+      type: json['type'] as String,
+      source: json['source'] as String,
+      outletId: json['outletId'] as String,
+      tableId: json['tableId'] as String?,
+      cashierId: json['cashierId'] as String,
+      closedAt: json['closedAt'] as String?,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
+    );
+
+Map<String, dynamic> _$$CancelOrderResponseImplToJson(
+        _$CancelOrderResponseImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'no': instance.no,
+      'status': instance.status,
+      'price': instance.price,
+      'customerId': instance.customerId,
+      'paymentStatus': instance.paymentStatus,
+      'customerType': instance.customerType,
+      'type': instance.type,
+      'source': instance.source,
+      'outletId': instance.outletId,
+      'tableId': instance.tableId,
+      'cashierId': instance.cashierId,
+      'closedAt': instance.closedAt,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+    };
