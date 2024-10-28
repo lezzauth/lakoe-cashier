@@ -58,8 +58,9 @@ class OrderRepositoryImpl implements OrderRepository {
   ) async {
     final Options options = await _getOptions();
 
-    final response = await _dio.post(
-      "$_baseURL/$id/items",
+    final response = await _dio.patch(
+      // "$_baseURL/$id/items",
+      "/cashier/orders/$id/items",
       data: jsonEncode(dto.map((e) => e.toJson()).toList()),
       options: options,
     );

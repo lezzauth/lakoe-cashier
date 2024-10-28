@@ -384,8 +384,6 @@ class OutletCard extends StatelessWidget {
           String? outletAddress = state.outlet.address;
           String? outletLogo = state.outlet.logo;
 
-          print("xxx outletLogo $outletLogo");
-
           return InkWell(
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,

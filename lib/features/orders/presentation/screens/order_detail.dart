@@ -26,7 +26,7 @@ import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card
 
 import 'package:point_of_sales_cashier/features/orders/common/widgets/summary/order_summary.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/solid_order_type_tag.dart';
-import 'package:point_of_sales_cashier/features/orders/data/arguments/order_add_item_argument.dart';
+import 'package:point_of_sales_cashier/features/orders/data/arguments/order_edit_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/data/models.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/tags/solid_order_online_status_tag.dart';
@@ -295,13 +295,15 @@ class _OrderDetailState extends State<OrderDetail> {
                 title: "Order #${order.no}",
                 isScrolled: _isScrolled,
                 actions: [
-                  TextButton(
-                    onPressed: () => cancelOrder(state, order),
-                    child: const TextActionL(
-                      "Batalkan",
-                      color: TColors.error,
-                    ),
-                  ),
+                  order.status == "OPEN"
+                      ? TextButton(
+                          onPressed: () => cancelOrder(state, order),
+                          child: const TextActionL(
+                            "Batalkan",
+                            color: TColors.error,
+                          ),
+                        )
+                      : SizedBox.shrink(),
                 ],
               ),
               body: Scrollbar(
@@ -373,8 +375,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                         ),
                                     },
                                     Container(
-                                      margin:
-                                          const EdgeInsets.only(bottom: 8.0),
+                                      margin: EdgeInsets.only(bottom: 8.0),
                                       child: const TextHeading3(
                                         "Pesanan",
                                         color: TColors.neutralDarkDarkest,
@@ -420,7 +421,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                             width: 44,
                                           ),
                                     name: product.name,
-                                    // qty: orderItem.quantity,
+                                    qty: orderItem.quantity,
                                     price: int.parse(product.price),
                                     noteAction: ProductNoteAction(
                                       notes: orderItem.notes ?? "",
@@ -433,21 +434,37 @@ class _OrderDetailState extends State<OrderDetail> {
                             SliverToBoxAdapter(
                               child: Padding(
                                 padding: const EdgeInsets.all(16.0),
-                                child: OrderSummary(
-                                  orderTotal: _getOrderTotal(order),
-                                  total: double.parse(order.price),
-                                  isPaid: order.paymentStatus == "PAID",
-                                  paymentInfo: order.transactions,
-                                  charges: order.charges!
-                                      .map((e) => OrderSummaryChargeModel(
-                                            type: e.type,
-                                            name: e.name,
-                                            amount: e.amount,
-                                            isPercentage: e.isPercentage,
-                                            percentageValue:
-                                                e.percentageValue.toString(),
-                                          ))
-                                      .toList(),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        bottom: 12.0,
+                                        top: 4,
+                                      ),
+                                      child: const TextHeading3(
+                                        "Ringkasan tagihan",
+                                        color: TColors.neutralDarkDarkest,
+                                      ),
+                                    ),
+                                    OrderSummary(
+                                      orderTotal: _getOrderTotal(order),
+                                      total: double.parse(order.price),
+                                      isPaid: order.paymentStatus == "PAID",
+                                      paymentInfo: order.transactions,
+                                      charges: order.charges!
+                                          .map((e) => OrderSummaryChargeModel(
+                                                type: e.type,
+                                                name: e.name,
+                                                amount: e.amount,
+                                                isPercentage: e.isPercentage,
+                                                percentageValue: e
+                                                    .percentageValue
+                                                    .toString(),
+                                              ))
+                                          .toList(),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -469,12 +486,11 @@ class _OrderDetailState extends State<OrderDetail> {
                             child: OrderOutletAction(
                                 isPaid: order.paymentStatus == "PAID",
                                 type: order.type,
-                                onAddMoreItem: () async {
+                                onEditOrder: () async {
                                   await Navigator.pushNamed(
                                     context,
                                     "/orders/add-item",
-                                    arguments:
-                                        OrderAddItemArgument(order: order),
+                                    arguments: OrderEditArgument(order: order),
                                   );
 
                                   _onRefresh();
@@ -556,7 +572,7 @@ class OrderOutletAction extends StatelessWidget {
   final String type;
   final bool isPaid;
 
-  final Function() onAddMoreItem;
+  final Function() onEditOrder;
   final Function() onComplete;
   final Function() onShare;
   final Function() onPrint;
@@ -565,7 +581,7 @@ class OrderOutletAction extends StatelessWidget {
     super.key,
     required this.type,
     required this.isPaid,
-    required this.onAddMoreItem,
+    required this.onEditOrder,
     required this.onComplete,
     required this.onShare,
     required this.onPrint,
@@ -581,19 +597,19 @@ class OrderOutletAction extends StatelessWidget {
     }
 
     return OrderOutlineOnProgressAction(
-      onAddMoreItem: onAddMoreItem,
+      onEditOrder: onEditOrder,
       onComplete: onComplete,
     );
   }
 }
 
 class OrderOutlineOnProgressAction extends StatelessWidget {
-  final Function() onAddMoreItem;
+  final Function() onEditOrder;
   final Function() onComplete;
 
   const OrderOutlineOnProgressAction({
     super.key,
-    required this.onAddMoreItem,
+    required this.onEditOrder,
     required this.onComplete,
   });
 
@@ -604,9 +620,9 @@ class OrderOutlineOnProgressAction extends StatelessWidget {
         SizedBox(
           height: 48,
           child: OutlinedButton(
-            onPressed: onAddMoreItem,
+            onPressed: onEditOrder,
             child: const TextActionL(
-              "Tambah Item",
+              "Ubah Pesanan",
               color: TColors.primary,
             ),
           ),

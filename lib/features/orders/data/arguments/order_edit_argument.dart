@@ -1,9 +1,9 @@
 import 'package:order_repository/order_repository.dart';
 
-class OrderAddItemArgument {
+class OrderEditArgument {
   final OrderModel order;
 
-  OrderAddItemArgument({
+  OrderEditArgument({
     required this.order,
   });
 }

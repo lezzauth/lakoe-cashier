@@ -29,6 +29,7 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
   List<LabelValue<String>> statuses = [
     const LabelValue(label: "Berlangsung", value: "OPEN"),
     const LabelValue(label: "Selesai", value: "COMPLETED"),
+    const LabelValue(label: "Batal", value: "CANCELLED"),
   ];
 
   @override
@@ -54,29 +55,36 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Wrap(
-          direction: Axis.horizontal,
-          alignment: WrapAlignment.start,
-          spacing: 8.0,
-          children: statuses.map((status) {
-            bool selected = status.value == widget.value.status;
-            return InputChip(
-              label: selected
-                  ? TextHeading4(
-                      status.label,
-                      color: TColors.primary,
-                    )
-                  : TextBodyM(
-                      status.label,
-                      color: TColors.neutralDarkDarkest,
-                    ),
-              selected: selected,
-              onPressed: () {
-                widget.onChanged(widget.value.copyWith(status: status.value));
-              },
-            );
-          }).toList(),
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Wrap(
+              direction: Axis.horizontal,
+              alignment: WrapAlignment.start,
+              spacing: 8.0,
+              children: statuses.map((status) {
+                bool selected = status.value == widget.value.status;
+                return InputChip(
+                  label: selected
+                      ? TextHeading4(
+                          status.label,
+                          color: TColors.primary,
+                        )
+                      : TextBodyM(
+                          status.label,
+                          color: TColors.neutralDarkDarkest,
+                        ),
+                  selected: selected,
+                  onPressed: () {
+                    widget
+                        .onChanged(widget.value.copyWith(status: status.value));
+                  },
+                );
+              }).toList(),
+            ),
+          ),
         ),
+        SizedBox(width: 8),
         InputChip(
           label: Row(
             children: [

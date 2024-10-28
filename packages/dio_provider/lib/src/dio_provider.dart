@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:app_config_provider/app_config_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/src/models/dio.dart';
@@ -170,7 +172,7 @@ class DioProvider {
         type: DioExceptionType.badResponse,
       ));
     } else {
-      print("xxx Response is not a Map: ${responseData}");
+      log("Response is not a Map: ${responseData}");
     }
   }
 }

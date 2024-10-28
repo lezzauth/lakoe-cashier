@@ -164,8 +164,8 @@ class OrderListItem extends StatelessWidget {
               ),
               if (isPaid)
                 Positioned(
-                  right: 47,
-                  bottom: 0,
+                  right: 100,
+                  bottom: 10,
                   child: Image.asset(
                     TImages.stamp,
                     width: 80,
