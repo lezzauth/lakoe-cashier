@@ -96,8 +96,8 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
       }
     }
 
-    dynamic logoOutlet = formKey.currentState?.value;
-    ImagePickerValue? image = logoOutlet["image_logo"] as ImagePickerValue;
+    dynamic outletValue = formKey.currentState?.value;
+    ImagePickerValue? image = outletValue["image_logo"] as ImagePickerValue;
 
     String colorHex = '0x${selectedColor.toRadixString(16).toUpperCase()}';
 
@@ -105,6 +105,9 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
       context.read<OutletCubit>().update(
             image.file,
             UpdateOutletDto(
+              name: outletValue["outletName"],
+              address: outletValue["outletAddress"],
+              type: outletValue["outletType"],
               color: colorHex,
             ),
           );

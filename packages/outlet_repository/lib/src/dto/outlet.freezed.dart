@@ -585,6 +585,9 @@ UpdateOutletDto _$UpdateOutletDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UpdateOutletDto {
+  String? get name => throw _privateConstructorUsedError;
+  String? get address => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
   String? get color => throw _privateConstructorUsedError;
 
   /// Serializes this UpdateOutletDto to a JSON map.
@@ -603,7 +606,7 @@ abstract class $UpdateOutletDtoCopyWith<$Res> {
           UpdateOutletDto value, $Res Function(UpdateOutletDto) then) =
       _$UpdateOutletDtoCopyWithImpl<$Res, UpdateOutletDto>;
   @useResult
-  $Res call({String? color});
+  $Res call({String? name, String? address, String? type, String? color});
 }
 
 /// @nodoc
@@ -621,9 +624,24 @@ class _$UpdateOutletDtoCopyWithImpl<$Res, $Val extends UpdateOutletDto>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? name = freezed,
+    Object? address = freezed,
+    Object? type = freezed,
     Object? color = freezed,
   }) {
     return _then(_value.copyWith(
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
       color: freezed == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -640,7 +658,7 @@ abstract class _$$UpdateOutletDtoImplCopyWith<$Res>
       __$$UpdateOutletDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? color});
+  $Res call({String? name, String? address, String? type, String? color});
 }
 
 /// @nodoc
@@ -656,9 +674,24 @@ class __$$UpdateOutletDtoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? name = freezed,
+    Object? address = freezed,
+    Object? type = freezed,
     Object? color = freezed,
   }) {
     return _then(_$UpdateOutletDtoImpl(
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
       color: freezed == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -670,17 +703,23 @@ class __$$UpdateOutletDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UpdateOutletDtoImpl implements _UpdateOutletDto {
-  const _$UpdateOutletDtoImpl({this.color});
+  const _$UpdateOutletDtoImpl({this.name, this.address, this.type, this.color});
 
   factory _$UpdateOutletDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$UpdateOutletDtoImplFromJson(json);
 
   @override
+  final String? name;
+  @override
+  final String? address;
+  @override
+  final String? type;
+  @override
   final String? color;
 
   @override
   String toString() {
-    return 'UpdateOutletDto(color: $color)';
+    return 'UpdateOutletDto(name: $name, address: $address, type: $type, color: $color)';
   }
 
   @override
@@ -688,12 +727,15 @@ class _$UpdateOutletDtoImpl implements _UpdateOutletDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdateOutletDtoImpl &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.color, color) || other.color == color));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, color);
+  int get hashCode => Object.hash(runtimeType, name, address, type, color);
 
   /// Create a copy of UpdateOutletDto
   /// with the given fields replaced by the non-null parameter values.
@@ -713,11 +755,21 @@ class _$UpdateOutletDtoImpl implements _UpdateOutletDto {
 }
 
 abstract class _UpdateOutletDto implements UpdateOutletDto {
-  const factory _UpdateOutletDto({final String? color}) = _$UpdateOutletDtoImpl;
+  const factory _UpdateOutletDto(
+      {final String? name,
+      final String? address,
+      final String? type,
+      final String? color}) = _$UpdateOutletDtoImpl;
 
   factory _UpdateOutletDto.fromJson(Map<String, dynamic> json) =
       _$UpdateOutletDtoImpl.fromJson;
 
+  @override
+  String? get name;
+  @override
+  String? get address;
+  @override
+  String? get type;
   @override
   String? get color;
 

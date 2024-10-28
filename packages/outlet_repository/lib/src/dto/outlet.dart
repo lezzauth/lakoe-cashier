@@ -80,6 +80,9 @@ extension GetOutletSalesDtoQueryStringExtension on GetOutletSalesDto {
 @freezed
 class UpdateOutletDto with _$UpdateOutletDto {
   const factory UpdateOutletDto({
+    String? name,
+    String? address,
+    String? type,
     String? color,
   }) = _UpdateOutletDto;
 
