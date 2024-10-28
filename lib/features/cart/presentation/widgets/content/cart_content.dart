@@ -178,26 +178,23 @@ class _CartContentState extends State<CartContent> {
                         ),
                       ),
                       SliverToBoxAdapter(
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const TextHeading3("Pesanan"),
-                              ResponsiveLayout(
-                                mobile: GestureDetector(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const TextHeading4(
-                                    "Tambah Pesanan",
-                                    color: TColors.primary,
-                                  ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const TextHeading3("Pesanan"),
+                            ResponsiveLayout(
+                              mobile: TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: TextHeading4(
+                                  "Tambah Produk",
+                                  color: TColors.primary,
                                 ),
-                                tablet: const SizedBox(),
                               ),
-                            ],
-                          ),
+                              tablet: const SizedBox(),
+                            ),
+                          ],
                         ),
                       ),
                       BlocBuilder<CartCubit, CartState>(
