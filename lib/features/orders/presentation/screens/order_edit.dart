@@ -108,7 +108,7 @@ class _OrderEditState extends State<OrderEdit> {
   Future<void> _onCartSaved() async {
     CartState cartState = context.read<CartCubit>().state;
 
-    await context.read<OrderEditCubit>().addItems(
+    await context.read<OrderEditCubit>().editOrder(
           widget.arguments.order.id,
           cartState.carts
               .map((cart) => OrderItemDto(
