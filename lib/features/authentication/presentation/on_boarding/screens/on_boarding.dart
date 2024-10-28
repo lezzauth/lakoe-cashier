@@ -60,15 +60,6 @@ class _OnBoardingState extends State<OnBoarding> {
       body: BlocConsumer<OnBoardingCubit, OnBoardingState>(
         listener: (context, state) {
           if (state is OnBoardingActionFailure) {
-            // const snackBar = SnackBar(
-            //   content: Text('OTP Request Failed'),
-            //   showCloseIcon: true,
-            // );
-            // ScaffoldMessenger.of(context)
-            //   ..hideCurrentSnackBar()
-            //   ..showSnackBar(
-            //     snackBar,
-            //   );
             return;
           }
 
