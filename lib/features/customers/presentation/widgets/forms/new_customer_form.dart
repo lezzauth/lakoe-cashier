@@ -20,6 +20,11 @@ class NewCustomerForm extends StatefulWidget {
 }
 
 class _NewCustomerFormState extends State<NewCustomerForm> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Future<void> _onSelectContact() async {
     if (!context.mounted) return;
 
@@ -59,11 +64,10 @@ class _NewCustomerFormState extends State<NewCustomerForm> {
             "phoneNumber": contact.phones.first.number,
           });
         } else {
-          if (!mounted) return;
           CustomToast.show(
-            context,
-            "Kontak tidak memiliki nomor telepon.",
+            "Kontak tidak memiliki nomor telepon",
             position: 'bottom',
+            duration: 2,
           );
         }
       }

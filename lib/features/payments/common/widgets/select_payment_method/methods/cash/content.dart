@@ -7,7 +7,6 @@ import 'package:point_of_sales_cashier/features/payments/application/cubit/payme
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/cash/footer.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/cash/form.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/radio_group.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class CashPaymentContent extends StatefulWidget {
   const CashPaymentContent({
@@ -27,15 +26,7 @@ class _CashPaymentContentState extends State<CashPaymentContent> {
   void _onSubmitted() {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
     if (!isFormValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
+      return;
     }
 
     dynamic value = _formKey.currentState?.value;

@@ -91,8 +91,8 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
             }
           } else {
             CustomToast.show(
-              context,
               "Kuota Remove.bg sudah habis.",
+              duration: 2,
             );
 
             setState(() {

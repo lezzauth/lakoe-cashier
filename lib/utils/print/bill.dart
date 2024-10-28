@@ -455,9 +455,9 @@ class TBill {
       log("print result: $result");
     } else {
       CustomToast.show(
-        context,
         "Tidak ada printer yang tersambung.",
         position: 'bottom',
+        duration: 2,
       );
     }
   }

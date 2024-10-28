@@ -110,8 +110,8 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
           );
     } else {
       CustomToast.show(
-        context,
         "Kamu harus pilih warna dulu, ya!",
+        duration: 2,
       );
     }
   }

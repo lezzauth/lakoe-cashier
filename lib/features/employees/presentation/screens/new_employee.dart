@@ -34,16 +34,6 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
     bool isFormValid =
         _employeeFormKey.currentState?.saveAndValidate() ?? false;
     if (!isFormValid) {
-      // SnackBar snackBar = SnackBar(
-      //   content: Text(ErrorTextStrings.formInvalid()),
-      //   showCloseIcon: true,
-      // );
-      // ScaffoldMessenger.of(context)
-      //   ..hideCurrentSnackBar()
-      //   ..showSnackBar(
-      //     snackBar,
-      //   );
-
       return;
     }
 
@@ -90,9 +80,9 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
         } else if (state is EmployeeMasterActionError) {
           if (state.res.message!.contains("pin already used")) {
             CustomToast.show(
-              context,
               "PIN sudah digunakan kasir lain.",
               position: 'bottom',
+              duration: 2,
             );
           } else {
             showModalBottomSheet(

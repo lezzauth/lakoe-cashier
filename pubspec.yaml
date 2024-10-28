@@ -124,6 +124,7 @@ dependencies:
   flex_color_picker: ^3.6.0
   remove_bg: ^0.0.3
   flutter_dotenv: ^5.2.1
+  fluttertoast: ^8.2.8
 
 dev_dependencies:
   flutter_test:

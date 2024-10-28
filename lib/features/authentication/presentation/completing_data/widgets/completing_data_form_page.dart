@@ -31,15 +31,6 @@ class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
-      // SnackBar snackBar = SnackBar(
-      //   content: Text(ErrorTextStrings.formInvalid()),
-      //   showCloseIcon: true,
-      // );
-      // ScaffoldMessenger.of(context)
-      //   ..hideCurrentSnackBar()
-      //   ..showSnackBar(
-      //     snackBar,
-      //   );
       if (kDebugMode) {
         print('Form complete data invalid');
       }
@@ -47,15 +38,6 @@ class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
     }
 
     widget.onSubmitted();
-
-    // context.read<CompletingDataCubit>().submitBusinessInformation(
-    //       name: value["name"],
-    //       phoneNumber: value["phoneNumber"],
-    //       email: value["email"],
-    //       outletAddress: value["outletAddress"],
-    //       outletName: value["outletName"],
-    //       outletType: value["outletType"],
-    //     );
   }
 
   @override

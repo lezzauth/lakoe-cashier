@@ -12,7 +12,6 @@ import 'package:point_of_sales_cashier/features/employees/data/arguments/employe
 import 'package:point_of_sales_cashier/features/employees/presentation/widgets/forms/employee_form.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EmployeeEditScreen extends StatefulWidget {
@@ -34,16 +33,6 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
     bool isFormValid =
         _employeeFormKey.currentState?.saveAndValidate() ?? false;
     if (!isFormValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
-
       return;
     }
 

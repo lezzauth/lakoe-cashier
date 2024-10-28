@@ -14,10 +14,10 @@ class RepostMasterShimmer extends StatelessWidget {
     if (errorText != null && errorText!.isNotEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         CustomToast.show(
-          context,
           "Oops… terjadi kesalah, nih!",
           backgroundColor: TColors.error,
           position: "bottom",
+          duration: 2,
         );
       });
     }

@@ -92,7 +92,6 @@ class _DashboardState extends State<Dashboard> {
             now.difference(lastBackPressed!) > const Duration(seconds: 2)) {
           lastBackPressed = now;
           CustomToast.show(
-            context,
             "Tekan sekali lagi untuk keluar",
             position: 'bottom',
             duration: 2,

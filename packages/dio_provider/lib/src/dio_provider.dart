@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 
@@ -34,7 +33,9 @@ class DioProvider {
   Dio get dio => _dio;
 
   Future<void> _handleRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     var connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
       _showNoConnectionToast();
@@ -53,9 +54,8 @@ class DioProvider {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (navigatorKey.currentContext != null && !isShowingBottomSheet) {
         CustomToast.show(
-          navigatorKey.currentContext!,
           "Tidak ada koneksi internet. Periksa koneksi kamu!",
-          icon: TIcons.cloudOff,
+          duration: 2,
         );
       }
     });
@@ -70,9 +70,7 @@ class DioProvider {
               _createDioException(e, "jwt expired", "Token has expired"));
         case 402:
           return handler.reject(_createDioException(
-              e,
-              "insufficient quota of products",
-              "Quota limit has been reached"));
+              e, "Insufficient quota of item", "Quota limit has been reached"));
         case 404:
           return handler.reject(_createDioException(
               e, "Client error - 404", "Client error - 404"));
@@ -91,7 +89,10 @@ class DioProvider {
   }
 
   DioException _createDioException(
-      DioException e, String errorMessage, String fallbackMessage) {
+    DioException e,
+    String errorMessage,
+    String fallbackMessage,
+  ) {
     return DioException(
       requestOptions: e.requestOptions,
       error: DioExceptionModel(
@@ -114,9 +115,8 @@ class DioProvider {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (navigatorKey.currentContext != null && !isShowingBottomSheet) {
         CustomToast.show(
-          navigatorKey.currentContext!,
           "Cek lagi koneksi internet kamu, ya!",
-          icon: TIcons.cloudOff,
+          duration: 2,
         );
       }
     });

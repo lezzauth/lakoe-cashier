@@ -10,7 +10,6 @@ import 'package:point_of_sales_cashier/features/tables/application/cubit/table_m
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/forms/table_information_form.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/tabs/table_new_qr_order_tab.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableEditScreen extends StatelessWidget {
@@ -37,16 +36,6 @@ class _TableEditState extends State<TableEdit> {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
-
       return;
     }
 

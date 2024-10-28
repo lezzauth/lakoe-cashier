@@ -34,8 +34,13 @@ class BankTransferPaymentScreen extends StatefulWidget {
 
 class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
-
   bool _isFormValid = false;
+
+  @override
+  void initState() {
+    super.initState();
+    CustomToast.init(context);
+  }
 
   Future<void> _onSubmitted() async {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
@@ -59,11 +64,11 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
     await THelper.copyToClipboard(text);
 
     if (!mounted) return;
-
-    CustomToast.show(
+    CustomToast.showWithContext(
       context,
-      "Berhasil disalin.",
+      "Berhasil disalin",
       icon: TIcons.copy,
+      duration: 1,
     );
   }
 

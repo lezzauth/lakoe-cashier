@@ -14,7 +14,6 @@ import 'package:point_of_sales_cashier/features/products/presentation/widgets/fo
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/product_information_form.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/stock_information_form.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:product_repository/product_repository.dart';
 
@@ -57,15 +56,6 @@ class _NewProductScreenState extends State<NewProductScreen>
         _stockInformationFormKey.currentState?.saveAndValidate() ?? false;
 
     if (!isProductInformationValid) {
-      // SnackBar snackBar = SnackBar(
-      //   content: Text(ErrorTextStrings.formInvalid()),
-      //   showCloseIcon: true,
-      // );
-      // ScaffoldMessenger.of(context)
-      //   ..hideCurrentSnackBar()
-      //   ..showSnackBar(
-      //     snackBar,
-      //   );
       changeTabIndex(0);
 
       return;
@@ -73,15 +63,6 @@ class _NewProductScreenState extends State<NewProductScreen>
 
     if (!isStockInformationValid &&
         _stockInformationFormKey.currentState != null) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
       changeTabIndex(1);
 
       return;

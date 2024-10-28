@@ -40,15 +40,6 @@ class _BankAccountFormState extends State<BankAccountForm> {
 
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
     if (!isFormValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
       return;
     }
 
