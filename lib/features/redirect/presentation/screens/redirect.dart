@@ -74,51 +74,52 @@ class _RedirectScreenState extends State<RedirectScreen> {
 
         if (!mounted) return;
 
-        if (token != null && token.isNotEmpty) {
-          if (state is AuthNotReady && !isBottomSheetVisible) {
-            isBottomSheetVisible = true;
-            if (!mounted) return;
-            showModalBottomSheet(
-              context: context,
-              enableDrag: false,
-              isDismissible: false,
-              builder: (context) {
-                return CustomBottomsheet(
-                  hasGrabber: false,
-                  child: ErrorDisplay(
-                    imageSrc: TImages.noConnection,
-                    title: "Yah, internetnya mati…",
-                    description:
-                        "Coba cek WiFi atau kuota internet kamu dan nanti coba lagi ya.",
-                    actionTitlePrimary: "Pengaturan",
-                    onActionPrimary: () async {
-                      openWifiSettings();
-                      Navigator.pop(context);
-                      isBottomSheetVisible = false;
-                    },
-                    actionTitleSecondary: "Coba Lagi",
-                    onActionSecondary: () {
-                      context.read<AuthCubit>().initialize();
-                      Navigator.pop(context);
-                      isBottomSheetVisible = false;
-                    },
-                  ),
-                );
-              },
-            );
-          } else if (state is AuthReady) {
-            Navigator.popAndPushNamed(context, "/cashier");
-          } else if (state is UncompletedProfile) {
-            await tokenProvider.clearAll();
-            Navigator.popAndPushNamed(context, "/on-boarding");
-          } else if (state is TokenExpired) {
-            final TokenProvider tokenProvider = TokenProvider();
-            if (state.res.code == 401) {
-              await tokenProvider.clearAll();
-              Navigator.popAndPushNamed(context, "/on-boarding");
-            }
-          }
-        } else {
+        if (token == null || token.isEmpty) {
+          Navigator.popAndPushNamed(context, "/on-boarding");
+          return;
+        }
+
+        if (state is AuthNotReady && !isBottomSheetVisible) {
+          isBottomSheetVisible = true;
+          if (!mounted) return;
+
+          showModalBottomSheet(
+            context: context,
+            enableDrag: false,
+            isDismissible: false,
+            builder: (context) {
+              return CustomBottomsheet(
+                hasGrabber: false,
+                child: ErrorDisplay(
+                  imageSrc: TImages.noConnection,
+                  title: "Yah, internetnya mati…",
+                  description:
+                      "Coba cek WiFi atau kuota internet kamu dan nanti coba lagi ya.",
+                  actionTitlePrimary: "Pengaturan",
+                  onActionPrimary: () {
+                    openWifiSettings();
+                    Navigator.pop(context);
+                    isBottomSheetVisible = false;
+                  },
+                  actionTitleSecondary: "Coba Lagi",
+                  onActionSecondary: () {
+                    context.read<AuthCubit>().initialize();
+                    Navigator.pop(context);
+                    isBottomSheetVisible = false;
+                  },
+                ),
+              );
+            },
+          );
+          return;
+        }
+
+        if (state is AuthReady) {
+          Navigator.popAndPushNamed(context, "/cashier");
+        } else if (state is UncompletedProfile ||
+            (state is TokenExpired && state.res.statusCode == 401) ||
+            (state is NotFound && state.res.statusCode == 404)) {
+          await tokenProvider.clearAll();
           Navigator.popAndPushNamed(context, "/on-boarding");
         }
       },

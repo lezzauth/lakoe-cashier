@@ -20,8 +20,9 @@ DioExceptionModel _$DioExceptionModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DioExceptionModel {
-  int? get code => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
+  int? get statusCode => throw _privateConstructorUsedError;
+  String? get error => throw _privateConstructorUsedError;
+  String? get message => throw _privateConstructorUsedError;
 
   /// Serializes this DioExceptionModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +40,7 @@ abstract class $DioExceptionModelCopyWith<$Res> {
           DioExceptionModel value, $Res Function(DioExceptionModel) then) =
       _$DioExceptionModelCopyWithImpl<$Res, DioExceptionModel>;
   @useResult
-  $Res call({int? code, String message});
+  $Res call({int? statusCode, String? error, String? message});
 }
 
 /// @nodoc
@@ -57,18 +58,23 @@ class _$DioExceptionModelCopyWithImpl<$Res, $Val extends DioExceptionModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? code = freezed,
-    Object? message = null,
+    Object? statusCode = freezed,
+    Object? error = freezed,
+    Object? message = freezed,
   }) {
     return _then(_value.copyWith(
-      code: freezed == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
+      statusCode: freezed == statusCode
+          ? _value.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
               as int?,
-      message: null == message
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -81,7 +87,7 @@ abstract class _$$DioExceptionModelImplCopyWith<$Res>
       __$$DioExceptionModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? code, String message});
+  $Res call({int? statusCode, String? error, String? message});
 }
 
 /// @nodoc
@@ -97,18 +103,23 @@ class __$$DioExceptionModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? code = freezed,
-    Object? message = null,
+    Object? statusCode = freezed,
+    Object? error = freezed,
+    Object? message = freezed,
   }) {
     return _then(_$DioExceptionModelImpl(
-      code: freezed == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
+      statusCode: freezed == statusCode
+          ? _value.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
               as int?,
-      message: null == message
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -116,19 +127,21 @@ class __$$DioExceptionModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$DioExceptionModelImpl implements _DioExceptionModel {
-  const _$DioExceptionModelImpl({required this.code, required this.message});
+  const _$DioExceptionModelImpl({this.statusCode, this.error, this.message});
 
   factory _$DioExceptionModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$DioExceptionModelImplFromJson(json);
 
   @override
-  final int? code;
+  final int? statusCode;
   @override
-  final String message;
+  final String? error;
+  @override
+  final String? message;
 
   @override
   String toString() {
-    return 'DioExceptionModel(code: $code, message: $message)';
+    return 'DioExceptionModel(statusCode: $statusCode, error: $error, message: $message)';
   }
 
   @override
@@ -136,13 +149,15 @@ class _$DioExceptionModelImpl implements _DioExceptionModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DioExceptionModelImpl &&
-            (identical(other.code, code) || other.code == code) &&
+            (identical(other.statusCode, statusCode) ||
+                other.statusCode == statusCode) &&
+            (identical(other.error, error) || other.error == error) &&
             (identical(other.message, message) || other.message == message));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, code, message);
+  int get hashCode => Object.hash(runtimeType, statusCode, error, message);
 
   /// Create a copy of DioExceptionModel
   /// with the given fields replaced by the non-null parameter values.
@@ -163,16 +178,19 @@ class _$DioExceptionModelImpl implements _DioExceptionModel {
 
 abstract class _DioExceptionModel implements DioExceptionModel {
   const factory _DioExceptionModel(
-      {required final int? code,
-      required final String message}) = _$DioExceptionModelImpl;
+      {final int? statusCode,
+      final String? error,
+      final String? message}) = _$DioExceptionModelImpl;
 
   factory _DioExceptionModel.fromJson(Map<String, dynamic> json) =
       _$DioExceptionModelImpl.fromJson;
 
   @override
-  int? get code;
+  int? get statusCode;
   @override
-  String get message;
+  String? get error;
+  @override
+  String? get message;
 
   /// Create a copy of DioExceptionModel
   /// with the given fields replaced by the non-null parameter values.

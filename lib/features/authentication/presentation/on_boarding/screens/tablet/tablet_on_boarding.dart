@@ -77,16 +77,6 @@ class _TabletOnBoardingState extends State<TabletOnBoarding> {
     bool isFormValid = widget.formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
-
       return;
     }
 

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_filter_state.dart';
@@ -128,87 +130,88 @@ class _TableMasterState extends State<TableMaster> {
             backgroundColor: TColors.neutralLightLightest,
             onRefresh: _onRefresh,
             child: BlocBuilder<TableMasterCubit, TableMasterState>(
-                builder: (context, state) => switch (state) {
-                      TableMasterLoadSuccess(:final tables) => ListView.builder(
-                          itemCount: tables.length,
-                          itemBuilder: (context, index) {
-                            TableModel table = tables.elementAt(index);
+              builder: (context, state) => ErrorWrapper(
+                fetchError: state is TableMasterLoadFailure,
+                onRefresh: _onRefresh,
+                child: switch (state) {
+                  TableMasterLoadSuccess(:final tables) => ListView.builder(
+                      itemCount: tables.length,
+                      itemBuilder: (context, index) {
+                        TableModel table = tables.elementAt(index);
 
-                            bool isFreeTable = table.id == "-";
+                        bool isFreeTable = table.id == "-";
 
-                            String title = table.no;
-                            String subtitle =
-                                "${table.capacity} Orang • Indoor";
+                        String title = table.no;
+                        String subtitle = "${table.capacity} Orang • Indoor";
 
-                            if (isFreeTable) {
-                              title = "Bebas";
-                              subtitle = "-";
-                            }
+                        if (isFreeTable) {
+                          title = "Bebas";
+                          subtitle = "-";
+                        }
 
-                            return Container(
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    width: 1,
-                                    color: TColors.neutralLightMedium,
+                        return Column(
+                          children: [
+                            ListTile(
+                              onTap: isFreeTable
+                                  ? null
+                                  : () {
+                                      _onGoToDetail(table);
+                                    },
+                              splashColor: TColors.highlightLightest,
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              leading: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(40),
+                                  color: TColors.highlightLightest,
+                                ),
+                                child: const Center(
+                                  child: UiIcons(
+                                    TIcons.tableRestaurant,
+                                    color: TColors.primary,
+                                    height: 20,
+                                    width: 20,
                                   ),
                                 ),
                               ),
-                              child: ListTile(
-                                onTap: isFreeTable
-                                    ? null
-                                    : () {
-                                        _onGoToDetail(table);
-                                      },
-                                splashColor: TColors.highlightLightest,
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                leading: Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(40),
-                                    color: TColors.highlightLightest,
-                                  ),
-                                  child: const Center(
-                                    child: UiIcons(
-                                      TIcons.tableRestaurant,
-                                      color: TColors.primary,
-                                      height: 20,
-                                      width: 20,
+                              title: TextHeading4(
+                                title,
+                                color: TColors.neutralDarkDarkest,
+                              ),
+                              subtitle: TextBodyS(
+                                subtitle,
+                                color: TColors.neutralDarkLight,
+                              ),
+                              trailing: isFreeTable
+                                  ? null
+                                  : const UiIcons(
+                                      TIcons.arrowRight,
+                                      color: TColors.neutralDarkLightest,
+                                      height: 12,
+                                      width: 12,
                                     ),
-                                  ),
-                                ),
-                                title: TextHeading4(
-                                  title,
-                                  color: TColors.neutralDarkDarkest,
-                                ),
-                                subtitle: TextBodyS(
-                                  subtitle,
-                                  color: TColors.neutralDarkLight,
-                                ),
-                                trailing: isFreeTable
-                                    ? null
-                                    : const UiIcons(
-                                        TIcons.arrowRight,
-                                        color: TColors.neutralDarkLightest,
-                                        height: 12,
-                                        width: 12,
-                                      ),
-                              ),
-                            );
-                          },
-                        ),
-                      TableMasterLoadFailure(:final error) => Center(
-                          child: TextBodyS(
-                            error,
-                            color: TColors.error,
-                          ),
-                        ),
-                      _ => const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                    }),
+                            ),
+                            const Divider(
+                              color: TColors.neutralLightMedium,
+                              indent: 16.0,
+                              height: 1,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  _ => ListShimmer(
+                      crossAlignment: "center",
+                      circleAvatar: true,
+                      sizeAvatar: 40.0,
+                      heightTitle: 16.0,
+                      heightSubtitle: 12.0,
+                    ),
+                },
+              ),
+            ),
           ),
         ),
         floatingActionButton: SizedBox(

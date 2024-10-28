@@ -22,8 +22,18 @@ class OrderDetailCubit extends Cubit<OrderDetailState> {
   Future<void> completeOrder(String id, CompleteOrderDto dto) async {
     try {
       emit(OrderDetailActionInProgress());
-      final response = await _cashierRepository.completeOrder(id, dto);
-      emit(OrderDetailActionSuccess(response: response));
+      final res = await _cashierRepository.completeOrder(id, dto);
+      emit(OrderDetailActionSuccess(completeResponse: res));
+    } catch (e) {
+      emit(OrderDetailActionFailure(e.toString()));
+    }
+  }
+
+  Future<void> cancelOrder(String id) async {
+    emit(OrderDetailActionInProgress());
+    try {
+      final res = await _cashierRepository.cancelOrder(id);
+      emit(OrderDetailActionSuccess(cancelResponse: res));
     } catch (e) {
       emit(OrderDetailActionFailure(e.toString()));
     }

@@ -2,8 +2,8 @@ import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_completed_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_completed_state.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/filters/order_date_filter.dart';
@@ -115,14 +115,19 @@ class _OrderOutletCompletedTabState extends State<OrderOutletCompletedTab> {
                             ),
                         ],
                       ),
-                    OrderMasterCompletedLoadFailure(:final error) => Center(
-                        child: TextBodyS(
-                          error,
-                          color: TColors.error,
-                        ),
+                    OrderMasterCompletedLoadFailure() => ListShimmer(
+                        crossAlignment: "center",
+                        circleAvatar: true,
+                        sizeAvatar: 48,
+                        heightTitle: 16,
+                        heightSubtitle: 12,
                       ),
-                    _ => const Center(
-                        child: CircularProgressIndicator(),
+                    _ => const ListShimmer(
+                        crossAlignment: "center",
+                        circleAvatar: true,
+                        sizeAvatar: 48,
+                        heightTitle: 16,
+                        heightSubtitle: 12,
                       ),
                   },
                 ),

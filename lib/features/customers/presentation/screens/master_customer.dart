@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
+import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
+import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_filter_state.dart';
@@ -84,51 +85,45 @@ class _MasterCustomerState extends State<MasterCustomer> {
             onRefresh: _onRefresh,
             backgroundColor: TColors.neutralLightLightest,
             child: BlocBuilder<CustomerMasterCubit, CustomerMasterState>(
-                builder: (context, state) => switch (state) {
-                      CustomerMasterLoadSuccess(:final customers) =>
-                        customers.isNotEmpty
-                            ? ListView.builder(
-                                itemCount: customers.length,
-                                itemBuilder: (context, index) {
-                                  CustomerModel customer =
-                                      customers.elementAt(index);
+              builder: (context, state) => ErrorWrapper(
+                fetchError: state is CustomerMasterLoadFailure,
+                onRefresh: _onRefresh,
+                child: switch (state) {
+                  CustomerMasterLoadSuccess(:final customers) => customers
+                          .isNotEmpty
+                      ? ListView.builder(
+                          itemCount: customers.length,
+                          itemBuilder: (context, index) {
+                            CustomerModel customer = customers.elementAt(index);
 
-                                  return Container(
-                                    decoration: const BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                      width: 1,
-                                      color: TColors.neutralLightMedium,
-                                    ))),
-                                    child: CustomerContactItem(
-                                      customer: customer,
-                                      onTap: customer.id == "-"
-                                          ? null
-                                          : () {
-                                              Navigator.pushNamed(
-                                                context,
-                                                "/customers/detail",
-                                                arguments: customer,
-                                              );
-                                            },
-                                    ),
-                                  );
-                                },
-                              )
-                            : const EmptyList(
-                                title: "Belum ada pelanggan, nih!",
-                                subTitle: "Yuk! Daftarkan pelanggan kamu.",
-                              ),
-                      CustomerMasterLoadFailure(:final error) => Center(
-                          child: TextBodyS(
-                            error,
-                            color: TColors.error,
-                          ),
+                            return CustomerContactItem(
+                              customer: customer,
+                              onTap: customer.id == "-"
+                                  ? null
+                                  : () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        "/customers/detail",
+                                        arguments: customer,
+                                      );
+                                    },
+                            );
+                          },
+                        )
+                      : const EmptyList(
+                          title: "Belum ada pelanggan, nih!",
+                          subTitle: "Yuk! Daftarkan pelanggan kamu.",
                         ),
-                      _ => const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                    }),
+                  _ => ListShimmer(
+                      crossAlignment: "center",
+                      circleAvatar: true,
+                      sizeAvatar: 40.0,
+                      heightTitle: 16.0,
+                      heightSubtitle: 12.0,
+                    ),
+                },
+              ),
+            ),
           ),
         ),
         floatingActionButton: SizedBox(

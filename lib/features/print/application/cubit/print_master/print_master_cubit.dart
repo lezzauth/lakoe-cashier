@@ -302,6 +302,20 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
         return true;
       } else {
         log('Failed to connect to: ${device.name} (${device.address})');
+        discoverDevices();
+
+        List<BluetoothDevice> updatedAvailableDevices =
+            List.from(currentState.availableDevices);
+
+        updatedAvailableDevices
+            .removeWhere((element) => element.address == device.address);
+
+        emit(PrintMasterLoadSuccess(
+          devices: currentState.devices,
+          connectedDevices: currentState.connectedDevices,
+          availableDevices: updatedAvailableDevices,
+          connectingDevices: [],
+        ));
 
         return false;
       }
@@ -409,7 +423,11 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
           ..removeWhere((d) => d.address == device.address);
 
         List<BluetoothDevice> updatedAvailableDevices =
-            List.from(currentState.availableDevices)..add(device);
+            List.from(currentState.availableDevices);
+
+        if (currentState.availableDevices.isNotEmpty) {
+          updatedAvailableDevices.add(device);
+        }
 
         emit(PrintMasterLoadSuccess(
           devices: updatedDevices,

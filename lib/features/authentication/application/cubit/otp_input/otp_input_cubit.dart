@@ -1,4 +1,6 @@
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/otp_input/otp_input_state.dart';
@@ -32,7 +34,21 @@ class OtpInputCubit extends Cubit<OtpInputState> {
           throw ErrorSummary("unknown action");
       }
     } catch (e) {
-      emit(OtpInputActionFailure(e.toString()));
+      if (e is DioException) {
+        final resError = e.error as DioExceptionModel;
+        emit(OtpInputActionFailure(resError));
+        return;
+      }
+
+      emit(
+        OtpInputActionFailure(
+          DioExceptionModel(
+            statusCode: 400,
+            error: e.toString(),
+            message: "Otp input action failure",
+          ),
+        ),
+      );
     }
   }
 }

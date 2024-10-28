@@ -55,10 +55,10 @@ final class EmployeeMasterActionFailure extends EmployeeMasterState {
   List<Object?> get props => [];
 }
 
-final class EmployeeMasterReachesLimit extends EmployeeMasterState {
+final class EmployeeMasterActionError extends EmployeeMasterState {
   final DioExceptionModel res;
 
-  EmployeeMasterReachesLimit(this.res);
+  EmployeeMasterActionError(this.res);
 
   @override
   List<Object?> get props => [res];

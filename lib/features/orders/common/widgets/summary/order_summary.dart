@@ -6,6 +6,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/shimmer/shimmer_text.dart';
 import 'package:point_of_sales_cashier/features/orders/data/models.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
@@ -18,6 +19,7 @@ class OrderSummary extends StatelessWidget {
   final bool isPaid;
   final List<Transactions>? paymentInfo;
   final Function()? onDiscountChanged;
+  final bool? isRefresh;
 
   final List<OrderSummaryChargeModel> charges;
 
@@ -29,6 +31,7 @@ class OrderSummary extends StatelessWidget {
     this.onDiscountChanged,
     this.isPaid = false,
     this.paymentInfo,
+    this.isRefresh = false,
   });
 
   List<OrderSummaryChargeModel> _taxCharges() =>
@@ -99,7 +102,9 @@ class OrderSummary extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const TextBodyM("Total Pesanan"),
-                      TextHeading4(TFormatter.formatToRupiah(orderTotal)),
+                      (!isRefresh!)
+                          ? TextHeading4(TFormatter.formatToRupiah(orderTotal))
+                          : ShimmerText(),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -120,13 +125,15 @@ class OrderSummary extends StatelessWidget {
                               TextBodyM((e.isPercentage)
                                   ? "${e.name} (${e.percentageValue}%)"
                                   : e.name),
-                              TextHeading4(
-                                TFormatter.formatToRupiah(
-                                  double.parse(
-                                    e.amount,
-                                  ),
-                                ),
-                              ),
+                              (!isRefresh!)
+                                  ? TextHeading4(
+                                      TFormatter.formatToRupiah(
+                                        double.parse(
+                                          e.amount,
+                                        ),
+                                      ),
+                                    )
+                                  : ShimmerText(),
                             ],
                           ),
                           const SizedBox(height: 8),
@@ -151,13 +158,15 @@ class OrderSummary extends StatelessWidget {
                               TextBodyM((e.isPercentage)
                                   ? "${e.name} (${e.percentageValue}%)"
                                   : e.name),
-                              TextHeading4(
-                                TFormatter.formatToRupiah(
-                                  double.parse(
-                                    e.amount,
-                                  ),
-                                ),
-                              ),
+                              (!isRefresh!)
+                                  ? TextHeading4(
+                                      TFormatter.formatToRupiah(
+                                        double.parse(
+                                          e.amount,
+                                        ),
+                                      ),
+                                    )
+                                  : ShimmerText(),
                             ],
                           ),
                           const SizedBox(height: 8),
@@ -175,7 +184,9 @@ class OrderSummary extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const TextBodyM("Total Tagihan"),
-                      TextHeading4(TFormatter.formatToRupiah(totalBill)),
+                      (!isRefresh!)
+                          ? TextHeading4(TFormatter.formatToRupiah(totalBill))
+                          : ShimmerText(),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -236,7 +247,9 @@ class OrderSummary extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const TextHeading3("Yang harus dibayar"),
-                      TextHeading2(TFormatter.formatToRupiah(totalBill)),
+                      (!isRefresh!)
+                          ? TextHeading2(TFormatter.formatToRupiah(totalBill))
+                          : ShimmerText(height: 26, width: 120),
                     ],
                   ),
                   if (isPaid && paymentInfo != null)
@@ -256,11 +269,13 @@ class OrderSummary extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const TextBodyM("Kembalian"),
-                            TextHeading4(
-                              TFormatter.formatToRupiah(
-                                paymentDetails['change'],
-                              ),
-                            ),
+                            (!isRefresh!)
+                                ? TextHeading4(
+                                    TFormatter.formatToRupiah(
+                                      paymentDetails['change'],
+                                    ),
+                                  )
+                                : ShimmerText(),
                           ],
                         ),
                       ],

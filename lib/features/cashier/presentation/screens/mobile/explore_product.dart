@@ -42,7 +42,7 @@ class _ExploreProductMobileState extends State<ExploreProductMobile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ExploreProductAppbar(),
+      appBar: ExploreProductAppbar(),
       body: Scrollbar(
         child: RefreshIndicator(
           onRefresh: _onRefresh,
@@ -52,7 +52,7 @@ class _ExploreProductMobileState extends State<ExploreProductMobile> {
               SliverToBoxAdapter(
                 child: Container(
                   color: TColors.neutralLightLight,
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 16.0,
                     vertical: 6.0,
                   ),
@@ -75,22 +75,22 @@ class _ExploreProductMobileState extends State<ExploreProductMobile> {
               SliverToBoxAdapter(
                 child: Container(
                   color: TColors.neutralLightLight,
-                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  padding: EdgeInsets.symmetric(vertical: 6),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(bottom: 12.0),
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: const Row(
+                        margin: EdgeInsets.only(bottom: 12.0),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TextHeading3("Berlangsung"),
                           ],
                         ),
                       ),
-                      const CashierOpenOrderList(),
+                      CashierOpenOrderList(),
                     ],
                   ),
                 ),
@@ -125,8 +125,8 @@ class _ExploreProductMobileState extends State<ExploreProductMobile> {
                   ),
                 ),
               ),
-              const CashierProductList(),
-              const SliverToBoxAdapter(
+              CashierProductList(),
+              SliverToBoxAdapter(
                 child: SizedBox(height: 80),
               ),
             ],

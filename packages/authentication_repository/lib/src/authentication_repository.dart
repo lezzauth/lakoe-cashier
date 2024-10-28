@@ -26,11 +26,12 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
           } else if (error.response?.statusCode == 429) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (navigatorKey.currentContext != null) {
-                CustomToast.show(
+                CustomToast.showWithContext(
                   navigatorKey.currentContext!,
                   "Tunggu sebentar ya…",
                   icon: TIcons.warning,
                   position: "bottom",
+                  duration: 2,
                 );
               }
             });

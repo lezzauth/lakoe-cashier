@@ -6,8 +6,9 @@ part 'dio.g.dart';
 @freezed
 class DioExceptionModel with _$DioExceptionModel {
   const factory DioExceptionModel({
-    required int? code,
-    required String message,
+    int? statusCode,
+    String? error,
+    String? message,
   }) = _DioExceptionModel;
 
   factory DioExceptionModel.fromJson(Map<String, Object?> json) =>

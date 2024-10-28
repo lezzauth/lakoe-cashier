@@ -38,12 +38,16 @@ final class OrderDetailActionInProgress extends OrderDetailState {
 }
 
 final class OrderDetailActionSuccess extends OrderDetailState {
-  final CompleteOrderResponse response;
+  final CompleteOrderResponse? completeResponse;
+  final CancelOrderResponse? cancelResponse;
 
-  OrderDetailActionSuccess({required this.response});
+  OrderDetailActionSuccess({
+    this.completeResponse,
+    this.cancelResponse,
+  });
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [completeResponse, cancelResponse];
 }
 
 final class OrderDetailActionFailure extends OrderDetailState {

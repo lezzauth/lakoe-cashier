@@ -35,8 +35,8 @@ class EmployeeMasterCubit extends Cubit<EmployeeMasterState> {
       emit(EmployeeMasterActionSuccess(response: response));
     } catch (e) {
       if (e is DioException) {
-        final limit = e.error as DioExceptionModel;
-        emit(EmployeeMasterReachesLimit(limit));
+        final resError = e.error as DioExceptionModel;
+        emit(EmployeeMasterActionError(resError));
         return;
       }
       emit(EmployeeMasterActionFailure(e.toString()));

@@ -1,4 +1,5 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -56,7 +57,6 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
 
   Color getColor(int index) {
     colors;
-
     return Color(colors[index % colors.length]);
   }
 
@@ -88,18 +88,33 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
   }
 
   onSubmit() {
+    bool isFormValid = formKey.currentState?.saveAndValidate() ?? false;
+
+    if (!isFormValid) {
+      if (kDebugMode) {
+        print("Is valid form: $isFormValid");
+      }
+    }
+
+    dynamic outletValue = formKey.currentState?.value;
+    ImagePickerValue? image = outletValue["image_logo"] as ImagePickerValue;
+
     String colorHex = '0x${selectedColor.toRadixString(16).toUpperCase()}';
 
     if (colorHex != "0x10000000") {
       context.read<OutletCubit>().update(
+            image.file,
             UpdateOutletDto(
-              color: colorHex.toString(),
+              name: outletValue["outletName"],
+              address: outletValue["outletAddress"],
+              type: outletValue["outletType"],
+              color: colorHex,
             ),
           );
     } else {
       CustomToast.show(
-        context,
         "Kamu harus pilih warna dulu, ya!",
+        duration: 2,
       );
     }
   }
@@ -304,7 +319,7 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             FormLabel(
-                              "Warna Brand ${arg!.color}",
+                              "Warna Brand",
                               description:
                                   "Warna ini akan pakai sebagai warna utama di QR Meja, toko online dan kebutuhan branding lainnya.",
                             ),

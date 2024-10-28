@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
+import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
@@ -230,8 +231,11 @@ class _ProductMasterState extends State<ProductMaster> {
                       child: switch (state) {
                         ProductMasterLoadSuccess(:final products) =>
                           _buildProductList(products),
-                        _ => const Center(
-                            child: CircularProgressIndicator(),
+                        _ => ListShimmer(
+                            crossAlignment: "center",
+                            sizeAvatar: 44.0,
+                            heightTitle: 16.0,
+                            heightSubtitle: 12.0,
                           ),
                       },
                     ),

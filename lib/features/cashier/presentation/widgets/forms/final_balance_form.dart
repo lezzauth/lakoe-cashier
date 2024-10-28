@@ -30,19 +30,10 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
     decimalDigits: 0,
   );
 
-  Future<void> _onSubmit() async {
+  Future<void> onSubmit() async {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
       return;
     }
 
@@ -90,6 +81,11 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
                   child: FormBuilderTextField(
                     name: "finalBalance",
                     keyboardType: TextInputType.number,
+                    onSubmitted: (value) {
+                      if (_formKey.currentState?.saveAndValidate() ?? false) {
+                        onSubmit();
+                      }
+                    },
                     validator: FormBuilderValidators.required(
                         errorText: ErrorTextStrings.required()),
                     inputFormatters: [_finalBalance],
@@ -115,11 +111,20 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
                     return SizedBox(
                       width: double.maxFinite,
                       child: ElevatedButton(
-                        onPressed: enabled ? _onSubmit : null,
-                        child: const TextActionL(
-                          "Lanjutkan",
-                          color: TColors.neutralLightLightest,
-                        ),
+                        onPressed: enabled ? onSubmit : null,
+                        child: state is CashierCloseInProgress
+                            ? const SizedBox(
+                                height: 16,
+                                width: 16,
+                                child: CircularProgressIndicator(
+                                  color: TColors.neutralLightLightest,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const TextActionL(
+                                "Lanjutkan",
+                                color: TColors.neutralLightLightest,
+                              ),
                       ),
                     );
                   },

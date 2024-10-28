@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -10,7 +12,6 @@ import 'package:point_of_sales_cashier/features/employees/data/arguments/employe
 import 'package:point_of_sales_cashier/features/employees/presentation/widgets/forms/employee_form.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EmployeeEditScreen extends StatefulWidget {
@@ -32,36 +33,28 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
     bool isFormValid =
         _employeeFormKey.currentState?.saveAndValidate() ?? false;
     if (!isFormValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
-
       return;
     }
 
     dynamic value = _employeeFormKey.currentState?.value;
-    ImagePickerValue profilePicture =
-        value["profilePicture"] as ImagePickerValue;
+    ImagePickerValue? profilePicture =
+        value["profilePicture"] as ImagePickerValue?;
 
     String? email = value["email"];
     if (email == null || email.isEmpty) {
       email = null;
     }
 
+    File? profilePictureFile = profilePicture?.file;
+
     await context.read<EmployeeMasterCubit>().update(
           widget.arguments.employee.id,
-          profilePicture: profilePicture.file,
+          profilePicture: profilePictureFile,
           dto: UpdateEmployeeDto(
             name: value["name"],
             // pin: value["pin"],
             phoneNumber: value["phoneNumber"],
-            role: "CASHIER",
+            role: widget.arguments.employee.role,
             email: email,
           ),
         );
@@ -96,7 +89,7 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
           actionError: state is EmployeeMasterActionFailure,
           child: Scaffold(
             appBar: CustomAppbar(
-              title: "Ubah Data Karyawan",
+              title: "Ubah Data Kasir",
               actions: [
                 TextButton(
                     onPressed: !isLoading ? _onSubmitted : null,

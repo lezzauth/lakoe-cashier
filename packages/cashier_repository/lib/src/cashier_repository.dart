@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:app_data_provider/app_data_provider.dart';
@@ -5,6 +6,7 @@ import 'package:cashier_repository/src/dto/cashier.dart';
 import 'package:cashier_repository/src/models/cashier.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
+import 'package:order_repository/order_repository.dart';
 import 'package:token_provider/token_provider.dart';
 
 abstract class CashierRepository {
@@ -24,7 +26,9 @@ abstract class CashierRepository {
     String id,
     CompleteOrderDto dto,
   );
+  Future<CancelOrderResponse> cancelOrder(String id);
   Future<List<OrderItemResponse>> findAllOrder(FindAllOrderDto? dto);
+  Future<OrderModelWithoutInclude> editOrder(String id, List<OrderItemDto> dto);
 }
 
 class CashierRepositoryImpl implements CashierRepository {
@@ -45,12 +49,13 @@ class CashierRepositoryImpl implements CashierRepository {
     final Options options = await _getOptions();
     final outletId = await _appDataProvider.outletId;
 
-    final response = await _dio.post(
+    final res = await _dio.post(
       "$_baseURL/open",
       data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );
-    return OpenCashierResponse.fromJson(response.data);
+
+    return OpenCashierResponse.fromJson(res.data);
   }
 
   @override
@@ -159,6 +164,17 @@ class CashierRepositoryImpl implements CashierRepository {
   }
 
   @override
+  Future<CancelOrderResponse> cancelOrder(String id) async {
+    final Options options = await _getOptions();
+
+    final response = await _dio.post(
+      "$_baseURL/orders/$id/cancel",
+      options: options,
+    );
+    return CancelOrderResponse.fromJson(response.data);
+  }
+
+  @override
   Future<List<OrderItemResponse>> findAllOrder(FindAllOrderDto? dto) async {
     final Options options = await _getOptions();
 
@@ -169,5 +185,21 @@ class CashierRepositoryImpl implements CashierRepository {
     return response.data!
         .map((item) => OrderItemResponse.fromJson(item))
         .toList();
+  }
+
+  @override
+  Future<OrderModelWithoutInclude> editOrder(
+    String id,
+    List<OrderItemDto> dto,
+  ) async {
+    final Options options = await _getOptions();
+
+    final response = await _dio.patch(
+      "$_baseURL/orders/$id/items",
+      data: jsonEncode(dto.map((e) => e.toJson()).toList()),
+      options: options,
+    );
+
+    return OrderModelWithoutInclude.fromJson(response.data);
   }
 }

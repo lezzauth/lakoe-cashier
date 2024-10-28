@@ -8,13 +8,20 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class CartCountFloatingAction extends StatelessWidget {
-  const CartCountFloatingAction({super.key, required this.onPressed});
+  const CartCountFloatingAction({
+    super.key,
+    required this.onPressed,
+    this.labelButton = "Proses Pesanan",
+  });
 
   final void Function() onPressed;
+  final String? labelButton;
 
   String _getTotalPrice(List<CartModel> carts) {
-    return TFormatter.formatToRupiah(carts.fold(0,
-        (sum, item) => sum + (item.quantity * int.parse(item.product.price))));
+    return TFormatter.formatToRupiah(carts.fold(
+      0,
+      (sum, item) => sum + (item.quantity * int.parse(item.product.price)),
+    ));
   }
 
   @override
@@ -41,7 +48,7 @@ class CartCountFloatingAction extends StatelessWidget {
                         color: TColors.neutralLightLightest,
                       ),
                       TextHeading3(
-                        "Proses Pesanan (${cartState.carts.length.toString()})",
+                        "$labelButton (${cartState.carts.length.toString()})",
                         color: TColors.neutralLightLightest,
                       ),
                     ],

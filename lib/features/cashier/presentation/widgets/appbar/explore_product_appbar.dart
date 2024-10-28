@@ -9,6 +9,7 @@ import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashie
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/appbar/close_cashier_button.dart';
 import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/appbar/lock_cashier_button.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ExploreProductAppbar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -62,12 +63,52 @@ class ExploreProductAppbar extends StatelessWidget
               ),
             ),
           ),
-        _ => const SafeArea(
-            child: Center(
-              child: SizedBox(
-                height: 24,
-                width: 24,
-                child: CircularProgressIndicator(),
+        _ => SafeArea(
+            child: Container(
+              color: TColors.neutralLightLight,
+              height: double.maxFinite,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const CloseCashierButton(
+                    label: "Tutup Kasir",
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const TextBodyS("Kasir:",
+                              color: TColors.neutralDarkLight),
+                          Container(
+                            margin: EdgeInsets.only(top: 4),
+                            child: Shimmer.fromColors(
+                              baseColor: const Color(0xFFE8E9F1),
+                              highlightColor: const Color(0xFFF8F9FE),
+                              child: Container(
+                                height: 16.0,
+                                width: 100.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  color: TColors.neutralLightLightest,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 12),
+                      const LockCashierButton(label: "Kunci")
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

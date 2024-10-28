@@ -44,16 +44,6 @@ class _OnBoardingState extends State<OnBoarding> {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
-      // SnackBar snackBar = SnackBar(
-      //   content: Text(ErrorTextStrings.formInvalid()),
-      //   showCloseIcon: true,
-      // );
-      // ScaffoldMessenger.of(context)
-      //   ..hideCurrentSnackBar()
-      //   ..showSnackBar(
-      //     snackBar,
-      //   );
-
       return;
     }
 
@@ -70,15 +60,6 @@ class _OnBoardingState extends State<OnBoarding> {
       body: BlocConsumer<OnBoardingCubit, OnBoardingState>(
         listener: (context, state) {
           if (state is OnBoardingActionFailure) {
-            // const snackBar = SnackBar(
-            //   content: Text('OTP Request Failed'),
-            //   showCloseIcon: true,
-            // );
-            // ScaffoldMessenger.of(context)
-            //   ..hideCurrentSnackBar()
-            //   ..showSnackBar(
-            //     snackBar,
-            //   );
             return;
           }
 

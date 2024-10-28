@@ -1,95 +1,123 @@
-import 'package:dio_provider/dio_provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class CustomToast {
+  static final CustomToast _instance = CustomToast._internal();
+  static late FToast fToast;
+
+  // Private constructor
+  CustomToast._internal();
+
+  // Factory constructor
+  factory CustomToast() {
+    return _instance;
+  }
+
+  // Inisialisasi FToast dengan konteks
+  static void init(BuildContext context) {
+    fToast = FToast();
+    fToast.init(context);
+  }
+
   static void show(
+    String message, {
+    String? icon,
+    String position = 'top',
+    Color backgroundColor = TColors.neutralDarkDark,
+    int duration = 5,
+  }) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: duration != 5 ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG,
+      gravity: _getToastGravity(position),
+      backgroundColor: backgroundColor,
+      textColor: TColors.neutralLightLightest,
+      fontSize: 14.0,
+    );
+  }
+
+  static void showWithContext(
     BuildContext context,
     String message, {
     String? icon,
     String position = 'top',
     Color backgroundColor = TColors.neutralDarkDark,
-    int duration = 3,
+    int duration = 5,
   }) {
-    final overlay = navigatorKey.currentState?.overlay;
-    if (overlay != null) {
-      double? topPosition;
-      double? bottomPosition;
+    if (context.mounted) {
+      _showToast(
+        context: context,
+        message: message,
+        icon: icon,
+        position: position,
+        backgroundColor: backgroundColor,
+        duration: duration,
+      );
+    }
+  }
 
-      switch (position) {
-        case 'center':
-          topPosition = MediaQuery.of(context).size.height * 0.4;
-          break;
-        case 'bottom':
-          bottomPosition = 40.0;
-          break;
-        case 'top':
-        default:
-          topPosition = 80.0;
-          break;
-      }
-
-      final overlayEntry = OverlayEntry(
-        builder: (context) => Positioned(
-          top: topPosition,
-          bottom: bottomPosition,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Material(
-                color: Colors.transparent,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0,
-                    vertical: 12.0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: backgroundColor,
-                    borderRadius: BorderRadius.circular(100.0),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (icon != null)
-                        UiIcons(
-                          icon,
-                          width: 18,
-                          height: 18,
-                          color: TColors.neutralLightLightest,
-                        ),
-                      SizedBox(width: icon != null ? 8 : 0),
-                      Flexible(
-                        child: TextBodyL(
-                          message,
-                          color: TColors.neutralLightLightest,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+  static void _showToast({
+    required BuildContext context,
+    required String message,
+    String? icon,
+    required String position,
+    required Color backgroundColor,
+    required int duration,
+  }) {
+    Widget toast = Container(
+      padding: EdgeInsets.only(
+        left: icon != null ? 12 : 16,
+        top: icon != null ? 8 : 12,
+        right: 16,
+        bottom: icon != null ? 8 : 12,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(99.0),
+        color: backgroundColor,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null)
+            UiIcons(
+              icon,
+              width: 24,
+              height: 24,
+              color: TColors.neutralLightLightest,
+            ),
+          SizedBox(width: icon != null ? 4.0 : 0),
+          Flexible(
+            child: TextBodyM(
+              message,
+              color: TColors.neutralLightLightest,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
-        ),
-      );
+        ],
+      ),
+    );
 
-      overlay.insert(overlayEntry);
+    // Menampilkan toast menggunakan FToast
+    fToast.showToast(
+      child: toast,
+      gravity: _getToastGravity(position),
+      toastDuration: Duration(seconds: duration),
+    );
+  }
 
-      Future.delayed(Duration(seconds: duration), () {
-        overlayEntry.remove();
-      });
-    } else {
-      if (kDebugMode) {
-        print("No overlay found. Unable to show toast.");
-      }
+  static ToastGravity _getToastGravity(String position) {
+    switch (position) {
+      case 'top':
+        return ToastGravity.TOP;
+      case 'center':
+        return ToastGravity.CENTER;
+      case 'bottom':
+      default:
+        return ToastGravity.BOTTOM;
     }
   }
 }

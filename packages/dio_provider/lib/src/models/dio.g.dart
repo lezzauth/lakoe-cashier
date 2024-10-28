@@ -9,13 +9,15 @@ part of 'dio.dart';
 _$DioExceptionModelImpl _$$DioExceptionModelImplFromJson(
         Map<String, dynamic> json) =>
     _$DioExceptionModelImpl(
-      code: (json['code'] as num?)?.toInt(),
-      message: json['message'] as String,
+      statusCode: (json['statusCode'] as num?)?.toInt(),
+      error: json['error'] as String?,
+      message: json['message'] as String?,
     );
 
 Map<String, dynamic> _$$DioExceptionModelImplToJson(
         _$DioExceptionModelImpl instance) =>
     <String, dynamic>{
-      'code': instance.code,
+      'statusCode': instance.statusCode,
+      'error': instance.error,
       'message': instance.message,
     };

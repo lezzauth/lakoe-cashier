@@ -1,26 +1,26 @@
 import 'package:equatable/equatable.dart';
 
-sealed class OrderAddItemState extends Equatable {}
+sealed class OrderEditState extends Equatable {}
 
-final class OrderAddItemInitial extends OrderAddItemState {
+final class OrderEditInitial extends OrderEditState {
   @override
   List<Object?> get props => [];
 }
 
-final class OrderAddItemActionInProgress extends OrderAddItemState {
+final class OrderEditActionInProgress extends OrderEditState {
   @override
   List<Object?> get props => [];
 }
 
-final class OrderAddItemActionSuccess extends OrderAddItemState {
+final class OrderEditActionSuccess extends OrderEditState {
   @override
   List<Object?> get props => [];
 }
 
-final class OrderAddItemActionFailure extends OrderAddItemState {
+final class OrderEditActionFailure extends OrderEditState {
   final String error;
 
-  OrderAddItemActionFailure(this.error);
+  OrderEditActionFailure(this.error);
 
   @override
   List<Object?> get props => [error];

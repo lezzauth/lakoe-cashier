@@ -96,9 +96,9 @@ import 'package:point_of_sales_cashier/features/account/manage_account/presentat
 import 'package:point_of_sales_cashier/features/notifications/presentation/screens/notification_master.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/orders/data/arguments/order_add_item_argument.dart';
+import 'package:point_of_sales_cashier/features/orders/data/arguments/order_edit_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_add_item.dart';
+import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_edit.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_detail.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_master.dart';
 import 'package:point_of_sales_cashier/features/payment_method/presentation/screens/payment_method_master.dart';
@@ -276,9 +276,9 @@ class App extends StatelessWidget {
                   arguments: ModalRoute.of(context)!.settings.arguments
                       as OrderDetailArgument,
                 ),
-            "/orders/add-item": (context) => OrderAddItemScreen(
+            "/orders/add-item": (context) => OrderEditScreen(
                   arguments: ModalRoute.of(context)!.settings.arguments
-                      as OrderAddItemArgument,
+                      as OrderEditArgument,
                 ),
             "/orders/proof": (context) => const PreviewProofTransfer(),
 

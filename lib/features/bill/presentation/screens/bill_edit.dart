@@ -11,7 +11,6 @@ import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_mast
 import 'package:point_of_sales_cashier/features/bill/data/arguments/template_order_model.dart';
 import 'package:point_of_sales_cashier/features/bill/presentation/widgets/bill_view.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class BillEditScreen extends StatefulWidget {
   const BillEditScreen({super.key});
@@ -26,16 +25,6 @@ class _BillEditScreenState extends State<BillEditScreen> {
   Future<void> _onSubmitted() async {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
     if (!isFormValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
-
       return;
     }
 

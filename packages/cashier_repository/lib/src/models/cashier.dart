@@ -20,7 +20,7 @@ class OperatorModel with _$OperatorModel {
     required String role,
     required String name,
     required String phoneNumber,
-    required String email,
+    String? email,
     required bool emailVerified,
     required bool phoneVerified,
     required String outletId,
@@ -166,4 +166,28 @@ class CompleteOrderResponse with _$CompleteOrderResponse {
 
   factory CompleteOrderResponse.fromJson(Map<String, Object?> json) =>
       _$CompleteOrderResponseFromJson(json);
+}
+
+@freezed
+class CancelOrderResponse with _$CancelOrderResponse {
+  const factory CancelOrderResponse({
+    required String id,
+    required int no,
+    required String status,
+    required String price,
+    String? customerId,
+    required String paymentStatus,
+    required String customerType,
+    required String type,
+    required String source,
+    required String outletId,
+    String? tableId,
+    required String cashierId,
+    String? closedAt,
+    required String createdAt,
+    required String updatedAt,
+  }) = _CancelOrderResponse;
+
+  factory CancelOrderResponse.fromJson(Map<String, Object?> json) =>
+      _$CancelOrderResponseFromJson(json);
 }

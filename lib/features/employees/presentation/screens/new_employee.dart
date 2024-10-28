@@ -6,6 +6,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
 import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
@@ -33,16 +34,6 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
     bool isFormValid =
         _employeeFormKey.currentState?.saveAndValidate() ?? false;
     if (!isFormValid) {
-      // SnackBar snackBar = SnackBar(
-      //   content: Text(ErrorTextStrings.formInvalid()),
-      //   showCloseIcon: true,
-      // );
-      // ScaffoldMessenger.of(context)
-      //   ..hideCurrentSnackBar()
-      //   ..showSnackBar(
-      //     snackBar,
-      //   );
-
       return;
     }
 
@@ -86,33 +77,41 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
       listener: (context, state) {
         if (state is EmployeeMasterActionSuccess) {
           Navigator.pop(context, true);
-        } else if (state is EmployeeMasterReachesLimit) {
-          showModalBottomSheet(
-            context: context,
-            enableDrag: false,
-            isDismissible: false,
-            builder: (context) {
-              return CustomBottomsheet(
-                hasGrabber: false,
-                child: ErrorDisplay(
-                  imageSrc: TImages.limitQuota,
-                  title: "Upgrade paket, yuk!",
-                  description:
-                      "Paket kamu saat ini belum bisa tambah karyawan baru. Upgrade, yuk!",
-                  actionTitlePrimary: "Lihat Paket",
-                  onActionPrimary: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, "/packages");
-                  },
-                  actionTitleSecondary: "Nanti Saja",
-                  onActionSecondary: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context, true);
-                  },
-                ),
-              );
-            },
-          );
+        } else if (state is EmployeeMasterActionError) {
+          if (state.res.message!.contains("pin already used")) {
+            CustomToast.show(
+              "PIN sudah digunakan kasir lain.",
+              position: 'bottom',
+              duration: 2,
+            );
+          } else {
+            showModalBottomSheet(
+              context: context,
+              enableDrag: false,
+              isDismissible: false,
+              builder: (context) {
+                return CustomBottomsheet(
+                  hasGrabber: false,
+                  child: ErrorDisplay(
+                    imageSrc: TImages.limitQuota,
+                    title: "Upgrade paket, yuk!",
+                    description:
+                        "Paket kamu saat ini belum bisa tambah karyawan baru. Upgrade, yuk!",
+                    actionTitlePrimary: "Lihat Paket",
+                    onActionPrimary: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "/packages");
+                    },
+                    actionTitleSecondary: "Nanti Saja",
+                    onActionSecondary: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context, true);
+                    },
+                  ),
+                );
+              },
+            );
+          }
         }
       },
       builder: (context, state) {
@@ -122,7 +121,7 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
           actionError: state is EmployeeMasterActionFailure,
           child: Scaffold(
             appBar: CustomAppbar(
-              title: "Karyawan Baru",
+              title: "Tambah Kasir Baru",
               actions: [
                 TextButton(
                     onPressed: !isLoading ? _onSubmitted : null,

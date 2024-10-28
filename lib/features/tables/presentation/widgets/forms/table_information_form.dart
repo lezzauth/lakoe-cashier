@@ -41,7 +41,7 @@ class _TableInformationFormState extends State<TableInformationForm> {
           message: "Kamu yakin ingin menghapus meja ini?",
           labelButtonPrimary: "Tidak",
           labelButtonSecondary: "Ya, Hapus",
-          isDiscardActionLoading: widget.isLoading,
+          isSecondaryActionLoading: widget.isLoading,
           primaryAction: () async {
             if (widget.onDeleted != null) {
               await widget.onDeleted!();

@@ -122,6 +122,9 @@ dependencies:
   flutter_bluetooth_serial: ^0.4.0
   flutter_inappwebview: ^6.1.5
   flex_color_picker: ^3.6.0
+  remove_bg: ^0.0.3
+  flutter_dotenv: ^5.2.1
+  fluttertoast: ^8.2.8
 
 dev_dependencies:
   flutter_test:
@@ -149,6 +152,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - .env
     - assets/icons/
     - assets/icons/categories/
     - assets/images/

@@ -4,10 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
+import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
 import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_filter_state.dart';
@@ -80,57 +82,59 @@ class _CategoryMasterState extends State<CategoryMaster> {
             backgroundColor: TColors.neutralLightLightest,
             onRefresh: onRefresh,
             child: BlocBuilder<CategoryMasterCubit, CategoryMasterState>(
-                builder: (context, state) => switch (state) {
-                      CategoryMasterLoadSuccess(:final categories) =>
-                        CustomScrollView(
-                          slivers: [
-                            if (categories.isEmpty)
-                              BlocBuilder<CategoryMasterFilterCubit,
-                                  CategoryMasterFilterState>(
-                                builder: (context, filterState) {
-                                  if (filterState.search != null &&
-                                      filterState.search!.isNotEmpty) {
-                                    return SliverToBoxAdapter(
-                                      child: const EmptyList(
-                                        title: "Pencarian tidak ditemukan",
-                                        subTitle:
-                                            "Coba cari dengan nama kategori yang lain.",
-                                      ),
-                                    );
-                                  }
+              builder: (context, state) => ErrorWrapper(
+                fetchError: state is CategoryMasterLoadFailure,
+                onRefresh: onRefresh,
+                child: switch (state) {
+                  CategoryMasterLoadSuccess(:final categories) =>
+                    CustomScrollView(
+                      slivers: [
+                        if (categories.isEmpty)
+                          BlocBuilder<CategoryMasterFilterCubit,
+                              CategoryMasterFilterState>(
+                            builder: (context, filterState) {
+                              if (filterState.search != null &&
+                                  filterState.search!.isNotEmpty) {
+                                return SliverToBoxAdapter(
+                                  child: const EmptyList(
+                                    title: "Pencarian tidak ditemukan",
+                                    subTitle:
+                                        "Coba cari dengan nama kategori yang lain.",
+                                  ),
+                                );
+                              }
 
-                                  return SliverToBoxAdapter(
-                                    child: const EmptyList(
-                                      title: "Belum ada kategori, nih!",
-                                      subTitle:
-                                          "Yuk! Masukan masukkan kategori kamu.",
-                                    ),
-                                  );
-                                },
-                              ),
-                            if (categories.isNotEmpty)
-                              SliverList.builder(
-                                itemCount: categories.length,
-                                itemBuilder: (context, index) {
-                                  CategoryModel category =
-                                      categories.elementAt(index);
+                              return SliverToBoxAdapter(
+                                child: const EmptyList(
+                                  title: "Belum ada kategori, nih!",
+                                  subTitle:
+                                      "Yuk! Masukan masukkan kategori kamu.",
+                                ),
+                              );
+                            },
+                          ),
+                        if (categories.isNotEmpty)
+                          SliverList.builder(
+                            itemCount: categories.length,
+                            itemBuilder: (context, index) {
+                              CategoryModel category =
+                                  categories.elementAt(index);
 
-                                  return Container(
-                                    decoration: const BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          width: 1,
-                                          color: TColors.neutralLightMedium,
-                                        ),
-                                      ),
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    title: TextHeading4(category.name),
+                                    subtitle: TextBodyM(
+                                      "${(category.count?.products ?? 0).toString()} Produk",
+                                      color: TColors.neutralDarkLight,
                                     ),
-                                    child: ListTile(
-                                      title: TextHeading4(category.name),
-                                      subtitle: TextBodyM(
-                                        "${(category.count?.products ?? 0).toString()} Produk",
-                                        color: TColors.neutralDarkLight,
-                                      ),
-                                      onTap: () async {
+                                    onTap: () async {
+                                      if (category.name.contains("Umum")) {
+                                        CustomToast.show(
+                                          "Kategori Umum tidak bisa diedit.",
+                                          position: "bottom",
+                                        );
+                                      } else {
                                         bool? updateCategory =
                                             await Navigator.pushNamed(
                                           context,
@@ -139,46 +143,51 @@ class _CategoryMasterState extends State<CategoryMaster> {
                                         ) as bool?;
                                         if (updateCategory != true) return;
                                         onRefresh();
-                                      },
-                                      leading: Container(
-                                        height: 44,
-                                        width: 44,
-                                        decoration: BoxDecoration(
-                                          color: TColors.highlightLightest,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Container(
+                                      }
+                                    },
+                                    leading: Container(
+                                      height: 44,
+                                      width: 44,
+                                      decoration: BoxDecoration(
+                                        color: TColors.highlightLightest,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Container(
+                                        height: 16,
+                                        width: 16,
+                                        alignment: Alignment.center,
+                                        child: SvgPicture.asset(
+                                          TCategoryIconFormatter.getIcon(
+                                            category.icon ?? '',
+                                          ),
                                           height: 16,
                                           width: 16,
-                                          alignment: Alignment.center,
-                                          child: SvgPicture.asset(
-                                            TCategoryIconFormatter.getIcon(
-                                              category.icon ?? '',
-                                            ),
-                                            height: 16,
-                                            width: 16,
-                                            fit: BoxFit.scaleDown,
-                                          ),
+                                          fit: BoxFit.scaleDown,
                                         ),
                                       ),
-                                      dense: true,
                                     ),
-                                  );
-                                },
-                              )
-                          ],
-                        ),
-                      CategoryMasterLoadFailure(:final error) => Center(
-                          child: TextBodyS(
-                            error,
-                            color: TColors.error,
-                          ),
-                        ),
-                      _ => const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                    }),
+                                    dense: true,
+                                  ),
+                                  const Divider(
+                                    color: TColors.neutralLightMedium,
+                                    indent: 16.0,
+                                    height: 1,
+                                  ),
+                                ],
+                              );
+                            },
+                          )
+                      ],
+                    ),
+                  _ => ListShimmer(
+                      crossAlignment: "center",
+                      sizeAvatar: 44.0,
+                      heightTitle: 16.0,
+                      heightSubtitle: 12.0,
+                    ),
+                },
+              ),
+            ),
           ),
         ),
         floatingActionButton: SizedBox(

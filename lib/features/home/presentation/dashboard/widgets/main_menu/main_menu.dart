@@ -98,9 +98,6 @@ class _MainMenuState extends State<MainMenu> {
                 } else {
                   onCashierAlreadyOpened();
                 }
-                // state is! CashierOpened
-                //   ? onCashierOpened
-                //   : onCashierAlreadyOpened
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 24),

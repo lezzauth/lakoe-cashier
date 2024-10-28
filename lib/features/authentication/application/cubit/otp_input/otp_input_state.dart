@@ -1,4 +1,5 @@
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:dio_provider/dio_provider.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class OtpInputState extends Equatable {}
@@ -14,12 +15,13 @@ final class OtpInputActionInProgress extends OtpInputState {
 }
 
 final class OtpInputActionFailure extends OtpInputState {
-  final String error;
+  // final String error;
+  final DioExceptionModel res;
 
-  OtpInputActionFailure(this.error);
+  OtpInputActionFailure(this.res);
 
   @override
-  List<Object?> get props => [error];
+  List<Object?> get props => [res];
 }
 
 final class OtpInputActionLogin extends OtpInputState {

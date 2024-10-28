@@ -65,7 +65,8 @@ class PreviewQrTable extends StatelessWidget {
                         children: [
                           ColorFiltered(
                             colorFilter: ColorFilter.mode(
-                              Colors.white,
+                              // Colors.white,
+                              Colors.transparent,
                               BlendMode.srcATop,
                             ),
                             child: Image.network(
@@ -139,7 +140,8 @@ class PreviewQrTable extends StatelessWidget {
                         child: Center(
                           child: ColorFiltered(
                             colorFilter: ColorFilter.mode(
-                              Colors.white,
+                              // Colors.white,
+                              Colors.transparent,
                               BlendMode.srcATop,
                             ),
                             child: Image.network(

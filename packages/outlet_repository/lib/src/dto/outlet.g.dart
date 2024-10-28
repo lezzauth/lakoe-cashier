@@ -57,11 +57,17 @@ Map<String, dynamic> _$$GetOutletSalesDtoImplToJson(
 _$UpdateOutletDtoImpl _$$UpdateOutletDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$UpdateOutletDtoImpl(
+      name: json['name'] as String?,
+      address: json['address'] as String?,
+      type: json['type'] as String?,
       color: json['color'] as String?,
     );
 
 Map<String, dynamic> _$$UpdateOutletDtoImplToJson(
         _$UpdateOutletDtoImpl instance) =>
     <String, dynamic>{
+      'name': instance.name,
+      'address': instance.address,
+      'type': instance.type,
       'color': instance.color,
     };

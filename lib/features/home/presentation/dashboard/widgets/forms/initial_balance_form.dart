@@ -24,15 +24,6 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
-      SnackBar snackBar = SnackBar(
-        content: Text(ErrorTextStrings.formInvalid()),
-        showCloseIcon: true,
-      );
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          snackBar,
-        );
       return;
     }
 
@@ -77,6 +68,11 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
                   child: FormBuilderTextField(
                     name: "initialBalance",
                     keyboardType: TextInputType.number,
+                    onSubmitted: (value) {
+                      if (_formKey.currentState?.saveAndValidate() ?? false) {
+                        onSubmit();
+                      }
+                    },
                     validator: FormBuilderValidators.required(
                         errorText: ErrorTextStrings.required()),
                     inputFormatters: [_currencyFormatter],

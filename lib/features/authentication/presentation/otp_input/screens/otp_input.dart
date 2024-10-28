@@ -43,14 +43,17 @@ class _OtpInputState extends State<OtpInput> {
   final AuthenticationRepository _authenticationRepository =
       AuthenticationRepositoryImpl();
 
+  String messageError = "PIN Salah";
   bool isRepeat = false;
   DateTime countdownDate = DateTime.now();
 
   Future<void> _onRequestOTP() async {
-    await _authenticationRepository
-        .requestOTP(RequestOTPDto(phoneNumber: widget.arguments.target));
+    await _authenticationRepository.requestOTP(RequestOTPDto(
+      phoneNumber: widget.arguments.target,
+    ));
 
     setState(() {
+      messageError = "";
       isRepeat = false;
       countdownDate = DateTime.now().add(Duration(minutes: 1));
     });
@@ -92,6 +95,12 @@ class _OtpInputState extends State<OtpInput> {
 
           Navigator.pushNamedAndRemoveUntil(
               context, "/cashier", ModalRoute.withName("/cashier"));
+        } else if (state is OtpInputActionFailure) {
+          if (state.res.message!.contains("code invalid or expired")) {
+            setState(() {
+              messageError = "PIN sudah hangus. Silakan kirim ulang.";
+            });
+          }
         } else if (state is OtpInputActionRegister) {
           Navigator.pushNamed(context, "/completing-data",
               // ModalRoute.withName("/completing-data"),
@@ -107,80 +116,81 @@ class _OtpInputState extends State<OtpInput> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 23.5),
-                    margin: const EdgeInsets.only(top: 88.5),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 40),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(bottom: 8.0),
-                                child: Text(
-                                  "Verifikasi Nomor WhatsApp",
-                                  style: GoogleFonts.inter(
-                                    fontSize: TSizes.fontSizeHeading3,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                "Masukkan 4 digit kode OTP yang telah kami kirimkan melalui WhatsApp untuk melanjutkan.",
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 23.5),
+                  margin: const EdgeInsets.only(top: 88.5),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 40),
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                "Verifikasi Nomor WhatsApp",
                                 style: GoogleFonts.inter(
-                                  fontSize: TSizes.fontSizeBodyS,
-                                  color: TColors.neutralDarkMedium,
+                                  fontSize: TSizes.fontSizeHeading3,
+                                  fontWeight: FontWeight.w700,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
-                              const SizedBox(height: 12),
-                              Text(
-                                TFormatter.censoredPhoneNumber(
-                                    widget.arguments.target),
-                                style: GoogleFonts.inter(
-                                  fontSize: TSizes.fontSizeBodyS,
-                                  color: TColors.neutralDarkMedium,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Pinput(
-                          defaultPinTheme: defaultPinTheme,
-                          focusedPinTheme: focusedPinTheme,
-                          length: 4,
-                          autofocus: true,
-                          controller: _optController,
-                          onCompleted: (value) {
-                            context
-                                .read<OtpInputCubit>()
-                                .verifyOTP(VerifyOTPDto(
-                                  phoneNumber: widget.arguments.target,
-                                  code: value,
-                                ));
-
-                            _optController.clear();
-                          },
-                        ),
-                        if (state is OtpInputActionFailure)
-                          Container(
-                            margin: const EdgeInsets.only(top: 12),
-                            child: Text(
-                              "OTP Salah",
+                            ),
+                            Text(
+                              "Masukkan 4 digit kode OTP yang telah kami kirimkan melalui WhatsApp untuk melanjutkan.",
                               style: GoogleFonts.inter(
                                 fontSize: TSizes.fontSizeBodyS,
-                                color: TColors.error,
+                                color: TColors.neutralDarkMedium,
                               ),
                               textAlign: TextAlign.center,
                             ),
-                          ),
-                      ],
-                    ),
+                            const SizedBox(height: 12),
+                            Text(
+                              TFormatter.censoredPhoneNumber(
+                                  widget.arguments.target),
+                              style: GoogleFonts.inter(
+                                fontSize: TSizes.fontSizeBodyS,
+                                color: TColors.neutralDarkMedium,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Pinput(
+                        defaultPinTheme: defaultPinTheme,
+                        focusedPinTheme: focusedPinTheme,
+                        length: 4,
+                        autofocus: true,
+                        controller: _optController,
+                        onCompleted: (value) {
+                          context.read<OtpInputCubit>().verifyOTP(VerifyOTPDto(
+                                phoneNumber: widget.arguments.target,
+                                code: value,
+                              ));
+
+                          _optController.clear();
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 12),
+                        child: (state is OtpInputActionFailure)
+                            ? Container(
+                                margin: const EdgeInsets.only(top: 12),
+                                child: Text(
+                                  messageError,
+                                  style: GoogleFonts.inter(
+                                    fontSize: TSizes.fontSizeBodyS,
+                                    color: TColors.error,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            : SizedBox.shrink(),
+                      ),
+                    ],
                   ),
                 ),
+                SizedBox(height: 20),
                 Container(
                   padding: const EdgeInsets.only(bottom: 55.0),
                   child: Row(
@@ -198,9 +208,7 @@ class _OtpInputState extends State<OtpInput> {
                           width: 8,
                         ),
                         TimerCountdown(
-                          endTime: countdownDate.add(
-                            const Duration(minutes: 1),
-                          ),
+                          endTime: countdownDate,
                           format: CountDownTimerFormat.minutesSeconds,
                           enableDescriptions: false,
                           spacerWidth: 2,

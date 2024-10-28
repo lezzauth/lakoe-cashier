@@ -69,11 +69,11 @@ class _EmployeeFormState extends State<EmployeeForm> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const FormLabel("Nama Karyawan"),
+                        const FormLabel("Nama Kasir"),
                         FormBuilderTextField(
                           name: "name",
                           decoration: const InputDecoration(
-                            hintText: "Masukan nama karyawan",
+                            hintText: "Masukan nama kasir",
                           ),
                           validator: FormBuilderValidators.required(
                               errorText: ErrorTextStrings.required()),
@@ -134,7 +134,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
                   FormBuilderTextField(
                     name: "email",
                     decoration: const InputDecoration(
-                      hintText: "Email karyawan",
+                      hintText: "Email kasir",
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: FormBuilderValidators.compose([
