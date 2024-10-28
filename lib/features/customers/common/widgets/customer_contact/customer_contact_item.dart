@@ -22,26 +22,35 @@ class CustomerContactItem extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isGuest = customer.id == "-";
 
-    return ListTile(
-      onTap: onTap,
-      leading: SvgPicture.asset(
-        TImages.contactAvatar,
-        height: 40,
-        width: 40,
-      ),
-      title: TextHeading4(customer.name),
-      subtitle: TextBodyS(
-        customer.phoneNumber.isEmpty ? '-' : customer.phoneNumber,
-        color: TColors.neutralDarkLight,
-      ),
-      trailing: isGuest
-          ? null
-          : const UiIcons(
-              TIcons.arrowRight,
-              height: 16,
-              width: 16,
-              color: TColors.neutralDarkLightest,
-            ),
+    return Column(
+      children: [
+        ListTile(
+          onTap: onTap,
+          leading: SvgPicture.asset(
+            TImages.contactAvatar,
+            height: 40,
+            width: 40,
+          ),
+          title: TextHeading4(customer.name),
+          subtitle: TextBodyS(
+            customer.phoneNumber.isEmpty ? '-' : customer.phoneNumber,
+            color: TColors.neutralDarkLight,
+          ),
+          trailing: isGuest
+              ? null
+              : const UiIcons(
+                  TIcons.arrowRight,
+                  height: 16,
+                  width: 16,
+                  color: TColors.neutralDarkLightest,
+                ),
+        ),
+        const Divider(
+          color: TColors.neutralLightMedium,
+          indent: 16.0,
+          height: 1,
+        ),
+      ],
     );
   }
 }

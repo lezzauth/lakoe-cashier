@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
 import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
@@ -11,7 +11,6 @@ import 'package:point_of_sales_cashier/features/cashier/application/cubit/produc
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/explore_product_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:product_repository/product_repository.dart';
-import 'package:shimmer/shimmer.dart';
 
 class CashierProductList extends StatefulWidget {
   const CashierProductList({super.key});
@@ -76,83 +75,11 @@ class _CashierProductListState extends State<CashierProductList> {
                 );
               },
             ),
-          CashierProductLoadFailure(:final error) => SliverToBoxAdapter(
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 24),
-                child: Center(
-                  child: TextBodyS(
-                    error,
-                    color: TColors.error,
-                  ),
-                ),
-              ),
+          CashierProductLoadFailure() => SliverToBoxAdapter(
+              child: ListShimmer(),
             ),
           _ => SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: Wrap(
-                  runSpacing: 12,
-                  children: List.generate(
-                    8,
-                    (index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                          vertical: 4.0,
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Shimmer.fromColors(
-                              baseColor: const Color(0xFFE8E9F1),
-                              highlightColor: const Color(0xFFF8F9FE),
-                              child: Container(
-                                height: 60.0,
-                                width: 60.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  color: TColors.neutralLightLightest,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 12.0),
-                            Wrap(
-                              spacing: 8.0,
-                              direction: Axis.vertical,
-                              children: [
-                                Shimmer.fromColors(
-                                  baseColor: const Color(0xFFE8E9F1),
-                                  highlightColor: const Color(0xFFF8F9FE),
-                                  child: Container(
-                                    height: 20.0,
-                                    width: 200.0,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      color: TColors.neutralLightLightest,
-                                    ),
-                                  ),
-                                ),
-                                Shimmer.fromColors(
-                                  baseColor: const Color(0xFFE8E9F1),
-                                  highlightColor: const Color(0xFFF8F9FE),
-                                  child: Container(
-                                    height: 16.0,
-                                    width: 100.0,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      color: TColors.neutralLightLightest,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
+              child: ListShimmer(),
             ),
         },
       ),

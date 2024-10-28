@@ -29,24 +29,33 @@ class EmployeeItem extends StatelessWidget {
       roleName = "Kasir";
     }
 
-    return ListTile(
-      onTap: onTap,
-      leading: SvgPicture.asset(
-        TImages.contactAvatar,
-        height: 40,
-        width: 40,
-      ),
-      title: TextHeading4(name),
-      subtitle: TextBodyS(
-        roleName,
-        color: TColors.neutralDarkLight,
-      ),
-      trailing: const UiIcons(
-        TIcons.arrowRight,
-        height: 16,
-        width: 16,
-        color: TColors.neutralDarkLightest,
-      ),
+    return Column(
+      children: [
+        ListTile(
+          onTap: onTap,
+          leading: SvgPicture.asset(
+            TImages.contactAvatar,
+            height: 40,
+            width: 40,
+          ),
+          title: TextHeading4(name),
+          subtitle: TextBodyS(
+            roleName,
+            color: TColors.neutralDarkLight,
+          ),
+          trailing: const UiIcons(
+            TIcons.arrowRight,
+            height: 16,
+            width: 16,
+            color: TColors.neutralDarkLightest,
+          ),
+        ),
+        const Divider(
+          color: TColors.neutralLightMedium,
+          indent: 16.0,
+          height: 1,
+        ),
+      ],
     );
   }
 }

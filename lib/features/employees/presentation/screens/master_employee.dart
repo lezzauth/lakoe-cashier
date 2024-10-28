@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
+import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
 import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
 import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_state.dart';
@@ -63,29 +64,24 @@ class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
                     itemBuilder: (context, index) {
                       EmployeeModel employee = employees.elementAt(index);
 
-                      return Container(
-                        decoration: const BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                          width: 1,
-                          color: TColors.neutralLightMedium,
-                        ))),
-                        child: EmployeeItem(
-                          name: employee.name,
-                          role: employee.role,
-                          onTap: () async {
-                            await Navigator.pushNamed(
-                                context, "/employee/detail",
-                                arguments:
-                                    EmployeeDetailArgument(employee: employee));
-                            _onRefresh();
-                          },
-                        ),
+                      return EmployeeItem(
+                        name: employee.name,
+                        role: employee.role,
+                        onTap: () async {
+                          await Navigator.pushNamed(context, "/employee/detail",
+                              arguments:
+                                  EmployeeDetailArgument(employee: employee));
+                          _onRefresh();
+                        },
                       );
                     },
                   ),
-                _ => const Center(
-                    child: CircularProgressIndicator(),
+                _ => ListShimmer(
+                    crossAlignment: "center",
+                    circleAvatar: true,
+                    sizeAvatar: 40.0,
+                    heightTitle: 16.0,
+                    heightSubtitle: 12.0,
                   ),
               },
             ),
