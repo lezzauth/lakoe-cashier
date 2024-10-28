@@ -250,7 +250,7 @@ class _OrderDetailState extends State<OrderDetail> {
           message:
               "Pesanan yang sudah dibatalkan tidak dapat diproses kembali. Yakin?",
           labelButtonPrimary: "Tidak",
-          labelButtonSecondary: "Ya, Hapus",
+          labelButtonSecondary: "Ya, Batalkan",
           isSecondaryActionLoading: state is OrderDetailActionInProgress,
           primaryAction: () async {
             Navigator.pop(context);
