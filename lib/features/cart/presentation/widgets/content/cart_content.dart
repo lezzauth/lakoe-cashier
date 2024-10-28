@@ -205,7 +205,6 @@ class _CartContentState extends State<CartContent> {
                               CartModel cart = cartState.carts[index];
                               String? image =
                                   cart.product.images.elementAtOrNull(0);
-                              // image ??= "https://placehold.co/88/png?text=[...]";
 
                               return Container(
                                 padding:
