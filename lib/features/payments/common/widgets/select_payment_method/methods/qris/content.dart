@@ -78,6 +78,7 @@ class _QrisPaymentContentState extends State<QrisPaymentContent> {
                 ),
                 QrisPaymentForm(
                   useQRISStatic: useQRISStatic,
+                  onSubmitted: _onSubmitted,
                   onChanged: (bool value) {
                     setState(() {
                       useQRISStatic = value;

@@ -14,10 +14,12 @@ class QrisPaymentForm extends StatefulWidget {
     super.key,
     this.useQRISStatic = false,
     required this.onChanged,
+    required this.onSubmitted,
   });
 
   final bool useQRISStatic;
   final ValueChanged<bool> onChanged;
+  final VoidCallback onSubmitted;
 
   @override
   State<QrisPaymentForm> createState() => _QrisPaymentFormState();
@@ -70,6 +72,7 @@ class _QrisPaymentFormState extends State<QrisPaymentForm> {
                         decoration: const InputDecoration(
                           hintText: 'Masukkan kode approval',
                         ),
+                        onSubmitted: (_) => widget.onSubmitted(),
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
                             errorText: ErrorTextStrings.required(),
