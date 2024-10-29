@@ -38,7 +38,7 @@ class PreviewOrderPrice extends StatelessWidget {
                 ),
                 PreviewOrderCharge(
                   type: "TAX",
-                  name: "PB1X",
+                  name: "PB1",
                   amount: "0",
                   isPercentage: true,
                   percentageValue: "0",
