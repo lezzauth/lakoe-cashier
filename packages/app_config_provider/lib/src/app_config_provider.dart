@@ -1,7 +1,14 @@
 class AppConfigProvider {
   AppConfigProvider._();
 
-  // static String apiUrl = "https://8c7e-2404-8000-1005-e48c-6891-d0a0-cfa1-8674.ngrok-free.app";
   static String apiUrl = "https://api.staging.lakoe.id";
   static String wahaApiUrl = "http://207.148.117.219:3000/api";
+
+  static void setFlavor(String flavor) {
+    if (flavor == 'Development') {
+      apiUrl = "https://api.staging.lakoe.id";
+    } else if (flavor == 'Production') {
+      apiUrl = "https://api.lakoe.id";
+    }
+  }
 }

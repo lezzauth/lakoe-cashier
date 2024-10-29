@@ -15,7 +15,7 @@
       ]
     },
     {
-      "name": "Lakoe",
+      "name": "Lakoe Prod",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
