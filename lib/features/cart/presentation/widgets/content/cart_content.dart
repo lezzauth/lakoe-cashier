@@ -254,8 +254,23 @@ class _CartContentState extends State<CartContent> {
                       ),
                       SliverToBoxAdapter(
                         child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 28.0),
-                          child: const PreviewOrderPrice(),
+                          margin: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                  bottom: 12.0,
+                                  top: 4,
+                                ),
+                                child: const TextHeading3(
+                                  "Ringkasan tagihan",
+                                  color: TColors.neutralDarkDarkest,
+                                ),
+                              ),
+                              const PreviewOrderPrice(),
+                            ],
+                          ),
                         ),
                       ),
                     ],
