@@ -5,19 +5,33 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "point_of_sales_cashier",
+      "name": "Lakoe Dev",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_dev.dart",
+      "args": [
+        "--flavor",
+        "dev"
+      ]
+    },
+    {
+      "name": "Lakoe",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
+      "args": [
+        "--flavor",
+        "prod"
+      ]
     },
     {
-      "name": "point_of_sales_cashier (profile mode)",
+      "name": "Lakoe (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile"
     },
     {
-      "name": "point_of_sales_cashier (release mode)",
+      "name": "Lakoe (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release"

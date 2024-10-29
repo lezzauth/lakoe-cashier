@@ -131,7 +131,9 @@ import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  final String flavor;
+
+  const App({super.key, required this.flavor});
 
   @override
   Widget build(BuildContext context) {

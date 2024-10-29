@@ -9,5 +9,5 @@ void main() async {
   await dotenv.load(fileName: ".env");
   await initializeDateFormatting("id_ID", null);
 
-  runApp(const App(flavor: 'Production'));
+  runApp(const App(flavor: 'Development'));
 }
