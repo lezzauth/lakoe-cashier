@@ -1,14 +1,13 @@
 import 'package:category_repository/category_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
-import 'package:point_of_sales_cashier/common/widgets/shimmer/chips_filter_shimmer.dart';
+import 'package:point_of_sales_cashier/common/widgets/shimmer/chips_shimmer.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:shimmer/shimmer.dart';
 
 class ProductCategoryFilter extends StatefulWidget {
   final int? value;
@@ -41,7 +40,7 @@ class _ProductCategoryFilterState extends State<ProductCategoryFilter> {
         physics: null,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: ChipsFilterShimmer(),
+          child: ChipsShimmer(),
         ),
       );
     }
@@ -52,30 +51,7 @@ class _ProductCategoryFilterState extends State<ProductCategoryFilter> {
         physics: null,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Wrap(
-            direction: Axis.horizontal,
-            spacing: 8.0,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: List.generate(
-              8,
-              (index) {
-                return Shimmer.fromColors(
-                  baseColor: const Color(0xFFE8E9F1),
-                  highlightColor: const Color(0xFFF8F9FE),
-                  child: Container(
-                    height: 32,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.0),
-                      color: TColors.neutralLightLightest,
-                      border: Border.all(
-                          color: TColors.neutralLightMedium, width: 1),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
+          child: ChipsShimmer(),
         ),
       );
     }

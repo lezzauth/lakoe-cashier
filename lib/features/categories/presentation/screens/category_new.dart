@@ -43,7 +43,7 @@ class _CategoryNewScreenState extends State<CategoryNewScreen> {
         BlocListener<CategoryMasterCubit, CategoryMasterState>(
           listener: (context, state) {
             if (state is CategoryMasterActionSuccess) {
-              Navigator.pop(context, true);
+              Navigator.pop(context, state.category.id);
             }
           },
         )
