@@ -270,7 +270,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
                               DetailCustomerOrder order =
                                   customer.customer.orders.elementAt(index);
 
-                              bool isPaid = order.paymentStatus == "PAID";
+                              bool isPaid = order.status == "COMPLETED";
                               return GestureDetector(
                                 onTap: () {
                                   Navigator.pushNamed(context, "/orders/detail",
@@ -293,12 +293,12 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                     children: [
                                       if (isPaid)
                                         Positioned(
-                                          right: 47,
-                                          bottom: 0,
-                                          child: Image.asset(
-                                            TImages.stamp,
-                                            width: 80,
-                                            height: 53.35,
+                                          right: 40,
+                                          bottom: 20,
+                                          child: SvgPicture.asset(
+                                            TImages.stampPaid,
+                                            width: 40,
+                                            height: 40,
                                           ),
                                         ),
                                       Container(

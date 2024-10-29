@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
@@ -287,12 +288,12 @@ class OrderSummary extends StatelessWidget {
         ),
         if (isPaid)
           Positioned(
-            bottom: 0,
+            bottom: 40,
             right: 48,
-            child: Image.asset(
-              TImages.stamp,
-              height: 121,
-              width: 181,
+            child: SvgPicture.asset(
+              TImages.stampPaid,
+              width: 80,
+              height: 80,
             ),
           ),
       ],
