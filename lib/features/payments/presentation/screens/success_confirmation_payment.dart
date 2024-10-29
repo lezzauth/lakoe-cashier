@@ -14,6 +14,7 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/bill/data/arguments/template_order_model.dart';
+import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_state.dart';
 import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
@@ -144,11 +145,14 @@ class _SuccessConfirmationPaymentContentState
                 onPopInvokedWithResult: (popDisposition, popResult) async {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     if (mounted) {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        "/cashier/explore-products",
-                        (route) => false,
-                      );
+                      context.read<CartCubit>().reset();
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          "/cashier/explore-products",
+                          (route) => false,
+                        );
+                      });
                     }
                   });
                   return Future.value(null);
