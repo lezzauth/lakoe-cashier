@@ -44,10 +44,10 @@ class OrderSummary extends StatelessWidget {
     String modifiedPaymentMethod = payment.paymentMethod;
 
     if (payment.paymentMethod == 'QR_CODE' && payment.paidFrom == 'EDC') {
-      modifiedPaymentMethod = 'QRIS Dinamis';
+      modifiedPaymentMethod = 'QRIS EDC';
     } else if (payment.paymentMethod == 'QR_CODE' &&
         payment.paidFrom == 'CASHIER') {
-      modifiedPaymentMethod = 'QRIS Statis';
+      modifiedPaymentMethod = 'QRIS';
     } else if (payment.paymentMethod == 'CASH') {
       modifiedPaymentMethod = 'Cash (Tunai)';
     } else if (payment.paymentMethod == 'DEBIT') {

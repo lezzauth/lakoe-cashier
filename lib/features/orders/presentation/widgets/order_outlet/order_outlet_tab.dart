@@ -93,9 +93,12 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
                                   OrderItemResponse order =
                                       orders.elementAt(reversedIndex);
                                   bool isPaid = order.paymentStatus == "PAID";
+                                  bool isCancel =
+                                      order.paymentStatus == "CANCELLED";
 
                                   return OrderListItem(
                                     isPaid: isPaid,
+                                    isCancel: isCancel,
                                     type: order.type,
                                     no: order.no,
                                     onTap: () {

@@ -14,6 +14,7 @@ class OrderListItem extends StatelessWidget {
   final bool isWithQR;
   final String type;
   final bool isPaid;
+  final bool isCancel;
   final Function()? onTap;
   final String customerName;
   final String tableName;
@@ -25,6 +26,7 @@ class OrderListItem extends StatelessWidget {
     this.isWithQR = false,
     this.type = "DINEIN",
     this.isPaid = false,
+    this.isCancel = false,
     this.onTap,
     this.customerName = "",
     this.tableName = "",
@@ -121,7 +123,7 @@ class OrderListItem extends StatelessWidget {
                                     color: TColors.neutralDarkLight,
                                   ),
                                 ],
-                              )
+                              ),
                             ],
                           ),
                         ],
@@ -164,12 +166,22 @@ class OrderListItem extends StatelessWidget {
               ),
               if (isPaid)
                 Positioned(
-                  right: 100,
-                  bottom: 10,
-                  child: Image.asset(
-                    TImages.stamp,
-                    width: 80,
-                    height: 53.35,
+                  right: 40,
+                  bottom: 20,
+                  child: SvgPicture.asset(
+                    TImages.stampPaid,
+                    width: 40,
+                    height: 40,
+                  ),
+                ),
+              if (isCancel)
+                Positioned(
+                  right: 40,
+                  bottom: 20,
+                  child: SvgPicture.asset(
+                    TImages.stampCancel,
+                    width: 40,
+                    height: 40,
                   ),
                 ),
             ],
