@@ -93,8 +93,8 @@ class _CartContentState extends State<CartContent> {
               if (ModalRoute.of(context)!.settings.name != "/cart") {
                 return;
               }
-              // TODO: cari cara buat nge handle carts kosong
-              // Navigator.pop(context);
+
+              Navigator.pop(context);
               return;
             }
 
