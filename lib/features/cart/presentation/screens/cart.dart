@@ -13,7 +13,6 @@ import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_deta
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/content/cart_content.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/footer/cart_footer.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
 import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
@@ -191,7 +190,6 @@ class _CartState extends State<Cart> {
               "/cashier/explore-products",
               (route) => false,
             );
-            context.read<CashierOrderCubit>().findAll();
           });
         }
 
