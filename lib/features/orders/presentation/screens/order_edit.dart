@@ -59,9 +59,9 @@ class _OrderEditState extends State<OrderEdit> {
     _onRefresh();
   }
 
-  Future<void> _onAddToCart(ProductModel product, int qty) async {
-    await context.read<CartCubit>().addCart(product);
-
+  Future<void> _onAddToCart(ProductModel product, int qty, String notes) async {
+    context.read<CartCubit>().addCart(product);
+    context.read<CartCubit>().updateNotes(product, notes);
     context.read<CartCubit>().updateQuantity(product, qty);
   }
 
@@ -91,12 +91,13 @@ class _OrderEditState extends State<OrderEdit> {
       }).toList();
 
       if (matchingProducts.isNotEmpty) {
-        for (var matchingProduct in matchingProducts) {
-          int qty = orderItems
-              .firstWhere(
-                  (orderItem) => orderItem.productId == matchingProduct.id)
-              .quantity;
-          await _onAddToCart(matchingProduct, qty);
+        for (var product in matchingProducts) {
+          var orderItem = orderItems.firstWhere(
+            (orderItem) => orderItem.productId == product.id,
+          );
+          int qty = orderItem.quantity;
+          String? notes = orderItem.notes;
+          await _onAddToCart(product, qty, notes!);
         }
         log("Matching products found: ${matchingProducts[0].name}");
       } else {
