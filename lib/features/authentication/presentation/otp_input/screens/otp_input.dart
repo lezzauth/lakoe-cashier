@@ -55,7 +55,8 @@ class _OtpInputState extends State<OtpInput> {
     setState(() {
       messageError = "";
       isRepeat = false;
-      countdownDate = DateTime.now().add(Duration(minutes: 1));
+      // countdownDate = DateTime.now().add(Duration(minutes: 1));
+      countdownDate = DateTime.now();
     });
   }
 
@@ -190,55 +191,55 @@ class _OtpInputState extends State<OtpInput> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.only(bottom: 55.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (!isRepeat) ...[
-                        const SizedBox(
-                          height: 12,
-                          width: 12,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2.0,
-                          ),
+                SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (!isRepeat) ...[
+                      const SizedBox(
+                        height: 12,
+                        width: 12,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.0,
                         ),
-                        const SizedBox(
-                          width: 8,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      TimerCountdown(
+                        // endTime: countdownDate,
+                        endTime: countdownDate.add(
+                          const Duration(minutes: 1),
                         ),
-                        TimerCountdown(
-                          endTime: countdownDate,
-                          format: CountDownTimerFormat.minutesSeconds,
-                          enableDescriptions: false,
-                          spacerWidth: 2,
-                          timeTextStyle: GoogleFonts.inter(
-                            color: TColors.primary,
-                            fontSize: TSizes.fontSizeActionL,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          colonsTextStyle: GoogleFonts.inter(
-                            color: TColors.primary,
-                            fontSize: TSizes.fontSizeActionL,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          onEnd: () {
-                            setState(() {
-                              isRepeat = true;
-                            });
-                          },
-                        )
-                      ],
-                      if (isRepeat)
-                        TextButton(
-                          onPressed: _onRequestOTP,
-                          child: const TextActionL(
-                            "Kirim Ulang OTP",
-                            color: TColors.primary,
-                          ),
-                        )
+                        format: CountDownTimerFormat.minutesSeconds,
+                        enableDescriptions: false,
+                        spacerWidth: 2,
+                        timeTextStyle: GoogleFonts.inter(
+                          color: TColors.primary,
+                          fontSize: TSizes.fontSizeActionL,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        colonsTextStyle: GoogleFonts.inter(
+                          color: TColors.primary,
+                          fontSize: TSizes.fontSizeActionL,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        onEnd: () {
+                          setState(() {
+                            isRepeat = true;
+                          });
+                        },
+                      )
                     ],
-                  ),
+                    if (isRepeat)
+                      TextButton(
+                        onPressed: _onRequestOTP,
+                        child: const TextActionL(
+                          "Kirim Ulang OTP",
+                          color: TColors.primary,
+                        ),
+                      )
+                  ],
                 )
               ],
             ),
