@@ -75,8 +75,9 @@ class _CartState extends State<Cart> {
           customerId: filterState.customer?.id,
           tableId: filterState.table?.id,
         );
-    if (!mounted) return;
-    Navigator.pop(context);
+
+    // if (!mounted) return;
+    // Navigator.pop(context);
   }
 
   Future<void> _onCashPaid(PaymentCash data) async {
@@ -180,26 +181,33 @@ class _CartState extends State<Cart> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<CartDetailCubit, CartDetailState>(
-          listener: (context, state) {
-            if (state is CartDetailActionSuccess) {
-              context.read<CartCubit>().reset();
-              context.read<CashierOrderCubit>().findAll();
-            }
+    return BlocListener<CartDetailCubit, CartDetailState>(
+      listener: (context, state) {
+        if (state is CartDetailActionSuccess) {
+          context.read<CartCubit>().reset();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              "/cashier/explore-products",
+              (route) => false,
+            );
+            context.read<CashierOrderCubit>().findAll();
+          });
+        }
 
-            if (state is CartDetailCompleteActionSuccess) {
-              Navigator.popAndPushNamed(
-                context,
-                "/payments/success_confirmation",
-                arguments:
-                    SuccessConfirmationPaymentArgument(payment: state.response),
-              );
-            }
-          },
-        ),
-      ],
+        if (state is CartDetailCompleteActionSuccess) {
+          context.read<CartCubit>().reset();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.popAndPushNamed(
+              context,
+              "/payments/success_confirmation",
+              arguments: SuccessConfirmationPaymentArgument(
+                payment: state.res,
+              ),
+            );
+          });
+        }
+      },
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
@@ -228,8 +236,8 @@ class _CartState extends State<Cart> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
                 child: CartFooter(
-                  onCompleted: onCompleteOrder,
                   onSaved: _onCartSaved,
+                  onCompleted: onCompleteOrder,
                 ),
               ),
             ),

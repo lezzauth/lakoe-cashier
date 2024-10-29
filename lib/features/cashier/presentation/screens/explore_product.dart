@@ -37,7 +37,6 @@ class _ExploreProductState extends State<ExploreProduct> {
   @override
   void initState() {
     super.initState();
-
     context.read<CashierOrderCubit>().init();
     context.read<CashierProductCubit>().init();
     context.read<CashierCategoryCubit>().init();
