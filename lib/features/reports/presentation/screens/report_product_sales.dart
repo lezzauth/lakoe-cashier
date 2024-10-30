@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
@@ -20,6 +21,7 @@ import 'package:point_of_sales_cashier/features/reports/data/arguments.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/cards/purchase_history_summary_card.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/product_order_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:product_repository/product_repository.dart';
 
@@ -171,12 +173,18 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       margin: const EdgeInsets.only(right: 12),
-                                      child: Image.network(
-                                        "https://picsum.photos/100",
-                                        height: 44,
-                                        width: 44,
-                                        fit: BoxFit.cover,
-                                      ),
+                                      child: product.images.isNotEmpty
+                                          ? Image.network(
+                                              product.images[0],
+                                              height: 44,
+                                              width: 44,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : SvgPicture.asset(
+                                              TImages.productAvatar,
+                                              height: 44,
+                                              width: 44,
+                                            ),
                                     ),
                                     Expanded(
                                       child: Column(
