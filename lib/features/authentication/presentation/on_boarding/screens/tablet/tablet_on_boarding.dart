@@ -188,9 +188,9 @@ class _TabletOnBoardingState extends State<TabletOnBoarding> {
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.startsWith("8",
                                 errorText: "Nomor dimulai dengan angka 8"),
-                            FormBuilderValidators.maxLength(12,
+                            FormBuilderValidators.maxLength(14,
                                 errorText: ErrorTextStrings.maxLength(
-                                    maxLength: 12, isNumber: true)),
+                                    maxLength: 14, isNumber: true)),
                             FormBuilderValidators.minLength(9,
                                 errorText: ErrorTextStrings.minLength(
                                     minLength: 9, isNumber: true)),
