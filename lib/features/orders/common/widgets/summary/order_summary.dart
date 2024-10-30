@@ -141,12 +141,6 @@ class OrderSummary extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Separator(
-                      color: TColors.neutralLightDark,
-                      height: 1,
-                      dashWidth: 5.0,
-                    ),
-                    const SizedBox(height: 8),
                   ],
                   if (_serviceFeeCharges().isNotEmpty) ...[
                     ..._serviceFeeCharges().map(
