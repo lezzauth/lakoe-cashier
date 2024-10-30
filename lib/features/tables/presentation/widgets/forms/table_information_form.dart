@@ -102,7 +102,7 @@ class _TableInformationFormState extends State<TableInformationForm> {
                       FormBuilderTextField(
                         name: "capacity",
                         decoration: const InputDecoration(
-                          hintText: "Jumlah kapasitas meja",
+                          hintText: "Mejanya untuk berapa orang?",
                           suffixText: "Orang",
                         ),
                         keyboardType: TextInputType.number,
