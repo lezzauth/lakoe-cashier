@@ -19,6 +19,8 @@ class ProductOrderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String tag = order.paymentMethod ?? "NONE";
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -81,13 +83,10 @@ class ProductOrderItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  if (order.paymentMethod != null)
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 5),
-                      child: TransactionTypeTag(
-                        tag: order.paymentMethod!,
-                      ),
-                    ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 5),
+                    child: TagPaymentMethod(tag: tag),
+                  ),
                   RichText(
                     text: TextSpan(
                       text: "Total: ",

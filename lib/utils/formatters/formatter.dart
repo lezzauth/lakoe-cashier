@@ -15,13 +15,38 @@ class TFormatter {
     return formatter.format(number).replaceAll(',', '.');
   }
 
+  static String getIndonesianTimeZone(DateTime dateTime) {
+    int offsetInHours = dateTime.timeZoneOffset.inHours;
+
+    if (offsetInHours == 7) {
+      return "WIB";
+    } else if (offsetInHours == 8) {
+      return "WITA";
+    } else if (offsetInHours == 9) {
+      return "WIT";
+    } else {
+      return "Zona waktu tidak diketahui";
+    }
+  }
+
   static String orderDate(String isoDate, {bool withDay = false}) {
     DateTime dateTime = DateTime.parse(isoDate).toLocal();
+    DateTime now = DateTime.now();
+
+    bool isToday = dateTime.year == now.year &&
+        dateTime.month == now.month &&
+        dateTime.day == now.day;
+
+    String timeZone = getIndonesianTimeZone(dateTime);
+
+    if (isToday) {
+      return "Hari ini, ${DateFormat("HH:mm", "id_ID").format(dateTime)} $timeZone";
+    }
 
     String formattedDate =
-        DateFormat("${withDay ? "EEEE, " : ""}dd MMM yyyy - HH:mm", "id_ID")
+        DateFormat("${withDay ? "EEEE, " : ""}dd MMM yyyy, HH:mm", "id_ID")
             .format(dateTime);
-    return formattedDate;
+    return "$formattedDate $timeZone";
   }
 
   static String billDate(String dateStr) {

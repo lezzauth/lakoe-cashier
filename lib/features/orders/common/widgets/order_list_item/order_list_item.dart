@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/ghost_order_type_tag.dart';
+import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/tag_thin_order_type.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -135,9 +135,7 @@ class OrderListItem extends StatelessWidget {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(bottom: 8),
-                          child: GhostOrderTypeTag(
-                            tag: type,
-                          ),
+                          child: TagThinOrderType(tag: type),
                         ),
                         RichText(
                           text: TextSpan(

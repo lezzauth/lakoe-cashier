@@ -25,7 +25,7 @@ import 'package:point_of_sales_cashier/features/orders/application/cubit/order_d
 import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card_order.dart';
 
 import 'package:point_of_sales_cashier/features/orders/common/widgets/summary/order_summary.dart';
-import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/solid_order_type_tag.dart';
+import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/tag_strong_order_type.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_edit_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/data/models.dart';
@@ -345,7 +345,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                               SolidOrderOnlineStatusTag(
                                                 status: order.type,
                                               ),
-                                            _ => SolidOrderTypeTag(
+                                            _ => TagStrongOrderType(
                                                 tag: order.type,
                                               )
                                           },

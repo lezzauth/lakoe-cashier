@@ -22,6 +22,9 @@ class OrderItem extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isPaid = order.status == "COMPLETED";
     bool isCancel = order.status == "CANCELLED";
+    String tag = isPaid
+        ? order.transactions.first.paymentMethod
+        : (isCancel ? "CANCEL" : "NONE");
 
     return GestureDetector(
       onTap: () {
@@ -45,26 +48,6 @@ class OrderItem extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            if (isPaid)
-              Positioned(
-                right: 40,
-                bottom: 20,
-                child: SvgPicture.asset(
-                  TImages.stampPaid,
-                  width: 40,
-                  height: 40,
-                ),
-              ),
-            if (isCancel)
-              Positioned(
-                right: 40,
-                bottom: 20,
-                child: SvgPicture.asset(
-                  TImages.stampCancel,
-                  width: 40,
-                  height: 40,
-                ),
-              ),
             Container(
               padding: const EdgeInsets.symmetric(
                 vertical: 14,
@@ -111,13 +94,10 @@ class OrderItem extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      if (order.transactions.firstOrNull != null)
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          child: TransactionTypeTag(
-                            tag: order.transactions.first.paymentMethod,
-                          ),
-                        ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 5),
+                        child: TagPaymentMethod(tag: tag),
+                      ),
                       RichText(
                         text: TextSpan(
                           text: "Total: ",
@@ -144,6 +124,26 @@ class OrderItem extends StatelessWidget {
                 ],
               ),
             ),
+            if (isPaid)
+              Positioned(
+                right: 40,
+                bottom: 20,
+                child: SvgPicture.asset(
+                  TImages.stampPaid,
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+            if (isCancel)
+              Positioned(
+                right: 40,
+                bottom: 20,
+                child: SvgPicture.asset(
+                  TImages.stampCancel,
+                  width: 40,
+                  height: 40,
+                ),
+              ),
           ],
         ),
       ),

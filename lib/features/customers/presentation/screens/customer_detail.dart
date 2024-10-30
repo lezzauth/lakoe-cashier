@@ -290,8 +290,8 @@ class _CustomerDetailState extends State<CustomerDetail> {
   }
 }
 
-class TransactionTypeTag extends StatelessWidget {
-  const TransactionTypeTag({super.key, required this.tag});
+class TagPaymentMethod extends StatelessWidget {
+  const TagPaymentMethod({super.key, required this.tag});
 
   final String tag;
 
@@ -307,6 +307,10 @@ class TransactionTypeTag extends StatelessWidget {
           return "Debit";
         case "BANK_TRANSFER":
           return "Bank Transfer";
+        case "NONE":
+          return "Belum Dibayar";
+        case "CANCEL":
+          return "-";
         default:
           return "Cash";
       }
@@ -322,6 +326,10 @@ class TransactionTypeTag extends StatelessWidget {
           return TColors.warningLight;
         case "BANK_TRANSFER":
           return TColors.neutralLightMedium;
+        case "NONE":
+          return TColors.neutralLightMedium;
+        case "CANCEL":
+          return TColors.neutralLightMedium;
         default:
           return TColors.successLight;
       }
@@ -336,6 +344,10 @@ class TransactionTypeTag extends StatelessWidget {
         case "DEBIT":
           return TColors.warningDark;
         case "BANK_TRANSFER":
+          return TColors.neutralDarkDark;
+        case "NONE":
+          return TColors.neutralDarkDark;
+        case "CANCEL":
           return TColors.neutralDarkDark;
         default:
           return TColors.successMedium;
