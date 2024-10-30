@@ -213,6 +213,12 @@ class _OrderEditState extends State<OrderEdit> {
                     ),
                   ),
                 ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    height: 12,
+                    color: TColors.neutralLightLightest,
+                  ),
+                ),
                 BlocBuilder<CartCubit, CartState>(
                     builder: (context, cartState) {
                   return const CashierProductList();
