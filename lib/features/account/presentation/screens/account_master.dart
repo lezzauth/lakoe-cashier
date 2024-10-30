@@ -19,6 +19,7 @@ import 'package:point_of_sales_cashier/features/outlets/application/outlet_state
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -239,7 +240,9 @@ class ProfileCard extends StatelessWidget {
                               ),
                               const SizedBox(height: 2.0),
                               TextBodyS(
-                                profile.phoneNumber.replaceFirst('+', ''),
+                                // profile.phoneNumber.replaceFirst('+', ''),
+                                PhoneNumberFormatter.formatForDisplay(
+                                    profile.phoneNumber),
                                 color: TColors.neutralDarkLight,
                               ),
                             ],

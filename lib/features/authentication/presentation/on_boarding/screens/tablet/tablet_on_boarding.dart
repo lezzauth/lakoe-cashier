@@ -81,9 +81,13 @@ class _TabletOnBoardingState extends State<TabletOnBoarding> {
     }
 
     dynamic value = widget.formKey.currentState?.value;
-    context
-        .read<OnBoardingCubit>()
-        .requestOTP(RequestOTPDto(phoneNumber: "+62${value["phoneNumber"]}"));
+    String phoneNumber =
+        PhoneNumberFormatter.formatForRequest(value["phoneNumber"]);
+    context.read<OnBoardingCubit>().requestOTP(
+          RequestOTPDto(
+            phoneNumber: phoneNumber,
+          ),
+        );
   }
 
   @override

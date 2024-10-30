@@ -11,6 +11,7 @@ import 'package:point_of_sales_cashier/features/customers/application/cubit/cust
 import 'package:point_of_sales_cashier/features/customers/presentation/widgets/forms/new_customer_form.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class NewCustomerScreen extends StatefulWidget {
   const NewCustomerScreen({super.key});
@@ -30,10 +31,13 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
 
     dynamic value = _formKey.currentState?.value;
 
+    String phoneNumber =
+        PhoneNumberFormatter.formatForRequest(value["phoneNumber"]);
+
     await context.read<CustomerMasterCubit>().create(
           CreateCustomerDto(
             name: value["name"],
-            phoneNumber: value["phoneNumber"],
+            phoneNumber: phoneNumber,
             address: value["address"],
             email: value["email"],
           ),

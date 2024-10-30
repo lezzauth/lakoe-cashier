@@ -122,7 +122,8 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                       TextHeading4(customer.customer.name),
                                       SizedBox(height: 4),
                                       TextBodyS(
-                                        customer.customer.phoneNumber,
+                                        PhoneNumberFormatter.formatForDisplay(
+                                            customer.customer.phoneNumber),
                                         color: TColors.neutralDarkLight,
                                       )
                                     ],

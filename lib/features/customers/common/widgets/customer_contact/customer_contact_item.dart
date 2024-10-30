@@ -7,6 +7,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class CustomerContactItem extends StatelessWidget {
   const CustomerContactItem({
@@ -33,7 +34,9 @@ class CustomerContactItem extends StatelessWidget {
           ),
           title: TextHeading4(customer.name),
           subtitle: TextBodyS(
-            customer.phoneNumber.isEmpty ? '-' : customer.phoneNumber,
+            customer.phoneNumber.isEmpty || isGuest
+                ? '-'
+                : PhoneNumberFormatter.formatForDisplay(customer.phoneNumber),
             color: TColors.neutralDarkLight,
           ),
           trailing: isGuest

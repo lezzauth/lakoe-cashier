@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:point_of_sales_cashier/common/widgets/access_permission/contact_denied_permission.dart';
 import 'package:point_of_sales_cashier/common/widgets/access_permission/contact_permission.dart';
@@ -9,7 +10,9 @@ import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class NewCustomerForm extends StatefulWidget {
   const NewCustomerForm({super.key, required this.formKey});
@@ -20,9 +23,26 @@ class NewCustomerForm extends StatefulWidget {
 }
 
 class _NewCustomerFormState extends State<NewCustomerForm> {
+  final _phoneController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+
+    _phoneController.addListener(() {
+      // Dapatkan nilai dari controller
+      String currentValue = _phoneController.text;
+
+      // Format nilai jika belum sesuai
+      String formattedValue =
+          PhoneNumberFormatter.formatForDisplay(currentValue);
+      if (currentValue != formattedValue) {
+        _phoneController.value = TextEditingValue(
+          text: formattedValue,
+          selection: TextSelection.collapsed(offset: formattedValue.length),
+        );
+      }
+    });
   }
 
   Future<void> _onSelectContact() async {
@@ -115,13 +135,27 @@ class _NewCustomerFormState extends State<NewCustomerForm> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const FormLabel("No. HP"),
+                      const FormLabel("Nomor HP/WA"),
                       FormBuilderTextField(
                         name: "phoneNumber",
+                        controller: _phoneController,
                         decoration: const InputDecoration(
                           hintText: "Masukan nomor hp atau wa",
                         ),
                         keyboardType: TextInputType.phone,
+                        inputFormatters: [
+                          PhoneNumberFormatter(isDisplayFormat: true)
+                        ],
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.startsWith("8",
+                              errorText: "Nomor dimulai dengan angka 8"),
+                          FormBuilderValidators.maxLength(14,
+                              errorText: ErrorTextStrings.maxLength(
+                                  maxLength: 14, isNumber: true)),
+                          FormBuilderValidators.minLength(9,
+                              errorText: ErrorTextStrings.minLength(
+                                  minLength: 9, isNumber: true)),
+                        ]),
                       ),
                     ],
                   ),
