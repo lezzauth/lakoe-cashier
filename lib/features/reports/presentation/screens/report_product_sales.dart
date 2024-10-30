@@ -231,10 +231,6 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                       "Riwayat Pembelian",
                                       color: TColors.neutralDarkDarkest,
                                     ),
-                                    TextBodyS(
-                                      "Terjual ${widget.arguments.product.soldCount} item",
-                                      color: TColors.neutralDarkLight,
-                                    ),
                                   ],
                                 ),
                               ),
@@ -242,28 +238,84 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 8,
                                 ),
-                                child: Row(
+                                child: Column(
                                   children: [
-                                    Expanded(
-                                      child: PurchaseHistorySummaryCard(
-                                        title: "Total Keuntungan",
-                                        value: TFormatter.formatToRupiah(
-                                          double.parse(product.profit),
-                                        ),
+                                    IntrinsicHeight(
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: PurchaseHistorySummaryCard(
+                                              strongCard: true,
+                                              title: "Total Keuntungan",
+                                              value: TFormatter.formatToRupiah(
+                                                double.parse("1000000"),
+                                              ),
+                                              onTap: () {},
+                                            ),
+                                          ),
+                                          SizedBox(width: 12),
+                                          Container(
+                                            width: 120,
+                                            alignment: Alignment.centerLeft,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              color: TColors.neutralLightLight,
+                                              border: Border.all(
+                                                width: 1,
+                                                color:
+                                                    TColors.neutralLightMedium,
+                                              ),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 16,
+                                              vertical: 12,
+                                            ),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                TextHeading5(
+                                                  "Terjual",
+                                                  color: TColors
+                                                      .neutralDarkLightest,
+                                                ),
+                                                SizedBox(height: 8),
+                                                TextHeading3(
+                                                  "${widget.arguments.product.soldCount} produk",
+                                                  color: TColors
+                                                      .neutralDarkDarkest,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: PurchaseHistorySummaryCard(
-                                        title: "Pembeli Favorit",
-                                        value:
-                                            product.favoriteCustomerId == null
-                                                ? "-"
-                                                : "Umum",
-                                        onTap: () {
-                                          //
-                                        },
-                                      ),
+                                    SizedBox(height: 12),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: PurchaseHistorySummaryCard(
+                                            title: "Total Penjualan",
+                                            value: TFormatter.formatToRupiah(
+                                              double.parse(product.profit),
+                                            ),
+                                            onTap: () {},
+                                          ),
+                                        ),
+                                        SizedBox(width: 12),
+                                        Expanded(
+                                          child: PurchaseHistorySummaryCard(
+                                            title: "Total Terhutang",
+                                            value: TFormatter.formatToRupiah(
+                                              double.parse("10000"),
+                                            ),
+                                            onTap: () {},
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
