@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/shimmer/chips_shimmer.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class TableLocationFilter extends StatefulWidget {
   final String? value;
@@ -59,10 +60,12 @@ class _TableLocationFilterState extends State<TableLocationFilter> {
                     return ChoiceChip(
                       label: selected
                           ? TextHeading5(
-                              location.name,
+                              TFormatter.capitalizeEachWord(location.name),
                               color: TColors.primary,
                             )
-                          : TextBodyS(location.name),
+                          : TextBodyS(
+                              TFormatter.capitalizeEachWord(location.name),
+                            ),
                       selected: selected,
                       onSelected: (value) {
                         widget.onChanged(location.id);
@@ -83,43 +86,9 @@ class _TableLocationFilterState extends State<TableLocationFilter> {
               TableMasterLocationLoadInProgress() => SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   physics: null,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Wrap(
-                      direction: Axis.horizontal,
-                      spacing: 8.0,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: List.generate(
-                        8,
-                        (index) {
-                          return Shimmer.fromColors(
-                            baseColor: const Color(0xFFE8E9F1),
-                            highlightColor: const Color(0xFFF8F9FE),
-                            child: Container(
-                              height: 32,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.0),
-                                color: TColors.neutralLightLightest,
-                                border: Border.all(
-                                    color: TColors.neutralLightMedium,
-                                    width: 1),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                  child: ChipsShimmer(),
                 ),
-              _ => const SizedBox(
-                  height: 16,
-                  width: 16,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                  ),
-                ),
+              _ => ChipsShimmer(),
             },
           ),
         ],

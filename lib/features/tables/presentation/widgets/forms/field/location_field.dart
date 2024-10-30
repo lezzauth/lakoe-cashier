@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/shimmer/chips_shimmer.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
@@ -15,6 +16,7 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:table_location_repository/table_location_repository.dart';
 
 class LocationField extends StatefulWidget {
@@ -91,10 +93,12 @@ class _LocationFieldState extends State<LocationField> {
                       child: ChoiceChip(
                         label: selected
                             ? TextHeading5(
-                                location.name,
+                                TFormatter.capitalizeEachWord(location.name),
                                 color: TColors.primary,
                               )
-                            : TextBodyS(location.name),
+                            : TextBodyS(
+                                TFormatter.capitalizeEachWord(location.name),
+                              ),
                         selected: selected,
                         onSelected: (value) {
                           field.didChange(location.id);
@@ -133,22 +137,15 @@ class _LocationFieldState extends State<LocationField> {
               );
             },
           ),
-        TableMasterLocationLoadFailure() => const SizedBox(
-            height: 16,
-            width: 16,
-            child: UiIcons(
-              TIcons.warning,
-              height: 16,
-              width: 16,
-              color: TColors.error,
-            ),
+        TableMasterLocationLoadFailure() => SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: null,
+            child: ChipsShimmer(),
           ),
-        _ => const SizedBox(
-            height: 16,
-            width: 16,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-            ),
+        _ => SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: null,
+            child: ChipsShimmer(),
           ),
       },
     );

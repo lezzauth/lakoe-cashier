@@ -142,7 +142,8 @@ class _TableMasterState extends State<TableMaster> {
                         bool isFreeTable = table.id == "-";
 
                         String title = table.no;
-                        String subtitle = "${table.capacity} Orang • Indoor";
+                        String subtitle =
+                            "${table.capacity} Orang • Indoor (Hardcode)";
 
                         if (isFreeTable) {
                           title = "Bebas";
