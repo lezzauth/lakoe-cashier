@@ -99,6 +99,7 @@ class _ExploreProductTabletContentState
             children: [
               Expanded(
                 child: Scaffold(
+                  backgroundColor: TColors.neutralLightLight,
                   appBar: ExploreProductAppbar(),
                   body: Scrollbar(
                     child: RefreshIndicator(
