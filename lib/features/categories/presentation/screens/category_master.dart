@@ -198,10 +198,9 @@ class _CategoryMasterState extends State<CategoryMaster> {
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () async {
-              bool? newCategory =
-                  await Navigator.pushNamed(context, "/categories/new")
-                      as bool?;
-              if (newCategory != true) return;
+              int? newCategoryId =
+                  await Navigator.pushNamed(context, "/categories/new") as int?;
+              if (newCategoryId == null) return;
               onRefresh();
             },
             elevation: 0,
