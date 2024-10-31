@@ -218,8 +218,7 @@ class _NumberPadState extends State<NumberPad> {
                 },
                 child: const UiIcons(
                   TIcons.backspace,
-                  width: 24,
-                  height: 24,
+                  size: 24,
                   color: TColors.neutralDarkDarkest,
                 ),
               ),

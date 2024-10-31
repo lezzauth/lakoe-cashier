@@ -250,8 +250,7 @@ class ProfileCard extends StatelessWidget {
                         ),
                         const UiIcons(
                           TIcons.arrowRight,
-                          height: 20,
-                          width: 20,
+                          size: 20,
                           color: TColors.primary,
                         ),
                       ],
@@ -341,8 +340,7 @@ class BalanceCard extends StatelessWidget {
                   children: [
                     UiIcons(
                       TIcons.wallet,
-                      height: 16,
-                      width: 16,
+                      size: 16,
                       color: TColors.neutralLightLight,
                     ),
                     SizedBox(width: 6),

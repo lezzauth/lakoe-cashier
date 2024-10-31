@@ -85,8 +85,7 @@ class ItemAccountEdit extends StatelessWidget {
           minLeadingWidth: 16,
           leading: UiIcons(
             icon,
-            height: 20,
-            width: 20,
+            size: 20,
             color: TColors.neutralDarkDark,
           ),
           title: TextBodyM(
@@ -105,8 +104,7 @@ class ItemAccountEdit extends StatelessWidget {
               const SizedBox(width: 8),
               const UiIcons(
                 TIcons.arrowRight,
-                height: 16,
-                width: 16,
+                size: 16,
                 color: TColors.primary,
               ),
             ],

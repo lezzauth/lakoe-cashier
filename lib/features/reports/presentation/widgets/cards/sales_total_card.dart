@@ -111,8 +111,7 @@ class SalesTotalCard extends StatelessWidget {
               ),
               child: const UiIcons(
                 TIcons.roundGraph,
-                height: 16,
-                width: 16,
+                size: 16,
                 color: TColors.primary,
               ),
             ),

@@ -94,8 +94,7 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
                 const UiIcons(
                   TIcons.filter,
                   color: TColors.primary,
-                  width: 16,
-                  height: 16,
+                  size: 16,
                 ),
                 const SizedBox(width: 4),
                 const TextBodyM(

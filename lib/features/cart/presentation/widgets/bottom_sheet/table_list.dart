@@ -128,8 +128,7 @@ class _TableListContentState extends State<TableListContent> {
                             child: const Center(
                               child: UiIcons(
                                 TIcons.tableRestaurant,
-                                height: 20,
-                                width: 20,
+                                size: 20,
                                 color: TColors.primary,
                               ),
                             ),
@@ -148,14 +147,12 @@ class _TableListContentState extends State<TableListContent> {
                           trailing: selected
                               ? const UiIcons(
                                   TIcons.check,
-                                  height: 16,
-                                  width: 16,
+                                  size: 16,
                                   color: TColors.primary,
                                 )
                               : const UiIcons(
                                   TIcons.arrowRight,
-                                  height: 12,
-                                  width: 12,
+                                  size: 12,
                                   color: TColors.neutralDarkLightest,
                                 ),
                         ),

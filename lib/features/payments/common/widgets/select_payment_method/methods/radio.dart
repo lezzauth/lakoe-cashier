@@ -108,8 +108,7 @@ class CashPaymentRadioContent extends StatelessWidget {
       children: [
         UiIcons(
           TIcons.moneyBill,
-          height: 24,
-          width: 24,
+          size: 24,
           color: selected ? TColors.primary : TColors.neutralDarkMedium,
         ),
         const SizedBox(width: 12),
@@ -143,8 +142,7 @@ class DebitPaymentRadioContent extends StatelessWidget {
       children: [
         UiIcons(
           TIcons.creditCard,
-          height: 24,
-          width: 24,
+          size: 24,
           color: selected ? TColors.primary : TColors.neutralDarkMedium,
         ),
         const SizedBox(width: 12),
@@ -178,8 +176,7 @@ class BankTransferPaymentRadioContent extends StatelessWidget {
       children: [
         UiIcons(
           TIcons.moneyBillTransfer,
-          height: 24,
-          width: 24,
+          size: 24,
           color: selected ? TColors.primary : TColors.neutralDarkMedium,
         ),
         const SizedBox(width: 12),

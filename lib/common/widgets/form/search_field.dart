@@ -59,8 +59,7 @@ class _SearchFieldState extends State<SearchField> {
         children: [
           const UiIcons(
             TIcons.search,
-            height: 20,
-            width: 20,
+            size: 20,
             color: TColors.neutralDarkLight,
           ),
           const SizedBox(width: 12),

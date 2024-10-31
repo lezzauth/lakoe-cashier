@@ -94,8 +94,7 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
             },
             icon: const UiIcons(
               TIcons.close,
-              height: 20,
-              width: 20,
+              size: 20,
               color: TColors.primary,
             ),
           ),

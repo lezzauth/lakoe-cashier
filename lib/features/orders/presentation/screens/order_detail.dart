@@ -682,8 +682,7 @@ class OrderOutlinePaidAction extends StatelessWidget {
                 children: [
                   UiIcons(
                     TIcons.printer,
-                    width: 20,
-                    height: 20,
+                    size: 20,
                     color: TColors.highlightLightest,
                   ),
                   SizedBox(width: 8),
@@ -906,8 +905,7 @@ class ContactWhatsapp extends StatelessWidget {
                 child: const Center(
                   child: UiIcons(
                     TIcons.profile,
-                    height: 20,
-                    width: 20,
+                    size: 20,
                     color: TColors.primary,
                   ),
                 ),
@@ -944,8 +942,7 @@ class ContactWhatsapp extends StatelessWidget {
                     UiIcons(
                       TIcons.whatsapp,
                       color: TColors.neutralLightLightest,
-                      height: 16,
-                      width: 16,
+                      size: 16,
                     ),
                     TextActionM(
                       "Hubungi",

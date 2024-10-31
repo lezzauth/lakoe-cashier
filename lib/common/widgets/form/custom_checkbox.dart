@@ -58,8 +58,7 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
                 duration: widget.animationDuration,
                 child: UiIcons(
                   TIcons.check,
-                  width: widget.size * 0.9,
-                  height: widget.size * 0.9,
+                  size: widget.size * 0.9,
                   color: widget.isError ? TColors.error : widget.checkColor,
                 ),
               )
@@ -68,8 +67,7 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
                 duration: widget.animationDuration,
                 child: UiIcons(
                   TIcons.check,
-                  width: widget.size * 0.2,
-                  height: widget.size * 0.2,
+                  size: widget.size * 0.2,
                   color: Colors.transparent,
                 ),
               ),

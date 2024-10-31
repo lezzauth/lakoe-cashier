@@ -120,8 +120,7 @@ class _NewCustomerFormState extends State<NewCustomerForm> {
                           suffixIcon: UiIcons(
                             onTap: _onSelectContact,
                             TIcons.contactBook,
-                            height: 24,
-                            width: 24,
+                            size: 24,
                             color: TColors.primary,
                           ),
                         ),

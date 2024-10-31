@@ -77,8 +77,11 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                                 () {
                                   Navigator.pop(context);
                                 },
-                            icon: const UiIcons(TIcons.arrowLeft,
-                                height: 16, width: 16, color: TColors.primary),
+                            icon: const UiIcons(
+                              TIcons.arrowLeft,
+                              size: 16,
+                              color: TColors.primary,
+                            ),
                           ),
                         ),
                     if (search != null)

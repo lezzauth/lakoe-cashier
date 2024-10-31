@@ -23,8 +23,7 @@ class MasterProductAppbar extends StatelessWidget
           onPressed: () {},
           icon: const UiIcons(
             TIcons.box,
-            height: 20,
-            width: 20,
+            size: 20,
             color: TColors.primary,
           ),
         )

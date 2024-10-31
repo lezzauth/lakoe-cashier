@@ -588,8 +588,7 @@ TableRow _buildTableRow(
                   )
                 : UiIcons(
                     isLast == true ? TIcons.info : TIcons.infinity,
-                    height: 20,
-                    width: 20,
+                    size: 20,
                     color: TColors.neutralDarkDark,
                     onTap: () {
                       showModalBottomSheet(

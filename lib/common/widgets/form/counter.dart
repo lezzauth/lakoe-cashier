@@ -53,21 +53,18 @@ class Counter extends StatelessWidget {
                 child: (value <= 1 && isDeletable == true)
                     ? UiIcons(
                         TIcons.trash,
-                        height: 16,
-                        width: 16,
+                        size: 16,
                         color: TColors.error,
                       )
                     : (minValue > 1 && isDeletable == false)
                         ? UiIcons(
                             TIcons.minus,
-                            height: 16,
-                            width: 16,
+                            size: 16,
                             color: TColors.highlightMedium,
                           )
                         : UiIcons(
                             TIcons.minus,
-                            height: 16,
-                            width: 16,
+                            size: 16,
                             color: TColors.primary,
                           ),
               ),
@@ -99,8 +96,7 @@ class Counter extends StatelessWidget {
               height: 36,
               child: UiIcons(
                 TIcons.add,
-                height: 16,
-                width: 16,
+                size: 16,
                 color: TColors.primary,
               ),
             ),

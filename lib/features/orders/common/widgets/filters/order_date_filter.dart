@@ -89,8 +89,7 @@ class _OrderDateFilterState extends State<OrderDateFilter> {
             const SizedBox(width: 8),
             const UiIcons(
               TIcons.arrowDown,
-              height: 12,
-              width: 12,
+              size: 12,
               color: TColors.neutralDarkLightest,
             ),
           ]

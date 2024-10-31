@@ -107,15 +107,13 @@ class OrderListItem extends StatelessWidget {
                                 children: [
                                   const UiIcons(
                                     TIcons.tableRestaurant,
-                                    height: 16,
-                                    width: 16,
+                                    size: 16,
                                     color: TColors.neutralDarkLight,
                                   ),
                                   if (isWithQR)
                                     const UiIcons(
                                       TIcons.qr,
-                                      height: 16,
-                                      width: 16,
+                                      size: 16,
                                       color: TColors.neutralDarkLight,
                                     ),
                                   TextHeading5(

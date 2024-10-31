@@ -57,8 +57,7 @@ class _OrderShippingDetailSectionState
             child: UiIcons(
               TIcons.truckFast,
               color: TColors.primary,
-              height: 24,
-              width: 24,
+              size: 24,
             ),
           ),
           Expanded(
@@ -119,8 +118,7 @@ class _OrderShippingDetailSectionState
                                   );
                                 },
                                 TIcons.copy,
-                                height: 18,
-                                width: 18,
+                                size: 18,
                               ),
                             ),
                           ],
@@ -148,8 +146,7 @@ class _OrderShippingDetailSectionState
                               margin: const EdgeInsets.only(left: 4),
                               child: UiIcons(
                                 TIcons.copy,
-                                height: 18,
-                                width: 18,
+                                size: 18,
                               ),
                             ),
                           ],

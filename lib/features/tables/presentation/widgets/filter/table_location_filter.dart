@@ -73,15 +73,10 @@ class _TableLocationFilterState extends State<TableLocationFilter> {
                     );
                   }).toList(),
                 ),
-              TableMasterLocationLoadFailure() => const SizedBox(
-                  height: 16,
-                  width: 16,
-                  child: UiIcons(
-                    TIcons.warning,
-                    height: 16,
-                    width: 16,
-                    color: TColors.error,
-                  ),
+              TableMasterLocationLoadFailure() => SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  physics: null,
+                  child: ChipsShimmer(),
                 ),
               TableMasterLocationLoadInProgress() => SingleChildScrollView(
                   scrollDirection: Axis.horizontal,

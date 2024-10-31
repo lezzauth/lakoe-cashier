@@ -81,8 +81,7 @@ class _BankSelectState extends State<BankSelect> {
                   const UiIcons(
                     TIcons.arrowDown,
                     color: TColors.neutralDarkLightest,
-                    height: 12,
-                    width: 12,
+                    size: 12,
                   )
                 ],
               ),

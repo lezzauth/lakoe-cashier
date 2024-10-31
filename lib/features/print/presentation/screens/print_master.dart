@@ -319,8 +319,7 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                                 children: [
                                   UiIcons(
                                     TIcons.refresh,
-                                    width: 24,
-                                    height: 24,
+                                    size: 24,
                                     color: TColors.primary,
                                   ),
                                   SizedBox(width: 8),
@@ -381,8 +380,7 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                                     children: [
                                       const UiIcons(
                                         TIcons.refresh,
-                                        width: 24,
-                                        height: 24,
+                                        size: 24,
                                         color: TColors.primary,
                                       ),
                                       const SizedBox(width: 8),
@@ -474,8 +472,7 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                       children: [
                         UiIcons(
                           TIcons.refresh,
-                          width: 24,
-                          height: 24,
+                          size: 24,
                           color: TColors.primary,
                         ),
                         SizedBox(width: 8),
@@ -609,8 +606,7 @@ class BillAction extends StatelessWidget {
                 children: [
                   UiIcons(
                     TIcons.printer,
-                    height: 20,
-                    width: 20,
+                    size: 20,
                     color: TColors.neutralLightLightest,
                     onTap: () {},
                   ),

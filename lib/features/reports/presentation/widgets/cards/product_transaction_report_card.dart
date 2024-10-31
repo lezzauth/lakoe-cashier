@@ -61,8 +61,7 @@ class ProductTransactionReportCard extends StatelessWidget {
             ),
             child: const UiIcons(
               TIcons.cardTransfer,
-              height: 20,
-              width: 20,
+              size: 20,
               color: TColors.primary,
             ),
           ),

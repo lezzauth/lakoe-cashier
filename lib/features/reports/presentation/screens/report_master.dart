@@ -188,8 +188,7 @@ class _ReportMasterState extends State<ReportMaster> {
                                 },
                                 icon: const UiIcons(
                                   TIcons.pieChartOutline,
-                                  height: 20,
-                                  width: 20,
+                                  size: 20,
                                   color: TColors.primary,
                                 ),
                                 label: "Rata2 Transaksi",
@@ -220,8 +219,7 @@ class _ReportMasterState extends State<ReportMaster> {
                                 },
                                 icon: const UiIcons(
                                   TIcons.billCheckedOutline,
-                                  height: 20,
-                                  width: 20,
+                                  size: 20,
                                   color: TColors.primary,
                                 ),
                                 label: "Total Keuntungan",

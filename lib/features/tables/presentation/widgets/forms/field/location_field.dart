@@ -126,8 +126,7 @@ class _LocationFieldState extends State<LocationField> {
                             ))),
                         icon: const UiIcons(
                           TIcons.add,
-                          height: 12,
-                          width: 12,
+                          size: 12,
                           color: TColors.primary,
                         ),
                       ),

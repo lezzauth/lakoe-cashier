@@ -137,8 +137,7 @@ class _OnlineShopOrderTrackState extends State<OnlineShopOrderTrack> {
                                               );
                                             },
                                             TIcons.copy,
-                                            height: 18,
-                                            width: 18,
+                                            size: 18,
                                           ),
                                         ),
                                       ],

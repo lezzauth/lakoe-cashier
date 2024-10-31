@@ -120,8 +120,7 @@ class _DatePresetRangeFilterState extends State<DatePresetRangeFilter> {
                 alignment: Alignment.center,
                 child: UiIcons(
                   TIcons.calendar,
-                  height: 20,
-                  width: 20,
+                  size: 20,
                   color: isDateRangeSelected
                       ? TColors.primary
                       : TColors.neutralDarkDarkest,

@@ -43,8 +43,7 @@ class CustomerContactItem extends StatelessWidget {
               ? null
               : const UiIcons(
                   TIcons.arrowRight,
-                  height: 16,
-                  width: 16,
+                  size: 16,
                   color: TColors.neutralDarkLightest,
                 ),
         ),

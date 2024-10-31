@@ -369,8 +369,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                                   SizedBox(width: 12),
                                                   UiIcons(
                                                     TIcons.arrowRight,
-                                                    width: 16,
-                                                    height: 16,
+                                                    size: 16,
                                                     color: TColors
                                                         .neutralDarkLightest,
                                                   ),
@@ -396,8 +395,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                         children: [
                                           UiIcons(
                                             TIcons.wallet,
-                                            width: 24,
-                                            height: 24,
+                                            size: 24,
                                             color: TColors.neutralDarkDark,
                                           ),
                                           SizedBox(width: 12),
@@ -410,8 +408,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                           SizedBox(width: 12),
                                           UiIcons(
                                             TIcons.arrowRight,
-                                            width: 16,
-                                            height: 16,
+                                            size: 16,
                                             color: TColors.neutralDarkLightest,
                                           ),
                                         ],
@@ -474,8 +471,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                           children: [
                             UiIcons(
                               TIcons.shieldKeyhole,
-                              width: 20,
-                              height: 20,
+                              size: 20,
                               color: TColors.neutralLightLightest,
                             ),
                             SizedBox(width: 8),

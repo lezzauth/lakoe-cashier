@@ -110,14 +110,12 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                                     trailing: selected
                                         ? const UiIcons(
                                             TIcons.check,
-                                            height: 16,
-                                            width: 16,
+                                            size: 16,
                                             color: TColors.primary,
                                           )
                                         : const UiIcons(
                                             TIcons.arrowRight,
-                                            height: 12,
-                                            width: 12,
+                                            size: 12,
                                             color: TColors.neutralDarkLightest,
                                           ),
                                   ),

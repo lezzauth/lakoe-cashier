@@ -56,8 +56,7 @@ class LockCashierButtonState extends State<LockCashierButton> {
           children: [
             const UiIcons(
               TIcons.homeLock,
-              height: 20,
-              width: 20,
+              size: 20,
               color: TColors.neutralLightLightest,
             ),
             ResponsiveLayout(

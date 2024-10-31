@@ -201,8 +201,7 @@ class OrderSummary extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: UiIcons(
                                         TIcons.image,
-                                        width: 16,
-                                        height: 16,
+                                        size: 16,
                                         color: TColors.primary,
                                       ),
                                     ),

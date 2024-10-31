@@ -66,8 +66,7 @@ class _TableDetailPageState extends State<TableDetailPage> {
                                   subTitle: "${widget.table.capacity} Orang",
                                   icon: const UiIcons(
                                     TIcons.profile,
-                                    height: 20,
-                                    width: 20,
+                                    size: 20,
                                     color: TColors.primary,
                                   ),
                                 ),
@@ -94,8 +93,7 @@ class _TableDetailPageState extends State<TableDetailPage> {
                                                   "-",
                                               icon: const UiIcons(
                                                 TIcons.map,
-                                                height: 16,
-                                                width: 16,
+                                                size: 16,
                                                 color: TColors.primary,
                                               ),
                                             ),

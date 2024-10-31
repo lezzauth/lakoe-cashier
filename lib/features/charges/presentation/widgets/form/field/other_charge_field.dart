@@ -107,8 +107,7 @@ class _OtherChargeFieldState extends State<OtherChargeField> {
                         alignment: Alignment.bottomCenter,
                         icon: const UiIcons(
                           TIcons.arrowDown,
-                          height: 12,
-                          width: 12,
+                          size: 12,
                           color: TColors.neutralDarkLightest,
                         ),
                         onChanged: (value) {
