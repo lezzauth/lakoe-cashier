@@ -22,13 +22,13 @@ import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_mast
 import 'package:point_of_sales_cashier/features/bill/data/arguments/template_order_model.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_state.dart';
-import 'package:point_of_sales_cashier/features/orders/common/widgets/cards/card_order.dart';
 
 import 'package:point_of_sales_cashier/features/orders/common/widgets/summary/order_summary.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/ui/tags/tag_strong_order_type.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_edit_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:point_of_sales_cashier/features/orders/data/models.dart';
+import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/customer_table_card.dart';
 import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/tags/solid_order_online_status_tag.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
@@ -389,7 +389,7 @@ class _OrderDetailState extends State<OrderDetail> {
                               itemCount: order.items.length,
                               itemBuilder: (context, index) {
                                 OrderItem orderItem =
-                                    order.items.elementAt(index);
+                                    order.items.reversed.elementAt(index);
                                 OrderItemProduct product = orderItem.product;
                                 String? image =
                                     product.images.elementAtOrNull(0);
@@ -956,53 +956,6 @@ class ContactWhatsapp extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-}
-
-class CustomerAndTableInformation extends StatelessWidget {
-  const CustomerAndTableInformation({
-    super.key,
-    this.customer,
-    this.table,
-  });
-
-  final OrderCustomer? customer;
-  final OrderTable? table;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(
-          flex: 1,
-          child: CardOrder(
-            title: "Pelanggan",
-            subTitle: customer == null ? "Umum" : customer!.name,
-            icon: const UiIcons(
-              TIcons.profile,
-              height: 20,
-              width: 20,
-              color: TColors.primary,
-            ),
-          ),
-        ),
-        const SizedBox(width: 12.0),
-        Flexible(
-          flex: 1,
-          child: CardOrder(
-            title: "Meja",
-            subTitle: table == null ? "Bebas" : table!.no,
-            icon: const UiIcons(
-              TIcons.tableRestaurant,
-              height: 20,
-              width: 20,
-              color: TColors.primary,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

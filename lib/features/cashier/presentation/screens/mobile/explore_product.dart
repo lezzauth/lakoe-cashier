@@ -86,7 +86,7 @@ class _ExploreProductMobileState extends State<ExploreProductMobile> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextHeading3("Berlangsung"),
+                            TextHeading3("Daftar Pesanan"),
                           ],
                         ),
                       ),

@@ -39,7 +39,7 @@ class LockCashierButtonState extends State<LockCashierButton> {
         style: ButtonStyle(
           padding: WidgetStatePropertyAll(
             EdgeInsets.symmetric(
-              horizontal: isMobile ? 8 : 16,
+              horizontal: isMobile ? 8 : 12,
               vertical: 0,
             ),
           ),
@@ -63,7 +63,7 @@ class LockCashierButtonState extends State<LockCashierButton> {
             ResponsiveLayout(
               mobile: const SizedBox(),
               tablet: Container(
-                margin: const EdgeInsets.only(left: 4),
+                margin: EdgeInsets.only(left: 8, right: 2),
                 child: TextActionL(
                   widget.label,
                   color: TColors.neutralLightLightest,

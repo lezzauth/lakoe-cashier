@@ -55,8 +55,8 @@ class ExploreProductAppbar extends StatelessWidget
                           ),
                         ],
                       ),
-                      const SizedBox(width: 12),
-                      const LockCashierButton(label: "Kunci")
+                      SizedBox(width: 12),
+                      LockCashierButton(label: "Kunci")
                     ],
                   ),
                 ],

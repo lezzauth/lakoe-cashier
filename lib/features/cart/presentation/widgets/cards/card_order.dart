@@ -13,6 +13,7 @@ class CardOrder extends StatelessWidget {
     this.title = "",
     this.onTap,
     this.trailing,
+    this.isReadOnly = false,
   });
 
   final Widget? icon;
@@ -20,6 +21,7 @@ class CardOrder extends StatelessWidget {
   final String subTitle;
   final Function()? onTap;
   final Widget? trailing;
+  final bool isReadOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +75,7 @@ class CardOrder extends StatelessWidget {
                   ],
                 ),
               ),
-              if (trailing == null)
+              if (trailing == null && isReadOnly == false)
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 4.0),
                   child: const UiIcons(

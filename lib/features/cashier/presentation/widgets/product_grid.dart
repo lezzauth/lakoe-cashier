@@ -28,7 +28,7 @@ class _ProductGridState extends State<ProductGrid> {
   Widget build(BuildContext context) {
     return BlocBuilder<CashierProductCubit, CashierProductState>(
       builder: (context, state) => SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         sliver: switch (state) {
           CashierProductLoadSuccess(:final products) => products.isEmpty
               ? const SliverFillRemaining(
@@ -44,8 +44,8 @@ class _ProductGridState extends State<ProductGrid> {
                         maxCrossAxisExtent: 208,
                         mainAxisExtent: 235.5,
                         childAspectRatio: 208 / 235.5,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
                       ),
                       itemCount: products.length,
                       itemBuilder: (context, index) {

@@ -184,7 +184,6 @@ class OrderSummary extends StatelessWidget {
                           : ShimmerText(),
                     ],
                   ),
-                  const SizedBox(height: 8),
                   if (isPaid && paymentInfo != null)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
