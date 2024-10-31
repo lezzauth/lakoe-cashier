@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
+import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_cubit.dart';
@@ -34,6 +36,8 @@ class ExploreProduct extends StatefulWidget {
 }
 
 class _ExploreProductState extends State<ExploreProduct> {
+  DateTime? lastBackPressed;
+
   @override
   void initState() {
     super.initState();
@@ -44,20 +48,43 @@ class _ExploreProductState extends State<ExploreProduct> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<CashierProductFilterCubit, CashierProductFilterState>(
-          listener: (context, state) {
-            context.read<CashierProductCubit>().findAll(
-                  categoryId: state.categoryId,
-                  name: state.name,
-                );
-          },
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        final now = DateTime.now();
+        if (lastBackPressed == null ||
+            now.difference(lastBackPressed!) > const Duration(seconds: 2)) {
+          lastBackPressed = now;
+          CustomToast.show(
+            "Tekan sekali lagi untuk keluar halaman kasir",
+            position: 'bottom',
+            duration: 2,
+          );
+          return;
+        } else {
+          context.read<CartCubit>().reset();
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            "/cashier",
+            (route) => false,
+          );
+        }
+      },
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<CashierProductFilterCubit, CashierProductFilterState>(
+            listener: (context, state) {
+              context.read<CashierProductCubit>().findAll(
+                    categoryId: state.categoryId,
+                    name: state.name,
+                  );
+            },
+          ),
+        ],
+        child: const ResponsiveLayout(
+          mobile: ExploreProductMobile(),
+          tablet: ExploreProductTablet(),
         ),
-      ],
-      child: const ResponsiveLayout(
-        mobile: ExploreProductMobile(),
-        tablet: ExploreProductTablet(),
       ),
     );
   }

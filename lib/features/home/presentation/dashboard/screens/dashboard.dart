@@ -48,7 +48,6 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   StreamSubscription? _sub;
   DateTime? lastBackPressed;
-  bool canPopNow = false;
 
   Future<void> _onInit() async {
     context.read<CashierCubit>().getOpenCashier();

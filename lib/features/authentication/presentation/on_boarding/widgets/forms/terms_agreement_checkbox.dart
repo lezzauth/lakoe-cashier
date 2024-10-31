@@ -32,7 +32,10 @@ class TermsAgreementCheckbox extends StatelessWidget {
         CustomCheckbox(
           value: value,
           isError: isError,
-          onChanged: onChanged,
+          onChanged: (newValue) {
+            FocusScope.of(context).unfocus();
+            onChanged(newValue);
+          },
         ),
         const SizedBox(width: 12),
         Flexible(
