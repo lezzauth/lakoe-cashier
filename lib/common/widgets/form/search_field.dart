@@ -106,21 +106,22 @@ class _SearchFieldState extends State<SearchField> {
               ),
             ),
           ),
-          if (widget.controller!.text.isNotEmpty)
-            GestureDetector(
-              onTap: () {
-                widget.controller!.clear();
-                widget.onChanged?.call('');
-              },
-              child: const Padding(
-                padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                child: UiIcons(
-                  TIcons.close,
-                  size: 12,
-                  color: TColors.neutralDarkLight,
+          if (widget.controller != null)
+            if (widget.controller!.text.isNotEmpty)
+              GestureDetector(
+                onTap: () {
+                  widget.controller!.clear();
+                  widget.onChanged?.call('');
+                },
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                  child: UiIcons(
+                    TIcons.close,
+                    size: 12,
+                    color: TColors.neutralDarkLight,
+                  ),
                 ),
               ),
-            ),
         ],
       ),
     );

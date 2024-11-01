@@ -39,6 +39,8 @@ class CartCustomerListContent extends StatefulWidget {
 }
 
 class _CartCustomerListContentState extends State<CartCustomerListContent> {
+  final TextEditingController _searchController = TextEditingController();
+
   Future<void> _onInit() async {
     await context.read<CartCustomerCubit>().init();
   }
@@ -65,6 +67,7 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                 padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
                 child: SearchField(
                   hintText: "Cari pelanggan...",
+                  controller: _searchController,
                   debounceTime: 500,
                   onChanged: (value) {
                     context

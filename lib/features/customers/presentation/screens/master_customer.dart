@@ -38,6 +38,7 @@ class MasterCustomer extends StatefulWidget {
 }
 
 class _MasterCustomerState extends State<MasterCustomer> {
+  final TextEditingController _searchController = TextEditingController();
   Future<void> _onRefresh() async {
     context.read<CustomerMasterCubit>().findAll(FindAllCustomerDto());
   }
@@ -72,6 +73,7 @@ class _MasterCustomerState extends State<MasterCustomer> {
         appBar: CustomAppbar(
           search: SearchField(
             hintText: "Cari pelanggan...",
+            controller: _searchController,
             debounceTime: 500,
             onChanged: (value) {
               context

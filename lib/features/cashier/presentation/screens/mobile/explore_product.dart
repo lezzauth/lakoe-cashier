@@ -25,6 +25,8 @@ class ExploreProductMobile extends StatefulWidget {
 }
 
 class _ExploreProductMobileState extends State<ExploreProductMobile> {
+  final TextEditingController _searchController = TextEditingController();
+
   Future<void> _onRefresh() async {
     if (!mounted) return;
 
@@ -61,6 +63,7 @@ class _ExploreProductMobileState extends State<ExploreProductMobile> {
                     builder: (context, state) {
                       return SearchField(
                         hintText: "Cari menu disini…",
+                        controller: _searchController,
                         debounceTime: 500,
                         onChanged: (value) {
                           context

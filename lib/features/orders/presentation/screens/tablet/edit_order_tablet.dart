@@ -53,6 +53,7 @@ class OrderEditTabletContent extends StatefulWidget {
 
 class _OrderEditTabletContentState extends State<OrderEditTabletContent> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -140,6 +141,7 @@ class _OrderEditTabletContentState extends State<OrderEditTabletContent> {
                   appBar: CustomAppbar(
                     search: SearchField(
                       hintText: "Cari menu disini...",
+                      controller: _searchController,
                       debounceTime: 500,
                       onChanged: (value) {
                         context

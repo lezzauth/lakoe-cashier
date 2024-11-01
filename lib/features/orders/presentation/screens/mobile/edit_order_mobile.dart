@@ -33,6 +33,7 @@ class OrderEditMobile extends StatefulWidget {
 }
 
 class _OrderEditMobileState extends State<OrderEditMobile> {
+  final TextEditingController _searchController = TextEditingController();
   void _onInit() async {
     _onRefresh();
   }
@@ -124,6 +125,7 @@ class _OrderEditMobileState extends State<OrderEditMobile> {
         appBar: CustomAppbar(
           search: SearchField(
             hintText: "Cari menu disini...",
+            controller: _searchController,
             debounceTime: 500,
             onChanged: (value) {
               context.read<CashierProductFilterCubit>().setFilter(name: value);

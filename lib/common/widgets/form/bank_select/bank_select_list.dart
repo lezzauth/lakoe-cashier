@@ -26,6 +26,8 @@ class BankSelectList extends StatefulWidget {
 }
 
 class _BankSelectListState extends State<BankSelectList> {
+  final TextEditingController _searchController = TextEditingController();
+
   String? _value;
   String search = "";
 
@@ -86,6 +88,7 @@ class _BankSelectListState extends State<BankSelectList> {
                 ),
                 SearchField(
                   hintText: "Cari nama bank disini...",
+                  controller: _searchController,
                   debounceTime: 500,
                   onChanged: (value) {
                     setState(() {
