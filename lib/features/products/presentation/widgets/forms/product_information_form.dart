@@ -1,5 +1,6 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
@@ -136,15 +137,22 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                         name: "price",
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
-                              errorText: ErrorTextStrings.required()),
+                            errorText: ErrorTextStrings.required(),
+                          ),
+                          (value) {
+                            final unformattedValue =
+                                _priceFormatter.getUnformattedValue();
+                            if (unformattedValue <= 0) {
+                              return "Nilai tidak boleh Rp0. Minimal Rp1";
+                            }
+                            return null;
+                          },
                         ]),
                         keyboardType: TextInputType.number,
                         inputFormatters: [_priceFormatter],
                         decoration: const InputDecoration(
                           hintText: 'Rp 0',
                         ),
-                        initialValue: _priceFormatter
-                            .formatString(widget.initialValue["price"] ?? "0"),
                         valueTransformer: (value) {
                           return _priceFormatter.getUnformattedValue().toInt();
                         },
