@@ -73,8 +73,13 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
                         onSubmit();
                       }
                     },
-                    validator: FormBuilderValidators.required(
-                        errorText: ErrorTextStrings.required()),
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                        errorText: ErrorTextStrings.required(),
+                      ),
+                      FormBuilderValidators.min(1,
+                          errorText: "Saldo tidak boleh 0"),
+                    ]),
                     inputFormatters: [_currencyFormatter],
                     decoration: const InputDecoration(
                       hintText: 'Rp 0',
