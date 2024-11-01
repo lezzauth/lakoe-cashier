@@ -1,5 +1,6 @@
 import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
@@ -228,14 +229,32 @@ class App extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: const [Locale("id"), Locale('en')],
-          builder: (context, child) => ResponsiveBreakpoints.builder(
-            child: child!,
-            breakpoints: [
-              const Breakpoint(start: 0, end: 450, name: MOBILE),
-              const Breakpoint(start: 451, end: 800, name: TABLET),
-              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-            ],
-          ),
+          builder: (context, child) {
+            return ResponsiveBreakpoints.builder(
+              // child: child!,
+              child: Builder(
+                builder: (context) {
+                  // Mengatur orientasi berdasarkan breakpoint
+                  if (ResponsiveBreakpoints.of(context).smallerThan(TABLET)) {
+                    SystemChrome.setPreferredOrientations([
+                      DeviceOrientation.portraitUp,
+                      DeviceOrientation.portraitDown,
+                    ]);
+                  } else {
+                    SystemChrome.setPreferredOrientations(
+                        DeviceOrientation.values);
+                  }
+
+                  return child!;
+                },
+              ),
+              breakpoints: [
+                const Breakpoint(start: 0, end: 450, name: MOBILE),
+                const Breakpoint(start: 451, end: 800, name: TABLET),
+                const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+              ],
+            );
+          },
           routes: {
             "/": (context) => const RedirectScreen(),
             "/on-boarding": (context) => const OnBoardingScreen(),

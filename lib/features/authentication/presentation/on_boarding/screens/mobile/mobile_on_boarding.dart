@@ -110,17 +110,17 @@ class _MobileOnBoardingState extends State<MobileOnBoarding> {
                 isTextInputActive: _isTextInputActive,
               ),
               ItemPageView(
-                title: "Jualan Makin Gampang!",
+                title: "QR Order dari Meja",
                 description:
-                    "Atur penjualan toko fisik dan online secara bersamaan. Semua lebih praktis!",
+                    "Cukup scan QR di meja, pelanggan bisa pesan langsung dari HP mereka!",
                 asset: TImages.onboarding2,
                 isTextInputActive: _isTextInputActive,
               ),
               ItemPageView(
-                title: "Hasil Jualan Saat Ini",
+                title: "Cek Laporan Penjualan",
                 description:
                     "Semua data penjualan dan keuntungan ada di tanganmu, lebih mudah dan cepat.",
-                asset: TImages.onboarding2,
+                asset: TImages.onboarding3,
                 isTextInputActive: _isTextInputActive,
               ),
             ],
