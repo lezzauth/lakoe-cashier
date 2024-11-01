@@ -10,10 +10,12 @@ class CartFooter extends StatelessWidget {
     super.key,
     this.onCompleted,
     required this.onSaved,
+    this.labelButtonCart = "Bayar & Selesaikan",
   });
 
   final Function() onSaved;
   final ValueChanged<double>? onCompleted;
+  final String labelButtonCart;
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +88,8 @@ class CartFooter extends StatelessWidget {
                             color: TColors.neutralLightLightest,
                           ),
                         )
-                      : const TextActionL(
-                          "Bayar & Selesai",
+                      : TextActionL(
+                          labelButtonCart,
                           color: TColors.neutralLightLightest,
                         ),
                 ),

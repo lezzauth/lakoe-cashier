@@ -213,6 +213,7 @@ class _ExploreProductTabletContentState
                               horizontal: 16,
                             ),
                             child: CartFooter(
+                              labelButtonCart: "Proses Pesanan",
                               onCompleted: (value) {
                                 _scaffoldKey.currentState!.openEndDrawer();
                               },
