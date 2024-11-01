@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outlet_repository/outlet_repository.dart';
+import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
@@ -17,6 +18,7 @@ import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widg
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/filter/dashboard_filter.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/item_menu/item_menu_container.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/main_menu/main_menu.dart';
+import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/main_menu/main_menu_tablet.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/summary/sales_summary.dart';
 import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/summary/transaction_summary.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -115,11 +117,19 @@ class _DashboardState extends State<Dashboard> {
           body: SafeArea(
             child: ListView(
               children: [
-                const MainMenu(),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  child: ItemMenuContainer(),
+                ResponsiveLayout(
+                  mobile: MainMenu(),
+                  tablet: MainMenuTablet(),
                 ),
+
+                ResponsiveLayout(
+                  mobile: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    child: ItemMenuContainer(),
+                  ),
+                  tablet: SizedBox.shrink(),
+                ),
+
                 // Container(
                 //   padding: EdgeInsets.symmetric(horizontal: 24),
                 //   margin: EdgeInsets.only(bottom: 12),
@@ -158,16 +168,35 @@ class _DashboardState extends State<Dashboard> {
                   margin: EdgeInsets.only(bottom: 12),
                   child: BlocBuilder<CashierReportCubit, CashierReportState>(
                     builder: (context, state) => switch (state) {
-                      CashierReportLoadSuccess(:final report) => Column(
-                          children: [
-                            SalesSummary(
-                              totalSales: report.total_sales,
-                            ),
-                            SizedBox(height: 12),
-                            TransactionSummary(
-                              totalTransactions: report.total_transactions,
-                            ),
-                          ],
+                      CashierReportLoadSuccess(:final report) =>
+                        ResponsiveLayout(
+                          tablet: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Expanded(
+                                child: SalesSummary(
+                                  totalSales: report.total_sales,
+                                ),
+                              ),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: TransactionSummary(
+                                  totalTransactions: report.total_transactions,
+                                ),
+                              ),
+                            ],
+                          ),
+                          mobile: Column(
+                            children: [
+                              SalesSummary(
+                                totalSales: report.total_sales,
+                              ),
+                              SizedBox(height: 16),
+                              TransactionSummary(
+                                totalTransactions: report.total_transactions,
+                              ),
+                            ],
+                          ),
                         ),
                       CashierReportLoadFailure(:final error) => Center(
                           child: TextBodyS(
@@ -178,32 +207,63 @@ class _DashboardState extends State<Dashboard> {
                       _ => Shimmer.fromColors(
                           baseColor: Color(0xFFE8E9F1),
                           highlightColor: Color(0xFFF8F9FE),
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 127,
-                                width: double.maxFinite,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16.0),
-                                  color: TColors.neutralLightLightest,
-                                  border: Border.all(
-                                      color: TColors.neutralLightMedium,
-                                      width: 1),
+                          child: ResponsiveLayout(
+                            mobile: Column(
+                              children: [
+                                Container(
+                                  height: 127,
+                                  width: double.maxFinite,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                    color: TColors.neutralLightLightest,
+                                    border: Border.all(
+                                        color: TColors.neutralLightMedium,
+                                        width: 1),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 12),
-                              Container(
-                                height: 127,
-                                width: double.maxFinite,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16.0),
-                                  color: TColors.neutralLightLightest,
-                                  border: Border.all(
-                                      color: TColors.neutralLightMedium,
-                                      width: 1),
+                                SizedBox(height: 16),
+                                Container(
+                                  height: 127,
+                                  width: double.maxFinite,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                    color: TColors.neutralLightLightest,
+                                    border: Border.all(
+                                        color: TColors.neutralLightMedium,
+                                        width: 1),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                            tablet: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    height: 127,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      color: TColors.neutralLightLightest,
+                                      border: Border.all(
+                                          color: TColors.neutralLightMedium,
+                                          width: 1),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 16),
+                                Expanded(
+                                  child: Container(
+                                    height: 127,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      color: TColors.neutralLightLightest,
+                                      border: Border.all(
+                                          color: TColors.neutralLightMedium,
+                                          width: 1),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                     },
