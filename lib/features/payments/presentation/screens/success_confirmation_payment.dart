@@ -52,7 +52,7 @@ class _SuccessConfirmationPaymentScreenState
               ),
               tablet: Center(
                 child: SizedBox(
-                  width: 311,
+                  width: 450,
                   child: SuccessConfirmationPaymentContent(
                     arguments: widget.arguments,
                   ),
