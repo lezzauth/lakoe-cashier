@@ -146,8 +146,6 @@ class _NewCustomerFormState extends State<NewCustomerForm> {
                           PhoneNumberFormatter(isDisplayFormat: true)
                         ],
                         validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.startsWith("8",
-                              errorText: "Nomor dimulai dengan angka 8"),
                           FormBuilderValidators.maxLength(14,
                               errorText: ErrorTextStrings.maxLength(
                                   maxLength: 14, isNumber: true)),
