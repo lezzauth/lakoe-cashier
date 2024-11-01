@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/shimmer/chips_shimmer.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
 import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_state.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class TableLocationFilter extends StatefulWidget {
