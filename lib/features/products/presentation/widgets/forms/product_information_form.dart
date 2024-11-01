@@ -103,8 +103,19 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                               decoration: const InputDecoration(
                                 hintText: "Contoh: Es Teh",
                               ),
-                              validator: FormBuilderValidators.required(
-                                  errorText: ErrorTextStrings.required()),
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(
+                                  errorText: ErrorTextStrings.required(),
+                                ),
+                                (value) {
+                                  if (value != null &&
+                                      !RegExp(r'^[a-zA-Z0-9\s]+$')
+                                          .hasMatch(value)) {
+                                    return "Tidak boleh mengandung karakter khusus";
+                                  }
+                                  return null;
+                                },
+                              ]),
                             ),
                           ],
                         ),
