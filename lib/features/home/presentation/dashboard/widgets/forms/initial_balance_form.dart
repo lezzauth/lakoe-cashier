@@ -77,8 +77,14 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
                       FormBuilderValidators.required(
                         errorText: ErrorTextStrings.required(),
                       ),
-                      FormBuilderValidators.min(1,
-                          errorText: "Saldo tidak boleh 0"),
+                      (value) {
+                        final unformattedValue =
+                            _currencyFormatter.getUnformattedValue();
+                        if (unformattedValue <= 0) {
+                          return "Nilai tidak boleh 0";
+                        }
+                        return null;
+                      },
                     ]),
                     inputFormatters: [_currencyFormatter],
                     decoration: const InputDecoration(
