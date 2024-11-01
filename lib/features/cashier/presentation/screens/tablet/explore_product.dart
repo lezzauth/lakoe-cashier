@@ -46,8 +46,25 @@ class ExploreProductTabletContent extends StatefulWidget {
 class _ExploreProductTabletContentState
     extends State<ExploreProductTabletContent> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.clear();
+    _onRefresh();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   Future<void> _onCartSaved() async {
+    _searchController.clear();
+    context.read<CashierProductFilterCubit>().setFilter(name: "");
+
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
         context.read<CartDetailFilterCubit>().state;
@@ -166,11 +183,12 @@ class _ExploreProductTabletContentState
                                             ),
                                           ),
                                           Container(
-                                            width: 360,
+                                            width: 450,
                                             padding: EdgeInsets.only(
                                                 right: 24, left: 12),
                                             child: SearchField(
                                               hintText: "Cari menu disini…",
+                                              controller: _searchController,
                                               debounceTime: 500,
                                               onChanged: (value) {
                                                 context
@@ -216,6 +234,10 @@ class _ExploreProductTabletContentState
                               labelButtonCart: "Proses Pesanan",
                               onCompleted: (value) {
                                 _scaffoldKey.currentState!.openEndDrawer();
+                                _searchController.clear();
+                                context
+                                    .read<CashierProductFilterCubit>()
+                                    .setFilter(name: "");
                               },
                               onSaved: _onCartSaved,
                             ),
