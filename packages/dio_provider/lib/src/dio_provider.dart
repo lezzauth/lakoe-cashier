@@ -9,6 +9,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bott
 import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/app.dart';
 
 bool isShowingBottomSheet = false;
 
@@ -172,9 +173,7 @@ class DioProvider {
         type: DioExceptionType.badResponse,
       ));
     } else {
-      log("Response is not a Map: ${responseData}");
+      log("Response is not a Map: $responseData");
     }
   }
 }
-
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

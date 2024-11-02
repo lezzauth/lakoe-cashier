@@ -6,6 +6,7 @@ import 'package:dio_provider/dio_provider.dart';
 import 'package:token_provider/token_provider.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:point_of_sales_cashier/app.dart';
 
 abstract class AuthenticationRepository {
   Future<RegisterResponse> register(RegisterDto dto);

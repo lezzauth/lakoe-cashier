@@ -1,4 +1,3 @@
-import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -130,6 +129,8 @@ import 'package:point_of_sales_cashier/features/taxes/presentation/screens/tax_m
 import 'package:point_of_sales_cashier/utils/helpers/navigator_observer.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class App extends StatelessWidget {
   final String flavor;
