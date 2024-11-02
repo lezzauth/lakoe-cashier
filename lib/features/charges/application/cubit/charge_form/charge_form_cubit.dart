@@ -15,7 +15,10 @@ class ChargeFormCubit extends Cubit<ChargeFormState> {
         );
 
   void setValue(
-      Map<String, dynamic>? value, bool isFormValid, bool isFormDirty) {
+    Map<String, dynamic>? value,
+    bool isFormValid,
+    bool isFormDirty,
+  ) {
     emit(ChargeFormState(
       charges: state.charges,
       value: value ?? state.value,

@@ -1,6 +1,6 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
@@ -8,6 +8,7 @@ import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/form/product_form_cubit.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/category_field.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -32,6 +33,9 @@ class ProductInformationForm extends StatefulWidget {
 
 class _ProductInformationFormState extends State<ProductInformationForm>
     with AutomaticKeepAliveClientMixin<ProductInformationForm> {
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _modalController = TextEditingController();
+
   final CurrencyTextInputFormatter _priceFormatter =
       CurrencyTextInputFormatter.currency(
     locale: "id_ID",
@@ -54,6 +58,26 @@ class _ProductInformationFormState extends State<ProductInformationForm>
   ];
 
   @override
+  void initState() {
+    super.initState();
+    if (widget.initialValue["price"] != null) {
+      _priceController.text =
+          _priceFormatter.formatString(widget.initialValue["price"]);
+    }
+    if (widget.initialValue["modal"] != null) {
+      _modalController.text =
+          _modalFormatter.formatString(widget.initialValue["modal"]);
+    }
+  }
+
+  @override
+  void dispose() {
+    _priceController.dispose();
+    _modalController.dispose();
+    super.dispose();
+  }
+
+  @override
   bool get wantKeepAlive => true;
 
   @override
@@ -62,7 +86,17 @@ class _ProductInformationFormState extends State<ProductInformationForm>
     return FormBuilder(
       key: widget.formKey,
       initialValue: widget.initialValue,
-      onChanged: widget.onChanged,
+      // onChanged: widget.onChanged,
+      onChanged: () {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          bool isFormValid = widget.formKey.currentState?.isValid ?? false;
+          context.read<ProductFormCubit>().onChangeProduct(
+                widget.formKey.currentState?.instantValue,
+                isFormValid,
+                true,
+              );
+        });
+      },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,6 +169,7 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                       ),
                       FormBuilderTextField(
                         name: "price",
+                        controller: _priceController,
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
                             errorText: ErrorTextStrings.required(),
@@ -150,9 +185,7 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                         ]),
                         keyboardType: TextInputType.number,
                         inputFormatters: [_priceFormatter],
-                        decoration: const InputDecoration(
-                          hintText: 'Rp 0',
-                        ),
+                        decoration: const InputDecoration(hintText: 'Rp 0'),
                         valueTransformer: (value) {
                           return _priceFormatter.getUnformattedValue().toInt();
                         },
@@ -208,13 +241,12 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                       ),
                       FormBuilderTextField(
                         name: "modal",
+                        controller: _modalController,
                         keyboardType: TextInputType.number,
                         inputFormatters: [_modalFormatter],
                         decoration: const InputDecoration(
                           hintText: 'Rp 0',
                         ),
-                        initialValue: _modalFormatter
-                            .formatString(widget.initialValue["modal"] ?? ""),
                         valueTransformer: (value) {
                           return _modalFormatter.getUnformattedValue().toInt();
                         },
