@@ -86,7 +86,8 @@ class _TableInformationFormState extends State<TableInformationForm> {
                           hintText: "Contoh: T-01",
                         ),
                         validator: FormBuilderValidators.required(
-                          errorText: ErrorTextStrings.required(),
+                          errorText:
+                              ErrorTextStrings.required(name: "Nomor Meja"),
                         ),
                       ),
                     ],
@@ -110,7 +111,8 @@ class _TableInformationFormState extends State<TableInformationForm> {
                           FilteringTextInputFormatter.digitsOnly
                         ],
                         validator: FormBuilderValidators.required(
-                          errorText: ErrorTextStrings.required(),
+                          errorText:
+                              ErrorTextStrings.required(name: "Kapasitas Meja"),
                         ),
                       ),
                     ],

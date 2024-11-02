@@ -140,7 +140,8 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                               ),
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(
-                                  errorText: ErrorTextStrings.required(),
+                                  errorText: ErrorTextStrings.required(
+                                      name: "Nama Produk"),
                                 ),
                                 (value) {
                                   if (value != null &&
@@ -172,7 +173,8 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                         controller: _priceController,
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
-                            errorText: ErrorTextStrings.required(),
+                            errorText:
+                                ErrorTextStrings.required(name: "Harga Jual"),
                           ),
                           (value) {
                             final unformattedValue =

@@ -44,6 +44,7 @@ class _CategoryFormState extends State<CategoryForm> {
     return FormBuilder(
       key: widget.formKey,
       initialValue: widget.initialValue,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -61,7 +62,16 @@ class _CategoryFormState extends State<CategoryForm> {
                   ),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(
-                        errorText: ErrorTextStrings.required()),
+                      errorText:
+                          ErrorTextStrings.required(name: "Nama Kategori"),
+                    ),
+                    (value) {
+                      if (value != null &&
+                          !RegExp(r'^[a-zA-Z0-9\s]+$').hasMatch(value)) {
+                        return "Tidak boleh mengandung karakter khusus";
+                      }
+                      return null;
+                    },
                   ]),
                 ),
               ],

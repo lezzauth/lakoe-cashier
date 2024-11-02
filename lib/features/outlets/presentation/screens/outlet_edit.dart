@@ -178,7 +178,8 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                                 hintText: "Contoh: Warung Madura",
                               ),
                               validator: FormBuilderValidators.required(
-                                  errorText: ErrorTextStrings.required()),
+                                  errorText: ErrorTextStrings.required(
+                                      name: "Nama Usaha")),
                             ),
                           ],
                         ),
@@ -215,7 +216,8 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                                   );
                                 },
                                 validator: FormBuilderValidators.required(
-                                    errorText: ErrorTextStrings.required()),
+                                    errorText: ErrorTextStrings.required(
+                                        name: "Jenis Usaha")),
                               )
                             ],
                           ),
@@ -233,7 +235,8 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                               ),
                               maxLines: 2,
                               validator: FormBuilderValidators.required(
-                                  errorText: ErrorTextStrings.required()),
+                                  errorText: ErrorTextStrings.required(
+                                      name: "Alamat")),
                             ),
                           ],
                         ),

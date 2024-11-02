@@ -219,7 +219,8 @@ class _ChargeFormState extends State<ChargeForm> {
                                         return FormBuilderValidators.compose([
                                           FormBuilderValidators.required(
                                             errorText:
-                                                ErrorTextStrings.required(),
+                                                ErrorTextStrings.required(
+                                                    name: "Service Charge"),
                                           ),
                                         ])(value);
                                       },

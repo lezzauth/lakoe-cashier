@@ -75,7 +75,8 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
                     },
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(
-                        errorText: ErrorTextStrings.required(),
+                        errorText:
+                            ErrorTextStrings.required(name: "Saldo Awal"),
                       ),
                       (value) {
                         final unformattedValue =

@@ -319,7 +319,8 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
                       },
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(
-                            errorText: ErrorTextStrings.required()),
+                            errorText: ErrorTextStrings.required(
+                                name: "Bukti Transfer")),
                       ]),
                     )
                   ],

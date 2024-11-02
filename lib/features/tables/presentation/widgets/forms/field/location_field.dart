@@ -202,7 +202,7 @@ class _CreateTableLocationFormState extends State<CreateTableLocationForm> {
                 name: "name",
                 decoration: const InputDecoration(hintText: "Contoh: Indoor"),
                 validator: FormBuilderValidators.required(
-                  errorText: ErrorTextStrings.required(),
+                  errorText: ErrorTextStrings.required(name: "Nama Lokasi"),
                 ),
                 textCapitalization: TextCapitalization.words,
               ),

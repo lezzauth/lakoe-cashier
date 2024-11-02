@@ -119,7 +119,8 @@ class _BankAccountFormState extends State<BankAccountForm> {
                           },
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(
-                              errorText: ErrorTextStrings.required(),
+                              errorText:
+                                  ErrorTextStrings.required(name: "Bank"),
                             ),
                           ]),
                         )
@@ -143,7 +144,8 @@ class _BankAccountFormState extends State<BankAccountForm> {
                           ],
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(
-                                errorText: ErrorTextStrings.required()),
+                                errorText: ErrorTextStrings.required(
+                                    name: "Nomor Rekening")),
                             FormBuilderValidators.numeric(
                                 errorText: ErrorTextStrings.numeric())
                           ]),

@@ -87,7 +87,8 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
                       }
                     },
                     validator: FormBuilderValidators.required(
-                        errorText: ErrorTextStrings.required()),
+                        errorText:
+                            ErrorTextStrings.required(name: "Saldo Akhir")),
                     inputFormatters: [_finalBalance],
                     decoration: const InputDecoration(
                       hintText: 'Rp 0',

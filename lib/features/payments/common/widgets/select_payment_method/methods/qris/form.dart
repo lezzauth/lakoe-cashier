@@ -75,7 +75,8 @@ class _QrisPaymentFormState extends State<QrisPaymentForm> {
                         onSubmitted: (_) => widget.onSubmitted(),
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
-                            errorText: ErrorTextStrings.required(),
+                            errorText: ErrorTextStrings.required(
+                                name: "Kode Approval"),
                           ),
                           FormBuilderValidators.numeric(
                             errorText: ErrorTextStrings.numeric(),
