@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:random_avatar/random_avatar.dart';
@@ -39,6 +40,7 @@ class AuthCubit extends Cubit<AuthState> {
       ));
     } catch (e, stackTrace) {
       log('AuthCubit.initialize err: ${e.toString()}', stackTrace: stackTrace);
+      Logman.instance.info('AuthCubit.initialize err: ${e.toString()}');
 
       if (e is DioException) {
         if (e.error is DioExceptionModel) {

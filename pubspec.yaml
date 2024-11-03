@@ -125,6 +125,7 @@ dependencies:
   remove_bg: ^0.0.3
   flutter_dotenv: ^5.2.1
   fluttertoast: ^8.2.8
+  logman: ^0.0.21
 
 dev_dependencies:
   flutter_test:

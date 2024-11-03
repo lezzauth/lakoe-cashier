@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:logman/logman.dart';
 import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/account_edit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/account_master.dart';
@@ -126,11 +127,10 @@ import 'package:point_of_sales_cashier/features/tables/presentation/screens/tabl
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
 import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_master/tax_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/taxes/presentation/screens/tax_master.dart';
+import 'package:point_of_sales_cashier/main_dev.dart';
 import 'package:point_of_sales_cashier/utils/helpers/navigator_observer.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class App extends StatelessWidget {
   final String flavor;
@@ -221,7 +221,10 @@ class App extends StatelessWidget {
           darkTheme: TAppTheme.darkTheme,
           themeMode: ThemeMode.light,
           navigatorKey: navigatorKey,
-          navigatorObservers: [CustomNavigatorObserver()],
+          navigatorObservers: [
+            CustomNavigatorObserver(),
+            LogmanNavigatorObserver()
+          ],
           initialRoute: "/",
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
