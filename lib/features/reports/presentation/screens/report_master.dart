@@ -369,11 +369,7 @@ class DetailAmount extends StatelessWidget {
                     const SizedBox(height: 4),
                     TextHeading1(
                       TFormatter.formatToRupiah(
-                        amount == "NaN"
-                            ? 0
-                            : int.parse(
-                                amount,
-                              ),
+                        amount == "NaN" ? 0 : double.parse(amount).round(),
                       ),
                     ),
                   ],

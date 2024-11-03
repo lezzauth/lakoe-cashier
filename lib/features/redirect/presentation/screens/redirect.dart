@@ -121,9 +121,6 @@ class _RedirectScreenState extends State<RedirectScreen> {
             (state is NotFound && state.res.statusCode == 404)) {
           await tokenProvider.clearAll();
           Navigator.popAndPushNamed(context, "/on-boarding");
-        } else {
-          await tokenProvider.clearAll();
-          Navigator.popAndPushNamed(context, "/on-boarding");
         }
       },
       child: BlocListener<CashierCubit, CashierState>(
