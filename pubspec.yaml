@@ -126,6 +126,7 @@ dependencies:
   flutter_dotenv: ^5.2.1
   fluttertoast: ^8.2.8
   logman: ^0.0.21
+  package_info_plus: ^8.1.0
 
 dev_dependencies:
   flutter_test:

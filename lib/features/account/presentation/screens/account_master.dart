@@ -2,6 +2,7 @@ import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/list_item_card.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/section_card.dart';
@@ -36,10 +37,34 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
     super.initState();
     context.read<AuthCubit>().initialize();
     _onInit();
+    _updateAppVersion();
   }
 
   void _onInit() {
     context.read<OutletCubit>().init();
+  }
+
+  Future<String> getAppVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    return "Versi ${packageInfo.version}";
+  }
+
+  Future<void> _updateAppVersion() async {
+    final appVersion = await getAppVersion();
+    setState(() {
+      otherSettingItems = otherSettingItems.map((item) {
+        if (item.title == "Kasih Rating") {
+          return _OtherItem(
+            title: item.title,
+            routeName: item.routeName,
+            iconSrc: item.iconSrc,
+            textTrailing: appVersion,
+            isNewItem: item.isNewItem,
+          );
+        }
+        return item;
+      }).toList();
+    });
   }
 
   List<_OtherItem> otherSettingItems = [
@@ -53,7 +78,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       title: "Kasih Rating",
       routeName: "/",
       iconSrc: TIcons.star,
-      textTrailing: "Versi 3.20.0",
+      textTrailing: "",
       isNewItem: false,
     ),
     _OtherItem(
