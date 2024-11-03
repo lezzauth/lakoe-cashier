@@ -169,8 +169,7 @@ class _TransferAttachmentFieldState extends State<TransferAttachmentField> {
                               margin: const EdgeInsets.only(bottom: 12),
                               child: const UiIcons(
                                 TIcons.camera,
-                                height: 40,
-                                width: 40,
+                                size: 40,
                                 color: TColors.primary,
                               ),
                             ),
@@ -237,8 +236,7 @@ class _TransferAttachmentFieldState extends State<TransferAttachmentField> {
                     alignment: Alignment.center,
                     child: const UiIcons(
                       TIcons.close,
-                      height: 12,
-                      width: 12,
+                      size: 12,
                       color: TColors.error,
                     ),
                   ),

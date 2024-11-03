@@ -185,8 +185,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                         children: [
                           UiIcons(
                             TIcons.timer,
-                            width: 20,
-                            height: 20,
+                            size: 20,
                             color: TColors.error,
                           ),
                           TextHeading2(
@@ -273,8 +272,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                                         SizedBox(width: 8),
                                         UiIcons(
                                           TIcons.copy,
-                                          width: 20,
-                                          height: 20,
+                                          size: 20,
                                           color: TColors.primary,
                                         ),
                                       ],
@@ -320,8 +318,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                                       SizedBox(width: 8),
                                       UiIcons(
                                         TIcons.copy,
-                                        width: 20,
-                                        height: 20,
+                                        size: 20,
                                         color: TColors.primary,
                                       ),
                                     ],

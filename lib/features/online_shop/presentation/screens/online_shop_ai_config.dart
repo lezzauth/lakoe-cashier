@@ -50,8 +50,7 @@ class _OnlineShopAIConfigScreenState extends State<OnlineShopAIConfigScreen> {
                     trailing: UiIcons(
                       TIcons.arrowRight,
                       color: TColors.primary,
-                      height: 12,
-                      width: 12,
+                      size: 12,
                     ),
                   ),
                   Divider(

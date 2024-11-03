@@ -84,8 +84,7 @@ class CustomToast {
           if (icon != null)
             UiIcons(
               icon,
-              width: 24,
-              height: 24,
+              size: 24,
               color: TColors.neutralLightLightest,
             ),
           SizedBox(width: icon != null ? 4.0 : 0),

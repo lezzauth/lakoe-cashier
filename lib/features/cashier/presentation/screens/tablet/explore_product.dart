@@ -46,8 +46,25 @@ class ExploreProductTabletContent extends StatefulWidget {
 class _ExploreProductTabletContentState
     extends State<ExploreProductTabletContent> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.clear();
+    _onRefresh();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   Future<void> _onCartSaved() async {
+    _searchController.clear();
+    context.read<CashierProductFilterCubit>().setFilter(name: "");
+
     CartState cartState = context.read<CartCubit>().state;
     CartDetailFilterState filterState =
         context.read<CartDetailFilterCubit>().state;
@@ -99,6 +116,7 @@ class _ExploreProductTabletContentState
             children: [
               Expanded(
                 child: Scaffold(
+                  backgroundColor: TColors.neutralLightLight,
                   appBar: ExploreProductAppbar(),
                   body: Scrollbar(
                     child: RefreshIndicator(
@@ -122,7 +140,7 @@ class _ExploreProductTabletContentState
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        TextHeading3("Berlangsung"),
+                                        TextHeading3("Daftar Pesanan"),
                                       ],
                                     ),
                                   ),
@@ -165,11 +183,12 @@ class _ExploreProductTabletContentState
                                             ),
                                           ),
                                           Container(
-                                            width: 360,
+                                            width: 450,
                                             padding: EdgeInsets.only(
                                                 right: 24, left: 12),
                                             child: SearchField(
                                               hintText: "Cari menu disini…",
+                                              controller: _searchController,
                                               debounceTime: 500,
                                               onChanged: (value) {
                                                 context
@@ -199,7 +218,7 @@ class _ExploreProductTabletContentState
                   return Visibility(
                     visible: state.carts.isNotEmpty,
                     child: SizedBox(
-                      width: 500,
+                      width: 440,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -212,8 +231,13 @@ class _ExploreProductTabletContentState
                               horizontal: 16,
                             ),
                             child: CartFooter(
+                              labelButtonCart: "Proses Pesanan",
                               onCompleted: (value) {
                                 _scaffoldKey.currentState!.openEndDrawer();
+                                _searchController.clear();
+                                context
+                                    .read<CashierProductFilterCubit>()
+                                    .setFilter(name: "");
                               },
                               onSaved: _onCartSaved,
                             ),

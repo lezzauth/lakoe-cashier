@@ -22,7 +22,7 @@ import 'package:point_of_sales_cashier/features/reports/presentation/widgets/car
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/cards/report_card.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/cards/sales_total_card.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/list_tile/best_seller_product_tile.dart';
-import 'package:point_of_sales_cashier/features/reports/presentation/widgets/shimmer/repost_master_shimmer.dart';
+import 'package:point_of_sales_cashier/features/reports/presentation/widgets/shimmer/report_master_shimmer.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -188,8 +188,7 @@ class _ReportMasterState extends State<ReportMaster> {
                                 },
                                 icon: const UiIcons(
                                   TIcons.pieChartOutline,
-                                  height: 20,
-                                  width: 20,
+                                  size: 20,
                                   color: TColors.primary,
                                 ),
                                 label: "Rata2 Transaksi",
@@ -220,8 +219,7 @@ class _ReportMasterState extends State<ReportMaster> {
                                 },
                                 icon: const UiIcons(
                                   TIcons.billCheckedOutline,
-                                  height: 20,
-                                  width: 20,
+                                  size: 20,
                                   color: TColors.primary,
                                 ),
                                 label: "Total Keuntungan",
@@ -371,11 +369,7 @@ class DetailAmount extends StatelessWidget {
                     const SizedBox(height: 4),
                     TextHeading1(
                       TFormatter.formatToRupiah(
-                        amount == "NaN"
-                            ? 0
-                            : int.parse(
-                                amount,
-                              ),
+                        amount == "NaN" ? 0 : double.parse(amount).round(),
                       ),
                     ),
                   ],

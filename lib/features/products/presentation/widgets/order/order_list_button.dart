@@ -29,8 +29,7 @@ class OrderListButton extends StatelessWidget {
           children: [
             UiIcons(
               TIcons.bill,
-              height: 32,
-              width: 32,
+              size: 32,
               color: TColors.neutralLightLightest,
             ),
             TextHeading5(

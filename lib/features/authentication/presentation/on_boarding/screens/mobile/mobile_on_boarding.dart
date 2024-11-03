@@ -82,9 +82,14 @@ class _MobileOnBoardingState extends State<MobileOnBoarding> {
     }
 
     dynamic value = widget.formKey.currentState?.value;
-    context
-        .read<OnBoardingCubit>()
-        .requestOTP(RequestOTPDto(phoneNumber: "+62${value["phoneNumber"]}"));
+    String phoneNumber =
+        PhoneNumberFormatter.formatForRequest(value["phoneNumber"]);
+
+    context.read<OnBoardingCubit>().requestOTP(
+          RequestOTPDto(
+            phoneNumber: phoneNumber,
+          ),
+        );
   }
 
   @override
@@ -105,17 +110,17 @@ class _MobileOnBoardingState extends State<MobileOnBoarding> {
                 isTextInputActive: _isTextInputActive,
               ),
               ItemPageView(
-                title: "Jualan Makin Gampang!",
+                title: "QR Order dari Meja",
                 description:
-                    "Atur penjualan toko fisik dan online secara bersamaan. Semua lebih praktis!",
+                    "Cukup scan QR di meja, pelanggan bisa pesan langsung dari HP mereka!",
                 asset: TImages.onboarding2,
                 isTextInputActive: _isTextInputActive,
               ),
               ItemPageView(
-                title: "Hasil Jualan Saat Ini",
+                title: "Cek Laporan Penjualan",
                 description:
                     "Semua data penjualan dan keuntungan ada di tanganmu, lebih mudah dan cepat.",
-                asset: TImages.onboarding2,
+                asset: TImages.onboarding3,
                 isTextInputActive: _isTextInputActive,
               ),
             ],
@@ -198,9 +203,9 @@ class _MobileOnBoardingState extends State<MobileOnBoarding> {
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.startsWith("8",
                               errorText: "Nomor dimulai dengan angka 8"),
-                          FormBuilderValidators.maxLength(12,
+                          FormBuilderValidators.maxLength(14,
                               errorText: ErrorTextStrings.maxLength(
-                                  maxLength: 12, isNumber: true)),
+                                  maxLength: 14, isNumber: true)),
                           FormBuilderValidators.minLength(9,
                               errorText: ErrorTextStrings.minLength(
                                   minLength: 9, isNumber: true)),

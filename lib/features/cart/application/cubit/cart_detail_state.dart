@@ -51,12 +51,12 @@ final class CartDetailActionFailure extends CartDetailState {
 }
 
 final class CartDetailCompleteActionSuccess extends CartDetailState {
-  final CompleteOrderResponse response;
+  final CompleteOrderResponse res;
 
-  CartDetailCompleteActionSuccess({required this.response});
+  CartDetailCompleteActionSuccess({required this.res});
 
   @override
-  List<Object?> get props => [response];
+  List<Object?> get props => [res];
 }
 
 final class CartDetailCompleteActionFailure extends CartDetailState {

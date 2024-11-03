@@ -65,8 +65,7 @@ class OrderItem extends StatelessWidget {
                   children: [
                     const UiIcons(
                       TIcons.profile,
-                      height: 12,
-                      width: 12,
+                      size: 12,
                       color: TColors.neutralDarkLightest,
                     ),
                     TextHeading5(customerName.isEmpty ? "Umum" : customerName),
@@ -81,8 +80,7 @@ class OrderItem extends StatelessWidget {
                   children: [
                     const UiIcons(
                       TIcons.tableRestaurant,
-                      height: 12,
-                      width: 12,
+                      size: 12,
                       color: TColors.neutralDarkLightest,
                     ),
                     TextHeading5(tableName.isEmpty ? "Bebas" : tableName),

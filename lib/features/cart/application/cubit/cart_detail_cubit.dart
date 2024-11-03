@@ -88,10 +88,9 @@ class CartDetailCubit extends Cubit<CartDetailState> {
     String? customerId,
     String? tableId,
   }) async {
+    emit(CartDetailActionInProgress());
     try {
-      emit(CartDetailActionInProgress());
-
-      final response = await _cashierRepository.saveAndCompleteOrder(
+      final res = await _cashierRepository.saveAndCompleteOrder(
         _cartsToSaveOrderDto(
           carts: carts,
           type: type,
@@ -100,7 +99,7 @@ class CartDetailCubit extends Cubit<CartDetailState> {
         ),
         dto,
       );
-      emit(CartDetailCompleteActionSuccess(response: response));
+      emit(CartDetailCompleteActionSuccess(res: res));
     } catch (e, stackTrace) {
       log("saveAndCompleteOrder err: ${e.toString()}",
           name: "CartDetailCubit.saveAndCompleteOrder", stackTrace: stackTrace);

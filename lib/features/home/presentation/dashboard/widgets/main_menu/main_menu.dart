@@ -190,7 +190,7 @@ class _MainMenuState extends State<MainMenu> {
             ),
           ),
         _ => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: Shimmer.fromColors(
               baseColor: const Color(0xFFE8E9F1),
               highlightColor: const Color(0xFFF8F9FE),

@@ -76,7 +76,8 @@ class _EmployeeFormState extends State<EmployeeForm> {
                             hintText: "Masukan nama kasir",
                           ),
                           validator: FormBuilderValidators.required(
-                              errorText: ErrorTextStrings.required()),
+                              errorText: ErrorTextStrings.required(
+                                  name: "Nama Kasir")),
                         ),
                       ],
                     ),
@@ -116,7 +117,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
                     ),
                     keyboardType: TextInputType.phone,
                     validator: FormBuilderValidators.required(
-                        errorText: ErrorTextStrings.required()),
+                        errorText: ErrorTextStrings.required(name: "Nomor HP")),
                   ),
                 ],
               ),
@@ -180,7 +181,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
                         FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(
-                              errorText: ErrorTextStrings.required(),
+                              errorText: ErrorTextStrings.required(name: "PIN"),
                             ),
                             FormBuilderValidators.equalLength(
                               6,

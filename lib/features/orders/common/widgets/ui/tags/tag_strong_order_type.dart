@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
-class SolidOrderTypeTag extends StatelessWidget {
-  const SolidOrderTypeTag({
+class TagStrongOrderType extends StatelessWidget {
+  const TagStrongOrderType({
     super.key,
     required this.tag,
   });

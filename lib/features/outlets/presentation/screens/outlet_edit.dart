@@ -21,6 +21,7 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class OutletEditScreen extends StatefulWidget {
   const OutletEditScreen({super.key});
@@ -122,7 +123,9 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double circleSize = screenWidth / 5 - 16;
+    double circleSize = ResponsiveBreakpoints.of(context).smallerThan(TABLET)
+        ? screenWidth / 5 - 16
+        : screenWidth / 10 - 16;
 
     return BlocListener<OutletCubit, OutletState>(
       listener: (context, state) {
@@ -175,7 +178,8 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                                 hintText: "Contoh: Warung Madura",
                               ),
                               validator: FormBuilderValidators.required(
-                                  errorText: ErrorTextStrings.required()),
+                                  errorText: ErrorTextStrings.required(
+                                      name: "Nama Usaha")),
                             ),
                           ],
                         ),
@@ -212,7 +216,8 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                                   );
                                 },
                                 validator: FormBuilderValidators.required(
-                                    errorText: ErrorTextStrings.required()),
+                                    errorText: ErrorTextStrings.required(
+                                        name: "Jenis Usaha")),
                               )
                             ],
                           ),
@@ -230,7 +235,8 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                               ),
                               maxLines: 2,
                               validator: FormBuilderValidators.required(
-                                  errorText: ErrorTextStrings.required()),
+                                  errorText: ErrorTextStrings.required(
+                                      name: "Alamat")),
                             ),
                           ],
                         ),
@@ -409,13 +415,15 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                                             : TColors.neutralLightMedium,
                                         shape: BoxShape.circle,
                                       ),
-                                      child: UiIcons(
-                                        isCustomColor
-                                            ? TIcons.check
-                                            : TIcons.pipette,
-                                        color: isCustomColor
-                                            ? TColors.neutralLightLightest
-                                            : TColors.neutralDarkDark,
+                                      child: Center(
+                                        child: UiIcons(
+                                          isCustomColor
+                                              ? TIcons.check
+                                              : TIcons.pipette,
+                                          color: isCustomColor
+                                              ? TColors.neutralLightLightest
+                                              : TColors.neutralDarkDark,
+                                        ),
                                       ),
                                     ),
                                   );
@@ -436,14 +444,16 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                                         color: getColor(index),
                                         shape: BoxShape.circle,
                                       ),
-                                      child: selectedColor ==
-                                              getColor(index).value
-                                          ? UiIcons(
-                                              TIcons.check,
-                                              color:
-                                                  TColors.neutralLightLightest,
-                                            )
-                                          : SizedBox.shrink(),
+                                      child:
+                                          selectedColor == getColor(index).value
+                                              ? Center(
+                                                  child: UiIcons(
+                                                    TIcons.check,
+                                                    color: TColors
+                                                        .neutralLightLightest,
+                                                  ),
+                                                )
+                                              : SizedBox.shrink(),
                                     ),
                                   );
                                 }

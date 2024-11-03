@@ -29,7 +29,7 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
   List<LabelValue<String>> statuses = [
     const LabelValue(label: "Berlangsung", value: "OPEN"),
     const LabelValue(label: "Selesai", value: "COMPLETED"),
-    const LabelValue(label: "Batal", value: "CANCELLED"),
+    const LabelValue(label: "Dibatalkan", value: "CANCELLED"),
   ];
 
   @override
@@ -58,6 +58,7 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
         Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
+            clipBehavior: Clip.none,
             child: Wrap(
               direction: Axis.horizontal,
               alignment: WrapAlignment.start,
@@ -84,35 +85,37 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
             ),
           ),
         ),
-        SizedBox(width: 8),
-        InputChip(
-          label: Row(
-            children: [
-              const UiIcons(
-                TIcons.filter,
-                color: TColors.primary,
-                width: 16,
-                height: 16,
-              ),
-              const SizedBox(width: 4),
-              const TextBodyM(
-                "Filter",
-                color: TColors.neutralDarkDarkest,
-              ),
-              if (isFilterUsed) ...[
+        Container(
+          color: Colors.white,
+          padding: const EdgeInsets.only(left: 8),
+          child: InputChip(
+            label: Row(
+              children: [
+                const UiIcons(
+                  TIcons.filter,
+                  color: TColors.primary,
+                  size: 16,
+                ),
                 const SizedBox(width: 4),
-                Container(
-                  height: 8,
-                  width: 8,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: TColors.error,
-                  ),
-                )
+                const TextBodyM(
+                  "Filter",
+                  color: TColors.neutralDarkDarkest,
+                ),
+                if (isFilterUsed) ...[
+                  const SizedBox(width: 4),
+                  Container(
+                    height: 8,
+                    width: 8,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: TColors.error,
+                    ),
+                  )
+                ],
               ],
-            ],
+            ),
+            onPressed: onFilterOpen,
           ),
-          onPressed: onFilterOpen,
         ),
       ],
     );

@@ -13,7 +13,12 @@ class ResponsiveLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (ResponsiveBreakpoints.of(context).smallerThan(TABLET)) return mobile;
+    bool isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+
+    if (ResponsiveBreakpoints.of(context).smallerThan(TABLET) || isPortrait) {
+      return mobile;
+    }
 
     return tablet;
   }

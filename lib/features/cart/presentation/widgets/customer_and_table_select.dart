@@ -79,8 +79,7 @@ class _CustomerAndTableSelectState extends State<CustomerAndTableSelect> {
             subTitle: widget.customer == null ? "Umum" : widget.customer!.name,
             icon: const UiIcons(
               TIcons.profile,
-              height: 20,
-              width: 20,
+              size: 20,
               color: TColors.primary,
             ),
             onTap: _onCustomerOpened,
@@ -101,8 +100,7 @@ class _CustomerAndTableSelectState extends State<CustomerAndTableSelect> {
             subTitle: widget.table == null ? "Bebas" : widget.table!.no,
             icon: const UiIcons(
               TIcons.tableRestaurant,
-              height: 20,
-              width: 20,
+              size: 20,
               color: TColors.primary,
             ),
             onTap: _onTableOpened,

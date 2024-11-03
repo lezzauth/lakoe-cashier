@@ -35,8 +35,7 @@ class OrderTypeChip extends StatelessWidget {
         children: [
           UiIcons(
             icon,
-            height: 16,
-            width: 16,
+            size: 16,
             color: selected ? TColors.primary : TColors.neutralDarkDarkest,
           ),
           ResponsiveLayout(

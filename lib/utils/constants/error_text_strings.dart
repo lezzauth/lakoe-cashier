@@ -2,7 +2,7 @@ class ErrorTextStrings {
   ErrorTextStrings._();
 
   static String required({String? name}) {
-    return "Kolom ${name ?? "ini"} wajib diisi.";
+    return "${name ?? "Kolom ini"} tidak boleh kosong.";
   }
 
   static String email({String? name}) {

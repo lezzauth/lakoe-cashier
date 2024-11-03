@@ -2,6 +2,7 @@ import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/list_item_card.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/section_card.dart';
@@ -19,6 +20,7 @@ import 'package:point_of_sales_cashier/features/outlets/application/outlet_state
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -35,10 +37,34 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
     super.initState();
     context.read<AuthCubit>().initialize();
     _onInit();
+    _updateAppVersion();
   }
 
   void _onInit() {
     context.read<OutletCubit>().init();
+  }
+
+  Future<String> getAppVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    return "Versi ${packageInfo.version}";
+  }
+
+  Future<void> _updateAppVersion() async {
+    final appVersion = await getAppVersion();
+    setState(() {
+      otherSettingItems = otherSettingItems.map((item) {
+        if (item.title == "Kasih Rating") {
+          return _OtherItem(
+            title: item.title,
+            routeName: item.routeName,
+            iconSrc: item.iconSrc,
+            textTrailing: appVersion,
+            isNewItem: item.isNewItem,
+          );
+        }
+        return item;
+      }).toList();
+    });
   }
 
   List<_OtherItem> otherSettingItems = [
@@ -52,7 +78,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       title: "Kasih Rating",
       routeName: "/",
       iconSrc: TIcons.star,
-      textTrailing: "Versi 3.20.0",
+      textTrailing: "",
       isNewItem: false,
     ),
     _OtherItem(
@@ -239,7 +265,9 @@ class ProfileCard extends StatelessWidget {
                               ),
                               const SizedBox(height: 2.0),
                               TextBodyS(
-                                profile.phoneNumber.replaceFirst('+', ''),
+                                // profile.phoneNumber.replaceFirst('+', ''),
+                                PhoneNumberFormatter.formatForDisplay(
+                                    profile.phoneNumber),
                                 color: TColors.neutralDarkLight,
                               ),
                             ],
@@ -247,8 +275,7 @@ class ProfileCard extends StatelessWidget {
                         ),
                         const UiIcons(
                           TIcons.arrowRight,
-                          height: 20,
-                          width: 20,
+                          size: 20,
                           color: TColors.primary,
                         ),
                       ],
@@ -338,8 +365,7 @@ class BalanceCard extends StatelessWidget {
                   children: [
                     UiIcons(
                       TIcons.wallet,
-                      height: 16,
-                      width: 16,
+                      size: 16,
                       color: TColors.neutralLightLight,
                     ),
                     SizedBox(width: 6),

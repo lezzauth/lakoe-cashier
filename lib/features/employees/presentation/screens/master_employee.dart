@@ -19,6 +19,7 @@ class MasterEmployeScreen extends StatefulWidget {
 }
 
 class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
+  final TextEditingController _searchController = TextEditingController();
   Future<void> _onRefresh() async {
     await context.read<EmployeeMasterCubit>().findAll(FindAllEmployeeDto());
   }
@@ -47,6 +48,7 @@ class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
       appBar: CustomAppbar(
         search: SearchField(
           hintText: "Cari kasir disini...",
+          controller: _searchController,
           debounceTime: 500,
           onChanged: (value) {},
         ),

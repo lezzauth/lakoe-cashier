@@ -37,6 +37,7 @@ class CategoryMaster extends StatefulWidget {
 }
 
 class _CategoryMasterState extends State<CategoryMaster> {
+  final TextEditingController _searchController = TextEditingController();
   Future<void> onRefresh() async {
     CategoryMasterFilterState filterState =
         context.read<CategoryMasterFilterCubit>().state;
@@ -68,7 +69,8 @@ class _CategoryMasterState extends State<CategoryMaster> {
       child: Scaffold(
         appBar: CustomAppbar(
           search: SearchField(
-            hintText: "Cari kategori disini",
+            hintText: "Cari kategori disini…",
+            controller: _searchController,
             debounceTime: 500,
             onChanged: (value) {
               context
@@ -198,10 +200,9 @@ class _CategoryMasterState extends State<CategoryMaster> {
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () async {
-              bool? newCategory =
-                  await Navigator.pushNamed(context, "/categories/new")
-                      as bool?;
-              if (newCategory != true) return;
+              int? newCategoryId =
+                  await Navigator.pushNamed(context, "/categories/new") as int?;
+              if (newCategoryId == null) return;
               onRefresh();
             },
             elevation: 0,

@@ -193,8 +193,7 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
                     alignment: Alignment.center,
                     child: const UiIcons(
                       TIcons.close,
-                      height: 12,
-                      width: 12,
+                      size: 12,
                       color: TColors.error,
                     ),
                   ),

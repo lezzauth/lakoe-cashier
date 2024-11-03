@@ -54,8 +54,7 @@ class _OrderPriceBreakdownSectionState
             child: UiIcons(
               TIcons.wallet2,
               color: TColors.primary,
-              height: 24,
-              width: 24,
+              size: 24,
             ),
           ),
           Expanded(

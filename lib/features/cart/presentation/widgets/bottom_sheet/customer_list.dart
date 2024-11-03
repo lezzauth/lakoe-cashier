@@ -39,6 +39,8 @@ class CartCustomerListContent extends StatefulWidget {
 }
 
 class _CartCustomerListContentState extends State<CartCustomerListContent> {
+  final TextEditingController _searchController = TextEditingController();
+
   Future<void> _onInit() async {
     await context.read<CartCustomerCubit>().init();
   }
@@ -65,6 +67,7 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                 padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
                 child: SearchField(
                   hintText: "Cari pelanggan...",
+                  controller: _searchController,
                   debounceTime: 500,
                   onChanged: (value) {
                     context
@@ -110,14 +113,12 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                                     trailing: selected
                                         ? const UiIcons(
                                             TIcons.check,
-                                            height: 16,
-                                            width: 16,
+                                            size: 16,
                                             color: TColors.primary,
                                           )
                                         : const UiIcons(
                                             TIcons.arrowRight,
-                                            height: 12,
-                                            width: 12,
+                                            size: 12,
                                             color: TColors.neutralDarkLightest,
                                           ),
                                   ),

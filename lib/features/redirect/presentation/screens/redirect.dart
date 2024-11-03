@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:logman/logman.dart';
 import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
@@ -27,9 +29,31 @@ class _RedirectScreenState extends State<RedirectScreen> {
   late final StreamSubscription<List<ConnectivityResult>>
       _connectivitySubscription;
 
+  Future<void> _loadFlavor() async {
+    final AppDataProvider appDataProvider = AppDataProvider();
+    final flavor = await appDataProvider.flavor;
+
+    if (flavor == "Development") {
+      Logman.instance.info('App started!');
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Logman.instance.attachOverlay(
+          context: context,
+          button: FloatingActionButton.small(
+            key: Key('logman-button'),
+            onPressed: () {},
+            child: Icon(Icons.terminal),
+          ),
+          printLogs: true,
+        );
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    _loadFlavor();
     context.read<AuthCubit>().initialize();
 
     _connectivitySubscription =

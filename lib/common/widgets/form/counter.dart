@@ -34,7 +34,15 @@ class Counter extends StatelessWidget {
       height: 36,
       child: Row(
         children: [
-          Container(
+          InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: (value <= 1 && isDeletable == true)
+                ? () => onChanged(value - 1)
+                : (minValue > 1 && isDeletable == false)
+                    ? null
+                    : () => onChanged(value - 1),
+            child: Container(
               decoration: BoxDecoration(
                 color: TColors.neutralLightLight,
                 borderRadius: BorderRadius.circular(8.0),
@@ -45,31 +53,23 @@ class Counter extends StatelessWidget {
                 child: (value <= 1 && isDeletable == true)
                     ? UiIcons(
                         TIcons.trash,
-                        height: 16,
-                        width: 16,
+                        size: 16,
                         color: TColors.error,
-                        onTap: () {
-                          onChanged(value - 1);
-                        },
                       )
                     : (minValue > 1 && isDeletable == false)
                         ? UiIcons(
                             TIcons.minus,
-                            height: 16,
-                            width: 16,
+                            size: 16,
                             color: TColors.highlightMedium,
-                            onTap: null,
                           )
                         : UiIcons(
                             TIcons.minus,
-                            height: 16,
-                            width: 16,
+                            size: 16,
                             color: TColors.primary,
-                            onTap: () {
-                              onChanged(value - 1);
-                            },
                           ),
-              )),
+              ),
+            ),
+          ),
           SizedBox(
             height: 36,
             width: 36,
@@ -83,21 +83,22 @@ class Counter extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: TColors.neutralLightLight,
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            width: 36,
-            height: 36,
-            child: UiIcons(
-              TIcons.add,
-              height: 16,
-              width: 16,
-              color: TColors.primary,
-              onTap: () {
-                onChanged(value + 1);
-              },
+          InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () => onChanged(value + 1),
+            child: Container(
+              decoration: BoxDecoration(
+                color: TColors.neutralLightLight,
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              width: 36,
+              height: 36,
+              child: UiIcons(
+                TIcons.add,
+                size: 16,
+                color: TColors.primary,
+              ),
             ),
           ),
         ],

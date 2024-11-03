@@ -24,8 +24,8 @@ class CategoryMasterCubit extends Cubit<CategoryMasterState> {
   Future<void> create(CreateCategoryDto dto) async {
     try {
       emit(CategoryMasterActionInProgress());
-      await _categoryRepository.create(dto);
-      emit(CategoryMasterActionSuccess());
+      final res = await _categoryRepository.create(dto);
+      emit(CategoryMasterActionSuccess(res));
     } catch (e) {
       emit(CategoryMasterActionFailure(e.toString()));
     }
@@ -34,8 +34,8 @@ class CategoryMasterCubit extends Cubit<CategoryMasterState> {
   Future<void> update(int id, UpdateCategoryDto dto) async {
     try {
       emit(CategoryMasterActionInProgress());
-      await _categoryRepository.update(id, dto);
-      emit(CategoryMasterActionSuccess());
+      final res = await _categoryRepository.update(id, dto);
+      emit(CategoryMasterActionSuccess(res));
     } catch (e) {
       emit(CategoryMasterActionFailure(e.toString()));
     }
@@ -44,8 +44,8 @@ class CategoryMasterCubit extends Cubit<CategoryMasterState> {
   Future<void> delete(int id) async {
     try {
       emit(CategoryMasterActionInProgress());
-      await _categoryRepository.delete(id);
-      emit(CategoryMasterActionSuccess());
+      final res = await _categoryRepository.delete(id);
+      emit(CategoryMasterActionSuccess(res));
     } catch (e) {
       emit(CategoryMasterActionFailure(e.toString()));
     }

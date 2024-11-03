@@ -160,8 +160,7 @@ class _DateStepperFilterState extends State<DateStepperFilter> {
                 },
                 icon: const UiIcons(
                   TIcons.arrowLeft,
-                  height: 16,
-                  width: 16,
+                  size: 16,
                   color: TColors.primary,
                 ),
               ),
@@ -187,8 +186,7 @@ class _DateStepperFilterState extends State<DateStepperFilter> {
                         },
                   icon: const UiIcons(
                     TIcons.arrowRight,
-                    height: 16,
-                    width: 16,
+                    size: 16,
                     color: TColors.primary,
                   ),
                 ),

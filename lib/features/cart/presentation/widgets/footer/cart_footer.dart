@@ -8,73 +8,94 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 class CartFooter extends StatelessWidget {
   const CartFooter({
     super.key,
-    required this.onCompleted,
+    this.onCompleted,
     required this.onSaved,
+    this.labelButtonCart = "Bayar & Selesaikan",
   });
 
   final Function() onSaved;
-  final ValueChanged<double> onCompleted;
+  final ValueChanged<double>? onCompleted;
+  final String labelButtonCart;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartDetailCubit, CartDetailState>(
       builder: (context, cartState) => Row(
         children: [
-          SizedBox(
-            height: 48.0,
-            child: OutlinedButton(
-              onPressed:
-                  cartState is CartDetailActionInProgress ? null : onSaved,
-              style: const ButtonStyle(
-                padding: WidgetStatePropertyAll(
-                  EdgeInsets.symmetric(horizontal: 26),
+          if (onCompleted == null)
+            Expanded(
+              child: SizedBox(
+                height: 48.0,
+                child: ElevatedButton(
+                  onPressed:
+                      cartState is CartDetailActionInProgress ? null : onSaved,
+                  child: cartState is CartDetailActionInProgress
+                      ? const SizedBox(
+                          height: 16,
+                          width: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 1,
+                            color: TColors.neutralLightLightest,
+                          ),
+                        )
+                      : const TextActionL(
+                          "Simpan Pesanan",
+                          color: TColors.neutralLightLightest,
+                        ),
                 ),
               ),
-              child: cartState is CartDetailActionInProgress
-                  ? const SizedBox(
-                      height: 16,
-                      width: 16,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 1,
-                      ),
-                    )
-                  : const TextActionL(
-                      "Simpan",
-                      color: TColors.primary,
-                    ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: SizedBox(
+            )
+          else ...[
+            SizedBox(
               height: 48.0,
-              child: ElevatedButton(
-                onPressed: cartState is CartDetailActionInProgress
-                    ? null
-                    : () {
-                        // TODO: handle int string decimal
-                        if (cartState is CartDetailLoadSuccess) {
-                          onCompleted(
-                            double.parse(cartState.previewOrderPrice.total),
-                          );
-                        }
-                      },
+              child: OutlinedButton(
+                onPressed:
+                    cartState is CartDetailActionInProgress ? null : onSaved,
                 child: cartState is CartDetailActionInProgress
                     ? const SizedBox(
                         height: 16,
                         width: 16,
                         child: CircularProgressIndicator(
                           strokeWidth: 1,
-                          color: TColors.neutralLightLightest,
                         ),
                       )
                     : const TextActionL(
-                        "Bayar & Selesai",
-                        color: TColors.neutralLightLightest,
+                        "Simpan",
+                        color: TColors.primary,
                       ),
               ),
             ),
-          ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: SizedBox(
+                height: 48.0,
+                child: ElevatedButton(
+                  onPressed: cartState is CartDetailActionInProgress
+                      ? null
+                      : () {
+                          if (cartState is CartDetailLoadSuccess) {
+                            onCompleted!(
+                              double.parse(cartState.previewOrderPrice.total),
+                            );
+                          }
+                        },
+                  child: cartState is CartDetailActionInProgress
+                      ? const SizedBox(
+                          height: 16,
+                          width: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 1,
+                            color: TColors.neutralLightLightest,
+                          ),
+                        )
+                      : TextActionL(
+                          labelButtonCart,
+                          color: TColors.neutralLightLightest,
+                        ),
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );

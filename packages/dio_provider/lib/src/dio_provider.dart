@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:app_config_provider/app_config_provider.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_provider/src/logging/logman_dio_interceptor.dart';
 import 'package:dio_provider/src/models/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
@@ -9,6 +10,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bott
 import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/main.dart';
 
 bool isShowingBottomSheet = false;
 
@@ -20,6 +22,8 @@ class DioProvider {
   );
 
   DioProvider() {
+    _dio.interceptors.add(LogmanDioInterceptor());
+
     _dio.interceptors.add(LogInterceptor(
       requestBody: true,
       responseBody: true,
@@ -172,9 +176,7 @@ class DioProvider {
         type: DioExceptionType.badResponse,
       ));
     } else {
-      log("Response is not a Map: ${responseData}");
+      log("Response is not a Map: $responseData");
     }
   }
 }
-
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

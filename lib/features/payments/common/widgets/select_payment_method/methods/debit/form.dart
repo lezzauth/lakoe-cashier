@@ -8,7 +8,9 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 
 class DebitPaymentForm extends StatefulWidget {
-  const DebitPaymentForm({super.key});
+  const DebitPaymentForm({super.key, required this.onSubmitted});
+
+  final VoidCallback onSubmitted;
 
   @override
   State<DebitPaymentForm> createState() => _DebitPaymentFormState();
@@ -44,9 +46,11 @@ class _DebitPaymentFormState extends State<DebitPaymentForm> {
                       decoration: const InputDecoration(
                         hintText: 'Masukkan kode approval',
                       ),
+                      onSubmitted: (_) => widget.onSubmitted(),
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(
-                          errorText: ErrorTextStrings.required(),
+                          errorText:
+                              ErrorTextStrings.required(name: "Kode Approval"),
                         ),
                         FormBuilderValidators.numeric(
                           errorText: ErrorTextStrings.numeric(),

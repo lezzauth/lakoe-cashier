@@ -40,13 +40,6 @@ class SuccessConfirmationPaymentScreen extends StatefulWidget {
 class _SuccessConfirmationPaymentScreenState
     extends State<SuccessConfirmationPaymentScreen> {
   @override
-  void initState() {
-    super.initState();
-
-    context.read<CartCubit>().reset();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => OrderDetailCubit(),
@@ -59,7 +52,7 @@ class _SuccessConfirmationPaymentScreenState
               ),
               tablet: Center(
                 child: SizedBox(
-                  width: 311,
+                  width: 450,
                   child: SuccessConfirmationPaymentContent(
                     arguments: widget.arguments,
                   ),
@@ -152,11 +145,14 @@ class _SuccessConfirmationPaymentContentState
                 onPopInvokedWithResult: (popDisposition, popResult) async {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     if (mounted) {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        "/cashier/explore-products",
-                        (route) => false,
-                      );
+                      context.read<CartCubit>().reset();
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          "/cashier/explore-products",
+                          (route) => false,
+                        );
+                      });
                     }
                   });
                   return Future.value(null);

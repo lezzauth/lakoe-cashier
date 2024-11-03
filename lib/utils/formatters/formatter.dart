@@ -15,13 +15,38 @@ class TFormatter {
     return formatter.format(number).replaceAll(',', '.');
   }
 
+  static String getIndonesianTimeZone(DateTime dateTime) {
+    int offsetInHours = dateTime.timeZoneOffset.inHours;
+
+    if (offsetInHours == 7) {
+      return "WIB";
+    } else if (offsetInHours == 8) {
+      return "WITA";
+    } else if (offsetInHours == 9) {
+      return "WIT";
+    } else {
+      return "Zona waktu tidak diketahui";
+    }
+  }
+
   static String orderDate(String isoDate, {bool withDay = false}) {
     DateTime dateTime = DateTime.parse(isoDate).toLocal();
+    DateTime now = DateTime.now();
+
+    bool isToday = dateTime.year == now.year &&
+        dateTime.month == now.month &&
+        dateTime.day == now.day;
+
+    String timeZone = getIndonesianTimeZone(dateTime);
+
+    if (isToday) {
+      return "Hari ini, ${DateFormat("HH:mm", "id_ID").format(dateTime)} $timeZone";
+    }
 
     String formattedDate =
-        DateFormat("${withDay ? "EEEE, " : ""}dd MMM yyyy - HH:mm", "id_ID")
+        DateFormat("${withDay ? "EEEE, " : ""}dd MMM yyyy, HH:mm", "id_ID")
             .format(dateTime);
-    return formattedDate;
+    return "$formattedDate $timeZone";
   }
 
   static String billDate(String dateStr) {
@@ -64,6 +89,15 @@ class TFormatter {
 
     return initials.toUpperCase();
   }
+
+  static String capitalizeEachWord(String text) {
+    if (text.isEmpty) return text;
+
+    return text.split(' ').map((word) {
+      if (word.isEmpty) return word;
+      return word[0].toUpperCase() + word.substring(1).toLowerCase();
+    }).join(' ');
+  }
 }
 
 class CreditCardFormatter extends TextInputFormatter {
@@ -88,30 +122,76 @@ class CreditCardFormatter extends TextInputFormatter {
 }
 
 class PhoneNumberFormatter extends TextInputFormatter {
+  final bool isDisplayFormat;
+
+  PhoneNumberFormatter({this.isDisplayFormat = false});
+
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     String newText = newValue.text;
 
-    // If the new text starts with '+628', replace it with '8'
-    if (newText.startsWith('+628')) {
-      newText = newText.replaceFirst('+628', '8');
-    }
-    // If the new text starts with '08', replace it with '8'
-    else if (newText.startsWith('08')) {
-      newText = newText.replaceFirst('08', '8');
+    if (isDisplayFormat) {
+      newText = formatForDisplay(newText);
+    } else {
+      if (newText.startsWith('+628')) {
+        newText = newText.replaceFirst('+628', '8');
+      } else if (newText.startsWith('628')) {
+        newText = newText.replaceFirst('628', '8');
+      } else if (newText.startsWith('08')) {
+        newText = newText.replaceFirst('08', '8');
+      }
+
+      newText = newText.replaceAll(RegExp(r'[^0-9]'), '');
+
+      if (newText.length > 10) {
+        newText =
+            '${newText.substring(0, 3)}-${newText.substring(3, 7)}-${newText.substring(7, 11)}';
+      } else if (newText.length > 7) {
+        newText =
+            '${newText.substring(0, 3)}-${newText.substring(3, 7)}-${newText.substring(7)}';
+      } else if (newText.length > 3) {
+        newText = '${newText.substring(0, 3)}-${newText.substring(3)}';
+      }
     }
 
-    // Allow only numbers and ensure the text is numeric after the replacements
-    final regex = RegExp(r'^[0-9]*$');
-    if (!regex.hasMatch(newText)) {
-      return oldValue;
-    }
-
-    // Return the formatted value
     return TextEditingValue(
       text: newText,
       selection: TextSelection.collapsed(offset: newText.length),
     );
+  }
+
+  static String formatForRequest(String phoneNumber) {
+    String cleanedPhoneNumber = phoneNumber.replaceAll('-', '');
+
+    if (cleanedPhoneNumber.startsWith('8')) {
+      cleanedPhoneNumber = '+62$cleanedPhoneNumber';
+    } else if (cleanedPhoneNumber.startsWith('08')) {
+      cleanedPhoneNumber = '+62${cleanedPhoneNumber.substring(1)}';
+    } else if (cleanedPhoneNumber.startsWith('628')) {
+      cleanedPhoneNumber = '+62${cleanedPhoneNumber.substring(2)}';
+    }
+
+    return cleanedPhoneNumber;
+  }
+
+  static String formatForDisplay(String phoneNumber) {
+    String cleanedPhoneNumber = phoneNumber.replaceAll(RegExp(r'[^0-9]'), '');
+
+    if (cleanedPhoneNumber.startsWith('628')) {
+      cleanedPhoneNumber = '0${cleanedPhoneNumber.substring(2)}';
+    } else if (cleanedPhoneNumber.startsWith('8')) {
+      cleanedPhoneNumber = '0$cleanedPhoneNumber';
+    }
+
+    if (cleanedPhoneNumber.length > 11) {
+      return '${cleanedPhoneNumber.substring(0, 4)}-${cleanedPhoneNumber.substring(4, 8)}-${cleanedPhoneNumber.substring(8, 12)}';
+    } else if (cleanedPhoneNumber.length > 7) {
+      return '${cleanedPhoneNumber.substring(0, 4)}-${cleanedPhoneNumber.substring(4, 8)}-${cleanedPhoneNumber.substring(8)}';
+    } else if (cleanedPhoneNumber.length > 3) {
+      return '${cleanedPhoneNumber.substring(0, 4)}-${cleanedPhoneNumber.substring(4)}';
+    }
+
+    return cleanedPhoneNumber;
   }
 }

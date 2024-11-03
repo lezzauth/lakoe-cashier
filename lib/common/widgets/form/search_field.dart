@@ -32,6 +32,20 @@ class SearchField extends StatefulWidget {
 class _SearchFieldState extends State<SearchField> {
   Timer? _debounce;
 
+  @override
+  void initState() {
+    super.initState();
+    widget.controller?.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
+
   _onSearchChanged(String query) {
     if (widget.debounceTime == 0) {
       if (widget.onChanged != null) widget.onChanged!(query);
@@ -59,14 +73,12 @@ class _SearchFieldState extends State<SearchField> {
         children: [
           const UiIcons(
             TIcons.search,
-            height: 20,
-            width: 20,
+            size: 20,
             color: TColors.neutralDarkLight,
           ),
           const SizedBox(width: 12),
           Flexible(
             child: SizedBox(
-              // height: 22,
               child: TextField(
                 controller: widget.controller,
                 decoration: InputDecoration(
@@ -93,7 +105,23 @@ class _SearchFieldState extends State<SearchField> {
                 focusNode: widget.focusNode,
               ),
             ),
-          )
+          ),
+          if (widget.controller != null)
+            if (widget.controller!.text.isNotEmpty)
+              GestureDetector(
+                onTap: () {
+                  widget.controller!.clear();
+                  widget.onChanged?.call('');
+                },
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                  child: UiIcons(
+                    TIcons.close,
+                    size: 12,
+                    color: TColors.neutralDarkLight,
+                  ),
+                ),
+              ),
         ],
       ),
     );

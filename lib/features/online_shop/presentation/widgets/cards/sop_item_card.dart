@@ -39,8 +39,7 @@ class SOPItemCard extends StatelessWidget {
               margin: const EdgeInsets.only(right: 16),
               child: UiIcons(
                 iconSrc,
-                height: 24,
-                width: 24,
+                size: 24,
                 color: TColors.primary,
               ),
             ),
@@ -69,8 +68,7 @@ class SOPItemCard extends StatelessWidget {
                 margin: const EdgeInsets.only(left: 12),
                 child: UiIcons(
                   TIcons.arrowRight,
-                  height: 16,
-                  width: 16,
+                  size: 16,
                   color: TColors.primary,
                 ),
               ),

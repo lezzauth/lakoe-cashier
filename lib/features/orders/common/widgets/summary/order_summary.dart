@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
@@ -44,10 +45,10 @@ class OrderSummary extends StatelessWidget {
     String modifiedPaymentMethod = payment.paymentMethod;
 
     if (payment.paymentMethod == 'QR_CODE' && payment.paidFrom == 'EDC') {
-      modifiedPaymentMethod = 'QRIS Dinamis';
+      modifiedPaymentMethod = 'QRIS EDC';
     } else if (payment.paymentMethod == 'QR_CODE' &&
         payment.paidFrom == 'CASHIER') {
-      modifiedPaymentMethod = 'QRIS Statis';
+      modifiedPaymentMethod = 'QRIS';
     } else if (payment.paymentMethod == 'CASH') {
       modifiedPaymentMethod = 'Cash (Tunai)';
     } else if (payment.paymentMethod == 'DEBIT') {
@@ -140,12 +141,6 @@ class OrderSummary extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Separator(
-                      color: TColors.neutralLightDark,
-                      height: 1,
-                      dashWidth: 5.0,
-                    ),
-                    const SizedBox(height: 8),
                   ],
                   if (_serviceFeeCharges().isNotEmpty) ...[
                     ..._serviceFeeCharges().map(
@@ -189,7 +184,6 @@ class OrderSummary extends StatelessWidget {
                           : ShimmerText(),
                     ],
                   ),
-                  const SizedBox(height: 8),
                   if (isPaid && paymentInfo != null)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -207,8 +201,7 @@ class OrderSummary extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: UiIcons(
                                         TIcons.image,
-                                        width: 16,
-                                        height: 16,
+                                        size: 16,
                                         color: TColors.primary,
                                       ),
                                     ),
@@ -287,12 +280,12 @@ class OrderSummary extends StatelessWidget {
         ),
         if (isPaid)
           Positioned(
-            bottom: 0,
+            bottom: 40,
             right: 48,
-            child: Image.asset(
-              TImages.stamp,
-              height: 121,
-              width: 181,
+            child: SvgPicture.asset(
+              TImages.stampPaid,
+              width: 80,
+              height: 80,
             ),
           ),
       ],

@@ -68,8 +68,7 @@ class CustomAppbarLight extends StatelessWidget implements PreferredSizeWidget {
                                 },
                             icon: const UiIcons(
                               TIcons.arrowLeft,
-                              height: 16,
-                              width: 16,
+                              size: 16,
                               color: TColors.neutralLightLightest,
                             ),
                           ),

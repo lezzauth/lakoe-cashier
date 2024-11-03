@@ -75,8 +75,7 @@ class CardOrder extends StatelessWidget {
                   margin: const EdgeInsets.only(left: 8.0),
                   child: const UiIcons(
                     TIcons.arrowRight,
-                    height: 12,
-                    width: 12,
+                    size: 12,
                     color: TColors.neutralLightDarkest,
                   ),
                 )

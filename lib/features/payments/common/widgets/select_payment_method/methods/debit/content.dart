@@ -74,7 +74,7 @@ class DebitPaymentContentState extends State<DebitPaymentContent> {
                     );
                   },
                 ),
-                DebitPaymentForm(),
+                DebitPaymentForm(onSubmitted: _onSubmitted),
               ],
             ),
           ),

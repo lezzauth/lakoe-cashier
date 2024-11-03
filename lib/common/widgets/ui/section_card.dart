@@ -46,8 +46,7 @@ class SectionCard extends StatelessWidget {
                           children: [
                             UiIcons(
                               iconSrc!,
-                              height: 20,
-                              width: 20,
+                              size: 20,
                               color: TColors.neutralDarkDark,
                             ),
                             const SizedBox(width: 12),

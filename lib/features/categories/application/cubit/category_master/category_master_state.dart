@@ -38,6 +38,8 @@ final class CategoryMasterActionInProgress extends CategoryMasterState {
 }
 
 final class CategoryMasterActionSuccess extends CategoryMasterState {
+  final CategoryModel category;
+  CategoryMasterActionSuccess(this.category);
   @override
   List<Object?> get props => [];
 }

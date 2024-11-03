@@ -4,8 +4,8 @@ class TPaymentMethodName {
   static String cash = "Cash (Tunai)";
   static String debit = "Debit/Credit";
   static String bankTransfer = "Transfer Bank";
-  static String qrisStatic = "QRIS Statis";
-  static String qrisDinamis = "QRIS Dinamis";
+  static String qrisStatic = "QRIS";
+  static String qrisDinamis = "QRIS EDC";
 
   static String getName(String paymentMethod, String? paymentSource) {
     switch (paymentMethod) {

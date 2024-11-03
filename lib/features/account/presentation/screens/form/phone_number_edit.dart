@@ -20,6 +20,7 @@ class PhoneNumberEditScreen extends StatefulWidget {
 }
 
 class _PhoneNumberEditScreenState extends State<PhoneNumberEditScreen> {
+  late GlobalKey<FormBuilderState> formKey;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,9 +90,9 @@ class _PhoneNumberEditScreenState extends State<PhoneNumberEditScreen> {
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.startsWith("8",
                                 errorText: "Nomor dimulai dengan angka 8"),
-                            FormBuilderValidators.maxLength(12,
+                            FormBuilderValidators.maxLength(14,
                                 errorText: ErrorTextStrings.maxLength(
-                                    maxLength: 12, isNumber: true)),
+                                    maxLength: 14, isNumber: true)),
                             FormBuilderValidators.minLength(9,
                                 errorText: ErrorTextStrings.minLength(
                                     minLength: 9, isNumber: true)),
@@ -118,7 +119,9 @@ class _PhoneNumberEditScreenState extends State<PhoneNumberEditScreen> {
             child: ElevatedButton(
               onPressed: () {
                 if (kDebugMode) {
-                  print("Verification!");
+                  String phoneNumber =
+                      PhoneNumberFormatter.formatForRequest("81286974581");
+                  print("xxx Verification! $phoneNumber");
                 }
               },
               child: const TextActionL(

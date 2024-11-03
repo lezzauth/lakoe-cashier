@@ -73,8 +73,20 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
                         onSubmit();
                       }
                     },
-                    validator: FormBuilderValidators.required(
-                        errorText: ErrorTextStrings.required()),
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                        errorText:
+                            ErrorTextStrings.required(name: "Saldo Awal"),
+                      ),
+                      (value) {
+                        final unformattedValue =
+                            _currencyFormatter.getUnformattedValue();
+                        if (unformattedValue <= 0) {
+                          return "Nilai tidak boleh 0";
+                        }
+                        return null;
+                      },
+                    ]),
                     inputFormatters: [_currencyFormatter],
                     decoration: const InputDecoration(
                       hintText: 'Rp 0',

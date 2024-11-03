@@ -101,8 +101,7 @@ class _TableMasterState extends State<TableMaster> {
               onPressed: () {},
               icon: const UiIcons(
                 TIcons.download,
-                height: 20,
-                width: 20,
+                size: 20,
                 color: TColors.primary,
               ),
             )
@@ -142,7 +141,8 @@ class _TableMasterState extends State<TableMaster> {
                         bool isFreeTable = table.id == "-";
 
                         String title = table.no;
-                        String subtitle = "${table.capacity} Orang • Indoor";
+                        String subtitle =
+                            "${table.capacity} Orang • Indoor (Hardcode)";
 
                         if (isFreeTable) {
                           title = "Bebas";
@@ -171,8 +171,7 @@ class _TableMasterState extends State<TableMaster> {
                                   child: UiIcons(
                                     TIcons.tableRestaurant,
                                     color: TColors.primary,
-                                    height: 20,
-                                    width: 20,
+                                    size: 20,
                                   ),
                                 ),
                               ),
@@ -189,8 +188,7 @@ class _TableMasterState extends State<TableMaster> {
                                   : const UiIcons(
                                       TIcons.arrowRight,
                                       color: TColors.neutralDarkLightest,
-                                      height: 12,
-                                      width: 12,
+                                      size: 12,
                                     ),
                             ),
                             const Divider(

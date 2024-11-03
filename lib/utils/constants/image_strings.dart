@@ -16,6 +16,8 @@ class TImages {
   static const String searchEmpty = "assets/images/search-empty.svg";
   static const String productEmpty = "assets/images/product-empty.svg";
   static const String stamp = "assets/images/stamp.png";
+  static const String stampPaid = "assets/images/stamp-paid.svg";
+  static const String stampCancel = "assets/images/stamp-cancel.svg";
   static const String infinity = "assets/images/infinity.svg";
   static const String catBox = "assets/images/cat-box.svg";
   static const String qrisLogo = "assets/images/qris-logo.svg";

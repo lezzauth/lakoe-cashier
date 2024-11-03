@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/form/product_form_cubit.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class StockInformationForm extends StatefulWidget {
@@ -42,7 +44,17 @@ class _StockInformationFormState extends State<StockInformationForm>
     return FormBuilder(
       key: formKey,
       initialValue: widget.initialValue,
-      onChanged: widget.onChanged,
+      // onChanged: widget.onChanged,
+      onChanged: () {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          bool isFormValid = widget.formKey.currentState?.isValid ?? false;
+          context.read<ProductFormCubit>().onChangeProduct(
+                widget.formKey.currentState?.instantValue,
+                isFormValid,
+                true,
+              );
+        });
+      },
       autovalidateMode: AutovalidateMode.always,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),

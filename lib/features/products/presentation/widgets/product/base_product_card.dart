@@ -6,7 +6,7 @@ import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class BaseProductCard extends StatelessWidget {
   final String name;
-  final Image image;
+  final Widget image;
   final int price;
   final bool selected;
 
@@ -38,6 +38,7 @@ class BaseProductCard extends StatelessWidget {
           Container(
             clipBehavior: Clip.antiAlias,
             decoration: const BoxDecoration(
+              color: TColors.neutralLightMedium,
               borderRadius: BorderRadius.all(
                 Radius.circular(16),
               ),

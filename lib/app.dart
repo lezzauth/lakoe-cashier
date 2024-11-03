@@ -1,7 +1,8 @@
-import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:logman/logman.dart';
 import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/account_edit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/account_master.dart';
@@ -126,12 +127,15 @@ import 'package:point_of_sales_cashier/features/tables/presentation/screens/tabl
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
 import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_master/tax_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/taxes/presentation/screens/tax_master.dart';
+import 'package:point_of_sales_cashier/main_dev.dart';
 import 'package:point_of_sales_cashier/utils/helpers/navigator_observer.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  final String flavor;
+
+  const App({super.key, required this.flavor});
 
   @override
   Widget build(BuildContext context) {
@@ -217,7 +221,10 @@ class App extends StatelessWidget {
           darkTheme: TAppTheme.darkTheme,
           themeMode: ThemeMode.light,
           navigatorKey: navigatorKey,
-          navigatorObservers: [CustomNavigatorObserver()],
+          navigatorObservers: [
+            CustomNavigatorObserver(),
+            LogmanNavigatorObserver()
+          ],
           initialRoute: "/",
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
@@ -226,14 +233,32 @@ class App extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: const [Locale("id"), Locale('en')],
-          builder: (context, child) => ResponsiveBreakpoints.builder(
-            child: child!,
-            breakpoints: [
-              const Breakpoint(start: 0, end: 450, name: MOBILE),
-              const Breakpoint(start: 451, end: 800, name: TABLET),
-              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-            ],
-          ),
+          builder: (context, child) {
+            return ResponsiveBreakpoints.builder(
+              // child: child!,
+              child: Builder(
+                builder: (context) {
+                  // Mengatur orientasi berdasarkan breakpoint
+                  if (ResponsiveBreakpoints.of(context).smallerThan(TABLET)) {
+                    SystemChrome.setPreferredOrientations([
+                      DeviceOrientation.portraitUp,
+                      DeviceOrientation.portraitDown,
+                    ]);
+                  } else {
+                    SystemChrome.setPreferredOrientations(
+                        DeviceOrientation.values);
+                  }
+
+                  return child!;
+                },
+              ),
+              breakpoints: [
+                const Breakpoint(start: 0, end: 450, name: MOBILE),
+                const Breakpoint(start: 451, end: 800, name: TABLET),
+                const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+              ],
+            );
+          },
           routes: {
             "/": (context) => const RedirectScreen(),
             "/on-boarding": (context) => const OnBoardingScreen(),

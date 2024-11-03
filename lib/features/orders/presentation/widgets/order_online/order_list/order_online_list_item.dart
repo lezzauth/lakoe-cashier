@@ -88,8 +88,7 @@ class OrderOnlineListItem extends StatelessWidget {
                                 children: [
                                   const UiIcons(
                                     TIcons.whatsapp,
-                                    height: 16,
-                                    width: 16,
+                                    size: 16,
                                     color: TColors.neutralDarkLight,
                                   ),
                                   TextHeading5(

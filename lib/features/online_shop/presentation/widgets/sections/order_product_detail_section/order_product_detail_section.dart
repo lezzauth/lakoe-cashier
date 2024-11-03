@@ -31,8 +31,7 @@ class _OrderProductDetailSectionState extends State<OrderProductDetailSection> {
             child: UiIcons(
               TIcons.box2,
               color: TColors.primary,
-              height: 24,
-              width: 24,
+              size: 24,
             ),
           ),
           Expanded(

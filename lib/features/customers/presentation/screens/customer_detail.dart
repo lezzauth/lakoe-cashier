@@ -2,7 +2,6 @@ import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
@@ -14,11 +13,10 @@ import 'package:point_of_sales_cashier/features/customers/application/cubit/cust
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_filter_cubit.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_filter_state.dart';
 import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_state.dart';
+import 'package:point_of_sales_cashier/features/customers/presentation/widgets/order_item.dart';
 import 'package:point_of_sales_cashier/features/orders/common/widgets/filters/order_date_filter.dart';
-import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class CustomerDetailScreen extends StatelessWidget {
@@ -124,7 +122,8 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                       TextHeading4(customer.customer.name),
                                       SizedBox(height: 4),
                                       TextBodyS(
-                                        customer.customer.phoneNumber,
+                                        PhoneNumberFormatter.formatForDisplay(
+                                            customer.customer.phoneNumber),
                                         color: TColors.neutralDarkLight,
                                       )
                                     ],
@@ -267,153 +266,11 @@ class _CustomerDetailState extends State<CustomerDetail> {
                           child: ListView.builder(
                             itemCount: customer.customer.orders.length,
                             itemBuilder: (context, index) {
-                              DetailCustomerOrder order =
-                                  customer.customer.orders.elementAt(index);
+                              DetailCustomerOrder order = customer
+                                  .customer.orders.reversed
+                                  .elementAt(index);
 
-                              bool isPaid = order.paymentStatus == "PAID";
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, "/orders/detail",
-                                      arguments:
-                                          OrderDetailArgument(id: order.id));
-                                },
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                        width: 1,
-                                        color: TColors.neutralLightMedium,
-                                      ),
-                                    ),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0,
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      if (isPaid)
-                                        Positioned(
-                                          right: 47,
-                                          bottom: 0,
-                                          child: Image.asset(
-                                            TImages.stamp,
-                                            width: 80,
-                                            height: 53.35,
-                                          ),
-                                        ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 14,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: isPaid
-                                              ? CrossAxisAlignment.center
-                                              : CrossAxisAlignment.end,
-                                          children: [
-                                            Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  margin: const EdgeInsets.only(
-                                                      bottom: 8.0),
-                                                  child: RichText(
-                                                    text: TextSpan(
-                                                      style: GoogleFonts.inter(
-                                                        fontSize: TSizes
-                                                            .fontSizeHeading4,
-                                                        color: TColors
-                                                            .neutralDarkDarkest,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                      text:
-                                                          "Order #${order.no}",
-                                                      children: [
-                                                        TextSpan(
-                                                          style:
-                                                              GoogleFonts.inter(
-                                                            fontSize: TSizes
-                                                                .fontSizeBodyS,
-                                                            color: TColors
-                                                                .neutralDarkLight,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                          ),
-                                                          text:
-                                                              " - (${order.count.items} Item)",
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                TextBodyS(
-                                                  TFormatter.orderDate(
-                                                    order.createdAt,
-                                                  ),
-                                                  color:
-                                                      TColors.neutralDarkLight,
-                                                ),
-                                              ],
-                                            ),
-                                            Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                if (order.transactions
-                                                        .firstOrNull !=
-                                                    null)
-                                                  Container(
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            bottom: 5),
-                                                    child: TransactionTypeTag(
-                                                      tag: order.transactions
-                                                          .first.paymentMethod,
-                                                    ),
-                                                  ),
-                                                RichText(
-                                                  text: TextSpan(
-                                                      text: "Total: ",
-                                                      style: GoogleFonts.inter(
-                                                        fontSize: TSizes
-                                                            .fontSizeBodyS,
-                                                        color: TColors
-                                                            .neutralDarkLight,
-                                                      ),
-                                                      children: [
-                                                        TextSpan(
-                                                          text: TFormatter
-                                                              .formatToRupiah(
-                                                            double.parse(
-                                                              order.price,
-                                                            ),
-                                                          ),
-                                                          style:
-                                                              GoogleFonts.inter(
-                                                            fontSize: TSizes
-                                                                .fontSizeBodyM,
-                                                            fontWeight:
-                                                                FontWeight.w800,
-                                                            color: TColors
-                                                                .neutralDarkDarkest,
-                                                          ),
-                                                        )
-                                                      ]),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
+                              return OrderItem(order: order);
                             },
                           ),
                         )
@@ -421,11 +278,8 @@ class _CustomerDetailState extends State<CustomerDetail> {
                   ),
                 ),
               ),
-            CustomerDetailLoadFailure(:final error) => Center(
-                child: TextBodyS(
-                  error,
-                  color: TColors.error,
-                ),
+            CustomerDetailLoadFailure() => Center(
+                child: CircularProgressIndicator(),
               ),
             _ => const Center(
                 child: CircularProgressIndicator(),
@@ -437,8 +291,8 @@ class _CustomerDetailState extends State<CustomerDetail> {
   }
 }
 
-class TransactionTypeTag extends StatelessWidget {
-  const TransactionTypeTag({super.key, required this.tag});
+class TagPaymentMethod extends StatelessWidget {
+  const TagPaymentMethod({super.key, required this.tag});
 
   final String tag;
 
@@ -454,6 +308,10 @@ class TransactionTypeTag extends StatelessWidget {
           return "Debit";
         case "BANK_TRANSFER":
           return "Bank Transfer";
+        case "NONE":
+          return "Belum Dibayar";
+        case "CANCEL":
+          return "-";
         default:
           return "Cash";
       }
@@ -469,6 +327,10 @@ class TransactionTypeTag extends StatelessWidget {
           return TColors.warningLight;
         case "BANK_TRANSFER":
           return TColors.neutralLightMedium;
+        case "NONE":
+          return TColors.neutralLightMedium;
+        case "CANCEL":
+          return TColors.neutralLightMedium;
         default:
           return TColors.successLight;
       }
@@ -483,6 +345,10 @@ class TransactionTypeTag extends StatelessWidget {
         case "DEBIT":
           return TColors.warningDark;
         case "BANK_TRANSFER":
+          return TColors.neutralDarkDark;
+        case "NONE":
+          return TColors.neutralDarkDark;
+        case "CANCEL":
           return TColors.neutralDarkDark;
         default:
           return TColors.successMedium;

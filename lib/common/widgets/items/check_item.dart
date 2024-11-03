@@ -47,8 +47,7 @@ class CheckItem extends StatelessWidget {
                       child: Center(
                         child: UiIcons(
                           TIcons.check,
-                          height: 10,
-                          width: 10,
+                          size: 10,
                           color: TColors.neutralLightLightest,
                         ),
                       ),
@@ -61,8 +60,7 @@ class CheckItem extends StatelessWidget {
               ),
               UiIcons(
                 TIcons.arrowRight,
-                height: 16,
-                width: 16,
+                size: 16,
                 color: TColors.primary,
               )
             ],

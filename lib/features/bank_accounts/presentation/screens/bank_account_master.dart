@@ -29,6 +29,8 @@ class BankAccountMaster extends StatefulWidget {
 }
 
 class _BankAccountMasterState extends State<BankAccountMaster> {
+  final TextEditingController _searchController = TextEditingController();
+
   Future<void> _onRefresh() async {
     context.read<BankAccountMasterCubit>().findAll();
   }
@@ -72,6 +74,7 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
           appBar: CustomAppbar(
             search: SearchField(
               hintText: "Cari nomor rekening disini...",
+              controller: _searchController,
               onChanged: (value) {
                 context
                     .read<BankAccountMasterFilterCubit>()

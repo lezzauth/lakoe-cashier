@@ -89,8 +89,7 @@ class DetailReceiptBottomSheet extends StatelessWidget {
                         children: [
                           UiIcons(
                             TIcons.download,
-                            width: 20,
-                            height: 20,
+                            size: 20,
                             color: TColors.primary,
                           ),
                           SizedBox(width: 8),
@@ -113,8 +112,7 @@ class DetailReceiptBottomSheet extends StatelessWidget {
                         children: [
                           UiIcons(
                             TIcons.printer,
-                            width: 20,
-                            height: 20,
+                            size: 20,
                             color: TColors.primary,
                           ),
                           SizedBox(width: 8),
@@ -137,8 +135,7 @@ class DetailReceiptBottomSheet extends StatelessWidget {
                         children: [
                           UiIcons(
                             TIcons.share,
-                            width: 20,
-                            height: 20,
+                            size: 20,
                             color: TColors.primary,
                           ),
                           SizedBox(width: 8),

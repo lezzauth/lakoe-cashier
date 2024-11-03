@@ -94,8 +94,7 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
             },
             icon: const UiIcons(
               TIcons.close,
-              height: 20,
-              width: 20,
+              size: 20,
               color: TColors.primary,
             ),
           ),
@@ -320,7 +319,8 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
                       },
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(
-                            errorText: ErrorTextStrings.required()),
+                            errorText: ErrorTextStrings.required(
+                                name: "Bukti Transfer")),
                       ]),
                     )
                   ],

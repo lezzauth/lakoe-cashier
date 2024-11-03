@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
@@ -20,6 +21,7 @@ import 'package:point_of_sales_cashier/features/reports/data/arguments.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/cards/purchase_history_summary_card.dart';
 import 'package:point_of_sales_cashier/features/reports/presentation/widgets/product_order_item.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:product_repository/product_repository.dart';
 
@@ -171,12 +173,18 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       margin: const EdgeInsets.only(right: 12),
-                                      child: Image.network(
-                                        "https://picsum.photos/100",
-                                        height: 44,
-                                        width: 44,
-                                        fit: BoxFit.cover,
-                                      ),
+                                      child: product.images.isNotEmpty
+                                          ? Image.network(
+                                              product.images[0],
+                                              height: 44,
+                                              width: 44,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : SvgPicture.asset(
+                                              TImages.productAvatar,
+                                              height: 44,
+                                              width: 44,
+                                            ),
                                     ),
                                     Expanded(
                                       child: Column(
@@ -223,10 +231,6 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                       "Riwayat Pembelian",
                                       color: TColors.neutralDarkDarkest,
                                     ),
-                                    TextBodyS(
-                                      "Terjual ${widget.arguments.product.soldCount} item",
-                                      color: TColors.neutralDarkLight,
-                                    ),
                                   ],
                                 ),
                               ),
@@ -234,28 +238,84 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 8,
                                 ),
-                                child: Row(
+                                child: Column(
                                   children: [
-                                    Expanded(
-                                      child: PurchaseHistorySummaryCard(
-                                        title: "Total Keuntungan",
-                                        value: TFormatter.formatToRupiah(
-                                          double.parse(product.profit),
-                                        ),
+                                    IntrinsicHeight(
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: PurchaseHistorySummaryCard(
+                                              strongCard: true,
+                                              title: "Total Keuntungan",
+                                              value: TFormatter.formatToRupiah(
+                                                double.parse("1000000"),
+                                              ),
+                                              onTap: () {},
+                                            ),
+                                          ),
+                                          SizedBox(width: 12),
+                                          Container(
+                                            width: 120,
+                                            alignment: Alignment.centerLeft,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              color: TColors.neutralLightLight,
+                                              border: Border.all(
+                                                width: 1,
+                                                color:
+                                                    TColors.neutralLightMedium,
+                                              ),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 16,
+                                              vertical: 12,
+                                            ),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                TextHeading5(
+                                                  "Terjual",
+                                                  color: TColors
+                                                      .neutralDarkLightest,
+                                                ),
+                                                SizedBox(height: 8),
+                                                TextHeading3(
+                                                  "${widget.arguments.product.soldCount} produk",
+                                                  color: TColors
+                                                      .neutralDarkDarkest,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: PurchaseHistorySummaryCard(
-                                        title: "Pembeli Favorit",
-                                        value:
-                                            product.favoriteCustomerId == null
-                                                ? "-"
-                                                : "Umum",
-                                        onTap: () {
-                                          //
-                                        },
-                                      ),
+                                    SizedBox(height: 12),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: PurchaseHistorySummaryCard(
+                                            title: "Total Penjualan",
+                                            value: TFormatter.formatToRupiah(
+                                              double.parse(product.profit),
+                                            ),
+                                            onTap: () {},
+                                          ),
+                                        ),
+                                        SizedBox(width: 12),
+                                        Expanded(
+                                          child: PurchaseHistorySummaryCard(
+                                            title: "Total Terhutang",
+                                            value: TFormatter.formatToRupiah(
+                                              double.parse("10000"),
+                                            ),
+                                            onTap: () {},
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),

@@ -13,7 +13,6 @@ import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_deta
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/content/cart_content.dart';
 import 'package:point_of_sales_cashier/features/cart/presentation/widgets/footer/cart_footer.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
 import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
 import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
 import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
@@ -75,8 +74,9 @@ class _CartState extends State<Cart> {
           customerId: filterState.customer?.id,
           tableId: filterState.table?.id,
         );
-    if (!mounted) return;
-    Navigator.pop(context);
+
+    // if (!mounted) return;
+    // Navigator.pop(context);
   }
 
   Future<void> _onCashPaid(PaymentCash data) async {
@@ -180,26 +180,32 @@ class _CartState extends State<Cart> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<CartDetailCubit, CartDetailState>(
-          listener: (context, state) {
-            if (state is CartDetailActionSuccess) {
-              context.read<CartCubit>().reset();
-              context.read<CashierOrderCubit>().findAll();
-            }
+    return BlocListener<CartDetailCubit, CartDetailState>(
+      listener: (context, state) {
+        if (state is CartDetailActionSuccess) {
+          context.read<CartCubit>().reset();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              "/cashier/explore-products",
+              (route) => false,
+            );
+          });
+        }
 
-            if (state is CartDetailCompleteActionSuccess) {
-              Navigator.popAndPushNamed(
-                context,
-                "/payments/success_confirmation",
-                arguments:
-                    SuccessConfirmationPaymentArgument(payment: state.response),
-              );
-            }
-          },
-        ),
-      ],
+        if (state is CartDetailCompleteActionSuccess) {
+          context.read<CartCubit>().reset();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.popAndPushNamed(
+              context,
+              "/payments/success_confirmation",
+              arguments: SuccessConfirmationPaymentArgument(
+                payment: state.res,
+              ),
+            );
+          });
+        }
+      },
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
@@ -228,8 +234,8 @@ class _CartState extends State<Cart> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
                 child: CartFooter(
-                  onCompleted: onCompleteOrder,
                   onSaved: _onCartSaved,
+                  onCompleted: onCompleteOrder,
                 ),
               ),
             ),

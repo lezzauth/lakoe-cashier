@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_card.dart';
+import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ExploreProductCard extends StatelessWidget {
@@ -18,17 +20,22 @@ class ExploreProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     bool selected = qty > 0;
     String? image = product.images.elementAtOrNull(0);
-    image ??= "https://placehold.co/208/165/png?text=[...]";
 
     return InkWell(
       onTap: onTap,
       child: BaseProductCard(
-        image: Image.network(
-          image,
-          height: 165.5,
-          width: 208,
-          fit: BoxFit.cover,
-        ),
+        image: image != null
+            ? Image.network(
+                image,
+                height: 165.5,
+                width: 208,
+                fit: BoxFit.cover,
+              )
+            : SvgPicture.asset(
+                TImages.productAvatar,
+                height: 165.5,
+                width: 208,
+              ),
         name: product.name,
         price: int.parse(product.price),
         selected: selected,

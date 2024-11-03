@@ -56,8 +56,7 @@ class _OrderInfoSectionState extends State<OrderInfoSection> {
                   ),
                   child: UiIcons(
                     TIcons.copy,
-                    height: 20,
-                    width: 20,
+                    size: 20,
                     onTap: () {
                       _onCopy(
                         text: widget.order.invoiceNumber,
@@ -99,8 +98,7 @@ class _OrderInfoSectionState extends State<OrderInfoSection> {
                       child: Center(
                         child: UiIcons(
                           TIcons.whatsappSolid,
-                          height: 16,
-                          width: 16,
+                          size: 16,
                           color: TColors.neutralLightLightest,
                           onTap: () {
                             THelper.openWhatsappNumber(

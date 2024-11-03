@@ -21,7 +21,7 @@ class OrderMasterScreen extends StatelessWidget {
         BlocProvider(create: (context) => OrderMasterFilterCubit()),
         BlocProvider(create: (context) => OrderMasterCompletedCubit()),
       ],
-      child: const DefaultTabController(
+      child: DefaultTabController(
         length: 2,
         child: OrderMaster(),
       ),
@@ -32,9 +32,11 @@ class OrderMasterScreen extends StatelessWidget {
 class OrderMasterCompletedFilterCubit {}
 
 class OrderMaster extends StatelessWidget {
-  const OrderMaster({
+  OrderMaster({
     super.key,
   });
+
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,7 @@ class OrderMaster extends StatelessWidget {
       appBar: CustomAppbar(
         search: SearchField(
           hintText: "Cari pesanan disini...",
+          controller: _searchController,
           debounceTime: 500,
           onChanged: (value) {
             context.read<OrderMasterFilterCubit>().setFilter(

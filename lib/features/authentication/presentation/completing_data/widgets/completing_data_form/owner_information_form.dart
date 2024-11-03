@@ -30,7 +30,7 @@ class _OwnerInformationFormState extends State<OwnerInformationForm> {
                   hintText: "Masukkan nama pemilik bisnis",
                 ),
                 validator: FormBuilderValidators.required(
-                    errorText: ErrorTextStrings.required()),
+                    errorText: ErrorTextStrings.required(name: "Nama Pemilik")),
               ),
             ],
           ),
@@ -48,7 +48,7 @@ class _OwnerInformationFormState extends State<OwnerInformationForm> {
                 name: "phoneNumber",
                 enabled: false,
                 validator: FormBuilderValidators.required(
-                    errorText: ErrorTextStrings.required()),
+                    errorText: ErrorTextStrings.required(name: "Nomor WA")),
               ),
             ],
           ),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
-class GhostOrderTypeTag extends StatelessWidget {
-  const GhostOrderTypeTag({
+class TagThinOrderType extends StatelessWidget {
+  const TagThinOrderType({
     super.key,
     required this.tag,
   });

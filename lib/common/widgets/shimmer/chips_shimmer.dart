@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ChipsFilterShimmer extends StatelessWidget {
-  const ChipsFilterShimmer({
+class ChipsShimmer extends StatelessWidget {
+  const ChipsShimmer({
     super.key,
     this.length = 8,
   });

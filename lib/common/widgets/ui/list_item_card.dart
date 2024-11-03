@@ -56,8 +56,7 @@ class ListItemCard extends StatelessWidget {
           children: [
             UiIcons(
               iconSrc,
-              height: 20,
-              width: 20,
+              size: 20,
               color:
                   dangerTheme == true ? TColors.error : TColors.neutralDarkDark,
             ),
@@ -132,8 +131,7 @@ class ListItemCard extends StatelessWidget {
                   SizedBox(width: 12),
                   UiIcons(
                     TIcons.arrowRight,
-                    height: 12,
-                    width: 12,
+                    size: 12,
                     color: TColors.neutralDarkLightest,
                   ),
                 ],

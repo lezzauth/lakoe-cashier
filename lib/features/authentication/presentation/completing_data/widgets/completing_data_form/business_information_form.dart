@@ -41,7 +41,7 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
                   hintText: "Contoh: Warung Madura",
                 ),
                 validator: FormBuilderValidators.required(
-                    errorText: ErrorTextStrings.required()),
+                    errorText: ErrorTextStrings.required(name: "Nama Usaha")),
               ),
             ],
           ),
@@ -81,7 +81,8 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
                     );
                   },
                   validator: FormBuilderValidators.required(
-                      errorText: ErrorTextStrings.required()),
+                      errorText:
+                          ErrorTextStrings.required(name: "Jenis Usaha")),
                 )
               ],
             ),
@@ -102,7 +103,7 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
                 ),
                 maxLines: 2,
                 validator: FormBuilderValidators.required(
-                    errorText: ErrorTextStrings.required()),
+                    errorText: ErrorTextStrings.required(name: "Alamat")),
               ),
             ],
           ),

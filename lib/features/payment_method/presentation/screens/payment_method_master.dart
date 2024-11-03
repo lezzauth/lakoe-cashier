@@ -36,7 +36,7 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
       isActive: true,
     ),
     _PaymentItem(
-      title: "QRIS Statis",
+      title: "QRIS",
       subTitle: "QRIS yang dicetak atau dipajang",
       isActive: true,
       lastItem: true,
@@ -44,7 +44,7 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
   ];
   List<_PaymentItem> listPaymentMethodSecondary = [
     _PaymentItem(
-      title: "QRIS Dinamis",
+      title: "QRIS EDC",
       subTitle: "Cetak dan tampilkan untuk bayar",
       isActive: false,
     ),
