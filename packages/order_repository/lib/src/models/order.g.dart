@@ -62,7 +62,6 @@ Map<String, dynamic> _$$OrderItemImplToJson(_$OrderItemImpl instance) =>
 _$TransactionsImpl _$$TransactionsImplFromJson(Map<String, dynamic> json) =>
     _$TransactionsImpl(
       id: json['id'] as String,
-      no: (json['no'] as num).toInt(),
       paymentMethod: json['paymentMethod'] as String,
       status: json['status'] as String,
       paidAmount: json['paidAmount'] as String,
@@ -82,7 +81,6 @@ _$TransactionsImpl _$$TransactionsImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$TransactionsImplToJson(_$TransactionsImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'no': instance.no,
       'paymentMethod': instance.paymentMethod,
       'status': instance.status,
       'paidAmount': instance.paidAmount,
@@ -213,8 +211,8 @@ _$OrderModelImpl _$$OrderModelImplFromJson(Map<String, dynamic> json) =>
       outletId: json['outletId'] as String,
       tableId: json['tableId'] as String?,
       cashierId: json['cashierId'] as String,
-      createdAt: json['createdAt'] as String,
       closedAt: json['closedAt'] as String?,
+      createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
       customer: json['customer'] == null
           ? null
@@ -251,8 +249,8 @@ Map<String, dynamic> _$$OrderModelImplToJson(_$OrderModelImpl instance) =>
       'outletId': instance.outletId,
       'tableId': instance.tableId,
       'cashierId': instance.cashierId,
-      'createdAt': instance.createdAt,
       'closedAt': instance.closedAt,
+      'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
       'customer': instance.customer,
       'charges': instance.charges,

@@ -43,7 +43,6 @@ class OrderItem with _$OrderItem {
 class Transactions with _$Transactions {
   const factory Transactions({
     required String id,
-    required int no,
     required String paymentMethod,
     required String status,
     required String paidAmount,
@@ -60,7 +59,7 @@ class Transactions with _$Transactions {
     required String updatedAt,
   }) = _Transactions;
 
-  factory Transactions.fromJson(Map<String, Object?> json) =>
+  factory Transactions.fromJson(Map<String, dynamic> json) =>
       _$TransactionsFromJson(json);
 }
 
@@ -152,8 +151,8 @@ class OrderModel with _$OrderModel {
     required String outletId,
     String? tableId,
     required String cashierId,
-    required String createdAt,
     String? closedAt,
+    required String createdAt,
     required String updatedAt,
     OrderCustomer? customer,
     List<OrderCharge>? charges,

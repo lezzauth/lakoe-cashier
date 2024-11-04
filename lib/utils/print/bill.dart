@@ -124,7 +124,7 @@ class TBill {
           styles: const PosStyles(align: PosAlign.left)),
       PosColumn(
           text: TFormatter.formatBillNumber(
-            order.transactions![0].no,
+            order.no,
             profileOwner.outlets[0].name,
           ),
           width: 7,

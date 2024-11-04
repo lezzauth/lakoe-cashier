@@ -12,7 +12,6 @@ class OrderDetailCubit extends Cubit<OrderDetailState> {
   Future<void> findOne(String id) async {
     try {
       emit(OrderDetailLoadInProgress());
-
       final order = await _orderRepository.findOne(id);
       emit(OrderDetailLoadSuccess(order: order));
     } catch (e) {

@@ -103,7 +103,7 @@ class BillView extends StatelessWidget {
                           SectionBillInformation(
                             cashierName: order.cashier!.operator.name,
                             noBill: TFormatter.formatBillNumber(
-                              order.transactions![0].no,
+                              order.no,
                               outletName,
                             ),
                             orderDate: TFormatter.billDate(order.createdAt),
