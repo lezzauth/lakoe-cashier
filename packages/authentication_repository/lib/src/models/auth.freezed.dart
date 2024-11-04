@@ -21,6 +21,9 @@ RegisterResponse _$RegisterResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$RegisterResponse {
   String get token => throw _privateConstructorUsedError;
+  String get refreshToken => throw _privateConstructorUsedError;
+  int get tokenExpireIn => throw _privateConstructorUsedError;
+  int get refreshTokenExpireIn => throw _privateConstructorUsedError;
 
   /// Serializes this RegisterResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +41,11 @@ abstract class $RegisterResponseCopyWith<$Res> {
           RegisterResponse value, $Res Function(RegisterResponse) then) =
       _$RegisterResponseCopyWithImpl<$Res, RegisterResponse>;
   @useResult
-  $Res call({String token});
+  $Res call(
+      {String token,
+      String refreshToken,
+      int tokenExpireIn,
+      int refreshTokenExpireIn});
 }
 
 /// @nodoc
@@ -57,12 +64,27 @@ class _$RegisterResponseCopyWithImpl<$Res, $Val extends RegisterResponse>
   @override
   $Res call({
     Object? token = null,
+    Object? refreshToken = null,
+    Object? tokenExpireIn = null,
+    Object? refreshTokenExpireIn = null,
   }) {
     return _then(_value.copyWith(
       token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      tokenExpireIn: null == tokenExpireIn
+          ? _value.tokenExpireIn
+          : tokenExpireIn // ignore: cast_nullable_to_non_nullable
+              as int,
+      refreshTokenExpireIn: null == refreshTokenExpireIn
+          ? _value.refreshTokenExpireIn
+          : refreshTokenExpireIn // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -75,7 +97,11 @@ abstract class _$$RegisterResponseImplCopyWith<$Res>
       __$$RegisterResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String token});
+  $Res call(
+      {String token,
+      String refreshToken,
+      int tokenExpireIn,
+      int refreshTokenExpireIn});
 }
 
 /// @nodoc
@@ -92,12 +118,27 @@ class __$$RegisterResponseImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? token = null,
+    Object? refreshToken = null,
+    Object? tokenExpireIn = null,
+    Object? refreshTokenExpireIn = null,
   }) {
     return _then(_$RegisterResponseImpl(
       token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      tokenExpireIn: null == tokenExpireIn
+          ? _value.tokenExpireIn
+          : tokenExpireIn // ignore: cast_nullable_to_non_nullable
+              as int,
+      refreshTokenExpireIn: null == refreshTokenExpireIn
+          ? _value.refreshTokenExpireIn
+          : refreshTokenExpireIn // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -105,17 +146,27 @@ class __$$RegisterResponseImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$RegisterResponseImpl implements _RegisterResponse {
-  const _$RegisterResponseImpl({required this.token});
+  const _$RegisterResponseImpl(
+      {required this.token,
+      required this.refreshToken,
+      required this.tokenExpireIn,
+      required this.refreshTokenExpireIn});
 
   factory _$RegisterResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$RegisterResponseImplFromJson(json);
 
   @override
   final String token;
+  @override
+  final String refreshToken;
+  @override
+  final int tokenExpireIn;
+  @override
+  final int refreshTokenExpireIn;
 
   @override
   String toString() {
-    return 'RegisterResponse(token: $token)';
+    return 'RegisterResponse(token: $token, refreshToken: $refreshToken, tokenExpireIn: $tokenExpireIn, refreshTokenExpireIn: $refreshTokenExpireIn)';
   }
 
   @override
@@ -123,12 +174,19 @@ class _$RegisterResponseImpl implements _RegisterResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RegisterResponseImpl &&
-            (identical(other.token, token) || other.token == token));
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken) &&
+            (identical(other.tokenExpireIn, tokenExpireIn) ||
+                other.tokenExpireIn == tokenExpireIn) &&
+            (identical(other.refreshTokenExpireIn, refreshTokenExpireIn) ||
+                other.refreshTokenExpireIn == refreshTokenExpireIn));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, token);
+  int get hashCode => Object.hash(
+      runtimeType, token, refreshToken, tokenExpireIn, refreshTokenExpireIn);
 
   /// Create a copy of RegisterResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -148,14 +206,23 @@ class _$RegisterResponseImpl implements _RegisterResponse {
 }
 
 abstract class _RegisterResponse implements RegisterResponse {
-  const factory _RegisterResponse({required final String token}) =
-      _$RegisterResponseImpl;
+  const factory _RegisterResponse(
+      {required final String token,
+      required final String refreshToken,
+      required final int tokenExpireIn,
+      required final int refreshTokenExpireIn}) = _$RegisterResponseImpl;
 
   factory _RegisterResponse.fromJson(Map<String, dynamic> json) =
       _$RegisterResponseImpl.fromJson;
 
   @override
   String get token;
+  @override
+  String get refreshToken;
+  @override
+  int get tokenExpireIn;
+  @override
+  int get refreshTokenExpireIn;
 
   /// Create a copy of RegisterResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -430,6 +497,9 @@ VerifyOTPResponse _$VerifyOTPResponseFromJson(Map<String, dynamic> json) {
 mixin _$VerifyOTPResponse {
   String get action => throw _privateConstructorUsedError;
   String get token => throw _privateConstructorUsedError;
+  String get refreshToken => throw _privateConstructorUsedError;
+  int get tokenExpireIn => throw _privateConstructorUsedError;
+  int get refreshTokenExpireIn => throw _privateConstructorUsedError;
 
   /// Serializes this VerifyOTPResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -447,7 +517,12 @@ abstract class $VerifyOTPResponseCopyWith<$Res> {
           VerifyOTPResponse value, $Res Function(VerifyOTPResponse) then) =
       _$VerifyOTPResponseCopyWithImpl<$Res, VerifyOTPResponse>;
   @useResult
-  $Res call({String action, String token});
+  $Res call(
+      {String action,
+      String token,
+      String refreshToken,
+      int tokenExpireIn,
+      int refreshTokenExpireIn});
 }
 
 /// @nodoc
@@ -467,6 +542,9 @@ class _$VerifyOTPResponseCopyWithImpl<$Res, $Val extends VerifyOTPResponse>
   $Res call({
     Object? action = null,
     Object? token = null,
+    Object? refreshToken = null,
+    Object? tokenExpireIn = null,
+    Object? refreshTokenExpireIn = null,
   }) {
     return _then(_value.copyWith(
       action: null == action
@@ -477,6 +555,18 @@ class _$VerifyOTPResponseCopyWithImpl<$Res, $Val extends VerifyOTPResponse>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      tokenExpireIn: null == tokenExpireIn
+          ? _value.tokenExpireIn
+          : tokenExpireIn // ignore: cast_nullable_to_non_nullable
+              as int,
+      refreshTokenExpireIn: null == refreshTokenExpireIn
+          ? _value.refreshTokenExpireIn
+          : refreshTokenExpireIn // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -489,7 +579,12 @@ abstract class _$$VerifyOTPResponseImplCopyWith<$Res>
       __$$VerifyOTPResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String action, String token});
+  $Res call(
+      {String action,
+      String token,
+      String refreshToken,
+      int tokenExpireIn,
+      int refreshTokenExpireIn});
 }
 
 /// @nodoc
@@ -507,6 +602,9 @@ class __$$VerifyOTPResponseImplCopyWithImpl<$Res>
   $Res call({
     Object? action = null,
     Object? token = null,
+    Object? refreshToken = null,
+    Object? tokenExpireIn = null,
+    Object? refreshTokenExpireIn = null,
   }) {
     return _then(_$VerifyOTPResponseImpl(
       action: null == action
@@ -517,6 +615,18 @@ class __$$VerifyOTPResponseImplCopyWithImpl<$Res>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      tokenExpireIn: null == tokenExpireIn
+          ? _value.tokenExpireIn
+          : tokenExpireIn // ignore: cast_nullable_to_non_nullable
+              as int,
+      refreshTokenExpireIn: null == refreshTokenExpireIn
+          ? _value.refreshTokenExpireIn
+          : refreshTokenExpireIn // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -524,7 +634,12 @@ class __$$VerifyOTPResponseImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$VerifyOTPResponseImpl implements _VerifyOTPResponse {
-  const _$VerifyOTPResponseImpl({required this.action, required this.token});
+  const _$VerifyOTPResponseImpl(
+      {required this.action,
+      required this.token,
+      required this.refreshToken,
+      required this.tokenExpireIn,
+      required this.refreshTokenExpireIn});
 
   factory _$VerifyOTPResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$VerifyOTPResponseImplFromJson(json);
@@ -533,10 +648,16 @@ class _$VerifyOTPResponseImpl implements _VerifyOTPResponse {
   final String action;
   @override
   final String token;
+  @override
+  final String refreshToken;
+  @override
+  final int tokenExpireIn;
+  @override
+  final int refreshTokenExpireIn;
 
   @override
   String toString() {
-    return 'VerifyOTPResponse(action: $action, token: $token)';
+    return 'VerifyOTPResponse(action: $action, token: $token, refreshToken: $refreshToken, tokenExpireIn: $tokenExpireIn, refreshTokenExpireIn: $refreshTokenExpireIn)';
   }
 
   @override
@@ -545,12 +666,19 @@ class _$VerifyOTPResponseImpl implements _VerifyOTPResponse {
         (other.runtimeType == runtimeType &&
             other is _$VerifyOTPResponseImpl &&
             (identical(other.action, action) || other.action == action) &&
-            (identical(other.token, token) || other.token == token));
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken) &&
+            (identical(other.tokenExpireIn, tokenExpireIn) ||
+                other.tokenExpireIn == tokenExpireIn) &&
+            (identical(other.refreshTokenExpireIn, refreshTokenExpireIn) ||
+                other.refreshTokenExpireIn == refreshTokenExpireIn));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, action, token);
+  int get hashCode => Object.hash(runtimeType, action, token, refreshToken,
+      tokenExpireIn, refreshTokenExpireIn);
 
   /// Create a copy of VerifyOTPResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -572,7 +700,10 @@ class _$VerifyOTPResponseImpl implements _VerifyOTPResponse {
 abstract class _VerifyOTPResponse implements VerifyOTPResponse {
   const factory _VerifyOTPResponse(
       {required final String action,
-      required final String token}) = _$VerifyOTPResponseImpl;
+      required final String token,
+      required final String refreshToken,
+      required final int tokenExpireIn,
+      required final int refreshTokenExpireIn}) = _$VerifyOTPResponseImpl;
 
   factory _VerifyOTPResponse.fromJson(Map<String, dynamic> json) =
       _$VerifyOTPResponseImpl.fromJson;
@@ -581,11 +712,235 @@ abstract class _VerifyOTPResponse implements VerifyOTPResponse {
   String get action;
   @override
   String get token;
+  @override
+  String get refreshToken;
+  @override
+  int get tokenExpireIn;
+  @override
+  int get refreshTokenExpireIn;
 
   /// Create a copy of VerifyOTPResponse
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$VerifyOTPResponseImplCopyWith<_$VerifyOTPResponseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+RefreshTokenRes _$RefreshTokenResFromJson(Map<String, dynamic> json) {
+  return _RefreshTokenRes.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RefreshTokenRes {
+  String get token => throw _privateConstructorUsedError;
+  String get refreshToken => throw _privateConstructorUsedError;
+  int get tokenExpireIn => throw _privateConstructorUsedError;
+  int get refreshTokenExpireIn => throw _privateConstructorUsedError;
+
+  /// Serializes this RefreshTokenRes to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RefreshTokenRes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RefreshTokenResCopyWith<RefreshTokenRes> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RefreshTokenResCopyWith<$Res> {
+  factory $RefreshTokenResCopyWith(
+          RefreshTokenRes value, $Res Function(RefreshTokenRes) then) =
+      _$RefreshTokenResCopyWithImpl<$Res, RefreshTokenRes>;
+  @useResult
+  $Res call(
+      {String token,
+      String refreshToken,
+      int tokenExpireIn,
+      int refreshTokenExpireIn});
+}
+
+/// @nodoc
+class _$RefreshTokenResCopyWithImpl<$Res, $Val extends RefreshTokenRes>
+    implements $RefreshTokenResCopyWith<$Res> {
+  _$RefreshTokenResCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RefreshTokenRes
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+    Object? refreshToken = null,
+    Object? tokenExpireIn = null,
+    Object? refreshTokenExpireIn = null,
+  }) {
+    return _then(_value.copyWith(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      tokenExpireIn: null == tokenExpireIn
+          ? _value.tokenExpireIn
+          : tokenExpireIn // ignore: cast_nullable_to_non_nullable
+              as int,
+      refreshTokenExpireIn: null == refreshTokenExpireIn
+          ? _value.refreshTokenExpireIn
+          : refreshTokenExpireIn // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RefreshTokenResImplCopyWith<$Res>
+    implements $RefreshTokenResCopyWith<$Res> {
+  factory _$$RefreshTokenResImplCopyWith(_$RefreshTokenResImpl value,
+          $Res Function(_$RefreshTokenResImpl) then) =
+      __$$RefreshTokenResImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String token,
+      String refreshToken,
+      int tokenExpireIn,
+      int refreshTokenExpireIn});
+}
+
+/// @nodoc
+class __$$RefreshTokenResImplCopyWithImpl<$Res>
+    extends _$RefreshTokenResCopyWithImpl<$Res, _$RefreshTokenResImpl>
+    implements _$$RefreshTokenResImplCopyWith<$Res> {
+  __$$RefreshTokenResImplCopyWithImpl(
+      _$RefreshTokenResImpl _value, $Res Function(_$RefreshTokenResImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RefreshTokenRes
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+    Object? refreshToken = null,
+    Object? tokenExpireIn = null,
+    Object? refreshTokenExpireIn = null,
+  }) {
+    return _then(_$RefreshTokenResImpl(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      tokenExpireIn: null == tokenExpireIn
+          ? _value.tokenExpireIn
+          : tokenExpireIn // ignore: cast_nullable_to_non_nullable
+              as int,
+      refreshTokenExpireIn: null == refreshTokenExpireIn
+          ? _value.refreshTokenExpireIn
+          : refreshTokenExpireIn // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RefreshTokenResImpl implements _RefreshTokenRes {
+  const _$RefreshTokenResImpl(
+      {required this.token,
+      required this.refreshToken,
+      required this.tokenExpireIn,
+      required this.refreshTokenExpireIn});
+
+  factory _$RefreshTokenResImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RefreshTokenResImplFromJson(json);
+
+  @override
+  final String token;
+  @override
+  final String refreshToken;
+  @override
+  final int tokenExpireIn;
+  @override
+  final int refreshTokenExpireIn;
+
+  @override
+  String toString() {
+    return 'RefreshTokenRes(token: $token, refreshToken: $refreshToken, tokenExpireIn: $tokenExpireIn, refreshTokenExpireIn: $refreshTokenExpireIn)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RefreshTokenResImpl &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken) &&
+            (identical(other.tokenExpireIn, tokenExpireIn) ||
+                other.tokenExpireIn == tokenExpireIn) &&
+            (identical(other.refreshTokenExpireIn, refreshTokenExpireIn) ||
+                other.refreshTokenExpireIn == refreshTokenExpireIn));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, token, refreshToken, tokenExpireIn, refreshTokenExpireIn);
+
+  /// Create a copy of RefreshTokenRes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RefreshTokenResImplCopyWith<_$RefreshTokenResImpl> get copyWith =>
+      __$$RefreshTokenResImplCopyWithImpl<_$RefreshTokenResImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RefreshTokenResImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RefreshTokenRes implements RefreshTokenRes {
+  const factory _RefreshTokenRes(
+      {required final String token,
+      required final String refreshToken,
+      required final int tokenExpireIn,
+      required final int refreshTokenExpireIn}) = _$RefreshTokenResImpl;
+
+  factory _RefreshTokenRes.fromJson(Map<String, dynamic> json) =
+      _$RefreshTokenResImpl.fromJson;
+
+  @override
+  String get token;
+  @override
+  String get refreshToken;
+  @override
+  int get tokenExpireIn;
+  @override
+  int get refreshTokenExpireIn;
+
+  /// Create a copy of RefreshTokenRes
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RefreshTokenResImplCopyWith<_$RefreshTokenResImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

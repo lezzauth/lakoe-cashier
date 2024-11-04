@@ -7,6 +7,9 @@ part 'auth.g.dart';
 class RegisterResponse with _$RegisterResponse {
   const factory RegisterResponse({
     required String token,
+    required String refreshToken,
+    required int tokenExpireIn,
+    required int refreshTokenExpireIn,
   }) = _RegisterResponse;
 
   factory RegisterResponse.fromJson(Map<String, Object?> json) =>
@@ -33,8 +36,24 @@ class VerifyOTPResponse with _$VerifyOTPResponse {
   const factory VerifyOTPResponse({
     required String action,
     required String token,
+    required String refreshToken,
+    required int tokenExpireIn,
+    required int refreshTokenExpireIn,
   }) = _VerifyOTPResponse;
 
   factory VerifyOTPResponse.fromJson(Map<String, Object?> json) =>
       _$VerifyOTPResponseFromJson(json);
+}
+
+@freezed
+class RefreshTokenRes with _$RefreshTokenRes {
+  const factory RefreshTokenRes({
+    required String token,
+    required String refreshToken,
+    required int tokenExpireIn,
+    required int refreshTokenExpireIn,
+  }) = _RefreshTokenRes;
+
+  factory RefreshTokenRes.fromJson(Map<String, Object?> json) =>
+      _$RefreshTokenResFromJson(json);
 }

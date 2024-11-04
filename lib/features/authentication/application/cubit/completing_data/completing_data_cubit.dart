@@ -13,9 +13,9 @@ class CompletingDataCubit extends Cubit<CompletingDataState> {
   Future<void> register(RegisterDto dto) async {
     emit(CompletingDataActionInProgress());
     try {
-      final response = await _authenticationRepository.register(dto);
-      emit(CompletingDataActionSuccess(response: response));
-      _tokenProvider.setAuthToken(response.token);
+      final res = await _authenticationRepository.register(dto);
+      emit(CompletingDataActionSuccess(response: res));
+      _tokenProvider.setAuthToken(res.token, res.tokenExpireIn);
     } catch (e) {
       emit(CompletingDataActionFailure(e.toString()));
     }
