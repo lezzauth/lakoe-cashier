@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+import 'package:logman/logman.dart';
 import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_state.dart';
 import 'package:point_of_sales_cashier/utils/helpers/bluetooth_permission.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
@@ -15,7 +15,7 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
   Future<void> checkBluetoothStatus() async {
     bool? isBluetoothEnabled = await FlutterBluetoothSerial.instance.isEnabled;
     if (!isBluetoothEnabled!) {
-      log('Bluetooth tidak aktif. Menghentikan proses...');
+      Logman.instance.info('Bluetooth tidak aktif. Menghentikan proses...');
       emit(PrintMasterBluetoothDisabled());
       return;
     }
@@ -66,15 +66,16 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
     await checkBluetoothStatus();
 
     if (isDiscoveryRunning) {
-      log('Discovery sudah berjalan. Menghentikan discovery yang lama dan memulai ulang...');
+      Logman.instance.info(
+          'Discovery sudah berjalan. Menghentikan discovery yang lama dan memulai ulang...');
       await stopDiscovery();
     }
 
     isDiscoveryRunning = true;
-    log('Memulai discovery...');
+    Logman.instance.info('Memulai discovery...');
 
     if (state is! PrintMasterLoadSuccess) {
-      log('State belum siap untuk melakukan discovery.');
+      Logman.instance.info('State belum siap untuk melakukan discovery.');
       isDiscoveryRunning = false;
       emit(PrintMasterLoadSuccess(
         devices: [],
@@ -99,6 +100,7 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
       ));
       discoveryStream = FlutterBluetoothSerial.instance.startDiscovery().listen(
         (result) async {
+          Logman.instance.info('Device found: ${result.device.name}');
           BluetoothDevice newDevice = result.device;
 
           if (newDevice.name != null &&
@@ -151,7 +153,7 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
           } else {}
         },
         onError: (error) {
-          log('Terjadi error saat discovery: $error');
+          Logman.instance.info('Terjadi error saat discovery: $error');
           isDiscoveryRunning = false;
           discoverDevices();
         },
@@ -159,7 +161,8 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
       );
 
       discoveryStream?.onDone(() async {
-        log('Discovery selesai, ditemukan ${currentState.availableDevices.length} perangkat');
+        Logman.instance.info(
+            'Discovery selesai, ditemukan ${currentState.availableDevices.length} perangkat');
         isDiscoveryRunning = false;
 
         List<BluetoothDevice> availableDevices =
@@ -183,7 +186,7 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
         // updateDevices();
       });
     } catch (e) {
-      log('Error selama proses discovery: $e');
+      Logman.instance.info('Error selama proses discovery: $e');
       isDiscoveryRunning = false;
     }
   }
@@ -216,11 +219,11 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
 
   Future<void> stopDiscovery() async {
     if (discoveryStream != null) {
-      log('Stopping discovery...');
+      Logman.instance.info('Stopping discovery...');
       await discoveryStream!.cancel();
       discoveryStream = null;
       isDiscoveryRunning = false;
-      log('Discovery stopped');
+      Logman.instance.info('Discovery stopped');
 
       final currentState = state as PrintMasterLoadSuccess;
 
@@ -262,15 +265,16 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
       // bool isBonded = await isDeviceBonded(device);
 
       // if (!isBonded) {
-      //   log('Device is not bonded. Pairing now...');
+      //   Logman.instance.info('Device is not bonded. Pairing now...');
 
       //   await BluetoothConnection.toAddress(device.address);
 
       // } else {
-      //   log('Device is already bonded.');
+      //   Logman.instance.info('Device is already bonded.');
       // }
 
-      log('Connecting to device: ${device.name} (${device.address})');
+      Logman.instance
+          .info('Connecting to device: ${device.name} (${device.address})');
 
       await Future.delayed(const Duration(seconds: 1));
 
@@ -281,7 +285,8 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
           List.from(currentState.connectedDevices);
 
       if (result) {
-        log('Successfully connected to: ${device.name} (${device.address})');
+        Logman.instance.info(
+            'Successfully connected to: ${device.name} (${device.address})');
 
         connectedDevices.add(device);
 
@@ -301,7 +306,8 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
         ));
         return true;
       } else {
-        log('Failed to connect to: ${device.name} (${device.address})');
+        Logman.instance
+            .info('Failed to connect to: ${device.name} (${device.address})');
         discoverDevices();
 
         List<BluetoothDevice> updatedAvailableDevices =
@@ -320,7 +326,7 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
         return false;
       }
     } catch (e) {
-      log('Error connecting to device: $e');
+      Logman.instance.info('Error connecting to device: $e');
       return false;
     } finally {
       final currentState = state as PrintMasterLoadSuccess;
@@ -372,28 +378,30 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
           isDiscovering: false,
         ));
 
-        log('Successfully disconnected from: ${device.address}');
+        Logman.instance
+            .info('Successfully disconnected from: ${device.address}');
       }
 
       return result;
     } catch (e) {
-      log('Error disconnecting device: $e');
+      Logman.instance.info('Error disconnecting device: $e');
       return false;
     }
   }
 
   Future<void> unpairDeviceByAddress(String address) async {
     try {
-      log('Unpairing device with address: $address');
+      Logman.instance.info('Unpairing device with address: $address');
       bool? unpaired = await FlutterBluetoothSerial.instance
           .removeDeviceBondWithAddress(address);
       if (unpaired!) {
-        log('Successfully unpaired device with address: $address');
+        Logman.instance
+            .info('Successfully unpaired device with address: $address');
       } else {
-        log('Failed to unpair device with address: $address');
+        Logman.instance.info('Failed to unpair device with address: $address');
       }
     } catch (e) {
-      log('Error unpairing device: $e');
+      Logman.instance.info('Error unpairing device: $e');
     }
   }
 
@@ -413,7 +421,8 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
 
       await Future.delayed(const Duration(seconds: 2));
 
-      log('Unpairing device: ${device.name} (${device.address})');
+      Logman.instance
+          .info('Unpairing device: ${device.name} (${device.address})');
       await unpairDeviceByAddress(device.address);
 
       if (state is PrintMasterLoadSuccess) {
@@ -440,7 +449,7 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
         ));
       }
     } catch (e) {
-      log('Error unpairing device: $e');
+      Logman.instance.info('Error unpairing device: $e');
     }
   }
 
