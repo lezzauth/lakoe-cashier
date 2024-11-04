@@ -23,6 +23,8 @@ mixin _$TableLocationModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get outletId => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
+  String get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this TableLocationModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +42,12 @@ abstract class $TableLocationModelCopyWith<$Res> {
           TableLocationModel value, $Res Function(TableLocationModel) then) =
       _$TableLocationModelCopyWithImpl<$Res, TableLocationModel>;
   @useResult
-  $Res call({String id, String name, String outletId});
+  $Res call(
+      {String id,
+      String name,
+      String outletId,
+      String createdAt,
+      String updatedAt});
 }
 
 /// @nodoc
@@ -61,6 +68,8 @@ class _$TableLocationModelCopyWithImpl<$Res, $Val extends TableLocationModel>
     Object? id = null,
     Object? name = null,
     Object? outletId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -75,6 +84,14 @@ class _$TableLocationModelCopyWithImpl<$Res, $Val extends TableLocationModel>
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -87,7 +104,12 @@ abstract class _$$TableLocationModelImplCopyWith<$Res>
       __$$TableLocationModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String outletId});
+  $Res call(
+      {String id,
+      String name,
+      String outletId,
+      String createdAt,
+      String updatedAt});
 }
 
 /// @nodoc
@@ -106,6 +128,8 @@ class __$$TableLocationModelImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? outletId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
   }) {
     return _then(_$TableLocationModelImpl(
       id: null == id
@@ -120,6 +144,14 @@ class __$$TableLocationModelImplCopyWithImpl<$Res>
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -128,7 +160,11 @@ class __$$TableLocationModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TableLocationModelImpl implements _TableLocationModel {
   const _$TableLocationModelImpl(
-      {required this.id, required this.name, required this.outletId});
+      {required this.id,
+      required this.name,
+      required this.outletId,
+      required this.createdAt,
+      required this.updatedAt});
 
   factory _$TableLocationModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TableLocationModelImplFromJson(json);
@@ -139,10 +175,14 @@ class _$TableLocationModelImpl implements _TableLocationModel {
   final String name;
   @override
   final String outletId;
+  @override
+  final String createdAt;
+  @override
+  final String updatedAt;
 
   @override
   String toString() {
-    return 'TableLocationModel(id: $id, name: $name, outletId: $outletId)';
+    return 'TableLocationModel(id: $id, name: $name, outletId: $outletId, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -153,12 +193,17 @@ class _$TableLocationModelImpl implements _TableLocationModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.outletId, outletId) ||
-                other.outletId == outletId));
+                other.outletId == outletId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, outletId);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, outletId, createdAt, updatedAt);
 
   /// Create a copy of TableLocationModel
   /// with the given fields replaced by the non-null parameter values.
@@ -181,7 +226,9 @@ abstract class _TableLocationModel implements TableLocationModel {
   const factory _TableLocationModel(
       {required final String id,
       required final String name,
-      required final String outletId}) = _$TableLocationModelImpl;
+      required final String outletId,
+      required final String createdAt,
+      required final String updatedAt}) = _$TableLocationModelImpl;
 
   factory _TableLocationModel.fromJson(Map<String, dynamic> json) =
       _$TableLocationModelImpl.fromJson;
@@ -192,6 +239,10 @@ abstract class _TableLocationModel implements TableLocationModel {
   String get name;
   @override
   String get outletId;
+  @override
+  String get createdAt;
+  @override
+  String get updatedAt;
 
   /// Create a copy of TableLocationModel
   /// with the given fields replaced by the non-null parameter values.

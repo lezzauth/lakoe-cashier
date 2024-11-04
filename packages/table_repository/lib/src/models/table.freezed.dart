@@ -27,6 +27,7 @@ mixin _$TableModel {
   String get outletRoomId => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
+  OutletRoom get outletRoom => throw _privateConstructorUsedError;
 
   /// Serializes this TableModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -51,7 +52,10 @@ abstract class $TableModelCopyWith<$Res> {
       String outletId,
       String outletRoomId,
       String createdAt,
-      String updatedAt});
+      String updatedAt,
+      OutletRoom outletRoom});
+
+  $OutletRoomCopyWith<$Res> get outletRoom;
 }
 
 /// @nodoc
@@ -76,6 +80,7 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
     Object? outletRoomId = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? outletRoom = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -106,7 +111,21 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      outletRoom: null == outletRoom
+          ? _value.outletRoom
+          : outletRoom // ignore: cast_nullable_to_non_nullable
+              as OutletRoom,
     ) as $Val);
+  }
+
+  /// Create a copy of TableModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $OutletRoomCopyWith<$Res> get outletRoom {
+    return $OutletRoomCopyWith<$Res>(_value.outletRoom, (value) {
+      return _then(_value.copyWith(outletRoom: value) as $Val);
+    });
   }
 }
 
@@ -125,7 +144,11 @@ abstract class _$$TableModelImplCopyWith<$Res>
       String outletId,
       String outletRoomId,
       String createdAt,
-      String updatedAt});
+      String updatedAt,
+      OutletRoom outletRoom});
+
+  @override
+  $OutletRoomCopyWith<$Res> get outletRoom;
 }
 
 /// @nodoc
@@ -148,6 +171,7 @@ class __$$TableModelImplCopyWithImpl<$Res>
     Object? outletRoomId = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? outletRoom = null,
   }) {
     return _then(_$TableModelImpl(
       id: null == id
@@ -178,6 +202,10 @@ class __$$TableModelImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      outletRoom: null == outletRoom
+          ? _value.outletRoom
+          : outletRoom // ignore: cast_nullable_to_non_nullable
+              as OutletRoom,
     ));
   }
 }
@@ -192,7 +220,8 @@ class _$TableModelImpl implements _TableModel {
       required this.outletId,
       required this.outletRoomId,
       required this.createdAt,
-      required this.updatedAt});
+      required this.updatedAt,
+      required this.outletRoom});
 
   factory _$TableModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TableModelImplFromJson(json);
@@ -211,10 +240,12 @@ class _$TableModelImpl implements _TableModel {
   final String createdAt;
   @override
   final String updatedAt;
+  @override
+  final OutletRoom outletRoom;
 
   @override
   String toString() {
-    return 'TableModel(id: $id, no: $no, capacity: $capacity, outletId: $outletId, outletRoomId: $outletRoomId, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TableModel(id: $id, no: $no, capacity: $capacity, outletId: $outletId, outletRoomId: $outletRoomId, createdAt: $createdAt, updatedAt: $updatedAt, outletRoom: $outletRoom)';
   }
 
   @override
@@ -233,13 +264,15 @@ class _$TableModelImpl implements _TableModel {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.outletRoom, outletRoom) ||
+                other.outletRoom == outletRoom));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, no, capacity, outletId,
-      outletRoomId, createdAt, updatedAt);
+      outletRoomId, createdAt, updatedAt, outletRoom);
 
   /// Create a copy of TableModel
   /// with the given fields replaced by the non-null parameter values.
@@ -265,7 +298,8 @@ abstract class _TableModel implements TableModel {
       required final String outletId,
       required final String outletRoomId,
       required final String createdAt,
-      required final String updatedAt}) = _$TableModelImpl;
+      required final String updatedAt,
+      required final OutletRoom outletRoom}) = _$TableModelImpl;
 
   factory _TableModel.fromJson(Map<String, dynamic> json) =
       _$TableModelImpl.fromJson;
@@ -284,11 +318,250 @@ abstract class _TableModel implements TableModel {
   String get createdAt;
   @override
   String get updatedAt;
+  @override
+  OutletRoom get outletRoom;
 
   /// Create a copy of TableModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TableModelImplCopyWith<_$TableModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+OutletRoom _$OutletRoomFromJson(Map<String, dynamic> json) {
+  return _OutletRoom.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OutletRoom {
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get outletId => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
+  String get updatedAt => throw _privateConstructorUsedError;
+
+  /// Serializes this OutletRoom to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of OutletRoom
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $OutletRoomCopyWith<OutletRoom> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OutletRoomCopyWith<$Res> {
+  factory $OutletRoomCopyWith(
+          OutletRoom value, $Res Function(OutletRoom) then) =
+      _$OutletRoomCopyWithImpl<$Res, OutletRoom>;
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      String outletId,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class _$OutletRoomCopyWithImpl<$Res, $Val extends OutletRoom>
+    implements $OutletRoomCopyWith<$Res> {
+  _$OutletRoomCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of OutletRoom
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? outletId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$OutletRoomImplCopyWith<$Res>
+    implements $OutletRoomCopyWith<$Res> {
+  factory _$$OutletRoomImplCopyWith(
+          _$OutletRoomImpl value, $Res Function(_$OutletRoomImpl) then) =
+      __$$OutletRoomImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      String outletId,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class __$$OutletRoomImplCopyWithImpl<$Res>
+    extends _$OutletRoomCopyWithImpl<$Res, _$OutletRoomImpl>
+    implements _$$OutletRoomImplCopyWith<$Res> {
+  __$$OutletRoomImplCopyWithImpl(
+      _$OutletRoomImpl _value, $Res Function(_$OutletRoomImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of OutletRoom
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? outletId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_$OutletRoomImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      outletId: null == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OutletRoomImpl implements _OutletRoom {
+  const _$OutletRoomImpl(
+      {required this.id,
+      required this.name,
+      required this.outletId,
+      required this.createdAt,
+      required this.updatedAt});
+
+  factory _$OutletRoomImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OutletRoomImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String name;
+  @override
+  final String outletId;
+  @override
+  final String createdAt;
+  @override
+  final String updatedAt;
+
+  @override
+  String toString() {
+    return 'OutletRoom(id: $id, name: $name, outletId: $outletId, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OutletRoomImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.outletId, outletId) ||
+                other.outletId == outletId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, outletId, createdAt, updatedAt);
+
+  /// Create a copy of OutletRoom
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OutletRoomImplCopyWith<_$OutletRoomImpl> get copyWith =>
+      __$$OutletRoomImplCopyWithImpl<_$OutletRoomImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OutletRoomImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OutletRoom implements OutletRoom {
+  const factory _OutletRoom(
+      {required final String id,
+      required final String name,
+      required final String outletId,
+      required final String createdAt,
+      required final String updatedAt}) = _$OutletRoomImpl;
+
+  factory _OutletRoom.fromJson(Map<String, dynamic> json) =
+      _$OutletRoomImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get name;
+  @override
+  String get outletId;
+  @override
+  String get createdAt;
+  @override
+  String get updatedAt;
+
+  /// Create a copy of OutletRoom
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$OutletRoomImplCopyWith<_$OutletRoomImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
