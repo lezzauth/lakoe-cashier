@@ -90,7 +90,7 @@ class _BankSelectState extends State<BankSelect> {
           if (hasError)
             Container(
               margin: const EdgeInsets.only(top: 8),
-              padding: const EdgeInsets.only(left: 14),
+              padding: const EdgeInsets.only(left: 12),
               child: TextBodyS(
                 widget.errorText,
                 color: TColors.error,

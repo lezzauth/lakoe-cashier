@@ -15,8 +15,9 @@ _$TableModelImpl _$$TableModelImplFromJson(Map<String, dynamic> json) =>
       outletRoomId: json['outletRoomId'] as String,
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
-      outletRoom:
-          OutletRoom.fromJson(json['outletRoom'] as Map<String, dynamic>),
+      outletRoom: json['outletRoom'] == null
+          ? null
+          : OutletRoom.fromJson(json['outletRoom'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$TableModelImplToJson(_$TableModelImpl instance) =>

@@ -23,9 +23,8 @@ class _CategoryNewScreenState extends State<CategoryNewScreen> {
     FocusScope.of(context).unfocus();
 
     bool isFormValidated = _formKey.currentState?.saveAndValidate() ?? false;
-    if (!isFormValidated) {
-      return;
-    }
+    if (!isFormValidated) return;
+
     dynamic value = _formKey.currentState?.value;
 
     context.read<CategoryMasterCubit>().create(

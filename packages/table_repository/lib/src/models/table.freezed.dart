@@ -27,7 +27,7 @@ mixin _$TableModel {
   String get outletRoomId => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
-  OutletRoom get outletRoom => throw _privateConstructorUsedError;
+  OutletRoom? get outletRoom => throw _privateConstructorUsedError;
 
   /// Serializes this TableModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,9 +53,9 @@ abstract class $TableModelCopyWith<$Res> {
       String outletRoomId,
       String createdAt,
       String updatedAt,
-      OutletRoom outletRoom});
+      OutletRoom? outletRoom});
 
-  $OutletRoomCopyWith<$Res> get outletRoom;
+  $OutletRoomCopyWith<$Res>? get outletRoom;
 }
 
 /// @nodoc
@@ -80,7 +80,7 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
     Object? outletRoomId = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? outletRoom = null,
+    Object? outletRoom = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -111,10 +111,10 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
-      outletRoom: null == outletRoom
+      outletRoom: freezed == outletRoom
           ? _value.outletRoom
           : outletRoom // ignore: cast_nullable_to_non_nullable
-              as OutletRoom,
+              as OutletRoom?,
     ) as $Val);
   }
 
@@ -122,8 +122,12 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $OutletRoomCopyWith<$Res> get outletRoom {
-    return $OutletRoomCopyWith<$Res>(_value.outletRoom, (value) {
+  $OutletRoomCopyWith<$Res>? get outletRoom {
+    if (_value.outletRoom == null) {
+      return null;
+    }
+
+    return $OutletRoomCopyWith<$Res>(_value.outletRoom!, (value) {
       return _then(_value.copyWith(outletRoom: value) as $Val);
     });
   }
@@ -145,10 +149,10 @@ abstract class _$$TableModelImplCopyWith<$Res>
       String outletRoomId,
       String createdAt,
       String updatedAt,
-      OutletRoom outletRoom});
+      OutletRoom? outletRoom});
 
   @override
-  $OutletRoomCopyWith<$Res> get outletRoom;
+  $OutletRoomCopyWith<$Res>? get outletRoom;
 }
 
 /// @nodoc
@@ -171,7 +175,7 @@ class __$$TableModelImplCopyWithImpl<$Res>
     Object? outletRoomId = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? outletRoom = null,
+    Object? outletRoom = freezed,
   }) {
     return _then(_$TableModelImpl(
       id: null == id
@@ -202,10 +206,10 @@ class __$$TableModelImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
-      outletRoom: null == outletRoom
+      outletRoom: freezed == outletRoom
           ? _value.outletRoom
           : outletRoom // ignore: cast_nullable_to_non_nullable
-              as OutletRoom,
+              as OutletRoom?,
     ));
   }
 }
@@ -221,7 +225,7 @@ class _$TableModelImpl implements _TableModel {
       required this.outletRoomId,
       required this.createdAt,
       required this.updatedAt,
-      required this.outletRoom});
+      this.outletRoom});
 
   factory _$TableModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TableModelImplFromJson(json);
@@ -241,7 +245,7 @@ class _$TableModelImpl implements _TableModel {
   @override
   final String updatedAt;
   @override
-  final OutletRoom outletRoom;
+  final OutletRoom? outletRoom;
 
   @override
   String toString() {
@@ -299,7 +303,7 @@ abstract class _TableModel implements TableModel {
       required final String outletRoomId,
       required final String createdAt,
       required final String updatedAt,
-      required final OutletRoom outletRoom}) = _$TableModelImpl;
+      final OutletRoom? outletRoom}) = _$TableModelImpl;
 
   factory _TableModel.fromJson(Map<String, dynamic> json) =
       _$TableModelImpl.fromJson;
@@ -319,7 +323,7 @@ abstract class _TableModel implements TableModel {
   @override
   String get updatedAt;
   @override
-  OutletRoom get outletRoom;
+  OutletRoom? get outletRoom;
 
   /// Create a copy of TableModel
   /// with the given fields replaced by the non-null parameter values.

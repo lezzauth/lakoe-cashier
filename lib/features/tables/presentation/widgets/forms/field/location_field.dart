@@ -16,25 +16,28 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 import 'package:table_location_repository/table_location_repository.dart';
 
 class LocationField extends StatefulWidget {
-  final String? initialValue;
-
   const LocationField({
     super.key,
     this.initialValue,
   });
+
+  final String? initialValue;
 
   @override
   State<LocationField> createState() => _LocationFieldState();
 }
 
 class _LocationFieldState extends State<LocationField> {
-  Future<TableLocationModel?> showCreateLocation() async {
-    TableLocationModel? newTableLocation =
-        await showModalBottomSheet<TableLocationModel>(
+  late List<TableLocationModel> locations = [];
+  String? _selectedLocationId;
+
+  Future<void> showCreateLocation(BuildContext context) async {
+    if (!context.mounted) return;
+
+    String? newTableLocationId = await showModalBottomSheet(
       context: context,
       useSafeArea: true,
       isScrollControlled: true,
@@ -48,90 +51,125 @@ class _LocationFieldState extends State<LocationField> {
           ),
         );
       },
-    );
-    return newTableLocation;
+    ) as String?;
+
+    if (newTableLocationId == null) return;
+
+    if (!context.mounted) return;
+    context.read<TableMasterLocationCubit>().findAll();
+
+    setState(() {
+      _selectedLocationId = newTableLocationId;
+    });
+
+    final field = FormBuilder.of(context)?.fields['outletRoomId'];
+    field?.didChange(newTableLocationId);
   }
 
-  Future<void> _onInit() async {
-    if (!mounted) return;
+  void _onInit() {
+    context.read<TableMasterLocationCubit>().init();
+  }
 
-    await context
-        .read<TableMasterLocationCubit>()
-        .findAll(FindAllTableLocationDto());
+  String? _getInitialValue(List<TableLocationModel> locations) {
+    if (widget.initialValue != null) return widget.initialValue;
+    if (locations.isEmpty) return null;
+
+    return locations[0].id;
   }
 
   @override
   void initState() {
     super.initState();
-
     _onInit();
+    _selectedLocationId = _getInitialValue(locations);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TableMasterLocationCubit, TableMasterLocationState>(
       listener: (context, state) {
-        if (state is TableMasterLocationActionSuccess) {
-          _onInit();
+        if (state is TableMasterLocationLoadSuccess) {
+          locations = state.locations;
+
+          if (_selectedLocationId == null && locations.isNotEmpty) {
+            setState(() {
+              _selectedLocationId = locations[0].id;
+            });
+          }
         }
       },
       builder: (context, state) => switch (state) {
-        TableMasterLocationLoadSuccess(:final locations) => FormBuilderField(
+        TableMasterLocationLoadSuccess(:final locations) =>
+          FormBuilderField<String>(
             name: "outletRoomId",
-            initialValue: widget.initialValue ?? locations[0].id,
+            initialValue: _selectedLocationId,
+            validator: FormBuilderValidators.required(
+              errorText: ErrorTextStrings.required(name: "Lokasi"),
+            ),
             builder: (field) {
-              return Wrap(
-                direction: Axis.horizontal,
-                alignment: WrapAlignment.center,
-                spacing: 8,
-                runSpacing: 8,
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ...locations.map((location) {
-                    bool selected = location.id == field.value;
-                    return SizedBox(
-                      // height: 32,
-                      child: ChoiceChip(
-                        label: selected
-                            ? TextHeading5(
-                                TFormatter.capitalizeEachWord(location.name),
-                                color: TColors.primary,
-                              )
-                            : TextBodyS(
-                                TFormatter.capitalizeEachWord(location.name),
-                              ),
-                        selected: selected,
-                        onSelected: (value) {
-                          field.didChange(location.id);
-                        },
-                      ),
-                    );
-                  }),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: SizedBox(
-                      height: 33,
-                      child: OutlinedButton.icon(
-                        onPressed: showCreateLocation,
-                        label: const TextActionM(
-                          "Buat Baru",
-                          color: TColors.primary,
-                        ),
-                        style: const ButtonStyle(
-                            padding: WidgetStatePropertyAll(
-                              EdgeInsets.symmetric(horizontal: 14.0),
-                            ),
-                            side: WidgetStatePropertyAll(BorderSide(
-                              width: 1,
+                  Wrap(
+                    direction: Axis.horizontal,
+                    spacing: 8,
+                    runSpacing: -4,
+                    children: [
+                      if (locations.isNotEmpty)
+                        ...locations.map((location) {
+                          bool selected = field.value == location.id;
+                          return InputChip(
+                            label: !selected
+                                ? TextBodyS(location.name)
+                                : TextHeading5(
+                                    location.name,
+                                    color: TColors.primary,
+                                  ),
+                            selected: selected,
+                            onPressed: () {
+                              field.didChange(location.id);
+                            },
+                          );
+                        }),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: SizedBox(
+                          height: 33,
+                          child: OutlinedButton.icon(
+                            onPressed: () {
+                              showCreateLocation(context);
+                            },
+                            label: const TextActionM(
+                              "Buat Baru",
                               color: TColors.primary,
-                            ))),
-                        icon: const UiIcons(
-                          TIcons.add,
-                          size: 12,
-                          color: TColors.primary,
+                            ),
+                            style: const ButtonStyle(
+                                padding: WidgetStatePropertyAll(
+                                  EdgeInsets.symmetric(horizontal: 14.0),
+                                ),
+                                side: WidgetStatePropertyAll(BorderSide(
+                                  width: 1,
+                                  color: TColors.primary,
+                                ))),
+                            icon: const UiIcons(
+                              TIcons.add,
+                              size: 12,
+                              color: TColors.primary,
+                            ),
+                          ),
                         ),
+                      ),
+                    ],
+                  ),
+                  if (field.hasError)
+                    Container(
+                      margin: const EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.only(left: 12),
+                      child: TextBodyS(
+                        field.errorText ?? "",
+                        color: TColors.error,
                       ),
                     ),
-                  )
                 ],
               );
             },
@@ -163,14 +201,13 @@ class _CreateTableLocationFormState extends State<CreateTableLocationForm> {
   final _formKey = GlobalKey<FormBuilderState>();
 
   Future<void> _onSubmit() async {
-    FocusScope.of(context).unfocus();
-
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
     if (!isFormValid) return;
 
+    FocusScope.of(context).unfocus();
     dynamic value = _formKey.currentState?.value;
 
-    await context
+    context
         .read<TableMasterLocationCubit>()
         .create(CreateTableLocationDto(name: value["name"]));
   }
@@ -180,7 +217,7 @@ class _CreateTableLocationFormState extends State<CreateTableLocationForm> {
     return BlocListener<TableMasterLocationCubit, TableMasterLocationState>(
       listener: (context, state) {
         if (state is TableMasterLocationActionSuccess) {
-          Navigator.pop(context, state.response);
+          Navigator.pop(context, state.response.id);
         }
       },
       child: FormBuilder(
@@ -225,9 +262,7 @@ class _CreateTableLocationFormState extends State<CreateTableLocationForm> {
                               ? const SizedBox(
                                   width: 16,
                                   height: 16,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 1.2,
-                                  ),
+                                  child: CircularProgressIndicator(),
                                 )
                               : const TextActionL("Simpan"),
                         );

@@ -12,7 +12,6 @@ import 'package:point_of_sales_cashier/features/tables/application/cubit/table_m
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/filter/table_location_filter.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:table_location_repository/table_location_repository.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableList extends StatelessWidget {
@@ -46,7 +45,7 @@ class _TableListContentState extends State<TableListContent> {
   Future<void> _onInit() async {
     if (!mounted) return;
 
-    context.read<TableMasterLocationCubit>().findAll(FindAllTableLocationDto());
+    context.read<TableMasterLocationCubit>().findAll();
     context.read<TableMasterCubit>().init();
   }
 

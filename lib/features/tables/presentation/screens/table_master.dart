@@ -16,7 +16,6 @@ import 'package:point_of_sales_cashier/features/tables/presentation/widgets/filt
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/pages/table_detail_page.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:table_location_repository/table_location_repository.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableMasterScreen extends StatelessWidget {
@@ -42,7 +41,7 @@ class _TableMasterState extends State<TableMaster> {
   Future<void> _onRefresh() async {
     if (!mounted) return;
 
-    context.read<TableMasterLocationCubit>().findAll(FindAllTableLocationDto());
+    context.read<TableMasterLocationCubit>().findAll();
     await context.read<TableMasterCubit>().init();
   }
 
@@ -142,7 +141,7 @@ class _TableMasterState extends State<TableMaster> {
 
                         String title = table.no;
                         String subtitle =
-                            "${table.capacity} Orang • Indoor (Hardcode)";
+                            "${table.capacity} Orang • ${table.outletRoom!.name}";
 
                         if (isFreeTable) {
                           title = "Bebas";

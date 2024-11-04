@@ -13,7 +13,7 @@ class TableModel with _$TableModel {
     required String outletRoomId,
     required String createdAt,
     required String updatedAt,
-    required OutletRoom outletRoom,
+    OutletRoom? outletRoom,
   }) = _TableModel;
 
   factory TableModel.fromJson(Map<String, Object?> json) =>

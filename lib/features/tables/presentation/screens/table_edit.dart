@@ -32,13 +32,13 @@ class _TableEditState extends State<TableEdit> {
   final _formKey = GlobalKey<FormBuilderState>();
 
   Future<void> _onSubmit(String tableId) async {
-    FocusScope.of(context).unfocus();
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
       return;
     }
 
+    FocusScope.of(context).unfocus();
     dynamic value = _formKey.currentState?.value;
 
     await context.read<TableMasterCubit>().update(

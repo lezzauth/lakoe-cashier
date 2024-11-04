@@ -42,15 +42,13 @@ class _TableInformationFormState extends State<TableInformationForm> {
           labelButtonPrimary: "Tidak",
           labelButtonSecondary: "Ya, Hapus",
           isSecondaryActionLoading: widget.isLoading,
-          primaryAction: () async {
-            if (widget.onDeleted != null) {
-              await widget.onDeleted!();
-            }
-
-            if (!context.mounted) return;
+          primaryAction: () {
             Navigator.pop(context);
           },
-          secondaryAction: () {
+          secondaryAction: () async {
+            await widget.onDeleted!();
+
+            if (!context.mounted) return;
             Navigator.pop(context);
           },
         );
@@ -134,8 +132,9 @@ class _TableInformationFormState extends State<TableInformationForm> {
                                 children: [
                                   const FormLabel("Lokasi"),
                                   LocationField(
-                                      initialValue:
-                                          widget.initialValue["outletRoomId"]),
+                                    initialValue:
+                                        widget.initialValue["outletRoomId"],
+                                  ),
                                 ],
                               ),
                             ),

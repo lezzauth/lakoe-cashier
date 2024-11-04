@@ -35,13 +35,13 @@ class _TableNewState extends State<TableNew> {
   final _formKey = GlobalKey<FormBuilderState>();
 
   Future<void> _onSubmit() async {
-    FocusScope.of(context).unfocus();
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
     if (!isFormValid) {
       return;
     }
 
+    FocusScope.of(context).unfocus();
     dynamic value = _formKey.currentState?.value;
 
     await context.read<TableMasterCubit>().create(CreateTableDto(
