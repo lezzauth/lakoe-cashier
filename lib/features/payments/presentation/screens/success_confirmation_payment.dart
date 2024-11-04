@@ -81,7 +81,7 @@ class _SuccessConfirmationPaymentContentState
   bool _doPrinting = false;
 
   void _onInit() {
-    context.read<OrderDetailCubit>().findOne(widget.arguments.payment.orderId);
+    context.read<OrderDetailCubit>().findOne(widget.arguments.payment.order.id);
   }
 
   @override
@@ -190,8 +190,8 @@ class _SuccessConfirmationPaymentContentState
                                       margin: const EdgeInsets.only(bottom: 8),
                                       child: TextHeading1(
                                         TFormatter.formatToRupiah(
-                                          double.parse(
-                                              arguments.payment.amount),
+                                          double.parse(arguments
+                                              .payment.transaction.amount),
                                         ),
                                       ),
                                     ),
@@ -226,7 +226,7 @@ class _SuccessConfirmationPaymentContentState
                                           children: [
                                             const TextReceipt("No. Order"),
                                             TextReceipt(
-                                              "#${arguments.payment.no}",
+                                              "#${arguments.payment.order.no}",
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ],
@@ -238,8 +238,10 @@ class _SuccessConfirmationPaymentContentState
                                           children: [
                                             const TextReceipt("Tanggal"),
                                             TextReceipt(
-                                              TFormatter.orderDate(
-                                                  arguments.payment.createdAt),
+                                              TFormatter.orderDate(arguments
+                                                  .payment
+                                                  .transaction
+                                                  .createdAt),
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ],
@@ -252,8 +254,10 @@ class _SuccessConfirmationPaymentContentState
                                             const TextReceipt("Pembayaran"),
                                             TextReceipt(
                                               TPaymentMethodName.getName(
-                                                arguments.payment.paymentMethod,
-                                                arguments.payment.paidFrom,
+                                                arguments.payment.transaction
+                                                    .paymentMethod,
+                                                arguments.payment.transaction
+                                                    .paidFrom,
                                               ),
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -273,8 +277,8 @@ class _SuccessConfirmationPaymentContentState
                                             const TextReceipt("Uang Diterima"),
                                             TextReceipt(
                                               TFormatter.formatToRupiah(
-                                                double.parse(arguments
-                                                    .payment.paidAmount),
+                                                double.parse(arguments.payment
+                                                    .transaction.paidAmount),
                                               ),
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -288,8 +292,8 @@ class _SuccessConfirmationPaymentContentState
                                             const TextReceipt("Total Tagihan"),
                                             TextReceipt(
                                               TFormatter.formatToRupiah(
-                                                double.parse(
-                                                    arguments.payment.amount),
+                                                double.parse(arguments.payment
+                                                    .transaction.amount),
                                               ),
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -322,7 +326,8 @@ class _SuccessConfirmationPaymentContentState
                                         TextReceipt(
                                           TFormatter.formatToRupiah(
                                             double.parse(
-                                              arguments.payment.change,
+                                              arguments
+                                                  .payment.transaction.change,
                                             ),
                                           ),
                                           fontWeight: FontWeight.w600,

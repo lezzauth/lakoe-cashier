@@ -198,8 +198,58 @@ Map<String, dynamic> _$$RegenerateCashierTokenResponseImplToJson(
 _$CompleteOrderResponseImpl _$$CompleteOrderResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$CompleteOrderResponseImpl(
+      order: Order.fromJson(json['order'] as Map<String, dynamic>),
+      transaction:
+          Transaction.fromJson(json['transaction'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$CompleteOrderResponseImplToJson(
+        _$CompleteOrderResponseImpl instance) =>
+    <String, dynamic>{
+      'order': instance.order,
+      'transaction': instance.transaction,
+    };
+
+_$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
       id: json['id'] as String,
       no: (json['no'] as num).toInt(),
+      status: json['status'] as String,
+      price: json['price'] as String,
+      customerId: json['customerId'] as String?,
+      paymentStatus: json['paymentStatus'] as String,
+      customerType: json['customerType'] as String,
+      type: json['type'] as String,
+      source: json['source'] as String,
+      outletId: json['outletId'] as String,
+      tableId: json['tableId'] as String?,
+      cashierId: json['cashierId'] as String,
+      closedAt: json['closedAt'] as String,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
+    );
+
+Map<String, dynamic> _$$OrderImplToJson(_$OrderImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'no': instance.no,
+      'status': instance.status,
+      'price': instance.price,
+      'customerId': instance.customerId,
+      'paymentStatus': instance.paymentStatus,
+      'customerType': instance.customerType,
+      'type': instance.type,
+      'source': instance.source,
+      'outletId': instance.outletId,
+      'tableId': instance.tableId,
+      'cashierId': instance.cashierId,
+      'closedAt': instance.closedAt,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+    };
+
+_$TransactionImpl _$$TransactionImplFromJson(Map<String, dynamic> json) =>
+    _$TransactionImpl(
+      id: json['id'] as String,
       paymentMethod: json['paymentMethod'] as String,
       status: json['status'] as String,
       paidAmount: json['paidAmount'] as String,
@@ -208,19 +258,17 @@ _$CompleteOrderResponseImpl _$$CompleteOrderResponseImplFromJson(
       change: json['change'] as String,
       accountNumber: json['accountNumber'] as String?,
       photo: json['photo'] as String?,
-      externalId: json['externalId'] as String?,
-      approvalCode: json['approvalCode'] as String?,
       orderId: json['orderId'] as String,
       outletId: json['outletId'] as String,
+      externalId: json['externalId'] as String?,
+      approvalCode: json['approvalCode'] as String?,
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
     );
 
-Map<String, dynamic> _$$CompleteOrderResponseImplToJson(
-        _$CompleteOrderResponseImpl instance) =>
+Map<String, dynamic> _$$TransactionImplToJson(_$TransactionImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'no': instance.no,
       'paymentMethod': instance.paymentMethod,
       'status': instance.status,
       'paidAmount': instance.paidAmount,
@@ -229,10 +277,10 @@ Map<String, dynamic> _$$CompleteOrderResponseImplToJson(
       'change': instance.change,
       'accountNumber': instance.accountNumber,
       'photo': instance.photo,
-      'externalId': instance.externalId,
-      'approvalCode': instance.approvalCode,
       'orderId': instance.orderId,
       'outletId': instance.outletId,
+      'externalId': instance.externalId,
+      'approvalCode': instance.approvalCode,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };

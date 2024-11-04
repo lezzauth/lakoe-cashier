@@ -146,26 +146,59 @@ class RegenerateCashierTokenResponse with _$RegenerateCashierTokenResponse {
 @freezed
 class CompleteOrderResponse with _$CompleteOrderResponse {
   const factory CompleteOrderResponse({
+    required Order order,
+    required Transaction transaction,
+  }) = _CompleteOrderResponse;
+
+  factory CompleteOrderResponse.fromJson(Map<String, Object?> json) =>
+      _$CompleteOrderResponseFromJson(json);
+}
+
+@freezed
+class Order with _$Order {
+  const factory Order({
     required String id,
     required int no,
+    required String status,
+    required String price,
+    String? customerId,
+    required String paymentStatus,
+    required String customerType,
+    required String type,
+    required String source,
+    required String outletId,
+    String? tableId,
+    required String cashierId,
+    required String closedAt,
+    required String createdAt,
+    required String updatedAt,
+  }) = _Order;
+
+  factory Order.fromJson(Map<String, Object?> json) => _$OrderFromJson(json);
+}
+
+@freezed
+class Transaction with _$Transaction {
+  const factory Transaction({
+    required String id,
     required String paymentMethod,
     required String status,
     required String paidAmount,
     required String paidFrom,
     required String amount,
     required String change,
-    required String? accountNumber,
-    required String? photo,
-    required String? externalId,
-    required String? approvalCode,
+    String? accountNumber,
+    String? photo,
     required String orderId,
     required String outletId,
+    String? externalId,
+    String? approvalCode,
     required String createdAt,
     required String updatedAt,
-  }) = _CompleteOrderResponse;
+  }) = _Transaction;
 
-  factory CompleteOrderResponse.fromJson(Map<String, Object?> json) =>
-      _$CompleteOrderResponseFromJson(json);
+  factory Transaction.fromJson(Map<String, Object?> json) =>
+      _$TransactionFromJson(json);
 }
 
 @freezed
