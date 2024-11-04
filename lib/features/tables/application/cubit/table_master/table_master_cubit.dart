@@ -25,6 +25,13 @@ class TableMasterCubit extends Cubit<TableMasterState> {
           outletRoomId: "",
           createdAt: "",
           updatedAt: "",
+          outletRoom: OutletRoom(
+            id: "-",
+            name: "Bebas",
+            outletId: "",
+            createdAt: "",
+            updatedAt: "",
+          ),
         )
       ];
       final tables = await _tableRepository.findAll(dto);
