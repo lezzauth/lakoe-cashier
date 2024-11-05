@@ -180,15 +180,17 @@ class PhoneNumberFormatter extends TextInputFormatter {
 
     if (cleanedPhoneNumber.startsWith('628')) {
       cleanedPhoneNumber = '0${cleanedPhoneNumber.substring(2)}';
+    } else if (cleanedPhoneNumber.startsWith('+628')) {
+      cleanedPhoneNumber = '0${cleanedPhoneNumber.substring(3)}';
     } else if (cleanedPhoneNumber.startsWith('8')) {
       cleanedPhoneNumber = '0$cleanedPhoneNumber';
     }
 
     if (cleanedPhoneNumber.length > 11) {
       return '${cleanedPhoneNumber.substring(0, 4)}-${cleanedPhoneNumber.substring(4, 8)}-${cleanedPhoneNumber.substring(8, 12)}';
-    } else if (cleanedPhoneNumber.length > 7) {
+    } else if (cleanedPhoneNumber.length > 8) {
       return '${cleanedPhoneNumber.substring(0, 4)}-${cleanedPhoneNumber.substring(4, 8)}-${cleanedPhoneNumber.substring(8)}';
-    } else if (cleanedPhoneNumber.length > 3) {
+    } else if (cleanedPhoneNumber.length > 4) {
       return '${cleanedPhoneNumber.substring(0, 4)}-${cleanedPhoneNumber.substring(4)}';
     }
 

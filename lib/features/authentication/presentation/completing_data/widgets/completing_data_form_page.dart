@@ -9,6 +9,7 @@ import 'package:point_of_sales_cashier/features/authentication/presentation/comp
 import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/completing_data_form/owner_information_form.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class CompletingDataFormPage extends StatefulWidget {
   const CompletingDataFormPage({
@@ -49,13 +50,19 @@ class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
         onChanged: () {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
             bool isFormValid = _formKey.currentState?.isValid ?? false;
-            context
-                .read<CompletingDataFormCubit>()
-                .setValue(_formKey.currentState?.instantValue, isFormValid);
+            context.read<CompletingDataFormCubit>().setValue(
+                  _formKey.currentState?.instantValue,
+                  isFormValid,
+                );
           });
         },
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        initialValue: widget.initialValue,
+        // initialValue: widget.initialValue,
+        initialValue: {
+          ...widget.initialValue,
+          'phoneNumber': PhoneNumberFormatter.formatForDisplay(
+              widget.initialValue['phoneNumber'] ?? ''),
+        },
         child: Expanded(
           child: ListView(
             padding: const EdgeInsets.only(top: 16),

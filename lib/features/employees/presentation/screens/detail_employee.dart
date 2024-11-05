@@ -13,6 +13,7 @@ import 'package:point_of_sales_cashier/features/employees/data/arguments/employe
 import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class DetailEmployeeScreen extends StatelessWidget {
   const DetailEmployeeScreen({super.key, required this.arguments});
@@ -162,7 +163,9 @@ class _DetailEmployeeState extends State<DetailEmployee> {
                                             flex: 3,
                                             fit: FlexFit.tight,
                                             child: TextBodyL(
-                                              employee.phoneNumber,
+                                              PhoneNumberFormatter
+                                                  .formatForDisplay(
+                                                      employee.phoneNumber),
                                               color: TColors.neutralDarkDarkest,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,

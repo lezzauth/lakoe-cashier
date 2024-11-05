@@ -41,14 +41,16 @@ class _OwnerInformationFormState extends State<OwnerInformationForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const FormLabel(
-                "Nomor WA",
+                "Nomor HP/WA",
                 enabled: false,
+                sub: " • Nomor ini tidak bisa diubah",
               ),
               FormBuilderTextField(
                 name: "phoneNumber",
                 enabled: false,
                 validator: FormBuilderValidators.required(
-                    errorText: ErrorTextStrings.required(name: "Nomor WA")),
+                  errorText: ErrorTextStrings.required(name: "Nomor HP/WA"),
+                ),
               ),
             ],
           ),
