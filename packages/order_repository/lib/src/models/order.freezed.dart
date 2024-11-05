@@ -14,6 +14,618 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+OrderItemRes _$OrderItemResFromJson(Map<String, dynamic> json) {
+  return _OrderItemRes.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OrderItemRes {
+  String get id => throw _privateConstructorUsedError;
+  int get no => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
+  String get paymentStatus => throw _privateConstructorUsedError;
+  String get customerType => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
+  String get source => throw _privateConstructorUsedError;
+  OrderItemCustomer? get customer => throw _privateConstructorUsedError;
+  OrderItemTable? get table => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OrderItemResCopyWith<OrderItemRes> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OrderItemResCopyWith<$Res> {
+  factory $OrderItemResCopyWith(
+          OrderItemRes value, $Res Function(OrderItemRes) then) =
+      _$OrderItemResCopyWithImpl<$Res, OrderItemRes>;
+  @useResult
+  $Res call(
+      {String id,
+      int no,
+      String price,
+      String paymentStatus,
+      String customerType,
+      String type,
+      String source,
+      OrderItemCustomer? customer,
+      OrderItemTable? table});
+
+  $OrderItemCustomerCopyWith<$Res>? get customer;
+  $OrderItemTableCopyWith<$Res>? get table;
+}
+
+/// @nodoc
+class _$OrderItemResCopyWithImpl<$Res, $Val extends OrderItemRes>
+    implements $OrderItemResCopyWith<$Res> {
+  _$OrderItemResCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? no = null,
+    Object? price = null,
+    Object? paymentStatus = null,
+    Object? customerType = null,
+    Object? type = null,
+    Object? source = null,
+    Object? customer = freezed,
+    Object? table = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as int,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String,
+      customerType: null == customerType
+          ? _value.customerType
+          : customerType // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String,
+      customer: freezed == customer
+          ? _value.customer
+          : customer // ignore: cast_nullable_to_non_nullable
+              as OrderItemCustomer?,
+      table: freezed == table
+          ? _value.table
+          : table // ignore: cast_nullable_to_non_nullable
+              as OrderItemTable?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OrderItemCustomerCopyWith<$Res>? get customer {
+    if (_value.customer == null) {
+      return null;
+    }
+
+    return $OrderItemCustomerCopyWith<$Res>(_value.customer!, (value) {
+      return _then(_value.copyWith(customer: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OrderItemTableCopyWith<$Res>? get table {
+    if (_value.table == null) {
+      return null;
+    }
+
+    return $OrderItemTableCopyWith<$Res>(_value.table!, (value) {
+      return _then(_value.copyWith(table: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$OrderItemResImplCopyWith<$Res>
+    implements $OrderItemResCopyWith<$Res> {
+  factory _$$OrderItemResImplCopyWith(
+          _$OrderItemResImpl value, $Res Function(_$OrderItemResImpl) then) =
+      __$$OrderItemResImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      int no,
+      String price,
+      String paymentStatus,
+      String customerType,
+      String type,
+      String source,
+      OrderItemCustomer? customer,
+      OrderItemTable? table});
+
+  @override
+  $OrderItemCustomerCopyWith<$Res>? get customer;
+  @override
+  $OrderItemTableCopyWith<$Res>? get table;
+}
+
+/// @nodoc
+class __$$OrderItemResImplCopyWithImpl<$Res>
+    extends _$OrderItemResCopyWithImpl<$Res, _$OrderItemResImpl>
+    implements _$$OrderItemResImplCopyWith<$Res> {
+  __$$OrderItemResImplCopyWithImpl(
+      _$OrderItemResImpl _value, $Res Function(_$OrderItemResImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? no = null,
+    Object? price = null,
+    Object? paymentStatus = null,
+    Object? customerType = null,
+    Object? type = null,
+    Object? source = null,
+    Object? customer = freezed,
+    Object? table = freezed,
+  }) {
+    return _then(_$OrderItemResImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as int,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String,
+      customerType: null == customerType
+          ? _value.customerType
+          : customerType // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String,
+      customer: freezed == customer
+          ? _value.customer
+          : customer // ignore: cast_nullable_to_non_nullable
+              as OrderItemCustomer?,
+      table: freezed == table
+          ? _value.table
+          : table // ignore: cast_nullable_to_non_nullable
+              as OrderItemTable?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OrderItemResImpl implements _OrderItemRes {
+  const _$OrderItemResImpl(
+      {required this.id,
+      required this.no,
+      required this.price,
+      required this.paymentStatus,
+      required this.customerType,
+      required this.type,
+      required this.source,
+      this.customer,
+      this.table});
+
+  factory _$OrderItemResImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OrderItemResImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final int no;
+  @override
+  final String price;
+  @override
+  final String paymentStatus;
+  @override
+  final String customerType;
+  @override
+  final String type;
+  @override
+  final String source;
+  @override
+  final OrderItemCustomer? customer;
+  @override
+  final OrderItemTable? table;
+
+  @override
+  String toString() {
+    return 'OrderItemRes(id: $id, no: $no, price: $price, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, customer: $customer, table: $table)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OrderItemResImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.no, no) || other.no == no) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.paymentStatus, paymentStatus) ||
+                other.paymentStatus == paymentStatus) &&
+            (identical(other.customerType, customerType) ||
+                other.customerType == customerType) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.source, source) || other.source == source) &&
+            (identical(other.customer, customer) ||
+                other.customer == customer) &&
+            (identical(other.table, table) || other.table == table));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, no, price, paymentStatus,
+      customerType, type, source, customer, table);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OrderItemResImplCopyWith<_$OrderItemResImpl> get copyWith =>
+      __$$OrderItemResImplCopyWithImpl<_$OrderItemResImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OrderItemResImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OrderItemRes implements OrderItemRes {
+  const factory _OrderItemRes(
+      {required final String id,
+      required final int no,
+      required final String price,
+      required final String paymentStatus,
+      required final String customerType,
+      required final String type,
+      required final String source,
+      final OrderItemCustomer? customer,
+      final OrderItemTable? table}) = _$OrderItemResImpl;
+
+  factory _OrderItemRes.fromJson(Map<String, dynamic> json) =
+      _$OrderItemResImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  int get no;
+  @override
+  String get price;
+  @override
+  String get paymentStatus;
+  @override
+  String get customerType;
+  @override
+  String get type;
+  @override
+  String get source;
+  @override
+  OrderItemCustomer? get customer;
+  @override
+  OrderItemTable? get table;
+  @override
+  @JsonKey(ignore: true)
+  _$$OrderItemResImplCopyWith<_$OrderItemResImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+OrderItemCustomer _$OrderItemCustomerFromJson(Map<String, dynamic> json) {
+  return _OrderItemCustomer.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OrderItemCustomer {
+  String get name => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OrderItemCustomerCopyWith<OrderItemCustomer> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OrderItemCustomerCopyWith<$Res> {
+  factory $OrderItemCustomerCopyWith(
+          OrderItemCustomer value, $Res Function(OrderItemCustomer) then) =
+      _$OrderItemCustomerCopyWithImpl<$Res, OrderItemCustomer>;
+  @useResult
+  $Res call({String name});
+}
+
+/// @nodoc
+class _$OrderItemCustomerCopyWithImpl<$Res, $Val extends OrderItemCustomer>
+    implements $OrderItemCustomerCopyWith<$Res> {
+  _$OrderItemCustomerCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$OrderItemCustomerImplCopyWith<$Res>
+    implements $OrderItemCustomerCopyWith<$Res> {
+  factory _$$OrderItemCustomerImplCopyWith(_$OrderItemCustomerImpl value,
+          $Res Function(_$OrderItemCustomerImpl) then) =
+      __$$OrderItemCustomerImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name});
+}
+
+/// @nodoc
+class __$$OrderItemCustomerImplCopyWithImpl<$Res>
+    extends _$OrderItemCustomerCopyWithImpl<$Res, _$OrderItemCustomerImpl>
+    implements _$$OrderItemCustomerImplCopyWith<$Res> {
+  __$$OrderItemCustomerImplCopyWithImpl(_$OrderItemCustomerImpl _value,
+      $Res Function(_$OrderItemCustomerImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+  }) {
+    return _then(_$OrderItemCustomerImpl(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OrderItemCustomerImpl implements _OrderItemCustomer {
+  const _$OrderItemCustomerImpl({required this.name});
+
+  factory _$OrderItemCustomerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OrderItemCustomerImplFromJson(json);
+
+  @override
+  final String name;
+
+  @override
+  String toString() {
+    return 'OrderItemCustomer(name: $name)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OrderItemCustomerImpl &&
+            (identical(other.name, name) || other.name == name));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OrderItemCustomerImplCopyWith<_$OrderItemCustomerImpl> get copyWith =>
+      __$$OrderItemCustomerImplCopyWithImpl<_$OrderItemCustomerImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OrderItemCustomerImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OrderItemCustomer implements OrderItemCustomer {
+  const factory _OrderItemCustomer({required final String name}) =
+      _$OrderItemCustomerImpl;
+
+  factory _OrderItemCustomer.fromJson(Map<String, dynamic> json) =
+      _$OrderItemCustomerImpl.fromJson;
+
+  @override
+  String get name;
+  @override
+  @JsonKey(ignore: true)
+  _$$OrderItemCustomerImplCopyWith<_$OrderItemCustomerImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+OrderItemTable _$OrderItemTableFromJson(Map<String, dynamic> json) {
+  return _OrderItemTable.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OrderItemTable {
+  String get no => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OrderItemTableCopyWith<OrderItemTable> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OrderItemTableCopyWith<$Res> {
+  factory $OrderItemTableCopyWith(
+          OrderItemTable value, $Res Function(OrderItemTable) then) =
+      _$OrderItemTableCopyWithImpl<$Res, OrderItemTable>;
+  @useResult
+  $Res call({String no});
+}
+
+/// @nodoc
+class _$OrderItemTableCopyWithImpl<$Res, $Val extends OrderItemTable>
+    implements $OrderItemTableCopyWith<$Res> {
+  _$OrderItemTableCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? no = null,
+  }) {
+    return _then(_value.copyWith(
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$OrderItemTableImplCopyWith<$Res>
+    implements $OrderItemTableCopyWith<$Res> {
+  factory _$$OrderItemTableImplCopyWith(_$OrderItemTableImpl value,
+          $Res Function(_$OrderItemTableImpl) then) =
+      __$$OrderItemTableImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String no});
+}
+
+/// @nodoc
+class __$$OrderItemTableImplCopyWithImpl<$Res>
+    extends _$OrderItemTableCopyWithImpl<$Res, _$OrderItemTableImpl>
+    implements _$$OrderItemTableImplCopyWith<$Res> {
+  __$$OrderItemTableImplCopyWithImpl(
+      _$OrderItemTableImpl _value, $Res Function(_$OrderItemTableImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? no = null,
+  }) {
+    return _then(_$OrderItemTableImpl(
+      no: null == no
+          ? _value.no
+          : no // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OrderItemTableImpl implements _OrderItemTable {
+  const _$OrderItemTableImpl({required this.no});
+
+  factory _$OrderItemTableImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OrderItemTableImplFromJson(json);
+
+  @override
+  final String no;
+
+  @override
+  String toString() {
+    return 'OrderItemTable(no: $no)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OrderItemTableImpl &&
+            (identical(other.no, no) || other.no == no));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, no);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OrderItemTableImplCopyWith<_$OrderItemTableImpl> get copyWith =>
+      __$$OrderItemTableImplCopyWithImpl<_$OrderItemTableImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OrderItemTableImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OrderItemTable implements OrderItemTable {
+  const factory _OrderItemTable({required final String no}) =
+      _$OrderItemTableImpl;
+
+  factory _OrderItemTable.fromJson(Map<String, dynamic> json) =
+      _$OrderItemTableImpl.fromJson;
+
+  @override
+  String get no;
+  @override
+  @JsonKey(ignore: true)
+  _$$OrderItemTableImplCopyWith<_$OrderItemTableImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 OrderCharge _$OrderChargeFromJson(Map<String, dynamic> json) {
   return _OrderCharge.fromJson(json);
 }

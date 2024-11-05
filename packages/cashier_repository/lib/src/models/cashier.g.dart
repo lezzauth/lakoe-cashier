@@ -127,32 +127,33 @@ Map<String, dynamic> _$$SaveOrderResponseImplToJson(
       'tableId': instance.tableId,
     };
 
-_$OrderItemCustomerImpl _$$OrderItemCustomerImplFromJson(
+_$OrderCashierItemCustomerImpl _$$OrderCashierItemCustomerImplFromJson(
         Map<String, dynamic> json) =>
-    _$OrderItemCustomerImpl(
+    _$OrderCashierItemCustomerImpl(
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$$OrderItemCustomerImplToJson(
-        _$OrderItemCustomerImpl instance) =>
+Map<String, dynamic> _$$OrderCashierItemCustomerImplToJson(
+        _$OrderCashierItemCustomerImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
     };
 
-_$OrderItemTableImpl _$$OrderItemTableImplFromJson(Map<String, dynamic> json) =>
-    _$OrderItemTableImpl(
+_$OrderCashierItemTableImpl _$$OrderCashierItemTableImplFromJson(
+        Map<String, dynamic> json) =>
+    _$OrderCashierItemTableImpl(
       no: json['no'] as String,
     );
 
-Map<String, dynamic> _$$OrderItemTableImplToJson(
-        _$OrderItemTableImpl instance) =>
+Map<String, dynamic> _$$OrderCashierItemTableImplToJson(
+        _$OrderCashierItemTableImpl instance) =>
     <String, dynamic>{
       'no': instance.no,
     };
 
-_$OrderItemResponseImpl _$$OrderItemResponseImplFromJson(
+_$OrderCashierItemResponseImpl _$$OrderCashierItemResponseImplFromJson(
         Map<String, dynamic> json) =>
-    _$OrderItemResponseImpl(
+    _$OrderCashierItemResponseImpl(
       id: json['id'] as String,
       no: (json['no'] as num).toInt(),
       price: json['price'] as String,
@@ -162,15 +163,16 @@ _$OrderItemResponseImpl _$$OrderItemResponseImplFromJson(
       source: json['source'] as String,
       customer: json['customer'] == null
           ? null
-          : OrderItemCustomer.fromJson(
+          : OrderCashierItemCustomer.fromJson(
               json['customer'] as Map<String, dynamic>),
       table: json['table'] == null
           ? null
-          : OrderItemTable.fromJson(json['table'] as Map<String, dynamic>),
+          : OrderCashierItemTable.fromJson(
+              json['table'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$OrderItemResponseImplToJson(
-        _$OrderItemResponseImpl instance) =>
+Map<String, dynamic> _$$OrderCashierItemResponseImplToJson(
+        _$OrderCashierItemResponseImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'no': instance.no,

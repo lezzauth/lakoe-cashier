@@ -1926,25 +1926,25 @@ abstract class _CloseCashierDto implements CloseCashierDto {
 }
 
 /// @nodoc
-mixin _$FindAllOrderDto {
+mixin _$FindAllOrderCashierDto {
   String? get type => throw _privateConstructorUsedError;
   String? get source => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get search => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
 
-  /// Create a copy of FindAllOrderDto
+  /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $FindAllOrderDtoCopyWith<FindAllOrderDto> get copyWith =>
+  $FindAllOrderCashierDtoCopyWith<FindAllOrderCashierDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $FindAllOrderDtoCopyWith<$Res> {
-  factory $FindAllOrderDtoCopyWith(
-          FindAllOrderDto value, $Res Function(FindAllOrderDto) then) =
-      _$FindAllOrderDtoCopyWithImpl<$Res, FindAllOrderDto>;
+abstract class $FindAllOrderCashierDtoCopyWith<$Res> {
+  factory $FindAllOrderCashierDtoCopyWith(FindAllOrderCashierDto value,
+          $Res Function(FindAllOrderCashierDto) then) =
+      _$FindAllOrderCashierDtoCopyWithImpl<$Res, FindAllOrderCashierDto>;
   @useResult
   $Res call(
       {String? type,
@@ -1955,16 +1955,17 @@ abstract class $FindAllOrderDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$FindAllOrderDtoCopyWithImpl<$Res, $Val extends FindAllOrderDto>
-    implements $FindAllOrderDtoCopyWith<$Res> {
-  _$FindAllOrderDtoCopyWithImpl(this._value, this._then);
+class _$FindAllOrderCashierDtoCopyWithImpl<$Res,
+        $Val extends FindAllOrderCashierDto>
+    implements $FindAllOrderCashierDtoCopyWith<$Res> {
+  _$FindAllOrderCashierDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of FindAllOrderDto
+  /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -2001,11 +2002,12 @@ class _$FindAllOrderDtoCopyWithImpl<$Res, $Val extends FindAllOrderDto>
 }
 
 /// @nodoc
-abstract class _$$FindAllOrderDtoImplCopyWith<$Res>
-    implements $FindAllOrderDtoCopyWith<$Res> {
-  factory _$$FindAllOrderDtoImplCopyWith(_$FindAllOrderDtoImpl value,
-          $Res Function(_$FindAllOrderDtoImpl) then) =
-      __$$FindAllOrderDtoImplCopyWithImpl<$Res>;
+abstract class _$$FindAllOrderCashierDtoImplCopyWith<$Res>
+    implements $FindAllOrderCashierDtoCopyWith<$Res> {
+  factory _$$FindAllOrderCashierDtoImplCopyWith(
+          _$FindAllOrderCashierDtoImpl value,
+          $Res Function(_$FindAllOrderCashierDtoImpl) then) =
+      __$$FindAllOrderCashierDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -2017,14 +2019,16 @@ abstract class _$$FindAllOrderDtoImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$FindAllOrderDtoImplCopyWithImpl<$Res>
-    extends _$FindAllOrderDtoCopyWithImpl<$Res, _$FindAllOrderDtoImpl>
-    implements _$$FindAllOrderDtoImplCopyWith<$Res> {
-  __$$FindAllOrderDtoImplCopyWithImpl(
-      _$FindAllOrderDtoImpl _value, $Res Function(_$FindAllOrderDtoImpl) _then)
+class __$$FindAllOrderCashierDtoImplCopyWithImpl<$Res>
+    extends _$FindAllOrderCashierDtoCopyWithImpl<$Res,
+        _$FindAllOrderCashierDtoImpl>
+    implements _$$FindAllOrderCashierDtoImplCopyWith<$Res> {
+  __$$FindAllOrderCashierDtoImplCopyWithImpl(
+      _$FindAllOrderCashierDtoImpl _value,
+      $Res Function(_$FindAllOrderCashierDtoImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of FindAllOrderDto
+  /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -2035,7 +2039,7 @@ class __$$FindAllOrderDtoImplCopyWithImpl<$Res>
     Object? search = freezed,
     Object? sort = freezed,
   }) {
-    return _then(_$FindAllOrderDtoImpl(
+    return _then(_$FindAllOrderCashierDtoImpl(
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -2062,8 +2066,8 @@ class __$$FindAllOrderDtoImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$FindAllOrderDtoImpl implements _FindAllOrderDto {
-  const _$FindAllOrderDtoImpl(
+class _$FindAllOrderCashierDtoImpl implements _FindAllOrderCashierDto {
+  const _$FindAllOrderCashierDtoImpl(
       {this.type, this.source, this.status, this.search, this.sort});
 
   @override
@@ -2079,14 +2083,14 @@ class _$FindAllOrderDtoImpl implements _FindAllOrderDto {
 
   @override
   String toString() {
-    return 'FindAllOrderDto(type: $type, source: $source, status: $status, search: $search, sort: $sort)';
+    return 'FindAllOrderCashierDto(type: $type, source: $source, status: $status, search: $search, sort: $sort)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FindAllOrderDtoImpl &&
+            other is _$FindAllOrderCashierDtoImpl &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.source, source) || other.source == source) &&
             (identical(other.status, status) || other.status == status) &&
@@ -2098,23 +2102,23 @@ class _$FindAllOrderDtoImpl implements _FindAllOrderDto {
   int get hashCode =>
       Object.hash(runtimeType, type, source, status, search, sort);
 
-  /// Create a copy of FindAllOrderDto
+  /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$FindAllOrderDtoImplCopyWith<_$FindAllOrderDtoImpl> get copyWith =>
-      __$$FindAllOrderDtoImplCopyWithImpl<_$FindAllOrderDtoImpl>(
-          this, _$identity);
+  _$$FindAllOrderCashierDtoImplCopyWith<_$FindAllOrderCashierDtoImpl>
+      get copyWith => __$$FindAllOrderCashierDtoImplCopyWithImpl<
+          _$FindAllOrderCashierDtoImpl>(this, _$identity);
 }
 
-abstract class _FindAllOrderDto implements FindAllOrderDto {
-  const factory _FindAllOrderDto(
+abstract class _FindAllOrderCashierDto implements FindAllOrderCashierDto {
+  const factory _FindAllOrderCashierDto(
       {final String? type,
       final String? source,
       final String? status,
       final String? search,
-      final String? sort}) = _$FindAllOrderDtoImpl;
+      final String? sort}) = _$FindAllOrderCashierDtoImpl;
 
   @override
   String? get type;
@@ -2127,10 +2131,10 @@ abstract class _FindAllOrderDto implements FindAllOrderDto {
   @override
   String? get sort;
 
-  /// Create a copy of FindAllOrderDto
+  /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FindAllOrderDtoImplCopyWith<_$FindAllOrderDtoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$FindAllOrderCashierDtoImplCopyWith<_$FindAllOrderCashierDtoImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

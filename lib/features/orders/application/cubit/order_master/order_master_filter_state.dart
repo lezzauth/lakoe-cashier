@@ -16,7 +16,7 @@ class OrderMasterFilterState extends Equatable {
     this.sort,
   });
 
-  FindAllOrderDto get toFindAllOrderDto => FindAllOrderDto(
+  FindAllOrderCashierDto get toFindAllOrderDto => FindAllOrderCashierDto(
         search: search,
         sort: sort,
         source: source,

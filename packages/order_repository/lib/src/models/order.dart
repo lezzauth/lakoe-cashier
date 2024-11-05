@@ -4,6 +4,44 @@ part 'order.freezed.dart';
 part 'order.g.dart';
 
 @freezed
+class OrderItemRes with _$OrderItemRes {
+  const factory OrderItemRes({
+    required String id,
+    required int no,
+    required String price,
+    required String paymentStatus,
+    required String customerType,
+    required String type,
+    required String source,
+    OrderItemCustomer? customer,
+    OrderItemTable? table,
+  }) = _OrderItemRes;
+
+  factory OrderItemRes.fromJson(Map<String, Object?> json) =>
+      _$OrderItemResFromJson(json);
+}
+
+@freezed
+class OrderItemCustomer with _$OrderItemCustomer {
+  const factory OrderItemCustomer({
+    required String name,
+  }) = _OrderItemCustomer;
+
+  factory OrderItemCustomer.fromJson(Map<String, Object?> json) =>
+      _$OrderItemCustomerFromJson(json);
+}
+
+@freezed
+class OrderItemTable with _$OrderItemTable {
+  const factory OrderItemTable({
+    required String no,
+  }) = _OrderItemTable;
+
+  factory OrderItemTable.fromJson(Map<String, Object?> json) =>
+      _$OrderItemTableFromJson(json);
+}
+
+@freezed
 class OrderCharge with _$OrderCharge {
   const factory OrderCharge({
     required String id,
