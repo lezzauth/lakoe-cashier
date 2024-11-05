@@ -56,7 +56,6 @@ class DetailCustomerOrderCount with _$DetailCustomerOrderCount {
 class DetailCustomerOrderTransaction with _$DetailCustomerOrderTransaction {
   const factory DetailCustomerOrderTransaction({
     required String id,
-    required int no,
     required String paymentMethod,
     required String status,
     required String paidAmount,
@@ -67,6 +66,8 @@ class DetailCustomerOrderTransaction with _$DetailCustomerOrderTransaction {
     String? photo,
     required String orderId,
     required String outletId,
+    String? externalId,
+    String? approvalCode,
     required String createdAt,
     required String updatedAt,
   }) = _DetailCustomerOrderTransaction;
@@ -90,6 +91,7 @@ class DetailCustomerOrder with _$DetailCustomerOrder {
     required String outletId,
     String? tableId,
     required String cashierId,
+    required String closedAt,
     required String createdAt,
     required String updatedAt,
     required List<DetailCustomerOrderTransaction> transactions,

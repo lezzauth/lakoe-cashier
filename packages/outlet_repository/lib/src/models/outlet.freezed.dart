@@ -813,7 +813,6 @@ DetailCustomerOrderTransaction _$DetailCustomerOrderTransactionFromJson(
 /// @nodoc
 mixin _$DetailCustomerOrderTransaction {
   String get id => throw _privateConstructorUsedError;
-  int get no => throw _privateConstructorUsedError;
   String get paymentMethod => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   String get paidAmount => throw _privateConstructorUsedError;
@@ -824,6 +823,8 @@ mixin _$DetailCustomerOrderTransaction {
   String? get photo => throw _privateConstructorUsedError;
   String get orderId => throw _privateConstructorUsedError;
   String get outletId => throw _privateConstructorUsedError;
+  String? get externalId => throw _privateConstructorUsedError;
+  String? get approvalCode => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
 
@@ -847,7 +848,6 @@ abstract class $DetailCustomerOrderTransactionCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      int no,
       String paymentMethod,
       String status,
       String paidAmount,
@@ -858,6 +858,8 @@ abstract class $DetailCustomerOrderTransactionCopyWith<$Res> {
       String? photo,
       String orderId,
       String outletId,
+      String? externalId,
+      String? approvalCode,
       String createdAt,
       String updatedAt});
 }
@@ -879,7 +881,6 @@ class _$DetailCustomerOrderTransactionCopyWithImpl<$Res,
   @override
   $Res call({
     Object? id = null,
-    Object? no = null,
     Object? paymentMethod = null,
     Object? status = null,
     Object? paidAmount = null,
@@ -890,6 +891,8 @@ class _$DetailCustomerOrderTransactionCopyWithImpl<$Res,
     Object? photo = freezed,
     Object? orderId = null,
     Object? outletId = null,
+    Object? externalId = freezed,
+    Object? approvalCode = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -898,10 +901,6 @@ class _$DetailCustomerOrderTransactionCopyWithImpl<$Res,
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      no: null == no
-          ? _value.no
-          : no // ignore: cast_nullable_to_non_nullable
-              as int,
       paymentMethod: null == paymentMethod
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
@@ -942,6 +941,14 @@ class _$DetailCustomerOrderTransactionCopyWithImpl<$Res,
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
               as String,
+      externalId: freezed == externalId
+          ? _value.externalId
+          : externalId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      approvalCode: freezed == approvalCode
+          ? _value.approvalCode
+          : approvalCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -965,7 +972,6 @@ abstract class _$$DetailCustomerOrderTransactionImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      int no,
       String paymentMethod,
       String status,
       String paidAmount,
@@ -976,6 +982,8 @@ abstract class _$$DetailCustomerOrderTransactionImplCopyWith<$Res>
       String? photo,
       String orderId,
       String outletId,
+      String? externalId,
+      String? approvalCode,
       String createdAt,
       String updatedAt});
 }
@@ -996,7 +1004,6 @@ class __$$DetailCustomerOrderTransactionImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? no = null,
     Object? paymentMethod = null,
     Object? status = null,
     Object? paidAmount = null,
@@ -1007,6 +1014,8 @@ class __$$DetailCustomerOrderTransactionImplCopyWithImpl<$Res>
     Object? photo = freezed,
     Object? orderId = null,
     Object? outletId = null,
+    Object? externalId = freezed,
+    Object? approvalCode = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -1015,10 +1024,6 @@ class __$$DetailCustomerOrderTransactionImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      no: null == no
-          ? _value.no
-          : no // ignore: cast_nullable_to_non_nullable
-              as int,
       paymentMethod: null == paymentMethod
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
@@ -1059,6 +1064,14 @@ class __$$DetailCustomerOrderTransactionImplCopyWithImpl<$Res>
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
               as String,
+      externalId: freezed == externalId
+          ? _value.externalId
+          : externalId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      approvalCode: freezed == approvalCode
+          ? _value.approvalCode
+          : approvalCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1077,7 +1090,6 @@ class _$DetailCustomerOrderTransactionImpl
     implements _DetailCustomerOrderTransaction {
   const _$DetailCustomerOrderTransactionImpl(
       {required this.id,
-      required this.no,
       required this.paymentMethod,
       required this.status,
       required this.paidAmount,
@@ -1088,6 +1100,8 @@ class _$DetailCustomerOrderTransactionImpl
       this.photo,
       required this.orderId,
       required this.outletId,
+      this.externalId,
+      this.approvalCode,
       required this.createdAt,
       required this.updatedAt});
 
@@ -1097,8 +1111,6 @@ class _$DetailCustomerOrderTransactionImpl
 
   @override
   final String id;
-  @override
-  final int no;
   @override
   final String paymentMethod;
   @override
@@ -1120,13 +1132,17 @@ class _$DetailCustomerOrderTransactionImpl
   @override
   final String outletId;
   @override
+  final String? externalId;
+  @override
+  final String? approvalCode;
+  @override
   final String createdAt;
   @override
   final String updatedAt;
 
   @override
   String toString() {
-    return 'DetailCustomerOrderTransaction(id: $id, no: $no, paymentMethod: $paymentMethod, status: $status, paidAmount: $paidAmount, paidFrom: $paidFrom, amount: $amount, change: $change, accountNumber: $accountNumber, photo: $photo, orderId: $orderId, outletId: $outletId, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'DetailCustomerOrderTransaction(id: $id, paymentMethod: $paymentMethod, status: $status, paidAmount: $paidAmount, paidFrom: $paidFrom, amount: $amount, change: $change, accountNumber: $accountNumber, photo: $photo, orderId: $orderId, outletId: $outletId, externalId: $externalId, approvalCode: $approvalCode, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -1135,7 +1151,6 @@ class _$DetailCustomerOrderTransactionImpl
         (other.runtimeType == runtimeType &&
             other is _$DetailCustomerOrderTransactionImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.no, no) || other.no == no) &&
             (identical(other.paymentMethod, paymentMethod) ||
                 other.paymentMethod == paymentMethod) &&
             (identical(other.status, status) || other.status == status) &&
@@ -1151,6 +1166,10 @@ class _$DetailCustomerOrderTransactionImpl
             (identical(other.orderId, orderId) || other.orderId == orderId) &&
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
+            (identical(other.externalId, externalId) ||
+                other.externalId == externalId) &&
+            (identical(other.approvalCode, approvalCode) ||
+                other.approvalCode == approvalCode) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -1162,7 +1181,6 @@ class _$DetailCustomerOrderTransactionImpl
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      no,
       paymentMethod,
       status,
       paidAmount,
@@ -1173,6 +1191,8 @@ class _$DetailCustomerOrderTransactionImpl
       photo,
       orderId,
       outletId,
+      externalId,
+      approvalCode,
       createdAt,
       updatedAt);
 
@@ -1198,7 +1218,6 @@ abstract class _DetailCustomerOrderTransaction
     implements DetailCustomerOrderTransaction {
   const factory _DetailCustomerOrderTransaction(
       {required final String id,
-      required final int no,
       required final String paymentMethod,
       required final String status,
       required final String paidAmount,
@@ -1209,6 +1228,8 @@ abstract class _DetailCustomerOrderTransaction
       final String? photo,
       required final String orderId,
       required final String outletId,
+      final String? externalId,
+      final String? approvalCode,
       required final String createdAt,
       required final String updatedAt}) = _$DetailCustomerOrderTransactionImpl;
 
@@ -1217,8 +1238,6 @@ abstract class _DetailCustomerOrderTransaction
 
   @override
   String get id;
-  @override
-  int get no;
   @override
   String get paymentMethod;
   @override
@@ -1239,6 +1258,10 @@ abstract class _DetailCustomerOrderTransaction
   String get orderId;
   @override
   String get outletId;
+  @override
+  String? get externalId;
+  @override
+  String? get approvalCode;
   @override
   String get createdAt;
   @override
@@ -1271,6 +1294,7 @@ mixin _$DetailCustomerOrder {
   String get outletId => throw _privateConstructorUsedError;
   String? get tableId => throw _privateConstructorUsedError;
   String get cashierId => throw _privateConstructorUsedError;
+  String get closedAt => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
   List<DetailCustomerOrderTransaction> get transactions =>
@@ -1307,6 +1331,7 @@ abstract class $DetailCustomerOrderCopyWith<$Res> {
       String outletId,
       String? tableId,
       String cashierId,
+      String closedAt,
       String createdAt,
       String updatedAt,
       List<DetailCustomerOrderTransaction> transactions,
@@ -1342,6 +1367,7 @@ class _$DetailCustomerOrderCopyWithImpl<$Res, $Val extends DetailCustomerOrder>
     Object? outletId = null,
     Object? tableId = freezed,
     Object? cashierId = null,
+    Object? closedAt = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? transactions = null,
@@ -1396,6 +1422,10 @@ class _$DetailCustomerOrderCopyWithImpl<$Res, $Val extends DetailCustomerOrder>
           ? _value.cashierId
           : cashierId // ignore: cast_nullable_to_non_nullable
               as String,
+      closedAt: null == closedAt
+          ? _value.closedAt
+          : closedAt // ignore: cast_nullable_to_non_nullable
+              as String,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1447,6 +1477,7 @@ abstract class _$$DetailCustomerOrderImplCopyWith<$Res>
       String outletId,
       String? tableId,
       String cashierId,
+      String closedAt,
       String createdAt,
       String updatedAt,
       List<DetailCustomerOrderTransaction> transactions,
@@ -1481,6 +1512,7 @@ class __$$DetailCustomerOrderImplCopyWithImpl<$Res>
     Object? outletId = null,
     Object? tableId = freezed,
     Object? cashierId = null,
+    Object? closedAt = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? transactions = null,
@@ -1535,6 +1567,10 @@ class __$$DetailCustomerOrderImplCopyWithImpl<$Res>
           ? _value.cashierId
           : cashierId // ignore: cast_nullable_to_non_nullable
               as String,
+      closedAt: null == closedAt
+          ? _value.closedAt
+          : closedAt // ignore: cast_nullable_to_non_nullable
+              as String,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1571,6 +1607,7 @@ class _$DetailCustomerOrderImpl implements _DetailCustomerOrder {
       required this.outletId,
       this.tableId,
       required this.cashierId,
+      required this.closedAt,
       required this.createdAt,
       required this.updatedAt,
       required final List<DetailCustomerOrderTransaction> transactions,
@@ -1605,6 +1642,8 @@ class _$DetailCustomerOrderImpl implements _DetailCustomerOrder {
   @override
   final String cashierId;
   @override
+  final String closedAt;
+  @override
   final String createdAt;
   @override
   final String updatedAt;
@@ -1622,7 +1661,7 @@ class _$DetailCustomerOrderImpl implements _DetailCustomerOrder {
 
   @override
   String toString() {
-    return 'DetailCustomerOrder(id: $id, no: $no, status: $status, price: $price, customerId: $customerId, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, outletId: $outletId, tableId: $tableId, cashierId: $cashierId, createdAt: $createdAt, updatedAt: $updatedAt, transactions: $transactions, count: $count)';
+    return 'DetailCustomerOrder(id: $id, no: $no, status: $status, price: $price, customerId: $customerId, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, outletId: $outletId, tableId: $tableId, cashierId: $cashierId, closedAt: $closedAt, createdAt: $createdAt, updatedAt: $updatedAt, transactions: $transactions, count: $count)';
   }
 
   @override
@@ -1647,6 +1686,8 @@ class _$DetailCustomerOrderImpl implements _DetailCustomerOrder {
             (identical(other.tableId, tableId) || other.tableId == tableId) &&
             (identical(other.cashierId, cashierId) ||
                 other.cashierId == cashierId) &&
+            (identical(other.closedAt, closedAt) ||
+                other.closedAt == closedAt) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -1672,6 +1713,7 @@ class _$DetailCustomerOrderImpl implements _DetailCustomerOrder {
       outletId,
       tableId,
       cashierId,
+      closedAt,
       createdAt,
       updatedAt,
       const DeepCollectionEquality().hash(_transactions),
@@ -1708,6 +1750,7 @@ abstract class _DetailCustomerOrder implements DetailCustomerOrder {
           required final String outletId,
           final String? tableId,
           required final String cashierId,
+          required final String closedAt,
           required final String createdAt,
           required final String updatedAt,
           required final List<DetailCustomerOrderTransaction> transactions,
@@ -1742,6 +1785,8 @@ abstract class _DetailCustomerOrder implements DetailCustomerOrder {
   String? get tableId;
   @override
   String get cashierId;
+  @override
+  String get closedAt;
   @override
   String get createdAt;
   @override

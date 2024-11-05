@@ -14,12 +14,12 @@ final class CustomerDetailLoadInProgress extends CustomerDetailState {
 }
 
 final class CustomerDetailLoadSuccess extends CustomerDetailState {
-  final DetailCustomerOutletResponse customer;
+  final DetailCustomerOutletResponse data;
 
-  CustomerDetailLoadSuccess({required this.customer});
+  CustomerDetailLoadSuccess({required this.data});
 
   @override
-  List<Object?> get props => [customer];
+  List<Object?> get props => [data];
 }
 
 final class CustomerDetailLoadFailure extends CustomerDetailState {

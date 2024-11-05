@@ -74,7 +74,6 @@ _$DetailCustomerOrderTransactionImpl
     _$$DetailCustomerOrderTransactionImplFromJson(Map<String, dynamic> json) =>
         _$DetailCustomerOrderTransactionImpl(
           id: json['id'] as String,
-          no: (json['no'] as num).toInt(),
           paymentMethod: json['paymentMethod'] as String,
           status: json['status'] as String,
           paidAmount: json['paidAmount'] as String,
@@ -85,6 +84,8 @@ _$DetailCustomerOrderTransactionImpl
           photo: json['photo'] as String?,
           orderId: json['orderId'] as String,
           outletId: json['outletId'] as String,
+          externalId: json['externalId'] as String?,
+          approvalCode: json['approvalCode'] as String?,
           createdAt: json['createdAt'] as String,
           updatedAt: json['updatedAt'] as String,
         );
@@ -93,7 +94,6 @@ Map<String, dynamic> _$$DetailCustomerOrderTransactionImplToJson(
         _$DetailCustomerOrderTransactionImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'no': instance.no,
       'paymentMethod': instance.paymentMethod,
       'status': instance.status,
       'paidAmount': instance.paidAmount,
@@ -104,6 +104,8 @@ Map<String, dynamic> _$$DetailCustomerOrderTransactionImplToJson(
       'photo': instance.photo,
       'orderId': instance.orderId,
       'outletId': instance.outletId,
+      'externalId': instance.externalId,
+      'approvalCode': instance.approvalCode,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };
@@ -123,6 +125,7 @@ _$DetailCustomerOrderImpl _$$DetailCustomerOrderImplFromJson(
       outletId: json['outletId'] as String,
       tableId: json['tableId'] as String?,
       cashierId: json['cashierId'] as String,
+      closedAt: json['closedAt'] as String,
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
       transactions: (json['transactions'] as List<dynamic>)
@@ -148,6 +151,7 @@ Map<String, dynamic> _$$DetailCustomerOrderImplToJson(
       'outletId': instance.outletId,
       'tableId': instance.tableId,
       'cashierId': instance.cashierId,
+      'closedAt': instance.closedAt,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
       'transactions': instance.transactions,
