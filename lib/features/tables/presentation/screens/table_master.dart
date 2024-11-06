@@ -56,6 +56,7 @@ class _TableMasterState extends State<TableMaster> {
           child: Expanded(
             child: TableDetailPage(
               table: table,
+              tableNo: table.no,
             ),
           ),
         );

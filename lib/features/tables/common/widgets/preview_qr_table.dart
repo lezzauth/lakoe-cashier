@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
@@ -32,7 +29,7 @@ class PreviewQrTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Container(
-        padding: const EdgeInsets.only(bottom: 20),
+        padding: const EdgeInsets.only(bottom: 32),
         decoration: BoxDecoration(
           border: Border.all(
             color: TColors.neutralLightDark,
@@ -165,17 +162,11 @@ class PreviewQrTable extends StatelessWidget {
               ],
             ),
             const Padding(
-              padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+              padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
               child: Center(
-                child: ResponsiveLayout(
-                  mobile: TextHeading3(
-                    "CARA PESAN",
-                    color: TColors.neutralDarkMedium,
-                  ),
-                  tablet: TextHeading2(
-                    "CARA PESAN",
-                    color: TColors.neutralDarkMedium,
-                  ),
+                child: TextHeading3(
+                  "CARA PESAN",
+                  color: TColors.neutralDarkMedium,
                 ),
               ),
             ),
@@ -196,17 +187,11 @@ class PreviewQrTable extends StatelessWidget {
                           ),
                           SizedBox(width: 8),
                           Flexible(
-                            child: ResponsiveLayout(
-                              mobile: TextBodyS(
-                                "Scan QR order",
-                                maxLines: 2,
-                                color: TColors.neutralDarkMedium,
-                              ),
-                              tablet: TextBodyL(
-                                "Scan QR order",
-                                maxLines: 2,
-                                color: TColors.neutralDarkMedium,
-                              ),
+                            child: TextBodyS(
+                              "Scan QR order",
+                              maxLines: 2,
+                              color: TColors.neutralDarkMedium,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
@@ -225,17 +210,11 @@ class PreviewQrTable extends StatelessWidget {
                           ),
                           SizedBox(width: 8),
                           Flexible(
-                            child: ResponsiveLayout(
-                              mobile: TextBodyS(
-                                "Pesan menunya",
-                                maxLines: 2,
-                                color: TColors.neutralDarkMedium,
-                              ),
-                              tablet: TextBodyL(
-                                "Pesan menunya",
-                                maxLines: 2,
-                                color: TColors.neutralDarkMedium,
-                              ),
+                            child: TextBodyS(
+                              "Pesan menunya",
+                              maxLines: 2,
+                              color: TColors.neutralDarkMedium,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
@@ -255,17 +234,11 @@ class PreviewQrTable extends StatelessWidget {
                           ),
                           SizedBox(width: 8),
                           Flexible(
-                            child: ResponsiveLayout(
-                              mobile: TextBodyS(
-                                "Bayar pesanan",
-                                maxLines: 2,
-                                color: TColors.neutralDarkMedium,
-                              ),
-                              tablet: TextBodyL(
-                                "Bayar pesanan",
-                                maxLines: 2,
-                                color: TColors.neutralDarkMedium,
-                              ),
+                            child: TextBodyS(
+                              "Bayar pesanan",
+                              maxLines: 2,
+                              color: TColors.neutralDarkMedium,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],

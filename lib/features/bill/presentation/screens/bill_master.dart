@@ -75,9 +75,7 @@ class _BillMasterState extends State<BillMaster> {
                     ),
                   ],
                 ),
-                const SizedBox(
-                    height:
-                        60), // Spacer untuk menghindari overlapping dengan tombol
+                const SizedBox(height: 60),
               ],
             ),
           ),
