@@ -38,8 +38,17 @@ class OutletCubit extends Cubit<OutletState> {
     OutletState currentState = state;
     try {
       emit(OutletActionInProgress());
-      await outletRepository.update(image, dto);
-      emit(OutletActionSuccess());
+      final res = await outletRepository.update(image, dto);
+
+      await _appDataProvider.setLogoBrand(res.logo!);
+
+      if (res.color != null) {
+        await _appDataProvider.setColorBrand(res.color!);
+      } else {
+        await _appDataProvider.setColorBrand("0xFFFD6E00");
+      }
+
+      emit(OutletActionSuccess(outlet: res));
     } catch (e) {
       emit(OutletActionFailure(e.toString()));
     }

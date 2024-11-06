@@ -129,7 +129,7 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
 
     return BlocListener<OutletCubit, OutletState>(
       listener: (context, state) {
-        if (state is OutletActionInProgress) {
+        if (state is OutletActionSuccess) {
           Navigator.pop(context, true);
         }
       },

@@ -132,9 +132,11 @@ class _TableInformationFormState extends State<TableInformationForm> {
                     child: SizedBox(
                       height: 48,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/tables/edit/brand");
+                        },
                         child: const TextActionL(
-                          "Edit Brand",
+                          "Ubah Logo & Warna",
                           color: TColors.primary,
                         ),
                       ),
@@ -146,144 +148,159 @@ class _TableInformationFormState extends State<TableInformationForm> {
           ),
         ),
         Expanded(
-          child: FormBuilder(
-            key: widget.formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            initialValue: widget.initialValue,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 16.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const FormLabel("No. Meja"),
-                            FormBuilderTextField(
-                              name: "no",
-                              decoration: const InputDecoration(
-                                hintText: "Contoh: T-00",
-                              ),
-                              validator: FormBuilderValidators.required(
-                                errorText: ErrorTextStrings.required(
-                                    name: "Nomor Meja"),
-                              ),
-                              onChanged: (value) {
-                                if (value!.isNotEmpty) {
-                                  setState(() {
-                                    tableNumber = value;
-                                  });
-                                } else {
-                                  setState(() {
-                                    tableNumber = widget.tableNumber;
-                                  });
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 16.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const FormLabel("Kapasitas"),
-                            FormBuilderTextField(
-                              name: "capacity",
-                              decoration: const InputDecoration(
-                                hintText: "Mejanya muat untuk berapa orang?",
-                                suffixText: "Orang",
-                              ),
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              validator: FormBuilderValidators.required(
-                                errorText: ErrorTextStrings.required(
-                                    name: "Kapasitas Meja"),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 16.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(bottom: 8),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const FormLabel("Lokasi"),
-                                        LocationField(
-                                          initialValue: widget
-                                              .initialValue["outletRoomId"],
-                                        ),
-                                      ],
-                                    ),
+          child: Column(
+            children: [
+              // TabContainer(
+              //   tabs: [
+              //     TabItem(title: "Info Meja"),
+              //     TabItem(title: "Logo & Warna")
+              //   ],
+              // ),
+              // SizedBox(height: 20),
+              FormBuilder(
+                key: widget.formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                initialValue: widget.initialValue,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const FormLabel("No. Meja"),
+                                FormBuilderTextField(
+                                  name: "no",
+                                  decoration: const InputDecoration(
+                                    hintText: "Contoh: T-00",
                                   ),
-                                ],
+                                  validator: FormBuilderValidators.required(
+                                    errorText: ErrorTextStrings.required(
+                                        name: "Nomor Meja"),
+                                  ),
+                                  onChanged: (value) {
+                                    if (value!.isNotEmpty) {
+                                      setState(() {
+                                        tableNumber = value;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        tableNumber = widget.tableNumber;
+                                      });
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const FormLabel("Kapasitas"),
+                                FormBuilderTextField(
+                                  name: "capacity",
+                                  decoration: const InputDecoration(
+                                    hintText:
+                                        "Mejanya muat untuk berapa orang?",
+                                    suffixText: "Orang",
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  validator: FormBuilderValidators.required(
+                                    errorText: ErrorTextStrings.required(
+                                        name: "Kapasitas Meja"),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 16.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 8),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const FormLabel("Lokasi"),
+                                            LocationField(
+                                              initialValue: widget
+                                                  .initialValue["outletRoomId"],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          if (widget.initialValue.isNotEmpty)
+                            TextButton(
+                              onPressed: () => _showPopupConfirmation(context),
+                              child: const TextActionL(
+                                "Hapus Meja",
+                                color: TColors.error,
                               ),
                             )
-                          ],
+                        ],
+                      ),
+                    ),
+                    ResponsiveLayout(
+                      mobile: SizedBox.shrink(),
+                      tablet: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 16,
+                        ),
+                        child: SizedBox(
+                          height: 48,
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed:
+                                widget.isLoading ? null : widget.onSubmit,
+                            child: widget.isLoading
+                                ? SizedBox(
+                                    height: 16,
+                                    width: 16,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 1.5,
+                                    ),
+                                  )
+                                : TextActionL(
+                                    "Simpan",
+                                  ),
+                          ),
                         ),
                       ),
-                      if (widget.initialValue.isNotEmpty)
-                        TextButton(
-                          onPressed: () => _showPopupConfirmation(context),
-                          child: const TextActionL(
-                            "Hapus Meja",
-                            color: TColors.error,
-                          ),
-                        )
-                    ],
-                  ),
-                ),
-                ResponsiveLayout(
-                  mobile: SizedBox.shrink(),
-                  tablet: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 16,
                     ),
-                    child: SizedBox(
-                      height: 48,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: widget.isLoading ? null : widget.onSubmit,
-                        child: widget.isLoading
-                            ? SizedBox(
-                                height: 16,
-                                width: 16,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 1.5,
-                                ),
-                              )
-                            : TextActionL(
-                                "Simpan",
-                              ),
-                      ),
-                    ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],

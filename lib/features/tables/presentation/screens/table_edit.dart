@@ -137,7 +137,7 @@ class _TableEditState extends State<TableEdit> {
               ],
             ),
             tablet: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(0, 16, 40, 16),
+              padding: const EdgeInsets.fromLTRB(0, 0, 40, 16),
               child: BlocBuilder<TableMasterCubit, TableMasterState>(
                   builder: (context, state) {
                 return TableInformationForm(

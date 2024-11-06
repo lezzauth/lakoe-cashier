@@ -16,6 +16,7 @@ import 'package:point_of_sales_cashier/features/tables/presentation/widgets/filt
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/pages/table_detail_page.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableMasterScreen extends StatelessWidget {
@@ -46,24 +47,35 @@ class _TableMasterState extends State<TableMaster> {
   }
 
   Future<void> _onGoToDetail(TableModel table) async {
-    bool? editedProduct = await showModalBottomSheet<bool?>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      useRootNavigator: true,
-      builder: (context) {
-        return CustomBottomsheet(
-          child: Expanded(
-            child: TableDetailPage(
-              table: table,
-              tableNo: table.no,
+    if (ResponsiveBreakpoints.of(context).smallerThan(TABLET)) {
+      bool? editedProduct = await showModalBottomSheet<bool?>(
+        context: context,
+        isScrollControlled: true,
+        useSafeArea: true,
+        useRootNavigator: true,
+        builder: (context) {
+          return CustomBottomsheet(
+            child: Expanded(
+              child: TableDetailPage(
+                table: table,
+                tableNo: table.no,
+              ),
             ),
-          ),
-        );
-      },
-    );
-    if (editedProduct != true) return;
-    _onRefresh();
+          );
+        },
+      );
+
+      if (editedProduct != true) return;
+      _onRefresh();
+    } else {
+      bool? editedProduct = await Navigator.pushNamed(
+        context,
+        "/tables/edit",
+        arguments: table,
+      ) as bool?;
+      if (editedProduct != true) return;
+      _onRefresh();
+    }
   }
 
   Future<void> _onGoToCreateScreen() async {

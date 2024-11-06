@@ -196,6 +196,7 @@ class _TableDetailPageState extends State<TableDetailPage> {
                     height: 48,
                     child: OutlinedButton(
                       onPressed: () async {
+                        Navigator.pop(context, true);
                         bool? editedProduct = await Navigator.pushNamed(
                           context,
                           "/tables/edit",

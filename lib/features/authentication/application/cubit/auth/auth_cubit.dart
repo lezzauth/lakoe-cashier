@@ -65,7 +65,7 @@ class AuthCubit extends Cubit<AuthState> {
         final resError = e.error as DioExceptionModel;
 
         // Check for 401 error (unauthorized), attempt to refresh token if encountered
-        if (e.response?.statusCode == 401) {
+        if (resError.statusCode == 401) {
           try {
             // Retrieve refresh token; if unavailable, throw an error
             final refreshToken = await _tokenProvider.getAuthRefreshToken();
@@ -90,7 +90,7 @@ class AuthCubit extends Cubit<AuthState> {
             emit(TokenExpired(resError, isTokenRefreshed: false));
             return;
           }
-        } else if (e.response?.statusCode == 404) {
+        } else if (resError.statusCode == 404) {
           // Emit NotFound state if a 404 error occurs
           emit(NotFound(resError));
         } else {
