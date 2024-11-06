@@ -15,18 +15,19 @@ class SalesTotalCard extends StatelessWidget {
     this.duration,
     this.totalSalesDiff,
     required this.totalSales,
+    required this.totalPastSales,
     this.onTap,
   });
 
   final String? preset;
   final int? duration;
   final String totalSales;
+  final String totalPastSales;
   final int? totalSalesDiff;
   final Function()? onTap;
 
   StatsType getType() {
-    if (totalSalesDiff == null) return StatsType.neutral;
-    if (totalSalesDiff! == 0) return StatsType.neutral;
+    if (totalSalesDiff == 0) return StatsType.neutral;
     if (totalSalesDiff!.isNegative) return StatsType.descend;
     if (totalSalesDiff! > 0) return StatsType.ascend;
 
@@ -84,7 +85,10 @@ class SalesTotalCard extends StatelessWidget {
                       children: [
                         StatsBadge(
                           type: getType(),
-                          value: "${totalSalesDiff?.abs() ?? 0}%",
+                          value: (double.parse(totalPastSales) == 0 &&
+                                  double.parse(totalSales) > 0)
+                              ? "100%"
+                              : "${totalSalesDiff?.abs()}%",
                         ),
                         Container(
                           margin: const EdgeInsets.only(left: 8),

@@ -160,8 +160,9 @@ class _ReportMasterState extends State<ReportMaster> {
                               },
                               preset: filterState.preset,
                               totalSales: report.totalSales,
+                              totalPastSales: report.totalPastSales,
                               duration: filterState.duration,
-                              totalSalesDiff: report.totalSalesDiff,
+                              totalSalesDiff: report.totalSalesDiffComputed,
                             );
                           },
                         ),

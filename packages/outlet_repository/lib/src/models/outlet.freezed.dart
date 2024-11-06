@@ -2957,9 +2957,10 @@ class __$$OutletReportTotalSaleModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$OutletReportTotalSaleModelImpl implements _OutletReportTotalSaleModel {
+class _$OutletReportTotalSaleModelImpl extends _OutletReportTotalSaleModel {
   const _$OutletReportTotalSaleModelImpl(
-      {required this.current, this.currentAvg, required this.past, this.diff});
+      {required this.current, this.currentAvg, required this.past, this.diff})
+      : super._();
 
   factory _$OutletReportTotalSaleModelImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -3012,13 +3013,13 @@ class _$OutletReportTotalSaleModelImpl implements _OutletReportTotalSaleModel {
   }
 }
 
-abstract class _OutletReportTotalSaleModel
-    implements OutletReportTotalSaleModel {
+abstract class _OutletReportTotalSaleModel extends OutletReportTotalSaleModel {
   const factory _OutletReportTotalSaleModel(
       {required final String current,
       final int? currentAvg,
       required final String past,
       final int? diff}) = _$OutletReportTotalSaleModelImpl;
+  const _OutletReportTotalSaleModel._() : super._();
 
   factory _OutletReportTotalSaleModel.fromJson(Map<String, dynamic> json) =
       _$OutletReportTotalSaleModelImpl.fromJson;
@@ -3160,9 +3161,10 @@ class __$$OutletReportTotalTransactionModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$OutletReportTotalTransactionModelImpl
-    implements _OutletReportTotalTransactionModel {
+    extends _OutletReportTotalTransactionModel {
   const _$OutletReportTotalTransactionModelImpl(
-      {required this.current, required this.past, this.diff});
+      {required this.current, required this.past, this.diff})
+      : super._();
 
   factory _$OutletReportTotalTransactionModelImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -3213,11 +3215,12 @@ class _$OutletReportTotalTransactionModelImpl
 }
 
 abstract class _OutletReportTotalTransactionModel
-    implements OutletReportTotalTransactionModel {
+    extends OutletReportTotalTransactionModel {
   const factory _OutletReportTotalTransactionModel(
       {required final int current,
       required final int past,
       final int? diff}) = _$OutletReportTotalTransactionModelImpl;
+  const _OutletReportTotalTransactionModel._() : super._();
 
   factory _OutletReportTotalTransactionModel.fromJson(
           Map<String, dynamic> json) =
@@ -3791,7 +3794,7 @@ class __$$OutletReportModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$OutletReportModelImpl implements _OutletReportModel {
+class _$OutletReportModelImpl extends _OutletReportModel {
   const _$OutletReportModelImpl(
       {required this.totalSales,
       required this.averageSales,
@@ -3801,7 +3804,8 @@ class _$OutletReportModelImpl implements _OutletReportModel {
       required this.totalPastSales,
       required this.totalSalesDiff,
       required final List<OutletReportBestSalesProductModel> bestSalesProduct})
-      : _bestSalesProduct = bestSalesProduct;
+      : _bestSalesProduct = bestSalesProduct,
+        super._();
 
   factory _$OutletReportModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$OutletReportModelImplFromJson(json);
@@ -3887,7 +3891,7 @@ class _$OutletReportModelImpl implements _OutletReportModel {
   }
 }
 
-abstract class _OutletReportModel implements OutletReportModel {
+abstract class _OutletReportModel extends OutletReportModel {
   const factory _OutletReportModel(
       {required final String totalSales,
       required final String averageSales,
@@ -3898,6 +3902,7 @@ abstract class _OutletReportModel implements OutletReportModel {
       required final int? totalSalesDiff,
       required final List<OutletReportBestSalesProductModel>
           bestSalesProduct}) = _$OutletReportModelImpl;
+  const _OutletReportModel._() : super._();
 
   factory _OutletReportModel.fromJson(Map<String, dynamic> json) =
       _$OutletReportModelImpl.fromJson;
