@@ -2,6 +2,7 @@ import 'package:app_data_provider/app_data_provider.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logman/logman.dart';
@@ -62,48 +63,52 @@ class AuthCubit extends Cubit<AuthState> {
       Logman.instance.info('AuthCubit Initialize: ${e.toString()}');
 
       if (e is DioException) {
+        Logman.instance.info('AuthCubit e is DioException');
         final resError = e.error as DioExceptionModel;
 
-        // Check for 401 error (unauthorized), attempt to refresh token if encountered
         if (resError.statusCode == 401) {
           try {
-            // Retrieve refresh token; if unavailable, throw an error
             final refreshToken = await _tokenProvider.getAuthRefreshToken();
             if (refreshToken == null) throw ErrorDescription("no refreshToken");
 
-            // Refresh the token, save it if successful
             final newAuthToken = await _authenticationRepository.refreshToken(
               RefreshTokenDto(token: refreshToken),
             );
             await _tokenProvider.setAuthToken(
               newAuthToken.token,
-              newAuthToken.tokenExpireIn, // Save new expiration time
+              newAuthToken.tokenExpireIn,
             );
 
-            // Retry the initialize process with the new token
             await initialize();
             return;
           } catch (refreshError) {
-            // Log the error if token refresh fails and emit TokenExpired state
             Logman.instance
                 .info('AuthCubit RefreshToken: ${refreshError.toString()}');
             emit(TokenExpired(resError, isTokenRefreshed: false));
             return;
           }
         } else if (resError.statusCode == 404) {
-          // Emit NotFound state if a 404 error occurs
+          await _tokenProvider.clearAll();
           emit(NotFound(resError));
         } else {
-          // Emit AuthNotReady for other types of errors
+          await _tokenProvider.clearAll();
           emit(AuthNotReady());
         }
-      } else if (e.toString().contains("Null")) {
-        // Emit UncompletedProfile if there's a null-related error
-        emit(UncompletedProfile(message: e.toString()));
-      }
+      } else if (e is PlatformException &&
+          e.message?.contains("BadPaddingException") == true) {
+        Logman.instance.info('AuthCubit e is PlatformException');
 
-      // Default to AuthNotReady state if error does not match specific cases
-      emit(AuthNotReady());
+        await _tokenProvider.clearAll();
+        emit(AuthNotReady());
+      } else if (e.toString().contains("Null")) {
+        Logman.instance.info('AuthCubit e is: ${e.toString()}');
+        await _tokenProvider.clearAll();
+        emit(UncompletedProfile(message: e.toString()));
+      } else {
+        Logman.instance.info('AuthNotReady');
+        await _tokenProvider.clearAll();
+        emit(AuthNotReady());
+      }
     }
   }
 }

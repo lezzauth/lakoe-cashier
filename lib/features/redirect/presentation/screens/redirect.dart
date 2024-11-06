@@ -91,6 +91,7 @@ class _RedirectScreenState extends State<RedirectScreen> {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) async {
+        Logman.instance.info('[Redirect] AuthState is $state');
         if (!mounted) return;
 
         final TokenProvider tokenProvider = TokenProvider();
