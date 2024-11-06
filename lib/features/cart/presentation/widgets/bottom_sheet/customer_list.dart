@@ -115,7 +115,6 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                                     trailing: selected
                                         ? const UiIcons(
                                             TIcons.check,
-                                            size: 16,
                                             color: TColors.primary,
                                           )
                                         : const UiIcons(
