@@ -58,7 +58,7 @@ class _TableNewState extends State<TableNew> {
         BlocListener<TableMasterCubit, TableMasterState>(
           listener: (context, state) {
             if (state is TableMasterActionSuccess) {
-              Navigator.pop(context, true);
+              Navigator.pop(context, state.data);
             } else if (state is TableMasterReachesLimit) {
               showModalBottomSheet(
                 context: context,

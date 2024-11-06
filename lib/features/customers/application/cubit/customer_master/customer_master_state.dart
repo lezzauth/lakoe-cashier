@@ -48,6 +48,9 @@ final class CustomerMasterActionInProgress extends CustomerMasterState {
 }
 
 final class CustomerMasterActionSuccess extends CustomerMasterState {
+  final CustomerModel data;
+
+  CustomerMasterActionSuccess(this.data);
   @override
   List<Object?> get props => [];
 }

@@ -179,9 +179,13 @@ class _TableListContentState extends State<TableListContent> {
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () async {
-              bool? newTable =
-                  await Navigator.pushNamed(context, "/tables/new") as bool?;
-              if (newTable != true) return;
+              TableModel? newTable =
+                  await Navigator.pushNamed(context, "/tables/new")
+                      as TableModel?;
+              if (newTable == null) return;
+
+              if (!context.mounted) return;
+              Navigator.pop(context, newTable);
               _onInit();
             },
             elevation: 0,

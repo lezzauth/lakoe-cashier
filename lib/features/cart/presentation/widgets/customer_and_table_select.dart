@@ -45,6 +45,7 @@ class _CustomerAndTableSelectState extends State<CustomerAndTableSelect> {
         );
       },
     );
+    selectedCustomer ??= widget.customer;
     widget.onCustomerChanged(selectedCustomer);
   }
 
@@ -64,6 +65,7 @@ class _CustomerAndTableSelectState extends State<CustomerAndTableSelect> {
         );
       },
     );
+    selectedTable ??= widget.table;
     widget.onTableChanged(selectedTable);
   }
 

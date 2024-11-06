@@ -500,7 +500,7 @@ class _SuccessConfirmationPaymentContentState
                                   );
                                 },
                                 child: const TextActionL(
-                                  "Buat Order Baru",
+                                  "Buat Pesanan Baru",
                                   color: TColors.neutralLightLightest,
                                 ),
                               ),

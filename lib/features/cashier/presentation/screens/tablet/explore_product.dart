@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logman/logman.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
@@ -95,6 +96,7 @@ class _ExploreProductTabletContentState
   Widget build(BuildContext context) {
     return BlocListener<CartDetailCubit, CartDetailState>(
       listener: (context, state) {
+        Logman.instance.info("STATE IS $state");
         if (state is CartDetailActionSuccess) {
           context.read<CartCubit>().reset();
           context.read<CashierOrderCubit>().findAll();
@@ -102,6 +104,7 @@ class _ExploreProductTabletContentState
 
         if (state is CartDetailActionSuccess ||
             state is CartDetailCompleteActionSuccess) {
+          context.read<CartCubit>().reset();
           context.read<CartDetailFilterCubit>().clearFilter();
         }
       },

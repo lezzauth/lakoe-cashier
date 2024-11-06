@@ -36,8 +36,8 @@ class CustomerMasterCubit extends Cubit<CustomerMasterState> {
   Future<void> create(CreateCustomerDto dto) async {
     try {
       emit(CustomerMasterActionInProgress());
-      await customerRepository.create(dto);
-      emit(CustomerMasterActionSuccess());
+      final res = await customerRepository.create(dto);
+      emit(CustomerMasterActionSuccess(res));
     } catch (e) {
       if (e is DioException) {
         final limit = e.error as DioExceptionModel;
