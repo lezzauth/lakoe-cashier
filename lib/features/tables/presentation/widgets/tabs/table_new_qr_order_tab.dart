@@ -94,17 +94,15 @@ class _TableNewQrOrderTabState extends State<TableNewQrOrderTab> {
         ),
         Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Expanded(
-            child: SizedBox(
-              height: 48,
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/tables/edit/brand");
-                },
-                child: TextActionL(
-                  "Ubah Logo & Warna",
-                  color: TColors.primary,
-                ),
+          child: SizedBox(
+            height: 48,
+            child: OutlinedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/tables/edit/brand");
+              },
+              child: TextActionL(
+                "Ubah Logo & Warna",
+                color: TColors.primary,
               ),
             ),
           ),

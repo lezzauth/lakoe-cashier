@@ -137,7 +137,6 @@ class PreviewQrTable extends StatelessWidget {
                         child: Center(
                           child: ColorFiltered(
                             colorFilter: ColorFilter.mode(
-                              // Colors.white,
                               Colors.transparent,
                               BlendMode.srcATop,
                             ),
@@ -147,7 +146,7 @@ class PreviewQrTable extends StatelessWidget {
                               height: 24,
                               errorBuilder: (context, error, stackTrace) {
                                 return Image.asset(
-                                  TImages.defaultLogo,
+                                  TImages.lakoeLetterWhite,
                                   width: 20,
                                   height: 20,
                                 );

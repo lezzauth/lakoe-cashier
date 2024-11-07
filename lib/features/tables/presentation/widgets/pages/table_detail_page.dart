@@ -173,7 +173,7 @@ class _TableDetailPageState extends State<TableDetailPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
             child: Row(
               children: [
                 Expanded(
