@@ -27,9 +27,26 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
   Future<void> _onSubmitted(
     String bankId, {
     dynamic value,
+    String? previousAccountNumber,
     BankListModel? bank,
   }) async {
     if (!context.mounted) return;
+
+    final bool isAccountNumberChanged =
+        value["accountNumber"] != previousAccountNumber;
+
+    if (!isAccountNumberChanged) {
+      await context.read<BankAccountMasterCubit>().update(
+            bankId: bankId,
+            dto: UpdateOwnerBankDto(
+              name: value["name"],
+              accountNumber: value["accountNumber"],
+              accountName: value["accountName"],
+              isPrimary: value["isPrimary"] ?? false,
+            ),
+          );
+      return;
+    }
 
     final result = await showModalBottomSheet<BankVerifyArgument?>(
       context: context,
@@ -82,11 +99,16 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
           title: "Ubah Rekening Bank",
         ),
         body: BankAccountForm(
-          onSubmitted: (value, bank) {
+          onSubmitted: (value, bank, previousAccountNumber) {
             FocusScope.of(context).unfocus();
-            _onSubmitted(arguments.account.id, bank: bank, value: value);
+            _onSubmitted(
+              arguments.account.id,
+              value: value,
+              bank: bank,
+              previousAccountNumber: previousAccountNumber,
+            );
           },
-          onDeleted: isOnlyAccount
+          onDeleted: isOnlyAccount || arguments.account.isPrimary
               ? null
               : () async {
                   return await _onDeleted(arguments.account.id);

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owner_repository/owner_repository.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
 
 class BankAccountMasterCubit extends Cubit<BankAccountMasterState> {
@@ -39,9 +40,27 @@ class BankAccountMasterCubit extends Cubit<BankAccountMasterState> {
   }) async {
     try {
       emit(BankAccountMasterActionInProgress());
+
       final response =
           await _ownerRepository.bank.update(bankId: bankId, dto: dto);
-      emit(BankAccountMasterActionSuccess(response: response));
+
+      final allBanks = await _ownerRepository.bank.findAll();
+      final hasPrimaryBank = allBanks.any((bank) => bank.isPrimary);
+
+      if (!hasPrimaryBank && !response.isPrimary) {
+        final forcedPrimaryResponse = await _ownerRepository.bank.update(
+          bankId: bankId,
+          dto: dto.copyWith(isPrimary: true),
+        );
+        emit(BankAccountMasterActionSuccess(response: forcedPrimaryResponse));
+
+        CustomToast.show(
+          "Rekening bank utama tetap harus ada.",
+          position: "center",
+        );
+      } else {
+        emit(BankAccountMasterActionSuccess(response: response));
+      }
     } catch (e) {
       emit(BankAccountMasterActionFailure(e.toString()));
     }
