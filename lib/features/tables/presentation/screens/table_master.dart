@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logman/logman.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
@@ -47,6 +48,8 @@ class _TableMasterState extends State<TableMaster> {
   }
 
   Future<void> _onGoToDetail(TableModel table) async {
+    Logman.instance.info(
+        "ResponsiveBreakpoints is ${ResponsiveBreakpoints.of(context).smallerThan(TABLET)}");
     if (ResponsiveBreakpoints.of(context).smallerThan(TABLET)) {
       bool? editedProduct = await showModalBottomSheet<bool?>(
         context: context,
@@ -79,8 +82,9 @@ class _TableMasterState extends State<TableMaster> {
   }
 
   Future<void> _onGoToCreateScreen() async {
-    bool? newTable = await Navigator.pushNamed(context, "/tables/new") as bool?;
-    if (newTable != true) return;
+    TableModel? newTable =
+        await Navigator.pushNamed(context, "/tables/new") as TableModel?;
+    if (newTable == null) return;
     _onRefresh();
   }
 
