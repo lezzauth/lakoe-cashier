@@ -25,7 +25,7 @@ class _DashboardDaySelectFilterState extends State<DashboardDaySelectFilter> {
           to: state.to,
           onChanged: ({from, template, to}) {
             context.read<CashierReportFilterCubit>().setFilter(
-                  template: null,
+                  template: template,
                   from: from,
                   to: to,
                 );

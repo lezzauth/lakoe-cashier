@@ -135,7 +135,38 @@ class _DateStepperFilterState extends State<DateStepperFilter> {
 
   void _onAction(String action) {
     final [from, to] = _calculateDateRange(action);
-    widget.onChanged(template: null, from: from, to: to);
+    String? template;
+
+    final today = DateTime.now();
+    final startOfToday = DateTime(today.year, today.month, today.day);
+    final startOfWeek = _startOfWeek(today);
+    final endOfWeek = _endOfWeek(today);
+    final startOfMonth = DateTime(today.year, today.month, 1);
+    final endOfMonth = DateTime(today.year, today.month + 1, 0);
+
+    if (_isSameDate(from, startOfToday) && _isSameDate(to, startOfToday)) {
+      template = "TODAY";
+    } else if (_isSameDate(from, startOfWeek) && _isSameDate(to, endOfWeek)) {
+      template = "THISWEEK";
+    } else if (_isSameDate(from, startOfMonth) && _isSameDate(to, endOfMonth)) {
+      template = "THISMONTH";
+    }
+
+    widget.onChanged(template: template, from: from, to: to);
+  }
+
+  bool _isSameDate(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
+  }
+
+  DateTime _startOfWeek(DateTime date) {
+    return date.subtract(Duration(days: date.weekday - 1));
+  }
+
+  DateTime _endOfWeek(DateTime date) {
+    return date.add(Duration(days: DateTime.daysPerWeek - date.weekday));
   }
 
   @override

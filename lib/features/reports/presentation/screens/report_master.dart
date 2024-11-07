@@ -71,14 +71,14 @@ class _ReportMasterState extends State<ReportMaster> {
             );
       },
       child: Scaffold(
-        appBar: const CustomAppbar(
+        appBar: CustomAppbar(
           title: "Laporan Penjualan",
         ),
         body: Scrollbar(
           child: RefreshIndicator(
             backgroundColor: TColors.neutralLightLight,
             onRefresh: () async {
-              return await Future.delayed(const Duration(milliseconds: 200));
+              return await Future.delayed(Duration(milliseconds: 200));
             },
             child: SingleChildScrollView(
                 child: BlocBuilder<ReportMasterCubit, ReportMasterState>(
@@ -112,7 +112,7 @@ class _ReportMasterState extends State<ReportMaster> {
                         );
                       }),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         child: SizedBox(
                           height: 44,
                           child: BlocBuilder<ReportMasterFilterCubit,
