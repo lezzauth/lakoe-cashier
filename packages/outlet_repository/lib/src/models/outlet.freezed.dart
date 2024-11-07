@@ -1294,7 +1294,7 @@ mixin _$DetailCustomerOrder {
   String get outletId => throw _privateConstructorUsedError;
   String? get tableId => throw _privateConstructorUsedError;
   String get cashierId => throw _privateConstructorUsedError;
-  String get closedAt => throw _privateConstructorUsedError;
+  String? get closedAt => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
   List<DetailCustomerOrderTransaction> get transactions =>
@@ -1331,7 +1331,7 @@ abstract class $DetailCustomerOrderCopyWith<$Res> {
       String outletId,
       String? tableId,
       String cashierId,
-      String closedAt,
+      String? closedAt,
       String createdAt,
       String updatedAt,
       List<DetailCustomerOrderTransaction> transactions,
@@ -1367,7 +1367,7 @@ class _$DetailCustomerOrderCopyWithImpl<$Res, $Val extends DetailCustomerOrder>
     Object? outletId = null,
     Object? tableId = freezed,
     Object? cashierId = null,
-    Object? closedAt = null,
+    Object? closedAt = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? transactions = null,
@@ -1422,10 +1422,10 @@ class _$DetailCustomerOrderCopyWithImpl<$Res, $Val extends DetailCustomerOrder>
           ? _value.cashierId
           : cashierId // ignore: cast_nullable_to_non_nullable
               as String,
-      closedAt: null == closedAt
+      closedAt: freezed == closedAt
           ? _value.closedAt
           : closedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1477,7 +1477,7 @@ abstract class _$$DetailCustomerOrderImplCopyWith<$Res>
       String outletId,
       String? tableId,
       String cashierId,
-      String closedAt,
+      String? closedAt,
       String createdAt,
       String updatedAt,
       List<DetailCustomerOrderTransaction> transactions,
@@ -1512,7 +1512,7 @@ class __$$DetailCustomerOrderImplCopyWithImpl<$Res>
     Object? outletId = null,
     Object? tableId = freezed,
     Object? cashierId = null,
-    Object? closedAt = null,
+    Object? closedAt = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? transactions = null,
@@ -1567,10 +1567,10 @@ class __$$DetailCustomerOrderImplCopyWithImpl<$Res>
           ? _value.cashierId
           : cashierId // ignore: cast_nullable_to_non_nullable
               as String,
-      closedAt: null == closedAt
+      closedAt: freezed == closedAt
           ? _value.closedAt
           : closedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1607,7 +1607,7 @@ class _$DetailCustomerOrderImpl implements _DetailCustomerOrder {
       required this.outletId,
       this.tableId,
       required this.cashierId,
-      required this.closedAt,
+      this.closedAt,
       required this.createdAt,
       required this.updatedAt,
       required final List<DetailCustomerOrderTransaction> transactions,
@@ -1642,7 +1642,7 @@ class _$DetailCustomerOrderImpl implements _DetailCustomerOrder {
   @override
   final String cashierId;
   @override
-  final String closedAt;
+  final String? closedAt;
   @override
   final String createdAt;
   @override
@@ -1750,7 +1750,7 @@ abstract class _DetailCustomerOrder implements DetailCustomerOrder {
           required final String outletId,
           final String? tableId,
           required final String cashierId,
-          required final String closedAt,
+          final String? closedAt,
           required final String createdAt,
           required final String updatedAt,
           required final List<DetailCustomerOrderTransaction> transactions,
@@ -1786,7 +1786,7 @@ abstract class _DetailCustomerOrder implements DetailCustomerOrder {
   @override
   String get cashierId;
   @override
-  String get closedAt;
+  String? get closedAt;
   @override
   String get createdAt;
   @override

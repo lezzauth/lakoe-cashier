@@ -91,7 +91,7 @@ class DetailCustomerOrder with _$DetailCustomerOrder {
     required String outletId,
     String? tableId,
     required String cashierId,
-    required String closedAt,
+    String? closedAt,
     required String createdAt,
     required String updatedAt,
     required List<DetailCustomerOrderTransaction> transactions,

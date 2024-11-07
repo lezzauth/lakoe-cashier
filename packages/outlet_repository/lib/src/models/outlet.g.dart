@@ -125,7 +125,7 @@ _$DetailCustomerOrderImpl _$$DetailCustomerOrderImplFromJson(
       outletId: json['outletId'] as String,
       tableId: json['tableId'] as String?,
       cashierId: json['cashierId'] as String,
-      closedAt: json['closedAt'] as String,
+      closedAt: json['closedAt'] as String?,
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
       transactions: (json['transactions'] as List<dynamic>)
