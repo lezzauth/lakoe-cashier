@@ -18,6 +18,7 @@ class OrderSummary extends StatelessWidget {
   final double total;
   final double orderTotal;
   final bool isPaid;
+  final bool isCancel;
   final List<Transactions>? paymentInfo;
   final Function()? onDiscountChanged;
   final bool? isRefresh;
@@ -31,6 +32,7 @@ class OrderSummary extends StatelessWidget {
     required this.charges,
     this.onDiscountChanged,
     this.isPaid = false,
+    this.isCancel = false,
     this.paymentInfo,
     this.isRefresh = false,
   });
@@ -284,6 +286,16 @@ class OrderSummary extends StatelessWidget {
             right: 48,
             child: SvgPicture.asset(
               TImages.stampPaid,
+              width: 80,
+              height: 80,
+            ),
+          ),
+        if (isCancel)
+          Positioned(
+            bottom: 40,
+            right: 48,
+            child: SvgPicture.asset(
+              TImages.stampCancel,
               width: 80,
               height: 80,
             ),
