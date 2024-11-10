@@ -24,6 +24,10 @@ class _ProductGridState extends State<ProductGrid> {
     context.read<CartCubit>().addCart(product);
   }
 
+  void _onCartQuantityChanged(ProductModel product, int quantity) {
+    context.read<CartCubit>().updateQuantity(product, quantity);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CashierProductCubit, CashierProductState>(
@@ -58,6 +62,9 @@ class _ProductGridState extends State<ProductGrid> {
                           qty: cart?.quantity ?? 0,
                           onTap: () {
                             _onAddToCart(product);
+                          },
+                          onCounterChanged: (qty) {
+                            _onCartQuantityChanged(product, qty);
                           },
                         );
                       },

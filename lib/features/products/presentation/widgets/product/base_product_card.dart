@@ -9,6 +9,7 @@ class BaseProductCard extends StatelessWidget {
   final Widget image;
   final int price;
   final bool selected;
+  final Widget? counter;
 
   const BaseProductCard({
     super.key,
@@ -16,6 +17,7 @@ class BaseProductCard extends StatelessWidget {
     required this.image,
     this.price = 0,
     this.selected = false,
+    this.counter,
   });
 
   @override
@@ -33,19 +35,24 @@ class BaseProductCard extends StatelessWidget {
                 : TColors.neutralLightMedium),
       ),
       child: Column(
-        // mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(
-              color: TColors.neutralLightMedium,
-              borderRadius: BorderRadius.all(
-                Radius.circular(16),
+          Stack(
+            alignment: AlignmentDirectional.center,
+            children: [
+              Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: const BoxDecoration(
+                  color: TColors.neutralLightMedium,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(16),
+                  ),
+                ),
+                height: 165.5,
+                width: 208,
+                child: image,
               ),
-            ),
-            height: 165.5,
-            width: 208,
-            child: image,
+              if (counter != null) counter!,
+            ],
           ),
           Expanded(
             child: Container(
