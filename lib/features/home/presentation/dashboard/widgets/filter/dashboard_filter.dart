@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/data/models.dart';
@@ -27,34 +25,88 @@ class _DashboardFilterState extends State<DashboardFilter> {
     const LabelValue(label: "Bulan ini", value: "THISMONTH"),
   ];
 
+  bool _isSameDate(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
+  }
+
+  DateTime _startOfWeek(DateTime date) {
+    return date.subtract(Duration(days: date.weekday - 1));
+  }
+
+  DateTime _endOfWeek(DateTime date) {
+    return date.add(Duration(days: DateTime.daysPerWeek - date.weekday));
+  }
+
   Future<void> _onPickDateRange(CashierReportFilterState filter) async {
-    log('_onPickDateRange: $filter');
+    final today = DateTime.now();
+    DateTime from =
+        filter.from == null ? today : DateTime.parse(filter.from!).toLocal();
+    DateTime to =
+        filter.to == null ? today : DateTime.parse(filter.to!).toLocal();
+
+    if (filter.from == null && filter.to == null) {
+      final startOfWeek = _startOfWeek(today);
+      final endOfWeek = _endOfWeek(today);
+      final startOfMonth = DateTime(today.year, today.month, 1);
+      final endOfMonth = DateTime(today.year, today.month + 1, 0);
+
+      switch (filter.template) {
+        case "TODAY":
+          from = today;
+          to = today;
+          break;
+        case "THISWEEK":
+          from = startOfWeek;
+          to = endOfWeek;
+          break;
+        case "THISMONTH":
+          from = startOfMonth;
+          to = endOfMonth;
+          break;
+      }
+    }
+
     List<DateTime>? ranges = await showModalBottomSheet<List<DateTime>?>(
       context: context,
       builder: (context) {
         return CustomBottomsheet(
           child: DateRangePicker(
-            from: filter.from == null
-                ? DateTime.now()
-                : DateTime.parse(filter.from!).toLocal(),
-            to: filter.to == null
-                ? DateTime.now()
-                : DateTime.parse(filter.to!).toLocal(),
+            from: from,
+            to: to,
           ),
         );
       },
     );
+
     if (ranges == null) return;
 
-    DateTime from = ranges.elementAt(0);
-    DateTime to = ranges.elementAt(1);
+    from = ranges.elementAt(0);
+    to = ranges.elementAt(1);
+
+    String? template;
+    final startOfToday = DateTime(today.year, today.month, today.day);
+    final startOfWeek = _startOfWeek(today);
+    final endOfWeek = _endOfWeek(today);
+    final startOfMonth = DateTime(today.year, today.month, 1);
+    final endOfMonth = DateTime(today.year, today.month + 1, 0);
+
+    if (_isSameDate(from, startOfToday) && _isSameDate(to, startOfToday)) {
+      template = "TODAY";
+    } else if (_isSameDate(from, startOfWeek) && _isSameDate(to, endOfWeek)) {
+      template = "THISWEEK";
+    } else if (_isSameDate(from, startOfMonth) && _isSameDate(to, endOfMonth)) {
+      template = "THISMONTH";
+    }
 
     if (!mounted) return;
+
     context.read<CashierReportFilterCubit>().setFilter(
-          template: null,
+          template: template,
           from: from,
           to: to,
-          preset: "RANGE",
+          preset: template ?? "RANGE",
           duration: from.difference(to).inDays.abs(),
         );
   }

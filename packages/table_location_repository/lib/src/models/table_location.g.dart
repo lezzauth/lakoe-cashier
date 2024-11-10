@@ -12,6 +12,8 @@ _$TableLocationModelImpl _$$TableLocationModelImplFromJson(
       id: json['id'] as String,
       name: json['name'] as String,
       outletId: json['outletId'] as String,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
     );
 
 Map<String, dynamic> _$$TableLocationModelImplToJson(
@@ -20,4 +22,6 @@ Map<String, dynamic> _$$TableLocationModelImplToJson(
       'id': instance.id,
       'name': instance.name,
       'outletId': instance.outletId,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
     };

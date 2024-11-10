@@ -45,14 +45,14 @@ class _DatePickerState extends State<DatePicker> {
           ),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: SizedBox(
-              height: 142,
+              height: 200,
               child: CupertinoTheme(
                 data: CupertinoThemeData(
                   textTheme: CupertinoTextThemeData(
                     dateTimePickerTextStyle: GoogleFonts.inter(
-                      fontSize: 14,
+                      fontSize: 16,
                       color: TColors.neutralDarkDarkest,
                     ),
                   ),
@@ -87,7 +87,7 @@ class _DatePickerState extends State<DatePicker> {
                               DateTime.now(),
                         );
                       },
-                      child: const TextActionL("Pilih"),
+                      child: TextActionL("Pilih"),
                     ),
                   ),
                 ),

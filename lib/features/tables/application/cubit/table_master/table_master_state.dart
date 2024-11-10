@@ -38,12 +38,12 @@ final class TableMasterActionInProgress extends TableMasterState {
 }
 
 final class TableMasterActionSuccess extends TableMasterState {
-  final TableModel response;
+  final TableModel data;
 
-  TableMasterActionSuccess({required this.response});
+  TableMasterActionSuccess({required this.data});
 
   @override
-  List<Object?> get props => [response];
+  List<Object?> get props => [data];
 }
 
 final class TableMasterActionFailure extends TableMasterState {

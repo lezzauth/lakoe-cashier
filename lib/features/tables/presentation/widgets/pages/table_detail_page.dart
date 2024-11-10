@@ -3,6 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
@@ -15,8 +16,13 @@ import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableDetailPage extends StatefulWidget {
-  const TableDetailPage({super.key, required this.table});
+  const TableDetailPage({
+    super.key,
+    required this.table,
+    required this.tableNo,
+  });
   final TableModel table;
+  final String tableNo;
 
   @override
   State<TableDetailPage> createState() => _TableDetailPageState();
@@ -130,11 +136,24 @@ class _TableDetailPageState extends State<TableDetailPage> {
                                     radix: 16);
                               }
 
-                              return PreviewQrTable(
-                                widget.table.id,
-                                logo: logoBrandData ?? "",
-                                colorBrand: argColorInt,
-                                tableNumber: widget.table.no,
+                              return ResponsiveLayout(
+                                mobile: PreviewQrTable(
+                                  widget.table.id,
+                                  logo: logoBrandData ?? "",
+                                  colorBrand: argColorInt,
+                                  tableNumber: widget.table.no,
+                                ),
+                                tablet: Center(
+                                  child: SizedBox(
+                                    width: 450,
+                                    child: PreviewQrTable(
+                                      widget.table.id,
+                                      logo: logoBrandData ?? "",
+                                      colorBrand: argColorInt,
+                                      tableNumber: widget.table.no,
+                                    ),
+                                  ),
+                                ),
                               );
                             } else {
                               return PreviewQrTable(
@@ -154,7 +173,7 @@ class _TableDetailPageState extends State<TableDetailPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
             child: Row(
               children: [
                 Expanded(

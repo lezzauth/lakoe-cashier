@@ -17,10 +17,9 @@ class SalesSummary extends StatelessWidget {
   final OutletReportTotalSaleModel totalSales;
 
   StatsType getType() {
-    if (totalSales.diff == null) return StatsType.neutral;
-    if (totalSales.diff! == 0) return StatsType.neutral;
-    if (totalSales.diff!.isNegative) return StatsType.descend;
-    if (totalSales.diff! > 0) return StatsType.ascend;
+    if (totalSales.diffComputed == 0) return StatsType.neutral;
+    if (totalSales.diffComputed.isNegative) return StatsType.descend;
+    if (totalSales.diffComputed > 0) return StatsType.ascend;
 
     return StatsType.neutral;
   }
@@ -86,7 +85,10 @@ class SalesSummary extends StatelessWidget {
                             children: [
                               StatsBadge(
                                 type: getType(),
-                                value: "${totalSales.diff?.abs() ?? 0}%",
+                                value: (int.parse(totalSales.past) == 0 &&
+                                        int.parse(totalSales.current) > 0)
+                                    ? "100%"
+                                    : "${totalSales.diffComputed.abs()}%",
                               ),
                               Text(
                                 "vs ${getComparisonText(state)}",

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
@@ -58,8 +59,17 @@ class TBill {
     final profile = await CapabilityProfile.load();
     final generator = Generator(PaperSize.mm58, profile, spaceBetweenRows: 1);
     final profileDevice = await CapabilityProfile.getAvailableProfiles();
-    log('profileDevice: $profileDevice');
+    Logman.instance.info('profileDevice: $profileDevice');
     bytes += generator.reset();
+
+    // int newBillNumber =
+    //     await AppDataProvider().incrementBillNumberOnPrint(order.id);
+
+    // String formattedBillNumber = TFormatter.formatBillNumber(
+    //   isTestingMode ? 1 : newBillNumber,
+    //   profileOwner.outlets[0].name,
+    // );
+
     if (isTestingMode) {
       bytes += generator.text(
         "[Testing Mode]",
@@ -124,7 +134,7 @@ class TBill {
           styles: const PosStyles(align: PosAlign.left)),
       PosColumn(
           text: TFormatter.formatBillNumber(
-            order.transactions![0].no,
+            order.closedAt!,
             profileOwner.outlets[0].name,
           ),
           width: 7,

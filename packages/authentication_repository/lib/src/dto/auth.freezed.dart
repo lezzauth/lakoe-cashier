@@ -766,3 +766,154 @@ abstract class _VerifyOTPDto implements VerifyOTPDto {
   _$$VerifyOTPDtoImplCopyWith<_$VerifyOTPDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+RefreshTokenDto _$RefreshTokenDtoFromJson(Map<String, dynamic> json) {
+  return _RefreshTokenDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RefreshTokenDto {
+  String get token => throw _privateConstructorUsedError;
+
+  /// Serializes this RefreshTokenDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RefreshTokenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RefreshTokenDtoCopyWith<RefreshTokenDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RefreshTokenDtoCopyWith<$Res> {
+  factory $RefreshTokenDtoCopyWith(
+          RefreshTokenDto value, $Res Function(RefreshTokenDto) then) =
+      _$RefreshTokenDtoCopyWithImpl<$Res, RefreshTokenDto>;
+  @useResult
+  $Res call({String token});
+}
+
+/// @nodoc
+class _$RefreshTokenDtoCopyWithImpl<$Res, $Val extends RefreshTokenDto>
+    implements $RefreshTokenDtoCopyWith<$Res> {
+  _$RefreshTokenDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RefreshTokenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+  }) {
+    return _then(_value.copyWith(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RefreshTokenDtoImplCopyWith<$Res>
+    implements $RefreshTokenDtoCopyWith<$Res> {
+  factory _$$RefreshTokenDtoImplCopyWith(_$RefreshTokenDtoImpl value,
+          $Res Function(_$RefreshTokenDtoImpl) then) =
+      __$$RefreshTokenDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String token});
+}
+
+/// @nodoc
+class __$$RefreshTokenDtoImplCopyWithImpl<$Res>
+    extends _$RefreshTokenDtoCopyWithImpl<$Res, _$RefreshTokenDtoImpl>
+    implements _$$RefreshTokenDtoImplCopyWith<$Res> {
+  __$$RefreshTokenDtoImplCopyWithImpl(
+      _$RefreshTokenDtoImpl _value, $Res Function(_$RefreshTokenDtoImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RefreshTokenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+  }) {
+    return _then(_$RefreshTokenDtoImpl(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RefreshTokenDtoImpl implements _RefreshTokenDto {
+  const _$RefreshTokenDtoImpl({required this.token});
+
+  factory _$RefreshTokenDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RefreshTokenDtoImplFromJson(json);
+
+  @override
+  final String token;
+
+  @override
+  String toString() {
+    return 'RefreshTokenDto(token: $token)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RefreshTokenDtoImpl &&
+            (identical(other.token, token) || other.token == token));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, token);
+
+  /// Create a copy of RefreshTokenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RefreshTokenDtoImplCopyWith<_$RefreshTokenDtoImpl> get copyWith =>
+      __$$RefreshTokenDtoImplCopyWithImpl<_$RefreshTokenDtoImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RefreshTokenDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RefreshTokenDto implements RefreshTokenDto {
+  const factory _RefreshTokenDto({required final String token}) =
+      _$RefreshTokenDtoImpl;
+
+  factory _RefreshTokenDto.fromJson(Map<String, dynamic> json) =
+      _$RefreshTokenDtoImpl.fromJson;
+
+  @override
+  String get token;
+
+  /// Create a copy of RefreshTokenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RefreshTokenDtoImplCopyWith<_$RefreshTokenDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

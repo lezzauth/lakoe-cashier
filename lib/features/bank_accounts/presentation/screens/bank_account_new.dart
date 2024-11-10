@@ -17,7 +17,11 @@ class BankAccountNewScreen extends StatefulWidget {
 }
 
 class _BankAccountNewScreenState extends State<BankAccountNewScreen> {
-  Future<void> _onSubmitted(dynamic value, BankListModel? bank) async {
+  Future<void> _onSubmitted(
+    dynamic value,
+    BankListModel? bank,
+    String previousAccountNumber,
+  ) async {
     if (!context.mounted) return;
 
     final result = await showModalBottomSheet<BankVerifyArgument?>(

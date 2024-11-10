@@ -1,5 +1,5 @@
-import 'package:cashier_repository/cashier_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:order_repository/order_repository.dart';
 
 sealed class OrderMasterCompletedState extends Equatable {}
 
@@ -15,7 +15,7 @@ final class OrderMasterCompletedLoadInProgress
 }
 
 final class OrderMasterCompletedLoadSuccess extends OrderMasterCompletedState {
-  final List<OrderItemResponse> orders;
+  final List<OrderItemRes> orders;
 
   OrderMasterCompletedLoadSuccess({
     required this.orders,

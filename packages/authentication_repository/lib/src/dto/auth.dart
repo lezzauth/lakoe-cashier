@@ -52,3 +52,13 @@ class VerifyOTPDto with _$VerifyOTPDto {
   factory VerifyOTPDto.fromJson(Map<String, Object?> json) =>
       _$VerifyOTPDtoFromJson(json);
 }
+
+@freezed
+class RefreshTokenDto with _$RefreshTokenDto {
+  const factory RefreshTokenDto({
+    required String token,
+  }) = _RefreshTokenDto;
+
+  factory RefreshTokenDto.fromJson(Map<String, Object?> json) =>
+      _$RefreshTokenDtoFromJson(json);
+}

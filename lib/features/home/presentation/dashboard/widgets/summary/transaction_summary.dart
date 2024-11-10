@@ -16,10 +16,9 @@ class TransactionSummary extends StatelessWidget {
   final OutletReportTotalTransactionModel totalTransactions;
 
   StatsType getType() {
-    if (totalTransactions.diff == null) return StatsType.neutral;
-    if (totalTransactions.diff! == 0) return StatsType.neutral;
-    if (totalTransactions.diff!.isNegative) return StatsType.descend;
-    if (totalTransactions.diff! > 0) return StatsType.ascend;
+    if (totalTransactions.diffComputed == 0) return StatsType.neutral;
+    if (totalTransactions.diffComputed.isNegative) return StatsType.descend;
+    if (totalTransactions.diffComputed > 0) return StatsType.ascend;
 
     return StatsType.neutral;
   }
@@ -84,9 +83,12 @@ class TransactionSummary extends StatelessWidget {
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
                               StatsBadge(
-                                  type: getType(),
-                                  value:
-                                      "${totalTransactions.diff?.abs() ?? 0}%"),
+                                type: getType(),
+                                value: (totalTransactions.past == 0 &&
+                                        totalTransactions.current > 0)
+                                    ? "100%"
+                                    : "${totalTransactions.diffComputed.abs()}%",
+                              ),
                               Text(
                                 "vs ${getComparisonText(state)}",
                                 style: GoogleFonts.inter(

@@ -8,7 +8,7 @@ import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart
 import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_state.dart';
 import 'package:point_of_sales_cashier/features/employees/common/widgets/employee_item.dart';
-import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_detail_argument.dart';
+import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 
 class MasterEmployeScreen extends StatefulWidget {
@@ -64,15 +64,29 @@ class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
                 EmployeeMasterLoadSuccess(:final employees) => ListView.builder(
                     itemCount: employees.length,
                     itemBuilder: (context, index) {
-                      EmployeeModel employee = employees.elementAt(index);
+                      List<EmployeeModel> sortedEmployees = List.from(employees)
+                        ..sort((a, b) {
+                          if (a.role == "OWNER") return -1;
+                          if (b.role == "OWNER") return 1;
+                          return 0;
+                        });
+                      EmployeeModel employee = sortedEmployees[index];
+                      // EmployeeModel employee = employees.elementAt(index);
 
                       return EmployeeItem(
                         name: employee.name,
                         role: employee.role,
                         onTap: () async {
-                          await Navigator.pushNamed(context, "/employee/detail",
+                          if (employee.role == "OWNER") {
+                            await Navigator.pushNamed(context, "/account/edit");
+                          } else {
+                            await Navigator.pushNamed(
+                              context,
+                              "/employee/edit",
                               arguments:
-                                  EmployeeDetailArgument(employee: employee));
+                                  EmployeeEditArgument(employee: employee),
+                            );
+                          }
                           _onRefresh();
                         },
                       );

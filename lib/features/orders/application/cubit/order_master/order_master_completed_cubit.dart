@@ -1,9 +1,9 @@
-import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_completed_state.dart';
 
 class OrderMasterCompletedCubit extends Cubit<OrderMasterCompletedState> {
-  final CashierRepository _cashierRepository = CashierRepositoryImpl();
+  final OrderRepository _orderRepository = OrderRepositoryImpl();
 
   OrderMasterCompletedCubit() : super(OrderMasterCompletedInitial());
 
@@ -15,7 +15,7 @@ class OrderMasterCompletedCubit extends Cubit<OrderMasterCompletedState> {
   Future<void> findAll(FindAllOrderDto dto) async {
     try {
       emit(OrderMasterCompletedLoadInProgress());
-      final orders = await _cashierRepository.findAllOrder(dto);
+      final orders = await _orderRepository.findAll(dto);
       emit(
         OrderMasterCompletedLoadSuccess(
           orders: orders,

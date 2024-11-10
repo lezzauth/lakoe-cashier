@@ -36,7 +36,7 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
       isActive: true,
     ),
     _PaymentItem(
-      title: "QRIS",
+      title: "QRIS Statis",
       subTitle: "QRIS yang dicetak atau dipajang",
       isActive: true,
       lastItem: true,

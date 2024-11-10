@@ -9,7 +9,7 @@ class TFilledButtonTheme {
     style: FilledButton.styleFrom(
       disabledForegroundColor: TColors.neutralLightLightest,
       disabledBackgroundColor: TColors.neutralLightDarkest,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       textStyle: const TextStyle(
         fontSize: TSizes.fontSizeActionL,
         color: TColors.neutralLightLightest,

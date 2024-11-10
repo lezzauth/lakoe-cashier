@@ -4,6 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
+import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
@@ -53,12 +54,15 @@ class _BillEditScreenState extends State<BillEditScreen> {
             appBar: CustomAppbar(
               title: "Ubah Struk (Bill)",
               actions: [
-                TextButton(
-                  onPressed: _onSubmitted,
-                  child: const TextActionL(
-                    "SIMPAN",
-                    color: TColors.primary,
+                ResponsiveLayout(
+                  mobile: TextButton(
+                    onPressed: _onSubmitted,
+                    child: const TextActionL(
+                      "SIMPAN",
+                      color: TColors.primary,
+                    ),
                   ),
+                  tablet: SizedBox.shrink(),
                 ),
               ],
             ),
@@ -67,64 +71,139 @@ class _BillEditScreenState extends State<BillEditScreen> {
                 vertical: 16,
                 horizontal: 20,
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const FormLabel("Catatan Kaki"),
-                        FormBuilderTextField(
-                          name: "footNote",
-                          initialValue: state.footNote,
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(),
-                            FormBuilderValidators.maxLength(100,
-                                errorText: 'Maksimal 100 karakter'),
-                          ]),
-                          decoration: const InputDecoration(),
-                          maxLines: 3,
-                          maxLength: 100,
-                          buildCounter: (
-                            BuildContext context, {
-                            required int currentLength,
-                            required bool isFocused,
-                            required int? maxLength,
-                          }) {
-                            return TextBodyS(
-                              '$currentLength/$maxLength',
-                              color: currentLength > (maxLength ?? 100)
-                                  ? Colors.red
-                                  : Colors.grey,
-                            );
-                          },
-                        ),
-                      ],
+              child: ResponsiveLayout(
+                mobile: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 16.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const FormLabel("Catatan Kaki"),
+                          FormBuilderTextField(
+                            name: "footNote",
+                            initialValue: state.footNote,
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(),
+                              FormBuilderValidators.maxLength(100,
+                                  errorText: 'Maksimal 100 karakter'),
+                            ]),
+                            decoration: const InputDecoration(),
+                            maxLines: 3,
+                            maxLength: 100,
+                            buildCounter: (
+                              BuildContext context, {
+                              required int currentLength,
+                              required bool isFocused,
+                              required int? maxLength,
+                            }) {
+                              return TextBodyS(
+                                '$currentLength/$maxLength',
+                                color: currentLength > (maxLength ?? 100)
+                                    ? Colors.red
+                                    : Colors.grey,
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Flexible(
-                    child: SizedBox(
-                      height: 500,
-                      child: ShaderMask(
-                        shaderCallback: (bounds) => LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Colors.white.withOpacity(0.0), Colors.white],
-                          stops: const [0.0, 0.5],
-                        ).createShader(bounds),
-                        blendMode: BlendMode.dstIn,
-                        child: SingleChildScrollView(
-                          reverse: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          child: BillView(order: templateOrder.order),
+                    Flexible(
+                      child: SizedBox(
+                        height: 500,
+                        child: ShaderMask(
+                          shaderCallback: (bounds) => LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.white.withOpacity(0.0),
+                              Colors.white
+                            ],
+                            stops: const [0.0, 0.5],
+                          ).createShader(bounds),
+                          blendMode: BlendMode.dstIn,
+                          child: SingleChildScrollView(
+                            reverse: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            child: BillView(
+                              order: templateOrder.order,
+                              isEdit: true,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+                tablet: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        reverse: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        child: BillView(
+                          order: templateOrder.order,
+                          isEdit: true,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 20),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const FormLabel("Catatan Kaki"),
+                            FormBuilderTextField(
+                              name: "footNote",
+                              initialValue: state.footNote,
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(),
+                                FormBuilderValidators.maxLength(100,
+                                    errorText: 'Maksimal 100 karakter'),
+                              ]),
+                              decoration: const InputDecoration(),
+                              maxLines: 8,
+                              maxLength: 100,
+                              buildCounter: (
+                                BuildContext context, {
+                                required int currentLength,
+                                required bool isFocused,
+                                required int? maxLength,
+                              }) {
+                                return TextBodyS(
+                                  '$currentLength/$maxLength',
+                                  color: currentLength > (maxLength ?? 100)
+                                      ? Colors.red
+                                      : Colors.grey,
+                                );
+                              },
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 16),
+                              child: SizedBox(
+                                height: 48,
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: _onSubmitted,
+                                  child: const TextActionL(
+                                    "Simpan",
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

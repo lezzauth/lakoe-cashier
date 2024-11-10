@@ -14,6 +14,205 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+/// @nodoc
+mixin _$FindAllOrderDto {
+  String? get type => throw _privateConstructorUsedError;
+  String? get source => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
+  String? get search => throw _privateConstructorUsedError;
+  String? get sort => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $FindAllOrderDtoCopyWith<FindAllOrderDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $FindAllOrderDtoCopyWith<$Res> {
+  factory $FindAllOrderDtoCopyWith(
+          FindAllOrderDto value, $Res Function(FindAllOrderDto) then) =
+      _$FindAllOrderDtoCopyWithImpl<$Res, FindAllOrderDto>;
+  @useResult
+  $Res call(
+      {String? type,
+      String? source,
+      String? status,
+      String? search,
+      String? sort});
+}
+
+/// @nodoc
+class _$FindAllOrderDtoCopyWithImpl<$Res, $Val extends FindAllOrderDto>
+    implements $FindAllOrderDtoCopyWith<$Res> {
+  _$FindAllOrderDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? type = freezed,
+    Object? source = freezed,
+    Object? status = freezed,
+    Object? search = freezed,
+    Object? sort = freezed,
+  }) {
+    return _then(_value.copyWith(
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      source: freezed == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      search: freezed == search
+          ? _value.search
+          : search // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sort: freezed == sort
+          ? _value.sort
+          : sort // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$FindAllOrderDtoImplCopyWith<$Res>
+    implements $FindAllOrderDtoCopyWith<$Res> {
+  factory _$$FindAllOrderDtoImplCopyWith(_$FindAllOrderDtoImpl value,
+          $Res Function(_$FindAllOrderDtoImpl) then) =
+      __$$FindAllOrderDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String? type,
+      String? source,
+      String? status,
+      String? search,
+      String? sort});
+}
+
+/// @nodoc
+class __$$FindAllOrderDtoImplCopyWithImpl<$Res>
+    extends _$FindAllOrderDtoCopyWithImpl<$Res, _$FindAllOrderDtoImpl>
+    implements _$$FindAllOrderDtoImplCopyWith<$Res> {
+  __$$FindAllOrderDtoImplCopyWithImpl(
+      _$FindAllOrderDtoImpl _value, $Res Function(_$FindAllOrderDtoImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? type = freezed,
+    Object? source = freezed,
+    Object? status = freezed,
+    Object? search = freezed,
+    Object? sort = freezed,
+  }) {
+    return _then(_$FindAllOrderDtoImpl(
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      source: freezed == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      search: freezed == search
+          ? _value.search
+          : search // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sort: freezed == sort
+          ? _value.sort
+          : sort // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FindAllOrderDtoImpl implements _FindAllOrderDto {
+  const _$FindAllOrderDtoImpl(
+      {this.type, this.source, this.status, this.search, this.sort});
+
+  @override
+  final String? type;
+  @override
+  final String? source;
+  @override
+  final String? status;
+  @override
+  final String? search;
+  @override
+  final String? sort;
+
+  @override
+  String toString() {
+    return 'FindAllOrderDto(type: $type, source: $source, status: $status, search: $search, sort: $sort)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FindAllOrderDtoImpl &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.source, source) || other.source == source) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.search, search) || other.search == search) &&
+            (identical(other.sort, sort) || other.sort == sort));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, type, source, status, search, sort);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FindAllOrderDtoImplCopyWith<_$FindAllOrderDtoImpl> get copyWith =>
+      __$$FindAllOrderDtoImplCopyWithImpl<_$FindAllOrderDtoImpl>(
+          this, _$identity);
+}
+
+abstract class _FindAllOrderDto implements FindAllOrderDto {
+  const factory _FindAllOrderDto(
+      {final String? type,
+      final String? source,
+      final String? status,
+      final String? search,
+      final String? sort}) = _$FindAllOrderDtoImpl;
+
+  @override
+  String? get type;
+  @override
+  String? get source;
+  @override
+  String? get status;
+  @override
+  String? get search;
+  @override
+  String? get sort;
+  @override
+  @JsonKey(ignore: true)
+  _$$FindAllOrderDtoImplCopyWith<_$FindAllOrderDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 OrderItemDto _$OrderItemDtoFromJson(Map<String, dynamic> json) {
   return _OrderItemDto.fromJson(json);
 }

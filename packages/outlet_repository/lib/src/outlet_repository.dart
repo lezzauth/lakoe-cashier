@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_data_provider/app_data_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
+import 'package:logman/logman.dart';
 import 'package:outlet_repository/src/dto/outlet.dart';
 import 'package:outlet_repository/src/models/outlet.dart';
 import 'package:token_provider/token_provider.dart';
@@ -43,11 +45,14 @@ class OutletRepositoryImpl implements OutletRepository {
     final options = await _getOptions();
     final outletId = await _appDataProvider.outletId;
 
-    final response = await _dio.get(
+    final res = await _dio.get(
       "$_baseURL/$outletId/customers/$customerId?${dto == null ? "" : dto.toQueryString()}",
       options: options,
     );
-    return DetailCustomerOutletResponse.fromJson(response.data);
+
+    Logman.instance.info(jsonEncode(res.data));
+
+    return DetailCustomerOutletResponse.fromJson(res.data);
   }
 
   @override

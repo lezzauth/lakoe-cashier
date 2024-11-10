@@ -27,18 +27,21 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
         children: [
           Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  child: const Wrap(
-                    runSpacing: 20,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextHeading3(
                         "Setelah akun dihapus, kamu akan kehilangan akses ke informasi berikut:",
                         color: TColors.neutralDarkDark,
                         fontWeight: FontWeight.w700,
                       ),
+                      SizedBox(height: 20),
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,6 +57,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                           ),
                         ],
                       ),
+                      SizedBox(height: 20),
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,6 +73,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                           ),
                         ],
                       ),
+                      SizedBox(height: 20),
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,15 +124,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(
-                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Flexible(
-                              child: TextHeading4(
-                                "Saya setuju dan bersedia menghapus akun ini secara permanen.",
-                                color: TColors.neutralDarkDark,
-                              ),
-                            ),
-                            const SizedBox(width: 20),
                             CustomCheckbox(
                               value: isAgreed,
                               onChanged: (bool value) {
@@ -135,6 +132,13 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                                   isAgreed = value;
                                 });
                               },
+                            ),
+                            const SizedBox(width: 20),
+                            const Flexible(
+                              child: TextHeading4(
+                                "Saya setuju dan bersedia menghapus akun ini secara permanen.",
+                                color: TColors.neutralDarkDark,
+                              ),
                             ),
                           ],
                         ),

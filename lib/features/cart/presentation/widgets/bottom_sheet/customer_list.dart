@@ -13,6 +13,7 @@ import 'package:point_of_sales_cashier/features/cart/application/cubit/customer/
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class CartCustomerList extends StatelessWidget {
   const CartCustomerList({super.key, this.value});
@@ -103,7 +104,8 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                                     ),
                                     title: TextHeading4(customer.name),
                                     subtitle: TextBodyS(
-                                      customer.phoneNumber,
+                                      PhoneNumberFormatter.formatForDisplay(
+                                          customer.phoneNumber),
                                       color: TColors.neutralDarkLight,
                                     ),
                                     onTap: () {
@@ -113,7 +115,6 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                                     trailing: selected
                                         ? const UiIcons(
                                             TIcons.check,
-                                            size: 16,
                                             color: TColors.primary,
                                           )
                                         : const UiIcons(
@@ -125,11 +126,8 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                                 );
                               },
                             ),
-                          CartCustomerLoadFailure(:final error) => Center(
-                              child: TextBodyS(
-                                error,
-                                color: TColors.error,
-                              ),
+                          CartCustomerLoadFailure() => const Center(
+                              child: CircularProgressIndicator(),
                             ),
                           _ => const Center(
                               child: CircularProgressIndicator(),
@@ -146,10 +144,13 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                 borderRadius: BorderRadius.circular(12.0),
               ),
               onPressed: () async {
-                bool? newCustomer =
+                CustomerModel? newCustomer =
                     await Navigator.pushNamed(context, "/customers/new")
-                        as bool?;
-                if (newCustomer != true) return;
+                        as CustomerModel?;
+                if (newCustomer == null) return;
+
+                if (!context.mounted) return;
+                Navigator.pop(context, newCustomer);
                 _onInit();
               },
               elevation: 0,

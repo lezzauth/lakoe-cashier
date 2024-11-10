@@ -49,7 +49,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
     return BlocListener<CustomerMasterCubit, CustomerMasterState>(
       listener: (context, state) {
         if (state is CustomerMasterActionSuccess) {
-          Navigator.pop(context, true);
+          Navigator.pop(context, state.data);
         } else if (state is CustomerReachesLimit) {
           showModalBottomSheet(
             context: context,

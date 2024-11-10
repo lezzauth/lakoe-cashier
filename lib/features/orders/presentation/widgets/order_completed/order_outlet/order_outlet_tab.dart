@@ -1,7 +1,7 @@
-import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:order_repository/order_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
 import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_completed_cubit.dart';
@@ -25,11 +25,6 @@ class OrderOutletCompletedTab extends StatefulWidget {
 class _OrderOutletCompletedTabState extends State<OrderOutletCompletedTab> {
   String? previousScreen;
   Future<void> onRefresh() async {
-    // OrderMasterFilterState filterState =
-    //     context.read<OrderMasterFilterCubit>().state;
-    // await context
-    //     .read<OrderMasterCubit>()
-    //     .findAll(filterState.toFindAllOrderDto);
     context.read<OrderMasterCompletedCubit>().init();
   }
 
@@ -74,7 +69,7 @@ class _OrderOutletCompletedTabState extends State<OrderOutletCompletedTab> {
                               itemBuilder: (context, index) {
                                 final reversedIndex = orders.length - 1 - index;
 
-                                OrderItemResponse order =
+                                OrderItemRes order =
                                     orders.elementAt(reversedIndex);
                                 bool isPaid = order.paymentStatus == "PAID";
 

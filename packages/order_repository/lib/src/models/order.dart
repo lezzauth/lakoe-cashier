@@ -4,6 +4,44 @@ part 'order.freezed.dart';
 part 'order.g.dart';
 
 @freezed
+class OrderItemRes with _$OrderItemRes {
+  const factory OrderItemRes({
+    required String id,
+    required int no,
+    required String price,
+    required String paymentStatus,
+    required String customerType,
+    required String type,
+    required String source,
+    OrderItemCustomer? customer,
+    OrderItemTable? table,
+  }) = _OrderItemRes;
+
+  factory OrderItemRes.fromJson(Map<String, Object?> json) =>
+      _$OrderItemResFromJson(json);
+}
+
+@freezed
+class OrderItemCustomer with _$OrderItemCustomer {
+  const factory OrderItemCustomer({
+    required String name,
+  }) = _OrderItemCustomer;
+
+  factory OrderItemCustomer.fromJson(Map<String, Object?> json) =>
+      _$OrderItemCustomerFromJson(json);
+}
+
+@freezed
+class OrderItemTable with _$OrderItemTable {
+  const factory OrderItemTable({
+    required String no,
+  }) = _OrderItemTable;
+
+  factory OrderItemTable.fromJson(Map<String, Object?> json) =>
+      _$OrderItemTableFromJson(json);
+}
+
+@freezed
 class OrderCharge with _$OrderCharge {
   const factory OrderCharge({
     required String id,
@@ -43,7 +81,6 @@ class OrderItem with _$OrderItem {
 class Transactions with _$Transactions {
   const factory Transactions({
     required String id,
-    required int no,
     required String paymentMethod,
     required String status,
     required String paidAmount,
@@ -60,7 +97,7 @@ class Transactions with _$Transactions {
     required String updatedAt,
   }) = _Transactions;
 
-  factory Transactions.fromJson(Map<String, Object?> json) =>
+  factory Transactions.fromJson(Map<String, dynamic> json) =>
       _$TransactionsFromJson(json);
 }
 
@@ -152,8 +189,8 @@ class OrderModel with _$OrderModel {
     required String outletId,
     String? tableId,
     required String cashierId,
-    required String createdAt,
     String? closedAt,
+    required String createdAt,
     required String updatedAt,
     OrderCustomer? customer,
     List<OrderCharge>? charges,

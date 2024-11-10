@@ -9,6 +9,8 @@ class TableLocationModel with _$TableLocationModel {
     required String id,
     required String name,
     required String outletId,
+    required String createdAt,
+    required String updatedAt,
   }) = _TableLocationModel;
 
   factory TableLocationModel.fromJson(Map<String, Object?> json) =>

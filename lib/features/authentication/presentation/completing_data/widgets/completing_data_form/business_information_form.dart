@@ -99,9 +99,10 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
               FormBuilderTextField(
                 name: "outletAddress",
                 decoration: const InputDecoration(
-                  hintText: "Cari alamat usaha",
+                  hintText:
+                      "Masukan alamat dengan format [Kecamatan], [Kabupaten], [Provinsi]\nContoh: Banjarsari, Solo, Jawa Tengah",
                 ),
-                maxLines: 2,
+                maxLines: 3,
                 validator: FormBuilderValidators.required(
                     errorText: ErrorTextStrings.required(name: "Alamat")),
               ),

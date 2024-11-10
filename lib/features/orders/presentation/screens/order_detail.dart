@@ -450,7 +450,8 @@ class _OrderDetailState extends State<OrderDetail> {
                                     OrderSummary(
                                       orderTotal: _getOrderTotal(order),
                                       total: double.parse(order.price),
-                                      isPaid: order.paymentStatus == "PAID",
+                                      isPaid: order.status == "COMPLETED",
+                                      isCancel: order.status == "CANCELLED",
                                       paymentInfo: order.transactions,
                                       charges: order.charges!
                                           .map((e) => OrderSummaryChargeModel(
@@ -484,7 +485,8 @@ class _OrderDetailState extends State<OrderDetail> {
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
                             child: OrderOutletAction(
-                                isPaid: order.paymentStatus == "PAID",
+                                isPaid: order.status == "COMPLETED",
+                                isCancel: order.status == "CANCELLED",
                                 type: order.type,
                                 onEditOrder: () async {
                                   await Navigator.pushNamed(
@@ -571,6 +573,7 @@ class _OrderDetailState extends State<OrderDetail> {
 class OrderOutletAction extends StatelessWidget {
   final String type;
   final bool isPaid;
+  final bool isCancel;
 
   final Function() onEditOrder;
   final Function() onComplete;
@@ -581,6 +584,7 @@ class OrderOutletAction extends StatelessWidget {
     super.key,
     required this.type,
     required this.isPaid,
+    required this.isCancel,
     required this.onEditOrder,
     required this.onComplete,
     required this.onShare,
@@ -594,6 +598,10 @@ class OrderOutletAction extends StatelessWidget {
         onPrint: onPrint,
         onShare: onShare,
       );
+    }
+
+    if (isCancel) {
+      return SizedBox.shrink();
     }
 
     return OrderOutlineOnProgressAction(

@@ -43,6 +43,7 @@ class _CategoryFieldState extends State<CategoryField> {
     setState(() {
       _selectedCategoryId = newCategoryId;
     });
+
     final field = FormBuilder.of(context)?.fields['categoryId'];
     field?.didChange(newCategoryId);
   }
@@ -83,7 +84,6 @@ class _CategoryFieldState extends State<CategoryField> {
         ProductMasterCategoryLoadSuccess(:final categories) =>
           FormBuilderField<int>(
             name: "categoryId",
-            // initialValue: _getInitialValue(categories),
             initialValue: _selectedCategoryId,
             builder: (field) {
               return Wrap(

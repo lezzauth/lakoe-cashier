@@ -80,40 +80,31 @@ class _TableNewQrOrderTabState extends State<TableNewQrOrderTab> {
                     }
                   },
                 ),
+                if (widget.table != null)
+                  TextButton(
+                    onPressed: () {},
+                    child: TextActionL(
+                      "Download QR Order",
+                      color: TColors.primary,
+                    ),
+                  ),
               ],
             ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: SizedBox(
-                  height: 48,
-                  child: OutlinedButton(
-                    onPressed: () {},
-                    child: const TextActionL(
-                      "Edit Brand",
-                      color: TColors.primary,
-                    ),
-                  ),
-                ),
+          child: SizedBox(
+            height: 48,
+            child: OutlinedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/tables/edit/brand");
+              },
+              child: TextActionL(
+                "Ubah Logo & Warna",
+                color: TColors.primary,
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: SizedBox(
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: showDownloadQR,
-                    child: const TextActionL(
-                      "Download",
-                      color: TColors.neutralLightLightest,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         )
       ],

@@ -23,26 +23,9 @@ class NewCustomerForm extends StatefulWidget {
 }
 
 class _NewCustomerFormState extends State<NewCustomerForm> {
-  final _phoneController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
-
-    _phoneController.addListener(() {
-      // Dapatkan nilai dari controller
-      String currentValue = _phoneController.text;
-
-      // Format nilai jika belum sesuai
-      String formattedValue =
-          PhoneNumberFormatter.formatForDisplay(currentValue);
-      if (currentValue != formattedValue) {
-        _phoneController.value = TextEditingValue(
-          text: formattedValue,
-          selection: TextSelection.collapsed(offset: formattedValue.length),
-        );
-      }
-    });
   }
 
   Future<void> _onSelectContact() async {
@@ -137,7 +120,6 @@ class _NewCustomerFormState extends State<NewCustomerForm> {
                       const FormLabel("Nomor HP/WA"),
                       FormBuilderTextField(
                         name: "phoneNumber",
-                        controller: _phoneController,
                         decoration: const InputDecoration(
                           hintText: "Masukan nomor hp atau wa",
                         ),

@@ -22,6 +22,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.7.0"
+  app_config_provider:
+    dependency: transitive
+    description:
+      path: "../app_config_provider"
+      relative: true
+    source: path
+    version: "0.0.0"
   app_data_provider:
     dependency: "direct main"
     description:
@@ -133,6 +140,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  clock:
+    dependency: transitive
+    description:
+      name: clock
+      sha256: fddb70d9b5277016c77a80201021d40a2247104d9f4aa7bab7157b7e3f05b84b
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2"
   code_builder:
     dependency: transitive
     description:
@@ -334,6 +349,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.19.0"
   io:
     dependency: transitive
     description:
@@ -366,6 +389,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.8.0"
+  logger:
+    dependency: transitive
+    description:
+      name: logger
+      sha256: "697d067c60c20999686a0add96cf6aba723b3aa1f83ecf806a8097231529ec32"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.0"
   logging:
     dependency: transitive
     description:
@@ -374,6 +405,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  logman:
+    dependency: transitive
+    description:
+      name: logman
+      sha256: "5b0be63bc8bbca004628985a06283e91ea49a9066f040a16935fdbaed1736c1d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.21"
   macros:
     dependency: transitive
     description:

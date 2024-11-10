@@ -56,7 +56,6 @@ class DetailCustomerOrderCount with _$DetailCustomerOrderCount {
 class DetailCustomerOrderTransaction with _$DetailCustomerOrderTransaction {
   const factory DetailCustomerOrderTransaction({
     required String id,
-    required int no,
     required String paymentMethod,
     required String status,
     required String paidAmount,
@@ -67,6 +66,8 @@ class DetailCustomerOrderTransaction with _$DetailCustomerOrderTransaction {
     String? photo,
     required String orderId,
     required String outletId,
+    String? externalId,
+    String? approvalCode,
     required String createdAt,
     required String updatedAt,
   }) = _DetailCustomerOrderTransaction;
@@ -90,6 +91,7 @@ class DetailCustomerOrder with _$DetailCustomerOrder {
     required String outletId,
     String? tableId,
     required String cashierId,
+    String? closedAt,
     required String createdAt,
     required String updatedAt,
     required List<DetailCustomerOrderTransaction> transactions,
@@ -158,6 +160,8 @@ class OutletSalesModel with _$OutletSalesModel {
 
 @freezed
 class OutletReportTotalSaleModel with _$OutletReportTotalSaleModel {
+  const OutletReportTotalSaleModel._();
+
   const factory OutletReportTotalSaleModel({
     required String current,
     int? currentAvg,
@@ -167,11 +171,14 @@ class OutletReportTotalSaleModel with _$OutletReportTotalSaleModel {
 
   factory OutletReportTotalSaleModel.fromJson(Map<String, Object?> json) =>
       _$OutletReportTotalSaleModelFromJson(json);
+
+  int get diffComputed => diff ?? (int.parse(current) - int.parse(past));
 }
 
 @freezed
 class OutletReportTotalTransactionModel
     with _$OutletReportTotalTransactionModel {
+  const OutletReportTotalTransactionModel._();
   const factory OutletReportTotalTransactionModel({
     required int current,
     required int past,
@@ -181,6 +188,8 @@ class OutletReportTotalTransactionModel
   factory OutletReportTotalTransactionModel.fromJson(
           Map<String, Object?> json) =>
       _$OutletReportTotalTransactionModelFromJson(json);
+
+  int get diffComputed => diff ?? current - past;
 }
 
 @freezed
@@ -207,6 +216,8 @@ class TimeRange with _$TimeRange {
 
 @freezed
 class OutletReportModel with _$OutletReportModel {
+  const OutletReportModel._();
+
   const factory OutletReportModel({
     required String totalSales,
     required String averageSales,
@@ -220,6 +231,9 @@ class OutletReportModel with _$OutletReportModel {
 
   factory OutletReportModel.fromJson(Map<String, dynamic> json) =>
       _$OutletReportModelFromJson(json);
+
+  int get totalSalesDiffComputed =>
+      totalSalesDiff ?? (int.parse(totalSales) - int.parse(totalPastSales));
 }
 
 @freezed

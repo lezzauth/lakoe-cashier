@@ -18,7 +18,12 @@ class CustomerMasterCubit extends Cubit<CustomerMasterState> {
       emit(CustomerMasterLoadInProgress());
       List<CustomerModel> initCustomers = [
         const CustomerModel(
-            id: "-", name: "Umum", email: "", phoneNumber: "-", address: ""),
+          id: "-",
+          name: "Umum",
+          email: "",
+          phoneNumber: "-",
+          address: "",
+        ),
       ];
       final customers = await customerRepository.findAll(dto);
       initCustomers.addAll(customers);
@@ -31,8 +36,8 @@ class CustomerMasterCubit extends Cubit<CustomerMasterState> {
   Future<void> create(CreateCustomerDto dto) async {
     try {
       emit(CustomerMasterActionInProgress());
-      await customerRepository.create(dto);
-      emit(CustomerMasterActionSuccess());
+      final res = await customerRepository.create(dto);
+      emit(CustomerMasterActionSuccess(res));
     } catch (e) {
       if (e is DioException) {
         final limit = e.error as DioExceptionModel;

@@ -18,8 +18,9 @@ final class AuthNotReady extends AuthState {}
 
 final class TokenExpired extends AuthState {
   final DioExceptionModel res;
+  final bool isTokenRefreshed;
 
-  TokenExpired(this.res);
+  TokenExpired(this.res, {this.isTokenRefreshed = false});
 }
 
 final class UncompletedProfile extends AuthState {

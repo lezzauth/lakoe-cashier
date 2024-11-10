@@ -16,18 +16,19 @@ class OtpInputCubit extends Cubit<OtpInputState> {
   Future<void> verifyOTP(VerifyOTPDto dto) async {
     try {
       emit(OtpInputActionInProgress());
-      final response = await _authenticationRepository.verifyOTP(dto);
-      _tokenProvider.setAuthToken(response.token);
+      final res = await _authenticationRepository.verifyOTP(dto);
+      _tokenProvider.setAuthToken(res.token, res.tokenExpireIn);
+      _tokenProvider.setAuthRefreshToken(res.refreshToken);
 
-      switch (response.action) {
+      switch (res.action) {
         case "LOGIN":
           emit(OtpInputActionLogin(
-            response: response,
+            response: res,
           ));
           break;
         case "REGISTER":
           emit(OtpInputActionRegister(
-            response: response,
+            response: res,
           ));
           break;
         default:

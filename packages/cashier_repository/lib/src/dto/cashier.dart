@@ -130,25 +130,25 @@ class CloseCashierDto with _$CloseCashierDto {
 
 // Preview Order Price
 @freezed
-class FindAllOrderDto with _$FindAllOrderDto {
-  const factory FindAllOrderDto({
+class FindAllOrderCashierDto with _$FindAllOrderCashierDto {
+  const factory FindAllOrderCashierDto({
     String? type,
     String? source,
     String? status,
     String? search,
     String? sort,
-  }) = _FindAllOrderDto;
+  }) = _FindAllOrderCashierDto;
 }
 
-extension CopyWithExtension on FindAllOrderDto {
-  FindAllOrderDto copyWith({
+extension CopyWithExtension on FindAllOrderCashierDto {
+  FindAllOrderCashierDto copyWith({
     String? type,
     String? source,
     String? status,
     String? search,
     String? sort,
   }) {
-    return FindAllOrderDto(
+    return FindAllOrderCashierDto(
       type: type ?? this.type,
       source: source ?? this.source,
       status: status ?? this.status,
@@ -158,7 +158,7 @@ extension CopyWithExtension on FindAllOrderDto {
   }
 }
 
-extension QueryStringExtension on FindAllOrderDto {
+extension QueryStringExtension on FindAllOrderCashierDto {
   String toQueryString() {
     final Map<String, dynamic> queryParams = {
       "type": type,

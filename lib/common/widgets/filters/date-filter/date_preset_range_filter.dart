@@ -43,32 +43,87 @@ class _DatePresetRangeFilterState extends State<DatePresetRangeFilter> {
     const LabelValue(label: "Bulan ini", value: "THISMONTH"),
   ];
 
+  bool _isSameDate(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
+  }
+
+  DateTime _startOfWeek(DateTime date) {
+    return date.subtract(Duration(days: date.weekday - 1));
+  }
+
+  DateTime _endOfWeek(DateTime date) {
+    return date.add(Duration(days: DateTime.daysPerWeek - date.weekday));
+  }
+
   Future<void> _onPickDateRange() async {
+    final today = DateTime.now();
+    DateTime from =
+        widget.from == null ? today : DateTime.parse(widget.from!).toLocal();
+    DateTime to =
+        widget.to == null ? today : DateTime.parse(widget.to!).toLocal();
+
+    if (widget.from == null && widget.to == null) {
+      final startOfWeek = _startOfWeek(today);
+      final endOfWeek = _endOfWeek(today);
+      final startOfMonth = DateTime(today.year, today.month, 1);
+      final endOfMonth = DateTime(today.year, today.month + 1, 0);
+
+      switch (widget.template) {
+        case "TODAY":
+          from = today;
+          to = today;
+          break;
+        case "THISWEEK":
+          from = startOfWeek;
+          to = endOfWeek;
+          break;
+        case "THISMONTH":
+          from = startOfMonth;
+          to = endOfMonth;
+          break;
+      }
+    }
+
     List<DateTime>? ranges = await showModalBottomSheet<List<DateTime>?>(
       context: context,
       builder: (context) {
         return CustomBottomsheet(
           child: DateRangePicker(
-            from: widget.from == null
-                ? DateTime.now()
-                : DateTime.parse(widget.from!).toLocal(),
-            to: widget.to == null
-                ? DateTime.now()
-                : DateTime.parse(widget.to!).toLocal(),
+            from: from,
+            to: to,
           ),
         );
       },
     );
     if (ranges == null) return;
 
-    DateTime from = ranges.elementAt(0);
-    DateTime to = ranges.elementAt(1);
+    from = ranges.elementAt(0);
+    to = ranges.elementAt(1);
+
+    String? template;
+    final startOfToday = DateTime(today.year, today.month, today.day);
+    final startOfWeek = _startOfWeek(today);
+    final endOfWeek = _endOfWeek(today);
+    final startOfMonth = DateTime(today.year, today.month, 1);
+    final endOfMonth = DateTime(today.year, today.month + 1, 0);
+
+    if (_isSameDate(from, startOfToday) && _isSameDate(to, startOfToday)) {
+      template = "TODAY";
+    } else if (_isSameDate(from, startOfWeek) && _isSameDate(to, endOfWeek)) {
+      template = "THISWEEK";
+    } else if (_isSameDate(from, startOfMonth) && _isSameDate(to, endOfMonth)) {
+      template = "THISMONTH";
+    }
+
+    if (!mounted) return;
 
     widget.onChanged(
-      template: null,
+      template: template,
       from: from,
       to: to,
-      preset: "RANGE",
+      preset: template ?? "RANGE",
       duration: from.difference(to).inDays.abs(),
     );
   }
@@ -76,7 +131,6 @@ class _DatePresetRangeFilterState extends State<DatePresetRangeFilter> {
   @override
   Widget build(BuildContext context) {
     bool isDateRangeSelected = widget.template == null && widget.preset != null;
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -100,7 +154,9 @@ class _DatePresetRangeFilterState extends State<DatePresetRangeFilter> {
                     selected: selected,
                     onSelected: (value) {
                       widget.onChanged(
-                          template: template.value, preset: template.value);
+                        template: template.value,
+                        preset: template.value,
+                      );
                     },
                   );
                 }).toList(),

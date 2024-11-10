@@ -60,6 +60,8 @@ class BillView extends StatelessWidget {
     Map<String, dynamic> paymentDetails = {};
 
     paymentDetails = _getPaymentInfo(order.transactions![0]);
+    double screenWidth = MediaQuery.of(context).size.width;
+    double containerWidth = screenWidth > 400 ? 400 : screenWidth;
 
     return BlocBuilder<BillMasterCubit, BillMasterState>(
         builder: (context, state) {
@@ -78,7 +80,7 @@ class BillView extends StatelessWidget {
                 width: isEdit == false ? 0.0 : 1.0,
               ),
             ),
-            width: double.infinity,
+            width: containerWidth,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
             child: Wrap(
               alignment: WrapAlignment.center,
@@ -91,20 +93,24 @@ class BillView extends StatelessWidget {
                       String outletAddress =
                           state.profile.outlets.first.address;
 
+                      String orderNumber =
+                          (order.no == 0) ? "21" : "${order.no}";
+
                       return Column(
                         children: [
                           BillSectionHeading(
                             outletName: outletName,
                             outletAddress: outletAddress,
-                            orderNumber: order.no.toString(),
+                            orderNumber: orderNumber,
                             orderType: order.type,
                             noTable: order.table?.no,
                           ),
                           SectionBillInformation(
                             cashierName: order.cashier!.operator.name,
                             noBill: TFormatter.formatBillNumber(
-                              order.transactions![0].no,
+                              order.closedAt!,
                               outletName,
+                              isPreview: true,
                             ),
                             orderDate: TFormatter.billDate(order.createdAt),
                           ),

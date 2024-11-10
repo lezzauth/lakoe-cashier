@@ -17,7 +17,7 @@ class CashierOrderCubit extends Cubit<CashierOrderState> {
     try {
       emit(CashierOrderLoadInProgress());
       final orders = await _cashierRepository
-          .findAllOrder(const FindAllOrderDto(status: "OPEN"));
+          .findAllOrderCashier(const FindAllOrderCashierDto(status: "OPEN"));
       emit(CashierOrderLoadSuccess(
         orders: orders,
       ));

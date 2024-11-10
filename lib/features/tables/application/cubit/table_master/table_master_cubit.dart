@@ -25,6 +25,13 @@ class TableMasterCubit extends Cubit<TableMasterState> {
           outletRoomId: "",
           createdAt: "",
           updatedAt: "",
+          outletRoom: OutletRoom(
+            id: "-",
+            name: "Bebas",
+            outletId: "",
+            createdAt: "",
+            updatedAt: "",
+          ),
         )
       ];
       final tables = await _tableRepository.findAll(dto);
@@ -38,8 +45,8 @@ class TableMasterCubit extends Cubit<TableMasterState> {
   Future<void> create(CreateTableDto dto) async {
     try {
       emit(TableMasterActionInProgress());
-      final response = await _tableRepository.create(dto);
-      emit(TableMasterActionSuccess(response: response));
+      final res = await _tableRepository.create(dto);
+      emit(TableMasterActionSuccess(data: res));
     } catch (e) {
       if (e is DioException) {
         final limit = e.error as DioExceptionModel;
@@ -53,8 +60,8 @@ class TableMasterCubit extends Cubit<TableMasterState> {
   Future<void> update(String id, UpdateTableDto dto) async {
     try {
       emit(TableMasterActionInProgress());
-      final response = await _tableRepository.update(id, dto);
-      emit(TableMasterActionSuccess(response: response));
+      final res = await _tableRepository.update(id, dto);
+      emit(TableMasterActionSuccess(data: res));
     } catch (e) {
       emit(TableMasterActionFailure(e.toString()));
     }
@@ -63,8 +70,8 @@ class TableMasterCubit extends Cubit<TableMasterState> {
   Future<void> delete(String id) async {
     try {
       emit(TableMasterActionInProgress());
-      final response = await _tableRepository.delete(id);
-      emit(TableMasterActionSuccess(response: response));
+      final res = await _tableRepository.delete(id);
+      emit(TableMasterActionSuccess(data: res));
     } catch (e) {
       emit(TableMasterActionFailure(e.toString()));
     }

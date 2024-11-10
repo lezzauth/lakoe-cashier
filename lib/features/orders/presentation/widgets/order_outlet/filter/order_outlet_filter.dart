@@ -10,8 +10,8 @@ import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 
 class OrderOutletFilter extends StatefulWidget {
-  final FindAllOrderDto value;
-  final ValueChanged<FindAllOrderDto> onChanged;
+  final FindAllOrderCashierDto value;
+  final ValueChanged<FindAllOrderCashierDto> onChanged;
 
   const OrderOutletFilter({
     super.key,

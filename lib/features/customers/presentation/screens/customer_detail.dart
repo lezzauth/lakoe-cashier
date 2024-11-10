@@ -2,6 +2,7 @@ import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:logman/logman.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
@@ -89,202 +90,217 @@ class _CustomerDetailState extends State<CustomerDetail> {
         appBar: const CustomAppbar(
           title: "Detail Pelanggan",
         ),
-        body: BlocBuilder<CustomerDetailCubit, CustomerDetailState>(
-          builder: (context, state) => switch (state) {
-            CustomerDetailLoadSuccess(:final customer) => Scrollbar(
-                child: RefreshIndicator(
-                  onRefresh: _onRefresh,
-                  backgroundColor: TColors.neutralLightLightest,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    TImages.contactAvatar,
-                                    height: 40,
-                                    width: 40,
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      TextHeading4(customer.customer.name),
-                                      SizedBox(height: 4),
-                                      TextBodyS(
-                                        PhoneNumberFormatter.formatForDisplay(
-                                            customer.customer.phoneNumber),
-                                        color: TColors.neutralDarkLight,
-                                      )
-                                    ],
-                                  )
-                                ],
+        body: BlocListener<CustomerDetailCubit, CustomerDetailState>(
+          listener: (context, state) {
+            Logman.instance.info("State is $state");
+          },
+          child: BlocBuilder<CustomerDetailCubit, CustomerDetailState>(
+            builder: (context, state) {
+              if (state is CustomerDetailLoadSuccess) {
+                final data = state.data;
+                return Scrollbar(
+                  child: RefreshIndicator(
+                    onRefresh: _onRefresh,
+                    backgroundColor: TColors.neutralLightLightest,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      TImages.contactAvatar,
+                                      height: 40,
+                                      width: 40,
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextHeading4(data.customer.name),
+                                        const SizedBox(height: 4),
+                                        TextBodyS(
+                                          PhoneNumberFormatter.formatForDisplay(
+                                            data.customer.phoneNumber,
+                                          ),
+                                          color: TColors.neutralDarkLight,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            // Column(
-                            //   mainAxisSize: MainAxisSize.min,
-                            //   crossAxisAlignment: CrossAxisAlignment.end,
-                            //   children: [
-                            //     Row(
-                            //       mainAxisAlignment: MainAxisAlignment.end,
-                            //       children: [
-                            //         SvgPicture.asset(
-                            //           TImages.lakoeCoin,
-                            //           height: 20,
-                            //           width: 20,
-                            //         ),
-                            //         const SizedBox(width: 4),
-                            //         TextHeading4(
-                            //           customer.customer.owners.first.coin
-                            //               .toString(),
-                            //         ),
-                            //       ],
-                            //     ),
-                            //     const TextBodyS(
-                            //       "Poin",
-                            //       color: TColors.neutralDarkLight,
-                            //     ),
-                            //   ],
-                            // ),
-                          ],
+                              // Column(
+                              //   mainAxisSize: MainAxisSize.min,
+                              //   crossAxisAlignment: CrossAxisAlignment.end,
+                              //   children: [
+                              //     Row(
+                              //       mainAxisAlignment: MainAxisAlignment.end,
+                              //       children: [
+                              //         SvgPicture.asset(
+                              //           TImages.lakoeCoin,
+                              //           height: 20,
+                              //           width: 20,
+                              //         ),
+                              //         const SizedBox(width: 4),
+                              //         TextHeading4(
+                              //           data.customer.owners.first.coin
+                              //               .toString(),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //     const TextBodyS(
+                              //       "Poin",
+                              //       color: TColors.neutralDarkLight,
+                              //     ),
+                              //   ],
+                              // ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        height: 4,
-                        color: TColors.neutralLightMedium,
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 16.0),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(
-                            top: 6.0, left: 16, right: 16),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(bottom: 8),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const TextHeading3("Riwayat Transaksi"),
-                                  TextBodyS(
-                                    "Total ${customer.customer.count.orders} transaksi",
-                                    color: TColors.neutralDarkLight,
-                                  )
-                                ],
+                        Container(
+                          height: 4,
+                          color: TColors.neutralLightMedium,
+                          margin: const EdgeInsets.only(top: 8.0, bottom: 16.0),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(
+                              top: 6.0, left: 16, right: 16),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const TextHeading3("Riwayat Transaksi"),
+                                    TextBodyS(
+                                      "Total ${data.customer.count.orders} transaksi",
+                                      color: TColors.neutralDarkLight,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: CustomerSummaryCard(
-                                      title: "Total Belanja",
-                                      value: TFormatter.formatToRupiah(
-                                        double.parse(
-                                          customer.summary.totalPrice,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: CustomerSummaryCard(
+                                        title: "Total Belanja",
+                                        value: TFormatter.formatToRupiah(
+                                          double.parse(data.summary.totalPrice),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: CustomerSummaryCard(
-                                      title: "Menu Favorit",
-                                      value: customer.summary.favorite,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: SizedBox(
-                                  width: double.maxFinite,
-                                  child: Row(
-                                    children: [
-                                      Wrap(
-                                        direction: Axis.horizontal,
-                                        alignment: WrapAlignment.start,
-                                        spacing: 8,
-                                        children: [
-                                          BlocBuilder<CustomerDetailFilterCubit,
-                                                  CustomerDetailFilterState>(
-                                              builder: (context, state) {
-                                            return OrderDateFilter(
-                                              from: state.from,
-                                              template: state.template,
-                                              to: state.to,
-                                              onChanged: (template, from, to) {
-                                                context
-                                                    .read<
-                                                        CustomerDetailFilterCubit>()
-                                                    .setFilter(
-                                                      template: template,
-                                                      from: from,
-                                                      to: to,
-                                                    );
-                                              },
-                                            );
-                                          }),
-                                        ],
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: CustomerSummaryCard(
+                                        title: "Menu Favorit",
+                                        value: data.summary.favorite,
                                       ),
-                                    ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: SizedBox(
+                                    width: double.maxFinite,
+                                    child: Row(
+                                      children: [
+                                        Wrap(
+                                          direction: Axis.horizontal,
+                                          alignment: WrapAlignment.start,
+                                          spacing: 8,
+                                          children: [
+                                            BlocBuilder<
+                                                CustomerDetailFilterCubit,
+                                                CustomerDetailFilterState>(
+                                              builder: (context, state) {
+                                                return OrderDateFilter(
+                                                  from: state.from,
+                                                  template: state.template,
+                                                  to: state.to,
+                                                  onChanged:
+                                                      (template, from, to) {
+                                                    context
+                                                        .read<
+                                                            CustomerDetailFilterCubit>()
+                                                        .setFilter(
+                                                          template: template,
+                                                          from: from,
+                                                          to: to,
+                                                        );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
+                            ],
+                          ),
+                        ),
+                        if (data.customer.orders.isEmpty)
+                          EmptyList(
+                            image: SvgPicture.asset(
+                              TImages.catBox,
+                              width: 140,
+                              height: 101.45,
                             ),
-                          ],
-                        ),
-                      ),
-                      if (customer.customer.orders.isEmpty)
-                        EmptyList(
-                          image: SvgPicture.asset(
-                            TImages.catBox,
-                            width: 140,
-                            height: 101.45,
+                            title: "Belum ada transaksi, nih!",
+                            subTitle:
+                                "${data.customer.name} sampai saat ini belum pernah melakukan transaksi.",
                           ),
-                          title: "Belum ada transaksi, nih!",
-                          subTitle:
-                              "${customer.customer.name} sampai saat ini belum pernah melakukan transaksi.",
-                        ),
-                      if (customer.customer.orders.isNotEmpty)
-                        Expanded(
-                          child: ListView.builder(
-                            itemCount: customer.customer.orders.length,
-                            itemBuilder: (context, index) {
-                              DetailCustomerOrder order = customer
-                                  .customer.orders.reversed
-                                  .elementAt(index);
-
-                              return OrderItem(order: order);
-                            },
+                        if (data.customer.orders.isNotEmpty)
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: data.customer.orders.length,
+                              itemBuilder: (context, index) {
+                                DetailCustomerOrder order = data
+                                    .customer.orders.reversed
+                                    .elementAt(index);
+                                return OrderItem(order: order);
+                              },
+                            ),
                           ),
-                        )
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ),
-            CustomerDetailLoadFailure() => Center(
-                child: CircularProgressIndicator(),
-              ),
-            _ => const Center(
-                child: CircularProgressIndicator(),
-              ),
-          },
+                );
+              } else if (state is CustomerDetailLoadFailure) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
         ),
       ),
     );

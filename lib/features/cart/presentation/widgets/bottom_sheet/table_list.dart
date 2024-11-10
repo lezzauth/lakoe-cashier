@@ -12,7 +12,6 @@ import 'package:point_of_sales_cashier/features/tables/application/cubit/table_m
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/filter/table_location_filter.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:table_location_repository/table_location_repository.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableList extends StatelessWidget {
@@ -46,7 +45,7 @@ class _TableListContentState extends State<TableListContent> {
   Future<void> _onInit() async {
     if (!mounted) return;
 
-    context.read<TableMasterLocationCubit>().findAll(FindAllTableLocationDto());
+    context.read<TableMasterLocationCubit>().findAll();
     context.read<TableMasterCubit>().init();
   }
 
@@ -147,7 +146,6 @@ class _TableListContentState extends State<TableListContent> {
                           trailing: selected
                               ? const UiIcons(
                                   TIcons.check,
-                                  size: 16,
                                   color: TColors.primary,
                                 )
                               : const UiIcons(
@@ -180,9 +178,13 @@ class _TableListContentState extends State<TableListContent> {
               borderRadius: BorderRadius.circular(12.0),
             ),
             onPressed: () async {
-              bool? newTable =
-                  await Navigator.pushNamed(context, "/tables/new") as bool?;
-              if (newTable != true) return;
+              TableModel? newTable =
+                  await Navigator.pushNamed(context, "/tables/new")
+                      as TableModel?;
+              if (newTable == null) return;
+
+              if (!context.mounted) return;
+              Navigator.pop(context, newTable);
               _onInit();
             },
             elevation: 0,

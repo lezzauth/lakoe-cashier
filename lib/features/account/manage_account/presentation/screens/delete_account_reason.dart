@@ -42,23 +42,25 @@ class _DeleteAccountReasonScreenState extends State<DeleteAccountReasonScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: const CustomAppbar(
           title: "Hapus Akun",
         ),
-        body: FormBuilder(
-          key: _formKey,
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 12),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: FormBuilder(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     child: Wrap(
                       runSpacing: 20,
                       children: [
-                        const Column(
+                        Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -144,46 +146,47 @@ class _DeleteAccountReasonScreenState extends State<DeleteAccountReasonScreen> {
                       ],
                     ),
                   ),
-                ),
+                ],
               ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: TColors.neutralLightMedium,
-                      width: 1.0,
-                    ),
-                  ),
+            ),
+          ),
+        ),
+        bottomNavigationBar: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: TColors.neutralLightMedium,
+                width: 1.0,
+              ),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/otp-input");
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: TColors.neutralLightLightest,
+                  backgroundColor: TColors.error,
+                  minimumSize: const Size(double.infinity, 48),
                 ),
-                child: Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/otp-input");
-                      },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: TColors.neutralLightLightest,
-                        backgroundColor: TColors.error,
-                        minimumSize: const Size(double.infinity, 48),
-                      ),
-                      child: const TextActionL("Lanjut"),
-                    ),
-                    const SizedBox(height: 12),
-                    OutlinedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: TColors.error,
-                        side: const BorderSide(color: TColors.error),
-                        minimumSize: const Size(double.infinity, 48),
-                      ),
-                      child: const TextActionL("Batal"),
-                    ),
-                  ],
+                child: const TextActionL("Lanjut"),
+              ),
+              const SizedBox(height: 12),
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: TColors.error,
+                  side: const BorderSide(color: TColors.error),
+                  minimumSize: const Size(double.infinity, 48),
                 ),
+                child: const TextActionL("Batal"),
               ),
             ],
           ),

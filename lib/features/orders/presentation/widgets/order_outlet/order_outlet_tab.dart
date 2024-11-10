@@ -90,7 +90,7 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
                                   final reversedIndex =
                                       orders.length - 1 - index;
 
-                                  OrderItemResponse order =
+                                  OrderCashierItemResponse order =
                                       orders.elementAt(reversedIndex);
                                   bool isPaid = order.paymentStatus == "PAID";
                                   bool isCancel =

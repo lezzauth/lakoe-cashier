@@ -10,6 +10,8 @@ enum AppDataKeys {
   logoBrand,
   colorBrand,
   flavor,
+  billNumber,
+  billNumberForOrder,
 }
 
 class AppDataProvider {

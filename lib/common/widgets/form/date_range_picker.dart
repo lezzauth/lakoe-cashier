@@ -84,6 +84,9 @@ class _DateRangePickerState extends State<DateRangePicker> {
                 onChanged: (value) {
                   setState(() {
                     from = value;
+                    if (to != null && to!.isBefore(from!)) {
+                      to = from;
+                    }
                   });
                 },
                 value: from,

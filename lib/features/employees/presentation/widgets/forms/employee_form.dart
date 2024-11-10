@@ -5,6 +5,7 @@ import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
 import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
 
 class EmployeeForm extends StatefulWidget {
   const EmployeeForm({
@@ -109,15 +110,24 @@ class _EmployeeFormState extends State<EmployeeForm> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const FormLabel("No. HP"),
+                  const FormLabel("Nomor HP/WA"),
                   FormBuilderTextField(
                     name: "phoneNumber",
                     decoration: const InputDecoration(
                       hintText: "Masukan nomor hp atau wa",
                     ),
                     keyboardType: TextInputType.phone,
-                    validator: FormBuilderValidators.required(
-                        errorText: ErrorTextStrings.required(name: "Nomor HP")),
+                    inputFormatters: [
+                      PhoneNumberFormatter(isDisplayFormat: true)
+                    ],
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.maxLength(14,
+                          errorText: ErrorTextStrings.maxLength(
+                              maxLength: 14, isNumber: true)),
+                      FormBuilderValidators.minLength(9,
+                          errorText: ErrorTextStrings.minLength(
+                              minLength: 9, isNumber: true)),
+                    ]),
                   ),
                 ],
               ),

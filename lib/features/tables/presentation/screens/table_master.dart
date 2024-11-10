@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logman/logman.dart';
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
 import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
@@ -16,7 +17,7 @@ import 'package:point_of_sales_cashier/features/tables/presentation/widgets/filt
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/pages/table_detail_page.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:table_location_repository/table_location_repository.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableMasterScreen extends StatelessWidget {
@@ -42,33 +43,48 @@ class _TableMasterState extends State<TableMaster> {
   Future<void> _onRefresh() async {
     if (!mounted) return;
 
-    context.read<TableMasterLocationCubit>().findAll(FindAllTableLocationDto());
+    context.read<TableMasterLocationCubit>().findAll();
     await context.read<TableMasterCubit>().init();
   }
 
   Future<void> _onGoToDetail(TableModel table) async {
-    bool? editedProduct = await showModalBottomSheet<bool?>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      useRootNavigator: true,
-      builder: (context) {
-        return CustomBottomsheet(
-          child: Expanded(
-            child: TableDetailPage(
-              table: table,
+    Logman.instance.info(
+        "ResponsiveBreakpoints is ${ResponsiveBreakpoints.of(context).smallerThan(TABLET)}");
+    if (ResponsiveBreakpoints.of(context).smallerThan(TABLET)) {
+      bool? editedProduct = await showModalBottomSheet<bool?>(
+        context: context,
+        isScrollControlled: true,
+        useSafeArea: true,
+        useRootNavigator: true,
+        builder: (context) {
+          return CustomBottomsheet(
+            child: Expanded(
+              child: TableDetailPage(
+                table: table,
+                tableNo: table.no,
+              ),
             ),
-          ),
-        );
-      },
-    );
-    if (editedProduct != true) return;
-    _onRefresh();
+          );
+        },
+      );
+
+      if (editedProduct != true) return;
+      _onRefresh();
+    } else {
+      bool? editedProduct = await Navigator.pushNamed(
+        context,
+        "/tables/edit",
+        arguments: table,
+      ) as bool?;
+      if (editedProduct != true) return;
+      _onRefresh();
+    }
   }
 
   Future<void> _onGoToCreateScreen() async {
-    bool? newTable = await Navigator.pushNamed(context, "/tables/new") as bool?;
-    if (newTable != true) return;
+    TableModel? newTable =
+        await Navigator.pushNamed(context, "/tables/new") as TableModel?;
+    if (newTable == null) return;
     _onRefresh();
   }
 
@@ -142,7 +158,7 @@ class _TableMasterState extends State<TableMaster> {
 
                         String title = table.no;
                         String subtitle =
-                            "${table.capacity} Orang • Indoor (Hardcode)";
+                            "${table.capacity} Orang • ${table.outletRoom!.name}";
 
                         if (isFreeTable) {
                           title = "Bebas";

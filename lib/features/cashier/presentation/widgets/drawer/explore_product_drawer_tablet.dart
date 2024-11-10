@@ -1,7 +1,6 @@
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
 import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_cubit.dart';
@@ -147,12 +146,8 @@ class _ExploreProductDrawerTabletState
                             onPaymentDebitCredit: _onDebitCreditPaid,
                             onPaymentQRCode: _onQRCodePaid,
                           ),
-                        CartDetailLoadFailure(:final error) => Center(
-                            child: TextBodyS(
-                              error,
-                              color: TColors.error,
-                            ),
-                          ),
+                        CartDetailLoadFailure() =>
+                          const Center(child: CircularProgressIndicator()),
                         _ => const Center(child: CircularProgressIndicator()),
                       },
                     ),

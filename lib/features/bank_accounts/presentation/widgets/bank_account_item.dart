@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:owner_repository/owner_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_caption_m.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
@@ -31,55 +31,66 @@ class BankAccountItem extends StatelessWidget {
             vertical: 12,
           ),
           child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 4),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            fit: FlexFit.loose,
-                            child: TextHeading4(
-                              bankAccount.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          if (bankAccount.isPrimary)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 4,
-                              ),
-                              margin: const EdgeInsets.only(
-                                left: 12,
-                              ),
-                              decoration: BoxDecoration(
-                                color: TColors.successLight,
-                                borderRadius: BorderRadius.circular(
-                                  12,
-                                ),
-                              ),
-                              child: const TextCaptionM(
-                                "UTAMA",
-                                color: TColors.successDark,
-                              ),
-                            )
-                        ],
-                      ),
-                    ),
                     Row(
                       children: [
-                        Expanded(
-                          child: TextBodyS(
-                            "${bankAccount.accountNumber} • ${bankAccount.accountName.toUpperCase()}",
-                            color: TColors.neutralDarkLightest,
+                        Flexible(
+                          fit: FlexFit.loose,
+                          child: TextHeading4(
+                            bankAccount.name,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
+                        ),
+                        if (bankAccount.isPrimary)
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            margin: const EdgeInsets.only(
+                              left: 12,
+                            ),
+                            decoration: BoxDecoration(
+                              color: TColors.successLight,
+                              borderRadius: BorderRadius.circular(
+                                12,
+                              ),
+                            ),
+                            child: const TextCaptionM(
+                              "UTAMA",
+                              color: TColors.successDark,
+                            ),
+                          )
+                      ],
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextBodyS(
+                          "——",
+                          color: TColors.neutralLightDark,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        TextBodyS(
+                          bankAccount.accountNumber,
+                          color: TColors.neutralDarkLight,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        TextBodyS(
+                          bankAccount.accountName.toUpperCase(),
+                          color: TColors.neutralDarkLight,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -87,7 +98,7 @@ class BankAccountItem extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              const TextActionL(
+              const TextActionM(
                 "Ubah",
                 color: TColors.primary,
               )

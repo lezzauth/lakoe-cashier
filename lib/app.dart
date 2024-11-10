@@ -125,6 +125,7 @@ import 'package:point_of_sales_cashier/features/tables/application/cubit/table_m
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_edit.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_master.dart';
 import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
+import 'package:point_of_sales_cashier/features/tables/presentation/widgets/pages/brand_edit.dart';
 import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_master/tax_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/taxes/presentation/screens/tax_master.dart';
 import 'package:point_of_sales_cashier/main_dev.dart';
@@ -323,6 +324,7 @@ class App extends StatelessWidget {
             "/tables": (context) => const TableMasterScreen(),
             "/tables/new": (context) => const TableNewScreen(),
             "/tables/edit": (context) => const TableEditScreen(),
+            "/tables/edit/brand": (context) => const BrandEditScreen(),
 
             // settings
             "/settings": (context) => const SettingsScreen(),

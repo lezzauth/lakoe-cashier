@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logman/logman.dart';
 import 'package:pinput/pinput.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
@@ -38,12 +39,16 @@ class OtpInput extends StatefulWidget {
   State<OtpInput> createState() => _OtpInputState();
 }
 
-class _OtpInputState extends State<OtpInput> {
+class _OtpInputState extends State<OtpInput>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _optController = TextEditingController();
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
   final AuthenticationRepository _authenticationRepository =
       AuthenticationRepositoryImpl();
 
-  String messageError = "PIN Salah";
+  String messageError = "Kode OTP Salah. Cek lagi.";
   bool isRepeat = false;
   DateTime countdownDate = DateTime.now();
 
@@ -55,14 +60,34 @@ class _OtpInputState extends State<OtpInput> {
     setState(() {
       messageError = "";
       isRepeat = false;
-      // countdownDate = DateTime.now().add(Duration(minutes: 1));
       countdownDate = DateTime.now();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+
+    _animation = Tween<double>(begin: 0, end: 15)
+        .chain(CurveTween(curve: Curves.elasticIn))
+        .animate(_animationController);
+
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _animationController.reverse();
+      }
     });
   }
 
   @override
   void dispose() {
     _optController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -97,9 +122,11 @@ class _OtpInputState extends State<OtpInput> {
           Navigator.pushNamedAndRemoveUntil(
               context, "/cashier", ModalRoute.withName("/cashier"));
         } else if (state is OtpInputActionFailure) {
-          if (state.res.message!.contains("code invalid or expired")) {
+          _animationController.forward();
+          Logman.instance.info(state.res.message!);
+          if (state.res.message!.contains("expired") && isRepeat) {
             setState(() {
-              messageError = "PIN sudah hangus. Silakan kirim ulang.";
+              messageError = "Kode OTP salah. Silakan kirim ulang.";
             });
           }
         } else if (state is OtpInputActionRegister) {
@@ -157,19 +184,30 @@ class _OtpInputState extends State<OtpInput> {
                           ],
                         ),
                       ),
-                      Pinput(
-                        defaultPinTheme: defaultPinTheme,
-                        focusedPinTheme: focusedPinTheme,
-                        length: 4,
-                        autofocus: true,
-                        controller: _optController,
-                        onCompleted: (value) {
-                          context.read<OtpInputCubit>().verifyOTP(VerifyOTPDto(
-                                phoneNumber: widget.arguments.target,
-                                code: value,
-                              ));
+                      AnimatedBuilder(
+                        animation: _animationController,
+                        builder: (context, child) {
+                          return Transform.translate(
+                            offset: Offset(_animation.value, 0),
+                            child: Pinput(
+                              defaultPinTheme: defaultPinTheme,
+                              focusedPinTheme: focusedPinTheme,
+                              length: 4,
+                              autofocus: true,
+                              obscureText: true,
+                              controller: _optController,
+                              onCompleted: (value) {
+                                context
+                                    .read<OtpInputCubit>()
+                                    .verifyOTP(VerifyOTPDto(
+                                      phoneNumber: widget.arguments.target,
+                                      code: value,
+                                    ));
 
-                          _optController.clear();
+                                _optController.clear();
+                              },
+                            ),
+                          );
                         },
                       ),
                       Padding(

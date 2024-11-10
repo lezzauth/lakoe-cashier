@@ -40,7 +40,7 @@ class CashierOpenOrderList extends StatelessWidget {
                     context.read<CashierOrderCubit>().findAll();
                   },
                 ),
-                ...orders.map(
+                ...orders.reversed.map(
                   (order) => OrderItem(
                     no: order.no,
                     customerName: order.customer?.name ?? "Umum",

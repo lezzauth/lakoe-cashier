@@ -18,6 +18,7 @@ class OrderSummary extends StatelessWidget {
   final double total;
   final double orderTotal;
   final bool isPaid;
+  final bool isCancel;
   final List<Transactions>? paymentInfo;
   final Function()? onDiscountChanged;
   final bool? isRefresh;
@@ -31,6 +32,7 @@ class OrderSummary extends StatelessWidget {
     required this.charges,
     this.onDiscountChanged,
     this.isPaid = false,
+    this.isCancel = false,
     this.paymentInfo,
     this.isRefresh = false,
   });
@@ -48,11 +50,11 @@ class OrderSummary extends StatelessWidget {
       modifiedPaymentMethod = 'QRIS EDC';
     } else if (payment.paymentMethod == 'QR_CODE' &&
         payment.paidFrom == 'CASHIER') {
-      modifiedPaymentMethod = 'QRIS';
+      modifiedPaymentMethod = 'QRIS Statis';
     } else if (payment.paymentMethod == 'CASH') {
       modifiedPaymentMethod = 'Cash (Tunai)';
     } else if (payment.paymentMethod == 'DEBIT') {
-      modifiedPaymentMethod = 'Debit/Credit';
+      modifiedPaymentMethod = 'Debit/Credit EDC';
     } else if (payment.paymentMethod == 'BANK_TRANSFER') {
       modifiedPaymentMethod = 'Transfer Bank';
     }
@@ -175,47 +177,27 @@ class OrderSummary extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                   ],
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const TextBodyM("Total Tagihan"),
-                      (!isRefresh!)
-                          ? TextHeading4(TFormatter.formatToRupiah(totalBill))
-                          : ShimmerText(),
-                    ],
-                  ),
-                  if (isPaid && paymentInfo != null)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextBodyM(paymentDetails['paymentMethod']),
-                        Row(
+                  (isPaid && paymentInfo != null)
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            paymentDetails['paymentMethod'] == 'Transfer Bank'
-                                ? GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, "/orders/proof");
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: UiIcons(
-                                        TIcons.image,
-                                        size: 16,
-                                        color: TColors.primary,
-                                      ),
-                                    ),
-                                  )
-                                : SizedBox(),
-                            TextHeading4(
-                              TFormatter.formatToRupiah(
-                                paymentDetails['paidAmount'],
-                              ),
-                            ),
+                            TextHeading3("Total Tagihan"),
+                            (!isRefresh!)
+                                ? TextHeading2(
+                                    TFormatter.formatToRupiah(totalBill))
+                                : ShimmerText(height: 26, width: 120),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextBodyM("Total Tagihan"),
+                            (!isRefresh!)
+                                ? TextHeading4(
+                                    TFormatter.formatToRupiah(totalBill))
+                                : ShimmerText(),
                           ],
                         ),
-                      ],
-                    ),
                 ],
               ),
             ),
@@ -228,7 +210,7 @@ class OrderSummary extends StatelessWidget {
               ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               decoration: BoxDecoration(
                 color: TColors.neutralLightLight,
                 borderRadius: BorderRadius.circular(12.0),
@@ -236,22 +218,68 @@ class OrderSummary extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const TextHeading3("Yang harus dibayar"),
-                      (!isRefresh!)
-                          ? TextHeading2(TFormatter.formatToRupiah(totalBill))
-                          : ShimmerText(height: 26, width: 120),
-                    ],
-                  ),
+                  (isPaid && paymentInfo != null)
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextBodyM("Yang harus dibayar"),
+                            (!isRefresh!)
+                                ? TextHeading4(
+                                    TFormatter.formatToRupiah(totalBill))
+                                : ShimmerText(),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextHeading3("Yang harus dibayar"),
+                            (!isRefresh!)
+                                ? TextHeading2(
+                                    TFormatter.formatToRupiah(totalBill))
+                                : ShimmerText(height: 26, width: 120),
+                          ],
+                        ),
+                  if (isPaid && paymentInfo != null)
+                    Container(
+                      margin: EdgeInsets.only(top: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextBodyM(paymentDetails['paymentMethod']),
+                          Row(
+                            children: [
+                              paymentDetails['paymentMethod'] == 'Transfer Bank'
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, "/orders/proof");
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: UiIcons(
+                                          TIcons.image,
+                                          size: 16,
+                                          color: TColors.primary,
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox(),
+                              TextHeading4(
+                                TFormatter.formatToRupiah(
+                                  paymentDetails['paidAmount'],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   if (isPaid && paymentInfo != null)
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 8.0),
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
                           child: Separator(
                             color: TColors.neutralLightDark,
                             height: 1,
@@ -261,14 +289,14 @@ class OrderSummary extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const TextBodyM("Kembalian"),
+                            TextHeading3("Kembalian"),
                             (!isRefresh!)
-                                ? TextHeading4(
+                                ? TextHeading2(
                                     TFormatter.formatToRupiah(
                                       paymentDetails['change'],
                                     ),
                                   )
-                                : ShimmerText(),
+                                : ShimmerText(height: 26, width: 120),
                           ],
                         ),
                       ],
@@ -284,6 +312,16 @@ class OrderSummary extends StatelessWidget {
             right: 48,
             child: SvgPicture.asset(
               TImages.stampPaid,
+              width: 80,
+              height: 80,
+            ),
+          ),
+        if (isCancel)
+          Positioned(
+            bottom: 40,
+            right: 48,
+            child: SvgPicture.asset(
+              TImages.stampCancel,
               width: 80,
               height: 80,
             ),

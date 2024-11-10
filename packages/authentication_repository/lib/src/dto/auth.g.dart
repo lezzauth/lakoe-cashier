@@ -59,3 +59,15 @@ Map<String, dynamic> _$$VerifyOTPDtoImplToJson(_$VerifyOTPDtoImpl instance) =>
       'phoneNumber': instance.phoneNumber,
       'code': instance.code,
     };
+
+_$RefreshTokenDtoImpl _$$RefreshTokenDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RefreshTokenDtoImpl(
+      token: json['token'] as String,
+    );
+
+Map<String, dynamic> _$$RefreshTokenDtoImplToJson(
+        _$RefreshTokenDtoImpl instance) =>
+    <String, dynamic>{
+      'token': instance.token,
+    };

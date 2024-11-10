@@ -8,10 +8,15 @@ class TableMasterLocationCubit extends Cubit<TableMasterLocationState> {
 
   TableMasterLocationCubit() : super(TableMasterLocationInitial());
 
-  Future<void> findAll(FindAllTableLocationDto dto) async {
+  Future<void> init() async {
+    await findAll();
+  }
+
+  Future<void> findAll() async {
     try {
       emit(TableMasterLocationLoadInProgress());
-      final locations = await _tableLocationRepository.findAll(dto);
+      final locations =
+          await _tableLocationRepository.findAll(FindAllTableLocationDto());
       emit(TableMasterLocationLoadSuccess(locations: locations));
     } catch (e) {
       emit(TableMasterLocationLoadFailure(e.toString()));

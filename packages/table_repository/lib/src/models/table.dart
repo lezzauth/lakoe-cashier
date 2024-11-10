@@ -13,8 +13,23 @@ class TableModel with _$TableModel {
     required String outletRoomId,
     required String createdAt,
     required String updatedAt,
+    OutletRoom? outletRoom,
   }) = _TableModel;
 
   factory TableModel.fromJson(Map<String, Object?> json) =>
       _$TableModelFromJson(json);
+}
+
+@freezed
+class OutletRoom with _$OutletRoom {
+  const factory OutletRoom({
+    required String id,
+    required String name,
+    required String outletId,
+    required String createdAt,
+    required String updatedAt,
+  }) = _OutletRoom;
+
+  factory OutletRoom.fromJson(Map<String, Object?> json) =>
+      _$OutletRoomFromJson(json);
 }

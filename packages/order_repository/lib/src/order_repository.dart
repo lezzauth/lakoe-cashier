@@ -9,6 +9,7 @@ import 'package:order_repository/src/models/order.dart';
 import 'package:token_provider/token_provider.dart';
 
 abstract class OrderRepository {
+  Future<List<OrderItemRes>> findAll(FindAllOrderDto? dto);
   Future<OrderModel> findOne(String id);
   Future<PreviewOrderPriceResponse> previewOrderPrice(PreviewOrderPriceDto dto);
   Future<OrderModelWithoutInclude> addItems(String id, List<OrderItemDto> dto);
@@ -25,6 +26,17 @@ class OrderRepositoryImpl implements OrderRepository {
     if (token == null) return Options();
 
     return Options(headers: {"Authorization": "Bearer $token"});
+  }
+
+  @override
+  Future<List<OrderItemRes>> findAll(FindAllOrderDto? dto) async {
+    final Options options = await _getOptions();
+
+    final response = await _dio.get<List<dynamic>>(
+      "$_baseURL?${dto?.toQueryString()}",
+      options: options,
+    );
+    return response.data!.map((item) => OrderItemRes.fromJson(item)).toList();
   }
 
   @override

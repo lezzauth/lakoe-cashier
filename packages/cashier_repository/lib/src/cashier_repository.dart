@@ -27,7 +27,8 @@ abstract class CashierRepository {
     CompleteOrderDto dto,
   );
   Future<CancelOrderResponse> cancelOrder(String id);
-  Future<List<OrderItemResponse>> findAllOrder(FindAllOrderDto? dto);
+  Future<List<OrderCashierItemResponse>> findAllOrderCashier(
+      FindAllOrderCashierDto? dto);
   Future<OrderModelWithoutInclude> editOrder(String id, List<OrderItemDto> dto);
 }
 
@@ -175,7 +176,8 @@ class CashierRepositoryImpl implements CashierRepository {
   }
 
   @override
-  Future<List<OrderItemResponse>> findAllOrder(FindAllOrderDto? dto) async {
+  Future<List<OrderCashierItemResponse>> findAllOrderCashier(
+      FindAllOrderCashierDto? dto) async {
     final Options options = await _getOptions();
 
     final response = await _dio.get<List<dynamic>>(
@@ -183,7 +185,7 @@ class CashierRepositoryImpl implements CashierRepository {
       options: options,
     );
     return response.data!
-        .map((item) => OrderItemResponse.fromJson(item))
+        .map((item) => OrderCashierItemResponse.fromJson(item))
         .toList();
   }
 

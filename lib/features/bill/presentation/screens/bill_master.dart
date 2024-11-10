@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide Image;
 import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_small.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
@@ -49,32 +50,51 @@ class _BillMasterState extends State<BillMaster> {
       appBar: const CustomAppbar(
         title: "Tampilan Struk (Bill)",
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Stack(
         children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              BillView(order: templateOrder.order),
-              const TextBodyS(
-                "Ini hanya contoh tampilan struk",
-                color: TColors.neutralDarkLightest,
-                fontStyle: FontStyle.italic,
-              ),
-            ],
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ResponsiveLayout(
+                      mobile: BillView(order: templateOrder.order),
+                      tablet: Center(
+                        child: SizedBox(
+                          width: 450,
+                          child: BillView(order: templateOrder.order),
+                        ),
+                      ),
+                    ),
+                    const TextBodyS(
+                      "Ini hanya contoh tampilan struk",
+                      color: TColors.neutralDarkLightest,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 60),
+              ],
+            ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: SizedBox(
-              height: 48,
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/bill/edit");
-                },
-                child: const TextActionL(
-                  "Ubah Catatan Kaki",
-                  color: TColors.primary,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              color: TColors.neutralLightLight,
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              child: SizedBox(
+                height: 48,
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/bill/edit");
+                  },
+                  child: const TextActionL(
+                    "Ubah Catatan Kaki",
+                    color: TColors.primary,
+                  ),
                 ),
               ),
             ),

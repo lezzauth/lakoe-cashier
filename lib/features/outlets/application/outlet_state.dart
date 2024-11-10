@@ -37,6 +37,9 @@ final class OutletActionInProgress extends OutletState {
 }
 
 final class OutletActionSuccess extends OutletState {
+  final OutletModel outlet;
+
+  OutletActionSuccess({required this.outlet});
   @override
   List<Object?> get props => [];
 }

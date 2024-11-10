@@ -10,12 +10,18 @@ _$RegisterResponseImpl _$$RegisterResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$RegisterResponseImpl(
       token: json['token'] as String,
+      refreshToken: json['refreshToken'] as String,
+      tokenExpireIn: (json['tokenExpireIn'] as num).toInt(),
+      refreshTokenExpireIn: (json['refreshTokenExpireIn'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$RegisterResponseImplToJson(
         _$RegisterResponseImpl instance) =>
     <String, dynamic>{
       'token': instance.token,
+      'refreshToken': instance.refreshToken,
+      'tokenExpireIn': instance.tokenExpireIn,
+      'refreshTokenExpireIn': instance.refreshTokenExpireIn,
     };
 
 _$RequestOTPResponseImpl _$$RequestOTPResponseImplFromJson(
@@ -45,6 +51,9 @@ _$VerifyOTPResponseImpl _$$VerifyOTPResponseImplFromJson(
     _$VerifyOTPResponseImpl(
       action: json['action'] as String,
       token: json['token'] as String,
+      refreshToken: json['refreshToken'] as String,
+      tokenExpireIn: (json['tokenExpireIn'] as num).toInt(),
+      refreshTokenExpireIn: (json['refreshTokenExpireIn'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$VerifyOTPResponseImplToJson(
@@ -52,4 +61,25 @@ Map<String, dynamic> _$$VerifyOTPResponseImplToJson(
     <String, dynamic>{
       'action': instance.action,
       'token': instance.token,
+      'refreshToken': instance.refreshToken,
+      'tokenExpireIn': instance.tokenExpireIn,
+      'refreshTokenExpireIn': instance.refreshTokenExpireIn,
+    };
+
+_$RefreshTokenResImpl _$$RefreshTokenResImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RefreshTokenResImpl(
+      token: json['token'] as String,
+      refreshToken: json['refreshToken'] as String,
+      tokenExpireIn: (json['tokenExpireIn'] as num).toInt(),
+      refreshTokenExpireIn: (json['refreshTokenExpireIn'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$$RefreshTokenResImplToJson(
+        _$RefreshTokenResImpl instance) =>
+    <String, dynamic>{
+      'token': instance.token,
+      'refreshToken': instance.refreshToken,
+      'tokenExpireIn': instance.tokenExpireIn,
+      'refreshTokenExpireIn': instance.refreshTokenExpireIn,
     };
