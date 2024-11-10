@@ -217,7 +217,7 @@ class _SuccessConfirmationPaymentContentState
                                   children: [
                                     Container(
                                       padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
+                                        horizontal: 16,
                                         vertical: 16,
                                       ),
                                       decoration: BoxDecoration(
@@ -314,7 +314,8 @@ class _SuccessConfirmationPaymentContentState
                                     ),
                                     const Padding(
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 12.0),
+                                        horizontal: 12.0,
+                                      ),
                                       child: Separator(
                                         color: TColors.neutralLightDark,
                                         height: 1,
@@ -323,7 +324,9 @@ class _SuccessConfirmationPaymentContentState
                                     ),
                                     Container(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 12, vertical: 16),
+                                        horizontal: 16,
+                                        vertical: 12,
+                                      ),
                                       decoration: BoxDecoration(
                                         color: TColors.neutralLightLight,
                                         borderRadius:
@@ -333,7 +336,11 @@ class _SuccessConfirmationPaymentContentState
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          const TextReceipt("Kembalian"),
+                                          const TextReceipt(
+                                            "Kembalian",
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: TSizes.fontSizeHeading2,
+                                          ),
                                           TextReceipt(
                                             TFormatter.formatToRupiah(
                                               double.parse(
@@ -341,7 +348,8 @@ class _SuccessConfirmationPaymentContentState
                                                     .payment.transaction.change,
                                               ),
                                             ),
-                                            fontWeight: FontWeight.w600,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: TSizes.fontSizeHeading1,
                                           ),
                                         ],
                                       ),
@@ -526,15 +534,21 @@ class _SuccessConfirmationPaymentContentState
 class TextReceipt extends StatelessWidget {
   final String data;
   final FontWeight? fontWeight;
+  final double? fontSize;
 
-  const TextReceipt(this.data, {super.key, this.fontWeight});
+  const TextReceipt(
+    this.data, {
+    super.key,
+    this.fontWeight,
+    this.fontSize = TSizes.fontSizeBodyM,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       data,
       style: GoogleFonts.kosugi(
-        fontSize: TSizes.fontSizeBodyM,
+        fontSize: fontSize,
         color: TColors.neutralDarkDarkest,
         fontWeight: fontWeight,
       ),
