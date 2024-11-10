@@ -49,28 +49,6 @@ class AppDataProvider {
     await _storage.setString(AppDataKeys.flavor.name, value);
   }
 
-  Future<void> setBillNumber(int value) async {
-    await _storage.setInt(AppDataKeys.billNumber.name, value);
-  }
-
-  Future<void> setBillNumberForOrder(String orderId, int billNumber) async {
-    await _storage.setInt("billNumber_$orderId", billNumber);
-  }
-
-  Future<int> incrementBillNumberOnPrint(String orderId) async {
-    int? existingBillNumber = await getBillNumberForOrder(orderId);
-
-    if (existingBillNumber != null) {
-      return existingBillNumber;
-    } else {
-      int currentBillNumber = await billNumber;
-      int newBillNumber = currentBillNumber + 1;
-      await setBillNumber(newBillNumber);
-      await setBillNumberForOrder(orderId, newBillNumber);
-      return newBillNumber;
-    }
-  }
-
   Future<void> setValues(AppDataModel values) async {
     await _storage.setString(AppDataKeys.outletId.name, values.outletId);
     await _storage.setString(AppDataKeys.ownerId.name, values.ownerId);
@@ -80,9 +58,6 @@ class AppDataProvider {
     await _storage.setString(AppDataKeys.colorBrand.name, values.colorBrand);
     await _storage.setString(AppDataKeys.logoBrand.name, values.logoBrand);
     await _storage.setString(AppDataKeys.flavor.name, values.flavor);
-    await _storage.setInt(AppDataKeys.billNumber.name, values.billNumber);
-    await _storage.setInt(
-        AppDataKeys.billNumberForOrder.name, values.billNumberForOrder);
   }
 
   Future<String> get outletId async {
@@ -117,14 +92,6 @@ class AppDataProvider {
     return await _storage.getString(AppDataKeys.flavor.name);
   }
 
-  Future<int> get billNumber async {
-    return await _storage.getInt(AppDataKeys.billNumber.name) ?? 1;
-  }
-
-  Future<int?> getBillNumberForOrder(String orderId) async {
-    return _storage.getInt("billNumber_$orderId");
-  }
-
   Future<AppDataModel> get values async {
     final outletId = await _storage.getString(AppDataKeys.outletId.name) ?? "";
     final ownerId = await _storage.getString(AppDataKeys.ownerId.name) ?? "";
@@ -138,9 +105,6 @@ class AppDataProvider {
     final logoBrand =
         await _storage.getString(AppDataKeys.logoBrand.name) ?? "";
     final flavor = await _storage.getString(AppDataKeys.flavor.name) ?? "";
-    final billNumber = await _storage.getInt(AppDataKeys.billNumber.name) ?? 1;
-    final billNumberForOrder =
-        await _storage.getInt(AppDataKeys.billNumberForOrder.name) ?? 1;
 
     return AppDataModel(
       footNote: footNote,
@@ -151,8 +115,6 @@ class AppDataProvider {
       colorBrand: colorBrand,
       logoBrand: logoBrand,
       flavor: flavor,
-      billNumber: billNumber,
-      billNumberForOrder: billNumberForOrder,
     );
   }
 }

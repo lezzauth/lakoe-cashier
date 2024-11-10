@@ -1,4 +1,3 @@
-import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -87,36 +86,6 @@ class BillView extends StatelessWidget {
               alignment: WrapAlignment.center,
               runSpacing: 4.0,
               children: [
-                // BlocBuilder<AuthCubit, AuthState>(
-                //   builder: (context, state) {
-                //     if (state is AuthReady) {
-                //       String outletName = state.profile.outlets.first.name;
-                //       String outletAddress =
-                //           state.profile.outlets.first.address;
-
-                //       String formattedBillNumber =
-                //           TFormatter.formatBillNumber(1, outletName);
-
-                //       return Column(
-                //         children: [
-                //           BillSectionHeading(
-                //             outletName: outletName,
-                //             outletAddress: outletAddress,
-                //             orderNumber: order.no.toString(),
-                //             orderType: order.type,
-                //             noTable: order.table?.no,
-                //           ),
-                //           SectionBillInformation(
-                //             cashierName: order.cashier!.operator.name,
-                //             noBill: formattedBillNumber,
-                //             orderDate: TFormatter.billDate(order.createdAt),
-                //           ),
-                //         ],
-                //       );
-                //     }
-                //     return CircularProgressIndicator();
-                //   },
-                // ),
                 BlocBuilder<AuthCubit, AuthState>(
                   builder: (context, state) {
                     if (state is AuthReady) {
@@ -124,43 +93,33 @@ class BillView extends StatelessWidget {
                       String outletAddress =
                           state.profile.outlets.first.address;
 
-                      return FutureBuilder<int>(
-                        future: AppDataProvider()
-                            .incrementBillNumberOnPrint(order.id),
-                        builder: (context, snapshot) {
-                          int billNumber = snapshot.data ?? 1;
-                          String formattedBillNumber =
-                              TFormatter.formatBillNumber(
-                            (order.no == 0) ? 1 : billNumber,
-                            outletName,
-                          );
+                      String orderNumber =
+                          (order.no == 0) ? "21" : "${order.no}";
 
-                          String orderNumber =
-                              (order.no == 0) ? "21" : "${order.no}";
-
-                          return Column(
-                            children: [
-                              BillSectionHeading(
-                                outletName: outletName,
-                                outletAddress: outletAddress,
-                                orderNumber: orderNumber,
-                                orderType: order.type,
-                                noTable: order.table?.no,
-                              ),
-                              SectionBillInformation(
-                                cashierName: order.cashier!.operator.name,
-                                noBill: formattedBillNumber,
-                                orderDate: TFormatter.billDate(order.createdAt),
-                              ),
-                            ],
-                          );
-                        },
+                      return Column(
+                        children: [
+                          BillSectionHeading(
+                            outletName: outletName,
+                            outletAddress: outletAddress,
+                            orderNumber: orderNumber,
+                            orderType: order.type,
+                            noTable: order.table?.no,
+                          ),
+                          SectionBillInformation(
+                            cashierName: order.cashier!.operator.name,
+                            noBill: TFormatter.formatBillNumber(
+                              order.closedAt!,
+                              outletName,
+                              isPreview: true,
+                            ),
+                            orderDate: TFormatter.billDate(order.createdAt),
+                          ),
+                        ],
                       );
                     }
                     return CircularProgressIndicator();
                   },
                 ),
-
                 BillSectionListItem(
                   items: order.items,
                   subtotal: _getOrderTotal(order),

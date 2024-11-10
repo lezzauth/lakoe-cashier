@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:app_data_provider/app_data_provider.dart';
 import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -63,13 +62,13 @@ class TBill {
     Logman.instance.info('profileDevice: $profileDevice');
     bytes += generator.reset();
 
-    int newBillNumber =
-        await AppDataProvider().incrementBillNumberOnPrint(order.id);
+    // int newBillNumber =
+    //     await AppDataProvider().incrementBillNumberOnPrint(order.id);
 
-    String formattedBillNumber = TFormatter.formatBillNumber(
-      isTestingMode ? 1 : newBillNumber,
-      profileOwner.outlets[0].name,
-    );
+    // String formattedBillNumber = TFormatter.formatBillNumber(
+    //   isTestingMode ? 1 : newBillNumber,
+    //   profileOwner.outlets[0].name,
+    // );
 
     if (isTestingMode) {
       bytes += generator.text(
@@ -134,7 +133,10 @@ class TBill {
           width: 5,
           styles: const PosStyles(align: PosAlign.left)),
       PosColumn(
-          text: formattedBillNumber,
+          text: TFormatter.formatBillNumber(
+            order.closedAt!,
+            profileOwner.outlets[0].name,
+          ),
           width: 7,
           styles: const PosStyles(align: PosAlign.right, bold: true)),
     ]);

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
@@ -72,21 +74,41 @@ class TFormatter {
         text.length - 7, text.length - 3, List.filled(4, "*").join());
   }
 
-  static String formatBillNumber(int billNumber, String outletName) {
+  static final Map<String, int> printCounters = {};
+
+  static String formatBillNumber(String closedAt, String outletName,
+      {bool isPreview = false}) {
     String initials = getInitials(outletName);
 
-    String formattedBillNumber = billNumber < 100000
-        ? billNumber.toString().padLeft(5, '0')
-        : billNumber.toString();
+    DateTime closedDate = DateTime.parse(closedAt).toLocal();
 
-    return "$initials-$formattedBillNumber";
+    String month = closedDate.month.toString().padLeft(2, '0');
+    String day = closedDate.day.toString().padLeft(2, '0');
+    String second = closedDate.second.toString().padLeft(2, '0');
+
+    if (!printCounters.containsKey(closedAt)) {
+      printCounters[closedAt] = 1;
+    }
+
+    int currentCount = printCounters[closedAt]!;
+
+    if (!isPreview) {
+      printCounters[closedAt] = currentCount + 1;
+    }
+
+    String printSuffix = currentCount.toString().padLeft(2, '0');
+
+    return "$initials-$month$day$second.$printSuffix";
   }
 
   static String getInitials(String name) {
     List<String> words = name.split(' ');
 
-    String initials = words.map((word) => word[0]).join();
+    if (words.length == 1) {
+      return words[0].substring(0, min(2, words[0].length)).toUpperCase();
+    }
 
+    String initials = words.take(2).map((word) => word[0]).join();
     return initials.toUpperCase();
   }
 
