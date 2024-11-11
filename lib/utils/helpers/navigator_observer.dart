@@ -42,14 +42,14 @@ class CustomNavigatorObserver extends NavigatorObserver {
           systemNavigationBarColor: TColors.neutralLightLight,
         ),
       );
-    } else if (route?.settings.name == "/packages/grow") {
+    } else if (route?.settings.name == "/account/detail_package") {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.light.copyWith(
           statusBarColor: Colors.transparent,
           systemNavigationBarColor: TColors.neutralLightLight,
         ),
       );
-    } else if (route?.settings.name == "/packages/pro") {
+    } else if (route?.settings.name == "/packages/detail") {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.light.copyWith(
           statusBarColor: Colors.transparent,

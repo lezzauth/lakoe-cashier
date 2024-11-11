@@ -17,6 +17,7 @@ import 'package:point_of_sales_cashier/features/authentication/application/cubit
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/outlets/application/outlet_cubit.dart';
 import 'package:point_of_sales_cashier/features/outlets/application/outlet_state.dart';
+import 'package:point_of_sales_cashier/features/packages/application/cubit/package_master_cubit.dart';
 import 'package:point_of_sales_cashier/utils/constants/colors.dart';
 import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
@@ -42,6 +43,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
 
   void _onInit() {
     context.read<OutletCubit>().init();
+    context.read<PackageMasterCubit>().init();
   }
 
   Future<String> getAppVersion() async {
@@ -285,7 +287,20 @@ class ProfileCard extends StatelessWidget {
                 InkWell(
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
-                  onTap: () => Navigator.pushNamed(context, "/packages"),
+                  onTap: () {
+                    if (profile.packageName == "GROW") {
+                      Navigator.pushNamed(
+                        context,
+                        "/account/detail_package",
+                        arguments: {
+                          'packageName': profile.packageName,
+                        },
+                      );
+                    } else {
+                      Navigator.pushNamed(context, "/packages");
+                    }
+                    // Navigator.pushNamed(context, "/packages");
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.only(

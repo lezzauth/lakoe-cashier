@@ -6,6 +6,7 @@ import 'package:logman/logman.dart';
 import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/account_edit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/account_master.dart';
+import 'package:point_of_sales_cashier/features/account/presentation/screens/account_package_detail.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/form/email_edit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/form/name_edit.dart';
 import 'package:point_of_sales_cashier/features/account/presentation/screens/form/phone_number_edit.dart';
@@ -367,6 +368,8 @@ class App extends StatelessWidget {
 
             // Profile & Account
             "/account": (context) => const AccountMasterScreen(),
+            "/account/detail_package": (context) =>
+                const AccountPackageDetailScreen(),
             "/account/edit": (context) => const AccountEditScreen(),
             "/account/edit/name": (context) => const NameEditScreen(),
             "/account/edit/phone_number": (context) =>
@@ -394,7 +397,7 @@ class App extends StatelessWidget {
 
             // Package
             "/packages": (context) => const PackageMasterScreen(),
-            "/packages/grow": (context) => const PackageDetailScreen(),
+            "/packages/detail": (context) => const PackageDetailScreen(),
             "/boost": (context) => const BoostDetailScreen(),
 
             // Checkout

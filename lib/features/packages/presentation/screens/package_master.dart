@@ -274,7 +274,7 @@ class PackageTabView extends StatelessWidget {
                                     onPressed: () {
                                       Navigator.pushNamed(
                                         context,
-                                        "/packages/grow",
+                                        "/packages/detail",
                                         arguments: {'packageName': item.name},
                                       );
                                     },
