@@ -13,8 +13,8 @@ class CashierCubit extends Cubit<CashierState> {
   CashierCubit() : super(CashierInitial());
 
   Future<void> openCashier(OpenCashierDto dto) async {
-    emit(CashierOpenInProgress());
     try {
+      emit(CashierOpenInProgress());
       final res = await _cashierRepository.openCashier(dto);
       _tokenProvider.setCashierToken(res.token);
 
@@ -28,8 +28,8 @@ class CashierCubit extends Cubit<CashierState> {
   }
 
   Future<void> closeCashier(CloseCashierDto dto) async {
-    emit(CashierCloseInProgress());
     try {
+      emit(CashierCloseInProgress());
       await _cashierRepository.closeCashier(dto);
       emit(CashierClosed());
     } catch (e) {
@@ -38,8 +38,8 @@ class CashierCubit extends Cubit<CashierState> {
   }
 
   Future<void> getOpenCashier() async {
-    emit(CashierOpenInProgress());
     try {
+      emit(CashierOpenInProgress());
       final response = await _cashierRepository.getOpenCashier();
       if (response == null) {
         emit(CashierClosed());
@@ -58,8 +58,8 @@ class CashierCubit extends Cubit<CashierState> {
   }
 
   Future<void> generatetoken(RegenerateCashierTokenDto dto) async {
-    emit(CashierOpenInProgress());
     try {
+      emit(CashierOpenInProgress());
       final response = await _cashierRepository.regenerateToken(dto);
       _tokenProvider.setCashierToken(response.token);
 

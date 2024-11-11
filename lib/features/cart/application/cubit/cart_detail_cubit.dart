@@ -88,8 +88,8 @@ class CartDetailCubit extends Cubit<CartDetailState> {
     String? customerId,
     String? tableId,
   }) async {
-    emit(CartDetailActionInProgress());
     try {
+      emit(CartDetailActionInProgress());
       final res = await _cashierRepository.saveAndCompleteOrder(
         _cartsToSaveOrderDto(
           carts: carts,

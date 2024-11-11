@@ -20,8 +20,8 @@ class OrderDetailCubit extends Cubit<OrderDetailState> {
   }
 
   Future<void> completeOrder(String id, CompleteOrderDto dto) async {
-    emit(OrderDetailActionInProgress());
     try {
+      emit(OrderDetailActionInProgress());
       final res = await _cashierRepository.completeOrder(id, dto);
       emit(OrderDetailActionSuccess(completeResponse: res));
     } catch (e) {
@@ -30,8 +30,8 @@ class OrderDetailCubit extends Cubit<OrderDetailState> {
   }
 
   Future<void> cancelOrder(String id) async {
-    emit(OrderDetailActionInProgress());
     try {
+      emit(OrderDetailActionInProgress());
       final res = await _cashierRepository.cancelOrder(id);
       emit(OrderDetailActionSuccess(cancelResponse: res));
     } catch (e) {

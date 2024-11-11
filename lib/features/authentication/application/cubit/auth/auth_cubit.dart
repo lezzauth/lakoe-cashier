@@ -22,8 +22,8 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
 
   Future<void> initialize() async {
-    emit(AuthLoadInProgress());
     try {
+      emit(AuthLoadInProgress());
       // Attempt to retrieve the auth token, which will be null if it has expired
       var authToken = await _tokenProvider.getAuthToken();
 
