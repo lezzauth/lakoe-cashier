@@ -91,14 +91,11 @@ class AuthCubit extends Cubit<AuthState> {
           await _tokenProvider.clearAll();
           emit(NotFound(resError));
         } else {
-          await _tokenProvider.clearAll();
           emit(AuthNotReady());
         }
       } else if (e is PlatformException &&
           e.message?.contains("BadPaddingException") == true) {
         Logman.instance.info('AuthCubit e is PlatformException');
-
-        await _tokenProvider.clearAll();
         emit(AuthNotReady());
       } else if (e.toString().contains("Null")) {
         Logman.instance.info('AuthCubit e is: ${e.toString()}');
@@ -106,7 +103,6 @@ class AuthCubit extends Cubit<AuthState> {
         emit(UncompletedProfile(message: e.toString()));
       } else {
         Logman.instance.info('AuthNotReady');
-        await _tokenProvider.clearAll();
         emit(AuthNotReady());
       }
     }

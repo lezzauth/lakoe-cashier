@@ -99,6 +99,12 @@ class _RedirectScreenState extends State<RedirectScreen> {
 
         if (!mounted) return;
 
+        if (state is AuthLoadInProgress) {
+          Logman.instance
+              .info('AuthState is in progress, waiting for result...');
+          return;
+        }
+
         if (token == null || token.isEmpty) {
           Navigator.popAndPushNamed(context, "/on-boarding");
           return;

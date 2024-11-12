@@ -65,10 +65,10 @@ class THelper {
   }
 
   static List<DateTime> getStartEndWeek(DateTime now) {
-    int currentWeekday = now.weekday;
+    int today = now.weekday;
 
-    DateTime startOfWeek = now.subtract(Duration(days: currentWeekday - 1));
-    DateTime endOfWeek = now.add(Duration(days: 7 - currentWeekday));
+    DateTime startOfWeek = now.subtract(Duration(days: today - 1));
+    DateTime endOfWeek = now.add(Duration(days: 7 - today));
 
     return [startOfWeek, endOfWeek];
   }
