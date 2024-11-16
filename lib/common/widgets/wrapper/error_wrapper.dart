@@ -56,22 +56,26 @@ class _ErrorWrapperState extends State<ErrorWrapper> {
       enableDrag: false,
       isDismissible: false,
       builder: (context) {
-        return CustomBottomsheet(
-          child: widget.fetchErrorDisplay ??
-              ErrorDisplay(
-                imageSrc: TImages.generalIllustration,
-                title: "Ups, Terjadi sedikit kesalahan!",
-                description:
-                    "Kamu bisa mencobanya lagi dengan tekan tombol dibawah ini, ya",
-                actionTitlePrimary: "Coba Lagi",
-                onActionPrimary: () async {
-                  Navigator.pop(context);
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {},
+          child: CustomBottomsheet(
+            child: widget.fetchErrorDisplay ??
+                ErrorDisplay(
+                  imageSrc: TImages.generalIllustration,
+                  title: "Ups, Terjadi sedikit kesalahan!",
+                  description:
+                      "Kamu bisa mencobanya lagi dengan tekan tombol dibawah ini, ya",
+                  actionTitlePrimary: "Coba Lagi",
+                  onActionPrimary: () async {
+                    Navigator.pop(context);
 
-                  if (widget.onRefresh != null) {
-                    await widget.onRefresh!();
-                  }
-                },
-              ),
+                    if (widget.onRefresh != null) {
+                      await widget.onRefresh!();
+                    }
+                  },
+                ),
+          ),
         );
       },
     );
@@ -83,17 +87,21 @@ class _ErrorWrapperState extends State<ErrorWrapper> {
       enableDrag: false,
       isDismissible: false,
       builder: (context) {
-        return CustomBottomsheet(
-          child: widget.actionErrorDisplay ??
-              ErrorDisplay(
-                imageSrc: TImages.generalIllustration,
-                title: "Maaf, servernya lagi sibuk, nih!",
-                description: "Kamu bisa mencobanya beberapa saat lagi, ya",
-                actionTitlePrimary: "Tutup",
-                onActionPrimary: () {
-                  Navigator.pop(context);
-                },
-              ),
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {},
+          child: CustomBottomsheet(
+            child: widget.actionErrorDisplay ??
+                ErrorDisplay(
+                  imageSrc: TImages.generalIllustration,
+                  title: "Maaf, servernya lagi sibuk, nih!",
+                  description: "Kamu bisa mencobanya beberapa saat lagi, ya",
+                  actionTitlePrimary: "Tutup",
+                  onActionPrimary: () {
+                    Navigator.pop(context);
+                  },
+                ),
+          ),
         );
       },
     );

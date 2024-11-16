@@ -56,23 +56,27 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
             enableDrag: false,
             isDismissible: false,
             builder: (context) {
-              return CustomBottomsheet(
-                hasGrabber: false,
-                child: ErrorDisplay(
-                  imageSrc: TImages.limitQuota,
-                  title: "Pelanggan penuh, nih!",
-                  description:
-                      "20 pelanggan sudah tersimpan. Upgrade untuk simpan lebih banyak!",
-                  actionTitlePrimary: "Lihat Paket",
-                  onActionPrimary: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, "/packages");
-                  },
-                  actionTitleSecondary: "Nanti Saja",
-                  onActionSecondary: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context, true);
-                  },
+              return PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (didPop, result) async {},
+                child: CustomBottomsheet(
+                  hasGrabber: false,
+                  child: ErrorDisplay(
+                    imageSrc: TImages.limitQuota,
+                    title: "Pelanggan penuh, nih!",
+                    description:
+                        "20 pelanggan sudah tersimpan. Upgrade untuk simpan lebih banyak!",
+                    actionTitlePrimary: "Lihat Paket",
+                    onActionPrimary: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "/packages");
+                    },
+                    actionTitleSecondary: "Nanti Saja",
+                    onActionSecondary: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context, true);
+                    },
+                  ),
                 ),
               );
             },

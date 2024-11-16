@@ -422,22 +422,26 @@ class TBill {
           enableDrag: false,
           isDismissible: false,
           builder: (context) {
-            return CustomBottomsheet(
-              hasGrabber: false,
-              child: ErrorDisplay(
-                imageSrc: TImages.noPrintIllustration,
-                title: "Belum ada print yang connect, nih!",
-                description:
-                    "Yuk! Sambungkan dulu print kamu di halaman Setting.",
-                actionTitlePrimary: "Atur Print",
-                onActionPrimary: () async {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, "/print");
-                },
-                actionTitleSecondary: "Nanti Saja",
-                onActionSecondary: () {
-                  Navigator.pop(context);
-                },
+            return PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) async {},
+              child: CustomBottomsheet(
+                hasGrabber: false,
+                child: ErrorDisplay(
+                  imageSrc: TImages.noPrintIllustration,
+                  title: "Belum ada print yang connect, nih!",
+                  description:
+                      "Yuk! Sambungkan dulu print kamu di halaman Setting.",
+                  actionTitlePrimary: "Atur Print",
+                  onActionPrimary: () async {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, "/print");
+                  },
+                  actionTitleSecondary: "Nanti Saja",
+                  onActionSecondary: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ),
             );
           },

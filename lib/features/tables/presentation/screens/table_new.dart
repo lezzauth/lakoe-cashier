@@ -83,23 +83,27 @@ class _TableNewState extends State<TableNew> {
                 enableDrag: false,
                 isDismissible: false,
                 builder: (context) {
-                  return CustomBottomsheet(
-                    hasGrabber: false,
-                    child: ErrorDisplay(
-                      imageSrc: TImages.limitQuota,
-                      title: "Meja maksimal, nih!",
-                      description:
-                          "Sudah 5 QR Meja. Upgrade untuk tambah meja QR!",
-                      actionTitlePrimary: "Lihat Paket",
-                      onActionPrimary: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, "/packages");
-                      },
-                      actionTitleSecondary: "Nanti Saja",
-                      onActionSecondary: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context, true);
-                      },
+                  return PopScope(
+                    canPop: false,
+                    onPopInvokedWithResult: (didPop, result) async {},
+                    child: CustomBottomsheet(
+                      hasGrabber: false,
+                      child: ErrorDisplay(
+                        imageSrc: TImages.limitQuota,
+                        title: "Meja maksimal, nih!",
+                        description:
+                            "Sudah 5 QR Meja. Upgrade untuk tambah meja QR!",
+                        actionTitlePrimary: "Lihat Paket",
+                        onActionPrimary: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/packages");
+                        },
+                        actionTitleSecondary: "Nanti Saja",
+                        onActionSecondary: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context, true);
+                        },
+                      ),
                     ),
                   );
                 },

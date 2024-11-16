@@ -80,22 +80,26 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
       enableDrag: false,
       isDismissible: false,
       builder: (context) {
-        return CustomBottomsheet(
-          hasGrabber: false,
-          child: ErrorDisplay(
-            imageSrc: TImages.bluetoothPermission,
-            title: "Izin akses bluetooth HP kamu, ya",
-            description:
-                "Dengan ini, kamu akan bisa menggunakan fitur aplikasi yang membutuhkan bluetooth.",
-            actionTitlePrimary: "Aktifkan Bluetooth",
-            onActionPrimary: () async {
-              Navigator.pop(context);
-              bool? isEnabled =
-                  await FlutterBluetoothSerial.instance.requestEnable();
-              if (isEnabled == true) {
-                _onRefresh();
-              }
-            },
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {},
+          child: CustomBottomsheet(
+            hasGrabber: false,
+            child: ErrorDisplay(
+              imageSrc: TImages.bluetoothPermission,
+              title: "Izin akses bluetooth HP kamu, ya",
+              description:
+                  "Dengan ini, kamu akan bisa menggunakan fitur aplikasi yang membutuhkan bluetooth.",
+              actionTitlePrimary: "Aktifkan Bluetooth",
+              onActionPrimary: () async {
+                Navigator.pop(context);
+                bool? isEnabled =
+                    await FlutterBluetoothSerial.instance.requestEnable();
+                if (isEnabled == true) {
+                  _onRefresh();
+                }
+              },
+            ),
           ),
         );
       },

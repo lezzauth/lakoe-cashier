@@ -25,7 +25,9 @@ class RedirectScreen extends StatefulWidget {
 }
 
 class _RedirectScreenState extends State<RedirectScreen> {
+  bool navigated = false;
   bool isBottomSheetVisible = false;
+
   late final StreamSubscription<List<ConnectivityResult>>
       _connectivitySubscription;
 
@@ -54,6 +56,16 @@ class _RedirectScreenState extends State<RedirectScreen> {
   void initState() {
     super.initState();
     _loadFlavor();
+    init();
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
+  void init() {
     context.read<AuthCubit>().initialize();
 
     _connectivitySubscription =
@@ -65,23 +77,9 @@ class _RedirectScreenState extends State<RedirectScreen> {
     });
   }
 
-  @override
-  void dispose() {
-    _connectivitySubscription.cancel();
-    super.dispose();
-  }
-
-  Future<void> openWifiSettings() async {
+  Future<void> openSettings() async {
     final intent = AndroidIntent(
-      action: 'android.settings.WIFI_SETTINGS',
-      flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
-    );
-    await intent.launch();
-  }
-
-  Future<void> openMobileDataSettings() async {
-    final intent = AndroidIntent(
-      action: 'android.settings.DATA_ROAMING_SETTINGS',
+      action: 'android.settings.SETTINGS',
       flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
     );
     await intent.launch();
@@ -105,7 +103,8 @@ class _RedirectScreenState extends State<RedirectScreen> {
           return;
         }
 
-        if (token == null || token.isEmpty) {
+        if (!navigated && (token == null || token.isEmpty)) {
+          navigated = true;
           Navigator.popAndPushNamed(context, "/on-boarding");
           return;
         }
@@ -119,41 +118,50 @@ class _RedirectScreenState extends State<RedirectScreen> {
             enableDrag: false,
             isDismissible: false,
             builder: (context) {
-              return CustomBottomsheet(
-                hasGrabber: false,
-                child: ErrorDisplay(
-                  imageSrc: TImages.noConnection,
-                  title: "Yah, internetnya mati…",
-                  description:
-                      "Coba cek WiFi atau kuota internet kamu dan nanti coba lagi ya.",
-                  actionTitlePrimary: "Pengaturan",
-                  onActionPrimary: () {
-                    openWifiSettings();
-                    Navigator.pop(context);
-                    isBottomSheetVisible = false;
-                  },
-                  actionTitleSecondary: "Coba Lagi",
-                  onActionSecondary: () {
-                    context.read<AuthCubit>().initialize();
-                    Navigator.pop(context);
-                    isBottomSheetVisible = false;
-                  },
+              return PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (didPop, result) async {},
+                child: CustomBottomsheet(
+                  hasGrabber: false,
+                  child: ErrorDisplay(
+                    imageSrc: TImages.noConnection,
+                    title: "Koneksi internet aman ngga?",
+                    description:
+                        "Coba cek WiFi atau kuota internet kamu dulu terus bisa dicoba lagi, ya!",
+                    actionTitlePrimary: "Pengaturan",
+                    onActionPrimary: () {
+                      isBottomSheetVisible = false;
+                      Navigator.pop(context);
+                      openSettings();
+                    },
+                    actionTitleSecondary: "Coba Lagi",
+                    onActionSecondary: () async {
+                      isBottomSheetVisible = false;
+                      Navigator.pop(context);
+                      await Future.delayed(Duration(seconds: 2));
+                      init();
+                    },
+                  ),
                 ),
               );
             },
-          );
+          ).whenComplete(() => isBottomSheetVisible = false);
           return;
         }
 
-        if (state is AuthReady) {
-          Navigator.popAndPushNamed(context, "/cashier");
-        } else if (state is AuthNotReady ||
-            (state is TokenExpired &&
-                state.res.statusCode == 401 &&
-                !state.isTokenRefreshed) ||
-            (state is NotFound && state.res.statusCode == 404)) {
-          await tokenProvider.clearAll();
-          Navigator.popAndPushNamed(context, "/on-boarding");
+        if (!navigated) {
+          if (state is AuthReady) {
+            navigated = true;
+            Navigator.popAndPushNamed(context, "/cashier");
+          } else if ((state is AuthNotReady) ||
+              (state is TokenExpired &&
+                  state.res.statusCode == 401 &&
+                  !state.isTokenRefreshed) ||
+              (state is NotFound && state.res.statusCode == 404)) {
+            await tokenProvider.clearAll();
+            navigated = true;
+            Navigator.popAndPushNamed(context, "/on-boarding");
+          }
         }
       },
       child: BlocListener<CashierCubit, CashierState>(

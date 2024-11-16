@@ -53,11 +53,15 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
       isDismissible: false,
       enableDrag: false,
       builder: (context) {
-        return BankVerify(
-          bankCode: bank!.bankCode,
-          accountNumber: value["accountNumber"],
-          bankName: bank.bankName,
-          name: bank.name,
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {},
+          child: BankVerify(
+            bankCode: bank!.bankCode,
+            accountNumber: value["accountNumber"],
+            bankName: bank.bankName,
+            name: bank.name,
+          ),
         );
       },
     );

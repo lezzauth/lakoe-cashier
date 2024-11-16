@@ -109,23 +109,27 @@ class _NewProductScreenState extends State<NewProductScreen>
             enableDrag: false,
             isDismissible: false,
             builder: (context) {
-              return CustomBottomsheet(
-                hasGrabber: false,
-                child: ErrorDisplay(
-                  imageSrc: TImages.limitQuota,
-                  title: "Yah! produk full, nih",
-                  description:
-                      "10 menu sudah ditambahkan. Upgrade paket untuk lebih banyak produk, yuk!",
-                  actionTitlePrimary: "Lihat Paket",
-                  onActionPrimary: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, "/packages");
-                  },
-                  actionTitleSecondary: "Nanti Saja",
-                  onActionSecondary: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context, true);
-                  },
+              return PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (didPop, result) async {},
+                child: CustomBottomsheet(
+                  hasGrabber: false,
+                  child: ErrorDisplay(
+                    imageSrc: TImages.limitQuota,
+                    title: "Yah! produk full, nih",
+                    description:
+                        "10 menu sudah ditambahkan. Upgrade paket untuk lebih banyak produk, yuk!",
+                    actionTitlePrimary: "Lihat Paket",
+                    onActionPrimary: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "/packages");
+                    },
+                    actionTitleSecondary: "Nanti Saja",
+                    onActionSecondary: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context, true);
+                    },
+                  ),
                 ),
               );
             },

@@ -1,9 +1,11 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:app_data_provider/app_data_provider.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
@@ -21,33 +23,50 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit() : super(AuthInitial());
 
+  bool isInitializing = false;
+  int retryCount = 0;
+  int maxRetries = 3;
+
   Future<void> initialize() async {
+    if (isInitializing) {
+      emit(AuthLoadInProgress());
+      return;
+    }
+    isInitializing = true;
+
     try {
       emit(AuthLoadInProgress());
-      // Attempt to retrieve the auth token, which will be null if it has expired
       var authToken = await _tokenProvider.getAuthToken();
 
-      // If authToken is null, attempt to refresh the token
       if (authToken == null) {
         final refreshToken = await _tokenProvider.getAuthRefreshToken();
-        if (refreshToken == null) throw ErrorDescription("no refreshToken");
+        if (refreshToken == null) {
+          emit(AuthNotReady());
+          return;
+        }
 
-        // Call the refresh token endpoint and save the new token if successful
         final newAuthToken = await _authenticationRepository.refreshToken(
           RefreshTokenDto(token: refreshToken),
         );
         await _tokenProvider.setAuthToken(
           newAuthToken.token,
-          newAuthToken.tokenExpireIn, // Save new expiration time
+          newAuthToken.tokenExpireIn,
         );
 
-        // Update authToken with the newly obtained token
         authToken = newAuthToken.token;
       }
 
-      // Continue with API calls now that the token is valid
-      final profile = await _ownerRepository.getProfile();
-      final outlets = await _ownerRepository.listOutlets();
+      final profile = await _ownerRepository
+          .getProfile()
+          .timeout(Duration(seconds: 10), onTimeout: () {
+        throw TimeoutException("Timeout while retrieving profile data.");
+      });
+
+      final outlets = await _ownerRepository
+          .listOutlets()
+          .timeout(Duration(seconds: 10), onTimeout: () {
+        throw TimeoutException("Timeout while retrieving outlet list.");
+      });
 
       await _appDataProvider.setOutletId(outlets.first.id);
       await _appDataProvider.setOwnerId(profile.id);
@@ -63,56 +82,57 @@ class AuthCubit extends Cubit<AuthState> {
       Logman.instance.info('AuthCubit Initialize: ${e.toString()}');
 
       if (e is DioException) {
-        Logman.instance.info('AuthCubit e is DioException');
-
         if (e.type == DioExceptionType.connectionError) {
-          Logman.instance.info('AuthCubit: Connection error occurred');
-          emit(ConnectionIssue(
+          final socketException = e.error as SocketException?;
+          if (socketException != null &&
+              socketException.osError?.errorCode == 7) {
+            emit(ConnectionIssue(
               message:
-                  'Failed to connect to the server. Please check your internet connection.'));
+                  'Failed to resolve hostname. Please check your DNS or internet connection.',
+            ));
+          } else {
+            emit(ConnectionIssue(
+              message:
+                  'No internet connection. Please check your internet connection.',
+            ));
+          }
           return;
         }
 
-        final resError = e.error as DioExceptionModel;
+        final resError = e.error as DioExceptionModel?;
 
-        if (resError.statusCode == 401) {
-          try {
-            final refreshToken = await _tokenProvider.getAuthRefreshToken();
-            if (refreshToken == null) throw ErrorDescription("no refreshToken");
-
-            final newAuthToken = await _authenticationRepository.refreshToken(
-              RefreshTokenDto(token: refreshToken),
-            );
-            await _tokenProvider.setAuthToken(
-              newAuthToken.token,
-              newAuthToken.tokenExpireIn,
-            );
-
-            await initialize();
-            return;
-          } catch (refreshError) {
-            Logman.instance
-                .info('AuthCubit RefreshToken: ${refreshError.toString()}');
-            emit(TokenExpired(resError, isTokenRefreshed: false));
-            return;
+        if (resError?.statusCode == 401) {
+          if (retryCount < maxRetries) {
+            retryCount++;
+            initialize();
+          } else {
+            emit(TokenExpired(resError!, isTokenRefreshed: false));
           }
-        } else if (resError.statusCode == 404) {
-          await _tokenProvider.clearAll();
-          emit(NotFound(resError));
-        } else {
-          emit(AuthNotReady());
+          return;
+        } else if (resError?.statusCode == 404) {
+          emit(NotFound(resError!));
+          return;
+        } else if (resError?.statusCode == 500) {
+          emit(ErrorInitialize(message: "Internal server error occurred."));
+          return;
         }
       } else if (e is PlatformException &&
           e.message?.contains("BadPaddingException") == true) {
-        Logman.instance.info('AuthCubit e is PlatformException');
         emit(AuthNotReady());
+        return;
       } else if (e.toString().contains("Null")) {
-        Logman.instance.info('AuthCubit e is: ${e.toString()}');
         emit(AuthNotReady());
-      } else {
-        Logman.instance.info('AuthCubit state is AuthNotReady');
-        emit(AuthNotReady());
+        return;
+      } else if (e is TimeoutException) {
+        emit(ConnectionIssue(
+          message: e.message ?? "Request timed out. Please try again.",
+        ));
+        return;
       }
+
+      emit(AuthNotReady());
+    } finally {
+      isInitializing = false;
     }
   }
 }
