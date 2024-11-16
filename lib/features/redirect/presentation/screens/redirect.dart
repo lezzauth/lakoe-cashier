@@ -110,7 +110,7 @@ class _RedirectScreenState extends State<RedirectScreen> {
           return;
         }
 
-        if (state is AuthNotReady && !isBottomSheetVisible) {
+        if (state is ConnectionIssue && !isBottomSheetVisible) {
           isBottomSheetVisible = true;
           if (!mounted) return;
 
@@ -147,8 +147,7 @@ class _RedirectScreenState extends State<RedirectScreen> {
 
         if (state is AuthReady) {
           Navigator.popAndPushNamed(context, "/cashier");
-        } else if (state is UncompletedProfile ||
-            (state is TokenExpired &&
+        } else if ((state is TokenExpired &&
                 state.res.statusCode == 401 &&
                 !state.isTokenRefreshed) ||
             (state is NotFound && state.res.statusCode == 404)) {

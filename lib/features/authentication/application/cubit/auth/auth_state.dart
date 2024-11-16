@@ -23,14 +23,20 @@ final class TokenExpired extends AuthState {
   TokenExpired(this.res, {this.isTokenRefreshed = false});
 }
 
-final class UncompletedProfile extends AuthState {
+final class ErrorInitialize extends AuthState {
   final String message;
 
-  UncompletedProfile({required this.message});
+  ErrorInitialize({required this.message});
 }
 
 final class NotFound extends AuthState {
   final DioExceptionModel res;
 
   NotFound(this.res);
+}
+
+final class ConnectionIssue extends AuthState {
+  final String message;
+
+  ConnectionIssue({required this.message});
 }

@@ -64,6 +64,15 @@ class AuthCubit extends Cubit<AuthState> {
 
       if (e is DioException) {
         Logman.instance.info('AuthCubit e is DioException');
+
+        if (e.type == DioExceptionType.connectionError) {
+          Logman.instance.info('AuthCubit: Connection error occurred');
+          emit(ConnectionIssue(
+              message:
+                  'Failed to connect to the server. Please check your internet connection.'));
+          return;
+        }
+
         final resError = e.error as DioExceptionModel;
 
         if (resError.statusCode == 401) {
@@ -99,10 +108,9 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthNotReady());
       } else if (e.toString().contains("Null")) {
         Logman.instance.info('AuthCubit e is: ${e.toString()}');
-        await _tokenProvider.clearAll();
-        emit(UncompletedProfile(message: e.toString()));
+        emit(AuthNotReady());
       } else {
-        Logman.instance.info('AuthNotReady');
+        Logman.instance.info('AuthCubit state is AuthNotReady');
         emit(AuthNotReady());
       }
     }
