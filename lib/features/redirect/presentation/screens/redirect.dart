@@ -147,7 +147,8 @@ class _RedirectScreenState extends State<RedirectScreen> {
 
         if (state is AuthReady) {
           Navigator.popAndPushNamed(context, "/cashier");
-        } else if ((state is TokenExpired &&
+        } else if (state is AuthNotReady ||
+            (state is TokenExpired &&
                 state.res.statusCode == 401 &&
                 !state.isTokenRefreshed) ||
             (state is NotFound && state.res.statusCode == 404)) {
