@@ -129,10 +129,11 @@ import 'package:point_of_sales_cashier/features/tables/presentation/screens/tabl
 import 'package:point_of_sales_cashier/features/tables/presentation/widgets/pages/brand_edit.dart';
 import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_master/tax_master_cubit.dart';
 import 'package:point_of_sales_cashier/features/taxes/presentation/screens/tax_master.dart';
-import 'package:point_of_sales_cashier/main_dev.dart';
 import 'package:point_of_sales_cashier/utils/helpers/navigator_observer.dart';
 import 'package:point_of_sales_cashier/utils/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class App extends StatelessWidget {
   final String flavor;

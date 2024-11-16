@@ -1,9 +1,17 @@
+import 'dart:async';
+
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:android_intent_plus/flag.dart';
 import 'package:app_data_provider/app_data_provider.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
 import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/list_item_card.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/section_card.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
@@ -33,17 +41,50 @@ class AccountMasterScreen extends StatefulWidget {
 }
 
 class _AccountMasterScreenState extends State<AccountMasterScreen> {
+  bool isBottomSheetVisible = false;
+
+  late final StreamSubscription<List<ConnectivityResult>>
+      connectivitySubscription;
+
   @override
   void initState() {
     super.initState();
-    context.read<AuthCubit>().initialize();
+
     _onInit();
     _updateAppVersion();
   }
 
+  @override
+  void dispose() {
+    connectivitySubscription.cancel();
+    super.dispose();
+  }
+
   void _onInit() {
+    context.read<AuthCubit>().initialize();
     context.read<OutletCubit>().init();
     context.read<PackageMasterCubit>().init();
+
+    connectivitySubscription =
+        Connectivity().onConnectivityChanged.listen((result) {
+      if (result != ConnectivityResult.none) {
+        if (!mounted) return;
+
+        if (isBottomSheetVisible) {
+          Navigator.pop(context);
+          isBottomSheetVisible = false;
+
+          CustomToast.show(
+            "Internet terhubung kembali",
+            backgroundColor: TColors.success,
+          );
+        }
+
+        context.read<AuthCubit>().initialize();
+        context.read<OutletCubit>().init();
+        context.read<PackageMasterCubit>().init();
+      }
+    });
   }
 
   Future<String> getAppVersion() async {
@@ -103,6 +144,14 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
     ),
   ];
 
+  Future<void> openSettings() async {
+    final intent = AndroidIntent(
+      action: 'android.settings.SETTINGS',
+      flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+    );
+    await intent.launch();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,73 +160,116 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       appBar: const CustomAppbarLight(
         title: "Profil & Akun",
       ),
-      body: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) {
-          if (state is AuthReady) {
-            final profile = state.profile;
+      body: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) async {
+          if (state is ConnectionIssue && !isBottomSheetVisible) {
+            isBottomSheetVisible = true;
+            if (!mounted) return;
 
+            showModalBottomSheet(
+              context: context,
+              enableDrag: false,
+              isDismissible: false,
+              builder: (context) {
+                return PopScope(
+                  canPop: false,
+                  onPopInvokedWithResult: (didPop, result) async {},
+                  child: CustomBottomsheet(
+                    hasGrabber: false,
+                    child: ErrorDisplay(
+                      imageSrc: TImages.noConnection,
+                      title: "Koneksi internet aman ngga?",
+                      description:
+                          "Coba cek WiFi atau kuota internet kamu dulu terus bisa dicoba lagi, ya!",
+                      actionTitlePrimary: "Pengaturan",
+                      onActionPrimary: () {
+                        isBottomSheetVisible = false;
+                        Navigator.pop(context);
+                        openSettings();
+                      },
+                      actionTitleSecondary: "Coba Lagi",
+                      onActionSecondary: () async {
+                        isBottomSheetVisible = false;
+                        Navigator.pop(context);
+                        await Future.delayed(Duration(seconds: 2));
+                        _onInit();
+                      },
+                    ),
+                  ),
+                );
+              },
+            ).whenComplete(() => isBottomSheetVisible = false);
+            return;
+          }
+        },
+        child: BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            if (state is AuthReady) {
+              final profile = state.profile;
+
+              return Stack(
+                children: [
+                  Positioned(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: SvgPicture.asset(
+                        profile.packageName == "GROW"
+                            ? TImages.growLevelHero
+                            : profile.packageName == "PRO"
+                                ? TImages.proLevelHero
+                                : TImages.liteLevelHero,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 120),
+                          ProfileCard(),
+                          // const SizedBox(height: 12),
+                          // const BalanceCard(),
+                          const SizedBox(height: 12),
+                          OutletCard(),
+                          const SizedBox(height: 12),
+                          OtherCard(
+                            children: otherSettingItems
+                                .map(
+                                  (item) => ListItemCard(
+                                    iconSrc: item.iconSrc,
+                                    title: item.title,
+                                    routeName: item.routeName,
+                                    isNewItem: item.isNewItem!,
+                                    textTrailing: item.textTrailing,
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
             return Stack(
               children: [
                 Positioned(
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: SvgPicture.asset(
-                      profile.packageName == "GROW"
-                          ? TImages.growLevelHero
-                          : profile.packageName == "PRO"
-                              ? TImages.proLevelHero
-                              : TImages.liteLevelHero,
+                      TImages.placeholderHero,
                       fit: BoxFit.fill,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 120),
-                        ProfileCard(),
-                        // const SizedBox(height: 12),
-                        // const BalanceCard(),
-                        const SizedBox(height: 12),
-                        OutletCard(),
-                        const SizedBox(height: 12),
-                        OtherCard(
-                          children: otherSettingItems
-                              .map(
-                                (item) => ListItemCard(
-                                  iconSrc: item.iconSrc,
-                                  title: item.title,
-                                  routeName: item.routeName,
-                                  isNewItem: item.isNewItem!,
-                                  textTrailing: item.textTrailing,
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                AccountShimmer(),
               ],
             );
-          }
-          return Stack(
-            children: [
-              Positioned(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: SvgPicture.asset(
-                    TImages.placeholderHero,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-              AccountShimmer(),
-            ],
-          );
-        },
+          },
+        ),
       ),
     );
   }

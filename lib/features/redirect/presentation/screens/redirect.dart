@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:logman/logman.dart';
 import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
 import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
 import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
@@ -29,9 +30,9 @@ class _RedirectScreenState extends State<RedirectScreen> {
   bool isBottomSheetVisible = false;
 
   late final StreamSubscription<List<ConnectivityResult>>
-      _connectivitySubscription;
+      connectivitySubscription;
 
-  Future<void> _loadFlavor() async {
+  Future<void> loadFlavor() async {
     final AppDataProvider appDataProvider = AppDataProvider();
     final flavor = await appDataProvider.flavor;
 
@@ -55,23 +56,33 @@ class _RedirectScreenState extends State<RedirectScreen> {
   @override
   void initState() {
     super.initState();
-    _loadFlavor();
+    loadFlavor();
     init();
   }
 
   @override
   void dispose() {
-    _connectivitySubscription.cancel();
+    connectivitySubscription.cancel();
     super.dispose();
   }
 
   void init() {
     context.read<AuthCubit>().initialize();
 
-    _connectivitySubscription =
+    connectivitySubscription =
         Connectivity().onConnectivityChanged.listen((result) {
       if (result != ConnectivityResult.none) {
         if (!mounted) return;
+        if (isBottomSheetVisible) {
+          Navigator.pop(context);
+          isBottomSheetVisible = false;
+
+          CustomToast.show(
+            "Internet terhubung kembali",
+            backgroundColor: TColors.success,
+          );
+        }
+
         context.read<AuthCubit>().initialize();
       }
     });

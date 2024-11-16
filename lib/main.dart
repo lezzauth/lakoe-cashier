@@ -5,7 +5,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:point_of_sales_cashier/app.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final AppDataProvider _appDataProvider = AppDataProvider();
 
 void main() async {

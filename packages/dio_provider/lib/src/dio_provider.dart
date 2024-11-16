@@ -10,7 +10,7 @@ import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bott
 import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/main.dart';
+import 'package:point_of_sales_cashier/app.dart';
 
 bool isShowingBottomSheet = false;
 
@@ -123,6 +123,7 @@ class DioProvider {
         CustomToast.show(
           "Cek lagi koneksi internet kamu, ya!",
           duration: 2,
+          backgroundColor: Colors.red,
         );
       }
     });

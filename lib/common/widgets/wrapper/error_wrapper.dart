@@ -60,6 +60,7 @@ class _ErrorWrapperState extends State<ErrorWrapper> {
           canPop: false,
           onPopInvokedWithResult: (didPop, result) async {},
           child: CustomBottomsheet(
+            hasGrabber: false,
             child: widget.fetchErrorDisplay ??
                 ErrorDisplay(
                   imageSrc: TImages.generalIllustration,
@@ -91,6 +92,7 @@ class _ErrorWrapperState extends State<ErrorWrapper> {
           canPop: false,
           onPopInvokedWithResult: (didPop, result) async {},
           child: CustomBottomsheet(
+            hasGrabber: false,
             child: widget.actionErrorDisplay ??
                 ErrorDisplay(
                   imageSrc: TImages.generalIllustration,
