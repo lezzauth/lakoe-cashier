@@ -39,7 +39,7 @@ class _BankAccountFormState extends State<BankAccountForm> {
   final _formKey = GlobalKey<FormBuilderState>();
   bool _isFormValid = false;
 
-  Future<void> _onSubmit() async {
+  void _onSubmit() async {
     if (!mounted) return;
 
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
@@ -50,7 +50,8 @@ class _BankAccountFormState extends State<BankAccountForm> {
     dynamic value = _formKey.currentState?.value;
 
     final bank = await context.read<BankListCubit>().findOne(value["name"]);
-    String previousAccountNumber = widget.initialValue["accountNumber"];
+    String previousAccountNumber =
+        widget.initialValue["accountNumber"] ?? value["accountNumber"];
 
     widget.onSubmitted(value, bank, previousAccountNumber);
   }
@@ -213,11 +214,11 @@ class _BankAccountFormState extends State<BankAccountForm> {
           ),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: ElevatedButton(
               onPressed: _isFormValid ? _onSubmit : null,
               child: widget.isLoading
-                  ? const SizedBox(
+                  ? SizedBox(
                       height: 16,
                       width: 16,
                       child: CircularProgressIndicator(
@@ -225,9 +226,7 @@ class _BankAccountFormState extends State<BankAccountForm> {
                         strokeWidth: 2,
                       ),
                     )
-                  : const TextActionL(
-                      "Simpan",
-                    ),
+                  : TextActionL("Simpan"),
             ),
           )
         ],

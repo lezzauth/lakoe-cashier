@@ -109,9 +109,9 @@ class _BankVerifyContentState extends State<BankVerifyContent> {
               return CustomBottomsheet(
                   child: GeneralInformation(
                 imageSrc: TImages.generalIllustration,
-                title: "Nomor rekening tidak ditemukan",
+                title: "Rekening tidak ditemukan",
                 description:
-                    "Yuk! Cek lagi nomor rekening yang kamu masukkan, pastikan sesuai denga bank-nya, ya!",
+                    "Yuk! Cek lagi nomor rekening yang kamu, pastikan sesuai dengan bank-nya, ya!",
                 onRequest: () {
                   Navigator.pop(context);
                 },

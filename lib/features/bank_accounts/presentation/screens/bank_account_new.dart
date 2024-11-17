@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:lakoe_pos/common/data/models.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
@@ -60,6 +61,13 @@ class _BankAccountNewScreenState extends State<BankAccountNewScreen> {
       listener: (context, state) {
         if (state is BankAccountMasterActionSuccess) {
           Navigator.pop(context, true);
+        } else if (state is BankAccountMasterActionFailure) {
+          if (state.error.contains("number already")) {
+            CustomToast.show(
+              "Rekening bank ini sudah tersimpan.",
+              position: 'bottom',
+            );
+          }
         }
       },
       builder: (context, state) => Scaffold(
