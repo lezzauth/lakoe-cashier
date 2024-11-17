@@ -3,17 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:package_repository/package_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/light_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/account/presentation/widgets/detail_package.dart';
-import 'package:point_of_sales_cashier/features/packages/application/cubit/package_detail/package_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/packages/application/cubit/package_detail/package_detail_state.dart';
-import 'package:point_of_sales_cashier/features/packages/application/cubit/package_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/packages/application/cubit/package_master_state.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/appbar/light_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/features/account/presentation/widgets/detail_package.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_detail/package_detail_cubit.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_detail/package_detail_state.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_master_cubit.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_master_state.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AccountPackageDetailScreen extends StatefulWidget {

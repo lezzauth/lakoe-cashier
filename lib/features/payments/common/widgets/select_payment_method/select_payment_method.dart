@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_cubit.dart';
-import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_filter_state.dart';
-import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
-import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/bank_transfer/content.dart';
-import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/cash/content.dart';
-import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/debit/content.dart';
-import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/qris/content.dart';
-import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_cubit.dart';
+import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_filter_cubit.dart';
+import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_filter_state.dart';
+import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_state.dart';
+import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/bank_transfer/content.dart';
+import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/cash/content.dart';
+import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/debit/content.dart';
+import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/qris/content.dart';
+import 'package:lakoe_pos/utils/device/device_uility.dart';
 
 class SelectPaymentMethod extends StatefulWidget {
   const SelectPaymentMethod({

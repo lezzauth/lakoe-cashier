@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_state.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/order/cashier_order_state.dart';
 
 class CashierOrderCubit extends Cubit<CashierOrderState> {
   final CashierRepository _cashierRepository = CashierRepositoryImpl();

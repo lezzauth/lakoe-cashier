@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_filter_state.dart';
+import 'package:lakoe_pos/features/reports/application/cubit/report_master/report_master_filter_state.dart';
 
 class ReportMasterFilterCubit extends Cubit<ReportMasterFilterState> {
   ReportMasterFilterCubit()

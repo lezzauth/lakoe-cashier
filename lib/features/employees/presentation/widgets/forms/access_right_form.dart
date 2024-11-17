@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:point_of_sales_cashier/features/employees/presentation/widgets/section_card_access.dart';
-import 'package:point_of_sales_cashier/features/employees/presentation/widgets/section_list_access.dart';
+import 'package:lakoe_pos/features/employees/presentation/widgets/section_card_access.dart';
+import 'package:lakoe_pos/features/employees/presentation/widgets/section_list_access.dart';
 
 class AccessRightForm extends StatefulWidget {
   const AccessRightForm({super.key, required this.formKey});

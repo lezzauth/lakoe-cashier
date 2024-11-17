@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/data/models.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/date_range_picker.dart';
-import 'package:point_of_sales_cashier/common/widgets/tiles/custom_radio_tile.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/features/orders/common/widgets/filters/order_date_filter.dart';
+import 'package:lakoe_pos/common/data/models.dart';
+import 'package:lakoe_pos/common/widgets/form/date_range_picker.dart';
+import 'package:lakoe_pos/common/widgets/tiles/custom_radio_tile.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/features/orders/common/widgets/filters/order_date_filter.dart';
 
 class OrderDateFilterContent extends StatefulWidget {
   const OrderDateFilterContent({

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_repository/order_repository.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_state.dart';
-import 'package:point_of_sales_cashier/features/orders/common/widgets/summary/order_summary.dart';
-import 'package:point_of_sales_cashier/features/orders/data/models.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_state.dart';
+import 'package:lakoe_pos/features/orders/common/widgets/summary/order_summary.dart';
+import 'package:lakoe_pos/features/orders/data/models.dart';
 
 class PreviewOrderPrice extends StatelessWidget {
   const PreviewOrderPrice({super.key});

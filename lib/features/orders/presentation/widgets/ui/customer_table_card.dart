@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:order_repository/order_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/cards/card_order.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/features/cart/presentation/widgets/cards/card_order.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 
 class CustomerAndTableInformation extends StatelessWidget {
   const CustomerAndTableInformation({

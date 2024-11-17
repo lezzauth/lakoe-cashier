@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:logman/logman.dart';
-import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_state.dart';
-import 'package:point_of_sales_cashier/utils/helpers/bluetooth_permission.dart';
+import 'package:lakoe_pos/features/print/application/cubit/print_master/print_master_state.dart';
+import 'package:lakoe_pos/utils/helpers/bluetooth_permission.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
 class PrintMasterCubit extends Cubit<PrintMasterState> {

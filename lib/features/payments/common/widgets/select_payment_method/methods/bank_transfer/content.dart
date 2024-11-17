@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:owner_repository/owner_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
-import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_cubit.dart';
-import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_filter_state.dart';
-import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
-import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/bank_transfer/footer.dart';
-import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/bank_transfer/form.dart';
-import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/radio_group.dart';
-import 'package:point_of_sales_cashier/features/payments/data/arguments/bank_transfer_payment_argument.dart';
-import 'package:point_of_sales_cashier/features/payments/data/models/bank_account_model.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
+import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_cubit.dart';
+import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_filter_cubit.dart';
+import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_filter_state.dart';
+import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_state.dart';
+import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/bank_transfer/footer.dart';
+import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/bank_transfer/form.dart';
+import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/radio_group.dart';
+import 'package:lakoe_pos/features/payments/data/arguments/bank_transfer_payment_argument.dart';
+import 'package:lakoe_pos/features/payments/data/models/bank_account_model.dart';
 
 class BankTransferPaymentContent extends StatefulWidget {
   const BankTransferPaymentContent({

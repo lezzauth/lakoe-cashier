@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_price.dart';
-import 'package:point_of_sales_cashier/features/orders/data/models.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/ui/separator/separator.dart';
+import 'package:lakoe_pos/features/bill/presentation/widgets/list_price.dart';
+import 'package:lakoe_pos/features/orders/data/models.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class BillSectionCharges extends StatelessWidget {
   final List<OrderSummaryChargeModel> charges;

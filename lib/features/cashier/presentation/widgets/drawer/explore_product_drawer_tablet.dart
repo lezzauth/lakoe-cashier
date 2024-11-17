@@ -1,17 +1,17 @@
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_state.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_state.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/content/cart_content_tablet.dart';
-import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
-import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method_tablet.dart';
-import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_state.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_state.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
+import 'package:lakoe_pos/features/cart/presentation/widgets/content/cart_content_tablet.dart';
+import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_state.dart';
+import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/select_payment_method_tablet.dart';
+import 'package:lakoe_pos/features/payments/data/arguments/success_confirmation_payment_argument.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class ExploreProductDrawerTablet extends StatefulWidget {
   const ExploreProductDrawerTablet({super.key});

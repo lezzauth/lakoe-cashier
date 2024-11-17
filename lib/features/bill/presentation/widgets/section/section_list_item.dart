@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:order_repository/order_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_item.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_price.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/ui/separator/separator.dart';
+import 'package:lakoe_pos/features/bill/presentation/widgets/list_item.dart';
+import 'package:lakoe_pos/features/bill/presentation/widgets/list_price.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class BillSectionListItem extends StatefulWidget {
   const BillSectionListItem({

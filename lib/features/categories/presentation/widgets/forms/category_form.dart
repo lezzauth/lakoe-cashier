@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
-import 'package:point_of_sales_cashier/features/categories/presentation/widgets/forms/field/category_icon_picker.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
+import 'package:lakoe_pos/common/widgets/form/form_label.dart';
+import 'package:lakoe_pos/features/categories/presentation/widgets/forms/field/category_icon_picker.dart';
+import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
 
 class CategoryForm extends StatefulWidget {
   final GlobalKey<FormBuilderState> formKey;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/shimmer/chips_shimmer.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/chips_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 class RepostMasterShimmer extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:point_of_sales_cashier/common/widgets/access_permission/access_permission.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/common/widgets/access_permission/access_permission.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
 class CameraPermission extends StatelessWidget {
   const CameraPermission({super.key});

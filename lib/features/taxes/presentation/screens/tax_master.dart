@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/popup_confirmation.dart';
-import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_form.dart/tax_form_cubit.dart';
-import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_form.dart/tax_form_state.dart';
-import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_master/tax_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_master/tax_master_state.dart';
-import 'package:point_of_sales_cashier/features/taxes/data/models.dart';
-import 'package:point_of_sales_cashier/features/taxes/presentation/widgets/form/tax_form.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/popup_confirmation.dart';
+import 'package:lakoe_pos/features/taxes/application/cubit/tax_form.dart/tax_form_cubit.dart';
+import 'package:lakoe_pos/features/taxes/application/cubit/tax_form.dart/tax_form_state.dart';
+import 'package:lakoe_pos/features/taxes/application/cubit/tax_master/tax_master_cubit.dart';
+import 'package:lakoe_pos/features/taxes/application/cubit/tax_master/tax_master_state.dart';
+import 'package:lakoe_pos/features/taxes/data/models.dart';
+import 'package:lakoe_pos/features/taxes/presentation/widgets/form/tax_form.dart';
 import 'package:collection/collection.dart';
 
 class TaxMasterScreen extends StatelessWidget {

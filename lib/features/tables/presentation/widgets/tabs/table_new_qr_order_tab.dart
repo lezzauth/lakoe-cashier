@@ -1,12 +1,12 @@
 import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/custom_radio.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/tables/common/widgets/preview_qr_table.dart';
-import 'package:point_of_sales_cashier/features/tables/presentation/widgets/bottom_sheet/download_qr_order_content.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/form/custom_radio.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/features/tables/common/widgets/preview_qr_table.dart';
+import 'package:lakoe_pos/features/tables/presentation/widgets/bottom_sheet/download_qr_order_content.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableNewQrOrderTab extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:point_of_sales_cashier/features/taxes/data/models.dart';
-import 'package:point_of_sales_cashier/features/taxes/presentation/widgets/form/field/other_tax_field.dart';
+import 'package:lakoe_pos/features/taxes/data/models.dart';
+import 'package:lakoe_pos/features/taxes/presentation/widgets/form/field/other_tax_field.dart';
 
 class TaxFormState extends Equatable {
   final List<OtherTaxField> taxes;

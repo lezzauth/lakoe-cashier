@@ -1,7 +1,7 @@
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_repository/order_repository.dart';
-import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_state.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_state.dart';
 
 class OrderDetailCubit extends Cubit<OrderDetailState> {
   final OrderRepository _orderRepository = OrderRepositoryImpl();

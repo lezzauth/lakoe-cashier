@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/application/cubit/bank_verify_state.dart';
+import 'package:lakoe_pos/application/cubit/bank_verify_state.dart';
 import 'package:public_repository/public_repository.dart';
 
 class BankVerifyCubit extends Cubit<BankVerifyState> {

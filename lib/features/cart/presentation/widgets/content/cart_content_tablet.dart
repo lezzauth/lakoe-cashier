@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/content/cart_content.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/content/cart_content_edit.dart';
-import 'package:point_of_sales_cashier/features/orders/data/arguments/order_edit_argument.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_1.dart';
+import 'package:lakoe_pos/features/cart/presentation/widgets/content/cart_content.dart';
+import 'package:lakoe_pos/features/cart/presentation/widgets/content/cart_content_edit.dart';
+import 'package:lakoe_pos/features/orders/data/arguments/order_edit_argument.dart';
 
 class CartContentTablet extends StatefulWidget {
   const CartContentTablet({

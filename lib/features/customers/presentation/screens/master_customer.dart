@@ -1,17 +1,17 @@
 import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
-import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_filter_state.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_state.dart';
-import 'package:point_of_sales_cashier/features/customers/common/widgets/customer_contact/customer_contact_item.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
+import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
+import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_filter_cubit.dart';
+import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_filter_state.dart';
+import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_state.dart';
+import 'package:lakoe_pos/features/customers/common/widgets/customer_contact/customer_contact_item.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class MasterCustomerScreen extends StatefulWidget {
   const MasterCustomerScreen({super.key});

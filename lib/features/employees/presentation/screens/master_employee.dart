@@ -1,15 +1,15 @@
 import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
-import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_state.dart';
-import 'package:point_of_sales_cashier/features/employees/common/widgets/employee_item.dart';
-import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_state.dart';
+import 'package:lakoe_pos/features/employees/common/widgets/employee_item.dart';
+import 'package:lakoe_pos/features/employees/data/arguments/employee_edit_argument.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class MasterEmployeScreen extends StatefulWidget {
   const MasterEmployeScreen({super.key});

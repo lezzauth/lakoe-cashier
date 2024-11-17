@@ -5,15 +5,15 @@ import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logman/logman.dart';
 import 'package:pinput/pinput.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/otp_input/otp_input_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/otp_input/otp_input_state.dart';
-import 'package:point_of_sales_cashier/features/authentication/data/arguments/completing_data_argument.dart';
-import 'package:point_of_sales_cashier/features/authentication/data/arguments/otp_input_argument.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/otp_input/otp_input_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/otp_input/otp_input_state.dart';
+import 'package:lakoe_pos/features/authentication/data/arguments/completing_data_argument.dart';
+import 'package:lakoe_pos/features/authentication/data/arguments/otp_input_argument.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/sizes.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class OtpInputScreen extends StatelessWidget {
   const OtpInputScreen({super.key, required this.arguments});

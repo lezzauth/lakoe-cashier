@@ -1,6 +1,6 @@
 import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_state.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_state.dart';
 
 class BillMasterCubit extends Cubit<BillMasterState> {
   final AppDataProvider _appDataProvider = AppDataProvider();

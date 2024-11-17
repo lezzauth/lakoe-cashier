@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_filter_state.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_report_filter_state.dart';
 
 class CashierReportFilterCubit extends Cubit<CashierReportFilterState> {
   CashierReportFilterCubit()

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
+import 'package:lakoe_pos/common/widgets/form/form_label.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
 
 class DebitPaymentForm extends StatefulWidget {
   const DebitPaymentForm({super.key, required this.onSubmitted});
@@ -97,7 +97,7 @@ class _DebitPaymentFormState extends State<DebitPaymentForm> {
 // import 'package:flutter_form_builder/flutter_form_builder.dart';
 // import 'package:form_builder_validators/form_builder_validators.dart';
 // import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-// import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
+// import 'package:lakoe_pos/common/widgets/form/form_label.dart';
 
 // class DebitPaymentForm extends StatefulWidget {
 //   const DebitPaymentForm({super.key});

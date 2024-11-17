@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_repository/order_repository.dart';
-import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_completed_state.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_completed_state.dart';
 
 class OrderMasterCompletedCubit extends Cubit<OrderMasterCompletedState> {
   final OrderRepository _orderRepository = OrderRepositoryImpl();

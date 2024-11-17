@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/methods/radio.dart';
-import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method_not_available.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/radio.dart';
+import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/select_payment_method_not_available.dart';
 
 class PaymentMethodRadioGroup extends StatelessWidget {
   final String value;

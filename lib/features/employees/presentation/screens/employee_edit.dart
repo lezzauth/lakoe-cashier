@@ -3,15 +3,15 @@ import 'dart:io';
 import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_state.dart';
-import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
-import 'package:point_of_sales_cashier/features/employees/presentation/widgets/forms/employee_form.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_state.dart';
+import 'package:lakoe_pos/features/employees/data/arguments/employee_edit_argument.dart';
+import 'package:lakoe_pos/features/employees/presentation/widgets/forms/employee_form.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/image_picker_field.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EmployeeEditScreen extends StatefulWidget {

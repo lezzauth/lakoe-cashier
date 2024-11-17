@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_state.dart';
+import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_state.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableMasterCubit extends Cubit<TableMasterState> {

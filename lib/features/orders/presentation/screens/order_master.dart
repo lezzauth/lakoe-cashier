@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
-import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_completed_cubit.dart';
-import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_completed/order_online/order_online_tab.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_completed/order_outlet/order_outlet_tab.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_online/order_online_tab.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_outlet/order_outlet_tab.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/ui/tab/tab_container.dart';
+import 'package:lakoe_pos/common/widgets/ui/tab/tab_item.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_completed_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_filter_cubit.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/order_completed/order_online/order_online_tab.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/order_completed/order_outlet/order_outlet_tab.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/order_online/order_online_tab.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/order_outlet/order_outlet_tab.dart';
 
 class OrderMasterScreen extends StatelessWidget {
   const OrderMasterScreen({super.key});

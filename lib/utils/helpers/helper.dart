@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
-import 'package:point_of_sales_cashier/utils/constants/bank_name_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/constants/bank_name_strings.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class THelper {

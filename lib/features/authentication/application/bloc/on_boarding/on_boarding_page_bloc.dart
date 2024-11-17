@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/bloc/on_boarding/on_boarding_page_event.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/bloc/on_boarding/on_boarding_page_state.dart';
+import 'package:lakoe_pos/features/authentication/application/bloc/on_boarding/on_boarding_page_event.dart';
+import 'package:lakoe_pos/features/authentication/application/bloc/on_boarding/on_boarding_page_state.dart';
 
 class OnBoardingPageBloc
     extends Bloc<OnBoardingPageEvent, OnBoardingPageState> {
