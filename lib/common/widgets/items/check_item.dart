@@ -47,7 +47,7 @@ class CheckItem extends StatelessWidget {
                       child: Center(
                         child: UiIcons(
                           TIcons.check,
-                          size: 10,
+                          size: 16,
                           color: TColors.neutralLightLightest,
                         ),
                       ),

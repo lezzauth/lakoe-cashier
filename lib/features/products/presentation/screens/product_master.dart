@@ -9,6 +9,7 @@ import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
+import 'package:lakoe_pos/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
 import 'package:lakoe_pos/features/products/application/cubit/category/product_master_category_cubit.dart';
 import 'package:lakoe_pos/features/products/application/cubit/category/product_master_category_state.dart';
 import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_cubit.dart';
@@ -178,6 +179,15 @@ class _ProductMasterState extends State<ProductMaster> {
                 );
           },
         ),
+        BlocListener<ProductMasterCubit, ProductMasterState>(
+          listener: (context, state) {
+            if (state is ProductMasterLoadSuccess) {
+              if (state.products.length == 1) {
+                context.read<OnboardingTransactionCubit>().init();
+              }
+            }
+          },
+        )
       ],
       child: Scaffold(
         appBar: CustomAppbar(

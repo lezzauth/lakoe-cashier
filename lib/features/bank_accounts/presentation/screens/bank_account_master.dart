@@ -7,6 +7,7 @@ import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_
 import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_filter_state.dart';
 import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
 import 'package:lakoe_pos/features/bank_accounts/presentation/widgets/bank_account_list.dart';
+import 'package:lakoe_pos/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class BankAccountMasterScreen extends StatelessWidget {
@@ -64,6 +65,12 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
           ),
           BlocListener<BankAccountMasterCubit, BankAccountMasterState>(
             listener: (context, state) {
+              if (state is BankAccountMasterLoadSuccess) {
+                if (state.bankAccounts.length == 1) {
+                  context.read<OnboardingTransactionCubit>().init();
+                }
+              }
+
               if (state is BankAccountMasterActionSuccess) {
                 _onRefresh();
               }

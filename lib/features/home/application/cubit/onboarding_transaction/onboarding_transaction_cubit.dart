@@ -12,8 +12,8 @@ class OnboardingTransactionCubit extends Cubit<OnboardingTransactionState> {
   Future<void> init() async {
     try {
       emit(OnboardingTransactionLoadInProgress());
-      final accounts = await _ownerRepository.bank.findAll();
       final products = await _productRepository.findAll(FindAllProductDto());
+      final accounts = await _ownerRepository.bank.findAll();
       emit(OnboardingTransactionLoadSuccess(
         isBankAccountCompleted: accounts.isNotEmpty,
         isProductCompleted: products.isNotEmpty,

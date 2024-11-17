@@ -42,6 +42,8 @@ class _BankAccountFormState extends State<BankAccountForm> {
   void _onSubmit() async {
     if (!mounted) return;
 
+    FocusScope.of(context).unfocus();
+
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
     if (!isFormValid) {
       return;

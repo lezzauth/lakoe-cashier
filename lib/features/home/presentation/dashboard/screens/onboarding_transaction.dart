@@ -19,6 +19,12 @@ class OnboardingTransactionScreen extends StatefulWidget {
 
 class _OnboardingTransactionScreenState
     extends State<OnboardingTransactionScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _onInit;
+  }
+
   void _onInit() {
     context.read<OnboardingTransactionCubit>().init();
   }
