@@ -219,7 +219,7 @@ class App extends StatelessWidget {
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: MaterialApp(
-          title: "Point of Sales",
+          title: "Lakoe POS",
           theme: TAppTheme.lightTheme,
           darkTheme: TAppTheme.darkTheme,
           themeMode: ThemeMode.light,

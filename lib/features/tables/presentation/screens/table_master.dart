@@ -146,6 +146,7 @@ class _TableMasterState extends State<TableMaster> {
             onRefresh: _onRefresh,
             child: BlocBuilder<TableMasterCubit, TableMasterState>(
               builder: (context, state) => ErrorWrapper(
+                connectionIssue: state is ConnectionIssue,
                 fetchError: state is TableMasterLoadFailure,
                 onRefresh: _onRefresh,
                 child: switch (state) {

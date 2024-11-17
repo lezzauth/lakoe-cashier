@@ -1,3 +1,5 @@
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:android_intent_plus/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
@@ -7,6 +9,7 @@ import 'package:lakoe_pos/utils/constants/image_strings.dart';
 class ErrorWrapper extends StatefulWidget {
   const ErrorWrapper({
     super.key,
+    this.connectionIssue = false,
     this.fetchError = false,
     this.actionError = false,
     this.actionErrorDisplay,
@@ -15,6 +18,7 @@ class ErrorWrapper extends StatefulWidget {
     required this.child,
   });
 
+  final bool connectionIssue;
   final bool fetchError;
   final bool actionError;
   final Widget? fetchErrorDisplay;
@@ -31,9 +35,7 @@ class _ErrorWrapperState extends State<ErrorWrapper> {
   void didUpdateWidget(ErrorWrapper oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // Check if the fetchError has changed from false to true
     if (oldWidget.fetchError == false && widget.fetchError == true) {
-      // Show a modal bottom sheet if fetchError is true
       SchedulerBinding.instance.addPostFrameCallback(
         (timeStamp) {
           _showFetchErrorModal();
@@ -48,6 +50,22 @@ class _ErrorWrapperState extends State<ErrorWrapper> {
         },
       );
     }
+
+    if (oldWidget.connectionIssue == false && widget.connectionIssue == true) {
+      SchedulerBinding.instance.addPostFrameCallback(
+        (timeStamp) {
+          _showConnectionErrorModal();
+        },
+      );
+    }
+  }
+
+  Future<void> openSettings() async {
+    final intent = AndroidIntent(
+      action: 'android.settings.SETTINGS',
+      flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+    );
+    await intent.launch();
   }
 
   void _showFetchErrorModal() {
@@ -70,12 +88,48 @@ class _ErrorWrapperState extends State<ErrorWrapper> {
                   actionTitlePrimary: "Coba Lagi",
                   onActionPrimary: () async {
                     Navigator.pop(context);
-
+                    await Future.delayed(Duration(seconds: 2));
                     if (widget.onRefresh != null) {
-                      await widget.onRefresh!();
+                      widget.onRefresh!();
                     }
                   },
                 ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showConnectionErrorModal() {
+    showModalBottomSheet(
+      context: context,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (context) {
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {},
+          child: CustomBottomsheet(
+            hasGrabber: false,
+            child: ErrorDisplay(
+              imageSrc: TImages.noConnection,
+              title: "Koneksi internet aman ngga?",
+              description:
+                  "Coba cek WiFi atau kuota internet kamu dulu terus bisa dicoba lagi, ya!",
+              actionTitlePrimary: "Pengaturan",
+              onActionPrimary: () {
+                Navigator.pop(context);
+                openSettings();
+              },
+              actionTitleSecondary: "Coba Lagi",
+              onActionSecondary: () async {
+                Navigator.pop(context);
+                await Future.delayed(Duration(seconds: 2));
+                if (widget.onRefresh != null) {
+                  widget.onRefresh!();
+                }
+              },
+            ),
           ),
         );
       },

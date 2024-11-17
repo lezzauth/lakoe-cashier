@@ -122,6 +122,7 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
         bool isLoading = state is EmployeeMasterActionInProgress;
 
         return ErrorWrapper(
+          connectionIssue: state is ConnectionIssue,
           actionError: state is EmployeeMasterActionFailure,
           child: Scaffold(
             appBar: CustomAppbar(

@@ -2,6 +2,7 @@ import 'package:customer_repository/customer_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/utils/helpers/error_handler.dart';
 import 'package:logman/logman.dart';
 import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_state.dart';
 
@@ -29,6 +30,16 @@ class CustomerMasterCubit extends Cubit<CustomerMasterState> {
       final customers = await customerRepository.findAll(dto);
       initCustomers.addAll(customers);
       emit(CustomerMasterLoadSuccess(customers: initCustomers));
+    } on DioException catch (e) {
+      handleDioException<CustomerMasterState>(
+        e,
+        emit: (state) => emit(state),
+        connectionIssueState: ConnectionIssue(
+          'Failed to resolve hostname. Please check your DNS or internet connection.',
+        ),
+        timeoutState: ConnectionIssue('Request timed out. Please try again.'),
+        unexpectedState: CustomerMasterLoadFailure(e.toString()),
+      );
     } catch (e) {
       Logman.instance.error(e);
       emit(CustomerMasterLoadFailure(e.toString()));

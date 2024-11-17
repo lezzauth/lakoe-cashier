@@ -85,6 +85,7 @@ class _CategoryMasterState extends State<CategoryMaster> {
             onRefresh: onRefresh,
             child: BlocBuilder<CategoryMasterCubit, CategoryMasterState>(
               builder: (context, state) => ErrorWrapper(
+                connectionIssue: state is ConnectionIssue,
                 fetchError: state is CategoryMasterLoadFailure,
                 onRefresh: onRefresh,
                 child: switch (state) {

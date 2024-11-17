@@ -72,3 +72,12 @@ final class CustomerReachesLimit extends CustomerMasterState {
   @override
   List<Object?> get props => [res];
 }
+
+final class ConnectionIssue extends CustomerMasterState {
+  final String message;
+
+  ConnectionIssue(this.message);
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}

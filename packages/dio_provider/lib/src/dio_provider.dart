@@ -7,12 +7,12 @@ import 'package:dio_provider/src/models/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:logman/logman.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/app.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DioProvider {
   final Dio _dio = Dio(BaseOptions(baseUrl: AppConfigProvider.apiUrl));
@@ -134,7 +134,7 @@ class DioProvider {
 
   void _showConnectionErrorToast() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (navigatorKey.currentContext != null && !dioProviderCubit.state) {
+      if (navigatorKey.currentContext != null) {
         CustomToast.show(
           "Cek lagi koneksi internet kamu, ya!",
           duration: 2,

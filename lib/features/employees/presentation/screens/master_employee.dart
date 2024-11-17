@@ -59,6 +59,7 @@ class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
           onRefresh: _onRefresh,
           child: BlocBuilder<EmployeeMasterCubit, EmployeeMasterState>(
             builder: (context, state) => ErrorWrapper(
+              connectionIssue: state is ConnectionIssue,
               fetchError: state is EmployeeMasterLoadFailure,
               child: switch (state) {
                 EmployeeMasterLoadSuccess(:final employees) => ListView.builder(

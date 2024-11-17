@@ -88,6 +88,7 @@ class _MasterCustomerState extends State<MasterCustomer> {
             backgroundColor: TColors.neutralLightLightest,
             child: BlocBuilder<CustomerMasterCubit, CustomerMasterState>(
               builder: (context, state) => ErrorWrapper(
+                connectionIssue: state is ConnectionIssue,
                 fetchError: state is CustomerMasterLoadFailure,
                 onRefresh: _onRefresh,
                 child: switch (state) {

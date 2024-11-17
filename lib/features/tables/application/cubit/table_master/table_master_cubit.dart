@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_state.dart';
+import 'package:lakoe_pos/utils/helpers/error_handler.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableMasterCubit extends Cubit<TableMasterState> {
@@ -37,6 +38,16 @@ class TableMasterCubit extends Cubit<TableMasterState> {
       final tables = await _tableRepository.findAll(dto);
       initTables.addAll(tables);
       emit(TableMasterLoadSuccess(tables: initTables));
+    } on DioException catch (e) {
+      handleDioException<TableMasterState>(
+        e,
+        emit: (state) => emit(state),
+        connectionIssueState: ConnectionIssue(
+          'Failed to resolve hostname. Please check your DNS or internet connection.',
+        ),
+        timeoutState: ConnectionIssue('Request timed out. Please try again.'),
+        unexpectedState: TableMasterLoadFailure(e.toString()),
+      );
     } catch (e) {
       emit(TableMasterLoadFailure(e.toString()));
     }

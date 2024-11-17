@@ -226,6 +226,7 @@ class _ProductMasterState extends State<ProductMaster> {
                 Expanded(
                   child: BlocBuilder<ProductMasterCubit, ProductMasterState>(
                     builder: (context, state) => ErrorWrapper(
+                      connectionIssue: state is ConnectionIssue,
                       fetchError: state is ProductMasterLoadFailure,
                       onRefresh: onRefresh,
                       child: switch (state) {

@@ -140,6 +140,7 @@ class _NewProductScreenState extends State<NewProductScreen>
         builder: (context, state) {
           bool isFormValid = state is! ProductMasterActionInProgress;
           return ErrorWrapper(
+            connectionIssue: state is ConnectionIssue,
             actionError: state is ProductMasterActionFailure,
             child: Scaffold(
               appBar: CustomAppbar(

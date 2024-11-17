@@ -63,3 +63,12 @@ final class EmployeeMasterActionError extends EmployeeMasterState {
   @override
   List<Object?> get props => [res];
 }
+
+final class ConnectionIssue extends EmployeeMasterState {
+  final String message;
+
+  ConnectionIssue(this.message);
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}
