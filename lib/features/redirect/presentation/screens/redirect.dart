@@ -106,8 +106,6 @@ class _RedirectScreenState extends State<RedirectScreen> {
         final TokenProvider tokenProvider = TokenProvider();
         final token = await tokenProvider.getAuthToken();
 
-        if (!mounted) return;
-
         if (state is AuthLoadInProgress) {
           Logman.instance
               .info('AuthState is in progress, waiting for result...');
@@ -115,6 +113,7 @@ class _RedirectScreenState extends State<RedirectScreen> {
         }
 
         if (!navigated && (token == null || token.isEmpty)) {
+          Logman.instance.info("[Redirect] Token is Empty");
           navigated = true;
           Navigator.popAndPushNamed(context, "/on-boarding");
           return;
@@ -122,9 +121,10 @@ class _RedirectScreenState extends State<RedirectScreen> {
 
         if (state is ConnectionIssue && !isBottomSheetVisible) {
           isBottomSheetVisible = true;
+
           if (!mounted) return;
 
-          showModalBottomSheet(
+          await showModalBottomSheet(
             context: context,
             enableDrag: false,
             isDismissible: false,
@@ -156,22 +156,27 @@ class _RedirectScreenState extends State<RedirectScreen> {
                 ),
               );
             },
-          ).whenComplete(() => isBottomSheetVisible = false);
+          ).whenComplete(() {
+            isBottomSheetVisible = false;
+          });
           return;
         }
 
         if (!navigated) {
           if (state is AuthReady) {
+            Logman.instance.info("[Redirect] Auth is ready");
             navigated = true;
             Navigator.popAndPushNamed(context, "/cashier");
+            return;
           } else if ((state is AuthNotReady) ||
               (state is TokenExpired &&
                   state.res.statusCode == 401 &&
                   !state.isTokenRefreshed) ||
               (state is NotFound && state.res.statusCode == 404)) {
-            await tokenProvider.clearAll();
+            Logman.instance.info("[Redirect] Non-Auth is ready");
             navigated = true;
             Navigator.popAndPushNamed(context, "/on-boarding");
+            return;
           }
         }
       },

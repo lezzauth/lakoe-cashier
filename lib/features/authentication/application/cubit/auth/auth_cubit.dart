@@ -41,6 +41,7 @@ class AuthCubit extends Cubit<AuthState> {
       if (authToken == null) {
         final refreshToken = await _tokenProvider.getAuthRefreshToken();
         if (refreshToken == null) {
+          await _tokenProvider.clearAll();
           emit(AuthNotReady());
           return;
         }
@@ -82,6 +83,7 @@ class AuthCubit extends Cubit<AuthState> {
       Logman.instance.info('AuthCubit Catch Initialize: ${e.toString()}');
 
       if (e is DioException) {
+        Logman.instance.info("DioException");
         if (e.type == DioExceptionType.connectionError) {
           final socketException = e.error as SocketException?;
           if (socketException != null &&
@@ -97,20 +99,36 @@ class AuthCubit extends Cubit<AuthState> {
             ));
           }
           return;
-        } else if (e is PlatformException &&
-            e.message?.contains("BadPaddingException") == true) {
-          emit(AuthNotReady());
-          return;
-        } else if (e.toString().contains("Null")) {
-          emit(AuthNotReady());
-          return;
-        } else if (e is TimeoutException) {
-          emit(ConnectionIssue(
-            message: e.message ?? "Request timed out. Please try again.",
-          ));
-          return;
         }
+      } else if (e is PlatformException) {
+        Logman.instance.info("PlatformException");
+        await _tokenProvider.clearAll();
+        emit(AuthNotReady());
+        return;
+      } else if (e is TimeoutException) {
+        emit(ConnectionIssue(
+          message: e.message ?? "Request timed out. Please try again.",
+        ));
+        return;
+      } else if (e.toString().contains("Null")) {
+        await _tokenProvider.clearAll();
+        emit(AuthNotReady());
+        return;
+      } else if (e is SocketException) {
+        Logman.instance.info("SocketException: ${e.message}");
+        emit(ConnectionIssue(
+          message:
+              'Network error occurred. Please check your internet connection.',
+        ));
+        return;
+      } else if (e is FormatException) {
+        Logman.instance.info("FormatException: ${e.message}");
+        await _tokenProvider.clearAll();
+        emit(AuthNotReady());
+        return;
+      }
 
+      if (e is DioException) {
         final resError = e.error as DioExceptionModel?;
 
         if (resError?.statusCode == 401) {
@@ -127,10 +145,17 @@ class AuthCubit extends Cubit<AuthState> {
         } else if (resError?.statusCode == 500) {
           emit(ErrorInitialize(message: "Internal server error occurred."));
           return;
+        } else {
+          await _tokenProvider.clearAll();
+          emit(AuthNotReady());
+          return;
         }
+      } else {
+        Logman.instance.info("Non DioException $e");
+        await _tokenProvider.clearAll();
+        emit(AuthNotReady());
+        return;
       }
-
-      emit(AuthNotReady());
     } finally {
       isInitializing = false;
     }
