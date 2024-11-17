@@ -5,21 +5,17 @@ import 'package:dio/dio.dart';
 import 'package:dio_provider/src/logging/logman_dio_interceptor.dart';
 import 'package:dio_provider/src/models/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:logman/logman.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
 import 'package:point_of_sales_cashier/app.dart';
-
-bool isShowingBottomSheet = false;
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DioProvider {
-  static final Dio _dio = Dio(
-    BaseOptions(
-      baseUrl: AppConfigProvider.apiUrl,
-    ),
-  );
+  final Dio _dio = Dio(BaseOptions(baseUrl: AppConfigProvider.apiUrl));
 
   DioProvider() {
     _dio.interceptors.add(LogmanDioInterceptor());
@@ -30,9 +26,8 @@ class DioProvider {
     ));
 
     _dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) => _handleRequest(options, handler),
-      onError: (DioException e, ErrorInterceptorHandler handler) =>
-          _handleError(e, handler),
+      onRequest: _handleRequest,
+      onError: _handleError,
     ));
   }
 
@@ -58,7 +53,7 @@ class DioProvider {
 
   void _showNoConnectionToast() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (navigatorKey.currentContext != null && !isShowingBottomSheet) {
+      if (navigatorKey.currentContext != null && !dioProviderCubit.state) {
         CustomToast.show(
           "Tidak ada koneksi internet. Periksa koneksi kamu!",
           duration: 2,
@@ -68,26 +63,46 @@ class DioProvider {
   }
 
   Future<void> _handleError(
-      DioException e, ErrorInterceptorHandler handler) async {
+    DioException e,
+    ErrorInterceptorHandler handler,
+  ) async {
     if (e.response != null) {
-      switch (e.response!.statusCode) {
-        case 401:
-          return handler.reject(
-              _createDioException(e, "jwt expired", "Token has expired"));
-        case 402:
-          return handler.reject(_createDioException(
-              e, "Insufficient quota of item", "Quota limit has been reached"));
-        case 404:
-          return handler.reject(_createDioException(
-              e, "Client error - 404", "Client error - 404"));
-        case 502:
-          _showMaintenanceBottomSheet();
-          break;
-      }
-    }
+      try {
+        final errorModel = DioExceptionModel.fromJson(
+            e.response!.data as Map<String, dynamic>);
 
-    if (_isConnectionError(e)) {
+        switch (e.response!.statusCode) {
+          case 401:
+            return handler.reject(
+                _createDioException(e, "jwt expired", "Token has expired"));
+          case 402:
+            return handler.reject(_createDioException(e,
+                "Insufficient quota of item", "Quota limit has been reached"));
+          case 404:
+            return handler.reject(_createDioException(
+                e, "Client error - 404", "Client error - 404"));
+          case 502:
+            _showMaintenanceBottomSheet();
+            break;
+        }
+        return handler.reject(DioException(
+          requestOptions: e.requestOptions,
+          error: errorModel,
+          type: DioExceptionType.badResponse,
+        ));
+      } catch (e) {
+        Logman.instance.error("Error parsing error response: $e");
+      }
+    } else if (_isConnectionError(e)) {
       _showConnectionErrorToast();
+      return handler.reject(
+        DioException(
+          requestOptions: e.requestOptions,
+          error: e.error,
+          message: e.message,
+          type: DioExceptionType.connectionError,
+        ),
+      );
     } else {
       _handleBadResponse(e, handler);
     }
@@ -119,7 +134,7 @@ class DioProvider {
 
   void _showConnectionErrorToast() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (navigatorKey.currentContext != null && !isShowingBottomSheet) {
+      if (navigatorKey.currentContext != null && !dioProviderCubit.state) {
         CustomToast.show(
           "Cek lagi koneksi internet kamu, ya!",
           duration: 2,
@@ -130,8 +145,8 @@ class DioProvider {
   }
 
   void _showMaintenanceBottomSheet() {
-    if (!isShowingBottomSheet) {
-      isShowingBottomSheet = true;
+    if (!dioProviderCubit.state) {
+      dioProviderCubit.setBottomSheetState(true);
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (navigatorKey.currentContext != null) {
           showModalBottomSheet(
@@ -148,7 +163,7 @@ class DioProvider {
                   actionTitlePrimary: "Oke. Mengerti",
                   onActionPrimary: () {
                     Navigator.pop(context);
-                    isShowingBottomSheet = false;
+                    dioProviderCubit.setBottomSheetState(false);
                   },
                 ),
               );
@@ -162,9 +177,9 @@ class DioProvider {
   void _handleBadResponse(DioException e, ErrorInterceptorHandler handler) {
     final responseData = e.response?.data;
     if (responseData is Map<String, dynamic>) {
-      String message = responseData['message'];
-      String error = responseData['error'];
-      int statusCode = responseData['statusCode'];
+      String message = responseData['message'] ?? 'Unknown error';
+      String error = responseData['error'] ?? 'Unknown error';
+      int statusCode = responseData['statusCode'] ?? 0;
 
       return handler.reject(DioException(
         requestOptions: e.requestOptions,
@@ -178,6 +193,63 @@ class DioProvider {
       ));
     } else {
       log("Response is not a Map: $responseData");
+      return handler.reject(DioException(
+        requestOptions: e.requestOptions,
+        error: "Unknown error",
+        message: "Unexpected response format",
+        type: DioExceptionType.badResponse,
+      ));
     }
   }
+}
+
+class DioProviderCubit extends Cubit<bool> {
+  DioProviderCubit() : super(false);
+
+  void setBottomSheetState(bool value) {
+    emit(value);
+  }
+}
+
+final dioProviderCubit = DioProviderCubit();
+
+// Enhancement: Adding retry mechanism for failed requests
+class RetryInterceptor extends Interceptor {
+  final Dio dio;
+  final int maxRetries;
+  final int retryDelay;
+
+  RetryInterceptor(
+      {required this.dio, this.maxRetries = 3, this.retryDelay = 1000});
+
+  @override
+  Future<void> onError(
+      DioException err, ErrorInterceptorHandler handler) async {
+    if (_shouldRetry(err) && err.requestOptions.extra["retry_count"] == null) {
+      err.requestOptions.extra["retry_count"] = 1;
+      for (int retryAttempt = 0; retryAttempt < maxRetries; retryAttempt++) {
+        await Future.delayed(Duration(milliseconds: retryDelay));
+        try {
+          final response = await dio.fetch(err.requestOptions);
+          return handler.resolve(response);
+        } catch (e) {
+          if (retryAttempt == maxRetries - 1) {
+            return super.onError(err, handler);
+          }
+        }
+      }
+    }
+    return super.onError(err, handler);
+  }
+
+  bool _shouldRetry(DioException err) {
+    return err.type == DioExceptionType.connectionTimeout ||
+        err.type == DioExceptionType.receiveTimeout ||
+        err.type == DioExceptionType.sendTimeout;
+  }
+}
+
+// Adding retry interceptor
+void addRetryInterceptor(Dio dio) {
+  dio.interceptors.add(RetryInterceptor(dio: dio));
 }

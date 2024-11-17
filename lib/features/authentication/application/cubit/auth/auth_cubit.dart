@@ -79,7 +79,7 @@ class AuthCubit extends Cubit<AuthState> {
         profile: profile,
       ));
     } catch (e) {
-      Logman.instance.info('AuthCubit Initialize: ${e.toString()}');
+      Logman.instance.info('AuthCubit Catch Initialize: ${e.toString()}');
 
       if (e is DioException) {
         if (e.type == DioExceptionType.connectionError) {
@@ -96,6 +96,18 @@ class AuthCubit extends Cubit<AuthState> {
                   'No internet connection. Please check your internet connection.',
             ));
           }
+          return;
+        } else if (e is PlatformException &&
+            e.message?.contains("BadPaddingException") == true) {
+          emit(AuthNotReady());
+          return;
+        } else if (e.toString().contains("Null")) {
+          emit(AuthNotReady());
+          return;
+        } else if (e is TimeoutException) {
+          emit(ConnectionIssue(
+            message: e.message ?? "Request timed out. Please try again.",
+          ));
           return;
         }
 
@@ -116,18 +128,6 @@ class AuthCubit extends Cubit<AuthState> {
           emit(ErrorInitialize(message: "Internal server error occurred."));
           return;
         }
-      } else if (e is PlatformException &&
-          e.message?.contains("BadPaddingException") == true) {
-        emit(AuthNotReady());
-        return;
-      } else if (e.toString().contains("Null")) {
-        emit(AuthNotReady());
-        return;
-      } else if (e is TimeoutException) {
-        emit(ConnectionIssue(
-          message: e.message ?? "Request timed out. Please try again.",
-        ));
-        return;
       }
 
       emit(AuthNotReady());

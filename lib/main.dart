@@ -1,5 +1,6 @@
 import 'package:app_config_provider/app_config_provider.dart';
 import 'package:app_data_provider/app_data_provider.dart';
+import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:point_of_sales_cashier/app.dart';
@@ -14,6 +15,9 @@ void main() async {
 
   await dotenv.load(fileName: ".env");
   await initializeDateFormatting("id_ID", null);
+
+  final dioProvider = DioProvider();
+  addRetryInterceptor(dioProvider.dio);
 
   runApp(const App(flavor: 'Production'));
 }
