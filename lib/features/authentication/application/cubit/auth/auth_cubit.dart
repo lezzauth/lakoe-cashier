@@ -83,7 +83,6 @@ class AuthCubit extends Cubit<AuthState> {
       Logman.instance.info('AuthCubit Catch Initialize: ${e.toString()}');
 
       if (e is DioException) {
-        Logman.instance.info("DioException");
         if (e.type == DioExceptionType.connectionError) {
           final socketException = e.error as SocketException?;
           if (socketException != null &&
@@ -101,7 +100,6 @@ class AuthCubit extends Cubit<AuthState> {
           return;
         }
       } else if (e is PlatformException) {
-        Logman.instance.info("PlatformException");
         await _tokenProvider.clearAll();
         emit(AuthNotReady());
         return;
@@ -115,14 +113,12 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthNotReady());
         return;
       } else if (e is SocketException) {
-        Logman.instance.info("SocketException: ${e.message}");
         emit(ConnectionIssue(
           message:
               'Network error occurred. Please check your internet connection.',
         ));
         return;
       } else if (e is FormatException) {
-        Logman.instance.info("FormatException: ${e.message}");
         await _tokenProvider.clearAll();
         emit(AuthNotReady());
         return;
@@ -151,7 +147,6 @@ class AuthCubit extends Cubit<AuthState> {
           return;
         }
       } else {
-        Logman.instance.info("Non DioException $e");
         await _tokenProvider.clearAll();
         emit(AuthNotReady());
         return;

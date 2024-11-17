@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/order/cashier_order_state.dart';
+import 'package:logman/logman.dart';
 
 class CashierOrderCubit extends Cubit<CashierOrderState> {
   final CashierRepository _cashierRepository = CashierRepositoryImpl();
@@ -21,9 +20,9 @@ class CashierOrderCubit extends Cubit<CashierOrderState> {
       emit(CashierOrderLoadSuccess(
         orders: orders,
       ));
-    } catch (e, stackTrace) {
-      log("findAll err: ${e.toString()}",
-          name: "OrderCubit.findAll", stackTrace: stackTrace);
+    } catch (e) {
+      Logman.instance
+          .error("[CashierOrderCubit] Catch findAll(): ${e.toString()}");
       emit(CashierOrderLoadFailure(e.toString()));
     }
   }
