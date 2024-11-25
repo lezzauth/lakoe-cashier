@@ -120,8 +120,19 @@ class _CategoryMasterState extends State<CategoryMaster> {
                           SliverList.builder(
                             itemCount: categories.length,
                             itemBuilder: (context, index) {
+                              List<CategoryModel> sortedCategories =
+                                  List.from(categories);
+                              sortedCategories.sort((a, b) {
+                                if (a.name.contains("Umum")) {
+                                  return -1;
+                                } else if (b.name.contains("Umum")) {
+                                  return 1;
+                                }
+                                return 0;
+                              });
+
                               CategoryModel category =
-                                  categories.elementAt(index);
+                                  sortedCategories.elementAt(index);
 
                               return Column(
                                 children: [
