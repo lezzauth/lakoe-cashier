@@ -14,7 +14,7 @@ final class OrderMasterLoadInProgress extends OrderMasterState {
 }
 
 final class OrderMasterLoadSuccess extends OrderMasterState {
-  final List<OrderCashierItemResponse> orders;
+  final List<OrderCashierItemRes> orders;
 
   OrderMasterLoadSuccess({
     required this.orders,

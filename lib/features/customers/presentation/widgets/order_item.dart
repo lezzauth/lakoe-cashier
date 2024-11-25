@@ -24,7 +24,7 @@ class OrderItem extends StatelessWidget {
     bool isCancel = order.status == "CANCELLED";
     String tag = isPaid
         ? order.transactions.first.paymentMethod
-        : (isCancel ? "CANCEL" : "NONE");
+        : (isCancel ? "CANCEL" : "UNPAID");
 
     return GestureDetector(
       onTap: () {

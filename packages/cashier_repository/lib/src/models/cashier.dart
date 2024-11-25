@@ -116,8 +116,8 @@ class OrderCashierItemTable with _$OrderCashierItemTable {
 }
 
 @freezed
-class OrderCashierItemResponse with _$OrderCashierItemResponse {
-  const factory OrderCashierItemResponse({
+class OrderCashierItemRes with _$OrderCashierItemRes {
+  const factory OrderCashierItemRes({
     required String id,
     required int no,
     required String price,
@@ -125,33 +125,34 @@ class OrderCashierItemResponse with _$OrderCashierItemResponse {
     required String customerType,
     required String type,
     required String source,
+    required String status,
     OrderCashierItemCustomer? customer,
     OrderCashierItemTable? table,
-  }) = _OrderCashierItemResponse;
+  }) = _OrderCashierItemRes;
 
-  factory OrderCashierItemResponse.fromJson(Map<String, Object?> json) =>
-      _$OrderCashierItemResponseFromJson(json);
+  factory OrderCashierItemRes.fromJson(Map<String, Object?> json) =>
+      _$OrderCashierItemResFromJson(json);
 }
 
 @freezed
-class RegenerateCashierTokenResponse with _$RegenerateCashierTokenResponse {
-  const factory RegenerateCashierTokenResponse({
+class RegenerateCashierTokenRes with _$RegenerateCashierTokenRes {
+  const factory RegenerateCashierTokenRes({
     required String token,
-  }) = _RegenerateCashierTokenResponse;
+  }) = _RegenerateCashierTokenRes;
 
-  factory RegenerateCashierTokenResponse.fromJson(Map<String, Object?> json) =>
-      _$RegenerateCashierTokenResponseFromJson(json);
+  factory RegenerateCashierTokenRes.fromJson(Map<String, Object?> json) =>
+      _$RegenerateCashierTokenResFromJson(json);
 }
 
 @freezed
-class CompleteOrderResponse with _$CompleteOrderResponse {
-  const factory CompleteOrderResponse({
+class CompleteOrderRes with _$CompleteOrderRes {
+  const factory CompleteOrderRes({
     required Order order,
     required Transaction transaction,
-  }) = _CompleteOrderResponse;
+  }) = _CompleteOrderRes;
 
-  factory CompleteOrderResponse.fromJson(Map<String, Object?> json) =>
-      _$CompleteOrderResponseFromJson(json);
+  factory CompleteOrderRes.fromJson(Map<String, Object?> json) =>
+      _$CompleteOrderResFromJson(json);
 }
 
 @freezed

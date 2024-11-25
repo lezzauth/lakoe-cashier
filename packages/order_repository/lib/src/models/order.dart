@@ -13,6 +13,7 @@ class OrderItemRes with _$OrderItemRes {
     required String customerType,
     required String type,
     required String source,
+    required String status,
     OrderItemCustomer? customer,
     OrderItemTable? table,
   }) = _OrderItemRes;

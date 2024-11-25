@@ -87,14 +87,11 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
                               SliverList.builder(
                                 itemCount: orders.length,
                                 itemBuilder: (context, index) {
-                                  final reversedIndex =
-                                      orders.length - 1 - index;
+                                  OrderCashierItemRes order =
+                                      orders.elementAt(index);
 
-                                  OrderCashierItemResponse order =
-                                      orders.elementAt(reversedIndex);
-                                  bool isPaid = order.paymentStatus == "PAID";
-                                  bool isCancel =
-                                      order.paymentStatus == "CANCELLED";
+                                  bool isPaid = order.status == "COMPLETED";
+                                  bool isCancel = order.status == "CANCELLED";
 
                                   return OrderListItem(
                                     isPaid: isPaid,

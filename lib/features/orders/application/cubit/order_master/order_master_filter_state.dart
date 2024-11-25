@@ -13,7 +13,7 @@ class OrderMasterFilterState extends Equatable {
     this.source,
     this.status,
     this.search,
-    this.sort,
+    this.sort = "NEWEST",
   });
 
   FindAllOrderCashierDto get toFindAllOrderDto => FindAllOrderCashierDto(

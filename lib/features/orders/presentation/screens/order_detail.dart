@@ -5,6 +5,7 @@ import 'package:cashier_repository/cashier_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_cubit.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
@@ -260,6 +261,7 @@ class _OrderDetailState extends State<OrderDetail> {
 
             if (!context.mounted) return;
             Navigator.pop(context);
+            context.read<OrderMasterCubit>().init();
           },
         );
       },

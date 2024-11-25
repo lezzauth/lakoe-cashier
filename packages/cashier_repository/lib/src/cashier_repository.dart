@@ -13,21 +13,21 @@ abstract class CashierRepository {
   Future<OpenCashierResponse> openCashier(OpenCashierDto dto);
   Future<CashierModel> closeCashier(CloseCashierDto dto);
   Future<GetOpenCashierResponse?> getOpenCashier();
-  Future<RegenerateCashierTokenResponse> regenerateToken(
+  Future<RegenerateCashierTokenRes> regenerateToken(
       RegenerateCashierTokenDto dto);
 
   // orders
   Future<SaveOrderResponse> saveOrder(SaveOrderDto dto);
-  Future<CompleteOrderResponse> saveAndCompleteOrder(
+  Future<CompleteOrderRes> saveAndCompleteOrder(
     SaveOrderDto saveOrderDto,
     CompleteOrderDto completeOrderDto,
   );
-  Future<CompleteOrderResponse> completeOrder(
+  Future<CompleteOrderRes> completeOrder(
     String id,
     CompleteOrderDto dto,
   );
   Future<CancelOrderResponse> cancelOrder(String id);
-  Future<List<OrderCashierItemResponse>> findAllOrderCashier(
+  Future<List<OrderCashierItemRes>> findAllOrderCashier(
       FindAllOrderCashierDto? dto);
   Future<OrderModelWithoutInclude> editOrder(String id, List<OrderItemDto> dto);
 }
@@ -86,7 +86,7 @@ class CashierRepositoryImpl implements CashierRepository {
   }
 
   @override
-  Future<RegenerateCashierTokenResponse> regenerateToken(
+  Future<RegenerateCashierTokenRes> regenerateToken(
       RegenerateCashierTokenDto dto) async {
     final Options options = await _getOptions();
     final outletId = await _appDataProvider.outletId;
@@ -96,7 +96,7 @@ class CashierRepositoryImpl implements CashierRepository {
       data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );
-    return RegenerateCashierTokenResponse.fromJson(response.data);
+    return RegenerateCashierTokenRes.fromJson(response.data);
   }
 
   // orders
@@ -134,7 +134,7 @@ class CashierRepositoryImpl implements CashierRepository {
   }
 
   @override
-  Future<CompleteOrderResponse> saveAndCompleteOrder(
+  Future<CompleteOrderRes> saveAndCompleteOrder(
     SaveOrderDto saveOrderDto,
     CompleteOrderDto completeOrderDto,
   ) async {
@@ -146,11 +146,11 @@ class CashierRepositoryImpl implements CashierRepository {
       data: await _completeOrderDto(completeOrderDto),
       options: options,
     );
-    return CompleteOrderResponse.fromJson(response.data);
+    return CompleteOrderRes.fromJson(response.data);
   }
 
   @override
-  Future<CompleteOrderResponse> completeOrder(
+  Future<CompleteOrderRes> completeOrder(
     String id,
     CompleteOrderDto dto,
   ) async {
@@ -161,7 +161,7 @@ class CashierRepositoryImpl implements CashierRepository {
       data: await _completeOrderDto(dto),
       options: options,
     );
-    return CompleteOrderResponse.fromJson(response.data);
+    return CompleteOrderRes.fromJson(response.data);
   }
 
   @override
@@ -176,7 +176,7 @@ class CashierRepositoryImpl implements CashierRepository {
   }
 
   @override
-  Future<List<OrderCashierItemResponse>> findAllOrderCashier(
+  Future<List<OrderCashierItemRes>> findAllOrderCashier(
       FindAllOrderCashierDto? dto) async {
     final Options options = await _getOptions();
 
@@ -185,7 +185,7 @@ class CashierRepositoryImpl implements CashierRepository {
       options: options,
     );
     return response.data!
-        .map((item) => OrderCashierItemResponse.fromJson(item))
+        .map((item) => OrderCashierItemRes.fromJson(item))
         .toList();
   }
 

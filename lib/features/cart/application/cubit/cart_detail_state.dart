@@ -51,7 +51,7 @@ final class CartDetailActionFailure extends CartDetailState {
 }
 
 final class CartDetailCompleteActionSuccess extends CartDetailState {
-  final CompleteOrderResponse res;
+  final CompleteOrderRes res;
 
   CartDetailCompleteActionSuccess({required this.res});
 

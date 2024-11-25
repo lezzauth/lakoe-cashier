@@ -14,7 +14,7 @@ final class CashierOrderLoadInProgress extends CashierOrderState {
 }
 
 final class CashierOrderLoadSuccess extends CashierOrderState {
-  final List<OrderCashierItemResponse> orders;
+  final List<OrderCashierItemRes> orders;
 
   CashierOrderLoadSuccess({
     required this.orders,

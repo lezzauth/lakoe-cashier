@@ -151,9 +151,9 @@ Map<String, dynamic> _$$OrderCashierItemTableImplToJson(
       'no': instance.no,
     };
 
-_$OrderCashierItemResponseImpl _$$OrderCashierItemResponseImplFromJson(
+_$OrderCashierItemResImpl _$$OrderCashierItemResImplFromJson(
         Map<String, dynamic> json) =>
-    _$OrderCashierItemResponseImpl(
+    _$OrderCashierItemResImpl(
       id: json['id'] as String,
       no: (json['no'] as num).toInt(),
       price: json['price'] as String,
@@ -161,6 +161,7 @@ _$OrderCashierItemResponseImpl _$$OrderCashierItemResponseImplFromJson(
       customerType: json['customerType'] as String,
       type: json['type'] as String,
       source: json['source'] as String,
+      status: json['status'] as String,
       customer: json['customer'] == null
           ? null
           : OrderCashierItemCustomer.fromJson(
@@ -171,8 +172,8 @@ _$OrderCashierItemResponseImpl _$$OrderCashierItemResponseImplFromJson(
               json['table'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$OrderCashierItemResponseImplToJson(
-        _$OrderCashierItemResponseImpl instance) =>
+Map<String, dynamic> _$$OrderCashierItemResImplToJson(
+        _$OrderCashierItemResImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'no': instance.no,
@@ -181,32 +182,33 @@ Map<String, dynamic> _$$OrderCashierItemResponseImplToJson(
       'customerType': instance.customerType,
       'type': instance.type,
       'source': instance.source,
+      'status': instance.status,
       'customer': instance.customer,
       'table': instance.table,
     };
 
-_$RegenerateCashierTokenResponseImpl
-    _$$RegenerateCashierTokenResponseImplFromJson(Map<String, dynamic> json) =>
-        _$RegenerateCashierTokenResponseImpl(
-          token: json['token'] as String,
-        );
+_$RegenerateCashierTokenResImpl _$$RegenerateCashierTokenResImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RegenerateCashierTokenResImpl(
+      token: json['token'] as String,
+    );
 
-Map<String, dynamic> _$$RegenerateCashierTokenResponseImplToJson(
-        _$RegenerateCashierTokenResponseImpl instance) =>
+Map<String, dynamic> _$$RegenerateCashierTokenResImplToJson(
+        _$RegenerateCashierTokenResImpl instance) =>
     <String, dynamic>{
       'token': instance.token,
     };
 
-_$CompleteOrderResponseImpl _$$CompleteOrderResponseImplFromJson(
+_$CompleteOrderResImpl _$$CompleteOrderResImplFromJson(
         Map<String, dynamic> json) =>
-    _$CompleteOrderResponseImpl(
+    _$CompleteOrderResImpl(
       order: Order.fromJson(json['order'] as Map<String, dynamic>),
       transaction:
           Transaction.fromJson(json['transaction'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$CompleteOrderResponseImplToJson(
-        _$CompleteOrderResponseImpl instance) =>
+Map<String, dynamic> _$$CompleteOrderResImplToJson(
+        _$CompleteOrderResImpl instance) =>
     <String, dynamic>{
       'order': instance.order,
       'transaction': instance.transaction,

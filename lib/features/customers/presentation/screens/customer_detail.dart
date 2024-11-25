@@ -324,12 +324,12 @@ class TagPaymentMethod extends StatelessWidget {
           return "Debit";
         case "BANK_TRANSFER":
           return "Bank Transfer";
-        case "NONE":
+        case "UNPAID":
           return "Belum Dibayar";
         case "CANCEL":
           return "-";
         default:
-          return "Cash";
+          return "-";
       }
     }
 
@@ -343,7 +343,7 @@ class TagPaymentMethod extends StatelessWidget {
           return TColors.warningLight;
         case "BANK_TRANSFER":
           return TColors.neutralLightMedium;
-        case "NONE":
+        case "UNPAID":
           return TColors.neutralLightMedium;
         case "CANCEL":
           return TColors.neutralLightMedium;
@@ -362,7 +362,7 @@ class TagPaymentMethod extends StatelessWidget {
           return TColors.warningDark;
         case "BANK_TRANSFER":
           return TColors.neutralDarkDark;
-        case "NONE":
+        case "UNPAID":
           return TColors.neutralDarkDark;
         case "CANCEL":
           return TColors.neutralDarkDark;

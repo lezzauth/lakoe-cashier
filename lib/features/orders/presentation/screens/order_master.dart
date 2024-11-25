@@ -61,11 +61,8 @@ class OrderMaster extends StatelessWidget {
         ),
         bottom: const TabContainer(
           tabs: [
-            TabItem(title: "Outlet"),
-            TabItem(
-              title: "Online",
-              // counter: 2,
-            )
+            TabItem(title: "Kasir"),
+            TabItem(title: "QR Meja", counter: 2)
           ],
         ),
       ),

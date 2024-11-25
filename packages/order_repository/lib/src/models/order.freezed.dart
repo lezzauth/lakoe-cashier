@@ -27,6 +27,7 @@ mixin _$OrderItemRes {
   String get customerType => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   String get source => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
   OrderItemCustomer? get customer => throw _privateConstructorUsedError;
   OrderItemTable? get table => throw _privateConstructorUsedError;
 
@@ -50,6 +51,7 @@ abstract class $OrderItemResCopyWith<$Res> {
       String customerType,
       String type,
       String source,
+      String status,
       OrderItemCustomer? customer,
       OrderItemTable? table});
 
@@ -77,6 +79,7 @@ class _$OrderItemResCopyWithImpl<$Res, $Val extends OrderItemRes>
     Object? customerType = null,
     Object? type = null,
     Object? source = null,
+    Object? status = null,
     Object? customer = freezed,
     Object? table = freezed,
   }) {
@@ -108,6 +111,10 @@ class _$OrderItemResCopyWithImpl<$Res, $Val extends OrderItemRes>
       source: null == source
           ? _value.source
           : source // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
               as String,
       customer: freezed == customer
           ? _value.customer
@@ -161,6 +168,7 @@ abstract class _$$OrderItemResImplCopyWith<$Res>
       String customerType,
       String type,
       String source,
+      String status,
       OrderItemCustomer? customer,
       OrderItemTable? table});
 
@@ -188,6 +196,7 @@ class __$$OrderItemResImplCopyWithImpl<$Res>
     Object? customerType = null,
     Object? type = null,
     Object? source = null,
+    Object? status = null,
     Object? customer = freezed,
     Object? table = freezed,
   }) {
@@ -220,6 +229,10 @@ class __$$OrderItemResImplCopyWithImpl<$Res>
           ? _value.source
           : source // ignore: cast_nullable_to_non_nullable
               as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
       customer: freezed == customer
           ? _value.customer
           : customer // ignore: cast_nullable_to_non_nullable
@@ -243,6 +256,7 @@ class _$OrderItemResImpl implements _OrderItemRes {
       required this.customerType,
       required this.type,
       required this.source,
+      required this.status,
       this.customer,
       this.table});
 
@@ -264,13 +278,15 @@ class _$OrderItemResImpl implements _OrderItemRes {
   @override
   final String source;
   @override
+  final String status;
+  @override
   final OrderItemCustomer? customer;
   @override
   final OrderItemTable? table;
 
   @override
   String toString() {
-    return 'OrderItemRes(id: $id, no: $no, price: $price, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, customer: $customer, table: $table)';
+    return 'OrderItemRes(id: $id, no: $no, price: $price, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, status: $status, customer: $customer, table: $table)';
   }
 
   @override
@@ -287,6 +303,7 @@ class _$OrderItemResImpl implements _OrderItemRes {
                 other.customerType == customerType) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.source, source) || other.source == source) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.customer, customer) ||
                 other.customer == customer) &&
             (identical(other.table, table) || other.table == table));
@@ -295,7 +312,7 @@ class _$OrderItemResImpl implements _OrderItemRes {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, no, price, paymentStatus,
-      customerType, type, source, customer, table);
+      customerType, type, source, status, customer, table);
 
   @JsonKey(ignore: true)
   @override
@@ -320,6 +337,7 @@ abstract class _OrderItemRes implements OrderItemRes {
       required final String customerType,
       required final String type,
       required final String source,
+      required final String status,
       final OrderItemCustomer? customer,
       final OrderItemTable? table}) = _$OrderItemResImpl;
 
@@ -340,6 +358,8 @@ abstract class _OrderItemRes implements OrderItemRes {
   String get type;
   @override
   String get source;
+  @override
+  String get status;
   @override
   OrderItemCustomer? get customer;
   @override
