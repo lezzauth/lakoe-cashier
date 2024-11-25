@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
@@ -23,6 +27,7 @@ class OrderOutletCompletedTab extends StatefulWidget {
 }
 
 class _OrderOutletCompletedTabState extends State<OrderOutletCompletedTab> {
+  bool isFilterUsed = false;
   String? previousScreen;
   Future<void> onRefresh() async {
     context.read<OrderMasterCompletedCubit>().init();
@@ -36,6 +41,18 @@ class _OrderOutletCompletedTabState extends State<OrderOutletCompletedTab> {
 
   @override
   Widget build(BuildContext context) {
+    onFilterOpen() {
+      return showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return CustomBottomsheet(
+            child: Placeholder(),
+          );
+        },
+      );
+    }
+
     return Scaffold(
       body: Scrollbar(
         child: RefreshIndicator(
@@ -47,13 +64,50 @@ class _OrderOutletCompletedTabState extends State<OrderOutletCompletedTab> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: IntrinsicWidth(
-                  child: OrderDateFilter(
-                    // from: "",
-                    template: "ALL",
-                    // to: "",
-                    onChanged: (template, from, to) {},
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IntrinsicWidth(
+                      child: OrderDateFilter(
+                        // from: "",
+                        template: "ALL",
+                        // to: "",
+                        onChanged: (template, from, to) {},
+                      ),
+                    ),
+                    Container(
+                      color: Colors.white,
+                      padding: const EdgeInsets.only(left: 8),
+                      child: InputChip(
+                        label: Row(
+                          children: [
+                            const UiIcons(
+                              TIcons.filter,
+                              color: TColors.primary,
+                              size: 16,
+                            ),
+                            const SizedBox(width: 4),
+                            const TextBodyM(
+                              "Filter",
+                              color: TColors.neutralDarkDarkest,
+                            ),
+                            if (isFilterUsed) ...[
+                              const SizedBox(width: 4),
+                              Container(
+                                height: 8,
+                                width: 8,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: TColors.error,
+                                ),
+                              )
+                            ],
+                          ],
+                        ),
+                        onPressed: onFilterOpen,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Expanded(

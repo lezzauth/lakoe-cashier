@@ -3,7 +3,11 @@ import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_m
 
 class OrderMasterFilterCubit extends Cubit<OrderMasterFilterState> {
   OrderMasterFilterCubit()
-      : super(const OrderMasterFilterState(status: "OPEN", source: "CASHIER"));
+      : super(const OrderMasterFilterState(
+          status: "OPEN",
+          source: "CASHIER",
+          sort: "NEWEST",
+        ));
 
   void setFilter({
     String? type,

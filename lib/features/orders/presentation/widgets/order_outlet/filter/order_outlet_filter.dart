@@ -34,22 +34,30 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
 
   @override
   Widget build(BuildContext context) {
-    onFilterOpen() {
-      return showModalBottomSheet(
+    onFilterOpen() async {
+      final result = await showModalBottomSheet<Map<String, dynamic>>(
         context: context,
         isScrollControlled: true,
         builder: (context) {
           return CustomBottomsheet(
             child: OrderOutletAdvancedFilter(
-              onFilterChanged: () {
-                setState(() {
-                  isFilterUsed = true;
-                });
+              value: widget.value,
+              onFilterChanged: (value) {
+                widget.onChanged(value);
               },
             ),
           );
         },
       );
+
+      if (result != null) {
+        setState(() {
+          isFilterUsed = result['isFilterUsed'] as bool;
+          if (result['sort'] != null) {
+            widget.onChanged(widget.value.copyWith(sort: result['sort']));
+          }
+        });
+      }
     }
 
     return Row(
@@ -77,8 +85,11 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
                         ),
                   selected: selected,
                   onPressed: () {
-                    widget
-                        .onChanged(widget.value.copyWith(status: status.value));
+                    widget.onChanged(
+                      widget.value.copyWith(
+                        status: status.value,
+                      ),
+                    );
                   },
                 );
               }).toList(),

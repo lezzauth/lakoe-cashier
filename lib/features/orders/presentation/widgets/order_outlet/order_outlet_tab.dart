@@ -26,12 +26,18 @@ class OrderOutletTab extends StatefulWidget {
 
 class _OrderOutletTabState extends State<OrderOutletTab> {
   String? previousScreen;
+
   Future<void> onRefresh() async {
     OrderMasterFilterState filterState =
         context.read<OrderMasterFilterCubit>().state;
+
+    final updatedFilterState = filterState.sort == null
+        ? filterState.copyWith(sort: 'NEWEST')
+        : filterState;
+
     await context
         .read<OrderMasterCubit>()
-        .findAll(filterState.toFindAllOrderDto);
+        .findAll(updatedFilterState.toFindAllOrderDto);
   }
 
   @override

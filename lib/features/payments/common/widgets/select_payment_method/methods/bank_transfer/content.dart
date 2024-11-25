@@ -14,7 +14,6 @@ import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method
 import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/bank_transfer/form.dart';
 import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/radio_group.dart';
 import 'package:lakoe_pos/features/payments/data/arguments/bank_transfer_payment_argument.dart';
-import 'package:lakoe_pos/features/payments/data/models/bank_account_model.dart';
 
 class BankTransferPaymentContent extends StatefulWidget {
   const BankTransferPaymentContent({
@@ -34,13 +33,6 @@ class _BankTransferPaymentContentState
   final _formKey = GlobalKey<FormBuilderState>();
 
   String selectedAccount = "1";
-
-  List<BankAccountModel> accounts = [
-    const BankAccountModel(
-        id: "1", bankName: "bni", name: "Thohirin", number: "9283381902"),
-    const BankAccountModel(
-        id: "2", bankName: "bri", name: "Thohirin", number: "900000283381902"),
-  ];
 
   void _onSubmitted() async {
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
@@ -97,7 +89,9 @@ class _BankTransferPaymentContentState
                     return Container(
                       margin: const EdgeInsets.only(bottom: 8.0),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 12.0),
+                        horizontal: 20.0,
+                        vertical: 12.0,
+                      ),
                       child: PaymentMethodRadioGroup(
                         value: state.paymentMethod,
                         onChanged: (value) {

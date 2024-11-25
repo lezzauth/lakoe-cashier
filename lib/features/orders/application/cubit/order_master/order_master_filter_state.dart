@@ -13,7 +13,7 @@ class OrderMasterFilterState extends Equatable {
     this.source,
     this.status,
     this.search,
-    this.sort = "NEWEST",
+    this.sort,
   });
 
   FindAllOrderCashierDto get toFindAllOrderDto => FindAllOrderCashierDto(
@@ -23,6 +23,22 @@ class OrderMasterFilterState extends Equatable {
         status: status,
         type: type,
       );
+
+  OrderMasterFilterState copyWith({
+    String? type,
+    String? source,
+    String? status,
+    String? search,
+    String? sort,
+  }) {
+    return OrderMasterFilterState(
+      type: type ?? this.type,
+      source: source ?? this.source,
+      status: status ?? this.status,
+      search: search ?? this.search,
+      sort: sort ?? this.sort,
+    );
+  }
 
   @override
   List<Object?> get props => [type, source, status, search, sort];

@@ -1,3 +1,4 @@
+import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lakoe_pos/common/data/models.dart';
@@ -9,9 +10,14 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/sizes.dart';
 
 class OrderOutletAdvancedFilter extends StatefulWidget {
-  final Function() onFilterChanged;
+  final FindAllOrderCashierDto value;
+  final ValueChanged<FindAllOrderCashierDto> onFilterChanged;
 
-  const OrderOutletAdvancedFilter({super.key, required this.onFilterChanged});
+  const OrderOutletAdvancedFilter({
+    super.key,
+    required this.value,
+    required this.onFilterChanged,
+  });
 
   @override
   State<OrderOutletAdvancedFilter> createState() =>
@@ -19,16 +25,20 @@ class OrderOutletAdvancedFilter extends StatefulWidget {
 }
 
 class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
-  String _sortValue = "newest";
+  late String selectedSortValue;
 
   List<LabelValue> sorts = [
-    const LabelValue<String>(label: "Terbaru", value: "newest"),
-    const LabelValue<String>(label: "Terlama", value: "oldest"),
-    const LabelValue<String>(
-        label: "Transaksi terbanyak", value: "highest_transaction"),
-    const LabelValue<String>(
-        label: "Transaksi tersedikit", value: "lowest_transaction"),
+    const LabelValue<String>(label: "Terbaru", value: "NEWEST"),
+    const LabelValue<String>(label: "Terlama", value: "OLDERS"),
+    const LabelValue<String>(label: "Transaksi terbanyak", value: "HIGHEST"),
+    const LabelValue<String>(label: "Transaksi tersedikit", value: "CHEAPEST"),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    selectedSortValue = widget.value.sort ?? "NEWEST";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,15 +65,15 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
           ],
         ),
         ...sorts.map(
-          (e) => SortRadioTile<String>(
+          (e) => SortRadioTile(
+            title: e.label,
             value: e.value,
-            groupValue: _sortValue,
+            groupValue: selectedSortValue,
             onChanged: (value) {
               setState(() {
-                _sortValue = value!;
+                selectedSortValue = value!;
               });
             },
-            title: e.label,
           ),
         ),
         const SizedBox(height: 12),
@@ -101,31 +111,31 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              RichText(
-                text: TextSpan(
-                  text: "Pesan dari QR Meja",
-                  style: GoogleFonts.inter(
-                    fontSize: TSizes.fontSizeHeading3,
-                    color: TColors.neutralDarkDarkest,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 28,
-                child: Switch(
-                  value: true,
-                  onChanged: (value) {},
-                ),
-              )
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       RichText(
+        //         text: TextSpan(
+        //           text: "Pesan dari QR Meja",
+        //           style: GoogleFonts.inter(
+        //             fontSize: TSizes.fontSizeHeading3,
+        //             color: TColors.neutralDarkDarkest,
+        //             fontWeight: FontWeight.w700,
+        //           ),
+        //         ),
+        //       ),
+        //       SizedBox(
+        //         height: 28,
+        //         child: Switch(
+        //           value: true,
+        //           onChanged: (value) {},
+        //         ),
+        //       )
+        //     ],
+        //   ),
+        // ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
           child: Row(
@@ -134,7 +144,15 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                 child: SizedBox(
                   height: 48,
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(
+                        context,
+                        {
+                          'isFilterUsed': false,
+                          'sort': "NEWEST",
+                        },
+                      );
+                    },
                     child: const TextActionL(
                       "Hapus",
                       color: TColors.primary,
@@ -148,8 +166,18 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                   height: 48,
                   child: ElevatedButton(
                     onPressed: () {
-                      widget.onFilterChanged();
-                      Navigator.pop(context);
+                      widget.onFilterChanged(
+                        widget.value.copyWith(
+                          sort: selectedSortValue,
+                        ),
+                      );
+                      Navigator.pop(
+                        context,
+                        {
+                          'isFilterUsed': true,
+                          'sort': selectedSortValue,
+                        },
+                      );
                     },
                     child: const TextActionL(
                       "Pasang",
