@@ -20,7 +20,7 @@ class OutletDto with _$OutletDto {
 class RegisterDto with _$RegisterDto {
   const factory RegisterDto({
     required String name,
-    required String email,
+    String? email,
     required String phoneNumber,
     required String pin,
     required OutletDto outlet,

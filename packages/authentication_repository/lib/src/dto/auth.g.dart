@@ -23,7 +23,7 @@ Map<String, dynamic> _$$OutletDtoImplToJson(_$OutletDtoImpl instance) =>
 _$RegisterDtoImpl _$$RegisterDtoImplFromJson(Map<String, dynamic> json) =>
     _$RegisterDtoImpl(
       name: json['name'] as String,
-      email: json['email'] as String,
+      email: json['email'] as String?,
       phoneNumber: json['phoneNumber'] as String,
       pin: json['pin'] as String,
       outlet: OutletDto.fromJson(json['outlet'] as Map<String, dynamic>),

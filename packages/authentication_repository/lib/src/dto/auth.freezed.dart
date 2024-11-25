@@ -205,7 +205,7 @@ RegisterDto _$RegisterDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$RegisterDto {
   String get name => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
   String get pin => throw _privateConstructorUsedError;
   OutletDto get outlet => throw _privateConstructorUsedError;
@@ -228,7 +228,7 @@ abstract class $RegisterDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {String name,
-      String email,
+      String? email,
       String phoneNumber,
       String pin,
       OutletDto outlet});
@@ -252,7 +252,7 @@ class _$RegisterDtoCopyWithImpl<$Res, $Val extends RegisterDto>
   @override
   $Res call({
     Object? name = null,
-    Object? email = null,
+    Object? email = freezed,
     Object? phoneNumber = null,
     Object? pin = null,
     Object? outlet = null,
@@ -262,10 +262,10 @@ class _$RegisterDtoCopyWithImpl<$Res, $Val extends RegisterDto>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -302,7 +302,7 @@ abstract class _$$RegisterDtoImplCopyWith<$Res>
   @useResult
   $Res call(
       {String name,
-      String email,
+      String? email,
       String phoneNumber,
       String pin,
       OutletDto outlet});
@@ -325,7 +325,7 @@ class __$$RegisterDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
-    Object? email = null,
+    Object? email = freezed,
     Object? phoneNumber = null,
     Object? pin = null,
     Object? outlet = null,
@@ -335,10 +335,10 @@ class __$$RegisterDtoImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -360,7 +360,7 @@ class __$$RegisterDtoImplCopyWithImpl<$Res>
 class _$RegisterDtoImpl implements _RegisterDto {
   const _$RegisterDtoImpl(
       {required this.name,
-      required this.email,
+      this.email,
       required this.phoneNumber,
       required this.pin,
       required this.outlet});
@@ -371,7 +371,7 @@ class _$RegisterDtoImpl implements _RegisterDto {
   @override
   final String name;
   @override
-  final String email;
+  final String? email;
   @override
   final String phoneNumber;
   @override
@@ -421,7 +421,7 @@ class _$RegisterDtoImpl implements _RegisterDto {
 abstract class _RegisterDto implements RegisterDto {
   const factory _RegisterDto(
       {required final String name,
-      required final String email,
+      final String? email,
       required final String phoneNumber,
       required final String pin,
       required final OutletDto outlet}) = _$RegisterDtoImpl;
@@ -432,7 +432,7 @@ abstract class _RegisterDto implements RegisterDto {
   @override
   String get name;
   @override
-  String get email;
+  String? get email;
   @override
   String get phoneNumber;
   @override
