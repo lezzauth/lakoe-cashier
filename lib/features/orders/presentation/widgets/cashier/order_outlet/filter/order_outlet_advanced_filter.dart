@@ -5,7 +5,7 @@ import 'package:lakoe_pos/common/data/models.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:lakoe_pos/features/orders/presentation/widgets/order_outlet/filter/sort_radio_tile.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_outlet/filter/sort_radio_tile.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/sizes.dart';
 

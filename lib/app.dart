@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:logman/logman.dart';
 import 'package:lakoe_pos/application/cubit/bank_list_cubit.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/account_edit.dart';
@@ -97,7 +98,6 @@ import 'package:lakoe_pos/features/account/manage_account/presentation/screens/d
 import 'package:lakoe_pos/features/account/manage_account/presentation/screens/manage_account.dart';
 import 'package:lakoe_pos/features/notifications/presentation/screens/notification_master.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
-import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_cubit.dart';
 import 'package:lakoe_pos/features/orders/data/arguments/order_edit_argument.dart';
 import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:lakoe_pos/features/orders/presentation/screens/order_edit.dart';
@@ -150,7 +150,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => CategoryMasterCubit()),
 
         // Order Master
-        BlocProvider(create: (context) => OrderMasterCubit()),
+        BlocProvider(create: (context) => OrderCashierCubit()),
         BlocProvider(create: (context) => OrderDetailCubit()),
 
         // Customer Master
@@ -208,7 +208,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => WhatsappSessionCubit()),
 
         // Online Shop
-        BlocProvider(create: (context) => ShopOrderMasterCubit()),
+        BlocProvider(create: (context) => ShopOrderCashierCubit()),
 
         // Package Plan
         BlocProvider(create: (context) => PackageMasterCubit()),

@@ -8,35 +8,34 @@ import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
-import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_completed_cubit.dart';
-import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_completed_state.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_state.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/filters/order_date_filter.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/order_list_item/order_list_item.dart';
 import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
-class OrderOutletCompletedTab extends StatefulWidget {
-  const OrderOutletCompletedTab({
+class OrderOutlet extends StatefulWidget {
+  const OrderOutlet({
     super.key,
   });
 
   @override
-  State<OrderOutletCompletedTab> createState() =>
-      _OrderOutletCompletedTabState();
+  State<OrderOutlet> createState() => _OrderOutletState();
 }
 
-class _OrderOutletCompletedTabState extends State<OrderOutletCompletedTab> {
+class _OrderOutletState extends State<OrderOutlet> {
   bool isFilterUsed = false;
   String? previousScreen;
   Future<void> onRefresh() async {
-    context.read<OrderMasterCompletedCubit>().init();
+    context.read<OrdersCubit>().init();
   }
 
   @override
   void initState() {
     super.initState();
-    context.read<OrderMasterCompletedCubit>().init();
+    context.read<OrdersCubit>().init();
   }
 
   @override
@@ -47,7 +46,13 @@ class _OrderOutletCompletedTabState extends State<OrderOutletCompletedTab> {
         isScrollControlled: true,
         builder: (context) {
           return CustomBottomsheet(
-            child: Placeholder(),
+            child: Column(
+              children: [
+                Text("Urutkan"),
+                Text("Status"),
+                Text("Type [TAKEWAR | DINEIN]"),
+              ],
+            ),
           );
         },
       );
@@ -111,8 +116,7 @@ class _OrderOutletCompletedTabState extends State<OrderOutletCompletedTab> {
                 ),
               ),
               Expanded(
-                child: BlocBuilder<OrderMasterCompletedCubit,
-                    OrderMasterCompletedState>(
+                child: BlocBuilder<OrdersCubit, OrdersState>(
                   builder: (context, state) => switch (state) {
                     OrderMasterCompletedLoadSuccess(:final orders) =>
                       CustomScrollView(

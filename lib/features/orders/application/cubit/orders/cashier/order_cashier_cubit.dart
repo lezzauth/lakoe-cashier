@@ -1,11 +1,11 @@
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_state.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_state.dart';
 
-class OrderMasterCubit extends Cubit<OrderMasterState> {
+class OrderCashierCubit extends Cubit<OrderCashierState> {
   final CashierRepository _cashierRepository = CashierRepositoryImpl();
 
-  OrderMasterCubit() : super(OrderMasterInitial());
+  OrderCashierCubit() : super(OrderMasterInitial());
 
   Future<void> init() async {
     await findAll(const FindAllOrderCashierDto(

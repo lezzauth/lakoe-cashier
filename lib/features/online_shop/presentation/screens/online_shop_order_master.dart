@@ -21,7 +21,7 @@ class OnlineShopOrderMasterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ShopOrderMasterFilterCubit(),
+      create: (context) => ShopOrderCashierFilterCubit(),
       child: OnlineShopOrderMaster(),
     );
   }
@@ -31,19 +31,19 @@ class OnlineShopOrderMaster extends StatefulWidget {
   const OnlineShopOrderMaster({super.key});
 
   @override
-  State<OnlineShopOrderMaster> createState() => _OnlineShopOrderMasterState();
+  State<OnlineShopOrderMaster> createState() => _OnlineShopOrderCashierState();
 }
 
-class _OnlineShopOrderMasterState extends State<OnlineShopOrderMaster> {
+class _OnlineShopOrderCashierState extends State<OnlineShopOrderMaster> {
   Future<void> _onInit() async {
-    context.read<ShopOrderMasterCubit>().findAll(dto: FindAllOrderDto());
+    context.read<ShopOrderCashierCubit>().findAll(dto: FindAllOrderDto());
   }
 
   Future<void> _onRefresh() async {
-    final filterState = context.read<ShopOrderMasterFilterCubit>().state;
+    final filterState = context.read<ShopOrderCashierFilterCubit>().state;
 
     context
-        .read<ShopOrderMasterCubit>()
+        .read<ShopOrderCashierCubit>()
         .findAll(dto: FindAllOrderDto(status: filterState.status));
   }
 
@@ -62,10 +62,11 @@ class _OnlineShopOrderMasterState extends State<OnlineShopOrderMaster> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ShopOrderMasterFilterCubit, ShopOrderMasterFilterState>(
+    return BlocListener<ShopOrderCashierFilterCubit,
+        ShopOrderCashierFilterState>(
       listener: (context, filterState) {
         context
-            .read<ShopOrderMasterCubit>()
+            .read<ShopOrderCashierCubit>()
             .findAll(dto: FindAllOrderDto(status: filterState.status));
       },
       child: Scaffold(
@@ -75,13 +76,13 @@ class _OnlineShopOrderMasterState extends State<OnlineShopOrderMaster> {
           ),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(48),
-            child: BlocBuilder<ShopOrderMasterFilterCubit,
-                ShopOrderMasterFilterState>(builder: (context, state) {
+            child: BlocBuilder<ShopOrderCashierFilterCubit,
+                ShopOrderCashierFilterState>(builder: (context, state) {
               return OrderStatusFilter(
                 value: state.status,
                 onChanged: (status) {
                   context
-                      .read<ShopOrderMasterFilterCubit>()
+                      .read<ShopOrderCashierFilterCubit>()
                       .setFilter(status: status);
                 },
               );
@@ -92,7 +93,7 @@ class _OnlineShopOrderMasterState extends State<OnlineShopOrderMaster> {
           child: RefreshIndicator(
             onRefresh: _onRefresh,
             backgroundColor: TColors.neutralLightLightest,
-            child: BlocBuilder<ShopOrderMasterCubit, ShopOrderMasterState>(
+            child: BlocBuilder<ShopOrderCashierCubit, ShopOrderCashierState>(
               builder: (context, state) => switch (state) {
                 ShopOrderMasterLoadSuccess(:final orders) => orders.isEmpty
                     ? EmptyList(

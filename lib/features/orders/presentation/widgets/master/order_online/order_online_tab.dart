@@ -3,26 +3,25 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/filters/order_date_filter.dart';
 import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
-import 'package:lakoe_pos/features/orders/presentation/widgets/order_online/order_list/order_online_list_item.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_online/order_list/order_online_list_item.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
-class OrderOnlineCompletedTab extends StatefulWidget {
-  const OrderOnlineCompletedTab({super.key});
+class OrderOnline extends StatefulWidget {
+  const OrderOnline({super.key});
 
   @override
-  State<OrderOnlineCompletedTab> createState() =>
-      _OrderOnlineCompletedTabState();
+  State<OrderOnline> createState() => _OrderOnlineState();
 }
 
-class _OrderOnlineCompletedTabState extends State<OrderOnlineCompletedTab> {
+class _OrderOnlineState extends State<OrderOnline> {
   String? previousScreen;
   List<dynamic> orders = [];
 
   @override
   void initState() {
     super.initState();
-    // context.read<OrderMasterCubit>().init();
+    // context.read<OrderCashierCubit>().init();
   }
 
   @override

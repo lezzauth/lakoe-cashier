@@ -21,8 +21,13 @@ mixin _$FindAllOrderDto {
   String? get status => throw _privateConstructorUsedError;
   String? get search => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
+  String? get rangeType => throw _privateConstructorUsedError;
+  String? get startDate => throw _privateConstructorUsedError;
+  String? get endDate => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FindAllOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FindAllOrderDtoCopyWith<FindAllOrderDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -38,7 +43,10 @@ abstract class $FindAllOrderDtoCopyWith<$Res> {
       String? source,
       String? status,
       String? search,
-      String? sort});
+      String? sort,
+      String? rangeType,
+      String? startDate,
+      String? endDate});
 }
 
 /// @nodoc
@@ -51,6 +59,8 @@ class _$FindAllOrderDtoCopyWithImpl<$Res, $Val extends FindAllOrderDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FindAllOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -59,6 +69,9 @@ class _$FindAllOrderDtoCopyWithImpl<$Res, $Val extends FindAllOrderDto>
     Object? status = freezed,
     Object? search = freezed,
     Object? sort = freezed,
+    Object? rangeType = freezed,
+    Object? startDate = freezed,
+    Object? endDate = freezed,
   }) {
     return _then(_value.copyWith(
       type: freezed == type
@@ -81,6 +94,18 @@ class _$FindAllOrderDtoCopyWithImpl<$Res, $Val extends FindAllOrderDto>
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
               as String?,
+      rangeType: freezed == rangeType
+          ? _value.rangeType
+          : rangeType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -98,7 +123,10 @@ abstract class _$$FindAllOrderDtoImplCopyWith<$Res>
       String? source,
       String? status,
       String? search,
-      String? sort});
+      String? sort,
+      String? rangeType,
+      String? startDate,
+      String? endDate});
 }
 
 /// @nodoc
@@ -109,6 +137,8 @@ class __$$FindAllOrderDtoImplCopyWithImpl<$Res>
       _$FindAllOrderDtoImpl _value, $Res Function(_$FindAllOrderDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FindAllOrderDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -117,6 +147,9 @@ class __$$FindAllOrderDtoImplCopyWithImpl<$Res>
     Object? status = freezed,
     Object? search = freezed,
     Object? sort = freezed,
+    Object? rangeType = freezed,
+    Object? startDate = freezed,
+    Object? endDate = freezed,
   }) {
     return _then(_$FindAllOrderDtoImpl(
       type: freezed == type
@@ -139,6 +172,18 @@ class __$$FindAllOrderDtoImplCopyWithImpl<$Res>
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
               as String?,
+      rangeType: freezed == rangeType
+          ? _value.rangeType
+          : rangeType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -147,7 +192,14 @@ class __$$FindAllOrderDtoImplCopyWithImpl<$Res>
 
 class _$FindAllOrderDtoImpl implements _FindAllOrderDto {
   const _$FindAllOrderDtoImpl(
-      {this.type, this.source, this.status, this.search, this.sort});
+      {this.type,
+      this.source,
+      this.status,
+      this.search,
+      this.sort,
+      this.rangeType,
+      this.startDate,
+      this.endDate});
 
   @override
   final String? type;
@@ -159,10 +211,16 @@ class _$FindAllOrderDtoImpl implements _FindAllOrderDto {
   final String? search;
   @override
   final String? sort;
+  @override
+  final String? rangeType;
+  @override
+  final String? startDate;
+  @override
+  final String? endDate;
 
   @override
   String toString() {
-    return 'FindAllOrderDto(type: $type, source: $source, status: $status, search: $search, sort: $sort)';
+    return 'FindAllOrderDto(type: $type, source: $source, status: $status, search: $search, sort: $sort, rangeType: $rangeType, startDate: $startDate, endDate: $endDate)';
   }
 
   @override
@@ -174,14 +232,21 @@ class _$FindAllOrderDtoImpl implements _FindAllOrderDto {
             (identical(other.source, source) || other.source == source) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.search, search) || other.search == search) &&
-            (identical(other.sort, sort) || other.sort == sort));
+            (identical(other.sort, sort) || other.sort == sort) &&
+            (identical(other.rangeType, rangeType) ||
+                other.rangeType == rangeType) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, type, source, status, search, sort);
+  int get hashCode => Object.hash(runtimeType, type, source, status, search,
+      sort, rangeType, startDate, endDate);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FindAllOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FindAllOrderDtoImplCopyWith<_$FindAllOrderDtoImpl> get copyWith =>
@@ -195,7 +260,10 @@ abstract class _FindAllOrderDto implements FindAllOrderDto {
       final String? source,
       final String? status,
       final String? search,
-      final String? sort}) = _$FindAllOrderDtoImpl;
+      final String? sort,
+      final String? rangeType,
+      final String? startDate,
+      final String? endDate}) = _$FindAllOrderDtoImpl;
 
   @override
   String? get type;
@@ -208,7 +276,16 @@ abstract class _FindAllOrderDto implements FindAllOrderDto {
   @override
   String? get sort;
   @override
-  @JsonKey(ignore: true)
+  String? get rangeType;
+  @override
+  String? get startDate;
+  @override
+  String? get endDate;
+
+  /// Create a copy of FindAllOrderDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FindAllOrderDtoImplCopyWith<_$FindAllOrderDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -223,8 +300,12 @@ mixin _$OrderItemDto {
   int get quantity => throw _privateConstructorUsedError;
   String get productId => throw _privateConstructorUsedError;
 
+  /// Serializes this OrderItemDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OrderItemDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OrderItemDtoCopyWith<OrderItemDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -248,6 +329,8 @@ class _$OrderItemDtoCopyWithImpl<$Res, $Val extends OrderItemDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of OrderItemDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -291,6 +374,8 @@ class __$$OrderItemDtoImplCopyWithImpl<$Res>
       _$OrderItemDtoImpl _value, $Res Function(_$OrderItemDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OrderItemDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -349,11 +434,13 @@ class _$OrderItemDtoImpl implements _OrderItemDto {
                 other.productId == productId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, notes, quantity, productId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OrderItemDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OrderItemDtoImplCopyWith<_$OrderItemDtoImpl> get copyWith =>
@@ -382,8 +469,11 @@ abstract class _OrderItemDto implements OrderItemDto {
   int get quantity;
   @override
   String get productId;
+
+  /// Create a copy of OrderItemDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OrderItemDtoImplCopyWith<_$OrderItemDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -398,8 +488,12 @@ mixin _$PreviewOrderPriceDto {
   String? get outletId => throw _privateConstructorUsedError;
   List<OrderItemDto> get items => throw _privateConstructorUsedError;
 
+  /// Serializes this PreviewOrderPriceDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PreviewOrderPriceDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PreviewOrderPriceDtoCopyWith<PreviewOrderPriceDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -424,6 +518,8 @@ class _$PreviewOrderPriceDtoCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PreviewOrderPriceDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -467,6 +563,8 @@ class __$$PreviewOrderPriceDtoImplCopyWithImpl<$Res>
       $Res Function(_$PreviewOrderPriceDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PreviewOrderPriceDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -531,12 +629,14 @@ class _$PreviewOrderPriceDtoImpl implements _PreviewOrderPriceDto {
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, type, outletId, const DeepCollectionEquality().hash(_items));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PreviewOrderPriceDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PreviewOrderPriceDtoImplCopyWith<_$PreviewOrderPriceDtoImpl>
@@ -567,8 +667,11 @@ abstract class _PreviewOrderPriceDto implements PreviewOrderPriceDto {
   String? get outletId;
   @override
   List<OrderItemDto> get items;
+
+  /// Create a copy of PreviewOrderPriceDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PreviewOrderPriceDtoImplCopyWith<_$PreviewOrderPriceDtoImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

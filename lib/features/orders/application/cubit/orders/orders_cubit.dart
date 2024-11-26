@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_completed_state.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_state.dart';
 import 'package:order_repository/order_repository.dart';
 
-class OrderMasterCompletedCubit extends Cubit<OrderMasterCompletedState> {
+class OrdersCubit extends Cubit<OrdersState> {
   final OrderRepository _orderRepository = OrderRepositoryImpl();
 
-  OrderMasterCompletedCubit() : super(OrderMasterCompletedInitial());
+  OrdersCubit() : super(OrderMasterCompletedInitial());
 
   Future<void> init() async {
     await findAll(FindAllOrderDto(sort: "NEWEST"));

@@ -1,20 +1,19 @@
 import 'package:equatable/equatable.dart';
 import 'package:order_repository/order_repository.dart';
 
-sealed class OrderMasterCompletedState extends Equatable {}
+sealed class OrdersState extends Equatable {}
 
-final class OrderMasterCompletedInitial extends OrderMasterCompletedState {
+final class OrderMasterCompletedInitial extends OrdersState {
   @override
   List<Object?> get props => [];
 }
 
-final class OrderMasterCompletedLoadInProgress
-    extends OrderMasterCompletedState {
+final class OrderMasterCompletedLoadInProgress extends OrdersState {
   @override
   List<Object?> get props => [];
 }
 
-final class OrderMasterCompletedLoadSuccess extends OrderMasterCompletedState {
+final class OrderMasterCompletedLoadSuccess extends OrdersState {
   final List<OrderItemRes> orders;
 
   OrderMasterCompletedLoadSuccess({
@@ -25,7 +24,7 @@ final class OrderMasterCompletedLoadSuccess extends OrderMasterCompletedState {
   List<Object?> get props => [orders];
 }
 
-final class OrderMasterCompletedLoadFailure extends OrderMasterCompletedState {
+final class OrderMasterCompletedLoadFailure extends OrdersState {
   final String error;
 
   OrderMasterCompletedLoadFailure(this.error);

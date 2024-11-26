@@ -5,54 +5,54 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
-import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_cubit.dart';
-import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_filter_cubit.dart';
-import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_filter_state.dart';
-import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_state.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_filter_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_filter_state.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_state.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/order_list_item/order_list_item.dart';
 import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
-import 'package:lakoe_pos/features/orders/presentation/widgets/order_outlet/filter/order_outlet_filter.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_outlet/filter/order_outlet_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
-class OrderOutletTab extends StatefulWidget {
-  const OrderOutletTab({
+class OrderCashierOutlet extends StatefulWidget {
+  const OrderCashierOutlet({
     super.key,
   });
 
   @override
-  State<OrderOutletTab> createState() => _OrderOutletTabState();
+  State<OrderCashierOutlet> createState() => _OrderCashierOutletState();
 }
 
-class _OrderOutletTabState extends State<OrderOutletTab> {
+class _OrderCashierOutletState extends State<OrderCashierOutlet> {
   String? previousScreen;
 
   Future<void> onRefresh() async {
-    OrderMasterFilterState filterState =
-        context.read<OrderMasterFilterCubit>().state;
+    OrderCashierFilterState filterState =
+        context.read<OrderCashierFilterCubit>().state;
 
     final updatedFilterState = filterState.sort == null
         ? filterState.copyWith(sort: 'NEWEST')
         : filterState;
 
     await context
-        .read<OrderMasterCubit>()
+        .read<OrderCashierCubit>()
         .findAll(updatedFilterState.toFindAllOrderDto);
   }
 
   @override
   void initState() {
     super.initState();
-    context.read<OrderMasterCubit>().init();
+    context.read<OrderCashierCubit>().init();
   }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
-        BlocListener<OrderMasterFilterCubit, OrderMasterFilterState>(
+        BlocListener<OrderCashierFilterCubit, OrderCashierFilterState>(
           listener: (context, state) {
-            context.read<OrderMasterCubit>().findAll(state.toFindAllOrderDto);
+            context.read<OrderCashierCubit>().findAll(state.toFindAllOrderDto);
           },
         ),
       ],
@@ -67,13 +67,13 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: BlocBuilder<OrderMasterFilterCubit,
-                      OrderMasterFilterState>(
+                  child: BlocBuilder<OrderCashierFilterCubit,
+                      OrderCashierFilterState>(
                     builder: (context, state) {
                       return OrderOutletFilter(
                         value: state.toFindAllOrderDto,
                         onChanged: (value) {
-                          context.read<OrderMasterFilterCubit>().setFilter(
+                          context.read<OrderCashierFilterCubit>().setFilter(
                                 sort: value.sort,
                                 source: value.source,
                                 status: value.status,
@@ -85,7 +85,7 @@ class _OrderOutletTabState extends State<OrderOutletTab> {
                   ),
                 ),
                 Expanded(
-                  child: BlocBuilder<OrderMasterCubit, OrderMasterState>(
+                  child: BlocBuilder<OrderCashierCubit, OrderCashierState>(
                     builder: (context, state) => switch (state) {
                       OrderMasterLoadSuccess(:final orders) => CustomScrollView(
                           slivers: [

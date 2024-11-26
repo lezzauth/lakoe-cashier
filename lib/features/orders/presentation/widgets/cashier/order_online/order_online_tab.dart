@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
-import 'package:lakoe_pos/features/orders/presentation/widgets/order_online/filter/order_online_filter.dart';
-import 'package:lakoe_pos/features/orders/presentation/widgets/order_online/order_list/order_online_list_item.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_online/filter/order_online_filter.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_online/order_list/order_online_list_item.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
-class OrderOnlineTab extends StatefulWidget {
-  const OrderOnlineTab({super.key});
+class OrderCashierOnline extends StatefulWidget {
+  const OrderCashierOnline({super.key});
 
   @override
-  State<OrderOnlineTab> createState() => _OrderOnlineTabState();
+  State<OrderCashierOnline> createState() => _OrderCashierOnlineState();
 }
 
-class _OrderOnlineTabState extends State<OrderOnlineTab> {
+class _OrderCashierOnlineState extends State<OrderCashierOnline> {
   String? previousScreen;
   List<dynamic> orders = [];
 

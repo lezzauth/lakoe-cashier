@@ -92,7 +92,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
         ),
         body: BlocListener<CustomerDetailCubit, CustomerDetailState>(
           listener: (context, state) {
-            Logman.instance.info("State is $state");
+            Logman.instance.info("CUSTOMER DETAIL State is $state");
           },
           child: BlocBuilder<CustomerDetailCubit, CustomerDetailState>(
             builder: (context, state) {

@@ -4,12 +4,12 @@ import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/form/search_field.dart';
 import 'package:lakoe_pos/common/widgets/ui/tab/tab_container.dart';
 import 'package:lakoe_pos/common/widgets/ui/tab/tab_item.dart';
-import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_completed_cubit.dart';
-import 'package:lakoe_pos/features/orders/application/cubit/order_master/order_master_filter_cubit.dart';
-import 'package:lakoe_pos/features/orders/presentation/widgets/order_completed/order_online/order_online_tab.dart';
-import 'package:lakoe_pos/features/orders/presentation/widgets/order_completed/order_outlet/order_outlet_tab.dart';
-import 'package:lakoe_pos/features/orders/presentation/widgets/order_online/order_online_tab.dart';
-import 'package:lakoe_pos/features/orders/presentation/widgets/order_outlet/order_outlet_tab.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_filter_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_online/order_online_tab.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/order_outlet_tab.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_online/order_online_tab.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_outlet/order_outlet_tab.dart';
 
 class OrderMasterScreen extends StatelessWidget {
   const OrderMasterScreen({super.key});
@@ -18,8 +18,8 @@ class OrderMasterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => OrderMasterFilterCubit()),
-        BlocProvider(create: (context) => OrderMasterCompletedCubit()),
+        BlocProvider(create: (context) => OrderCashierFilterCubit()),
+        BlocProvider(create: (context) => OrdersCubit()),
       ],
       child: DefaultTabController(
         length: 2,
@@ -54,7 +54,7 @@ class OrderMaster extends StatelessWidget {
           controller: _searchController,
           debounceTime: 500,
           onChanged: (value) {
-            context.read<OrderMasterFilterCubit>().setFilter(
+            context.read<OrderCashierFilterCubit>().setFilter(
                   search: value,
                 );
           },
@@ -71,14 +71,14 @@ class OrderMaster extends StatelessWidget {
         child: (previousScreen == "ExploreProduct")
             ? TabBarView(
                 children: [
-                  OrderOutletTab(),
-                  OrderOnlineTab(),
+                  OrderCashierOutlet(),
+                  OrderCashierOnline(),
                 ],
               )
             : TabBarView(
                 children: [
-                  OrderOutletCompletedTab(),
-                  OrderOnlineCompletedTab(),
+                  OrderOutlet(),
+                  OrderOnline(),
                 ],
               ),
       ),

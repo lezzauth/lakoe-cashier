@@ -1932,6 +1932,9 @@ mixin _$FindAllOrderCashierDto {
   String? get status => throw _privateConstructorUsedError;
   String? get search => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
+  String? get rangeType => throw _privateConstructorUsedError;
+  String? get startDate => throw _privateConstructorUsedError;
+  String? get endDate => throw _privateConstructorUsedError;
 
   /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
@@ -1951,7 +1954,10 @@ abstract class $FindAllOrderCashierDtoCopyWith<$Res> {
       String? source,
       String? status,
       String? search,
-      String? sort});
+      String? sort,
+      String? rangeType,
+      String? startDate,
+      String? endDate});
 }
 
 /// @nodoc
@@ -1975,6 +1981,9 @@ class _$FindAllOrderCashierDtoCopyWithImpl<$Res,
     Object? status = freezed,
     Object? search = freezed,
     Object? sort = freezed,
+    Object? rangeType = freezed,
+    Object? startDate = freezed,
+    Object? endDate = freezed,
   }) {
     return _then(_value.copyWith(
       type: freezed == type
@@ -1997,6 +2006,18 @@ class _$FindAllOrderCashierDtoCopyWithImpl<$Res,
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
               as String?,
+      rangeType: freezed == rangeType
+          ? _value.rangeType
+          : rangeType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -2015,7 +2036,10 @@ abstract class _$$FindAllOrderCashierDtoImplCopyWith<$Res>
       String? source,
       String? status,
       String? search,
-      String? sort});
+      String? sort,
+      String? rangeType,
+      String? startDate,
+      String? endDate});
 }
 
 /// @nodoc
@@ -2038,6 +2062,9 @@ class __$$FindAllOrderCashierDtoImplCopyWithImpl<$Res>
     Object? status = freezed,
     Object? search = freezed,
     Object? sort = freezed,
+    Object? rangeType = freezed,
+    Object? startDate = freezed,
+    Object? endDate = freezed,
   }) {
     return _then(_$FindAllOrderCashierDtoImpl(
       type: freezed == type
@@ -2060,6 +2087,18 @@ class __$$FindAllOrderCashierDtoImplCopyWithImpl<$Res>
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
               as String?,
+      rangeType: freezed == rangeType
+          ? _value.rangeType
+          : rangeType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -2068,7 +2107,14 @@ class __$$FindAllOrderCashierDtoImplCopyWithImpl<$Res>
 
 class _$FindAllOrderCashierDtoImpl implements _FindAllOrderCashierDto {
   const _$FindAllOrderCashierDtoImpl(
-      {this.type, this.source, this.status, this.search, this.sort});
+      {this.type,
+      this.source,
+      this.status,
+      this.search,
+      this.sort,
+      this.rangeType,
+      this.startDate,
+      this.endDate});
 
   @override
   final String? type;
@@ -2080,10 +2126,16 @@ class _$FindAllOrderCashierDtoImpl implements _FindAllOrderCashierDto {
   final String? search;
   @override
   final String? sort;
+  @override
+  final String? rangeType;
+  @override
+  final String? startDate;
+  @override
+  final String? endDate;
 
   @override
   String toString() {
-    return 'FindAllOrderCashierDto(type: $type, source: $source, status: $status, search: $search, sort: $sort)';
+    return 'FindAllOrderCashierDto(type: $type, source: $source, status: $status, search: $search, sort: $sort, rangeType: $rangeType, startDate: $startDate, endDate: $endDate)';
   }
 
   @override
@@ -2095,12 +2147,17 @@ class _$FindAllOrderCashierDtoImpl implements _FindAllOrderCashierDto {
             (identical(other.source, source) || other.source == source) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.search, search) || other.search == search) &&
-            (identical(other.sort, sort) || other.sort == sort));
+            (identical(other.sort, sort) || other.sort == sort) &&
+            (identical(other.rangeType, rangeType) ||
+                other.rangeType == rangeType) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, type, source, status, search, sort);
+  int get hashCode => Object.hash(runtimeType, type, source, status, search,
+      sort, rangeType, startDate, endDate);
 
   /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
@@ -2118,7 +2175,10 @@ abstract class _FindAllOrderCashierDto implements FindAllOrderCashierDto {
       final String? source,
       final String? status,
       final String? search,
-      final String? sort}) = _$FindAllOrderCashierDtoImpl;
+      final String? sort,
+      final String? rangeType,
+      final String? startDate,
+      final String? endDate}) = _$FindAllOrderCashierDtoImpl;
 
   @override
   String? get type;
@@ -2130,6 +2190,12 @@ abstract class _FindAllOrderCashierDto implements FindAllOrderCashierDto {
   String? get search;
   @override
   String? get sort;
+  @override
+  String? get rangeType;
+  @override
+  String? get startDate;
+  @override
+  String? get endDate;
 
   /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
