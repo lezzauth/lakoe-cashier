@@ -30,9 +30,7 @@ class OrderMasterScreen extends StatelessWidget {
 }
 
 class OrderMaster extends StatelessWidget {
-  OrderMaster({
-    super.key,
-  });
+  OrderMaster({super.key});
 
   final TextEditingController _searchController = TextEditingController();
 

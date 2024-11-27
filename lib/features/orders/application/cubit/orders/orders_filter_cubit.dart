@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
-import 'package:logman/logman.dart';
 
 class OrdersFilterCubit extends Cubit<OrdersFilterState> {
   OrdersFilterCubit()
       : super(const OrdersFilterState(
           source: "CASHIER",
           sort: "NEWEST",
+          template: "ALL",
         ));
 
   void setFilter({
@@ -15,21 +15,19 @@ class OrdersFilterCubit extends Cubit<OrdersFilterState> {
     String? status,
     String? search,
     String? sort,
-    String? rangeType,
-    DateTime? startDate,
-    DateTime? endDate,
+    String? template,
+    DateTime? from,
+    DateTime? to,
   }) {
-    Logman.instance.info("1 STATE rangeType is ${state.rangeType}");
-    Logman.instance.info("2 rangeType is $rangeType");
     emit(OrdersFilterState(
       search: search ?? state.search,
       sort: sort ?? state.sort,
       source: source ?? state.source,
-      status: status ?? state.status ?? "OPEN",
+      status: status ?? state.status,
       type: type ?? state.type,
-      rangeType: rangeType ?? state.rangeType,
-      startDate: startDate!.toUtc().toIso8601String(),
-      endDate: endDate!.toUtc().toIso8601String(),
+      template: template ?? state.template,
+      from: from?.toIso8601String(),
+      to: to?.toIso8601String(),
     ));
   }
 
@@ -37,6 +35,7 @@ class OrdersFilterCubit extends Cubit<OrdersFilterState> {
     emit(const OrdersFilterState(
       source: "CASHIER",
       sort: "NEWEST",
+      template: "ALL",
     ));
   }
 }

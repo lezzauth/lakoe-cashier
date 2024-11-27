@@ -16,9 +16,7 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
 class OrderCashierOutlet extends StatefulWidget {
-  const OrderCashierOutlet({
-    super.key,
-  });
+  const OrderCashierOutlet({super.key});
 
   @override
   State<OrderCashierOutlet> createState() => _OrderCashierOutletState();
@@ -74,7 +72,6 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                           context.read<OrderCashierFilterCubit>().setFilter(
                                 sort: value.sort,
                                 source: value.source,
-                                status: value.status,
                                 type: value.type,
                               );
                         },

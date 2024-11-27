@@ -15,9 +15,9 @@ class OrderCashierFilterCubit extends Cubit<OrderCashierFilterState> {
     String? status,
     String? search,
     String? sort,
-    String? rangeType,
-    DateTime? startDate,
-    DateTime? endDate,
+    String? template,
+    DateTime? to,
+    DateTime? from,
   }) {
     emit(OrderCashierFilterState(
       search: search ?? state.search,
@@ -25,9 +25,9 @@ class OrderCashierFilterCubit extends Cubit<OrderCashierFilterState> {
       source: source ?? state.source,
       status: status ?? state.status ?? "OPEN",
       type: type ?? state.type,
-      rangeType: rangeType ?? state.rangeType,
-      startDate: startDate!.toUtc().toIso8601String(),
-      endDate: endDate!.toUtc().toIso8601String(),
+      template: template ?? state.template,
+      to: to?.toIso8601String(),
+      from: from?.toIso8601String(),
     ));
   }
 

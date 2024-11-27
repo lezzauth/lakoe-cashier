@@ -54,9 +54,9 @@ class _OrderDateFilterState extends State<OrderDateFilter> {
       builder: (context) {
         return CustomBottomsheet(
           child: OrderDateFilterContent(
+            template: widget.template,
             from: widget.from,
             to: widget.to,
-            template: widget.template,
           ),
         );
       },

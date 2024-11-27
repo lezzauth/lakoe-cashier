@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
-import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/filter/order_outlet_filter.dart';
 import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_state.dart';
-import 'package:lakoe_pos/features/orders/common/widgets/filters/order_date_filter.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/order_list_item/order_list_item.dart';
 import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
 class OrderOutlet extends StatefulWidget {
-  const OrderOutlet({
-    super.key,
-  });
+  const OrderOutlet({super.key});
 
   @override
   State<OrderOutlet> createState() => _OrderOutletState();
@@ -32,7 +27,14 @@ class _OrderOutletState extends State<OrderOutlet> {
 
   Future<void> onRefresh() async {
     OrdersFilterState filterState = context.read<OrdersFilterCubit>().state;
-    await context.read<OrdersCubit>().findAll(filterState.toFindAllOrderDto);
+
+    final updatedFilterState = filterState.sort == null
+        ? filterState.copyWith(sort: 'NEWEST')
+        : filterState;
+
+    await context
+        .read<OrdersCubit>()
+        .findAll(updatedFilterState.toFindAllOrderDto);
   }
 
   @override
@@ -41,36 +43,29 @@ class _OrderOutletState extends State<OrderOutlet> {
     context.read<OrdersCubit>().init();
   }
 
-  // onFilterOpen() {
-  //   return showModalBottomSheet(
-  //     context: context,
-  //     isScrollControlled: true,
-  //     builder: (context) {
-  //       return CustomBottomsheet(
-  //         child: Column(
-  //           children: [
-  //             Text("Urutkan"),
-  //             Text("Status"),
-  //             Text("Type [TAKEWAR | DINEIN]"),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
-    return BlocListener<OrdersFilterCubit, OrdersFilterState>(
-      listener: (context, state) {
-        Logman.instance.info("LISTENER XXX");
-        // context.read<OrdersCubit>().findAll(FindAllOrderDto(
-        //       sort: "NEWEST",
-        //       rangeType: state.rangeType,
-        //       startDate: state.startDate,
-        //       endDate: state.endDate,
-        //     ));
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<OrdersCubit, OrdersState>(
+          listener: (context, state) {},
+        ),
+        BlocListener<OrdersFilterCubit, OrdersFilterState>(
+          listener: (context, state) {
+            Logman.instance.info("listener $state");
+            context.read<OrdersCubit>().findAll(FindAllOrderDto(
+                  status: ["ALL"].contains(state.status) ? null : state.status,
+                  sort: state.sort,
+                  search: state.search,
+                  template:
+                      ["ALL"].contains(state.template) ? null : state.template,
+                  from:
+                      !["CUSTOM"].contains(state.template) ? null : state.from,
+                  to: !["CUSTOM"].contains(state.template) ? null : state.to,
+                ));
+          },
+        )
+      ],
       child: Scaffold(
         body: Scrollbar(
           child: RefreshIndicator(
@@ -82,61 +77,28 @@ class _OrderOutletState extends State<OrderOutlet> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      BlocBuilder<OrdersFilterCubit, OrdersFilterState>(
-                          builder: (context, state) {
-                        return IntrinsicWidth(
-                          child: OrderDateFilter(
-                            template: state.rangeType ?? "ALL",
-                            from: state.startDate,
-                            to: state.endDate,
-                            onChanged: (template, from, to) {
-                              Logman.instance.info("onChanged XXX $template");
-                              context.read<OrdersFilterCubit>().setFilter(
-                                    // rangeType: template,
-                                    // startDate: from,
-                                    // endDate: to,
-                                    rangeType: "LAST1DAY",
-                                  );
-                            },
-                          ),
-                        );
-                      }),
-                      Container(
-                        color: Colors.white,
-                        padding: const EdgeInsets.only(left: 8),
-                        child: InputChip(
-                          label: Row(
-                            children: [
-                              const UiIcons(
-                                TIcons.filter,
-                                color: TColors.primary,
-                                size: 16,
-                              ),
-                              const SizedBox(width: 4),
-                              const TextBodyM(
-                                "Filter",
-                                color: TColors.neutralDarkDarkest,
-                              ),
-                              if (isFilterUsed) ...[
-                                const SizedBox(width: 4),
-                                Container(
-                                  height: 8,
-                                  width: 8,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: TColors.error,
-                                  ),
-                                )
-                              ],
-                            ],
-                          ),
-                          // onPressed: onFilterOpen,
-                        ),
-                      ),
-                    ],
+                  child: BlocBuilder<OrdersFilterCubit, OrdersFilterState>(
+                    builder: (context, state) {
+                      return OrderOutletFilter(
+                        value: state.toFindAllOrderDto,
+                        onChanged: (value) {
+                          Logman.instance.info("value.status ${value.status}");
+                          context.read<OrdersFilterCubit>().setFilter(
+                                sort: value.sort,
+                                source: value.source,
+                                type: value.type,
+                                status: value.status,
+                                template: value.template,
+                                from: value.template == "CUSTOM"
+                                    ? DateTime.parse(value.from!)
+                                    : null,
+                                to: value.template == "CUSTOM"
+                                    ? DateTime.parse(value.to!)
+                                    : null,
+                              );
+                        },
+                      );
+                    },
                   ),
                 ),
                 Expanded(

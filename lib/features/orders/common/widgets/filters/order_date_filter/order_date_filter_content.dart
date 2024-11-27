@@ -33,9 +33,7 @@ class _OrderDateFilterContentState extends State<OrderDateFilterContent> {
   ];
 
   void _onSubmit() {
-    // if (widget.onSubmit == null) return;
     Navigator.pop(context, OrderDateFilterValue(template: _groupValue));
-    // widget.onSubmit!(template: _groupValue == "ALL" ? null : _groupValue);
   }
 
   @override
@@ -78,8 +76,6 @@ class _OrderDateFilterContentState extends State<OrderDateFilterContent> {
                   ? DateTime.now()
                   : DateTime.parse(widget.to!).toLocal(),
               onSubmit: ({from, to}) {
-                // if (widget.onSubmit == null) return;
-                // widget.onSubmit!(from: from, to: to, template: "CUSTOM");
                 Navigator.pop(
                     context,
                     OrderDateFilterValue(

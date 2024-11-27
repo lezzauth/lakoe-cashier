@@ -7,9 +7,9 @@ class OrderCashierFilterState extends Equatable {
   final String? status;
   final String? search;
   final String? sort;
-  final String? rangeType;
-  final String? startDate;
-  final String? endDate;
+  final String? template;
+  final String? to;
+  final String? from;
 
   const OrderCashierFilterState({
     this.type,
@@ -17,9 +17,9 @@ class OrderCashierFilterState extends Equatable {
     this.status,
     this.search,
     this.sort,
-    this.rangeType,
-    this.startDate,
-    this.endDate,
+    this.template,
+    this.to,
+    this.from,
   });
 
   FindAllOrderCashierDto get toFindAllOrderDto => FindAllOrderCashierDto(
@@ -28,9 +28,9 @@ class OrderCashierFilterState extends Equatable {
         source: source,
         status: status,
         type: type,
-        rangeType: rangeType,
-        startDate: startDate,
-        endDate: endDate,
+        template: template,
+        to: to,
+        from: from,
       );
 
   OrderCashierFilterState copyWith({
@@ -39,9 +39,9 @@ class OrderCashierFilterState extends Equatable {
     String? status,
     String? search,
     String? sort,
-    String? rangeType,
-    String? startDate,
-    String? endDate,
+    String? template,
+    String? to,
+    String? from,
   }) {
     return OrderCashierFilterState(
       type: type ?? this.type,
@@ -49,9 +49,9 @@ class OrderCashierFilterState extends Equatable {
       status: status ?? this.status,
       search: search ?? this.search,
       sort: sort ?? this.sort,
-      rangeType: rangeType ?? this.rangeType,
-      startDate: startDate ?? this.startDate,
-      endDate: endDate ?? this.endDate,
+      template: template ?? this.template,
+      to: to ?? this.to,
+      from: from ?? this.from,
     );
   }
 
@@ -62,8 +62,8 @@ class OrderCashierFilterState extends Equatable {
         status,
         search,
         sort,
-        rangeType,
-        startDate,
-        endDate,
+        template,
+        to,
+        from,
       ];
 }

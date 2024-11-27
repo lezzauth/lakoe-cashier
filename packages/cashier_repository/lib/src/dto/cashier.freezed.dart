@@ -1932,9 +1932,9 @@ mixin _$FindAllOrderCashierDto {
   String? get status => throw _privateConstructorUsedError;
   String? get search => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
-  String? get rangeType => throw _privateConstructorUsedError;
-  String? get startDate => throw _privateConstructorUsedError;
-  String? get endDate => throw _privateConstructorUsedError;
+  String? get template => throw _privateConstructorUsedError;
+  String? get to => throw _privateConstructorUsedError;
+  String? get from => throw _privateConstructorUsedError;
 
   /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
@@ -1955,9 +1955,9 @@ abstract class $FindAllOrderCashierDtoCopyWith<$Res> {
       String? status,
       String? search,
       String? sort,
-      String? rangeType,
-      String? startDate,
-      String? endDate});
+      String? template,
+      String? to,
+      String? from});
 }
 
 /// @nodoc
@@ -1981,9 +1981,9 @@ class _$FindAllOrderCashierDtoCopyWithImpl<$Res,
     Object? status = freezed,
     Object? search = freezed,
     Object? sort = freezed,
-    Object? rangeType = freezed,
-    Object? startDate = freezed,
-    Object? endDate = freezed,
+    Object? template = freezed,
+    Object? to = freezed,
+    Object? from = freezed,
   }) {
     return _then(_value.copyWith(
       type: freezed == type
@@ -2006,17 +2006,17 @@ class _$FindAllOrderCashierDtoCopyWithImpl<$Res,
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
               as String?,
-      rangeType: freezed == rangeType
-          ? _value.rangeType
-          : rangeType // ignore: cast_nullable_to_non_nullable
+      template: freezed == template
+          ? _value.template
+          : template // ignore: cast_nullable_to_non_nullable
               as String?,
-      startDate: freezed == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
+      to: freezed == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
               as String?,
-      endDate: freezed == endDate
-          ? _value.endDate
-          : endDate // ignore: cast_nullable_to_non_nullable
+      from: freezed == from
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -2037,9 +2037,9 @@ abstract class _$$FindAllOrderCashierDtoImplCopyWith<$Res>
       String? status,
       String? search,
       String? sort,
-      String? rangeType,
-      String? startDate,
-      String? endDate});
+      String? template,
+      String? to,
+      String? from});
 }
 
 /// @nodoc
@@ -2062,9 +2062,9 @@ class __$$FindAllOrderCashierDtoImplCopyWithImpl<$Res>
     Object? status = freezed,
     Object? search = freezed,
     Object? sort = freezed,
-    Object? rangeType = freezed,
-    Object? startDate = freezed,
-    Object? endDate = freezed,
+    Object? template = freezed,
+    Object? to = freezed,
+    Object? from = freezed,
   }) {
     return _then(_$FindAllOrderCashierDtoImpl(
       type: freezed == type
@@ -2087,17 +2087,17 @@ class __$$FindAllOrderCashierDtoImplCopyWithImpl<$Res>
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
               as String?,
-      rangeType: freezed == rangeType
-          ? _value.rangeType
-          : rangeType // ignore: cast_nullable_to_non_nullable
+      template: freezed == template
+          ? _value.template
+          : template // ignore: cast_nullable_to_non_nullable
               as String?,
-      startDate: freezed == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
+      to: freezed == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
               as String?,
-      endDate: freezed == endDate
-          ? _value.endDate
-          : endDate // ignore: cast_nullable_to_non_nullable
+      from: freezed == from
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -2112,9 +2112,9 @@ class _$FindAllOrderCashierDtoImpl implements _FindAllOrderCashierDto {
       this.status,
       this.search,
       this.sort,
-      this.rangeType,
-      this.startDate,
-      this.endDate});
+      this.template,
+      this.to,
+      this.from});
 
   @override
   final String? type;
@@ -2127,15 +2127,15 @@ class _$FindAllOrderCashierDtoImpl implements _FindAllOrderCashierDto {
   @override
   final String? sort;
   @override
-  final String? rangeType;
+  final String? template;
   @override
-  final String? startDate;
+  final String? to;
   @override
-  final String? endDate;
+  final String? from;
 
   @override
   String toString() {
-    return 'FindAllOrderCashierDto(type: $type, source: $source, status: $status, search: $search, sort: $sort, rangeType: $rangeType, startDate: $startDate, endDate: $endDate)';
+    return 'FindAllOrderCashierDto(type: $type, source: $source, status: $status, search: $search, sort: $sort, template: $template, to: $to, from: $from)';
   }
 
   @override
@@ -2148,16 +2148,15 @@ class _$FindAllOrderCashierDtoImpl implements _FindAllOrderCashierDto {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.search, search) || other.search == search) &&
             (identical(other.sort, sort) || other.sort == sort) &&
-            (identical(other.rangeType, rangeType) ||
-                other.rangeType == rangeType) &&
-            (identical(other.startDate, startDate) ||
-                other.startDate == startDate) &&
-            (identical(other.endDate, endDate) || other.endDate == endDate));
+            (identical(other.template, template) ||
+                other.template == template) &&
+            (identical(other.to, to) || other.to == to) &&
+            (identical(other.from, from) || other.from == from));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, type, source, status, search,
-      sort, rangeType, startDate, endDate);
+  int get hashCode => Object.hash(
+      runtimeType, type, source, status, search, sort, template, to, from);
 
   /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
@@ -2176,9 +2175,9 @@ abstract class _FindAllOrderCashierDto implements FindAllOrderCashierDto {
       final String? status,
       final String? search,
       final String? sort,
-      final String? rangeType,
-      final String? startDate,
-      final String? endDate}) = _$FindAllOrderCashierDtoImpl;
+      final String? template,
+      final String? to,
+      final String? from}) = _$FindAllOrderCashierDtoImpl;
 
   @override
   String? get type;
@@ -2191,11 +2190,11 @@ abstract class _FindAllOrderCashierDto implements FindAllOrderCashierDto {
   @override
   String? get sort;
   @override
-  String? get rangeType;
+  String? get template;
   @override
-  String? get startDate;
+  String? get to;
   @override
-  String? get endDate;
+  String? get from;
 
   /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
