@@ -5,7 +5,7 @@ import 'package:lakoe_pos/common/widgets/form/search_field.dart';
 import 'package:lakoe_pos/common/widgets/ui/tab/tab_container.dart';
 import 'package:lakoe_pos/common/widgets/ui/tab/tab_item.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_filter_cubit.dart';
-import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_online/order_online_tab.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/order_outlet_tab.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_online/order_online_tab.dart';
@@ -18,8 +18,8 @@ class OrderMasterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => OrdersFilterCubit()),
         BlocProvider(create: (context) => OrderCashierFilterCubit()),
-        BlocProvider(create: (context) => OrdersCubit()),
       ],
       child: DefaultTabController(
         length: 2,
@@ -28,8 +28,6 @@ class OrderMasterScreen extends StatelessWidget {
     );
   }
 }
-
-class OrderMasterCompletedFilterCubit {}
 
 class OrderMaster extends StatelessWidget {
   OrderMaster({
@@ -40,11 +38,9 @@ class OrderMaster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve arguments from the route
     final args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-    // Extract specific values from the arguments
     final String? previousScreen = args?['previousScreen'];
 
     return Scaffold(
@@ -54,9 +50,11 @@ class OrderMaster extends StatelessWidget {
           controller: _searchController,
           debounceTime: 500,
           onChanged: (value) {
-            context.read<OrderCashierFilterCubit>().setFilter(
-                  search: value,
-                );
+            if (previousScreen == "ExploreProduct") {
+              context.read<OrderCashierFilterCubit>().setFilter(search: value);
+            } else {
+              context.read<OrdersFilterCubit>().setFilter(search: value);
+            }
           },
         ),
         bottom: const TabContainer(

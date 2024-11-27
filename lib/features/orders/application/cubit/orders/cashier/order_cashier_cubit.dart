@@ -5,7 +5,7 @@ import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order
 class OrderCashierCubit extends Cubit<OrderCashierState> {
   final CashierRepository _cashierRepository = CashierRepositoryImpl();
 
-  OrderCashierCubit() : super(OrderMasterInitial());
+  OrderCashierCubit() : super(OrderCashierStateInitial());
 
   Future<void> init() async {
     await findAll(const FindAllOrderCashierDto(
@@ -17,15 +17,11 @@ class OrderCashierCubit extends Cubit<OrderCashierState> {
 
   Future<void> findAll(FindAllOrderCashierDto dto) async {
     try {
-      emit(OrderMasterLoadInProgress());
+      emit(OrderCashierLoadInProgress());
       final orders = await _cashierRepository.findAllOrderCashier(dto);
-      emit(
-        OrderMasterLoadSuccess(
-          orders: orders,
-        ),
-      );
+      emit(OrderCashierLoadSuccess(orders: orders));
     } catch (e) {
-      emit(OrderMasterLoadFailure(e.toString()));
+      emit(OrderCashierLoadFailure(e.toString()));
     }
   }
 }

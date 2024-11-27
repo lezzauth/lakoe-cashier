@@ -5,19 +5,22 @@ import 'package:order_repository/order_repository.dart';
 class OrdersCubit extends Cubit<OrdersState> {
   final OrderRepository _orderRepository = OrderRepositoryImpl();
 
-  OrdersCubit() : super(OrderMasterCompletedInitial());
+  OrdersCubit() : super(OrdersStateInitial());
 
   Future<void> init() async {
-    await findAll(FindAllOrderDto(sort: "NEWEST"));
+    await findAll(FindAllOrderDto(
+      source: "CASHIER",
+      sort: "NEWEST",
+    ));
   }
 
   Future<void> findAll(FindAllOrderDto dto) async {
     try {
-      emit(OrderMasterCompletedLoadInProgress());
+      emit(OrdersLoadInProgress());
       final orders = await _orderRepository.findAll(dto);
-      emit(OrderMasterCompletedLoadSuccess(orders: orders));
+      emit(OrdersLoadSuccess(orders: orders));
     } catch (e) {
-      emit(OrderMasterCompletedLoadFailure(e.toString()));
+      emit(OrdersLoadFailure(e.toString()));
     }
   }
 }

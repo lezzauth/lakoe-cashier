@@ -25,8 +25,6 @@ class OrderCashierOutlet extends StatefulWidget {
 }
 
 class _OrderCashierOutletState extends State<OrderCashierOutlet> {
-  String? previousScreen;
-
   Future<void> onRefresh() async {
     OrderCashierFilterState filterState =
         context.read<OrderCashierFilterCubit>().state;
@@ -87,7 +85,8 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                 Expanded(
                   child: BlocBuilder<OrderCashierCubit, OrderCashierState>(
                     builder: (context, state) => switch (state) {
-                      OrderMasterLoadSuccess(:final orders) => CustomScrollView(
+                      OrderCashierLoadSuccess(:final orders) =>
+                        CustomScrollView(
                           slivers: [
                             if (orders.isNotEmpty) ...[
                               SliverList.builder(
@@ -139,7 +138,7 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                               ),
                           ],
                         ),
-                      OrderMasterLoadFailure() => ListShimmer(
+                      OrderCashierLoadFailure() => ListShimmer(
                           crossAlignment: "center",
                           circleAvatar: true,
                           sizeAvatar: 48,
@@ -168,7 +167,10 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
             },
             style: const ButtonStyle(
               padding: WidgetStatePropertyAll(
-                EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                EdgeInsets.symmetric(
+                  vertical: 0,
+                  horizontal: 20,
+                ),
               ),
             ),
             child: const TextActionL(
