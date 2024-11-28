@@ -50,7 +50,6 @@ class _CategoryMasterState extends State<CategoryMaster> {
   @override
   void initState() {
     super.initState();
-
     context.read<CategoryMasterCubit>().init();
   }
 

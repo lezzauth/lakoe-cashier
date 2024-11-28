@@ -7,6 +7,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
@@ -62,6 +64,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
 
   void _onInit() {
     context.read<AuthCubit>().initialize();
+    context.read<OwnerCubit>().init();
     context.read<OutletCubit>().init();
     context.read<PackageMasterCubit>().init();
 
@@ -81,6 +84,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
         }
 
         context.read<AuthCubit>().initialize();
+        context.read<OwnerCubit>().init();
         context.read<OutletCubit>().init();
         context.read<PackageMasterCubit>().init();
       }
@@ -160,52 +164,56 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       appBar: const CustomAppbarLight(
         title: "Profil & Akun",
       ),
-      body: BlocListener<AuthCubit, AuthState>(
-        listener: (context, state) async {
-          if (state is ConnectionIssue && !isBottomSheetVisible) {
-            isBottomSheetVisible = true;
-            if (!mounted) return;
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthCubit, AuthState>(
+            listener: (context, state) async {
+              if (state is ConnectionIssue && !isBottomSheetVisible) {
+                isBottomSheetVisible = true;
+                if (!mounted) return;
 
-            showModalBottomSheet(
-              context: context,
-              enableDrag: false,
-              isDismissible: false,
-              builder: (context) {
-                return PopScope(
-                  canPop: false,
-                  onPopInvokedWithResult: (didPop, result) async {},
-                  child: CustomBottomsheet(
-                    hasGrabber: false,
-                    child: ErrorDisplay(
-                      imageSrc: TImages.noConnection,
-                      title: "Koneksi internet aman ngga?",
-                      description:
-                          "Coba cek WiFi atau kuota internet kamu dulu terus bisa dicoba lagi, ya!",
-                      actionTitlePrimary: "Pengaturan",
-                      onActionPrimary: () {
-                        isBottomSheetVisible = false;
-                        Navigator.pop(context);
-                        openSettings();
-                      },
-                      actionTitleSecondary: "Coba Lagi",
-                      onActionSecondary: () async {
-                        isBottomSheetVisible = false;
-                        Navigator.pop(context);
-                        await Future.delayed(Duration(seconds: 2));
-                        _onInit();
-                      },
-                    ),
-                  ),
-                );
-              },
-            ).whenComplete(() => isBottomSheetVisible = false);
-            return;
-          }
-        },
-        child: BlocBuilder<AuthCubit, AuthState>(
+                showModalBottomSheet(
+                  context: context,
+                  enableDrag: false,
+                  isDismissible: false,
+                  builder: (context) {
+                    return PopScope(
+                      canPop: false,
+                      onPopInvokedWithResult: (didPop, result) async {},
+                      child: CustomBottomsheet(
+                        hasGrabber: false,
+                        child: ErrorDisplay(
+                          imageSrc: TImages.noConnection,
+                          title: "Koneksi internet aman ngga?",
+                          description:
+                              "Coba cek WiFi atau kuota internet kamu dulu terus bisa dicoba lagi, ya!",
+                          actionTitlePrimary: "Pengaturan",
+                          onActionPrimary: () {
+                            isBottomSheetVisible = false;
+                            Navigator.pop(context);
+                            openSettings();
+                          },
+                          actionTitleSecondary: "Coba Lagi",
+                          onActionSecondary: () async {
+                            isBottomSheetVisible = false;
+                            Navigator.pop(context);
+                            await Future.delayed(Duration(seconds: 2));
+                            _onInit();
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ).whenComplete(() => isBottomSheetVisible = false);
+                return;
+              }
+            },
+          ),
+        ],
+        child: BlocBuilder<OwnerCubit, OwnerState>(
           builder: (context, state) {
-            if (state is AuthReady) {
-              final profile = state.profile;
+            if (state is OwnerLoadSuccess) {
+              final profile = state.owner;
 
               return Stack(
                 children: [
@@ -280,10 +288,10 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
+    return BlocBuilder<OwnerCubit, OwnerState>(
       builder: (context, state) {
-        if (state is AuthReady) {
-          final profile = state.profile;
+        if (state is OwnerLoadSuccess) {
+          final profile = state.owner;
           final AppDataProvider appDataProvider = AppDataProvider();
 
           return Container(
@@ -297,7 +305,11 @@ class ProfileCard extends StatelessWidget {
                 InkWell(
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
-                  onTap: () => Navigator.pushNamed(context, "/account/edit"),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    "/account/edit",
+                    arguments: profile,
+                  ),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16.0),

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:owner_repository/src/charge_repository.dart';
+import 'package:owner_repository/src/dto/owner.dart';
 import 'package:owner_repository/src/models/owner.dart';
 import 'package:owner_repository/src/owner_bank_repository.dart';
 import 'package:owner_repository/src/tax_repository.dart';
@@ -13,6 +14,7 @@ abstract class OwnerRepository {
   ChargeRepository get charge;
   Future<List<OutletModel>> listOutlets();
   Future<OwnerProfileModel> getProfile();
+  Future<UpdateOwnerModel> updateNameAccount(UpdateNameDto dto);
 }
 
 class OwnerRepositoryImpl implements OwnerRepository {
@@ -45,6 +47,19 @@ class OwnerRepositoryImpl implements OwnerRepository {
       options: options,
     );
     return OwnerProfileModel.fromJson(response.data);
+  }
+
+  @override
+  Future<UpdateOwnerModel> updateNameAccount(UpdateNameDto dto) async {
+    final Options options = await _getOptions();
+
+    final res = await _dio.patch(
+      "$_baseURL/profile",
+      data: dto.toJson(),
+      options: options,
+    );
+
+    return UpdateOwnerModel.fromJson(res.data);
   }
 
   @override

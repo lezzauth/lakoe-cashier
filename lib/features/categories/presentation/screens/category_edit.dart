@@ -96,12 +96,12 @@ class _CategoryEditScreenState extends State<CategoryEditScreen> {
                         _onSubmit(arguments.id);
                       },
                 child: state is CategoryMasterActionInProgress
-                    ? const SizedBox(
+                    ? SizedBox(
                         height: 16,
                         width: 16,
                         child: CircularProgressIndicator(),
                       )
-                    : const TextActionL(
+                    : TextActionL(
                         "SIMPAN",
                         color: TColors.primary,
                       ),
@@ -109,7 +109,7 @@ class _CategoryEditScreenState extends State<CategoryEditScreen> {
             ],
           ),
           body: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
                   CategoryForm(

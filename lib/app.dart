@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
 import 'package:logman/logman.dart';
@@ -149,6 +150,9 @@ class App extends StatelessWidget {
 
         // Category Master
         BlocProvider(create: (context) => CategoryMasterCubit()),
+
+        // Owner
+        BlocProvider(create: (context) => OwnerCubit()),
 
         // Order Master
         BlocProvider(create: (context) => OrderCashierCubit()),

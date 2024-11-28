@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:owner_repository/owner_repository.dart';
 
 class AccountEditScreen extends StatefulWidget {
   const AccountEditScreen({super.key});
@@ -14,51 +18,89 @@ class AccountEditScreen extends StatefulWidget {
 }
 
 class _AccountEditScreenState extends State<AccountEditScreen> {
-  List<_ItemAccountEditModel> listItemAccountEdit = [
-    _ItemAccountEditModel(
-      icon: TIcons.userOutline,
-      field: "Nama Lengkap",
-      value: "Tauhid",
-      routeName: "/account/edit/name",
-    ),
-    _ItemAccountEditModel(
-      icon: TIcons.smartphoneOutline,
-      field: "Nomor WA",
-      value: "0812-3456-7890",
-      routeName: "/account/edit/phone_number",
-    ),
-    _ItemAccountEditModel(
-      icon: TIcons.letterOutline,
-      field: "Email",
-      value: "-",
-      routeName: "/account/edit/email",
-    ),
-    _ItemAccountEditModel(
-      icon: TIcons.passwordOutline,
-      field: "PIN",
-      value: "",
-      routeName: "/account/edit/pin",
-    ),
-  ];
+  late List<_ItemAccountEditModel> listItemAccountEdit;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args =
+        ModalRoute.of(context)!.settings.arguments as OwnerProfileModel;
+
+    listItemAccountEdit = [
+      _ItemAccountEditModel(
+        icon: TIcons.userOutline,
+        field: "Nama Lengkap",
+        value: args.name,
+        routeName: "/account/edit/name",
+      ),
+      _ItemAccountEditModel(
+        icon: TIcons.smartphoneOutline,
+        field: "Nomor WA",
+        value: args.phoneNumber,
+        routeName: "/account/edit/phone_number",
+      ),
+      _ItemAccountEditModel(
+        icon: TIcons.letterOutline,
+        field: "Email",
+        value: args.email ?? "-",
+        routeName: "/account/edit/email",
+      ),
+      _ItemAccountEditModel(
+        icon: TIcons.passwordOutline,
+        field: "PIN",
+        value: "••••••",
+        routeName: "/account/edit/pin",
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppbar(
-        title: "Ubah Data Akun",
-      ),
-      body: ListView(
-        children: listItemAccountEdit
-            .map(
-              (item) => ItemAccountEdit(
-                icon: item.icon,
-                field: item.field,
-                value: item.value,
-                routeName: item.routeName,
-              ),
-            )
-            .toList(),
-      ),
-    );
+    return BlocBuilder<OwnerCubit, OwnerState>(builder: (context, state) {
+      if (state is OwnerLoadSuccess) {
+        listItemAccountEdit = [
+          _ItemAccountEditModel(
+            icon: TIcons.userOutline,
+            field: "Nama Lengkap",
+            value: state.owner.name,
+            routeName: "/account/edit/name",
+          ),
+          _ItemAccountEditModel(
+            icon: TIcons.smartphoneOutline,
+            field: "Nomor WA",
+            value: state.owner.phoneNumber,
+            routeName: "/account/edit/phone_number",
+          ),
+          _ItemAccountEditModel(
+            icon: TIcons.letterOutline,
+            field: "Email",
+            value: state.owner.email ?? "-",
+            routeName: "/account/edit/email",
+          ),
+          _ItemAccountEditModel(
+            icon: TIcons.passwordOutline,
+            field: "PIN",
+            value: "••••••",
+            routeName: "/account/edit/pin",
+          ),
+        ];
+      }
+      return Scaffold(
+        appBar: CustomAppbar(title: "Ubah Data Akun"),
+        body: ListView(
+          children: listItemAccountEdit
+              .map(
+                (item) => ItemAccountEdit(
+                  icon: item.icon,
+                  field: item.field,
+                  value: item.value,
+                  routeName: item.routeName,
+                ),
+              )
+              .toList(),
+        ),
+      );
+    });
   }
 }
 
@@ -81,7 +123,7 @@ class ItemAccountEdit extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+          contentPadding: EdgeInsets.symmetric(horizontal: 20),
           minLeadingWidth: 16,
           leading: UiIcons(
             icon,
@@ -101,19 +143,24 @@ class ItemAccountEdit extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(width: 8),
-              const UiIcons(
+              SizedBox(width: 8),
+              UiIcons(
                 TIcons.arrowRight,
                 size: 16,
                 color: TColors.primary,
               ),
             ],
           ),
-          onTap: () {
-            Navigator.pushNamed(context, routeName);
+          onTap: () async {
+            bool? result =
+                await Navigator.pushNamed(context, routeName, arguments: {
+              field: value,
+            }) as bool?;
+
+            if (!result!) return;
           },
         ),
-        const Divider(
+        Divider(
           color: TColors.neutralLightMedium,
           indent: 20.0,
           height: 1,
@@ -135,4 +182,18 @@ class _ItemAccountEditModel {
     required this.value,
     required this.routeName,
   });
+
+  _ItemAccountEditModel copyWith({
+    String? icon,
+    String? field,
+    String? value,
+    String? routeName,
+  }) {
+    return _ItemAccountEditModel(
+      icon: icon ?? this.icon,
+      field: field ?? this.field,
+      value: value ?? this.value,
+      routeName: routeName ?? this.routeName,
+    );
+  }
 }

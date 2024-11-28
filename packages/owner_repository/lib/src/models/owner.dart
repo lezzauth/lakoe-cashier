@@ -10,6 +10,7 @@ class OwnerProfileModel with _$OwnerProfileModel {
     required String name,
     required String phoneNumber,
     required String packageName,
+    String? email,
     required List<Outlet> outlets,
   }) = _OwnerProfileModel;
 
@@ -26,4 +27,24 @@ class Outlet with _$Outlet {
   }) = _Outlet;
 
   factory Outlet.fromJson(Map<String, Object?> json) => _$OutletFromJson(json);
+}
+
+@freezed
+class UpdateOwnerModel with _$UpdateOwnerModel {
+  const factory UpdateOwnerModel({
+    required String id,
+    required String name,
+    required String phoneNumber,
+    String? email,
+    required String balance,
+    required bool emailVerified,
+    required bool phoneVerified,
+    required String packageName,
+    String? packageExpiretAt,
+    required String createdAt,
+    required String updatedAt,
+  }) = _UpdateOwnerModel;
+
+  factory UpdateOwnerModel.fromJson(Map<String, Object?> json) =>
+      _$UpdateOwnerModelFromJson(json);
 }
