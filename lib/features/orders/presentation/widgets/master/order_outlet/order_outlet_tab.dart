@@ -149,7 +149,7 @@ class _OrderOutletState extends State<OrderOutlet> {
                                   ),
                                   title: "Belum ada pesanan, nih!",
                                   subTitle:
-                                      "Saat ini belum ada pesanan yang selesai, nih!\nYuk, selesaikan pesanan pertama untuk hari ini.",
+                                      "Saat ini kamu belum pernah melakukan transaksi sama sekali.",
                                 ),
                               ),
                           ],
