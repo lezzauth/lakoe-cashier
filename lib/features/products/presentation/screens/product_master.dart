@@ -122,7 +122,7 @@ class _ProductMasterState extends State<ProductMaster> {
             ),
             child: BaseProductItem(
               name: product.name,
-              price: int.parse(product.price),
+              price: double.parse(product.price).round(),
               image: image != null
                   ? Image.network(
                       image,
