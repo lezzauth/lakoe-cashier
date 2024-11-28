@@ -70,6 +70,7 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                         value: state.toFindAllOrderDto,
                         onChanged: (value) {
                           context.read<OrderCashierFilterCubit>().setFilter(
+                                status: value.status,
                                 sort: value.sort,
                                 source: value.source,
                                 type: value.type,

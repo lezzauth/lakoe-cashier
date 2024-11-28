@@ -53,9 +53,6 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
       if (result != null) {
         setState(() {
           isFilterUsed = result['isFilterUsed'] as bool;
-          if (result['sort'] != null) {
-            widget.onChanged(widget.value.copyWith(sort: result['sort']));
-          }
         });
       }
     }

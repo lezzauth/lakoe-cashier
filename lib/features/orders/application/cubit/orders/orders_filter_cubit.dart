@@ -2,12 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
 
 class OrdersFilterCubit extends Cubit<OrdersFilterState> {
-  OrdersFilterCubit()
-      : super(const OrdersFilterState(
-          source: "CASHIER",
-          sort: "NEWEST",
-          template: "ALL",
-        ));
+  OrdersFilterCubit() : super(const OrdersFilterState(sort: "NEWEST"));
 
   void setFilter({
     String? type,
@@ -32,10 +27,6 @@ class OrdersFilterCubit extends Cubit<OrdersFilterState> {
   }
 
   void clearFilter() {
-    emit(const OrdersFilterState(
-      source: "CASHIER",
-      sort: "NEWEST",
-      template: "ALL",
-    ));
+    emit(const OrdersFilterState(sort: "NEWEST"));
   }
 }

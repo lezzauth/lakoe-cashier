@@ -6,7 +6,6 @@ import 'package:lakoe_pos/features/orders/common/widgets/filters/order_date_filt
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/filter/order_outlet_advanced_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
-import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 
 class OrderOutletFilter extends StatefulWidget {
@@ -37,7 +36,6 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
             child: OrderOutletAdvancedFilter(
               value: widget.value,
               onFilterChanged: (value) {
-                Logman.instance.info("value $value");
                 widget.onChanged(value);
               },
             ),

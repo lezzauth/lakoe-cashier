@@ -71,18 +71,25 @@ class _OrderDateFilterContentState extends State<OrderDateFilterContent> {
               hideLabel: true,
               from: widget.from == null
                   ? DateTime.now()
-                  : DateTime.parse(widget.from!).toLocal(),
+                      .copyWith(hour: 0, minute: 0, second: 0, millisecond: 0)
+                  : DateTime.parse(widget.from!)
+                      .toLocal()
+                      .copyWith(hour: 0, minute: 0, second: 0, millisecond: 0),
               to: widget.to == null
                   ? DateTime.now()
                   : DateTime.parse(widget.to!).toLocal(),
               onSubmit: ({from, to}) {
+                final customFrom = from!
+                    .copyWith(hour: 0, minute: 0, second: 0, millisecond: 0);
+                final customTo = to;
                 Navigator.pop(
-                    context,
-                    OrderDateFilterValue(
-                      template: "CUSTOM",
-                      from: from,
-                      to: to,
-                    ));
+                  context,
+                  OrderDateFilterValue(
+                    template: "CUSTOM",
+                    from: customFrom,
+                    to: customTo,
+                  ),
+                );
               },
             ),
           if (_groupValue != "CUSTOM")

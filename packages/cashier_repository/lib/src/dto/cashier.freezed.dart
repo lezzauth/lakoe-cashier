@@ -1933,8 +1933,8 @@ mixin _$FindAllOrderCashierDto {
   String? get search => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
   String? get template => throw _privateConstructorUsedError;
-  String? get to => throw _privateConstructorUsedError;
   String? get from => throw _privateConstructorUsedError;
+  String? get to => throw _privateConstructorUsedError;
 
   /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
@@ -1956,8 +1956,8 @@ abstract class $FindAllOrderCashierDtoCopyWith<$Res> {
       String? search,
       String? sort,
       String? template,
-      String? to,
-      String? from});
+      String? from,
+      String? to});
 }
 
 /// @nodoc
@@ -1982,8 +1982,8 @@ class _$FindAllOrderCashierDtoCopyWithImpl<$Res,
     Object? search = freezed,
     Object? sort = freezed,
     Object? template = freezed,
-    Object? to = freezed,
     Object? from = freezed,
+    Object? to = freezed,
   }) {
     return _then(_value.copyWith(
       type: freezed == type
@@ -2010,13 +2010,13 @@ class _$FindAllOrderCashierDtoCopyWithImpl<$Res,
           ? _value.template
           : template // ignore: cast_nullable_to_non_nullable
               as String?,
-      to: freezed == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
-              as String?,
       from: freezed == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
+              as String?,
+      to: freezed == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -2038,8 +2038,8 @@ abstract class _$$FindAllOrderCashierDtoImplCopyWith<$Res>
       String? search,
       String? sort,
       String? template,
-      String? to,
-      String? from});
+      String? from,
+      String? to});
 }
 
 /// @nodoc
@@ -2063,8 +2063,8 @@ class __$$FindAllOrderCashierDtoImplCopyWithImpl<$Res>
     Object? search = freezed,
     Object? sort = freezed,
     Object? template = freezed,
-    Object? to = freezed,
     Object? from = freezed,
+    Object? to = freezed,
   }) {
     return _then(_$FindAllOrderCashierDtoImpl(
       type: freezed == type
@@ -2091,13 +2091,13 @@ class __$$FindAllOrderCashierDtoImplCopyWithImpl<$Res>
           ? _value.template
           : template // ignore: cast_nullable_to_non_nullable
               as String?,
-      to: freezed == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
-              as String?,
       from: freezed == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
+              as String?,
+      to: freezed == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -2113,8 +2113,8 @@ class _$FindAllOrderCashierDtoImpl implements _FindAllOrderCashierDto {
       this.search,
       this.sort,
       this.template,
-      this.to,
-      this.from});
+      this.from,
+      this.to});
 
   @override
   final String? type;
@@ -2129,13 +2129,13 @@ class _$FindAllOrderCashierDtoImpl implements _FindAllOrderCashierDto {
   @override
   final String? template;
   @override
-  final String? to;
-  @override
   final String? from;
+  @override
+  final String? to;
 
   @override
   String toString() {
-    return 'FindAllOrderCashierDto(type: $type, source: $source, status: $status, search: $search, sort: $sort, template: $template, to: $to, from: $from)';
+    return 'FindAllOrderCashierDto(type: $type, source: $source, status: $status, search: $search, sort: $sort, template: $template, from: $from, to: $to)';
   }
 
   @override
@@ -2150,13 +2150,13 @@ class _$FindAllOrderCashierDtoImpl implements _FindAllOrderCashierDto {
             (identical(other.sort, sort) || other.sort == sort) &&
             (identical(other.template, template) ||
                 other.template == template) &&
-            (identical(other.to, to) || other.to == to) &&
-            (identical(other.from, from) || other.from == from));
+            (identical(other.from, from) || other.from == from) &&
+            (identical(other.to, to) || other.to == to));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, type, source, status, search, sort, template, to, from);
+      runtimeType, type, source, status, search, sort, template, from, to);
 
   /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
@@ -2176,8 +2176,8 @@ abstract class _FindAllOrderCashierDto implements FindAllOrderCashierDto {
       final String? search,
       final String? sort,
       final String? template,
-      final String? to,
-      final String? from}) = _$FindAllOrderCashierDtoImpl;
+      final String? from,
+      final String? to}) = _$FindAllOrderCashierDtoImpl;
 
   @override
   String? get type;
@@ -2192,9 +2192,9 @@ abstract class _FindAllOrderCashierDto implements FindAllOrderCashierDto {
   @override
   String? get template;
   @override
-  String? get to;
-  @override
   String? get from;
+  @override
+  String? get to;
 
   /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.

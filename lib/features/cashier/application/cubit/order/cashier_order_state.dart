@@ -32,3 +32,12 @@ final class CashierOrderLoadFailure extends CashierOrderState {
   @override
   List<Object?> get props => [error];
 }
+
+final class ConnectionIssue extends CashierOrderState {
+  final String message;
+
+  ConnectionIssue(this.message);
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}

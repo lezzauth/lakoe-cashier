@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/filter/order_outlet_filter.dart';
-import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
@@ -52,17 +51,7 @@ class _OrderOutletState extends State<OrderOutlet> {
         ),
         BlocListener<OrdersFilterCubit, OrdersFilterState>(
           listener: (context, state) {
-            Logman.instance.info("listener $state");
-            context.read<OrdersCubit>().findAll(FindAllOrderDto(
-                  status: ["ALL"].contains(state.status) ? null : state.status,
-                  sort: state.sort,
-                  search: state.search,
-                  template:
-                      ["ALL"].contains(state.template) ? null : state.template,
-                  from:
-                      !["CUSTOM"].contains(state.template) ? null : state.from,
-                  to: !["CUSTOM"].contains(state.template) ? null : state.to,
-                ));
+            context.read<OrdersCubit>().findAll(state.toFindAllOrderDto);
           },
         )
       ],
@@ -82,7 +71,6 @@ class _OrderOutletState extends State<OrderOutlet> {
                       return OrderOutletFilter(
                         value: state.toFindAllOrderDto,
                         onChanged: (value) {
-                          Logman.instance.info("value.status ${value.status}");
                           context.read<OrdersFilterCubit>().setFilter(
                                 sort: value.sort,
                                 source: value.source,

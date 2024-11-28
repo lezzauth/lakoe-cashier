@@ -137,8 +137,8 @@ class FindAllOrderCashierDto with _$FindAllOrderCashierDto {
     String? search,
     String? sort,
     String? template,
-    String? to,
     String? from,
+    String? to,
   }) = _FindAllOrderCashierDto;
 }
 
@@ -150,8 +150,8 @@ extension CopyWithExtension on FindAllOrderCashierDto {
     String? search,
     String? sort,
     String? template,
-    String? to,
     String? from,
+    String? to,
   }) {
     return FindAllOrderCashierDto(
       type: type ?? this.type,
@@ -160,8 +160,8 @@ extension CopyWithExtension on FindAllOrderCashierDto {
       search: search ?? this.search,
       sort: sort ?? this.sort,
       template: template ?? this.template,
-      to: to ?? this.to,
       from: from ?? this.from,
+      to: to ?? this.to,
     );
   }
 }
@@ -175,8 +175,8 @@ extension QueryStringExtension on FindAllOrderCashierDto {
       "search": search,
       "sort": sort,
       "template": template,
-      "to": to,
       "from": from,
+      "to": to,
     };
 
     queryParams.removeWhere((key, value) => value == null);

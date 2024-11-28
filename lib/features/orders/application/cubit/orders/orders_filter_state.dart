@@ -7,7 +7,7 @@ class OrdersFilterState extends Equatable {
   final String? status;
   final String? search;
   final String? sort;
-  final String template;
+  final String? template;
   final String? from;
   final String? to;
 
@@ -17,7 +17,7 @@ class OrdersFilterState extends Equatable {
     this.status,
     this.search,
     this.sort,
-    required this.template,
+    this.template,
     this.from,
     this.to,
   });
@@ -26,9 +26,9 @@ class OrdersFilterState extends Equatable {
         search: search,
         sort: sort,
         source: source,
-        status: status,
-        type: type,
-        template: template,
+        status: status == 'ALL' ? null : status,
+        type: type == 'ALL' ? null : type,
+        template: template == 'ALL' ? null : template,
         from: from,
         to: to,
       );

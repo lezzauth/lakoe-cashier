@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lakoe_pos/common/data/models.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
@@ -8,7 +7,6 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_outlet/filter/sort_radio_tile.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
-import 'package:lakoe_pos/utils/constants/sizes.dart';
 import 'package:order_repository/order_repository.dart';
 
 class OrderOutletAdvancedFilter extends StatefulWidget {
@@ -29,6 +27,7 @@ class OrderOutletAdvancedFilter extends StatefulWidget {
 class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
   late String selectedSortValue;
   String? selectedStatusValue;
+  String? selectedTypesValue;
 
   List<LabelValue> sorts = [
     const LabelValue<String>(label: "Terbaru", value: "NEWEST"),
@@ -44,11 +43,17 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
     const LabelValue(label: "Dibatalkan", value: "CANCELLED"),
   ];
 
+  List<LabelValue<String>> types = [
+    const LabelValue(label: "Makan di tempat", value: "DINEIN"),
+    const LabelValue(label: "Dibungkus", value: "TAKEAWAY"),
+  ];
+
   @override
   void initState() {
     super.initState();
     selectedSortValue = widget.value.sort ?? "NEWEST";
     selectedStatusValue = widget.value.status;
+    selectedTypesValue = widget.value.type;
   }
 
   @override
@@ -60,14 +65,12 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
         Row(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 16,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: TextHeading2("Filter"),
             ),
           ],
         ),
+        SizedBox(height: 12),
         Row(
           children: [
             Padding(
@@ -120,7 +123,11 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                 selected: selected,
                 onPressed: () {
                   setState(() {
-                    selectedStatusValue = status.value;
+                    if (selected) {
+                      selectedStatusValue = null;
+                    } else {
+                      selectedStatusValue = status.value;
+                    }
                   });
                 },
               );
@@ -128,38 +135,46 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
           ),
         ),
         SizedBox(height: 12),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextHeading3("Jenis Pesanan"),
+            ),
+          ],
+        ),
+        SizedBox(height: 8),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              RichText(
-                text: TextSpan(
-                    text: "Dine In",
-                    style: GoogleFonts.inter(
-                      fontSize: TSizes.fontSizeHeading3,
-                      color: TColors.neutralDarkDarkest,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: " (Makan di tempat)",
-                        style: GoogleFonts.inter(
-                          fontSize: TSizes.fontSizeHeading3,
-                          color: TColors.neutralDarkMedium,
-                          fontWeight: FontWeight.w400,
-                        ),
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: Wrap(
+            direction: Axis.horizontal,
+            alignment: WrapAlignment.start,
+            spacing: 8.0,
+            children: types.map((type) {
+              bool selected = type.value == selectedTypesValue;
+              return InputChip(
+                label: selected
+                    ? TextHeading4(
+                        type.label,
+                        color: TColors.primary,
                       )
-                    ]),
-              ),
-              SizedBox(
-                height: 28,
-                child: Switch(
-                  value: true,
-                  onChanged: (value) {},
-                ),
-              )
-            ],
+                    : TextBodyM(
+                        type.label,
+                        color: TColors.neutralDarkDarkest,
+                      ),
+                selected: selected,
+                onPressed: () {
+                  setState(() {
+                    if (selected) {
+                      selectedTypesValue = null;
+                    } else {
+                      selectedTypesValue = type.value;
+                    }
+                  });
+                },
+              );
+            }).toList(),
           ),
         ),
         Padding(
@@ -175,6 +190,7 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                         widget.value.copyWith(
                           sort: "NEWEST",
                           status: "ALL",
+                          type: "ALL",
                         ),
                       );
                       Navigator.pop(context, {'isFilterUsed': false});
@@ -191,15 +207,20 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                 child: SizedBox(
                   height: 48,
                   child: ElevatedButton(
-                    onPressed: () {
-                      widget.onFilterChanged(
-                        widget.value.copyWith(
-                          sort: selectedSortValue,
-                          status: selectedStatusValue,
-                        ),
-                      );
-                      Navigator.pop(context, {'isFilterUsed': true});
-                    },
+                    onPressed: (selectedSortValue == "NEWEST" &&
+                            selectedStatusValue == null &&
+                            selectedTypesValue == null)
+                        ? null
+                        : () {
+                            widget.onFilterChanged(
+                              widget.value.copyWith(
+                                sort: selectedSortValue,
+                                status: selectedStatusValue,
+                                type: selectedTypesValue,
+                              ),
+                            );
+                            Navigator.pop(context, {'isFilterUsed': true});
+                          },
                     child: TextActionL(
                       "Pasang",
                       color: TColors.neutralLightLightest,

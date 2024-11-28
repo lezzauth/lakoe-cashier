@@ -16,18 +16,18 @@ class OrderCashierFilterCubit extends Cubit<OrderCashierFilterState> {
     String? search,
     String? sort,
     String? template,
-    DateTime? to,
     DateTime? from,
+    DateTime? to,
   }) {
     emit(OrderCashierFilterState(
       search: search ?? state.search,
-      sort: sort ?? state.sort,
+      sort: sort ?? state.sort ?? "NEWEST",
       source: source ?? state.source,
       status: status ?? state.status ?? "OPEN",
       type: type ?? state.type,
       template: template ?? state.template,
-      to: to?.toIso8601String(),
       from: from?.toIso8601String(),
+      to: to?.toIso8601String(),
     ));
   }
 

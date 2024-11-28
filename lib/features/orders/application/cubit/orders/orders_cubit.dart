@@ -8,10 +8,7 @@ class OrdersCubit extends Cubit<OrdersState> {
   OrdersCubit() : super(OrdersStateInitial());
 
   Future<void> init() async {
-    await findAll(FindAllOrderDto(
-      source: "CASHIER",
-      sort: "NEWEST",
-    ));
+    await findAll(FindAllOrderDto(sort: "NEWEST"));
   }
 
   Future<void> findAll(FindAllOrderDto dto) async {
