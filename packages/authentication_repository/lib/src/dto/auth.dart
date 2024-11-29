@@ -62,3 +62,13 @@ class RefreshTokenDto with _$RefreshTokenDto {
   factory RefreshTokenDto.fromJson(Map<String, Object?> json) =>
       _$RefreshTokenDtoFromJson(json);
 }
+
+@freezed
+class GenerateTokenDto with _$GenerateTokenDto {
+  const factory GenerateTokenDto({
+    required String pin,
+  }) = _GenerateTokenDto;
+
+  factory GenerateTokenDto.fromJson(Map<String, Object?> json) =>
+      _$GenerateTokenDtoFromJson(json);
+}

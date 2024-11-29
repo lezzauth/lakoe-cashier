@@ -8,7 +8,7 @@ import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
-import 'package:owner_repository/owner_repository.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class AccountEditScreen extends StatefulWidget {
   const AccountEditScreen({super.key});
@@ -23,35 +23,6 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final args =
-        ModalRoute.of(context)!.settings.arguments as OwnerProfileModel;
-
-    listItemAccountEdit = [
-      _ItemAccountEditModel(
-        icon: TIcons.userOutline,
-        field: "Nama Lengkap",
-        value: args.name,
-        routeName: "/account/edit/name",
-      ),
-      _ItemAccountEditModel(
-        icon: TIcons.smartphoneOutline,
-        field: "Nomor WA",
-        value: args.phoneNumber,
-        routeName: "/account/edit/phone_number",
-      ),
-      _ItemAccountEditModel(
-        icon: TIcons.letterOutline,
-        field: "Email",
-        value: args.email ?? "-",
-        routeName: "/account/edit/email",
-      ),
-      _ItemAccountEditModel(
-        icon: TIcons.passwordOutline,
-        field: "PIN",
-        value: "••••••",
-        routeName: "/account/edit/pin",
-      ),
-    ];
   }
 
   @override
@@ -138,7 +109,9 @@ class ItemAccountEdit extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextHeading4(
-                value,
+                (field == "Nomor WA")
+                    ? PhoneNumberFormatter.formatForDisplay(value)
+                    : value,
                 color: TColors.neutralDarkDark,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -152,12 +125,20 @@ class ItemAccountEdit extends StatelessWidget {
             ],
           ),
           onTap: () async {
-            bool? result =
-                await Navigator.pushNamed(context, routeName, arguments: {
-              field: value,
-            }) as bool?;
+            if (routeName == "/account/edit/name") {
+              bool? result =
+                  await Navigator.pushNamed(context, routeName, arguments: {
+                field: value,
+              }) as bool?;
 
-            if (!result!) return;
+              if (!result!) return;
+            } else {
+              Navigator.pushNamed(context, "/account/edit/verify_pin",
+                  arguments: {
+                    field: value,
+                    'routeName': routeName,
+                  });
+            }
           },
         ),
         Divider(

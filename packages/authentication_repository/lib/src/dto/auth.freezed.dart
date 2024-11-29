@@ -917,3 +917,154 @@ abstract class _RefreshTokenDto implements RefreshTokenDto {
   _$$RefreshTokenDtoImplCopyWith<_$RefreshTokenDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+GenerateTokenDto _$GenerateTokenDtoFromJson(Map<String, dynamic> json) {
+  return _GenerateTokenDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$GenerateTokenDto {
+  String get pin => throw _privateConstructorUsedError;
+
+  /// Serializes this GenerateTokenDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of GenerateTokenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $GenerateTokenDtoCopyWith<GenerateTokenDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GenerateTokenDtoCopyWith<$Res> {
+  factory $GenerateTokenDtoCopyWith(
+          GenerateTokenDto value, $Res Function(GenerateTokenDto) then) =
+      _$GenerateTokenDtoCopyWithImpl<$Res, GenerateTokenDto>;
+  @useResult
+  $Res call({String pin});
+}
+
+/// @nodoc
+class _$GenerateTokenDtoCopyWithImpl<$Res, $Val extends GenerateTokenDto>
+    implements $GenerateTokenDtoCopyWith<$Res> {
+  _$GenerateTokenDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of GenerateTokenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pin = null,
+  }) {
+    return _then(_value.copyWith(
+      pin: null == pin
+          ? _value.pin
+          : pin // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$GenerateTokenDtoImplCopyWith<$Res>
+    implements $GenerateTokenDtoCopyWith<$Res> {
+  factory _$$GenerateTokenDtoImplCopyWith(_$GenerateTokenDtoImpl value,
+          $Res Function(_$GenerateTokenDtoImpl) then) =
+      __$$GenerateTokenDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String pin});
+}
+
+/// @nodoc
+class __$$GenerateTokenDtoImplCopyWithImpl<$Res>
+    extends _$GenerateTokenDtoCopyWithImpl<$Res, _$GenerateTokenDtoImpl>
+    implements _$$GenerateTokenDtoImplCopyWith<$Res> {
+  __$$GenerateTokenDtoImplCopyWithImpl(_$GenerateTokenDtoImpl _value,
+      $Res Function(_$GenerateTokenDtoImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of GenerateTokenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pin = null,
+  }) {
+    return _then(_$GenerateTokenDtoImpl(
+      pin: null == pin
+          ? _value.pin
+          : pin // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$GenerateTokenDtoImpl implements _GenerateTokenDto {
+  const _$GenerateTokenDtoImpl({required this.pin});
+
+  factory _$GenerateTokenDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GenerateTokenDtoImplFromJson(json);
+
+  @override
+  final String pin;
+
+  @override
+  String toString() {
+    return 'GenerateTokenDto(pin: $pin)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GenerateTokenDtoImpl &&
+            (identical(other.pin, pin) || other.pin == pin));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, pin);
+
+  /// Create a copy of GenerateTokenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GenerateTokenDtoImplCopyWith<_$GenerateTokenDtoImpl> get copyWith =>
+      __$$GenerateTokenDtoImplCopyWithImpl<_$GenerateTokenDtoImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GenerateTokenDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _GenerateTokenDto implements GenerateTokenDto {
+  const factory _GenerateTokenDto({required final String pin}) =
+      _$GenerateTokenDtoImpl;
+
+  factory _GenerateTokenDto.fromJson(Map<String, dynamic> json) =
+      _$GenerateTokenDtoImpl.fromJson;
+
+  @override
+  String get pin;
+
+  /// Create a copy of GenerateTokenDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GenerateTokenDtoImplCopyWith<_$GenerateTokenDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

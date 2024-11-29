@@ -13,6 +13,7 @@ abstract class AuthenticationRepository {
   Future<RequestOTPResponse> requestOTP(RequestOTPDto dto);
   Future<VerifyOTPResponse> verifyOTP(VerifyOTPDto dto);
   Future<RefreshTokenRes> refreshToken(RefreshTokenDto dto);
+  Future<GenerateTokenRes> generateToken(GenerateTokenDto dto);
 }
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
@@ -100,5 +101,18 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     );
 
     return RefreshTokenRes.fromJson(response.data);
+  }
+
+  @override
+  Future<GenerateTokenRes> generateToken(GenerateTokenDto dto) async {
+    final Options options = await _getOptions();
+
+    final response = await _dio.post(
+      "$_baseURL/generate-otp",
+      data: dto.toJson(),
+      options: options,
+    );
+
+    return GenerateTokenRes.fromJson(response.data);
   }
 }

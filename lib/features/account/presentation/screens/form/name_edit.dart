@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
@@ -27,6 +28,7 @@ class _NameEditScreenState extends State<NameEditScreen> {
   @override
   void initState() {
     super.initState();
+    CustomToast.init(context);
 
     _focusNode.addListener(() {
       if (_focusNode.hasFocus) {
@@ -72,15 +74,32 @@ class _NameEditScreenState extends State<NameEditScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<OwnerCubit, OwnerState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is OwnerActionSuccess) {
+          CustomToast.showWithContext(
+            context,
+            "Nama berhasil diubah",
+            duration: 1,
+            backgroundColor: TColors.success,
+          );
+          await Future.delayed(Duration(seconds: 1));
           Navigator.pop(context, true);
+          context.read<OwnerCubit>().getOwner();
+        } else if (state is OwnerActionFailure) {
+          CustomToast.showWithContext(
+            context,
+            "Nama gagal diubah",
+            duration: 1,
+            backgroundColor: TColors.error,
+          );
+          await Future.delayed(Duration(seconds: 1));
+          Navigator.pop(context);
           context.read<OwnerCubit>().getOwner();
         }
       },
       child: BlocBuilder<OwnerCubit, OwnerState>(builder: (context, state) {
         return Scaffold(
-          appBar: const CustomAppbar(),
+          appBar: CustomAppbar(),
           body: FormBuilder(
             key: formKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -88,12 +107,11 @@ class _NameEditScreenState extends State<NameEditScreen> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 12),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextHeading2(
@@ -106,12 +124,12 @@ class _NameEditScreenState extends State<NameEditScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 24),
+                        SizedBox(height: 24),
                         FormBuilderTextField(
                           name: "name",
                           controller: _controller,
                           focusNode: _focusNode,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintText: "Masukan nama lengkap",
                           ),
                           validator: FormBuilderValidators.compose([
@@ -151,7 +169,7 @@ class _NameEditScreenState extends State<NameEditScreen> {
                             _onSubmit();
                           },
                     child: state is OwnerActionInProgress
-                        ? const SizedBox(
+                        ? SizedBox(
                             height: 16,
                             width: 16,
                             child: CircularProgressIndicator(

@@ -15,6 +15,10 @@ abstract class OwnerRepository {
   Future<List<OutletModel>> listOutlets();
   Future<OwnerProfileModel> getProfile();
   Future<UpdateOwnerModel> updateNameAccount(UpdateNameDto dto);
+  Future<UpdateOwnerModel> updateEmailAccount(UpdateEmailDto dto);
+  Future<UpdateOwnerModel> updatePINAccount(UpdatePinDto dto);
+  Future<RequestOTPRes> requestOTP(RequestOTPDto dto);
+  Future<UpdateOwnerModel> updatePhoneNumber(UpdatePhoneNumberDto dto);
 }
 
 class OwnerRepositoryImpl implements OwnerRepository {
@@ -51,6 +55,58 @@ class OwnerRepositoryImpl implements OwnerRepository {
 
   @override
   Future<UpdateOwnerModel> updateNameAccount(UpdateNameDto dto) async {
+    final Options options = await _getOptions();
+
+    final res = await _dio.patch(
+      "$_baseURL/profile",
+      data: dto.toJson(),
+      options: options,
+    );
+
+    return UpdateOwnerModel.fromJson(res.data);
+  }
+
+  @override
+  Future<UpdateOwnerModel> updateEmailAccount(UpdateEmailDto dto) async {
+    final Options options = await _getOptions();
+
+    final res = await _dio.patch(
+      "$_baseURL/profile",
+      data: dto.toJson(),
+      options: options,
+    );
+
+    return UpdateOwnerModel.fromJson(res.data);
+  }
+
+  @override
+  Future<UpdateOwnerModel> updatePINAccount(UpdatePinDto dto) async {
+    final Options options = await _getOptions();
+
+    final res = await _dio.patch(
+      "$_baseURL/profile",
+      data: dto.toJson(),
+      options: options,
+    );
+
+    return UpdateOwnerModel.fromJson(res.data);
+  }
+
+  @override
+  Future<RequestOTPRes> requestOTP(RequestOTPDto dto) async {
+    final Options options = await _getOptions();
+
+    final res = await _dio.patch(
+      "$_baseURL/profile/otp",
+      data: dto.toJson(),
+      options: options,
+    );
+
+    return RequestOTPRes.fromJson(res.data);
+  }
+
+  @override
+  Future<UpdateOwnerModel> updatePhoneNumber(UpdatePhoneNumberDto dto) async {
     final Options options = await _getOptions();
 
     final res = await _dio.patch(

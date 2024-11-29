@@ -97,9 +97,10 @@ class _PinInputPageState extends State<PinInputPage> {
                               widget.onPinValid!(value);
                             }
 
+                            _pinController.clear();
+
                             setState(() {
                               loading = false;
-                              isRepeat = false;
                             });
                           } else {
                             setState(() {

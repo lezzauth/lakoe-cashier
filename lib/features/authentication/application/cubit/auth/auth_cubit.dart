@@ -155,4 +155,16 @@ class AuthCubit extends Cubit<AuthState> {
       isInitializing = false;
     }
   }
+
+  Future<void> generateToken(GenerateTokenDto pin) async {
+    try {
+      emit(GenerateTokenInProgress());
+
+      final res = await _authenticationRepository.generateToken(pin);
+      emit(GenerateTokenSuccess(res));
+      await initialize();
+    } catch (e) {
+      emit(GenerateTokenFailure(e.toString()));
+    }
+  }
 }

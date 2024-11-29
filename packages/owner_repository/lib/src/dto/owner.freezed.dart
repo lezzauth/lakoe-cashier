@@ -687,3 +687,154 @@ abstract class _UpdatePinDto implements UpdatePinDto {
   _$$UpdatePinDtoImplCopyWith<_$UpdatePinDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+RequestOTPDto _$RequestOTPDtoFromJson(Map<String, dynamic> json) {
+  return _RequestOTPDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RequestOTPDto {
+  String get phoneNumber => throw _privateConstructorUsedError;
+
+  /// Serializes this RequestOTPDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RequestOTPDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RequestOTPDtoCopyWith<RequestOTPDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RequestOTPDtoCopyWith<$Res> {
+  factory $RequestOTPDtoCopyWith(
+          RequestOTPDto value, $Res Function(RequestOTPDto) then) =
+      _$RequestOTPDtoCopyWithImpl<$Res, RequestOTPDto>;
+  @useResult
+  $Res call({String phoneNumber});
+}
+
+/// @nodoc
+class _$RequestOTPDtoCopyWithImpl<$Res, $Val extends RequestOTPDto>
+    implements $RequestOTPDtoCopyWith<$Res> {
+  _$RequestOTPDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RequestOTPDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? phoneNumber = null,
+  }) {
+    return _then(_value.copyWith(
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RequestOTPDtoImplCopyWith<$Res>
+    implements $RequestOTPDtoCopyWith<$Res> {
+  factory _$$RequestOTPDtoImplCopyWith(
+          _$RequestOTPDtoImpl value, $Res Function(_$RequestOTPDtoImpl) then) =
+      __$$RequestOTPDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String phoneNumber});
+}
+
+/// @nodoc
+class __$$RequestOTPDtoImplCopyWithImpl<$Res>
+    extends _$RequestOTPDtoCopyWithImpl<$Res, _$RequestOTPDtoImpl>
+    implements _$$RequestOTPDtoImplCopyWith<$Res> {
+  __$$RequestOTPDtoImplCopyWithImpl(
+      _$RequestOTPDtoImpl _value, $Res Function(_$RequestOTPDtoImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RequestOTPDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? phoneNumber = null,
+  }) {
+    return _then(_$RequestOTPDtoImpl(
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RequestOTPDtoImpl implements _RequestOTPDto {
+  const _$RequestOTPDtoImpl({required this.phoneNumber});
+
+  factory _$RequestOTPDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RequestOTPDtoImplFromJson(json);
+
+  @override
+  final String phoneNumber;
+
+  @override
+  String toString() {
+    return 'RequestOTPDto(phoneNumber: $phoneNumber)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RequestOTPDtoImpl &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, phoneNumber);
+
+  /// Create a copy of RequestOTPDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RequestOTPDtoImplCopyWith<_$RequestOTPDtoImpl> get copyWith =>
+      __$$RequestOTPDtoImplCopyWithImpl<_$RequestOTPDtoImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RequestOTPDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RequestOTPDto implements RequestOTPDto {
+  const factory _RequestOTPDto({required final String phoneNumber}) =
+      _$RequestOTPDtoImpl;
+
+  factory _RequestOTPDto.fromJson(Map<String, dynamic> json) =
+      _$RequestOTPDtoImpl.fromJson;
+
+  @override
+  String get phoneNumber;
+
+  /// Create a copy of RequestOTPDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RequestOTPDtoImplCopyWith<_$RequestOTPDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

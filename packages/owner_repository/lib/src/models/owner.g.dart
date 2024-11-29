@@ -74,3 +74,25 @@ Map<String, dynamic> _$$UpdateOwnerModelImplToJson(
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };
+
+_$RequestOTPResImpl _$$RequestOTPResImplFromJson(Map<String, dynamic> json) =>
+    _$RequestOTPResImpl(
+      id: json['id'] as String,
+      target: json['target'] as String,
+      type: json['type'] as String,
+      action: json['action'] as String,
+      expireAt: json['expireAt'] as String?,
+      createdAt: json['createdAt'] as String?,
+      updatedAt: json['updatedAt'] as String?,
+    );
+
+Map<String, dynamic> _$$RequestOTPResImplToJson(_$RequestOTPResImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'target': instance.target,
+      'type': instance.type,
+      'action': instance.action,
+      'expireAt': instance.expireAt,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+    };

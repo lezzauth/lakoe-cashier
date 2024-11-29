@@ -41,7 +41,7 @@ class OtpInput extends StatefulWidget {
 
 class _OtpInputState extends State<OtpInput>
     with SingleTickerProviderStateMixin {
-  final TextEditingController _optController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
   late AnimationController _animationController;
   late Animation<double> _animation;
 
@@ -86,7 +86,7 @@ class _OtpInputState extends State<OtpInput>
 
   @override
   void dispose() {
-    _optController.dispose();
+    _otpController.dispose();
     _animationController.dispose();
     super.dispose();
   }
@@ -195,7 +195,7 @@ class _OtpInputState extends State<OtpInput>
                               length: 4,
                               autofocus: true,
                               obscureText: true,
-                              controller: _optController,
+                              controller: _otpController,
                               onCompleted: (value) {
                                 context
                                     .read<OtpInputCubit>()
@@ -204,7 +204,7 @@ class _OtpInputState extends State<OtpInput>
                                       code: value,
                                     ));
 
-                                _optController.clear();
+                                _otpController.clear();
                               },
                             ),
                           );

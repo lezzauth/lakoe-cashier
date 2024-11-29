@@ -56,3 +56,13 @@ Map<String, dynamic> _$$UpdatePinDtoImplToJson(_$UpdatePinDtoImpl instance) =>
       'token': instance.token,
       'pin': instance.pin,
     };
+
+_$RequestOTPDtoImpl _$$RequestOTPDtoImplFromJson(Map<String, dynamic> json) =>
+    _$RequestOTPDtoImpl(
+      phoneNumber: json['phoneNumber'] as String,
+    );
+
+Map<String, dynamic> _$$RequestOTPDtoImplToJson(_$RequestOTPDtoImpl instance) =>
+    <String, dynamic>{
+      'phoneNumber': instance.phoneNumber,
+    };

@@ -46,3 +46,13 @@ class UpdatePinDto with _$UpdatePinDto {
   factory UpdatePinDto.fromJson(Map<String, Object?> json) =>
       _$UpdatePinDtoFromJson(json);
 }
+
+@freezed
+class RequestOTPDto with _$RequestOTPDto {
+  const factory RequestOTPDto({
+    required String phoneNumber,
+  }) = _RequestOTPDto;
+
+  factory RequestOTPDto.fromJson(Map<String, Object?> json) =>
+      _$RequestOTPDtoFromJson(json);
+}

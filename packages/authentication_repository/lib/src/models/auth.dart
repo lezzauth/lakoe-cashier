@@ -57,3 +57,13 @@ class RefreshTokenRes with _$RefreshTokenRes {
   factory RefreshTokenRes.fromJson(Map<String, Object?> json) =>
       _$RefreshTokenResFromJson(json);
 }
+
+@freezed
+class GenerateTokenRes with _$GenerateTokenRes {
+  const factory GenerateTokenRes({
+    required String token,
+  }) = _GenerateTokenRes;
+
+  factory GenerateTokenRes.fromJson(Map<String, Object?> json) =>
+      _$GenerateTokenResFromJson(json);
+}

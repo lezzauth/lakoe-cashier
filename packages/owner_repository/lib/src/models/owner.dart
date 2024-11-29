@@ -48,3 +48,19 @@ class UpdateOwnerModel with _$UpdateOwnerModel {
   factory UpdateOwnerModel.fromJson(Map<String, Object?> json) =>
       _$UpdateOwnerModelFromJson(json);
 }
+
+@freezed
+class RequestOTPRes with _$RequestOTPRes {
+  const factory RequestOTPRes({
+    required String id,
+    required String target,
+    required String type,
+    required String action,
+    String? expireAt,
+    String? createdAt,
+    String? updatedAt,
+  }) = _RequestOTPRes;
+
+  factory RequestOTPRes.fromJson(Map<String, Object?> json) =>
+      _$RequestOTPResFromJson(json);
+}

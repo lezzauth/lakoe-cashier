@@ -71,3 +71,15 @@ Map<String, dynamic> _$$RefreshTokenDtoImplToJson(
     <String, dynamic>{
       'token': instance.token,
     };
+
+_$GenerateTokenDtoImpl _$$GenerateTokenDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$GenerateTokenDtoImpl(
+      pin: json['pin'] as String,
+    );
+
+Map<String, dynamic> _$$GenerateTokenDtoImplToJson(
+        _$GenerateTokenDtoImpl instance) =>
+    <String, dynamic>{
+      'pin': instance.pin,
+    };

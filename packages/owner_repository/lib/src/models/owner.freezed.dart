@@ -830,3 +830,280 @@ abstract class _UpdateOwnerModel implements UpdateOwnerModel {
   _$$UpdateOwnerModelImplCopyWith<_$UpdateOwnerModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+RequestOTPRes _$RequestOTPResFromJson(Map<String, dynamic> json) {
+  return _RequestOTPRes.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RequestOTPRes {
+  String get id => throw _privateConstructorUsedError;
+  String get target => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
+  String get action => throw _privateConstructorUsedError;
+  String? get expireAt => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
+  String? get updatedAt => throw _privateConstructorUsedError;
+
+  /// Serializes this RequestOTPRes to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RequestOTPRes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RequestOTPResCopyWith<RequestOTPRes> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RequestOTPResCopyWith<$Res> {
+  factory $RequestOTPResCopyWith(
+          RequestOTPRes value, $Res Function(RequestOTPRes) then) =
+      _$RequestOTPResCopyWithImpl<$Res, RequestOTPRes>;
+  @useResult
+  $Res call(
+      {String id,
+      String target,
+      String type,
+      String action,
+      String? expireAt,
+      String? createdAt,
+      String? updatedAt});
+}
+
+/// @nodoc
+class _$RequestOTPResCopyWithImpl<$Res, $Val extends RequestOTPRes>
+    implements $RequestOTPResCopyWith<$Res> {
+  _$RequestOTPResCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RequestOTPRes
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? target = null,
+    Object? type = null,
+    Object? action = null,
+    Object? expireAt = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      target: null == target
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      action: null == action
+          ? _value.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as String,
+      expireAt: freezed == expireAt
+          ? _value.expireAt
+          : expireAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RequestOTPResImplCopyWith<$Res>
+    implements $RequestOTPResCopyWith<$Res> {
+  factory _$$RequestOTPResImplCopyWith(
+          _$RequestOTPResImpl value, $Res Function(_$RequestOTPResImpl) then) =
+      __$$RequestOTPResImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String target,
+      String type,
+      String action,
+      String? expireAt,
+      String? createdAt,
+      String? updatedAt});
+}
+
+/// @nodoc
+class __$$RequestOTPResImplCopyWithImpl<$Res>
+    extends _$RequestOTPResCopyWithImpl<$Res, _$RequestOTPResImpl>
+    implements _$$RequestOTPResImplCopyWith<$Res> {
+  __$$RequestOTPResImplCopyWithImpl(
+      _$RequestOTPResImpl _value, $Res Function(_$RequestOTPResImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RequestOTPRes
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? target = null,
+    Object? type = null,
+    Object? action = null,
+    Object? expireAt = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(_$RequestOTPResImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      target: null == target
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      action: null == action
+          ? _value.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as String,
+      expireAt: freezed == expireAt
+          ? _value.expireAt
+          : expireAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RequestOTPResImpl implements _RequestOTPRes {
+  const _$RequestOTPResImpl(
+      {required this.id,
+      required this.target,
+      required this.type,
+      required this.action,
+      this.expireAt,
+      this.createdAt,
+      this.updatedAt});
+
+  factory _$RequestOTPResImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RequestOTPResImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String target;
+  @override
+  final String type;
+  @override
+  final String action;
+  @override
+  final String? expireAt;
+  @override
+  final String? createdAt;
+  @override
+  final String? updatedAt;
+
+  @override
+  String toString() {
+    return 'RequestOTPRes(id: $id, target: $target, type: $type, action: $action, expireAt: $expireAt, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RequestOTPResImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.target, target) || other.target == target) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.action, action) || other.action == action) &&
+            (identical(other.expireAt, expireAt) ||
+                other.expireAt == expireAt) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, id, target, type, action, expireAt, createdAt, updatedAt);
+
+  /// Create a copy of RequestOTPRes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RequestOTPResImplCopyWith<_$RequestOTPResImpl> get copyWith =>
+      __$$RequestOTPResImplCopyWithImpl<_$RequestOTPResImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RequestOTPResImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RequestOTPRes implements RequestOTPRes {
+  const factory _RequestOTPRes(
+      {required final String id,
+      required final String target,
+      required final String type,
+      required final String action,
+      final String? expireAt,
+      final String? createdAt,
+      final String? updatedAt}) = _$RequestOTPResImpl;
+
+  factory _RequestOTPRes.fromJson(Map<String, dynamic> json) =
+      _$RequestOTPResImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get target;
+  @override
+  String get type;
+  @override
+  String get action;
+  @override
+  String? get expireAt;
+  @override
+  String? get createdAt;
+  @override
+  String? get updatedAt;
+
+  /// Create a copy of RequestOTPRes
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RequestOTPResImplCopyWith<_$RequestOTPResImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

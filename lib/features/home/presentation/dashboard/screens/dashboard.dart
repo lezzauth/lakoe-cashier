@@ -113,7 +113,7 @@ class _DashboardState extends State<Dashboard> {
               );
         },
         child: Scaffold(
-          appBar: const DashboardAppbar(),
+          appBar: DashboardAppbar(),
           body: SafeArea(
             child: ListView(
               children: [

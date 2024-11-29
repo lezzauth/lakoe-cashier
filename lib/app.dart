@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/form/edit_acccount_pin.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/form/otp_input.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
 import 'package:logman/logman.dart';
@@ -379,10 +381,13 @@ class App extends StatelessWidget {
                 const AccountPackageDetailScreen(),
             "/account/edit": (context) => const AccountEditScreen(),
             "/account/edit/name": (context) => const NameEditScreen(),
+            "/account/edit/verify_pin": (context) =>
+                const EditAcccountPinScreen(),
             "/account/edit/phone_number": (context) =>
                 const PhoneNumberEditScreen(),
             "/account/edit/email": (context) => const EmailEditScreen(),
             "/account/edit/pin": (context) => const PinEditScreen(),
+            "/account/edit/input_otp": (context) => const NewOtpInputScreen(),
 
             // reports
             "/reports": (context) => const ReportMasterScreen(),

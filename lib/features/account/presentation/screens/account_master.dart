@@ -305,11 +305,7 @@ class ProfileCard extends StatelessWidget {
                 InkWell(
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    "/account/edit",
-                    arguments: profile,
-                  ),
+                  onTap: () => Navigator.pushNamed(context, "/account/edit"),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16.0),
