@@ -132,12 +132,17 @@ class ItemAccountEdit extends StatelessWidget {
               }) as bool?;
 
               if (!result!) return;
+              context.read<OwnerCubit>().getOwner();
             } else {
-              Navigator.pushNamed(context, "/account/edit/verify_pin",
+              bool? result = await Navigator.pushNamed(
+                  context, "/account/edit/verify_pin",
                   arguments: {
                     field: value,
                     'routeName': routeName,
-                  });
+                  }) as bool?;
+
+              if (!result!) return;
+              context.read<OwnerCubit>().getOwner();
             }
           },
         ),

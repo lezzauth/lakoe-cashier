@@ -51,11 +51,11 @@ class OwnerCubit extends Cubit<OwnerState> {
         final statusCode = error.statusCode;
 
         if (statusCode == 400) {
-          errorMessage = "Kode tidak valid atau sudah kadaluarsa.";
+          errorMessage = "Invalid or expired code.";
         } else if (statusCode == 401) {
-          errorMessage = "Akses tidak diizinkan. Silakan login kembali.";
+          errorMessage = "Access denied.";
         } else if (statusCode == 500) {
-          errorMessage = "Terjadi kesalahan server. Coba lagi nanti.";
+          errorMessage = "Server error.";
         }
 
         Logman.instance.error(
@@ -86,11 +86,11 @@ class OwnerCubit extends Cubit<OwnerState> {
         final statusCode = error.statusCode;
 
         if (statusCode == 400) {
-          errorMessage = "Kode tidak valid atau sudah kadaluarsa.";
+          errorMessage = "Invalid or expired code.";
         } else if (statusCode == 401) {
-          errorMessage = "Akses tidak diizinkan. Silakan login kembali.";
+          errorMessage = "Access denied.";
         } else if (statusCode == 500) {
-          errorMessage = "Terjadi kesalahan server. Coba lagi nanti.";
+          errorMessage = "Server error.";
         }
 
         Logman.instance.error(
@@ -155,11 +155,11 @@ class OwnerCubit extends Cubit<OwnerState> {
         final statusCode = error.statusCode;
 
         if (statusCode == 400) {
-          errorMessage = "Kode tidak valid atau sudah kadaluarsa.";
+          errorMessage = "Invalid or expired code.";
         } else if (statusCode == 401) {
-          errorMessage = "Akses tidak diizinkan. Silakan login kembali.";
+          errorMessage = "Access denied.";
         } else if (statusCode == 500) {
-          errorMessage = "Terjadi kesalahan server. Coba lagi nanti.";
+          errorMessage = "Server error.";
         }
 
         Logman.instance.error(

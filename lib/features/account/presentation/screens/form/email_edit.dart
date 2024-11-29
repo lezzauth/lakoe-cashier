@@ -4,6 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
@@ -13,6 +14,7 @@ import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:owner_repository/owner_repository.dart';
 
@@ -25,23 +27,13 @@ class EmailEditScreen extends StatefulWidget {
 
 class _EmailEditScreenState extends State<EmailEditScreen> {
   late String token;
-  final formKey = GlobalKey<FormBuilderState>();
-  final FocusNode _focusNode = FocusNode();
-  late TextEditingController _controller;
+  final _formKey = GlobalKey<FormBuilderState>();
+  bool _showClearIcon = true;
 
   @override
   void initState() {
     super.initState();
     CustomToast.init(context);
-
-    _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
-        _controller.selection = TextSelection(
-          baseOffset: 0,
-          extentOffset: _controller.text.length,
-        );
-      }
-    });
   }
 
   @override
@@ -50,30 +42,20 @@ class _EmailEditScreenState extends State<EmailEditScreen> {
 
     final args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-    final String field = args!.keys.first;
-    final String value = args[field];
 
-    _controller = TextEditingController(text: value);
     setState(() {
-      token = args['token'];
+      token = args!['token'];
     });
-  }
-
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    _controller.dispose();
-    super.dispose();
   }
 
   Future<void> _onSubmit() async {
     FocusScope.of(context).unfocus();
 
-    bool isFormValidated = formKey.currentState?.saveAndValidate() ?? false;
-    if (!isFormValidated) {
+    bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
+    if (!isFormValid) {
       return;
     }
-    dynamic value = formKey.currentState?.value;
+    dynamic value = _formKey.currentState?.value;
 
     context.read<OwnerCubit>().updateEmail(UpdateEmailDto(
           token: token,
@@ -83,13 +65,15 @@ class _EmailEditScreenState extends State<EmailEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final String field = args!.keys.first;
+    final String value = args[field];
+
     return PopScope(
       onPopInvokedWithResult: (didPop, result) async {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.popUntil(
-            context,
-            ModalRoute.withName('/account/edit'),
-          );
+          Navigator.pop(context, true);
         });
       },
       child: BlocListener<OwnerCubit, OwnerState>(
@@ -102,31 +86,31 @@ class _EmailEditScreenState extends State<EmailEditScreen> {
               backgroundColor: TColors.success,
             );
             await Future.delayed(Duration(seconds: 1));
-            Navigator.popUntil(
-              context,
-              ModalRoute.withName('/account/edit'),
-            );
-            context.read<OwnerCubit>().getOwner();
+            Navigator.pop(context, true);
           } else if (state is OwnerActionFailure) {
-            if (state.error.contains("valid")) {
+            if (state.error.contains("expired")) {
               showModalBottomSheet(
                 context: context,
-                enableDrag: true,
-                isDismissible: true,
+                enableDrag: false,
+                isDismissible: false,
                 builder: (context) {
-                  return CustomBottomsheet(
-                    hasGrabber: true,
-                    child: ErrorDisplay(
-                      imageSrc: TImages.generalIllustration,
-                      title: "Ups, Terjadi sedikit masalah!",
-                      description:
-                          "Kamu perlu mengulangi prosesnya dengan mamasukan ulang PIN kamu.",
-                      actionTitlePrimary: "Masukan Ulang PIN",
-                      onActionPrimary: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                        context.read<OwnerCubit>().getOwner();
-                      },
+                  return PopScope(
+                    canPop: false,
+                    onPopInvokedWithResult: (didPop, result) async {},
+                    child: CustomBottomsheet(
+                      hasGrabber: false,
+                      child: ErrorDisplay(
+                        imageSrc: TImages.generalIllustration,
+                        title: "Ups, Terjadi sedikit masalah!",
+                        description:
+                            "Kamu perlu mengulangi prosesnya dengan mamasukan ulang PIN kamu.",
+                        actionTitlePrimary: "Masukan Ulang PIN",
+                        onActionPrimary: () {
+                          Navigator.pop(context, true);
+                          Navigator.pop(context, true);
+                          context.read<OwnerCubit>().getOwner();
+                        },
+                      ),
                     ),
                   );
                 },
@@ -139,24 +123,15 @@ class _EmailEditScreenState extends State<EmailEditScreen> {
                 backgroundColor: TColors.error,
               );
               await Future.delayed(Duration(seconds: 1));
-              Navigator.pop(context);
-              Navigator.pop(context);
-              context.read<OwnerCubit>().getOwner();
+              Navigator.pop(context, true);
             }
           }
         },
         child: BlocBuilder<OwnerCubit, OwnerState>(builder: (context, state) {
           return Scaffold(
-            appBar: CustomAppbar(
-              handleBackButton: () {
-                Navigator.popUntil(
-                  context,
-                  ModalRoute.withName('/account/edit'),
-                );
-              },
-            ),
+            appBar: CustomAppbar(),
             body: FormBuilder(
-              key: formKey,
+              key: _formKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
@@ -183,11 +158,27 @@ class _EmailEditScreenState extends State<EmailEditScreen> {
                           SizedBox(height: 24),
                           FormBuilderTextField(
                             name: "email",
-                            controller: _controller,
-                            focusNode: _focusNode,
+                            initialValue: value,
                             decoration: InputDecoration(
                               hintText: "Contoh: warmindo@gmail.com",
+                              suffixIcon: _showClearIcon
+                                  ? IconButton(
+                                      icon: UiIcons(
+                                        TIcons.close,
+                                        size: 12,
+                                      ),
+                                      onPressed: () {
+                                        _formKey.currentState?.fields['email']
+                                            ?.didChange('');
+                                      },
+                                    )
+                                  : null,
                             ),
+                            onChanged: (val) {
+                              setState(() {
+                                _showClearIcon = val?.isNotEmpty ?? false;
+                              });
+                            },
                             keyboardType: TextInputType.emailAddress,
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.conditional((value) {

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
@@ -11,6 +12,7 @@ import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:owner_repository/owner_repository.dart';
 
 class NameEditScreen extends StatefulWidget {
@@ -21,58 +23,34 @@ class NameEditScreen extends StatefulWidget {
 }
 
 class _NameEditScreenState extends State<NameEditScreen> {
-  final formKey = GlobalKey<FormBuilderState>();
-  final FocusNode _focusNode = FocusNode();
-  late TextEditingController _controller;
+  final _formKey = GlobalKey<FormBuilderState>();
+  bool _showClearIcon = true;
 
   @override
   void initState() {
     super.initState();
     CustomToast.init(context);
-
-    _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
-        _controller.selection = TextSelection(
-          baseOffset: 0,
-          extentOffset: _controller.text.length,
-        );
-      }
-    });
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    final args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-    final String field = args!.keys.first;
-    final String value = args[field];
-
-    _controller = TextEditingController(text: value);
-  }
-
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    _controller.dispose();
-    super.dispose();
   }
 
   Future<void> _onSubmit() async {
     FocusScope.of(context).unfocus();
 
-    bool isFormValidated = formKey.currentState?.saveAndValidate() ?? false;
+    bool isFormValidated = _formKey.currentState?.saveAndValidate() ?? false;
     if (!isFormValidated) {
       return;
     }
-    dynamic value = formKey.currentState?.value;
+    dynamic value = _formKey.currentState?.value;
 
     context.read<OwnerCubit>().updateName(UpdateNameDto(name: value['name']));
   }
 
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final String field = args!.keys.first;
+    final String value = args[field];
+
     return BlocListener<OwnerCubit, OwnerState>(
       listener: (context, state) async {
         if (state is OwnerActionSuccess) {
@@ -84,7 +62,6 @@ class _NameEditScreenState extends State<NameEditScreen> {
           );
           await Future.delayed(Duration(seconds: 1));
           Navigator.pop(context, true);
-          context.read<OwnerCubit>().getOwner();
         } else if (state is OwnerActionFailure) {
           CustomToast.showWithContext(
             context,
@@ -101,7 +78,7 @@ class _NameEditScreenState extends State<NameEditScreen> {
         return Scaffold(
           appBar: CustomAppbar(),
           body: FormBuilder(
-            key: formKey,
+            key: _formKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               children: [
@@ -127,11 +104,27 @@ class _NameEditScreenState extends State<NameEditScreen> {
                         SizedBox(height: 24),
                         FormBuilderTextField(
                           name: "name",
-                          controller: _controller,
-                          focusNode: _focusNode,
+                          initialValue: value,
                           decoration: InputDecoration(
                             hintText: "Masukan nama lengkap",
+                            suffixIcon: _showClearIcon
+                                ? IconButton(
+                                    icon: UiIcons(
+                                      TIcons.close,
+                                      size: 12,
+                                    ),
+                                    onPressed: () {
+                                      _formKey.currentState?.fields['name']
+                                          ?.didChange('');
+                                    },
+                                  )
+                                : null,
                           ),
+                          onChanged: (val) {
+                            setState(() {
+                              _showClearIcon = val?.isNotEmpty ?? false;
+                            });
+                          },
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(
                               errorText:

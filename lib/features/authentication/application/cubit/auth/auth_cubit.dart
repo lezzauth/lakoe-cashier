@@ -163,6 +163,30 @@ class AuthCubit extends Cubit<AuthState> {
       final res = await _authenticationRepository.generateToken(pin);
       emit(GenerateTokenSuccess(res));
       await initialize();
+    } on DioException catch (e) {
+      final error = e.error as DioExceptionModel?;
+      String errorMessage = "Terjadi kesalahan. Silakan coba lagi.";
+
+      if (error != null) {
+        final statusCode = error.statusCode;
+
+        if (statusCode == 400) {
+          errorMessage = "Invalid or expired code.";
+        } else if (statusCode == 401) {
+          errorMessage = "Access denied.";
+        } else if (statusCode == 500) {
+          errorMessage = "Server error.";
+        }
+
+        Logman.instance.error(
+            "Catch Edit Account ${e.response?.statusCode}: ${e.response?.data}");
+      } else {
+        errorMessage =
+            "Tidak dapat terhubung ke server. Periksa koneksi internet Anda.";
+        Logman.instance.error("Catch Edit Account ${e.message}");
+      }
+
+      emit(GenerateTokenFailure(errorMessage));
     } catch (e) {
       emit(GenerateTokenFailure(e.toString()));
     }

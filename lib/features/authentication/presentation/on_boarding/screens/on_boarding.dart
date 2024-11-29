@@ -1,4 +1,3 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -33,25 +32,6 @@ class _OnBoardingState extends State<OnBoarding> {
   int pageIndex = 0;
   final _formKey = GlobalKey<FormBuilderState>();
   bool _isFormValid = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  onSubmit() {
-    FocusScope.of(context).unfocus();
-    bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
-
-    if (!isFormValid) {
-      return;
-    }
-
-    dynamic value = _formKey.currentState?.value;
-    context
-        .read<OnBoardingCubit>()
-        .requestOTP(RequestOTPDto(phoneNumber: "+62${value["phoneNumber"]}"));
-  }
 
   @override
   Widget build(BuildContext context) {

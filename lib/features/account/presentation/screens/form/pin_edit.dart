@@ -5,6 +5,7 @@ import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
 import 'package:lakoe_pos/common/widgets/form/dotted_pin.dart';
 import 'package:lakoe_pos/common/widgets/form/number_pad.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/general_information.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
@@ -13,6 +14,7 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/constants/sizes.dart';
 import 'package:owner_repository/owner_repository.dart';
@@ -31,6 +33,7 @@ class _PinEditScreenState extends State<PinEditScreen> {
   bool isRepeat = false;
   bool loading = false;
   bool isPinNotMatch = false;
+  bool pinUpdated = false;
 
   @override
   void didChangeDependencies() {
@@ -49,56 +52,65 @@ class _PinEditScreenState extends State<PinEditScreen> {
     return PopScope(
       onPopInvokedWithResult: (didPop, result) async {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.popUntil(
-            context,
-            ModalRoute.withName('/account/edit'),
-          );
+          Navigator.pop(context, true);
         });
       },
       child: BlocListener<OwnerCubit, OwnerState>(
         listener: (context, state) async {
           if (state is OwnerActionSuccess) {
+            setState(() {
+              pinUpdated = true;
+            });
             showModalBottomSheet(
               context: context,
+              enableDrag: false,
+              isDismissible: false,
               builder: (context) {
-                return CustomBottomsheet(
-                  child: GeneralInformation(
-                    imageSrc: TImages.successIllustration,
-                    title: "PIN kamu berhasil diubah",
-                    description:
-                        "Saat ini kamu harus menggunakan PIN terbaru setiap kali mau akses aplikasi.",
-                    onRequest: () {
-                      Navigator.popUntil(
-                        context,
-                        ModalRoute.withName('/account/edit'),
-                      );
-                    },
-                    actionTitle: "Selesai",
+                return PopScope(
+                  canPop: false,
+                  onPopInvokedWithResult: (didPop, result) async {},
+                  child: CustomBottomsheet(
+                    hasGrabber: false,
+                    child: GeneralInformation(
+                      imageSrc: TImages.successIllustration,
+                      title: "PIN kamu berhasil diubah",
+                      description:
+                          "Saat ini kamu harus menggunakan PIN terbaru setiap kali mau akses aplikasi.",
+                      onRequest: () {
+                        Navigator.pop(context, true);
+                        Navigator.pop(context, true);
+                      },
+                      actionTitle: "Selesai",
+                    ),
                   ),
                 );
               },
             );
             context.read<OwnerCubit>().getOwner();
           } else if (state is OwnerActionFailure) {
-            if (state.error.contains("valid")) {
+            if (state.error.contains("expired")) {
               showModalBottomSheet(
                 context: context,
-                enableDrag: true,
-                isDismissible: true,
+                enableDrag: false,
+                isDismissible: false,
                 builder: (context) {
-                  return CustomBottomsheet(
-                    hasGrabber: true,
-                    child: ErrorDisplay(
-                      imageSrc: TImages.generalIllustration,
-                      title: "Ups, Terjadi sedikit masalah!",
-                      description:
-                          "Kamu perlu mengulangi prosesnya dengan mamasukan ulang PIN kamu.",
-                      actionTitlePrimary: "Masukan Ulang PIN",
-                      onActionPrimary: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                        context.read<OwnerCubit>().getOwner();
-                      },
+                  return PopScope(
+                    canPop: false,
+                    onPopInvokedWithResult: (didPop, result) async {},
+                    child: CustomBottomsheet(
+                      hasGrabber: false,
+                      child: ErrorDisplay(
+                        imageSrc: TImages.generalIllustration,
+                        title: "Ups, Terjadi sedikit masalah!",
+                        description:
+                            "Kamu perlu mengulangi prosesnya dengan mamasukan ulang PIN kamu.",
+                        actionTitlePrimary: "Masukan Ulang PIN",
+                        onActionPrimary: () {
+                          Navigator.pop(context, true);
+                          Navigator.pop(context, true);
+                          context.read<OwnerCubit>().getOwner();
+                        },
+                      ),
                     ),
                   );
                 },
@@ -106,27 +118,20 @@ class _PinEditScreenState extends State<PinEditScreen> {
             } else {
               CustomToast.showWithContext(
                 context,
-                "Email gagal diubah",
+                "PIN gagal diubah",
                 duration: 1,
                 backgroundColor: TColors.error,
               );
               await Future.delayed(Duration(seconds: 1));
-              Navigator.pop(context);
-              Navigator.pop(context);
+
+              Navigator.pop(context, true);
               context.read<OwnerCubit>().getOwner();
             }
           }
         },
         child: BlocBuilder<OwnerCubit, OwnerState>(builder: (context, state) {
           return Scaffold(
-            appBar: CustomAppbar(
-              handleBackButton: () {
-                Navigator.popUntil(
-                  context,
-                  ModalRoute.withName('/account/edit'),
-                );
-              },
-            ),
+            appBar: CustomAppbar(),
             body: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -161,7 +166,7 @@ class _PinEditScreenState extends State<PinEditScreen> {
                             ],
                           ),
                         ),
-                        if (!loading)
+                        if (!loading && !pinUpdated)
                           DottedPin(
                             length: 6,
                             controller: _controller,
@@ -214,6 +219,22 @@ class _PinEditScreenState extends State<PinEditScreen> {
                                 _controller.clear();
                               }
                             },
+                          ),
+                        if (pinUpdated)
+                          Container(
+                            height: 28,
+                            width: 28,
+                            decoration: BoxDecoration(
+                              color: TColors.success,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: UiIcons(
+                                TIcons.check,
+                                size: 24,
+                                color: TColors.neutralLightLightest,
+                              ),
+                            ),
                           ),
                         if (loading)
                           const SizedBox(

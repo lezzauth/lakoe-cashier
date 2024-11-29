@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/constants/sizes.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
-import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:pinput/pinput.dart';
 
@@ -71,8 +73,6 @@ class _NewOtpInputScreenState extends State<NewOtpInputScreen>
     if (args != null) {
       final RequestOTPRes otpData = args['otpData'];
 
-      Logman.instance.info("otpData ${otpData.target}");
-
       setState(() {
         data = otpData;
         token = args['token'];
@@ -125,11 +125,48 @@ class _NewOtpInputScreenState extends State<NewOtpInputScreen>
           backgroundColor: TColors.success,
         );
         await Future.delayed(Duration(seconds: 1));
-        Navigator.popUntil(
-          context,
-          ModalRoute.withName('/account/edit'),
-        );
-        context.read<OwnerCubit>().getOwner();
+        Navigator.pop(context, true);
+        Navigator.pop(context, true);
+      } else if (state is OwnerActionFailure) {
+        if (state.error.contains("expired")) {
+          showModalBottomSheet(
+            context: context,
+            enableDrag: false,
+            isDismissible: false,
+            builder: (context) {
+              return PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (didPop, result) async {},
+                child: CustomBottomsheet(
+                  hasGrabber: false,
+                  child: ErrorDisplay(
+                    imageSrc: TImages.generalIllustration,
+                    title: "Ups, Terjadi sedikit masalah!",
+                    description:
+                        "Kamu perlu mengulangi prosesnya dengan mamasukan ulang PIN kamu.",
+                    actionTitlePrimary: "Masukan Ulang PIN",
+                    onActionPrimary: () {
+                      Navigator.pop(context, true);
+                      Navigator.pop(context, true);
+                      Navigator.pop(context, true);
+                    },
+                  ),
+                ),
+              );
+            },
+          );
+        } else {
+          CustomToast.showWithContext(
+            context,
+            "Nomor WA gagal diubah",
+            duration: 1,
+            backgroundColor: TColors.error,
+          );
+          await Future.delayed(Duration(seconds: 1));
+          Navigator.pop(context, true);
+          Navigator.pop(context, true);
+          context.read<OwnerCubit>().getOwner();
+        }
       }
     }, builder: (context, state) {
       return Scaffold(

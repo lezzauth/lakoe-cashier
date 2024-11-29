@@ -73,12 +73,19 @@ class _EditAcccountPinScreenState extends State<EditAcccountPinScreen> {
           });
         } else if (state is GenerateTokenFailure) {
           _pinController.clear();
-
-          setState(() {
-            checkPIN = false;
-            isPinWrong = true;
-            messsageError = "PIN Salah. Coba Lagi.";
-          });
+          if (state.error.contains("denied")) {
+            setState(() {
+              checkPIN = false;
+              isPinWrong = true;
+              messsageError = "PIN Salah. Coba Lagi.";
+            });
+          } else {
+            setState(() {
+              checkPIN = false;
+              isPinWrong = true;
+              messsageError = "Terjadi kesalahan. Coba lagi.";
+            });
+          }
         } else if (state is GenerateTokenSuccess) {
           Navigator.pushNamed(context, routeName, arguments: {
             'field': currentValue,

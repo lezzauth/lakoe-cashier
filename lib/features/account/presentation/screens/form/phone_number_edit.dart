@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
@@ -12,6 +13,7 @@ import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 import 'package:owner_repository/owner_repository.dart';
@@ -27,7 +29,9 @@ class _PhoneNumberEditScreenState extends State<PhoneNumberEditScreen> {
   late String token;
   late String originalPhoneNumber;
   late String phoneNumber;
-  final formKey = GlobalKey<FormBuilderState>();
+  final _formKey = GlobalKey<FormBuilderState>();
+  bool _isFormValid = false;
+  bool _showClearIcon = true;
 
   @override
   void didChangeDependencies() {
@@ -73,13 +77,14 @@ class _PhoneNumberEditScreenState extends State<PhoneNumberEditScreen> {
 
   Future<void> _onSubmit() async {
     FocusScope.of(context).unfocus();
-    bool isFormValidated = formKey.currentState?.saveAndValidate() ?? false;
+    _isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
 
-    if (!isFormValidated) {
+    if (!_isFormValid) {
       return;
     }
 
-    String? newPhoneNumber = formKey.currentState?.fields['phoneNumber']?.value;
+    String? newPhoneNumber =
+        _formKey.currentState?.fields['phoneNumber']?.value;
 
     String formattedPhoneNumber = formatterPhoneNumber(newPhoneNumber ?? "");
 
@@ -105,10 +110,7 @@ class _PhoneNumberEditScreenState extends State<PhoneNumberEditScreen> {
     return PopScope(
       onPopInvokedWithResult: (didPop, result) async {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.popUntil(
-            context,
-            ModalRoute.withName('/account/edit'),
-          );
+          Navigator.pop(context, true);
         });
       },
       child: MultiBlocListener(
@@ -141,16 +143,9 @@ class _PhoneNumberEditScreenState extends State<PhoneNumberEditScreen> {
         ],
         child: BlocBuilder<OwnerCubit, OwnerState>(builder: (context, state) {
           return Scaffold(
-            appBar: CustomAppbar(
-              handleBackButton: () {
-                Navigator.popUntil(
-                  context,
-                  ModalRoute.withName('/account/edit'),
-                );
-              },
-            ),
+            appBar: CustomAppbar(),
             body: FormBuilder(
-              key: formKey,
+              key: _formKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
@@ -214,7 +209,25 @@ class _PhoneNumberEditScreenState extends State<PhoneNumberEditScreen> {
                                   initialValue: phoneNumber,
                                   decoration: InputDecoration(
                                     hintText: "Masukan nomor WA",
+                                    suffixIcon: _showClearIcon
+                                        ? IconButton(
+                                            icon: UiIcons(
+                                              TIcons.close,
+                                              size: 12,
+                                            ),
+                                            onPressed: () {
+                                              _formKey.currentState
+                                                  ?.fields['phoneNumber']
+                                                  ?.didChange('');
+                                            },
+                                          )
+                                        : null,
                                   ),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      _showClearIcon = val?.isNotEmpty ?? false;
+                                    });
+                                  },
                                   keyboardType: TextInputType.phone,
                                   inputFormatters: [PhoneNumberFormatter()],
                                   validator: FormBuilderValidators.compose([
