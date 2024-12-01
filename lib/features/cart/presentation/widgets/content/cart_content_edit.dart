@@ -108,6 +108,7 @@ class _CartContentEditState extends State<CartContentEdit> {
                         child: Container(
                           margin: const EdgeInsets.only(bottom: 16),
                           child: CustomerAndTableInformation(
+                            order: order,
                             customer: order.customer,
                             table: order.table,
                           ),

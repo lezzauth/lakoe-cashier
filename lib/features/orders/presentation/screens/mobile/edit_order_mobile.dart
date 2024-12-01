@@ -156,6 +156,7 @@ class _OrderEditMobileState extends State<OrderEditMobile> {
                           child: TextHeading3("Order #${order.no}"),
                         ),
                         CustomerAndTableInformation(
+                          order: order,
                           customer: order.customer,
                           table: order.table,
                         ),

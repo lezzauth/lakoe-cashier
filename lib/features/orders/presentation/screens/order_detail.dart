@@ -412,6 +412,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                         Container(
                                           margin: EdgeInsets.only(bottom: 16),
                                           child: CustomerAndTableInformation(
+                                            order: order,
                                             customer: order.customer,
                                             table: order.table,
                                           ),
