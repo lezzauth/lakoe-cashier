@@ -46,15 +46,27 @@ class AuthCubit extends Cubit<AuthState> {
           return;
         }
 
-        final newAuthToken = await _authenticationRepository.refreshToken(
-          RefreshTokenDto(token: refreshToken),
-        );
-        await _tokenProvider.setAuthToken(
-          newAuthToken.token,
-          newAuthToken.tokenExpireIn,
-        );
+        try {
+          final newAuthToken = await _authenticationRepository.refreshToken(
+            RefreshTokenDto(token: refreshToken),
+          );
 
-        authToken = newAuthToken.token;
+          await _tokenProvider.setAuthToken(
+            newAuthToken.token,
+            newAuthToken.tokenExpireIn,
+          );
+
+          await _tokenProvider.setAuthRefreshToken(
+            newAuthToken.refreshToken,
+            newAuthToken.refreshTokenExpireIn,
+          );
+
+          authToken = newAuthToken.token;
+        } catch (e) {
+          await _tokenProvider.clearAll();
+          emit(AuthNotReady());
+          return;
+        }
       }
 
       final profile = await _ownerRepository

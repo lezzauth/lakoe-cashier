@@ -18,7 +18,10 @@ class OtpInputCubit extends Cubit<OtpInputState> {
       emit(OtpInputActionInProgress());
       final res = await _authenticationRepository.verifyOTP(dto);
       _tokenProvider.setAuthToken(res.token, res.tokenExpireIn);
-      _tokenProvider.setAuthRefreshToken(res.refreshToken);
+      _tokenProvider.setAuthRefreshToken(
+        res.refreshToken,
+        res.refreshTokenExpireIn,
+      );
 
       switch (res.action) {
         case "LOGIN":
