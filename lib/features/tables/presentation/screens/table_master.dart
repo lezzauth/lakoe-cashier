@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logman/logman.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
@@ -48,8 +47,6 @@ class _TableMasterState extends State<TableMaster> {
   }
 
   Future<void> _onGoToDetail(TableModel table) async {
-    Logman.instance.info(
-        "ResponsiveBreakpoints is ${ResponsiveBreakpoints.of(context).smallerThan(TABLET)}");
     if (ResponsiveBreakpoints.of(context).smallerThan(TABLET)) {
       bool? editedProduct = await showModalBottomSheet<bool?>(
         context: context,

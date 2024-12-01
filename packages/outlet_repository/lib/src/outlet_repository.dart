@@ -10,16 +10,10 @@ import 'package:outlet_repository/src/models/outlet.dart';
 import 'package:token_provider/token_provider.dart';
 
 abstract class OutletRepository {
-  Future<DetailCustomerOutletResponse> detailCustomerOutlet({
-    required String customerId,
-    DetailCustomerOutletDto? dto,
-  });
-  Future<OutletSalesModel> getOutletSales({
-    GetOutletSalesDto? dto,
-  });
-  Future<OutletReportModel> getOutletReports({
-    GetOutletReportDto? dto,
-  });
+  Future<DetailCustomerOutletResponse> detailCustomerOutlet(
+      {required String customerId, DetailCustomerOutletDto? dto});
+  Future<OutletSalesModel> getOutletSales({GetOutletSalesDto? dto});
+  Future<OutletReportModel> getOutletReports({GetOutletReportDto? dto});
   Future<OutletModel> getDetailOutlet();
   Future<OutletModel> update(File? image, UpdateOutletDto dto);
 }

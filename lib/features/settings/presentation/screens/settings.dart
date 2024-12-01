@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/ui/list_item_card.dart';
 import 'package:lakoe_pos/common/widgets/ui/section_card.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
+import 'package:lakoe_pos/features/outlets/application/outlet_cubit.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 
@@ -19,6 +22,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<OwnerCubit>().init();
+    context.read<OutletCubit>().init();
+
     _scrollController.addListener(() {
       if (_scrollController.offset > 0 && !_isScrolled) {
         setState(() {

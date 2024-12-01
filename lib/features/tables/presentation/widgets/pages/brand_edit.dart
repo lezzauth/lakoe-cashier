@@ -2,7 +2,6 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:logman/logman.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/form/form_label.dart';
@@ -64,9 +63,7 @@ class _BrandEditScreenState extends State<BrandEditScreen> {
   onSubmit() {
     bool isFormValid = formKey.currentState?.saveAndValidate() ?? false;
 
-    if (!isFormValid) {
-      Logman.instance.info("Is valid form: $isFormValid");
-    }
+    if (!isFormValid) return;
 
     dynamic outletValue = formKey.currentState?.value;
     ImagePickerValue? image = outletValue["image_logo"] as ImagePickerValue;
@@ -100,7 +97,6 @@ class _BrandEditScreenState extends State<BrandEditScreen> {
 
     return BlocListener<OutletCubit, OutletState>(
       listener: (context, state) {
-        Logman.instance.info("STATE IS: $state");
         if (state is OutletLoadSuccess) {
           setState(() {
             arg = state.outlet;
@@ -124,6 +120,7 @@ class _BrandEditScreenState extends State<BrandEditScreen> {
         }
 
         if (state is OutletActionSuccess) {
+          context.read<OutletCubit>().init();
           Navigator.pop(context, true);
         }
       },

@@ -196,13 +196,13 @@ class _TableDetailPageState extends State<TableDetailPage> {
                     height: 48,
                     child: OutlinedButton(
                       onPressed: () async {
-                        bool? editedProduct = await Navigator.pushNamed(
+                        Navigator.pop(context, true);
+                        bool? editedTable = await Navigator.pushNamed(
                           context,
                           "/tables/edit",
                           arguments: widget.table,
                         ) as bool?;
-                        if (editedProduct != true) return;
-                        Navigator.pop(context, true);
+                        if (editedTable != true) return;
                       },
                       child: const TextActionL(
                         "Ubah Meja",
