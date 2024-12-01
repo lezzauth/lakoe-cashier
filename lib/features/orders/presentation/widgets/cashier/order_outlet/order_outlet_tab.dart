@@ -93,27 +93,19 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                                   OrderCashierItemRes order =
                                       orders.elementAt(index);
 
-                                  bool isPaid = order.status == "COMPLETED";
-                                  bool isCancel = order.status == "CANCELLED";
-
                                   return OrderListItem(
-                                    isPaid: isPaid,
-                                    isCancel: isCancel,
-                                    type: order.type,
-                                    no: order.no,
+                                    isCashier: true,
+                                    order: order,
                                     onTap: () {
                                       Navigator.pushNamed(
                                         context,
                                         "/orders/detail",
                                         arguments: OrderDetailArgument(
                                           id: order.id,
+                                          isCashier: true,
                                         ),
                                       );
                                     },
-                                    price: order.price,
-                                    customerName:
-                                        order.customer?.name ?? "Umum",
-                                    tableName: order.table?.no ?? "-",
                                   );
                                 },
                               ),

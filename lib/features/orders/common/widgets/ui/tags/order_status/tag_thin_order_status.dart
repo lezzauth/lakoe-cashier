@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 
-class TagThinOrderType extends StatelessWidget {
-  const TagThinOrderType({
+class TagThinOrderStatus extends StatelessWidget {
+  const TagThinOrderStatus({
     super.key,
     required this.tag,
   });
@@ -14,34 +14,46 @@ class TagThinOrderType extends StatelessWidget {
   Widget build(BuildContext context) {
     String getTagLabel() {
       switch (tag) {
-        case "DINEIN":
-          return "Dine In";
-        case "TAKEAWAY":
-          return "Bungkus";
+        case "OPEN":
+          return "Berlangsung";
+        case "CLOSED":
+          return "Terhutang";
+        case "COMPLETED":
+          return "Selesai";
+        case "CANCELLED":
+          return "Dibatalkan";
         default:
-          return "Dine In";
+          return "Berlangsung";
       }
     }
 
     Color getTagBackgroundColor() {
       switch (tag) {
-        case "DINEIN":
+        case "OPEN":
+          return TColors.infoLight;
+        case "CLOSED":
+          return TColors.errorLight;
+        case "COMPLETED":
           return TColors.successLight;
-        case "TAKEAWAY":
-          return TColors.warningLight;
+        case "CANCELLED":
+          return TColors.neutralLightDark;
         default:
-          return TColors.successLight;
+          return TColors.infoLight;
       }
     }
 
     Color getTagTextColor() {
       switch (tag) {
-        case "DINEIN":
+        case "OPEN":
+          return TColors.infoDark;
+        case "CLOSED":
+          return TColors.errorDark;
+        case "COMPLETED":
           return TColors.successDark;
-        case "TAKEAWAY":
-          return TColors.warningDark;
+        case "CANCELLED":
+          return TColors.neutralDarkDarkest;
         default:
-          return TColors.successDark;
+          return TColors.infoDark;
       }
     }
 

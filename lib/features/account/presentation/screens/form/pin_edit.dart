@@ -76,7 +76,7 @@ class _PinEditScreenState extends State<PinEditScreen> {
                       title: "PIN kamu berhasil diubah",
                       description:
                           "Saat ini kamu harus menggunakan PIN terbaru setiap kali mau akses aplikasi.",
-                      onRequest: () {
+                      onAction: () {
                         Navigator.pop(context, true);
                         Navigator.pop(context, true);
                       },

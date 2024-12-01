@@ -33,15 +33,15 @@ class CustomerAndTableInformation extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 12.0),
+        SizedBox(width: 12.0),
         Flexible(
           flex: 1,
           child: CardOrder(
             isReadOnly: true,
-            title: "Meja",
-            subTitle: table == null ? "Bebas" : table!.no,
-            icon: const UiIcons(
-              TIcons.tableRestaurant,
+            title: table == null ? "Pesanan" : "Meja",
+            subTitle: table == null ? "Dibungkus" : table!.no,
+            icon: UiIcons(
+              table == null ? TIcons.bag : TIcons.tableRestaurant,
               size: 20,
               color: TColors.primary,
             ),

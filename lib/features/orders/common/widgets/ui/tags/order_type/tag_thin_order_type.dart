@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 
-class TagStrongOrderType extends StatelessWidget {
-  const TagStrongOrderType({
+class TagThinOrderType extends StatelessWidget {
+  const TagThinOrderType({
     super.key,
     required this.tag,
   });
@@ -15,15 +15,26 @@ class TagStrongOrderType extends StatelessWidget {
     String getTagLabel() {
       switch (tag) {
         case "DINEIN":
-          return "Dine In";
+          return "Makan di Tempat";
         case "TAKEAWAY":
-          return "Bungkus";
+          return "Dibungkus";
         default:
-          return "Dine In";
+          return "Makan di Tempat";
       }
     }
 
     Color getTagBackgroundColor() {
+      switch (tag) {
+        case "DINEIN":
+          return TColors.successLight;
+        case "TAKEAWAY":
+          return TColors.warningLight;
+        default:
+          return TColors.successLight;
+      }
+    }
+
+    Color getTagTextColor() {
       switch (tag) {
         case "DINEIN":
           return TColors.successDark;
@@ -31,17 +42,6 @@ class TagStrongOrderType extends StatelessWidget {
           return TColors.warningDark;
         default:
           return TColors.successDark;
-      }
-    }
-
-    Color getTagTextColor() {
-      switch (tag) {
-        case "DINEIN":
-          return TColors.neutralLightLightest;
-        case "TAKEAWAY":
-          return TColors.neutralDarkDark;
-        default:
-          return TColors.neutralLightLightest;
       }
     }
 

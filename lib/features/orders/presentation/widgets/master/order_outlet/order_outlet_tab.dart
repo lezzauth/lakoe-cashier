@@ -100,14 +100,8 @@ class _OrderOutletState extends State<OrderOutlet> {
                                 itemBuilder: (context, index) {
                                   OrderItemRes order = orders.elementAt(index);
 
-                                  bool isPaid = order.status == "COMPLETED";
-                                  bool isCancel = order.status == "CANCELLED";
-
                                   return OrderListItem(
-                                    isPaid: isPaid,
-                                    isCancel: isCancel,
-                                    type: order.type,
-                                    no: order.no,
+                                    order: order,
                                     onTap: () {
                                       Navigator.pushNamed(
                                         context,
@@ -117,10 +111,6 @@ class _OrderOutletState extends State<OrderOutlet> {
                                         ),
                                       );
                                     },
-                                    price: order.price,
-                                    customerName:
-                                        order.customer?.name ?? "Umum",
-                                    tableName: order.table?.no ?? "Bebas",
                                   );
                                 },
                               ),

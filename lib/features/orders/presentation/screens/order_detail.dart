@@ -1,11 +1,14 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/general_information.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
+import 'package:lakoe_pos/features/orders/common/widgets/ui/tags/order_status/tag_strong_order_status.dart';
+import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
@@ -25,7 +28,6 @@ import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_d
 import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_state.dart';
 
 import 'package:lakoe_pos/features/orders/common/widgets/summary/order_summary.dart';
-import 'package:lakoe_pos/features/orders/common/widgets/ui/tags/tag_strong_order_type.dart';
 import 'package:lakoe_pos/features/orders/data/arguments/order_edit_argument.dart';
 import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:lakoe_pos/features/orders/data/models.dart';
@@ -74,6 +76,7 @@ class OrderDetail extends StatefulWidget {
 class _OrderDetailState extends State<OrderDetail> {
   final ScrollController _scrollController = ScrollController();
   bool _isScrolled = false;
+  bool _isCashier = false;
 
   List<_BillPriceItem> listBillPriceItem = [
     _BillPriceItem(label: "Subtotal", price: "Rp20.000"),
@@ -93,7 +96,11 @@ class _OrderDetailState extends State<OrderDetail> {
   @override
   void initState() {
     super.initState();
-    _onRefresh();
+    context.read<OrderDetailCubit>().findOne(widget.arguments.id);
+
+    setState(() {
+      _isCashier = widget.arguments.isCashier;
+    });
 
     _scrollController.addListener(() {
       if (_scrollController.offset > 0 && !_isScrolled) {
@@ -216,9 +223,13 @@ class _OrderDetailState extends State<OrderDetail> {
   void _handlePrintReceipt(
     BuildContext context,
     OrderModel order,
-    Function(BuildContext, OwnerProfileModel, OrderModel, String,
-            ScrollController)
-        action,
+    Function(
+      BuildContext,
+      OwnerProfileModel,
+      OrderModel,
+      String,
+      ScrollController,
+    ) action,
   ) {
     final billMasterState = context.read<BillMasterCubit>().state;
     String footNote = billMasterState.footNote;
@@ -230,9 +241,7 @@ class _OrderDetailState extends State<OrderDetail> {
       profile = authState.profile;
     } else {
       profile = TemplateOrderModel().ownerProfile;
-      if (kDebugMode) {
-        print('AuthState is not ready, using default profile.');
-      }
+      Logman.instance.error("AuthState is not ready, using default profile.");
     }
 
     action(context, profile, order, footNote, _scrollController);
@@ -268,307 +277,357 @@ class _OrderDetailState extends State<OrderDetail> {
     );
   }
 
+  void showCashierAccessBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return CustomBottomsheet(
+          child: GeneralInformation(
+            imageSrc: TImages.generalIllustration,
+            title: "Masuk ke Halaman Kasir",
+            description:
+                "Untuk menyelesaikan pembayaran ini, kamu perlu masuk ke halaman kasir terlebih dahulu.",
+            onAction: () {
+              Navigator.pop(context);
+            },
+            actionTitle: "Oke, Paham",
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
-      listeners: [
-        BlocListener<OrderDetailCubit, OrderDetailState>(
-          listener: (context, state) {
-            if (state is OrderDetailActionSuccess) {
-              if (state.completeResponse != null) {
-                Navigator.popAndPushNamed(
-                  context,
-                  "/payments/success_confirmation",
-                  arguments: SuccessConfirmationPaymentArgument(
-                    payment: state.completeResponse!,
-                  ),
-                );
-              } else {
-                Navigator.pop(context, true);
+        listeners: [
+          BlocListener<OrderDetailCubit, OrderDetailState>(
+            listener: (context, state) {
+              if (state is OrderDetailActionSuccess) {
+                if (state.completeResponse != null) {
+                  Navigator.popAndPushNamed(
+                    context,
+                    "/payments/success_confirmation",
+                    arguments: SuccessConfirmationPaymentArgument(
+                      payment: state.completeResponse!,
+                    ),
+                  );
+                } else {
+                  Navigator.pop(context, true);
+                }
               }
-            }
-          },
-        ),
-      ],
-      child: BlocBuilder<OrderDetailCubit, OrderDetailState>(
-        builder: (context, state) => switch (state) {
-          OrderDetailLoadSuccess(:final order) => Scaffold(
-              appBar: CustomAppbar(
-                title: "Order #${order.no}",
-                isScrolled: _isScrolled,
-                actions: [
-                  order.status == "OPEN"
-                      ? TextButton(
-                          onPressed: () => cancelOrder(state, order),
-                          child: const TextActionL(
-                            "Batalkan",
-                            color: TColors.error,
-                          ),
-                        )
-                      : SizedBox.shrink(),
-                ],
-              ),
-              body: Scrollbar(
-                child: RefreshIndicator(
-                  onRefresh: _onRefresh,
-                  backgroundColor: TColors.neutralLightLightest,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Expanded(
-                        child: CustomScrollView(
-                          controller: _scrollController,
-                          slivers: [
-                            SliverToBoxAdapter(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.fromLTRB(8, 8, 12, 8),
-                                      margin: const EdgeInsets.only(bottom: 13),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(
-                                          width: 1,
-                                          color: TColors.neutralLightMedium,
+            },
+          ),
+        ],
+        child: BlocBuilder<OrderDetailCubit, OrderDetailState>(
+          builder: (context, state) {
+            if (state is OrderDetailLoadSuccess) {
+              final order = state.order;
+              return Scaffold(
+                appBar: CustomAppbar(
+                  title: "Order ${order.no}",
+                  isScrolled: _isScrolled,
+                  actions: [
+                    order.status == "OPEN"
+                        ? TextButton(
+                            onPressed: () {
+                              if (_isCashier) {
+                                cancelOrder(state, order);
+                              } else {
+                                showCashierAccessBottomSheet(context);
+                              }
+                            },
+                            child: const TextActionL(
+                              "Batalkan",
+                              color: TColors.error,
+                            ),
+                          )
+                        : SizedBox.shrink(),
+                  ],
+                ),
+                body: Scrollbar(
+                  child: RefreshIndicator(
+                    onRefresh: _onRefresh,
+                    backgroundColor: TColors.neutralLightLightest,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: CustomScrollView(
+                            controller: _scrollController,
+                            slivers: [
+                              SliverToBoxAdapter(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding:
+                                            EdgeInsets.fromLTRB(8, 8, 12, 8),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 13),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          border: Border.all(
+                                            width: 1,
+                                            color: TColors.neutralLightMedium,
+                                          ),
+                                          color: TColors.neutralLightLight,
                                         ),
-                                        color: TColors.neutralLightLight,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          switch (order.source) {
-                                            "QRONLINE" =>
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            if (order.source == "QRONLINE")
                                               SolidOrderOnlineStatusTag(
                                                 status: order.type,
-                                              ),
-                                            _ => TagStrongOrderType(
-                                                tag: order.type,
                                               )
-                                          },
-                                          Expanded(
-                                            child: TextHeading4(
-                                              TFormatter.orderDate(
-                                                order.createdAt,
-                                                withDay: true,
+                                            else
+                                              TagStrongOrderStatus(
+                                                tag: order.status,
                                               ),
-                                              color: TColors.neutralDarkLight,
-                                              textAlign: TextAlign.end,
-                                              maxLines: 2,
-                                            ),
-                                          )
-                                        ],
+                                            Expanded(
+                                              child: TextBodyM(
+                                                TFormatter.orderDate(
+                                                  order.createdAt,
+                                                  withDay: true,
+                                                ),
+                                                color: TColors.neutralDarkLight,
+                                                textAlign: TextAlign.end,
+                                                maxLines: 2,
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    switch (order.source) {
-                                      "QRONLINE" => const ContactWhatsapp(),
-                                      _ => Container(
-                                          margin:
-                                              const EdgeInsets.only(bottom: 16),
+                                      if (order.source == "QRONLINE")
+                                        ContactWhatsapp()
+                                      else
+                                        Container(
+                                          margin: EdgeInsets.only(bottom: 16),
                                           child: CustomerAndTableInformation(
                                             customer: order.customer,
                                             table: order.table,
                                           ),
                                         ),
-                                    },
-                                    Container(
-                                      margin: EdgeInsets.only(bottom: 8.0),
-                                      child: const TextHeading3(
-                                        "Pesanan",
-                                        color: TColors.neutralDarkDarkest,
+                                      Container(
+                                        margin: EdgeInsets.only(bottom: 8.0),
+                                        child: TextHeading3(
+                                          "Pesanan",
+                                          color: TColors.neutralDarkDarkest,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            SliverList.builder(
-                              itemCount: order.items.length,
-                              itemBuilder: (context, index) {
-                                OrderItem orderItem =
-                                    order.items.reversed.elementAt(index);
-                                OrderItemProduct product = orderItem.product;
-                                String? image =
-                                    product.images.elementAtOrNull(0);
+                              SliverList.builder(
+                                itemCount: order.items.length,
+                                itemBuilder: (context, index) {
+                                  OrderItem orderItem =
+                                      order.items.reversed.elementAt(index);
+                                  OrderItemProduct product = orderItem.product;
+                                  String? image =
+                                      product.images.elementAtOrNull(0);
 
-                                return Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12.0,
-                                    horizontal: 16.0,
-                                  ),
-                                  decoration: const BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                        width: 1,
-                                        color: TColors.neutralLightMedium,
+                                  return Container(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 12.0,
+                                      horizontal: 16.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          width: 1,
+                                          color: TColors.neutralLightMedium,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  child: BaseProductItem(
-                                    image: image != null
-                                        ? Image.network(
-                                            image,
-                                            height: 44,
-                                            width: 44,
-                                            fit: BoxFit.cover,
-                                          )
-                                        : SvgPicture.asset(
-                                            TImages.productAvatar,
-                                            height: 44,
-                                            width: 44,
-                                          ),
-                                    name: product.name,
-                                    qty: orderItem.quantity,
-                                    price: int.parse(product.price),
-                                    noteAction: ProductNoteAction(
-                                      notes: orderItem.notes ?? "",
-                                      readOnly: true,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                            SliverToBoxAdapter(
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        bottom: 12.0,
-                                        top: 4,
-                                      ),
-                                      child: const TextHeading3(
-                                        "Ringkasan tagihan",
-                                        color: TColors.neutralDarkDarkest,
+                                    child: BaseProductItem(
+                                      image: image != null
+                                          ? Image.network(
+                                              image,
+                                              height: 44,
+                                              width: 44,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : SvgPicture.asset(
+                                              TImages.productAvatar,
+                                              height: 44,
+                                              width: 44,
+                                            ),
+                                      name: product.name,
+                                      qty: orderItem.quantity,
+                                      price: int.parse(product.price),
+                                      noteAction: ProductNoteAction(
+                                        notes: orderItem.notes ?? "",
+                                        readOnly: true,
                                       ),
                                     ),
-                                    OrderSummary(
-                                      orderTotal: _getOrderTotal(order),
-                                      total: double.parse(order.price),
-                                      isPaid: order.status == "COMPLETED",
-                                      isCancel: order.status == "CANCELLED",
-                                      paymentInfo: order.transactions,
-                                      charges: order.charges!
-                                          .map((e) => OrderSummaryChargeModel(
-                                                type: e.type,
-                                                name: e.name,
-                                                amount: e.amount,
-                                                isPercentage: e.isPercentage,
-                                                percentageValue: e
-                                                    .percentageValue
-                                                    .toString(),
-                                              ))
-                                          .toList(),
-                                    ),
-                                  ],
+                                  );
+                                },
+                              ),
+                              SliverToBoxAdapter(
+                                child: Padding(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                          bottom: 12.0,
+                                          top: 4,
+                                        ),
+                                        child: TextHeading3(
+                                          "Ringkasan tagihan",
+                                          color: TColors.neutralDarkDarkest,
+                                        ),
+                                      ),
+                                      OrderSummary(
+                                        orderTotal: _getOrderTotal(order),
+                                        total: double.parse(order.price),
+                                        isPaid: order.status == "COMPLETED",
+                                        isCancel: order.status == "CANCELLED",
+                                        paymentInfo: order.transactions,
+                                        charges: order.charges!
+                                            .map((e) => OrderSummaryChargeModel(
+                                                  type: e.type,
+                                                  name: e.name,
+                                                  amount: e.amount,
+                                                  isPercentage: e.isPercentage,
+                                                  percentageValue: e
+                                                      .percentageValue
+                                                      .toString(),
+                                                ))
+                                            .toList(),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (order.source == "CASHIER")
-                        Container(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                color: TColors.neutralLightMedium,
-                                width: 1.0,
-                              ),
-                            ),
+                            ],
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
-                            child: OrderOutletAction(
-                                isPaid: order.status == "COMPLETED",
-                                isCancel: order.status == "CANCELLED",
-                                type: order.type,
-                                onEditOrder: () async {
-                                  await Navigator.pushNamed(
-                                    context,
-                                    "/orders/add-item",
-                                    arguments: OrderEditArgument(order: order),
-                                  );
-
-                                  _onRefresh();
-                                },
-                                onComplete: () {
-                                  _onCompleteOrder(
-                                    amount: double.parse(order.price),
-                                    order: order,
-                                  );
-                                },
-                                onPrint: () {
-                                  _handlePrintReceipt(
-                                    context,
-                                    order,
-                                    (context, profile, order, footNote,
-                                        scrollController) {
-                                      TBill.printReceipt(
+                        ),
+                        if (order.source == "CASHIER")
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                top: BorderSide(
+                                  color: TColors.neutralLightMedium,
+                                  width: 1.0,
+                                ),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(16, 12, 16, 20),
+                              child: OrderOutletAction(
+                                  isPaid: order.status == "COMPLETED",
+                                  isCancel: order.status == "CANCELLED",
+                                  isClosed: order.status == "CLOSED",
+                                  type: order.type,
+                                  onEditOrder: () async {
+                                    if (order.status == "OPEN" && _isCashier) {
+                                      await Navigator.pushNamed(
                                         context,
-                                        profile,
-                                        order,
-                                        footNote,
+                                        "/orders/add-item",
+                                        arguments:
+                                            OrderEditArgument(order: order),
                                       );
-                                    },
-                                  );
-                                },
-                                onShare: () {
-                                  _handlePrintReceipt(
-                                    context,
-                                    order,
-                                    (context, profile, order, footNote,
-                                        scrollController) {
-                                      ReceiptHelper.showDetailBill(
-                                        context,
-                                        profile: profile,
+
+                                      _onRefresh();
+                                    } else {
+                                      showCashierAccessBottomSheet(context);
+                                    }
+                                  },
+                                  onComplete: () {
+                                    if (order.status == "CLOSED") {
+                                      _onCompleteOrder(
+                                        amount: double.parse(order.price),
                                         order: order,
-                                        footNote: footNote,
-                                        scrollController: scrollController,
                                       );
-                                    },
-                                  );
-                                }),
+                                    } else if (order.status == "OPEN" &&
+                                        _isCashier) {
+                                      _onCompleteOrder(
+                                        amount: double.parse(order.price),
+                                        order: order,
+                                      );
+                                    } else {
+                                      showCashierAccessBottomSheet(context);
+                                    }
+                                  },
+                                  onPrint: () {
+                                    _handlePrintReceipt(
+                                      context,
+                                      order,
+                                      (context, profile, order, footNote,
+                                          scrollController) {
+                                        TBill.printReceipt(
+                                          context,
+                                          profile,
+                                          order,
+                                          footNote,
+                                        );
+                                      },
+                                    );
+                                  },
+                                  onShare: () {
+                                    _handlePrintReceipt(
+                                      context,
+                                      order,
+                                      (context, profile, order, footNote,
+                                          scrollController) {
+                                        ReceiptHelper.showDetailBill(
+                                          context,
+                                          profile: profile,
+                                          order: order,
+                                          footNote: footNote,
+                                          scrollController: scrollController,
+                                        );
+                                      },
+                                    );
+                                  }),
+                            ),
                           ),
-                        ),
-                      if (order.source == "QRONLINE")
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 16,
+                        if (order.source == "QRONLINE")
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 12,
+                              horizontal: 16,
+                            ),
+                            child: OrderOnlineAction(
+                              status: order.type,
+                              onComplete: () {},
+                              onDeclined: () {},
+                              onPrint: () {},
+                              onProcessed: () {},
+                              onShare: () {},
+                            ),
                           ),
-                          child: OrderOnlineAction(
-                            status: order.type,
-                            onComplete: () {},
-                            onDeclined: () {},
-                            onPrint: () {},
-                            onProcessed: () {},
-                            onShare: () {},
-                          ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          OrderDetailLoadFailure() => Scaffold(
-              body: SizedBox.shrink(),
-            ),
-          _ => const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-        },
-      ),
-    );
+              );
+            } else if (state is OrderDetailLoadFailure) {
+              return Scaffold(
+                body: SizedBox.shrink(),
+              );
+            } else {
+              return Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+          },
+        ));
   }
 }
 
@@ -576,6 +635,7 @@ class OrderOutletAction extends StatelessWidget {
   final String type;
   final bool isPaid;
   final bool isCancel;
+  final bool isClosed;
 
   final Function() onEditOrder;
   final Function() onComplete;
@@ -587,6 +647,7 @@ class OrderOutletAction extends StatelessWidget {
     required this.type,
     required this.isPaid,
     required this.isCancel,
+    required this.isClosed,
     required this.onEditOrder,
     required this.onComplete,
     required this.onShare,
@@ -596,7 +657,7 @@ class OrderOutletAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isPaid) {
-      return OrderOutlinePaidAction(
+      return OrderOutletPaidAction(
         onPrint: onPrint,
         onShare: onShare,
       );
@@ -606,18 +667,24 @@ class OrderOutletAction extends StatelessWidget {
       return SizedBox.shrink();
     }
 
-    return OrderOutlineOnProgressAction(
+    if (isClosed) {
+      return OrderOutetOnClosedAction(
+        onComplete: onComplete,
+      );
+    }
+
+    return OrderOutetOnProgressAction(
       onEditOrder: onEditOrder,
       onComplete: onComplete,
     );
   }
 }
 
-class OrderOutlineOnProgressAction extends StatelessWidget {
+class OrderOutetOnProgressAction extends StatelessWidget {
   final Function() onEditOrder;
   final Function() onComplete;
 
-  const OrderOutlineOnProgressAction({
+  const OrderOutetOnProgressAction({
     super.key,
     required this.onEditOrder,
     required this.onComplete,
@@ -655,11 +722,35 @@ class OrderOutlineOnProgressAction extends StatelessWidget {
   }
 }
 
-class OrderOutlinePaidAction extends StatelessWidget {
+class OrderOutetOnClosedAction extends StatelessWidget {
+  final Function() onComplete;
+
+  const OrderOutetOnClosedAction({
+    super.key,
+    required this.onComplete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 48,
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: onComplete,
+        child: const TextActionL(
+          "Lunasi Pesanan",
+          color: TColors.neutralLightLightest,
+        ),
+      ),
+    );
+  }
+}
+
+class OrderOutletPaidAction extends StatelessWidget {
   final Function() onShare;
   final Function() onPrint;
 
-  const OrderOutlinePaidAction({
+  const OrderOutletPaidAction({
     super.key,
     required this.onPrint,
     required this.onShare,

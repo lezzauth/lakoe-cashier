@@ -112,7 +112,7 @@ class _BankVerifyContentState extends State<BankVerifyContent> {
                 title: "Rekening tidak ditemukan",
                 description:
                     "Yuk! Cek lagi nomor rekening yang kamu, pastikan sesuai dengan bank-nya, ya!",
-                onRequest: () {
+                onAction: () {
                   Navigator.pop(context);
                 },
                 actionTitle: "Cek Lagi",

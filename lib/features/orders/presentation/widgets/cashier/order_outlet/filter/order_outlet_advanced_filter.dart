@@ -25,7 +25,9 @@ class OrderOutletAdvancedFilter extends StatefulWidget {
 }
 
 class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
+  bool isFilterUsed = false;
   late String selectedSortValue;
+  String? selectedStatusValue;
   String? selectedTypesValue;
 
   List<LabelValue> sorts = [
@@ -33,6 +35,12 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
     const LabelValue<String>(label: "Terlama", value: "OLDERS"),
     const LabelValue<String>(label: "Transaksi terbanyak", value: "HIGHEST"),
     const LabelValue<String>(label: "Transaksi tersedikit", value: "CHEAPEST"),
+  ];
+
+  List<LabelValue<String>> statuses = [
+    const LabelValue(label: "Berlangsung", value: "OPEN"),
+    const LabelValue(label: "Selesai", value: "COMPLETED"),
+    const LabelValue(label: "Dibatalkan", value: "CANCELLED"),
   ];
 
   List<LabelValue<String>> types = [
@@ -44,6 +52,7 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
   void initState() {
     super.initState();
     selectedSortValue = widget.value.sort ?? "NEWEST";
+    selectedStatusValue = widget.value.status;
     selectedTypesValue = widget.value.type;
   }
 
@@ -88,6 +97,49 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextHeading3("Status"),
+            ),
+          ],
+        ),
+        SizedBox(height: 8),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: Wrap(
+            direction: Axis.horizontal,
+            alignment: WrapAlignment.start,
+            spacing: 8.0,
+            children: statuses.map((status) {
+              bool selected = status.value == selectedStatusValue;
+              return InputChip(
+                label: selected
+                    ? TextHeading4(
+                        status.label,
+                        color: TColors.primary,
+                      )
+                    : TextBodyM(
+                        status.label,
+                        color: TColors.neutralDarkDarkest,
+                      ),
+                selected: selected,
+                onPressed: () {
+                  setState(() {
+                    if (selected) {
+                      selectedStatusValue = "OPEN";
+                    } else {
+                      selectedStatusValue = status.value;
+                    }
+                  });
+                },
+              );
+            }).toList(),
+          ),
+        ),
+        SizedBox(height: 12),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: TextHeading3("Jenis Pesanan"),
             ),
           ],
@@ -115,7 +167,7 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                 onPressed: () {
                   setState(() {
                     if (selected) {
-                      selectedTypesValue = null;
+                      selectedTypesValue = "ALL";
                     } else {
                       selectedTypesValue = type.value;
                     }
@@ -137,9 +189,13 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                       widget.onFilterChanged(
                         widget.value.copyWith(
                           sort: "NEWEST",
+                          status: "OPEN",
                           type: "ALL",
                         ),
                       );
+                      setState(() {
+                        isFilterUsed = false;
+                      });
                       Navigator.pop(context, {'isFilterUsed': false});
                     },
                     child: TextActionL(
@@ -155,16 +211,27 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                   height: 48,
                   child: ElevatedButton(
                     onPressed: (selectedSortValue == "NEWEST" &&
-                            selectedTypesValue == null)
+                            selectedStatusValue == "OPEN" &&
+                            selectedTypesValue == null &&
+                            isFilterUsed)
                         ? null
                         : () {
                             widget.onFilterChanged(
                               widget.value.copyWith(
                                 sort: selectedSortValue,
+                                status: selectedStatusValue,
                                 type: selectedTypesValue,
                               ),
                             );
-                            Navigator.pop(context, {'isFilterUsed': true});
+                            bool isFiltered = selectedSortValue != "NEWEST" ||
+                                (selectedStatusValue != "OPEN" &&
+                                    selectedStatusValue != "COMPLETED") ||
+                                (selectedTypesValue ?? "ALL") != "ALL";
+                            setState(() {
+                              isFilterUsed = isFiltered;
+                            });
+                            Navigator.pop(
+                                context, {'isFilterUsed': isFilterUsed});
                           },
                     child: TextActionL(
                       "Pasang",

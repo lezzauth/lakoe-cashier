@@ -25,6 +25,7 @@ class OrderOutletAdvancedFilter extends StatefulWidget {
 }
 
 class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
+  bool isFilterUsed = false;
   late String selectedSortValue;
   String? selectedStatusValue;
   String? selectedTypesValue;
@@ -124,7 +125,7 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                 onPressed: () {
                   setState(() {
                     if (selected) {
-                      selectedStatusValue = null;
+                      selectedStatusValue = "ALL";
                     } else {
                       selectedStatusValue = status.value;
                     }
@@ -167,7 +168,7 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                 onPressed: () {
                   setState(() {
                     if (selected) {
-                      selectedTypesValue = null;
+                      selectedTypesValue = "ALL";
                     } else {
                       selectedTypesValue = type.value;
                     }
@@ -193,6 +194,9 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                           type: "ALL",
                         ),
                       );
+                      setState(() {
+                        isFilterUsed = false;
+                      });
                       Navigator.pop(context, {'isFilterUsed': false});
                     },
                     child: TextActionL(
@@ -209,7 +213,8 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                   child: ElevatedButton(
                     onPressed: (selectedSortValue == "NEWEST" &&
                             selectedStatusValue == null &&
-                            selectedTypesValue == null)
+                            selectedTypesValue == null &&
+                            isFilterUsed)
                         ? null
                         : () {
                             widget.onFilterChanged(
@@ -219,7 +224,14 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
                                 type: selectedTypesValue,
                               ),
                             );
-                            Navigator.pop(context, {'isFilterUsed': true});
+                            bool isFiltered = selectedSortValue != "NEWEST" ||
+                                (selectedStatusValue ?? "ALL") != "ALL" ||
+                                (selectedTypesValue ?? "ALL") != "ALL";
+                            setState(() {
+                              isFilterUsed = isFiltered;
+                            });
+                            Navigator.pop(
+                                context, {'isFilterUsed': isFilterUsed});
                           },
                     child: TextActionL(
                       "Pasang",

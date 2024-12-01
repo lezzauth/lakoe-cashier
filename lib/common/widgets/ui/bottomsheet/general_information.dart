@@ -10,14 +10,14 @@ class GeneralInformation extends StatelessWidget {
     required this.description,
     required this.imageSrc,
     required this.title,
-    required this.onRequest,
+    required this.onAction,
     this.actionTitle,
   });
 
   final String imageSrc;
   final String title;
   final String description;
-  final Function() onRequest;
+  final Function() onAction;
   final String? actionTitle;
 
   @override
@@ -60,7 +60,7 @@ class GeneralInformation extends StatelessWidget {
           child: SizedBox(
             height: 48,
             child: ElevatedButton(
-              onPressed: onRequest,
+              onPressed: onAction,
               child: TextActionL(actionTitle ?? "Berikan Izin"),
             ),
           ),
