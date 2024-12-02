@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:lakoe_pos/application/cubit/bank_verify_cubit.dart';
 import 'package:lakoe_pos/application/cubit/bank_verify_state.dart';
 import 'package:lakoe_pos/common/data/models.dart';
 import 'package:lakoe_pos/common/widgets/form/bank_verify/bank_verify_confirmation.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/general_information.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:public_repository/public_repository.dart';
 
@@ -101,27 +106,116 @@ class _BankVerifyContentState extends State<BankVerifyContent> {
         }
 
         if (state is BankVerifyActionFailure) {
-          final result = await showModalBottomSheet<BankVerifyArgument?>(
-            context: context,
-            isScrollControlled: true,
-            barrierColor: Colors.transparent,
-            builder: (context) {
-              return CustomBottomsheet(
-                  child: GeneralInformation(
-                imageSrc: TImages.generalIllustration,
-                title: "Rekening tidak ditemukan",
-                description:
-                    "Yuk! Cek lagi nomor rekening yang kamu, pastikan sesuai dengan bank-nya, ya!",
-                onAction: () {
-                  Navigator.pop(context);
-                },
-                actionTitle: "Cek Lagi",
-              ));
-            },
-          );
+          if (state.error.contains("503")) {
+            final TextEditingController controller = TextEditingController();
 
-          if (!context.mounted) return;
-          Navigator.pop(context, result);
+            final GlobalKey<FormBuilderState> formKey =
+                GlobalKey<FormBuilderState>();
+
+            final result = await showModalBottomSheet<BankVerifyArgument?>(
+              context: context,
+              isScrollControlled: true,
+              barrierColor: Colors.transparent,
+              builder: (context) {
+                return CustomBottomsheet(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: FormBuilder(
+                      key: formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 8),
+                            child: TextHeading2(
+                              "Nama pemilik rekening",
+                              color: TColors.neutralDarkDarkest,
+                            ),
+                          ),
+                          TextBodyM(
+                            "Pastikan nama pemilik rekening sesuai dengan nama yang tercantum di buku tabungan atau informasi resmi bank.",
+                            color: TColors.neutralDarkMedium,
+                          ),
+                          const SizedBox(height: 16),
+                          FormBuilderTextField(
+                            name: "accountName",
+                            controller: controller,
+                            decoration: const InputDecoration(
+                              hintText: "Masukan nama pemilik rekening",
+                            ),
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                errorText:
+                                    ErrorTextStrings.required(name: "Nama"),
+                              ),
+                              (value) {
+                                if (value != null &&
+                                    !RegExp(r'^[a-zA-Z0-9\s]+$')
+                                        .hasMatch(value)) {
+                                  return "Tidak boleh mengandung karakter khusus";
+                                }
+                                return null;
+                              },
+                            ]),
+                          ),
+                          const SizedBox(height: 16),
+                          SizedBox(
+                            width: double.infinity,
+                            child: SizedBox(
+                              height: 48,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (formKey.currentState?.saveAndValidate() ??
+                                      false) {
+                                    Navigator.pop(
+                                      context,
+                                      BankVerifyArgument(
+                                        bankName: widget.bankName,
+                                        accountNumber: widget.accountNumber,
+                                        accountName: controller.text,
+                                        name: widget.name,
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: TextActionL("Konfirmasi"),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+
+            if (!context.mounted) return;
+
+            Navigator.pop(context, result);
+          } else {
+            final result = await showModalBottomSheet<BankVerifyArgument?>(
+              context: context,
+              isScrollControlled: true,
+              barrierColor: Colors.transparent,
+              builder: (context) {
+                return CustomBottomsheet(
+                    child: GeneralInformation(
+                  imageSrc: TImages.generalIllustration,
+                  title: "Rekening tidak ditemukan",
+                  description:
+                      "Yuk! Cek lagi nomor rekening yang kamu, pastikan sesuai dengan bank-nya, ya!",
+                  onAction: () {
+                    Navigator.pop(context);
+                  },
+                  actionTitle: "Cek Lagi",
+                ));
+              },
+            );
+            if (!context.mounted) return;
+            Navigator.pop(context, result);
+          }
         }
       },
       child: Column(
