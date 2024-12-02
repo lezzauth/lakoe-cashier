@@ -9,7 +9,7 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_cubit.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_state.dart';
 import 'package:lakoe_pos/features/tables/presentation/widgets/forms/table_information_form.dart';
-import 'package:lakoe_pos/features/tables/presentation/widgets/tabs/table_new_qr_order_tab.dart';
+import 'package:lakoe_pos/features/tables/presentation/widgets/tabs/table_qr_order_tab.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:table_repository/table_repository.dart';
 
@@ -105,9 +105,7 @@ class _TableEditState extends State<TableEdit> {
                 mobile: TabContainer(
                   tabs: [
                     TabItem(title: "Info Meja"),
-                    TabItem(
-                      title: "QR Order",
-                    )
+                    TabItem(title: "QR Order")
                   ],
                 ),
                 tablet: SizedBox.shrink(),
@@ -118,7 +116,7 @@ class _TableEditState extends State<TableEdit> {
             mobile: TabBarView(
               children: [
                 SingleChildScrollView(
-                  padding: const EdgeInsets.only(top: 16),
+                  padding: EdgeInsets.only(top: 16),
                   child: TableInformationForm(
                     formKey: _formKey,
                     initialValue: {
@@ -131,9 +129,7 @@ class _TableEditState extends State<TableEdit> {
                     tableNumber: arguments.no,
                   ),
                 ),
-                TableNewQrOrderTab(
-                  table: arguments,
-                ),
+                TableQrOrderTab(table: arguments),
               ],
             ),
             tablet: SingleChildScrollView(

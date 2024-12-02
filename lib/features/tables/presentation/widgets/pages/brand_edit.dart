@@ -120,7 +120,6 @@ class _BrandEditScreenState extends State<BrandEditScreen> {
         }
 
         if (state is OutletActionSuccess) {
-          context.read<OutletCubit>().init();
           Navigator.pop(context, true);
         }
       },

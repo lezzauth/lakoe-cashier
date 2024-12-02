@@ -1,41 +1,28 @@
 import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/form/custom_radio.dart';
-import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/features/outlets/application/outlet_cubit.dart';
 import 'package:lakoe_pos/features/tables/common/widgets/preview_qr_table.dart';
-import 'package:lakoe_pos/features/tables/presentation/widgets/bottom_sheet/download_qr_order_content.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:table_repository/table_repository.dart';
 
-class TableNewQrOrderTab extends StatefulWidget {
-  const TableNewQrOrderTab({super.key, this.table});
+class TableQrOrderTab extends StatefulWidget {
+  const TableQrOrderTab({super.key, this.table});
 
   final TableModel? table;
 
   @override
-  State<TableNewQrOrderTab> createState() => _TableNewQrOrderTabState();
+  State<TableQrOrderTab> createState() => _TableQrOrderTabState();
 }
 
-class _TableNewQrOrderTabState extends State<TableNewQrOrderTab> {
+class _TableQrOrderTabState extends State<TableQrOrderTab> {
   final AppDataProvider _appDataProvider = AppDataProvider();
 
   @override
   Widget build(BuildContext context) {
-    showDownloadQR() {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        useSafeArea: true,
-        builder: (context) {
-          return const CustomBottomsheet(
-            child: DownloadQrOrderContent(),
-          );
-        },
-      );
-    }
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -75,11 +62,12 @@ class _TableNewQrOrderTabState extends State<TableNewQrOrderTab> {
                         widget.table?.id ?? DateTime.timestamp().toString(),
                         logo: "",
                         colorBrand: 0xFFFD6E00,
-                        tableNumber: widget.table?.no ?? "T-01",
+                        tableNumber: widget.table?.no ?? "T-00",
                       );
                     }
                   },
                 ),
+                SizedBox(height: 12),
                 if (widget.table != null)
                   TextButton(
                     onPressed: () {},
@@ -93,12 +81,20 @@ class _TableNewQrOrderTabState extends State<TableNewQrOrderTab> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(20.0),
           child: SizedBox(
             height: 48,
             child: OutlinedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "/tables/edit/brand");
+              onPressed: () async {
+                bool? result =
+                    await Navigator.pushNamed(context, "/tables/edit/brand")
+                        as bool?;
+
+                if (result == true) {
+                  if (mounted) {
+                    context.read<OutletCubit>().init();
+                  }
+                }
               },
               child: TextActionL(
                 "Ubah Logo & Warna",

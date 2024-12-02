@@ -127,7 +127,7 @@ class _TableInformationFormState extends State<TableInformationForm> {
                 ),
                 SizedBox(height: 20),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 60),
+                  padding: EdgeInsets.symmetric(horizontal: 60),
                   child: Expanded(
                     child: SizedBox(
                       height: 48,
@@ -135,7 +135,7 @@ class _TableInformationFormState extends State<TableInformationForm> {
                         onPressed: () {
                           Navigator.pushNamed(context, "/tables/edit/brand");
                         },
-                        child: const TextActionL(
+                        child: TextActionL(
                           "Ubah Logo & Warna",
                           color: TColors.primary,
                         ),

@@ -11,7 +11,7 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_cubit.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_state.dart';
 import 'package:lakoe_pos/features/tables/presentation/widgets/forms/table_information_form.dart';
-import 'package:lakoe_pos/features/tables/presentation/widgets/tabs/table_new_qr_order_tab.dart';
+import 'package:lakoe_pos/features/tables/presentation/widgets/tabs/table_qr_order_tab.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:table_repository/table_repository.dart';
@@ -76,7 +76,7 @@ class _TableNewState extends State<TableNew> {
         BlocListener<TableMasterCubit, TableMasterState>(
           listener: (context, state) {
             if (state is TableMasterActionSuccess) {
-              Navigator.pop(context, state.data);
+              Navigator.pop(context, true);
             } else if (state is TableMasterReachesLimit) {
               showModalBottomSheet(
                 context: context,
@@ -147,9 +147,7 @@ class _TableNewState extends State<TableNew> {
                 mobile: TabContainer(
                   tabs: [
                     TabItem(title: "Info Meja"),
-                    TabItem(
-                      title: "QR Order",
-                    )
+                    TabItem(title: "QR Order")
                   ],
                 ),
                 tablet: SizedBox.shrink(),
@@ -160,21 +158,22 @@ class _TableNewState extends State<TableNew> {
             mobile: TabBarView(
               children: [
                 SingleChildScrollView(
-                  padding: const EdgeInsets.only(top: 16),
+                  padding: EdgeInsets.only(top: 16),
                   child: TableInformationForm(
                     formKey: _formKey,
                     tableNumber: dummyTableModel.no,
+                    table: dummyTableModel,
                   ),
                 ),
-                const TableNewQrOrderTab(),
+                TableQrOrderTab(),
               ],
             ),
             tablet: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(0, 16, 40, 16),
+              padding: EdgeInsets.fromLTRB(0, 16, 40, 16),
               child: BlocBuilder<TableMasterCubit, TableMasterState>(
                   builder: (context, state) {
                 return SingleChildScrollView(
-                  padding: const EdgeInsets.only(top: 16),
+                  padding: EdgeInsets.only(top: 16),
                   child: TableInformationForm(
                     formKey: _formKey,
                     table: dummyTableModel,

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
-import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
@@ -13,10 +12,8 @@ import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_m
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_state.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
 import 'package:lakoe_pos/features/tables/presentation/widgets/filter/table_location_filter.dart';
-import 'package:lakoe_pos/features/tables/presentation/widgets/pages/table_detail_page.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableMasterScreen extends StatelessWidget {
@@ -46,36 +43,14 @@ class _TableMasterState extends State<TableMaster> {
     await context.read<TableMasterCubit>().init();
   }
 
-  Future<void> _onGoToDetail(TableModel table) async {
-    if (ResponsiveBreakpoints.of(context).smallerThan(TABLET)) {
-      bool? editedProduct = await showModalBottomSheet<bool?>(
-        context: context,
-        isScrollControlled: true,
-        useSafeArea: true,
-        useRootNavigator: true,
-        builder: (context) {
-          return CustomBottomsheet(
-            child: Expanded(
-              child: TableDetailPage(
-                table: table,
-                tableNo: table.no,
-              ),
-            ),
-          );
-        },
-      );
-
-      if (editedProduct != true) return;
-      _onRefresh();
-    } else {
-      bool? editedProduct = await Navigator.pushNamed(
-        context,
-        "/tables/edit",
-        arguments: table,
-      ) as bool?;
-      if (editedProduct != true) return;
-      _onRefresh();
-    }
+  Future<void> _onGoToEditTable(TableModel table) async {
+    bool? editedProduct = await Navigator.pushNamed(
+      context,
+      "/tables/edit",
+      arguments: table,
+    ) as bool?;
+    if (editedProduct != true) return;
+    _onRefresh();
   }
 
   Future<void> _onGoToCreateScreen() async {
@@ -169,7 +144,7 @@ class _TableMasterState extends State<TableMaster> {
                               onTap: isFreeTable
                                   ? null
                                   : () {
-                                      _onGoToDetail(table);
+                                      _onGoToEditTable(table);
                                     },
                               splashColor: TColors.highlightLightest,
                               contentPadding:

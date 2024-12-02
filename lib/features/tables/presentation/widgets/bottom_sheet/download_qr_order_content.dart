@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:lakoe_pos/features/tables/presentation/widgets/tabs/table_new_qr_order_tab.dart';
+import 'package:lakoe_pos/features/tables/presentation/widgets/tabs/table_qr_order_tab.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/device/device_uility.dart';
 
