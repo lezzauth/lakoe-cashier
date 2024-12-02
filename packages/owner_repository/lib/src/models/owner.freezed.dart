@@ -24,7 +24,13 @@ mixin _$OwnerProfileModel {
   String get name => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
   String get packageName => throw _privateConstructorUsedError;
+  String? get packageExpiretAt => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  String get balance => throw _privateConstructorUsedError;
+  bool get emailVerified => throw _privateConstructorUsedError;
+  bool get phoneVerified => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
+  String get updatedAt => throw _privateConstructorUsedError;
   List<Outlet> get outlets => throw _privateConstructorUsedError;
 
   /// Serializes this OwnerProfileModel to a JSON map.
@@ -48,7 +54,13 @@ abstract class $OwnerProfileModelCopyWith<$Res> {
       String name,
       String phoneNumber,
       String packageName,
+      String? packageExpiretAt,
       String? email,
+      String balance,
+      bool emailVerified,
+      bool phoneVerified,
+      String createdAt,
+      String updatedAt,
       List<Outlet> outlets});
 }
 
@@ -71,7 +83,13 @@ class _$OwnerProfileModelCopyWithImpl<$Res, $Val extends OwnerProfileModel>
     Object? name = null,
     Object? phoneNumber = null,
     Object? packageName = null,
+    Object? packageExpiretAt = freezed,
     Object? email = freezed,
+    Object? balance = null,
+    Object? emailVerified = null,
+    Object? phoneVerified = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
     Object? outlets = null,
   }) {
     return _then(_value.copyWith(
@@ -91,10 +109,34 @@ class _$OwnerProfileModelCopyWithImpl<$Res, $Val extends OwnerProfileModel>
           ? _value.packageName
           : packageName // ignore: cast_nullable_to_non_nullable
               as String,
+      packageExpiretAt: freezed == packageExpiretAt
+          ? _value.packageExpiretAt
+          : packageExpiretAt // ignore: cast_nullable_to_non_nullable
+              as String?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      balance: null == balance
+          ? _value.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as String,
+      emailVerified: null == emailVerified
+          ? _value.emailVerified
+          : emailVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
+      phoneVerified: null == phoneVerified
+          ? _value.phoneVerified
+          : phoneVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
       outlets: null == outlets
           ? _value.outlets
           : outlets // ignore: cast_nullable_to_non_nullable
@@ -116,7 +158,13 @@ abstract class _$$OwnerProfileModelImplCopyWith<$Res>
       String name,
       String phoneNumber,
       String packageName,
+      String? packageExpiretAt,
       String? email,
+      String balance,
+      bool emailVerified,
+      bool phoneVerified,
+      String createdAt,
+      String updatedAt,
       List<Outlet> outlets});
 }
 
@@ -137,7 +185,13 @@ class __$$OwnerProfileModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? phoneNumber = null,
     Object? packageName = null,
+    Object? packageExpiretAt = freezed,
     Object? email = freezed,
+    Object? balance = null,
+    Object? emailVerified = null,
+    Object? phoneVerified = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
     Object? outlets = null,
   }) {
     return _then(_$OwnerProfileModelImpl(
@@ -157,10 +211,34 @@ class __$$OwnerProfileModelImplCopyWithImpl<$Res>
           ? _value.packageName
           : packageName // ignore: cast_nullable_to_non_nullable
               as String,
+      packageExpiretAt: freezed == packageExpiretAt
+          ? _value.packageExpiretAt
+          : packageExpiretAt // ignore: cast_nullable_to_non_nullable
+              as String?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      balance: null == balance
+          ? _value.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as String,
+      emailVerified: null == emailVerified
+          ? _value.emailVerified
+          : emailVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
+      phoneVerified: null == phoneVerified
+          ? _value.phoneVerified
+          : phoneVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
       outlets: null == outlets
           ? _value._outlets
           : outlets // ignore: cast_nullable_to_non_nullable
@@ -177,7 +255,13 @@ class _$OwnerProfileModelImpl implements _OwnerProfileModel {
       required this.name,
       required this.phoneNumber,
       required this.packageName,
+      this.packageExpiretAt,
       this.email,
+      this.balance = '0',
+      this.emailVerified = false,
+      this.phoneVerified = false,
+      required this.createdAt,
+      required this.updatedAt,
       required final List<Outlet> outlets})
       : _outlets = outlets;
 
@@ -193,7 +277,22 @@ class _$OwnerProfileModelImpl implements _OwnerProfileModel {
   @override
   final String packageName;
   @override
+  final String? packageExpiretAt;
+  @override
   final String? email;
+  @override
+  @JsonKey()
+  final String balance;
+  @override
+  @JsonKey()
+  final bool emailVerified;
+  @override
+  @JsonKey()
+  final bool phoneVerified;
+  @override
+  final String createdAt;
+  @override
+  final String updatedAt;
   final List<Outlet> _outlets;
   @override
   List<Outlet> get outlets {
@@ -204,7 +303,7 @@ class _$OwnerProfileModelImpl implements _OwnerProfileModel {
 
   @override
   String toString() {
-    return 'OwnerProfileModel(id: $id, name: $name, phoneNumber: $phoneNumber, packageName: $packageName, email: $email, outlets: $outlets)';
+    return 'OwnerProfileModel(id: $id, name: $name, phoneNumber: $phoneNumber, packageName: $packageName, packageExpiretAt: $packageExpiretAt, email: $email, balance: $balance, emailVerified: $emailVerified, phoneVerified: $phoneVerified, createdAt: $createdAt, updatedAt: $updatedAt, outlets: $outlets)';
   }
 
   @override
@@ -218,14 +317,37 @@ class _$OwnerProfileModelImpl implements _OwnerProfileModel {
                 other.phoneNumber == phoneNumber) &&
             (identical(other.packageName, packageName) ||
                 other.packageName == packageName) &&
+            (identical(other.packageExpiretAt, packageExpiretAt) ||
+                other.packageExpiretAt == packageExpiretAt) &&
             (identical(other.email, email) || other.email == email) &&
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.emailVerified, emailVerified) ||
+                other.emailVerified == emailVerified) &&
+            (identical(other.phoneVerified, phoneVerified) ||
+                other.phoneVerified == phoneVerified) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             const DeepCollectionEquality().equals(other._outlets, _outlets));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, phoneNumber,
-      packageName, email, const DeepCollectionEquality().hash(_outlets));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      phoneNumber,
+      packageName,
+      packageExpiretAt,
+      email,
+      balance,
+      emailVerified,
+      phoneVerified,
+      createdAt,
+      updatedAt,
+      const DeepCollectionEquality().hash(_outlets));
 
   /// Create a copy of OwnerProfileModel
   /// with the given fields replaced by the non-null parameter values.
@@ -250,7 +372,13 @@ abstract class _OwnerProfileModel implements OwnerProfileModel {
       required final String name,
       required final String phoneNumber,
       required final String packageName,
+      final String? packageExpiretAt,
       final String? email,
+      final String balance,
+      final bool emailVerified,
+      final bool phoneVerified,
+      required final String createdAt,
+      required final String updatedAt,
       required final List<Outlet> outlets}) = _$OwnerProfileModelImpl;
 
   factory _OwnerProfileModel.fromJson(Map<String, dynamic> json) =
@@ -265,7 +393,19 @@ abstract class _OwnerProfileModel implements OwnerProfileModel {
   @override
   String get packageName;
   @override
+  String? get packageExpiretAt;
+  @override
   String? get email;
+  @override
+  String get balance;
+  @override
+  bool get emailVerified;
+  @override
+  bool get phoneVerified;
+  @override
+  String get createdAt;
+  @override
+  String get updatedAt;
   @override
   List<Outlet> get outlets;
 

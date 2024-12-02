@@ -10,7 +10,13 @@ class OwnerProfileModel with _$OwnerProfileModel {
     required String name,
     required String phoneNumber,
     required String packageName,
+    String? packageExpiretAt,
     String? email,
+    @Default('0') String balance,
+    @Default(false) bool emailVerified,
+    @Default(false) bool phoneVerified,
+    required String createdAt,
+    required String updatedAt,
     required List<Outlet> outlets,
   }) = _OwnerProfileModel;
 

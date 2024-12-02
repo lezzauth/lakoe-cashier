@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:app_data_provider/app_data_provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
@@ -439,11 +439,11 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                                 phoneNumber: '',
                                 packageName: '',
                                 outlets: [],
+                                createdAt: '',
+                                updatedAt: '',
                               );
-                              if (kDebugMode) {
-                                print(
-                                    'AuthState is not ready, using default profile.');
-                              }
+                              Logman.instance.info(
+                                  "AuthState is not ready, using default profile.");
                             }
 
                             TBill.testPrint(context, profile, footNote);
