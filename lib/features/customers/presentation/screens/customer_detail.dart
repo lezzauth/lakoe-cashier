@@ -158,8 +158,9 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                     ),
                                   ) as CustomerModel?;
                                   if (newCustomer == null) return;
-                                  Logman.instance.info("XXX $newCustomer");
+
                                   if (!context.mounted) return;
+                                  _onRefresh();
                                 },
                                 child: TextActionL(
                                   "Ubah",

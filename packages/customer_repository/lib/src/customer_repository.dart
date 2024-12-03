@@ -57,7 +57,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
     final options = await _getOptions();
     final outletId = await _appDataProvider.outletId;
 
-    final response = await _dio.put(
+    final response = await _dio.patch(
       "$_baseURL/$id",
       data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
