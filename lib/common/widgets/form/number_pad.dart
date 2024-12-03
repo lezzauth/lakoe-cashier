@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/features/employees/presentation/widgets/forms/employee_select.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/sizes.dart';
@@ -185,7 +187,22 @@ class _NumberPadState extends State<NumberPad> {
             children: [
               Pad(
                 onTap: () {
-                  // Navigator.pop(context);
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    useSafeArea: true,
+                    builder: (context) {
+                      return CustomBottomsheet(
+                        child: EmployeeSelect(
+                          value: "widget.value",
+                          onChanged: (value) {
+                            Navigator.pop(context);
+                            // widget.onChanged(value!);
+                          },
+                        ),
+                      );
+                    },
+                  );
                 },
                 color: Colors.transparent,
                 child: !widget.isShowForgot

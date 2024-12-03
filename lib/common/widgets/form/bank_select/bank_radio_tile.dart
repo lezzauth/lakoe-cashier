@@ -34,7 +34,7 @@ class BankRadioTile<T> extends StatelessWidget {
             groupValue: groupValue,
             onChanged: onChanged,
           ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
         ),
         const Divider(
           color: TColors.neutralLightMedium,

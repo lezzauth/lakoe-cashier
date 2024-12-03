@@ -6,6 +6,8 @@ import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/edit_acccount_pin.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/otp_input.dart';
 import 'package:lakoe_pos/features/customers/presentation/screens/edit_customer.dart';
+import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/create_new_pin.dart';
+import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/input_otp.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
 import 'package:logman/logman.dart';
@@ -362,6 +364,9 @@ class App extends StatelessWidget {
                   arguments: ModalRoute.of(context)!.settings.arguments
                       as EmployeeEditArgument,
                 ),
+            "/employee/forgot/input_otp": (context) => const InputOtpScreen(),
+            "/employee/forgot/create_pin": (context) =>
+                const CreateNewPinScreen(),
 
             // bank accounts
             "/bank_accounts": (context) => const BankAccountMasterScreen(),
