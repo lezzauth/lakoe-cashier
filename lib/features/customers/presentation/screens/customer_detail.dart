@@ -2,6 +2,7 @@ import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:logman/logman.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
@@ -139,6 +140,30 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                       ],
                                     ),
                                   ],
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  Logman.instance.info("EDIT");
+                                  CustomerModel? newCustomer =
+                                      await Navigator.pushNamed(
+                                    context,
+                                    "/customers/edit",
+                                    arguments: CustomerModel(
+                                      id: data.customer.id,
+                                      name: data.customer.name,
+                                      phoneNumber: data.customer.phoneNumber,
+                                      email: data.customer.email,
+                                      address: data.customer.address,
+                                    ),
+                                  ) as CustomerModel?;
+                                  if (newCustomer == null) return;
+                                  Logman.instance.info("XXX $newCustomer");
+                                  if (!context.mounted) return;
+                                },
+                                child: TextActionL(
+                                  "Ubah",
+                                  color: TColors.primary,
                                 ),
                               ),
                               // Column(

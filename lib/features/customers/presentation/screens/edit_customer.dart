@@ -3,27 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
-import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
-import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
 import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_state.dart';
 import 'package:lakoe_pos/features/customers/presentation/widgets/forms/customer_form.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
-import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
-class NewCustomerScreen extends StatefulWidget {
-  const NewCustomerScreen({super.key});
+class EditCustomerScreen extends StatefulWidget {
+  const EditCustomerScreen({super.key});
 
   @override
-  State<NewCustomerScreen> createState() => _NewCustomerScreenState();
+  State<EditCustomerScreen> createState() => _EditCustomerScreenState();
 }
 
-class _NewCustomerScreenState extends State<NewCustomerScreen> {
+class _EditCustomerScreenState extends State<EditCustomerScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
 
-  Future<void> _onSubmit() async {
+  Future<void> _onSubmit(String id) async {
     FocusScope.of(context).unfocus();
 
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
@@ -34,7 +31,8 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
     String phoneNumber =
         PhoneNumberFormatter.formatForRequest(value["phoneNumber"]);
 
-    await context.read<CustomerMasterCubit>().create(
+    await context.read<CustomerMasterCubit>().update(
+          id,
           CustomerDto(
             name: value["name"],
             phoneNumber: phoneNumber,
@@ -46,53 +44,26 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as CustomerModel;
+
     return BlocListener<CustomerMasterCubit, CustomerMasterState>(
       listener: (context, state) {
         if (state is CustomerMasterActionSuccess) {
           Navigator.pop(context, state.data);
-        } else if (state is CustomerReachesLimit) {
-          showModalBottomSheet(
-            context: context,
-            enableDrag: false,
-            isDismissible: false,
-            builder: (context) {
-              return PopScope(
-                canPop: false,
-                onPopInvokedWithResult: (didPop, result) async {},
-                child: CustomBottomsheet(
-                  hasGrabber: false,
-                  child: ErrorDisplay(
-                    imageSrc: TImages.limitQuota,
-                    title: "Pelanggan penuh, nih!",
-                    description:
-                        "20 pelanggan sudah tersimpan. Upgrade untuk simpan lebih banyak!",
-                    actionTitlePrimary: "Lihat Paket",
-                    onActionPrimary: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, "/packages");
-                    },
-                    actionTitleSecondary: "Nanti Saja",
-                    onActionSecondary: () {
-                      Navigator.pop(context);
-                      Navigator.pop(context, true);
-                    },
-                  ),
-                ),
-              );
-            },
-          );
         }
       },
       child: Scaffold(
         appBar: CustomAppbar(
-          title: "Pelanggan Baru",
+          title: "Ubah Data Pelanggan",
           actions: [
             BlocBuilder<CustomerMasterCubit, CustomerMasterState>(
               builder: (context, state) {
                 return TextButton(
                   onPressed: state is CustomerMasterActionInProgress
                       ? null
-                      : _onSubmit,
+                      : () {
+                          _onSubmit(args.id);
+                        },
                   child: state is CustomerMasterActionInProgress
                       ? const SizedBox(
                           height: 16,
@@ -111,6 +82,14 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
         body: SingleChildScrollView(
           child: CustomerForm(
             formKey: _formKey,
+            initialValue: {
+              "id": args.id,
+              "name": args.name,
+              "phoneNumber":
+                  PhoneNumberFormatter.formatForDisplay(args.phoneNumber),
+              "email": args.email,
+              "address": args.address,
+            },
           ),
         ),
       ),

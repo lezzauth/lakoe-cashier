@@ -7,7 +7,8 @@ import 'package:token_provider/token_provider.dart';
 
 abstract class CustomerRepository {
   Future<List<CustomerModel>> findAll(FindAllCustomerDto dto);
-  Future<CustomerModel> create(CreateCustomerDto dto);
+  Future<CustomerModel> create(CustomerDto dto);
+  Future<CustomerModel> update(String id, CustomerDto dto);
 }
 
 class CustomerRepositoryImpl implements CustomerRepository {
@@ -38,12 +39,26 @@ class CustomerRepositoryImpl implements CustomerRepository {
   }
 
   @override
-  Future<CustomerModel> create(CreateCustomerDto dto) async {
+  Future<CustomerModel> create(CustomerDto dto) async {
     final options = await _getOptions();
     final outletId = await _appDataProvider.outletId;
 
     final response = await _dio.post(
       _baseURL,
+      data: dto.copyWith(outletId: outletId).toJson(),
+      options: options,
+    );
+
+    return CustomerModel.fromJson(response.data);
+  }
+
+  @override
+  Future<CustomerModel> update(String id, CustomerDto dto) async {
+    final options = await _getOptions();
+    final outletId = await _appDataProvider.outletId;
+
+    final response = await _dio.put(
+      "$_baseURL/$id",
       data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );

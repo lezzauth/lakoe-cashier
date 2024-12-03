@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/edit_acccount_pin.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/otp_input.dart';
+import 'package:lakoe_pos/features/customers/presentation/screens/edit_customer.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
 import 'package:logman/logman.dart';
@@ -304,6 +305,7 @@ class App extends StatelessWidget {
             // customers
             "/customers": (context) => const MasterCustomerScreen(),
             "/customers/new": (context) => const NewCustomerScreen(),
+            "/customers/edit": (context) => const EditCustomerScreen(),
             "/customers/detail": (context) => const CustomerDetailScreen(),
 
             // orders

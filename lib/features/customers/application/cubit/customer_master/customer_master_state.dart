@@ -73,6 +73,29 @@ final class CustomerReachesLimit extends CustomerMasterState {
   List<Object?> get props => [res];
 }
 
+final class CustomerActionInProgress extends CustomerMasterState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class CustomerActionSuccess extends CustomerMasterState {
+  final CustomerModel res;
+
+  CustomerActionSuccess(this.res);
+
+  @override
+  List<Object?> get props => [];
+}
+
+final class CustomerActionFailure extends CustomerMasterState {
+  final String error;
+
+  CustomerActionFailure(this.error);
+
+  @override
+  List<Object?> get props => [];
+}
+
 final class ConnectionIssue extends CustomerMasterState {
   final String message;
 

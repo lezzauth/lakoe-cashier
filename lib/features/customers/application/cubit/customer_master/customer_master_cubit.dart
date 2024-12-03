@@ -46,7 +46,7 @@ class CustomerMasterCubit extends Cubit<CustomerMasterState> {
     }
   }
 
-  Future<void> create(CreateCustomerDto dto) async {
+  Future<void> create(CustomerDto dto) async {
     try {
       emit(CustomerMasterActionInProgress());
       final res = await customerRepository.create(dto);
@@ -57,6 +57,16 @@ class CustomerMasterCubit extends Cubit<CustomerMasterState> {
         emit(CustomerReachesLimit(limit));
         return;
       }
+      emit(CustomerMasterActionFailure(e.toString()));
+    }
+  }
+
+  Future<void> update(String id, CustomerDto dto) async {
+    try {
+      emit(CustomerMasterActionInProgress());
+      final res = await customerRepository.update(id, dto);
+      emit(CustomerMasterActionSuccess(res));
+    } catch (e) {
       emit(CustomerMasterActionFailure(e.toString()));
     }
   }

@@ -14,15 +14,21 @@ import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
-class NewCustomerForm extends StatefulWidget {
-  const NewCustomerForm({super.key, required this.formKey});
+class CustomerForm extends StatefulWidget {
   final GlobalKey<FormBuilderState> formKey;
+  final Map<String, dynamic> initialValue;
+
+  const CustomerForm({
+    super.key,
+    required this.formKey,
+    this.initialValue = const <String, dynamic>{},
+  });
 
   @override
-  State<NewCustomerForm> createState() => _NewCustomerFormState();
+  State<CustomerForm> createState() => _CustomerFormState();
 }
 
-class _NewCustomerFormState extends State<NewCustomerForm> {
+class _CustomerFormState extends State<CustomerForm> {
   @override
   void initState() {
     super.initState();
@@ -81,6 +87,7 @@ class _NewCustomerFormState extends State<NewCustomerForm> {
   Widget build(BuildContext context) {
     return FormBuilder(
       key: widget.formKey,
+      initialValue: widget.initialValue,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
