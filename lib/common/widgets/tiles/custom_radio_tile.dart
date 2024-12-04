@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lakoe_pos/common/widgets/form/custom_radio.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class CustomRadioTile<T> extends StatelessWidget {
@@ -31,14 +31,16 @@ class CustomRadioTile<T> extends StatelessWidget {
       children: [
         ListTile(
           onTap: () => onChanged(value),
-          title: TextBodyL(
+          title: TextHeading4(
             title,
             color: TColors.neutralDarkDarkest,
           ),
-          subtitle: TextBodyM(
-            subtitle!,
-            color: TColors.neutralDarkLightest,
-          ),
+          subtitle: subtitle != null
+              ? TextBodyM(
+                  subtitle!,
+                  color: TColors.neutralDarkLightest,
+                )
+              : null,
           leading: leading,
           trailing: CustomRadio(
             value: value,

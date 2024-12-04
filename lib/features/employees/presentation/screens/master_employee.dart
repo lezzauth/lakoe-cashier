@@ -72,11 +72,9 @@ class _MasterEmployeScreenState extends State<MasterEmployeScreen> {
                           return 0;
                         });
                       EmployeeModel employee = sortedEmployees[index];
-                      // EmployeeModel employee = employees.elementAt(index);
 
                       return EmployeeItem(
-                        name: employee.name,
-                        role: employee.role,
+                        data: employee,
                         onTap: () async {
                           if (employee.role == "OWNER") {
                             await Navigator.pushNamed(context, "/account/edit");

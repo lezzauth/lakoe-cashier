@@ -1,12 +1,15 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lakoe_pos/common/widgets/tiles/custom_radio_tile.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
 import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_state.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/device/device_uility.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
@@ -25,6 +28,8 @@ class EmployeeSelect extends StatefulWidget {
 }
 
 class _EmployeeSelectState extends State<EmployeeSelect> {
+  final AppDataProvider appDataProvider = AppDataProvider();
+
   String? _value;
   String search = "";
 
@@ -71,8 +76,72 @@ class _EmployeeSelectState extends State<EmployeeSelect> {
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: state.employees.length,
                       itemBuilder: (context, i) {
-                        EmployeeModel data = state.employees.elementAt(i);
+                        List<EmployeeModel> sortedEmployees =
+                            List.from(state.employees)
+                              ..sort((a, b) {
+                                if (a.role == "OWNER") return -1;
+                                if (b.role == "OWNER") return 1;
+                                return 0;
+                              });
+                        EmployeeModel data = sortedEmployees[i];
+
                         return CustomRadioTile(
+                          leading: data.role == "OWNER"
+                              ? FutureBuilder<String?>(
+                                  future: appDataProvider.avatarSvg,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const CircularProgressIndicator();
+                                    }
+                                    if (snapshot.hasData &&
+                                        snapshot.data != null &&
+                                        snapshot.data!.isNotEmpty) {
+                                      return Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: TColors.neutralLightMedium,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        child: ClipOval(
+                                          child: SvgPicture.string(
+                                            snapshot.data!,
+                                            height: 40,
+                                            width: 40,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    return SvgPicture.asset(
+                                      TImages.contactAvatar,
+                                      height: 40,
+                                      width: 40,
+                                    );
+                                  },
+                                )
+                              : data.profilePicture != null
+                                  ? Container(
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.network(
+                                        data.profilePicture!,
+                                        height: 40,
+                                        width: 40,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : SvgPicture.asset(
+                                      TImages.contactAvatar,
+                                      height: 40,
+                                      width: 40,
+                                    ),
                           value: data.phoneNumber,
                           title: data.name,
                           subtitle: PhoneNumberFormatter.formatForDisplay(
@@ -91,14 +160,6 @@ class _EmployeeSelectState extends State<EmployeeSelect> {
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 12,
-                      ),
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          top: BorderSide(
-                            color: TColors.neutralLightMedium,
-                            width: 1.0,
-                          ),
-                        ),
                       ),
                       child: SizedBox(
                         height: 48,

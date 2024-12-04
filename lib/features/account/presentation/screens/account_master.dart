@@ -420,6 +420,7 @@ class ProfileCard extends StatelessWidget {
                         const TextBodyM(
                           "Paket aktif kamu saat ini",
                           color: TColors.neutralDarkDarkest,
+                          fontWeight: FontWeight.w500,
                         ),
                         const SizedBox(width: 8.0),
                         Image.asset(
