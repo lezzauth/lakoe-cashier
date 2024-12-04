@@ -29,8 +29,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
           } else if (error.response?.statusCode == 429) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (navigatorKey.currentContext != null) {
-                CustomToast.showWithContext(
-                  navigatorKey.currentContext!,
+                CustomToast.show(
                   "Tunggu sebentar ya…",
                   icon: TIcons.warning,
                   position: "bottom",

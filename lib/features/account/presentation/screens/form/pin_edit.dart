@@ -36,6 +36,12 @@ class _PinEditScreenState extends State<PinEditScreen> {
   bool pinUpdated = false;
 
   @override
+  void initState() {
+    super.initState();
+    CustomToast.init(context);
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 

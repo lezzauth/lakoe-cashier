@@ -39,6 +39,7 @@ class _NewOtpInputScreenState extends State<NewOtpInputScreen>
   @override
   void initState() {
     super.initState();
+    CustomToast.init(context);
 
     _animationController = AnimationController(
       vsync: this,
@@ -116,7 +117,6 @@ class _NewOtpInputScreenState extends State<NewOtpInputScreen>
 
     return BlocConsumer<OwnerCubit, OwnerState>(
         listener: (context, state) async {
-      if (!mounted) return;
       if (state is OwnerActionSuccess) {
         CustomToast.showWithContext(
           context,
@@ -165,7 +165,6 @@ class _NewOtpInputScreenState extends State<NewOtpInputScreen>
           await Future.delayed(Duration(seconds: 1));
           Navigator.pop(context, true);
           Navigator.pop(context, true);
-          context.read<OwnerCubit>().getOwner();
         }
       }
     }, builder: (context, state) {
