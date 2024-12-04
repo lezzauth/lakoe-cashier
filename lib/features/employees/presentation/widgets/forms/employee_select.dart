@@ -2,11 +2,13 @@ import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/tiles/custom_radio_tile.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
 import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_state.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/device/device_uility.dart';
-import 'package:logman/logman.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class EmployeeSelect extends StatefulWidget {
   const EmployeeSelect({
@@ -55,35 +57,67 @@ class _EmployeeSelectState extends State<EmployeeSelect> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 16),
-                  child: const TextHeading2("Pilih Kasir"),
-                ),
+                const TextHeading2("Pilih Kasir"),
               ],
             ),
           ),
           BlocBuilder<EmployeeMasterCubit, EmployeeMasterState>(
             builder: (context, state) {
-              Logman.instance.info("XXX $state");
               if (state is EmployeeMasterLoadSuccess) {
-                return ListView.builder(
-                  itemCount: state.employees.length,
-                  itemBuilder: (context, i) {
-                    EmployeeModel data = state.employees.elementAt(i);
-                    return CustomRadioTile(
-                      value: data.id,
-                      title: data.name,
-                      groupValue: _value,
-                      onChanged: (value) {
-                        setState(() {
-                          _value = value!;
-                        });
+                return Column(
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: state.employees.length,
+                      itemBuilder: (context, i) {
+                        EmployeeModel data = state.employees.elementAt(i);
+                        return CustomRadioTile(
+                          value: data.phoneNumber,
+                          title: data.name,
+                          subtitle: PhoneNumberFormatter.formatForDisplay(
+                              data.phoneNumber),
+                          groupValue: _value,
+                          onChanged: (value) {
+                            setState(() {
+                              _value = value!;
+                            });
+                          },
+                        );
                       },
-                    );
-                  },
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          top: BorderSide(
+                            color: TColors.neutralLightMedium,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: SizedBox(
+                        height: 48,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            widget.onChanged(_value);
+                          },
+                          child: const TextActionL("Lanjutkan"),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               } else {
-                return Placeholder();
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: 80),
+                  child: Center(child: CircularProgressIndicator()),
+                );
               }
             },
           )

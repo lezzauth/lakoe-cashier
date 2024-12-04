@@ -4,12 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lakoe_pos/common/widgets/form/dotted_pin.dart';
 import 'package:lakoe_pos/common/widgets/form/number_pad.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_state.dart';
 import 'package:lakoe_pos/features/home/data/arguments/open_cashier_pin_argument.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/sizes.dart';
 
 class OpenCashierPinScreen extends StatefulWidget {
@@ -122,14 +124,20 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
                           margin: const EdgeInsets.only(bottom: 40, top: 56),
                           child: Column(
                             children: [
+                              UiIcons(
+                                TIcons.lock,
+                                size: 32,
+                                color: TColors.neutralLightDarkest,
+                              ),
+                              SizedBox(height: 20),
                               Container(
                                 margin: const EdgeInsets.only(bottom: 8.0),
-                                child: const TextHeading3(
+                                child: const TextHeading2(
                                   "Masukan PIN kamu",
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              const TextBodyS(
+                              const TextBodyM(
                                 "Masukin PIN kasir yang sedang bertugas",
                                 color: TColors.neutralDarkMedium,
                                 textAlign: TextAlign.center,

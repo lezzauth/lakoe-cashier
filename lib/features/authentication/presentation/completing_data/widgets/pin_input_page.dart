@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lakoe_pos/common/widgets/form/dotted_pin.dart';
 import 'package:lakoe_pos/common/widgets/form/number_pad.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/features/authentication/application/cubit/completing_data/completing_data_screen_cubit.dart';
 
 import 'package:lakoe_pos/utils/constants/colors.dart';
@@ -53,14 +53,14 @@ class _PinInputPageState extends State<PinInputPage> {
                         children: [
                           Container(
                             margin: const EdgeInsets.only(bottom: 8.0),
-                            child: TextHeading3(
+                            child: TextHeading2(
                               !isRepeat
                                   ? "Buat kode akses (PIN)"
                                   : "Masukan ulang kode akses (PIN)",
                               textAlign: TextAlign.center,
                             ),
                           ),
-                          const TextBodyS(
+                          const TextBodyM(
                             "Kode akses ini akan digunakan untuk setiap kali akan melakukan transaksi.",
                             color: TColors.neutralDarkMedium,
                             textAlign: TextAlign.center,

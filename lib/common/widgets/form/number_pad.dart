@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/features/employees/data/arguments/forgot_pin_dto.dart';
 import 'package:lakoe_pos/features/employees/presentation/widgets/forms/employee_select.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
@@ -24,6 +25,8 @@ class NumberPad extends StatefulWidget {
 }
 
 class _NumberPadState extends State<NumberPad> {
+  String? _value;
+
   @override
   void dispose() {
     if (widget.controller is TextEditingController) {
@@ -194,10 +197,19 @@ class _NumberPadState extends State<NumberPad> {
                     builder: (context) {
                       return CustomBottomsheet(
                         child: EmployeeSelect(
-                          value: "widget.value",
+                          value: _value ?? "",
                           onChanged: (value) {
                             Navigator.pop(context);
-                            // widget.onChanged(value!);
+                            setState(() {
+                              _value = value;
+                            });
+                            Navigator.pushNamed(
+                              context,
+                              "/employee/forgot/create_pin",
+                              arguments: ForgotPinArguments(
+                                phoneNumber: value,
+                              ),
+                            );
                           },
                         ),
                       );
