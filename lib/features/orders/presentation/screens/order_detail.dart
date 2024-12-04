@@ -102,6 +102,8 @@ class _OrderDetailState extends State<OrderDetail> {
       _isCashier = widget.arguments.isCashier;
     });
 
+    Logman.instance.info("XXX ${widget.arguments.isCashier}");
+
     _scrollController.addListener(() {
       if (_scrollController.offset > 0 && !_isScrolled) {
         setState(() {

@@ -48,7 +48,10 @@ class CashierOpenOrderList extends StatelessWidget {
                       await Navigator.pushNamed(
                         context,
                         "/orders/detail",
-                        arguments: OrderDetailArgument(id: order.id),
+                        arguments: OrderDetailArgument(
+                          id: order.id,
+                          isCashier: true,
+                        ),
                       );
 
                       if (!context.mounted) return;
