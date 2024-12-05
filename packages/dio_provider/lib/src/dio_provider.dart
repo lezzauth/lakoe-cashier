@@ -74,13 +74,28 @@ class DioProvider {
         switch (e.response!.statusCode) {
           case 401:
             return handler.reject(
-                _createDioException(e, "jwt expired", "Token has expired"));
+              _createDioException(
+                e,
+                "jwt expired",
+                "Token has expired",
+              ),
+            );
           case 402:
-            return handler.reject(_createDioException(e,
-                "Insufficient quota of item", "Quota limit has been reached"));
+            return handler.reject(
+              _createDioException(
+                e,
+                "Insufficient quota of item",
+                "Quota limit has been reached",
+              ),
+            );
           case 404:
-            return handler.reject(_createDioException(
-                e, "Client error - 404", "Client error - 404"));
+            return handler.reject(
+              _createDioException(e, "Client error - 404", ""),
+            );
+          case 429:
+            return handler.reject(
+              _createDioException(e, "Too many request (429)", ""),
+            );
           case 502:
             _showMaintenanceBottomSheet();
             break;
@@ -121,7 +136,7 @@ class DioProvider {
         message: errorMessage,
       ),
       message: fallbackMessage,
-      type: DioExceptionType.unknown,
+      type: e.type,
     );
   }
 

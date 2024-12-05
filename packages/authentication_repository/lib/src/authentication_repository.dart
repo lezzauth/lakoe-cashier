@@ -5,8 +5,6 @@ import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:token_provider/token_provider.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
-import 'package:lakoe_pos/utils/constants/icon_strings.dart';
-import 'package:lakoe_pos/app.dart';
 
 abstract class AuthenticationRepository {
   Future<RegisterResponse> register(RegisterDto dto);
@@ -28,14 +26,10 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
           if (error.response?.statusCode == 401) {
           } else if (error.response?.statusCode == 429) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (navigatorKey.currentContext != null) {
-                CustomToast.show(
-                  "Tunggu sebentar ya…",
-                  icon: TIcons.warning,
-                  position: "bottom",
-                  duration: 2,
-                );
-              }
+              CustomToast.show(
+                "Tunggu sebentar ya…",
+                duration: 2,
+              );
             });
           }
           handler.next(error);

@@ -120,7 +120,7 @@ class _PhoneNumberEditScreenState extends State<PhoneNumberEditScreen> {
               if (state is RequestFailure) {
                 if (state.error.contains("too many")) {
                   CustomToast.show(
-                    "Tunggu sebentar ya…",
+                    "Tunggu 10 detik lagi, ya!",
                     position: "center",
                   );
                 }

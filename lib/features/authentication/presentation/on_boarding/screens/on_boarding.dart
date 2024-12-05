@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/features/authentication/application/cubit/on_boarding/on_boarding_cubit.dart';
 import 'package:lakoe_pos/features/authentication/application/cubit/on_boarding/on_boarding_state.dart';
 import 'package:lakoe_pos/features/authentication/data/arguments/otp_input_argument.dart';
@@ -40,7 +41,12 @@ class _OnBoardingState extends State<OnBoarding> {
       body: BlocConsumer<OnBoardingCubit, OnBoardingState>(
         listener: (context, state) {
           if (state is OnBoardingActionFailure) {
-            return;
+            if (state.error.contains("429")) {
+              CustomToast.show(
+                "Tunggu 10 detik lagi, ya!",
+                position: "bottom",
+              );
+            }
           }
 
           if (state is OnBoardingActionSuccess) {
