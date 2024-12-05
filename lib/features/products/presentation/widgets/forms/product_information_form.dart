@@ -50,11 +50,12 @@ class _ProductInformationFormState extends State<ProductInformationForm>
   );
 
   final List<Map<String, String>> _units = [
+    {"id": "serving", "name": "Porsi"},
+    {"id": "cup", "name": "Cup atau Glass"},
     {"id": "pcs", "name": "Pcs"},
-    {"id": "kilogram", "name": "Kilogram"},
-    {"id": "box", "name": "Box"},
-    {"id": "gram", "name": "Gram"},
-    {"id": "liter", "name": "Liter"},
+    {"id": "bottle", "name": "Botol"},
+    {"id": "slice", "name": "Slice"},
+    {"id": "set", "name": "Set"},
   ];
 
   @override
