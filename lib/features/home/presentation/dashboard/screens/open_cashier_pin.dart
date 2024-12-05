@@ -133,7 +133,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
                               Container(
                                 margin: const EdgeInsets.only(bottom: 8.0),
                                 child: const TextHeading2(
-                                  "Masukan PIN kamu",
+                                  "Masukan PIN Kasir",
                                   textAlign: TextAlign.center,
                                 ),
                               ),

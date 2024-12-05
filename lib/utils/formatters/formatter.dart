@@ -70,6 +70,14 @@ class TFormatter {
   }
 
   static String censoredPhoneNumber(String text) {
+    if (text.startsWith('+62')) {
+      text = '0${text.substring(3)}';
+    } else if (text.startsWith('62')) {
+      text = '0${text.substring(2)}';
+    } else if (!text.startsWith('08')) {
+      text = '0$text';
+    }
+
     return text.replaceRange(
         text.length - 7, text.length - 3, List.filled(4, "*").join());
   }

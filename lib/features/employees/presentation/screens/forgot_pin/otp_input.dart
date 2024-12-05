@@ -178,7 +178,7 @@ class _InputOtpState extends State<InputOtp>
                                 ),
                               ),
                               Text(
-                                "Masukkan 4 digit kode OTP yang telah kami kirimkan melalui WhatsApp untuk melanjutkan.",
+                                "Masukkan 4 digit kode OTP yang telah kami kirimkan ke WhatsApp nomor dibawah ini:",
                                 style: GoogleFonts.inter(
                                   fontSize: TSizes.fontSizeBodyS,
                                   color: TColors.neutralDarkMedium,
