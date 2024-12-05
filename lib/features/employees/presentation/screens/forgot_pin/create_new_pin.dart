@@ -48,7 +48,7 @@ class _CreateNewPinState extends State<CreateNewPin> {
 
   String firstValue = "";
   bool isRepeat = false;
-  bool loading = false;
+  bool isLoading = false;
   bool isPinNotMatch = false;
   bool pinUpdated = false;
 
@@ -72,12 +72,12 @@ class _CreateNewPinState extends State<CreateNewPin> {
             child: ErrorDisplay(
               imageSrc: TImages.generalIllustration,
               title: code == "400"
-                  ? "Ups, Terjadi sedikit masalah!"
+                  ? "Yah, terjadi kesalahan!"
                   : (code == "409")
                       ? "PIN sudah digunakan"
                       : "",
               description: (code == "400")
-                  ? "Kamu perlu mengulangi prosesnya dari awal."
+                  ? "Tenang! Kamu hanya perlu mengulangi prosesnya dari awal, kok."
                   : (code == "409")
                       ? "Masukan PIN lain, karena PIN tersebut sudah digunakan kasir lain."
                       : "",
@@ -92,6 +92,9 @@ class _CreateNewPinState extends State<CreateNewPin> {
                   Navigator.pop(context);
                   Navigator.pop(context);
                 } else if (code == "409") {
+                  setState(() {
+                    isRepeat = false;
+                  });
                   Navigator.pop(context);
                 }
               },
@@ -109,6 +112,8 @@ class _CreateNewPinState extends State<CreateNewPin> {
         if (state is UpdatePinSuccess) {
           setState(() {
             pinUpdated = true;
+            isLoading = false;
+            isRepeat = false;
           });
           showModalBottomSheet(
             context: context,
@@ -136,6 +141,10 @@ class _CreateNewPinState extends State<CreateNewPin> {
             },
           );
         } else if (state is UpdatePinFailure) {
+          setState(() {
+            isLoading = false;
+            isRepeat = true;
+          });
           if (state.error.contains("400")) {
             openBottomSheet("400");
           } else if (state.error.contains("409")) {
@@ -190,14 +199,14 @@ class _CreateNewPinState extends State<CreateNewPin> {
                         ],
                       ),
                     ),
-                    if (!loading && !pinUpdated)
+                    if (!isLoading && !pinUpdated)
                       DottedPin(
                         length: 6,
                         controller: _controller,
                         onCompleted: (value) async {
                           if (isRepeat) {
                             setState(() {
-                              loading = true;
+                              isLoading = true;
                             });
 
                             await Future.delayed(Duration(seconds: 1));
@@ -205,7 +214,7 @@ class _CreateNewPinState extends State<CreateNewPin> {
                             if (value != firstValue) {
                               setState(() {
                                 isPinNotMatch = true;
-                                loading = false;
+                                isLoading = false;
                               });
                               _controller.clear();
                               return;
@@ -213,7 +222,6 @@ class _CreateNewPinState extends State<CreateNewPin> {
 
                             setState(() {
                               isPinNotMatch = false;
-                              isRepeat = false;
                             });
 
                             context.read<ForgotPinCubit>().updatePin(
@@ -224,13 +232,9 @@ class _CreateNewPinState extends State<CreateNewPin> {
                                 ));
 
                             _controller.clear();
-
-                            setState(() {
-                              loading = false;
-                            });
                           } else {
                             setState(() {
-                              loading = true;
+                              isLoading = true;
                             });
 
                             await Future.delayed(Duration(seconds: 1));
@@ -238,7 +242,7 @@ class _CreateNewPinState extends State<CreateNewPin> {
                             setState(() {
                               firstValue = value;
                               isRepeat = true;
-                              loading = false;
+                              isLoading = false;
                             });
 
                             _controller.clear();
@@ -261,7 +265,7 @@ class _CreateNewPinState extends State<CreateNewPin> {
                           ),
                         ),
                       ),
-                    if (loading)
+                    if (isLoading)
                       const SizedBox(
                         height: 20,
                         width: 20,
@@ -270,7 +274,7 @@ class _CreateNewPinState extends State<CreateNewPin> {
                               AlwaysStoppedAnimation<Color>(TColors.primary),
                         ),
                       ),
-                    if (isPinNotMatch && !loading)
+                    if (isPinNotMatch && !isLoading)
                       Container(
                         margin: const EdgeInsets.only(top: 12),
                         child: Text(

@@ -14,6 +14,27 @@ class ForgotPinCubit extends Cubit<ForgotPinState> {
       emit(RequestOtpInProgress());
       final res = await repository.requestOTP(id, dto);
       emit(RequestOtpSuccess(res: res));
+    } on DioException catch (e) {
+      final error = e.error as DioExceptionModel?;
+      String errorMessage = "Terjadi kesalahan. Silakan coba lagi.";
+
+      if (error != null) {
+        final statusCode = error.statusCode;
+
+        if (statusCode == 400) {
+          errorMessage = "Invalid or expired code (400)";
+        } else if (statusCode == 401) {
+          errorMessage = "Access denied (401)";
+        } else if (statusCode == 500) {
+          errorMessage = "Server error (500)";
+        } else if (statusCode == 429) {
+          errorMessage = "Too many requests (429)";
+        }
+      } else {
+        errorMessage = "Unable to connect to server";
+      }
+
+      emit(RequestOtpFailure(errorMessage));
     } catch (e) {
       emit(RequestOtpFailure(e.toString()));
     }

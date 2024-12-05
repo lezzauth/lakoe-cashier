@@ -133,7 +133,7 @@ class _InputOtpState extends State<InputOtp>
     String phoneNumber = widget.arguments.phoneNumber!;
 
     return BlocListener<ForgotPinCubit, ForgotPinState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is VerifyOtpSuccess) {
           Navigator.popAndPushNamed(
             context,
@@ -145,10 +145,22 @@ class _InputOtpState extends State<InputOtp>
             ),
           );
         }
+
+        if (state is RequestOtpFailure) {
+          if (state.error.contains("429")) {
+            CustomToast.show(
+              "Tunggu 10 detik lagi, ya!",
+              position: "bottom",
+              duration: 10,
+            );
+          }
+          await Future.delayed(Duration(seconds: 3));
+          Navigator.pop(context);
+        }
       },
       child: BlocBuilder<ForgotPinCubit, ForgotPinState>(
           builder: (context, state) {
-        if (state is RequestOtpInProgress) {
+        if (state is RequestOtpInProgress || state is RequestOtpFailure) {
           return LoadingScreen();
         }
         return BlocListener<ForgotPinCubit, ForgotPinState>(

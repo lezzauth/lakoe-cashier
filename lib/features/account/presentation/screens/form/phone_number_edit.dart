@@ -118,7 +118,7 @@ class _PhoneNumberEditScreenState extends State<PhoneNumberEditScreen> {
           BlocListener<OwnerCubit, OwnerState>(
             listener: (context, state) async {
               if (state is RequestFailure) {
-                if (state.error.contains("too many")) {
+                if (state.error.contains("429")) {
                   CustomToast.show(
                     "Tunggu 10 detik lagi, ya!",
                     position: "center",

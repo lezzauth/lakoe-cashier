@@ -56,6 +56,8 @@ class OwnerCubit extends Cubit<OwnerState> {
           errorMessage = "Access denied (401)";
         } else if (statusCode == 500) {
           errorMessage = "Server error (500)";
+        } else if (statusCode == 429) {
+          errorMessage = "Too many requests (429)";
         }
 
         Logman.instance.error(
@@ -90,6 +92,8 @@ class OwnerCubit extends Cubit<OwnerState> {
           errorMessage = "Access denied (401)";
         } else if (statusCode == 500) {
           errorMessage = "Server error (500)";
+        } else if (statusCode == 429) {
+          errorMessage = "Too many requests (429)";
         }
 
         Logman.instance.error(
@@ -158,6 +162,8 @@ class OwnerCubit extends Cubit<OwnerState> {
           errorMessage = "Access denied (401)";
         } else if (statusCode == 500) {
           errorMessage = "Server error (500)";
+        } else if (statusCode == 429) {
+          errorMessage = "Too many requests (429)";
         }
 
         Logman.instance.error(

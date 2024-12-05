@@ -31,7 +31,7 @@ class CustomToast {
   }) {
     Fluttertoast.showToast(
       msg: message,
-      toastLength: duration != 5 ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG,
+      toastLength: duration <= 5 ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG,
       gravity: _getToastGravity(position),
       backgroundColor: backgroundColor,
       textColor: TColors.neutralLightLightest,

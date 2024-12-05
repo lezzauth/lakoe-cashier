@@ -31,7 +31,7 @@ class _PinEditScreenState extends State<PinEditScreen> {
   late String token;
   String firstValue = "";
   bool isRepeat = false;
-  bool loading = false;
+  bool isLoading = false;
   bool isPinNotMatch = false;
   bool pinUpdated = false;
 
@@ -66,6 +66,7 @@ class _PinEditScreenState extends State<PinEditScreen> {
           if (state is OwnerActionSuccess) {
             setState(() {
               pinUpdated = true;
+              isLoading = false;
             });
             showModalBottomSheet(
               context: context,
@@ -94,6 +95,9 @@ class _PinEditScreenState extends State<PinEditScreen> {
             );
             context.read<OwnerCubit>().getOwner();
           } else if (state is OwnerActionFailure) {
+            setState(() {
+              isLoading = false;
+            });
             if (state.error.contains("expired")) {
               showModalBottomSheet(
                 context: context,
@@ -107,7 +111,7 @@ class _PinEditScreenState extends State<PinEditScreen> {
                       hasGrabber: false,
                       child: ErrorDisplay(
                         imageSrc: TImages.generalIllustration,
-                        title: "Ups, Terjadi sedikit masalah!",
+                        title: "Yah, terjadi kesalahan!",
                         description:
                             "Kamu perlu mengulangi prosesnya dengan mamasukan ulang PIN kamu.",
                         actionTitlePrimary: "Masukan Ulang PIN",
@@ -172,14 +176,14 @@ class _PinEditScreenState extends State<PinEditScreen> {
                             ],
                           ),
                         ),
-                        if (!loading && !pinUpdated)
+                        if (!isLoading && !pinUpdated)
                           DottedPin(
                             length: 6,
                             controller: _controller,
                             onCompleted: (value) async {
                               if (isRepeat) {
                                 setState(() {
-                                  loading = true;
+                                  isLoading = true;
                                 });
 
                                 await Future.delayed(Duration(seconds: 1));
@@ -187,7 +191,7 @@ class _PinEditScreenState extends State<PinEditScreen> {
                                 if (value != firstValue) {
                                   setState(() {
                                     isPinNotMatch = true;
-                                    loading = false;
+                                    isLoading = false;
                                   });
                                   _controller.clear();
                                   return;
@@ -205,13 +209,9 @@ class _PinEditScreenState extends State<PinEditScreen> {
                                     ));
 
                                 _controller.clear();
-
-                                setState(() {
-                                  loading = false;
-                                });
                               } else {
                                 setState(() {
-                                  loading = true;
+                                  isLoading = true;
                                 });
 
                                 await Future.delayed(Duration(seconds: 1));
@@ -219,7 +219,7 @@ class _PinEditScreenState extends State<PinEditScreen> {
                                 setState(() {
                                   firstValue = value;
                                   isRepeat = true;
-                                  loading = false;
+                                  isLoading = false;
                                 });
 
                                 _controller.clear();
@@ -242,7 +242,7 @@ class _PinEditScreenState extends State<PinEditScreen> {
                               ),
                             ),
                           ),
-                        if (loading)
+                        if (isLoading)
                           const SizedBox(
                             height: 20,
                             width: 20,
@@ -251,7 +251,7 @@ class _PinEditScreenState extends State<PinEditScreen> {
                                   TColors.primary),
                             ),
                           ),
-                        if (isPinNotMatch && !loading)
+                        if (isPinNotMatch && !isLoading)
                           Container(
                             margin: const EdgeInsets.only(top: 12),
                             child: Text(
