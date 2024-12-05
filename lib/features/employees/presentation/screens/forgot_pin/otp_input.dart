@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -134,6 +136,8 @@ class _InputOtpState extends State<InputOtp>
 
     return BlocListener<ForgotPinCubit, ForgotPinState>(
       listener: (context, state) async {
+        if (state is RequestOtpSuccess) {}
+
         if (state is VerifyOtpSuccess) {
           Navigator.popAndPushNamed(
             context,

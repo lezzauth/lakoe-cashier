@@ -15,6 +15,7 @@ final class RequestOtpInProgress extends ForgotPinState {
 
 final class RequestOtpSuccess extends ForgotPinState {
   final RequestOtpRes res;
+
   RequestOtpSuccess({required this.res});
 
   @override
@@ -23,6 +24,7 @@ final class RequestOtpSuccess extends ForgotPinState {
 
 final class RequestOtpFailure extends ForgotPinState {
   final String error;
+
   RequestOtpFailure(this.error);
 
   @override
