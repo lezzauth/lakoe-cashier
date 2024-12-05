@@ -21,6 +21,7 @@ class OperatorModel with _$OperatorModel {
     required String name,
     required String phoneNumber,
     String? email,
+    String? profilePicture,
     required bool emailVerified,
     required bool phoneVerified,
     required String outletId,

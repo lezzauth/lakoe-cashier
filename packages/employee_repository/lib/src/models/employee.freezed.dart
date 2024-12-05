@@ -385,3 +385,409 @@ abstract class _EmployeeModel implements EmployeeModel {
   _$$EmployeeModelImplCopyWith<_$EmployeeModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+RequestOtpRes _$RequestOtpResFromJson(Map<String, dynamic> json) {
+  return _RequestOtpRes.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RequestOtpRes {
+  String get id => throw _privateConstructorUsedError;
+  String get target => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
+  String get action => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
+  String get updatedAt => throw _privateConstructorUsedError;
+
+  /// Serializes this RequestOtpRes to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RequestOtpRes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RequestOtpResCopyWith<RequestOtpRes> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RequestOtpResCopyWith<$Res> {
+  factory $RequestOtpResCopyWith(
+          RequestOtpRes value, $Res Function(RequestOtpRes) then) =
+      _$RequestOtpResCopyWithImpl<$Res, RequestOtpRes>;
+  @useResult
+  $Res call(
+      {String id,
+      String target,
+      String type,
+      String action,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class _$RequestOtpResCopyWithImpl<$Res, $Val extends RequestOtpRes>
+    implements $RequestOtpResCopyWith<$Res> {
+  _$RequestOtpResCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RequestOtpRes
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? target = null,
+    Object? type = null,
+    Object? action = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      target: null == target
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      action: null == action
+          ? _value.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RequestOtpResImplCopyWith<$Res>
+    implements $RequestOtpResCopyWith<$Res> {
+  factory _$$RequestOtpResImplCopyWith(
+          _$RequestOtpResImpl value, $Res Function(_$RequestOtpResImpl) then) =
+      __$$RequestOtpResImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String target,
+      String type,
+      String action,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class __$$RequestOtpResImplCopyWithImpl<$Res>
+    extends _$RequestOtpResCopyWithImpl<$Res, _$RequestOtpResImpl>
+    implements _$$RequestOtpResImplCopyWith<$Res> {
+  __$$RequestOtpResImplCopyWithImpl(
+      _$RequestOtpResImpl _value, $Res Function(_$RequestOtpResImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RequestOtpRes
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? target = null,
+    Object? type = null,
+    Object? action = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_$RequestOtpResImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      target: null == target
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      action: null == action
+          ? _value.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RequestOtpResImpl implements _RequestOtpRes {
+  const _$RequestOtpResImpl(
+      {required this.id,
+      required this.target,
+      required this.type,
+      required this.action,
+      required this.createdAt,
+      required this.updatedAt});
+
+  factory _$RequestOtpResImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RequestOtpResImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String target;
+  @override
+  final String type;
+  @override
+  final String action;
+  @override
+  final String createdAt;
+  @override
+  final String updatedAt;
+
+  @override
+  String toString() {
+    return 'RequestOtpRes(id: $id, target: $target, type: $type, action: $action, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RequestOtpResImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.target, target) || other.target == target) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.action, action) || other.action == action) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, target, type, action, createdAt, updatedAt);
+
+  /// Create a copy of RequestOtpRes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RequestOtpResImplCopyWith<_$RequestOtpResImpl> get copyWith =>
+      __$$RequestOtpResImplCopyWithImpl<_$RequestOtpResImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RequestOtpResImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RequestOtpRes implements RequestOtpRes {
+  const factory _RequestOtpRes(
+      {required final String id,
+      required final String target,
+      required final String type,
+      required final String action,
+      required final String createdAt,
+      required final String updatedAt}) = _$RequestOtpResImpl;
+
+  factory _RequestOtpRes.fromJson(Map<String, dynamic> json) =
+      _$RequestOtpResImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get target;
+  @override
+  String get type;
+  @override
+  String get action;
+  @override
+  String get createdAt;
+  @override
+  String get updatedAt;
+
+  /// Create a copy of RequestOtpRes
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RequestOtpResImplCopyWith<_$RequestOtpResImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+VerifyOtpRes _$VerifyOtpResFromJson(Map<String, dynamic> json) {
+  return _VerifyOtpRes.fromJson(json);
+}
+
+/// @nodoc
+mixin _$VerifyOtpRes {
+  String get token => throw _privateConstructorUsedError;
+
+  /// Serializes this VerifyOtpRes to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of VerifyOtpRes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $VerifyOtpResCopyWith<VerifyOtpRes> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $VerifyOtpResCopyWith<$Res> {
+  factory $VerifyOtpResCopyWith(
+          VerifyOtpRes value, $Res Function(VerifyOtpRes) then) =
+      _$VerifyOtpResCopyWithImpl<$Res, VerifyOtpRes>;
+  @useResult
+  $Res call({String token});
+}
+
+/// @nodoc
+class _$VerifyOtpResCopyWithImpl<$Res, $Val extends VerifyOtpRes>
+    implements $VerifyOtpResCopyWith<$Res> {
+  _$VerifyOtpResCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of VerifyOtpRes
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+  }) {
+    return _then(_value.copyWith(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$VerifyOtpResImplCopyWith<$Res>
+    implements $VerifyOtpResCopyWith<$Res> {
+  factory _$$VerifyOtpResImplCopyWith(
+          _$VerifyOtpResImpl value, $Res Function(_$VerifyOtpResImpl) then) =
+      __$$VerifyOtpResImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String token});
+}
+
+/// @nodoc
+class __$$VerifyOtpResImplCopyWithImpl<$Res>
+    extends _$VerifyOtpResCopyWithImpl<$Res, _$VerifyOtpResImpl>
+    implements _$$VerifyOtpResImplCopyWith<$Res> {
+  __$$VerifyOtpResImplCopyWithImpl(
+      _$VerifyOtpResImpl _value, $Res Function(_$VerifyOtpResImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of VerifyOtpRes
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+  }) {
+    return _then(_$VerifyOtpResImpl(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$VerifyOtpResImpl implements _VerifyOtpRes {
+  const _$VerifyOtpResImpl({required this.token});
+
+  factory _$VerifyOtpResImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VerifyOtpResImplFromJson(json);
+
+  @override
+  final String token;
+
+  @override
+  String toString() {
+    return 'VerifyOtpRes(token: $token)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$VerifyOtpResImpl &&
+            (identical(other.token, token) || other.token == token));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, token);
+
+  /// Create a copy of VerifyOtpRes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$VerifyOtpResImplCopyWith<_$VerifyOtpResImpl> get copyWith =>
+      __$$VerifyOtpResImplCopyWithImpl<_$VerifyOtpResImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$VerifyOtpResImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _VerifyOtpRes implements VerifyOtpRes {
+  const factory _VerifyOtpRes({required final String token}) =
+      _$VerifyOtpResImpl;
+
+  factory _VerifyOtpRes.fromJson(Map<String, dynamic> json) =
+      _$VerifyOtpResImpl.fromJson;
+
+  @override
+  String get token;
+
+  /// Create a copy of VerifyOtpRes
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$VerifyOtpResImplCopyWith<_$VerifyOtpResImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

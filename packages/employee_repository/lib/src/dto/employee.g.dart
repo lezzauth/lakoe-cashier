@@ -59,3 +59,37 @@ Map<String, dynamic> _$$FindAllEmployeeDtoImplToJson(
     <String, dynamic>{
       'outletId': instance.outletId,
     };
+
+_$RequestOtpDtoImpl _$$RequestOtpDtoImplFromJson(Map<String, dynamic> json) =>
+    _$RequestOtpDtoImpl(
+      phoneNumber: json['phoneNumber'] as String,
+    );
+
+Map<String, dynamic> _$$RequestOtpDtoImplToJson(_$RequestOtpDtoImpl instance) =>
+    <String, dynamic>{
+      'phoneNumber': instance.phoneNumber,
+    };
+
+_$VerifyOtpDtoImpl _$$VerifyOtpDtoImplFromJson(Map<String, dynamic> json) =>
+    _$VerifyOtpDtoImpl(
+      phoneNumber: json['phoneNumber'] as String,
+      code: json['code'] as String,
+    );
+
+Map<String, dynamic> _$$VerifyOtpDtoImplToJson(_$VerifyOtpDtoImpl instance) =>
+    <String, dynamic>{
+      'phoneNumber': instance.phoneNumber,
+      'code': instance.code,
+    };
+
+_$UpdatePinDtoImpl _$$UpdatePinDtoImplFromJson(Map<String, dynamic> json) =>
+    _$UpdatePinDtoImpl(
+      pin: json['pin'] as String,
+      token: json['token'] as String,
+    );
+
+Map<String, dynamic> _$$UpdatePinDtoImplToJson(_$UpdatePinDtoImpl instance) =>
+    <String, dynamic>{
+      'pin': instance.pin,
+      'token': instance.token,
+    };

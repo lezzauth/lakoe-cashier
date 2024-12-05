@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/ui/loading_screen.dart';
 import 'package:package_repository/package_repository.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
 import 'package:lakoe_pos/features/checkout/data/payment_method_model.dart';
-import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/helpers/helper.dart';
 
 class PaymentPreparedScreen extends StatefulWidget {
@@ -115,37 +114,7 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
           }
         }
       },
-      child: Scaffold(
-        body: Container(
-          color: TColors.neutralLightLightest,
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 200),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 60,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100.0),
-                      child: LinearProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(TColors.primary),
-                        backgroundColor: TColors.neutralLightMedium,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  TextBodyL(
-                    "Tunggu sebantar, ya!",
-                    color: TColors.neutralDarkLight,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+      child: LoadingScreen(),
     );
   }
 }

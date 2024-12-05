@@ -51,18 +51,17 @@ class OwnerCubit extends Cubit<OwnerState> {
         final statusCode = error.statusCode;
 
         if (statusCode == 400) {
-          errorMessage = "Invalid or expired code.";
+          errorMessage = "Invalid or expired code (400)";
         } else if (statusCode == 401) {
-          errorMessage = "Access denied.";
+          errorMessage = "Access denied (401)";
         } else if (statusCode == 500) {
-          errorMessage = "Server error.";
+          errorMessage = "Server error (500)";
         }
 
         Logman.instance.error(
             "Catch Edit Account ${e.response?.statusCode}: ${e.response?.data}");
       } else {
-        errorMessage =
-            "Tidak dapat terhubung ke server. Periksa koneksi internet Anda.";
+        errorMessage = "Unable to connect to server";
         Logman.instance.error("Catch Edit Account ${e.message}");
       }
 
@@ -86,18 +85,17 @@ class OwnerCubit extends Cubit<OwnerState> {
         final statusCode = error.statusCode;
 
         if (statusCode == 400) {
-          errorMessage = "Invalid or expired code.";
+          errorMessage = "Invalid or expired code (400)";
         } else if (statusCode == 401) {
-          errorMessage = "Access denied.";
+          errorMessage = "Access denied (401)";
         } else if (statusCode == 500) {
-          errorMessage = "Server error.";
+          errorMessage = "Server error (500)";
         }
 
         Logman.instance.error(
             "Catch Edit Account ${e.response?.statusCode}: ${e.response?.data}");
       } else {
-        errorMessage =
-            "Tidak dapat terhubung ke server. Periksa koneksi internet Anda.";
+        errorMessage = "Unable to connect to server";
         Logman.instance.error("Catch Edit Account ${e.message}");
       }
 
@@ -155,18 +153,17 @@ class OwnerCubit extends Cubit<OwnerState> {
         final statusCode = error.statusCode;
 
         if (statusCode == 400) {
-          errorMessage = "Invalid or expired code.";
+          errorMessage = "Invalid or expired code (400)";
         } else if (statusCode == 401) {
-          errorMessage = "Access denied.";
+          errorMessage = "Access denied (401)";
         } else if (statusCode == 500) {
-          errorMessage = "Server error.";
+          errorMessage = "Server error (500)";
         }
 
         Logman.instance.error(
             "Catch Edit Account ${e.response?.statusCode}: ${e.response?.data}");
       } else {
-        errorMessage =
-            "Tidak dapat terhubung ke server. Periksa koneksi internet Anda.";
+        errorMessage = "Unable to connect to server";
         Logman.instance.error("Catch Edit Account ${e.message}");
       }
 

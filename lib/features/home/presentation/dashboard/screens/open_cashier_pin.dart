@@ -57,7 +57,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
   }
 
   onOpenCashierReInitial(String value) {
-    context.read<CashierCubit>().generatetoken(
+    context.read<CashierCubit>().generateToken(
           RegenerateCashierTokenDto(pin: value),
         );
   }

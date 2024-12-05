@@ -185,7 +185,7 @@ class _NewOtpInputScreenState extends State<NewOtpInputScreen>
                           Container(
                             margin: const EdgeInsets.only(bottom: 8.0),
                             child: Text(
-                              "Verifikasi Nomor WhatsApp",
+                              "Verifikasi Nomor Baru",
                               style: GoogleFonts.inter(
                                 fontSize: TSizes.fontSizeHeading3,
                                 fontWeight: FontWeight.w700,

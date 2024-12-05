@@ -93,7 +93,7 @@ class _MainMenuState extends State<MainMenu> {
                   return;
                 }
 
-                if (state is! CashierOpened) {
+                if (state is! CashierAlreadyOpen) {
                   onCashierOpened();
                 } else {
                   onCashierAlreadyOpened();
@@ -103,7 +103,7 @@ class _MainMenuState extends State<MainMenu> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Container(
                   decoration: BoxDecoration(
-                    gradient: state is CashierOpened
+                    gradient: state is CashierAlreadyOpen
                         ? TColors.greenGradient
                         : TColors.redGradient,
                     borderRadius: BorderRadius.circular(
@@ -138,7 +138,7 @@ class _MainMenuState extends State<MainMenu> {
                                     bottom: 12,
                                   ),
                                   child: UiIcons(
-                                    state is CashierOpened
+                                    state is CashierAlreadyOpen
                                         ? TIcons.lock
                                         : TIcons.cashier,
                                     color: TColors.neutralLightLightest,
@@ -154,7 +154,7 @@ class _MainMenuState extends State<MainMenu> {
                                 )
                               ],
                             ),
-                            if (state is CashierOpened)
+                            if (state is CashierAlreadyOpen)
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.end,

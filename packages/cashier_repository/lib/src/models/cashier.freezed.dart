@@ -176,6 +176,7 @@ mixin _$OperatorModel {
   String get name => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  String? get profilePicture => throw _privateConstructorUsedError;
   bool get emailVerified => throw _privateConstructorUsedError;
   bool get phoneVerified => throw _privateConstructorUsedError;
   String get outletId => throw _privateConstructorUsedError;
@@ -204,6 +205,7 @@ abstract class $OperatorModelCopyWith<$Res> {
       String name,
       String phoneNumber,
       String? email,
+      String? profilePicture,
       bool emailVerified,
       bool phoneVerified,
       String outletId,
@@ -231,6 +233,7 @@ class _$OperatorModelCopyWithImpl<$Res, $Val extends OperatorModel>
     Object? name = null,
     Object? phoneNumber = null,
     Object? email = freezed,
+    Object? profilePicture = freezed,
     Object? emailVerified = null,
     Object? phoneVerified = null,
     Object? outletId = null,
@@ -257,6 +260,10 @@ class _$OperatorModelCopyWithImpl<$Res, $Val extends OperatorModel>
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      profilePicture: freezed == profilePicture
+          ? _value.profilePicture
+          : profilePicture // ignore: cast_nullable_to_non_nullable
               as String?,
       emailVerified: null == emailVerified
           ? _value.emailVerified
@@ -296,6 +303,7 @@ abstract class _$$OperatorModelImplCopyWith<$Res>
       String name,
       String phoneNumber,
       String? email,
+      String? profilePicture,
       bool emailVerified,
       bool phoneVerified,
       String outletId,
@@ -321,6 +329,7 @@ class __$$OperatorModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? phoneNumber = null,
     Object? email = freezed,
+    Object? profilePicture = freezed,
     Object? emailVerified = null,
     Object? phoneVerified = null,
     Object? outletId = null,
@@ -347,6 +356,10 @@ class __$$OperatorModelImplCopyWithImpl<$Res>
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      profilePicture: freezed == profilePicture
+          ? _value.profilePicture
+          : profilePicture // ignore: cast_nullable_to_non_nullable
               as String?,
       emailVerified: null == emailVerified
           ? _value.emailVerified
@@ -381,6 +394,7 @@ class _$OperatorModelImpl implements _OperatorModel {
       required this.name,
       required this.phoneNumber,
       this.email,
+      this.profilePicture,
       required this.emailVerified,
       required this.phoneVerified,
       required this.outletId,
@@ -401,6 +415,8 @@ class _$OperatorModelImpl implements _OperatorModel {
   @override
   final String? email;
   @override
+  final String? profilePicture;
+  @override
   final bool emailVerified;
   @override
   final bool phoneVerified;
@@ -413,7 +429,7 @@ class _$OperatorModelImpl implements _OperatorModel {
 
   @override
   String toString() {
-    return 'OperatorModel(id: $id, role: $role, name: $name, phoneNumber: $phoneNumber, email: $email, emailVerified: $emailVerified, phoneVerified: $phoneVerified, outletId: $outletId, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'OperatorModel(id: $id, role: $role, name: $name, phoneNumber: $phoneNumber, email: $email, profilePicture: $profilePicture, emailVerified: $emailVerified, phoneVerified: $phoneVerified, outletId: $outletId, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -427,6 +443,8 @@ class _$OperatorModelImpl implements _OperatorModel {
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
             (identical(other.email, email) || other.email == email) &&
+            (identical(other.profilePicture, profilePicture) ||
+                other.profilePicture == profilePicture) &&
             (identical(other.emailVerified, emailVerified) ||
                 other.emailVerified == emailVerified) &&
             (identical(other.phoneVerified, phoneVerified) ||
@@ -441,8 +459,19 @@ class _$OperatorModelImpl implements _OperatorModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, role, name, phoneNumber,
-      email, emailVerified, phoneVerified, outletId, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      role,
+      name,
+      phoneNumber,
+      email,
+      profilePicture,
+      emailVerified,
+      phoneVerified,
+      outletId,
+      createdAt,
+      updatedAt);
 
   /// Create a copy of OperatorModel
   /// with the given fields replaced by the non-null parameter values.
@@ -467,6 +496,7 @@ abstract class _OperatorModel implements OperatorModel {
       required final String name,
       required final String phoneNumber,
       final String? email,
+      final String? profilePicture,
       required final bool emailVerified,
       required final bool phoneVerified,
       required final String outletId,
@@ -486,6 +516,8 @@ abstract class _OperatorModel implements OperatorModel {
   String get phoneNumber;
   @override
   String? get email;
+  @override
+  String? get profilePicture;
   @override
   bool get emailVerified;
   @override

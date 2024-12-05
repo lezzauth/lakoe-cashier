@@ -20,8 +20,8 @@ class EmployeeSelect extends StatefulWidget {
     required this.onChanged,
   });
 
-  final String? value;
-  final ValueChanged<String?> onChanged;
+  final EmployeeModel? value;
+  final ValueChanged<EmployeeModel?> onChanged;
 
   @override
   State<EmployeeSelect> createState() => _EmployeeSelectState();
@@ -30,7 +30,7 @@ class EmployeeSelect extends StatefulWidget {
 class _EmployeeSelectState extends State<EmployeeSelect> {
   final AppDataProvider appDataProvider = AppDataProvider();
 
-  String? _value;
+  EmployeeModel? _value;
   String search = "";
 
   @override
@@ -85,7 +85,7 @@ class _EmployeeSelectState extends State<EmployeeSelect> {
                               });
                         EmployeeModel data = sortedEmployees[i];
 
-                        return CustomRadioTile(
+                        return CustomRadioTile<EmployeeModel?>(
                           leading: data.role == "OWNER"
                               ? FutureBuilder<String?>(
                                   future: appDataProvider.avatarSvg,
@@ -142,14 +142,14 @@ class _EmployeeSelectState extends State<EmployeeSelect> {
                                       height: 40,
                                       width: 40,
                                     ),
-                          value: data.phoneNumber,
+                          value: data,
                           title: data.name,
                           subtitle: PhoneNumberFormatter.formatForDisplay(
                               data.phoneNumber),
                           groupValue: _value,
                           onChanged: (value) {
                             setState(() {
-                              _value = value!;
+                              _value = data;
                             });
                           },
                         );
