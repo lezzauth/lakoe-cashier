@@ -16,6 +16,7 @@ import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/ima
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class NewEmployeeScreen extends StatefulWidget {
   const NewEmployeeScreen({super.key});
@@ -47,12 +48,15 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
     }
     File? profilePictureFile = profilePicture?.file;
 
+    String phoneNumber =
+        PhoneNumberFormatter.formatForRequest(value["phoneNumber"]);
+
     await context.read<EmployeeMasterCubit>().create(
           profilePictureFile,
           CreateEmployeeDto(
             name: value["name"],
             pin: value["pin"],
-            phoneNumber: value["phoneNumber"],
+            phoneNumber: phoneNumber,
             role: "CASHIER",
             email: email,
           ),

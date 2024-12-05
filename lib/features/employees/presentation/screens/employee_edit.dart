@@ -13,6 +13,7 @@ import 'package:lakoe_pos/features/employees/presentation/widgets/forms/employee
 import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class EmployeeEditScreen extends StatefulWidget {
   const EmployeeEditScreen({super.key, required this.arguments});
@@ -28,6 +29,28 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
   final _employeeFormKey = GlobalKey<FormBuilderState>();
 
   TabController? _tabController;
+
+  String formatterPhoneNumber(String value) {
+    if (value.startsWith('+628')) {
+      value = value.replaceFirst('+628', '08');
+    } else if (value.startsWith('628')) {
+      value = value.replaceFirst('628', '08');
+    }
+
+    value = value.replaceAll(RegExp(r'[^0-9]'), '');
+
+    if (value.length > 10) {
+      value =
+          '${value.substring(0, 4)}-${value.substring(4, 8)}-${value.substring(8, 12)}';
+    } else if (value.length > 7) {
+      value =
+          '${value.substring(0, 4)}-${value.substring(4, 8)}-${value.substring(8)}';
+    } else if (value.length > 3) {
+      value = '${value.substring(0, 4)}-${value.substring(4)}';
+    }
+
+    return value;
+  }
 
   Future<void> _onSubmitted() async {
     bool isFormValid =
@@ -47,13 +70,16 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
 
     File? profilePictureFile = profilePicture?.file;
 
+    String phoneNumber =
+        PhoneNumberFormatter.formatForRequest(value["phoneNumber"]);
+
     await context.read<EmployeeMasterCubit>().update(
           widget.arguments.employee.id,
           profilePicture: profilePictureFile,
           dto: UpdateEmployeeDto(
             name: value["name"],
             // pin: value["pin"],
-            phoneNumber: value["phoneNumber"],
+            phoneNumber: phoneNumber,
             role: widget.arguments.employee.role,
             email: email,
           ),
@@ -75,6 +101,7 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
   @override
   Widget build(BuildContext context) {
     final employee = widget.arguments.employee;
+    final formattedValue = formatterPhoneNumber(employee.phoneNumber);
 
     return BlocConsumer<EmployeeMasterCubit, EmployeeMasterState>(
       listener: (context, state) {
@@ -124,7 +151,7 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
                       ? null
                       : ImagePickerValue(url: employee.profilePicture!),
                   "name": employee.name,
-                  "phoneNumber": employee.phoneNumber,
+                  "phoneNumber": formattedValue,
                   "email": employee.email,
                 },
               ),

@@ -127,6 +127,7 @@ dependencies:
   fluttertoast: ^8.2.8
   logman: ^0.0.21
   package_info_plus: ^8.1.0
+  firebase_core: ^3.8.0
 
 dev_dependencies:
   flutter_test:
