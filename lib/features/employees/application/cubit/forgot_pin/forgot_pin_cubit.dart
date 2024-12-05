@@ -47,6 +47,8 @@ class ForgotPinCubit extends Cubit<ForgotPinState> {
           errorMessage = "Access denied (401)";
         } else if (statusCode == 500) {
           errorMessage = "Server error (500)";
+        } else if (statusCode == 409) {
+          errorMessage = "This pin already used by another employee (409)";
         }
       } else {
         errorMessage = "Unable to connect to server";

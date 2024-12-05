@@ -58,6 +58,50 @@ class _CreateNewPinState extends State<CreateNewPin> {
     CustomToast.init(context);
   }
 
+  void openBottomSheet(String code) {
+    showModalBottomSheet(
+      context: context,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (context) {
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {},
+          child: CustomBottomsheet(
+            hasGrabber: false,
+            child: ErrorDisplay(
+              imageSrc: TImages.generalIllustration,
+              title: code == "400"
+                  ? "Ups, Terjadi sedikit masalah!"
+                  : (code == "409")
+                      ? "PIN sudah digunakan"
+                      : "",
+              description: (code == "400")
+                  ? "Kamu perlu mengulangi prosesnya dari awal."
+                  : (code == "409")
+                      ? "Masukan PIN lain, karena PIN tersebut sudah digunakan kasir lain."
+                      : "",
+              actionTitlePrimary: (code == "400")
+                  ? "Oke, Ulangi"
+                  : (code == "409")
+                      ? "Oke, Paham"
+                      : "",
+              onActionPrimary: () {
+                if (code == "400") {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                } else if (code == "409") {
+                  Navigator.pop(context);
+                }
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<ForgotPinCubit, ForgotPinState>(
@@ -93,31 +137,9 @@ class _CreateNewPinState extends State<CreateNewPin> {
           );
         } else if (state is UpdatePinFailure) {
           if (state.error.contains("400")) {
-            showModalBottomSheet(
-              context: context,
-              enableDrag: false,
-              isDismissible: false,
-              builder: (context) {
-                return PopScope(
-                  canPop: false,
-                  onPopInvokedWithResult: (didPop, result) async {},
-                  child: CustomBottomsheet(
-                    hasGrabber: false,
-                    child: ErrorDisplay(
-                      imageSrc: TImages.generalIllustration,
-                      title: "Ups, Terjadi sedikit masalah!",
-                      description: "Kamu perlu mengulangi prosesnya dari awal.",
-                      actionTitlePrimary: "Oke, Ulangi",
-                      onActionPrimary: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
-                );
-              },
-            );
+            openBottomSheet("400");
+          } else if (state.error.contains("409")) {
+            openBottomSheet("409");
           } else {
             CustomToast.showWithContext(
               context,
