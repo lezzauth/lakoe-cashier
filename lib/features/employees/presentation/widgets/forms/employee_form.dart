@@ -86,24 +86,6 @@ class _EmployeeFormState extends State<EmployeeForm> {
                 ],
               ),
             ),
-            // Container(
-            //   margin: const EdgeInsets.only(bottom: 8.0),
-            //   child: Row(
-            //     children: [
-            //       Expanded(
-            //           child: Column(
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //           const FormLabel("Kategori"),
-            //           Container(
-            //             margin: const EdgeInsets.only(bottom: 8),
-            //             child: const RolesField(),
-            //           ),
-            //         ],
-            //       ))
-            //     ],
-            //   ),
-            // ),
             Container(
               margin: const EdgeInsets.only(bottom: 16.0),
               child: Column(
