@@ -147,8 +147,8 @@ class _ExploreProductDrawerTabletState
                             onPaymentQRCode: _onQRCodePaid,
                           ),
                         CartDetailLoadFailure() =>
-                          const Center(child: CircularProgressIndicator()),
-                        _ => const Center(child: CircularProgressIndicator()),
+                          Center(child: CircularProgressIndicator()),
+                        _ => Center(child: CircularProgressIndicator()),
                       },
                     ),
                   ),

@@ -62,6 +62,7 @@ class _SelectPaymentMethodTabletState extends State<SelectPaymentMethodTablet> {
           )
         ],
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: const CustomAppbar(
             title: "",
             leading: TextHeading1("Pembayaran"),
@@ -69,31 +70,22 @@ class _SelectPaymentMethodTabletState extends State<SelectPaymentMethodTablet> {
           body: Column(
             children: [
               Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child:
-                          BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
-                        builder: (context, state) =>
-                            switch (state.paymentMethod) {
-                          "CASH" => CashPaymentContent(
-                              amount: amount,
-                            ),
-                          "QR_CODE" => QrisPaymentContent(
-                              amount: amount,
-                            ),
-                          "DEBIT" => DebitPaymentContent(
-                              amount: amount,
-                            ),
-                          "BANK_TRANSFER" => BankTransferPaymentContent(
-                              amount: amount,
-                            ),
-                          _ => const SizedBox(),
-                        },
+                child: BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
+                  builder: (context, state) => switch (state.paymentMethod) {
+                    "CASH" => CashPaymentContent(
+                        amount: amount,
                       ),
-                    )
-                  ],
+                    "QR_CODE" => QrisPaymentContent(
+                        amount: amount,
+                      ),
+                    "DEBIT" => DebitPaymentContent(
+                        amount: amount,
+                      ),
+                    "BANK_TRANSFER" => BankTransferPaymentContent(
+                        amount: amount,
+                      ),
+                    _ => const SizedBox(),
+                  },
                 ),
               ),
             ],

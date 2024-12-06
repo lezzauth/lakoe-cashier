@@ -41,6 +41,7 @@ class QrisPaymentFooter extends StatelessWidget {
             padding: const EdgeInsets.all(24),
             alignment: Alignment.bottomCenter,
             decoration: const BoxDecoration(
+              color: TColors.neutralLightLightest,
               border: Border(
                 top: BorderSide(
                   width: 1,

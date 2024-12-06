@@ -68,16 +68,16 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
             child: TextHeading2("Masukan saldo akhir kasir"),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(bottom: 8.0),
+                  margin: EdgeInsets.only(bottom: 8.0),
                   child: FormBuilderTextField(
                     name: "finalBalance",
                     keyboardType: TextInputType.number,
@@ -90,7 +90,7 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
                         errorText:
                             ErrorTextStrings.required(name: "Saldo Akhir")),
                     inputFormatters: [_finalBalance],
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Rp 0',
                     ),
                     valueTransformer: (value) {
@@ -99,8 +99,8 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 28.0),
-                  child: const TextBodyS(
+                  margin: EdgeInsets.only(bottom: 28.0),
+                  child: TextBodyS(
                     "Masukkan jumlah uang tunai yang ada di laci kasir setelah Anda menyelesaikan shift. Ini akan membantu kami memastikan bahwa semua transaksi telah dicatat dengan benar.",
                     color: TColors.neutralDarkLightest,
                   ),

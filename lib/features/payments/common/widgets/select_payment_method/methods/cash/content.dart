@@ -92,6 +92,7 @@ class _CashPaymentContentState extends State<CashPaymentContent> {
                   formKey: _formKey,
                   amount: widget.amount,
                   onPaidAmountChanged: _onPaidAmountChanged,
+                  onSubmitted: _isFormValid ? _onSubmitted : null,
                 ),
               ],
             ),

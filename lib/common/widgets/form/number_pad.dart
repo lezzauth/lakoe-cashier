@@ -13,7 +13,6 @@ import 'package:lakoe_pos/features/employees/presentation/widgets/forms/employee
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/sizes.dart';
-import 'package:logman/logman.dart';
 
 class NumberPad extends StatefulWidget {
   final TextEditingController? controller;
@@ -256,7 +255,6 @@ class _NumberPadState extends State<NumberPad> {
                 children: [
                   BlocBuilder<EmployeeMasterCubit, EmployeeMasterState>(
                       builder: (context, state) {
-                    Logman.instance.info("XXX ${state.props.length}");
                     return Pad(
                       onTap: () {
                         if (employee == null) {

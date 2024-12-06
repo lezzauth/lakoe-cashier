@@ -16,15 +16,18 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class CashPaymentForm extends StatefulWidget {
-  const CashPaymentForm(
-      {super.key,
-      this.amount = 0,
-      required this.formKey,
-      required this.onPaidAmountChanged});
+  const CashPaymentForm({
+    super.key,
+    this.amount = 0,
+    required this.formKey,
+    required this.onPaidAmountChanged,
+    required this.onSubmitted,
+  });
 
   final double amount;
   final GlobalKey<FormBuilderState> formKey;
   final Function(double) onPaidAmountChanged;
+  final void Function()? onSubmitted;
 
   @override
   State<CashPaymentForm> createState() => _CashPaymentFormState();
@@ -126,6 +129,12 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
                               .toDouble();
                         });
                         widget.onPaidAmountChanged(_paidAmount);
+                      },
+                      onSubmitted: (value) {
+                        if (widget.formKey.currentState?.saveAndValidate() ??
+                            false) {
+                          widget.onSubmitted!();
+                        }
                       },
                       decoration: InputDecoration(
                         hintText: 'Rp Uang yang diterima',
