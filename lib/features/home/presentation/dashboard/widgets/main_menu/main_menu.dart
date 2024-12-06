@@ -162,7 +162,7 @@ class _MainMenuState extends State<MainMenu> {
                                   Container(
                                     margin: const EdgeInsets.only(bottom: 4.0),
                                     child: Text(
-                                      "Kasir: ",
+                                      "Kasir",
                                       style: GoogleFonts.inter(
                                         fontSize: TSizes.fontSizeBodyM,
                                         fontWeight: FontWeight.w400,

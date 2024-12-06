@@ -99,7 +99,7 @@ class _MainMenuTabletState extends State<MainMenuTablet> {
                         return;
                       }
 
-                      if (state is! CashierOpened) {
+                      if (state is! CashierAlreadyOpen) {
                         onCashierOpened();
                       } else {
                         onCashierAlreadyOpened();
@@ -109,7 +109,7 @@ class _MainMenuTabletState extends State<MainMenuTablet> {
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Container(
                         decoration: BoxDecoration(
-                          gradient: state is CashierOpened
+                          gradient: state is CashierAlreadyOpen
                               ? TColors.greenGradient
                               : TColors.redGradient,
                           borderRadius: BorderRadius.circular(16.0),
@@ -143,7 +143,7 @@ class _MainMenuTabletState extends State<MainMenuTablet> {
                                           bottom: 12,
                                         ),
                                         child: UiIcons(
-                                          state is CashierOpened
+                                          state is CashierAlreadyOpen
                                               ? TIcons.lock
                                               : TIcons.cashier,
                                           color: TColors.neutralLightLightest,
@@ -159,7 +159,7 @@ class _MainMenuTabletState extends State<MainMenuTablet> {
                                       )
                                     ],
                                   ),
-                                  if (state is CashierOpened)
+                                  if (state is CashierAlreadyOpen)
                                     Column(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       crossAxisAlignment:
@@ -169,7 +169,7 @@ class _MainMenuTabletState extends State<MainMenuTablet> {
                                           margin: const EdgeInsets.only(
                                               bottom: 4.0),
                                           child: Text(
-                                            "Kasir: ",
+                                            "Kasir yang bertugas",
                                             style: GoogleFonts.inter(
                                               fontSize: TSizes.fontSizeBodyM,
                                               fontWeight: FontWeight.w400,

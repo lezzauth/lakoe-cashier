@@ -30,47 +30,79 @@ class PaymentMethodRadioGroup extends StatelessWidget {
       );
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(bottom: 12),
-          child: Row(
-            children: [
-              PaymentMethodRadio(
-                value: "CASH",
+    List items = [
+      {"value": "CASH"},
+      {"value": "BANK_TRANSFER"},
+      {"value": "QR_CODE"},
+      {"value": "DEBIT"}
+    ];
+
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: List.generate(
+        items.length,
+        (index) {
+          return LayoutBuilder(builder: (context, constraints) {
+            final bottomSheetWidth = constraints.maxWidth;
+            return SizedBox(
+              width: (items.length % 2 != 0 && index == 0)
+                  ? bottomSheetWidth
+                  : (bottomSheetWidth) / 2 - 6,
+              child: PaymentMethodRadio(
+                value: items[index]["value"],
                 groupValue: value,
                 onChanged: onChanged,
-              ),
-              const SizedBox(width: 12),
-              PaymentMethodRadio(
-                value: "BANK_TRANSFER",
-                groupValue: value,
-                onChanged: onChanged,
-                limited: limitedValues.contains("BANK_TRANSFER"),
+                limited: limitedValues.contains(items[index]["value"]),
                 onLimited: onLimitedPressed,
               ),
-            ],
-          ),
-        ),
-        Row(
-          children: [
-            PaymentMethodRadio(
-              value: "QR_CODE",
-              groupValue: value,
-              onChanged: onChanged,
-              limited: limitedValues.contains("QR_CODE"),
-              onLimited: onLimitedPressed,
-            ),
-            const SizedBox(width: 12),
-            PaymentMethodRadio(
-              value: "DEBIT",
-              groupValue: value,
-              onChanged: onChanged,
-            ),
-          ],
-        ),
-      ],
+            );
+          });
+        },
+      ),
     );
+
+    // return Column(
+    //   mainAxisSize: MainAxisSize.min,
+    //   children: [
+    //     Container(
+    //       margin: const EdgeInsets.only(bottom: 12),
+    //       child: Row(
+    //         children: [
+    //           PaymentMethodRadio(
+    //             value: "CASH",
+    //             groupValue: value,
+    //             onChanged: onChanged,
+    //           ),
+    //           const SizedBox(width: 12),
+    //           PaymentMethodRadio(
+    //             value: "BANK_TRANSFER",
+    //             groupValue: value,
+    //             onChanged: onChanged,
+    //             limited: limitedValues.contains("BANK_TRANSFER"),
+    //             onLimited: onLimitedPressed,
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //     Row(
+    //       children: [
+    //         PaymentMethodRadio(
+    //           value: "QR_CODE",
+    //           groupValue: value,
+    //           onChanged: onChanged,
+    //           limited: limitedValues.contains("QR_CODE"),
+    //           onLimited: onLimitedPressed,
+    //         ),
+    //         const SizedBox(width: 12),
+    //         PaymentMethodRadio(
+    //           value: "DEBIT",
+    //           groupValue: value,
+    //           onChanged: onChanged,
+    //         ),
+    //       ],
+    //     ),
+    //   ],
+    // );
   }
 }

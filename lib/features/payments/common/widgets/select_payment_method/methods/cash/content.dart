@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_cubit.dart';
 import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_filter_cubit.dart';
 import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_filter_state.dart';
@@ -60,14 +61,17 @@ class _CashPaymentContentState extends State<CashPaymentContent> {
           SingleChildScrollView(
             padding: const EdgeInsets.only(bottom: 80),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
                   builder: (context, state) {
                     return Container(
-                      margin: const EdgeInsets.only(bottom: 8.0),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 12.0),
+                      margin: EdgeInsets.only(bottom: 8.0),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.0,
+                        vertical: 12.0,
+                      ),
                       child: PaymentMethodRadioGroup(
                         value: state.paymentMethod,
                         onChanged: (value) {
@@ -79,6 +83,10 @@ class _CashPaymentContentState extends State<CashPaymentContent> {
                       ),
                     );
                   },
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(20, 8, 20, 12),
+                  child: TextHeading4("Masukan sejumlah uang"),
                 ),
                 CashPaymentForm(
                   formKey: _formKey,

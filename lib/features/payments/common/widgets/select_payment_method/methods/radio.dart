@@ -60,7 +60,7 @@ class PaymentMethodRadio extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
         child: Container(
           height: 58,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
             color: getCardColor(),

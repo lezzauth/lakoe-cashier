@@ -62,35 +62,31 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
         ],
         child: Padding(
           padding: TDeviceUtils.getViewInsets(context),
-          child: Wrap(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(20, 16, 20, 4),
-                        child: const TextHeading2("Metode pembayaran"),
-                      )
-                    ],
-                  ),
-                  BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
-                    builder: (context, state) => switch (state.paymentMethod) {
-                      "CASH" => CashPaymentContent(
-                          amount: amount,
-                        ),
-                      "BANK_TRANSFER" => BankTransferPaymentContent(
-                          amount: amount,
-                        ),
-                      "QR_CODE" => QrisPaymentContent(
-                          amount: amount,
-                        ),
-                      "DEBIT" => DebitPaymentContent(amount: amount),
-                      _ => const SizedBox(),
-                    },
-                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(20, 16, 20, 4),
+                    child: TextHeading2("Metode pembayaran"),
+                  )
                 ],
+              ),
+              BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
+                builder: (context, state) => switch (state.paymentMethod) {
+                  "CASH" => CashPaymentContent(
+                      amount: amount,
+                    ),
+                  "BANK_TRANSFER" => BankTransferPaymentContent(
+                      amount: amount,
+                    ),
+                  "QR_CODE" => QrisPaymentContent(
+                      amount: amount,
+                    ),
+                  "DEBIT" => DebitPaymentContent(amount: amount),
+                  _ => SizedBox(),
+                },
               ),
             ],
           ),
