@@ -20,7 +20,7 @@ import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/item_menu
 import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/main_menu/main_menu.dart';
 import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/main_menu/main_menu_tablet.dart';
 import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/summary/sales_summary.dart';
-import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/summary/transaction_summary.dart';
+import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/summary/orders_summary.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:uni_links/uni_links.dart';
@@ -180,7 +180,7 @@ class _DashboardState extends State<Dashboard> {
                               ),
                               SizedBox(width: 16),
                               Expanded(
-                                child: TransactionSummary(
+                                child: OrderSummary(
                                   totalTransactions: report.total_transactions,
                                 ),
                               ),
@@ -192,7 +192,7 @@ class _DashboardState extends State<Dashboard> {
                                 totalSales: report.total_sales,
                               ),
                               SizedBox(height: 16),
-                              TransactionSummary(
+                              OrderSummary(
                                 totalTransactions: report.total_transactions,
                               ),
                             ],

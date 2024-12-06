@@ -10,8 +10,8 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/constants/sizes.dart';
 
-class TransactionSummary extends StatelessWidget {
-  const TransactionSummary({super.key, required this.totalTransactions});
+class OrderSummary extends StatelessWidget {
+  const OrderSummary({super.key, required this.totalTransactions});
 
   final OutletReportTotalTransactionModel totalTransactions;
 
@@ -66,7 +66,7 @@ class TransactionSummary extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.only(bottom: 8),
                         child: Text(
-                          "Transaksi",
+                          "Pesanan",
                           style: GoogleFonts.inter(
                             color: TColors.neutralDarkDarkest,
                             fontSize: TSizes.fontSizeHeading3,

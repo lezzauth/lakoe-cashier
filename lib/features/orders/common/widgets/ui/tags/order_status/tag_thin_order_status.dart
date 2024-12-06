@@ -45,15 +45,15 @@ class TagThinOrderStatus extends StatelessWidget {
     Color getTagTextColor() {
       switch (tag) {
         case "OPEN":
-          return TColors.infoDark;
+          return TColors.info;
         case "CLOSED":
-          return TColors.errorDark;
+          return TColors.error;
         case "COMPLETED":
-          return TColors.successDark;
+          return TColors.success;
         case "CANCELLED":
           return TColors.neutralDarkDarkest;
         default:
-          return TColors.infoDark;
+          return TColors.info;
       }
     }
 

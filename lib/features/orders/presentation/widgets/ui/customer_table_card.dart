@@ -42,6 +42,10 @@ class CustomerAndTableInformation extends StatelessWidget {
                     SvgPicture.asset(
                       type == "DINEIN" ? TIcons.servingDome : TIcons.bag,
                       height: 32,
+                      colorFilter: ColorFilter.mode(
+                        TColors.primary,
+                        BlendMode.srcIn,
+                      ),
                     ),
                     SizedBox(height: 16),
                     TextHeading3(

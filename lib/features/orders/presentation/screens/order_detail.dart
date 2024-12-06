@@ -361,8 +361,7 @@ class _OrderDetailState extends State<OrderDetail> {
                             slivers: [
                               SliverToBoxAdapter(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16),
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment:
@@ -371,8 +370,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                       Container(
                                         padding:
                                             EdgeInsets.fromLTRB(8, 8, 12, 8),
-                                        margin:
-                                            const EdgeInsets.only(bottom: 13),
+                                        margin: EdgeInsets.only(bottom: 13),
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(12),

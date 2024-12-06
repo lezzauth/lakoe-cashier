@@ -38,7 +38,7 @@ class OrderItem extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 8.0),
               child: RichText(
                 text: TextSpan(
-                    text: "Order: ",
+                    text: "Order ",
                     style: GoogleFonts.inter(
                       fontSize: TSizes.fontSizeBodyS,
                       color: TColors.neutralDarkLight,
@@ -68,10 +68,17 @@ class OrderItem extends StatelessWidget {
                       size: 12,
                       color: TColors.neutralDarkLightest,
                     ),
-                    TextHeading5(customerName.isEmpty ? "Umum" : customerName),
+                    SizedBox(
+                      width: 80,
+                      child: TextHeading5(
+                        customerName.isEmpty ? "Umum" : customerName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 8),
                 Wrap(
                   direction: Axis.horizontal,
                   crossAxisAlignment: WrapCrossAlignment.center,

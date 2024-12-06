@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:logman/logman.dart';
 import 'package:pinput/pinput.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
@@ -154,31 +156,23 @@ class _OtpInputState extends State<OtpInput>
                         child: Column(
                           children: [
                             Container(
-                              margin: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
+                              margin: EdgeInsets.only(bottom: 8.0),
+                              child: TextHeading2(
                                 "Verifikasi Nomor WhatsApp",
-                                style: GoogleFonts.inter(
-                                  fontSize: TSizes.fontSizeHeading3,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
-                            Text(
-                              "Masukkan 4 digit kode OTP yang telah kami kirimkan melalui WhatsApp untuk melanjutkan.",
-                              style: GoogleFonts.inter(
-                                fontSize: TSizes.fontSizeBodyS,
-                                color: TColors.neutralDarkMedium,
-                              ),
+                            TextBodyM(
+                              "Masukkan 4 angka kode OTP yang sudah kami kirimkan ke nomor WhatsApp dibawah ini:",
+                              color: TColors.neutralDarkMedium,
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 12),
-                            Text(
+                            TextBodyM(
                               TFormatter.censoredPhoneNumber(
                                   widget.arguments.target),
-                              style: GoogleFonts.inter(
-                                fontSize: TSizes.fontSizeBodyS,
-                                color: TColors.neutralDarkMedium,
-                              ),
+                              color: TColors.neutralDarkMedium,
+                              fontWeight: FontWeight.bold,
                               textAlign: TextAlign.center,
                             ),
                           ],

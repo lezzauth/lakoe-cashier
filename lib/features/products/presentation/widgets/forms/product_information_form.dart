@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:lakoe_pos/common/data/models.dart';
 import 'package:lakoe_pos/common/widgets/form/form_label.dart';
-import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_action_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/features/products/application/cubit/product_master/form/product_form_cubit.dart';
@@ -13,7 +12,6 @@ import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/cat
 import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
-import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 
 class ProductInformationForm extends StatefulWidget {
   final GlobalKey<FormBuilderState> formKey;
@@ -49,15 +47,20 @@ class _ProductInformationFormState extends State<ProductInformationForm>
     decimalDigits: 0,
   );
 
-  final List<Map<String, String>> _units = [
-    {"id": "serving", "name": "Porsi"},
-    {"id": "cup", "name": "Cup/Gelas/Cangkir"},
-    {"id": "pcs", "name": "Pcs"},
-    {"id": "bottle", "name": "Botol"},
-    {"id": "slice", "name": "Slice/Potong"},
-    {"id": "set", "name": "Set"},
-    {"id": "scoop", "name": "Ball/Scoop"},
+  final List<LabelValue> _availability = [
+    const LabelValue(label: "Tersedia", value: "AVAILABLE"),
+    const LabelValue(label: "Tidak Tersedia", value: "UNAVAILABLE"),
   ];
+
+  // final List<Map<String, String>> _units = [
+  //   {"id": "serving", "name": "Porsi"},
+  //   {"id": "cup", "name": "Cup/Gelas/Cangkir"},
+  //   {"id": "pcs", "name": "Pcs"},
+  //   {"id": "bottle", "name": "Botol"},
+  //   {"id": "slice", "name": "Slice/Potong"},
+  //   {"id": "set", "name": "Set"},
+  //   {"id": "scoop", "name": "Ball/Scoop"},
+  // ];
 
   @override
   void initState() {
@@ -279,70 +282,42 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 8.0),
+                  margin: const EdgeInsets.only(bottom: 16.0),
                   child: Row(
                     children: [
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const FormLabel("Satuan Dasar"),
+                            const FormLabel("Status Produk"),
                             Container(
                               margin: const EdgeInsets.only(bottom: 8),
                               child: FormBuilderField<String>(
-                                name: "unit",
+                                name: "availability",
                                 initialValue:
-                                    widget.initialValue["unit"] ?? "pcs",
+                                    widget.initialValue["availability"] ??
+                                        "AVAILABLE",
                                 builder: (field) {
                                   return Wrap(
                                     direction: Axis.horizontal,
                                     spacing: 8,
-                                    runSpacing: -4,
                                     children: [
-                                      ..._units.map((unit) {
+                                      ..._availability.map((item) {
                                         bool selected =
-                                            unit["id"] == field.value;
+                                            item.value == field.value;
                                         return InputChip(
                                           label: !selected
-                                              ? TextBodyM(unit["name"]!)
+                                              ? TextBodyM(item.label)
                                               : TextHeading4(
-                                                  unit["name"]!,
+                                                  item.label,
                                                   color: TColors.primary,
                                                 ),
                                           selected: selected,
                                           onPressed: () {
-                                            field.didChange(unit["id"]);
+                                            field.didChange(item.value);
                                           },
                                         );
                                       }),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 8.0),
-                                        child: SizedBox(
-                                          height: 33,
-                                          child: OutlinedButton.icon(
-                                            onPressed: () {},
-                                            label: const TextActionM(
-                                              "Buat Baru",
-                                              color: TColors.primary,
-                                            ),
-                                            style: const ButtonStyle(
-                                                padding: WidgetStatePropertyAll(
-                                                    EdgeInsets.symmetric(
-                                                        horizontal: 14.0)),
-                                                side: WidgetStatePropertyAll(
-                                                    BorderSide(
-                                                  width: 1,
-                                                  color: TColors.primary,
-                                                ))),
-                                            icon: const UiIcons(
-                                              TIcons.add,
-                                              size: 12,
-                                              color: TColors.primary,
-                                            ),
-                                          ),
-                                        ),
-                                      )
                                     ],
                                   );
                                 },
@@ -354,6 +329,82 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                     ],
                   ),
                 ),
+                // Container(
+                //   margin: const EdgeInsets.only(bottom: 8.0),
+                //   child: Row(
+                //     children: [
+                //       Expanded(
+                //         child: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             const FormLabel("Satuan Dasar"),
+                //             Container(
+                //               margin: const EdgeInsets.only(bottom: 8),
+                //               child: FormBuilderField<String>(
+                //                 name: "unit",
+                //                 initialValue:
+                //                     widget.initialValue["unit"] ?? "pcs",
+                //                 builder: (field) {
+                //                   return Wrap(
+                //                     direction: Axis.horizontal,
+                //                     spacing: 8,
+                //                     runSpacing: -4,
+                //                     children: [
+                //                       ..._units.map((unit) {
+                //                         bool selected =
+                //                             unit["id"] == field.value;
+                //                         return InputChip(
+                //                           label: !selected
+                //                               ? TextBodyM(unit["name"]!)
+                //                               : TextHeading4(
+                //                                   unit["name"]!,
+                //                                   color: TColors.primary,
+                //                                 ),
+                //                           selected: selected,
+                //                           onPressed: () {
+                //                             field.didChange(unit["id"]);
+                //                           },
+                //                         );
+                //                       }),
+                //                       Padding(
+                //                         padding:
+                //                             const EdgeInsets.only(top: 8.0),
+                //                         child: SizedBox(
+                //                           height: 33,
+                //                           child: OutlinedButton.icon(
+                //                             onPressed: () {},
+                //                             label: const TextActionM(
+                //                               "Buat Baru",
+                //                               color: TColors.primary,
+                //                             ),
+                //                             style: const ButtonStyle(
+                //                                 padding: WidgetStatePropertyAll(
+                //                                     EdgeInsets.symmetric(
+                //                                         horizontal: 14.0)),
+                //                                 side: WidgetStatePropertyAll(
+                //                                     BorderSide(
+                //                                   width: 1,
+                //                                   color: TColors.primary,
+                //                                 ))),
+                //                             icon: const UiIcons(
+                //                               TIcons.add,
+                //                               size: 12,
+                //                               color: TColors.primary,
+                //                             ),
+                //                           ),
+                //                         ),
+                //                       )
+                //                     ],
+                //                   );
+                //                 },
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           )

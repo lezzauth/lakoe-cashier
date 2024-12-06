@@ -8,6 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/loading_screen.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/features/employees/application/cubit/forgot_pin/forgot_pin_cubit.dart';
 import 'package:lakoe_pos/features/employees/application/cubit/forgot_pin/forgot_pin_state.dart';
 import 'package:lakoe_pos/features/employees/data/arguments/forgot_pin_dto.dart';
@@ -184,30 +186,22 @@ class _InputOtpState extends State<InputOtp>
                           child: Column(
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(bottom: 8.0),
-                                child: Text(
+                                margin: EdgeInsets.only(bottom: 8.0),
+                                child: TextHeading2(
                                   "Masukan Kode OTP",
-                                  style: GoogleFonts.inter(
-                                    fontSize: TSizes.fontSizeHeading3,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
                               ),
-                              Text(
-                                "Masukkan 4 digit kode OTP yang telah kami kirimkan ke WhatsApp nomor dibawah ini:",
-                                style: GoogleFonts.inter(
-                                  fontSize: TSizes.fontSizeBodyS,
-                                  color: TColors.neutralDarkMedium,
-                                ),
+                              TextBodyM(
+                                "Masukkan 4 angka kode OTP yang sudah kami kirimkan ke nomor WhatsApp dibawah ini:",
+                                color: TColors.neutralDarkMedium,
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 12),
-                              Text(
+                              TextBodyM(
                                 TFormatter.censoredPhoneNumber(phoneNumber),
-                                style: GoogleFonts.inter(
-                                  fontSize: TSizes.fontSizeBodyS,
-                                  color: TColors.neutralDarkMedium,
-                                ),
+                                color: TColors.neutralDarkMedium,
+                                fontWeight: FontWeight.bold,
                                 textAlign: TextAlign.center,
                               ),
                             ],

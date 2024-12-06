@@ -78,18 +78,7 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
           )
         ],
         child: Scaffold(
-          appBar: CustomAppbar(
-            title: "Daftar Rekening Bank",
-            // search: SearchField(
-            //   hintText: "Cari nomor rekening disini...",
-            //   controller: _searchController,
-            //   onChanged: (value) {
-            //     context
-            //         .read<BankAccountMasterFilterCubit>()
-            //         .setFilter(search: value);
-            //   },
-            // ),
-          ),
+          appBar: CustomAppbar(title: "Daftar Rekening Bank"),
           body: Padding(
             padding: const EdgeInsets.only(top: 20.0),
             child: Scrollbar(

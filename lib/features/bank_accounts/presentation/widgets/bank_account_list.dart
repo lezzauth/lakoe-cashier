@@ -26,12 +26,16 @@ class BankAccountList extends StatefulWidget {
 
 class _BankAccountListState extends State<BankAccountList> {
   Future<void> _onGoToEditScreen(
-      OwnerBankModel bankAccount, int bankAccountLength) async {
+    OwnerBankModel bankAccount,
+    int bankAccountLength,
+  ) async {
     bool? isUpdated = await Navigator.pushNamed(
       context,
       "/bank_accounts/detail",
       arguments: BankAccountDetailArgument(
-          account: bankAccount, bankAccountLength: bankAccountLength),
+        bank: bankAccount,
+        bankAccountLength: bankAccountLength,
+      ),
     ) as bool?;
     if (widget.onEdit == null) return;
 

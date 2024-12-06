@@ -14,6 +14,7 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/device/device_uility.dart';
 import 'package:public_repository/public_repository.dart';
 
 class BankVerify extends StatefulWidget {
@@ -119,71 +120,75 @@ class _BankVerifyContentState extends State<BankVerifyContent> {
               builder: (context) {
                 return CustomBottomsheet(
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: TDeviceUtils.getViewInsets(context),
                     child: FormBuilder(
                       key: formKey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 8),
-                            child: TextHeading2(
-                              "Nama pemilik rekening",
-                              color: TColors.neutralDarkDarkest,
-                            ),
-                          ),
-                          TextBodyM(
-                            "Pastikan nama pemilik rekening sesuai dengan nama yang tercantum di buku tabungan atau informasi resmi bank.",
-                            color: TColors.neutralDarkMedium,
-                          ),
-                          const SizedBox(height: 16),
-                          FormBuilderTextField(
-                            name: "accountName",
-                            controller: controller,
-                            decoration: const InputDecoration(
-                              hintText: "Masukan nama pemilik rekening",
-                            ),
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(
-                                errorText:
-                                    ErrorTextStrings.required(name: "Nama"),
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(20, 16, 20, 16),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 8),
+                              child: TextHeading2(
+                                "Nama pemilik rekening",
+                                color: TColors.neutralDarkDarkest,
                               ),
-                              (value) {
-                                if (value != null &&
-                                    !RegExp(r'^[a-zA-Z0-9\s]+$')
-                                        .hasMatch(value)) {
-                                  return "Tidak boleh mengandung karakter khusus";
-                                }
-                                return null;
-                              },
-                            ]),
-                          ),
-                          const SizedBox(height: 16),
-                          SizedBox(
-                            width: double.infinity,
-                            child: SizedBox(
-                              height: 48,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (formKey.currentState?.saveAndValidate() ??
-                                      false) {
-                                    Navigator.pop(
-                                      context,
-                                      BankVerifyArgument(
-                                        bankName: widget.bankName,
-                                        accountNumber: widget.accountNumber,
-                                        accountName: controller.text,
-                                        name: widget.name,
-                                      ),
-                                    );
+                            ),
+                            TextBodyM(
+                              "Pastikan nama pemilik rekening sesuai dengan nama yang tercantum di buku tabungan atau informasi resmi bank.",
+                              color: TColors.neutralDarkMedium,
+                            ),
+                            const SizedBox(height: 16),
+                            FormBuilderTextField(
+                              name: "accountName",
+                              controller: controller,
+                              decoration: const InputDecoration(
+                                hintText: "Masukan nama pemilik rekening",
+                              ),
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(
+                                  errorText:
+                                      ErrorTextStrings.required(name: "Nama"),
+                                ),
+                                (value) {
+                                  if (value != null &&
+                                      !RegExp(r'^[a-zA-Z0-9\s]+$')
+                                          .hasMatch(value)) {
+                                    return "Tidak boleh mengandung karakter khusus";
                                   }
+                                  return null;
                                 },
-                                child: TextActionL("Konfirmasi"),
+                              ]),
+                            ),
+                            const SizedBox(height: 16),
+                            SizedBox(
+                              width: double.infinity,
+                              child: SizedBox(
+                                height: 48,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    if (formKey.currentState
+                                            ?.saveAndValidate() ??
+                                        false) {
+                                      Navigator.pop(
+                                        context,
+                                        BankVerifyArgument(
+                                          bankName: widget.bankName,
+                                          accountNumber: widget.accountNumber,
+                                          accountName: controller.text,
+                                          name: widget.name,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: TextActionL("Konfirmasi"),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

@@ -30,7 +30,7 @@ class TagStrongOrderStatus extends StatelessWidget {
     Color getTagBackgroundColor() {
       switch (tag) {
         case "OPEN":
-          return TColors.info;
+          return TColors.infoDark;
         case "CLOSED":
           return TColors.error;
         case "COMPLETED":
@@ -38,7 +38,7 @@ class TagStrongOrderStatus extends StatelessWidget {
         case "CANCELLED":
           return TColors.neutralDarkDark;
         default:
-          return TColors.info;
+          return TColors.infoDark;
       }
     }
 

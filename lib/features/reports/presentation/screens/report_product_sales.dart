@@ -228,7 +228,7 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     const TextHeading3(
-                                      "Riwayat Pembelian",
+                                      "Riwayat Penjualan",
                                       color: TColors.neutralDarkDarkest,
                                     ),
                                   ],

@@ -106,22 +106,22 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
           onSubmitted: (value, bank, previousAccountNumber) {
             FocusScope.of(context).unfocus();
             _onSubmitted(
-              arguments.account.id,
+              arguments.bank.id,
               value: value,
               bank: bank,
               previousAccountNumber: previousAccountNumber,
             );
           },
-          onDeleted: isOnlyAccount || arguments.account.isPrimary
+          onDeleted: isOnlyAccount || arguments.bank.isPrimary
               ? null
               : () async {
-                  return await _onDeleted(arguments.account.id);
+                  return await _onDeleted(arguments.bank.id);
                 },
           isLoading: state is BankAccountMasterActionInProgress,
           initialValue: {
-            "name": arguments.account.name,
-            "accountNumber": arguments.account.accountNumber,
-            "isPrimary": arguments.account.isPrimary,
+            "name": arguments.bank.name,
+            "accountNumber": arguments.bank.accountNumber,
+            "isPrimary": arguments.bank.isPrimary,
           },
         ),
       ),

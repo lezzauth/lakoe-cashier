@@ -121,7 +121,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(bottom: 40, top: 56),
+                          margin: EdgeInsets.only(bottom: 40, top: 56),
                           child: Column(
                             children: [
                               UiIcons(
@@ -131,13 +131,13 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
                               ),
                               SizedBox(height: 20),
                               Container(
-                                margin: const EdgeInsets.only(bottom: 8.0),
-                                child: const TextHeading2(
+                                margin: EdgeInsets.only(bottom: 8.0),
+                                child: TextHeading2(
                                   "Masukan PIN Kasir",
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              const TextBodyM(
+                              TextBodyM(
                                 "Masukin PIN kasir yang sedang bertugas",
                                 color: TColors.neutralDarkMedium,
                                 textAlign: TextAlign.center,
@@ -146,7 +146,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
                           ),
                         ),
                         if (checkPIN && !isPinWrong)
-                          const SizedBox(
+                          SizedBox(
                             height: 20,
                             width: 20,
                             child: CircularProgressIndicator(

@@ -308,7 +308,7 @@ class OrderSummary extends StatelessWidget {
         ),
         if (isPaid)
           Positioned(
-            bottom: 40,
+            top: 70,
             right: 48,
             child: SvgPicture.asset(
               TImages.stampPaid,
@@ -318,7 +318,7 @@ class OrderSummary extends StatelessWidget {
           ),
         if (isCancel)
           Positioned(
-            bottom: 40,
+            top: 70,
             right: 48,
             child: SvgPicture.asset(
               TImages.stampCancel,

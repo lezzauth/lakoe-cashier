@@ -162,7 +162,7 @@ class _CartContentState extends State<CartContent> {
                                       return OrderTypeChip(
                                         label: orderType.label,
                                         icon: orderType.value == "DINEIN"
-                                            ? TIcons.tableRestaurant
+                                            ? TIcons.servingDome
                                             : TIcons.bag,
                                         selected: selected,
                                         onSelected: (value) {
