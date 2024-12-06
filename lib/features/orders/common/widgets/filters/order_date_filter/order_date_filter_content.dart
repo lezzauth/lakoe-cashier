@@ -70,27 +70,24 @@ class _OrderDateFilterContentState extends State<OrderDateFilterContent> {
             DateRangePicker(
               hideLabel: true,
               from: widget.from == null
-                  ? DateTime.now().copyWith(
-                      hour: 0,
-                      minute: 0,
-                      second: 0,
-                      millisecond: 0,
-                    )
-                  : DateTime.parse(widget.from!).toLocal(),
+                  ? DateTime.now()
+                      .copyWith(hour: 0, minute: 0, second: 0, millisecond: 0)
+                  : DateTime.parse(widget.from!)
+                      .toLocal()
+                      .copyWith(hour: 0, minute: 0, second: 0, millisecond: 0),
               to: widget.to == null
-                  ? DateTime.now().copyWith(
-                      hour: 23,
-                      minute: 59,
-                      second: 59,
-                    )
+                  ? DateTime.now()
                   : DateTime.parse(widget.to!).toLocal(),
               onSubmit: ({from, to}) {
+                final customFrom = from!
+                    .copyWith(hour: 0, minute: 0, second: 0, millisecond: 0);
+                final customTo = to;
                 Navigator.pop(
                   context,
                   OrderDateFilterValue(
                     template: "CUSTOM",
-                    from: from,
-                    to: to,
+                    from: customFrom,
+                    to: customTo,
                   ),
                 );
               },
