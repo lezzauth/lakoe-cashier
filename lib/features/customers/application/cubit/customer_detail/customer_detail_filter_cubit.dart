@@ -5,14 +5,27 @@ class CustomerDetailFilterCubit extends Cubit<CustomerDetailFilterState> {
   CustomerDetailFilterCubit()
       : super(const CustomerDetailFilterState(template: "ALL"));
 
+  DateTime convertToUtc(DateTime localDate) {
+    return DateTime.utc(
+      localDate.year,
+      localDate.month,
+      localDate.day,
+      localDate.hour,
+      localDate.minute,
+      localDate.second,
+      localDate.millisecond,
+      localDate.microsecond,
+    );
+  }
+
   void setFilter({
     DateTime? from,
     DateTime? to,
     required String template,
   }) {
     emit(CustomerDetailFilterState(
-      from: from?.toUtc().toIso8601String(),
-      to: to?.toUtc().toIso8601String(),
+      from: convertToUtc(from!).toIso8601String(),
+      to: convertToUtc(to!).toIso8601String(),
       template: template,
     ));
   }

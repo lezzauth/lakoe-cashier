@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
-import 'package:logman/logman.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
@@ -92,9 +91,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
           title: "Detail Pelanggan",
         ),
         body: BlocListener<CustomerDetailCubit, CustomerDetailState>(
-          listener: (context, state) {
-            Logman.instance.info("CUSTOMER DETAIL State is $state");
-          },
+          listener: (context, state) {},
           child: BlocBuilder<CustomerDetailCubit, CustomerDetailState>(
             builder: (context, state) {
               if (state is CustomerDetailLoadSuccess) {
@@ -144,7 +141,6 @@ class _CustomerDetailState extends State<CustomerDetail> {
                               ),
                               TextButton(
                                 onPressed: () async {
-                                  Logman.instance.info("EDIT");
                                   CustomerModel? newCustomer =
                                       await Navigator.pushNamed(
                                     context,
@@ -244,8 +240,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
+                                padding: EdgeInsets.symmetric(vertical: 8),
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: SizedBox(
@@ -381,9 +376,9 @@ class TagPaymentMethod extends StatelessWidget {
     Color getTagTextColor() {
       switch (tag) {
         case "CASH":
-          return TColors.successMedium;
+          return TColors.success;
         case "QR_CODE":
-          return TColors.infoMedium;
+          return TColors.info;
         case "DEBIT":
           return TColors.warningDark;
         case "BANK_TRANSFER":
@@ -393,7 +388,7 @@ class TagPaymentMethod extends StatelessWidget {
         case "CANCEL":
           return TColors.neutralDarkDark;
         default:
-          return TColors.successMedium;
+          return TColors.success;
       }
     }
 
