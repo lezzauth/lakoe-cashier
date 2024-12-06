@@ -40,7 +40,7 @@ class _EmployeeSelectState extends State<EmployeeSelect> {
       _value = widget.value;
     });
 
-    context.read<EmployeeMasterCubit>().init();
+    // context.read<EmployeeMasterCubit>().init();
   }
 
   Future<void> onRefresh() async {

@@ -6,11 +6,14 @@ import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_cubit.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_state.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_state.dart';
 import 'package:lakoe_pos/features/employees/data/arguments/forgot_pin_dto.dart';
 import 'package:lakoe_pos/features/employees/presentation/widgets/forms/employee_select.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/sizes.dart';
+import 'package:logman/logman.dart';
 
 class NumberPad extends StatefulWidget {
   final TextEditingController? controller;
@@ -39,6 +42,7 @@ class _NumberPadState extends State<NumberPad> {
 
   Future<void> _onInit() async {
     context.read<CashierCubit>().getOpenCashier();
+    context.read<EmployeeMasterCubit>().findAll(FindAllEmployeeDto());
   }
 
   @override
@@ -65,6 +69,35 @@ class _NumberPadState extends State<NumberPad> {
     newValue = newValue.substring(0, newValue.length - 1);
 
     widget.controller!.value = TextEditingValue(text: newValue);
+  }
+
+  void selectEmployee() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (context) {
+        return CustomBottomsheet(
+          child: EmployeeSelect(
+            value: employee,
+            onChanged: (value) {
+              Navigator.pop(context);
+              setState(() {
+                employee = value;
+              });
+              Navigator.pushNamed(
+                context,
+                "/employee/forgot/input_otp",
+                arguments: ForgotPinArguments(
+                  id: value!.id,
+                  phoneNumber: value.phoneNumber,
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -221,69 +254,63 @@ class _NumberPadState extends State<NumberPad> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Pad(
-                    onTap: () {
-                      if (employee == null) {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          useSafeArea: true,
-                          builder: (context) {
-                            return CustomBottomsheet(
-                              child: EmployeeSelect(
-                                value: employee,
-                                onChanged: (value) {
-                                  Navigator.pop(context);
-                                  setState(() {
-                                    employee = value;
-                                  });
-                                  Navigator.pushNamed(
-                                    context,
-                                    "/employee/forgot/input_otp",
-                                    arguments: ForgotPinArguments(
-                                      id: value!.id,
-                                      phoneNumber: value.phoneNumber,
+                  BlocBuilder<EmployeeMasterCubit, EmployeeMasterState>(
+                      builder: (context, state) {
+                    Logman.instance.info("XXX ${state.props.length}");
+                    return Pad(
+                      onTap: () {
+                        if (employee == null) {
+                          if (state is EmployeeMasterLoadSuccess) {
+                            if (state.employees.length == 1) {
+                              Navigator.pushNamed(
+                                context,
+                                "/employee/forgot/input_otp",
+                                arguments: ForgotPinArguments(
+                                  id: state.employees[0].id,
+                                  phoneNumber: state.employees[0].phoneNumber,
+                                ),
+                              );
+                            } else {
+                              selectEmployee();
+                            }
+                          } else {
+                            selectEmployee();
+                          }
+                        } else {
+                          Navigator.pushNamed(
+                            context,
+                            "/employee/forgot/input_otp",
+                            arguments: ForgotPinArguments(
+                              id: employee!.id,
+                              phoneNumber: employee!.phoneNumber,
+                            ),
+                          );
+                        }
+                      },
+                      color: Colors.transparent,
+                      child: !widget.isShowForgot
+                          ? SizedBox()
+                          : (state is GetCashierInProgress)
+                              ? SizedBox(
+                                  height: 16,
+                                  width: 16,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      TColors.primary,
                                     ),
-                                  );
-                                },
-                              ),
-                            );
-                          },
-                        );
-                      } else {
-                        Navigator.pushNamed(
-                          context,
-                          "/employee/forgot/input_otp",
-                          arguments: ForgotPinArguments(
-                            id: employee!.id,
-                            phoneNumber: employee!.phoneNumber,
-                          ),
-                        );
-                      }
-                    },
-                    color: Colors.transparent,
-                    child: !widget.isShowForgot
-                        ? SizedBox()
-                        : (state is GetCashierInProgress)
-                            ? SizedBox(
-                                height: 16,
-                                width: 16,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    TColors.primary,
+                                    strokeWidth: 2.5,
                                   ),
-                                  strokeWidth: 2.5,
+                                )
+                              : Text(
+                                  "Lupa?",
+                                  style: GoogleFonts.inter(
+                                    fontSize: TSizes.fontSizeHeading4,
+                                    fontWeight: FontWeight.w600,
+                                    color: TColors.primary,
+                                  ),
                                 ),
-                              )
-                            : Text(
-                                "Lupa?",
-                                style: GoogleFonts.inter(
-                                  fontSize: TSizes.fontSizeHeading4,
-                                  fontWeight: FontWeight.w600,
-                                  color: TColors.primary,
-                                ),
-                              ),
-                  ),
+                    );
+                  }),
                   Pad(
                     onTap: () {
                       handleChange("0");
