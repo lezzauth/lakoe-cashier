@@ -21,7 +21,7 @@ final class CustomerMasterLoadSuccess extends CustomerMasterState {
     this.customers = const [
       CustomerModel(
         id: "-",
-        name: "Umum",
+        name: "Tamu",
         email: "",
         phoneNumber: "-",
         address: "",

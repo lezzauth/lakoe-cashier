@@ -30,7 +30,7 @@ class OrderListItem extends StatelessWidget {
     String price = order.price;
     String type = order.type;
     String status = order.status;
-    String customerName = order.customer?.name ?? "Umum";
+    String customerName = order.customer?.name ?? "Tamu";
     String tableName = order.table?.no ?? "Bebas";
     bool isPaid = order.paymentStatus == "PAID";
     bool isCancel = order.status == "CANCELLED";

@@ -140,7 +140,24 @@ class _TableListContentState extends State<TableListContent> {
                           onTap: () {
                             Navigator.pop(
                               context,
-                              isFreeTable ? null : table,
+                              isFreeTable
+                                  ? TableModel(
+                                      id: "-",
+                                      no: "Bebas",
+                                      capacity: 0,
+                                      outletId: "",
+                                      outletRoomId: "",
+                                      createdAt: "",
+                                      updatedAt: "",
+                                      outletRoom: OutletRoom(
+                                        id: "-",
+                                        name: "Bebas",
+                                        outletId: "",
+                                        createdAt: "",
+                                        updatedAt: "",
+                                      ),
+                                    )
+                                  : table,
                             );
                           },
                           trailing: selected

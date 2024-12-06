@@ -42,7 +42,7 @@ class CashierOpenOrderList extends StatelessWidget {
                 ...orders.map(
                   (order) => OrderItem(
                     no: order.no,
-                    customerName: order.customer?.name ?? "Umum",
+                    customerName: order.customer?.name ?? "Tamu",
                     tableName: order.table?.no ?? "Bebas",
                     onTap: () async {
                       await Navigator.pushNamed(

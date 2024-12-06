@@ -90,7 +90,7 @@ class CustomerAndTableInformation extends StatelessWidget {
           child: CardOrder(
             isReadOnly: true,
             title: "Pelanggan",
-            subTitle: customer == null ? "Umum" : customer!.name,
+            subTitle: customer == null ? "Tamu" : customer!.name,
             icon: const UiIcons(
               TIcons.profile,
               size: 20,

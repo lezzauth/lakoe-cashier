@@ -68,7 +68,7 @@ class OrderOnlineListItem extends StatelessWidget {
                                       color: TColors.neutralDarkDarkest,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                    text: "Umum",
+                                    text: "Tamu",
                                     children: [
                                       TextSpan(
                                         style: GoogleFonts.inter(

@@ -71,7 +71,7 @@ class OrderItem extends StatelessWidget {
                     SizedBox(
                       width: 80,
                       child: TextHeading5(
-                        customerName.isEmpty ? "Umum" : customerName,
+                        customerName.isEmpty ? "Tamu" : customerName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

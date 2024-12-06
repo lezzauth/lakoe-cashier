@@ -104,13 +104,25 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                                     ),
                                     title: TextHeading4(customer.name),
                                     subtitle: TextBodyS(
-                                      PhoneNumberFormatter.formatForDisplay(
-                                          customer.phoneNumber),
+                                      (customer.phoneNumber == '-')
+                                          ? customer.phoneNumber
+                                          : PhoneNumberFormatter
+                                              .formatForDisplay(
+                                                  customer.phoneNumber),
                                       color: TColors.neutralDarkLight,
                                     ),
                                     onTap: () {
-                                      Navigator.pop(context,
-                                          customer.id == "-" ? null : customer);
+                                      Navigator.pop(
+                                          context,
+                                          customer.id == "-"
+                                              ? CustomerModel(
+                                                  id: "-",
+                                                  name: "Tamu",
+                                                  email: "",
+                                                  phoneNumber: "-",
+                                                  address: "",
+                                                )
+                                              : customer);
                                     },
                                     trailing: selected
                                         ? const UiIcons(

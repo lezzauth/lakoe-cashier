@@ -16,7 +16,7 @@ class CartCustomerCubit extends Cubit<CartCustomerState> {
       emit(CartCustomerLoadInProgress());
       List<CustomerModel> initCustomers = [
         const CustomerModel(
-            id: "-", name: "Umum", email: "", phoneNumber: "-", address: ""),
+            id: "-", name: "Tamu", email: "", phoneNumber: "-", address: ""),
       ];
       final customers = await customerRepository.findAll(dto);
       initCustomers.addAll(customers);

@@ -78,8 +78,8 @@ class _CustomerAndTableSelectState extends State<CustomerAndTableSelect> {
           flex: 1,
           child: CardOrder(
             title: "Pelanggan",
-            subTitle: widget.customer == null ? "Umum" : widget.customer!.name,
-            icon: const UiIcons(
+            subTitle: widget.customer == null ? "Tamu" : widget.customer!.name,
+            icon: UiIcons(
               TIcons.profile,
               size: 20,
               color: TColors.primary,
@@ -94,13 +94,13 @@ class _CustomerAndTableSelectState extends State<CustomerAndTableSelect> {
             //       ),
           ),
         ),
-        const SizedBox(width: 12.0),
+        SizedBox(width: 12.0),
         Flexible(
           flex: 1,
           child: CardOrder(
             title: "No. Meja",
             subTitle: widget.table == null ? "Bebas" : widget.table!.no,
-            icon: const UiIcons(
+            icon: UiIcons(
               TIcons.tableRestaurant,
               size: 20,
               color: TColors.primary,
