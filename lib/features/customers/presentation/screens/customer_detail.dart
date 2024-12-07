@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/customers/presentation/widgets/filter_orders.dart';
-import 'package:logman/logman.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
@@ -41,6 +40,8 @@ class CustomerDetail extends StatefulWidget {
 }
 
 class _CustomerDetailState extends State<CustomerDetail> {
+  bool isFilterActive = false;
+
   Future<void> _onRefresh() async {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
@@ -67,6 +68,43 @@ class _CustomerDetailState extends State<CustomerDetail> {
   void initState() {
     super.initState();
     _onRefresh();
+  }
+
+  void _handleFilterChange(DetailCustomerOutletDto value) {
+    final isAllNull = (value.template == null || value.template == "ALL") &&
+        value.from == null &&
+        value.to == null &&
+        (value.status == null || value.status == "ALL");
+
+    setState(() {
+      isFilterActive = !isAllNull;
+    });
+
+    final from = value.template == "CUSTOM"
+        ? DateTime.parse(value.from!)
+        : value.from != null
+            ? DateTime.parse(value.from!)
+            : null;
+
+    final to = value.template == "CUSTOM"
+        ? DateTime.parse(value.to!)
+        : value.to != null
+            ? DateTime.parse(value.to!)
+            : null;
+
+    context.read<CustomerDetailFilterCubit>().setFilter(
+          status: value.status,
+          template: value.template,
+          from: from,
+          to: to,
+        );
+  }
+
+  void _handleClearFilter() {
+    setState(() {
+      isFilterActive = false;
+    });
+    context.read<CustomerDetailFilterCubit>().clearFilter();
   }
 
   @override
@@ -103,7 +141,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(
+                          padding: EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 12,
                           ),
@@ -118,14 +156,14 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                       height: 40,
                                       width: 40,
                                     ),
-                                    const SizedBox(width: 16),
+                                    SizedBox(width: 16),
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         TextHeading4(data.customer.name),
-                                        const SizedBox(height: 4),
+                                        SizedBox(height: 4),
                                         TextBodyS(
                                           PhoneNumberFormatter.formatForDisplay(
                                             data.customer.phoneNumber,
@@ -225,36 +263,13 @@ class _CustomerDetailState extends State<CustomerDetail> {
                               BlocBuilder<CustomerDetailFilterCubit,
                                   CustomerDetailFilterState>(
                                 builder: (context, state) {
-                                  return FilterOrders(
+                                  return FilterOrdersByCustomer(
                                     value: state.toDetailCustomerOutletDto,
                                     onClear: () {
-                                      context
-                                          .read<CustomerDetailFilterCubit>()
-                                          .clearFilter();
+                                      _handleClearFilter();
                                     },
                                     onChanged: (value) {
-                                      Logman.instance.info("VALUE $value");
-
-                                      final from = value.template == "CUSTOM"
-                                          ? DateTime.parse(value.from!)
-                                          : value.from != null
-                                              ? DateTime.parse(value.from!)
-                                              : null;
-
-                                      final to = value.template == "CUSTOM"
-                                          ? DateTime.parse(value.to!)
-                                          : value.to != null
-                                              ? DateTime.parse(value.to!)
-                                              : null;
-
-                                      context
-                                          .read<CustomerDetailFilterCubit>()
-                                          .setFilter(
-                                            status: value.status,
-                                            template: value.template,
-                                            from: from,
-                                            to: to,
-                                          );
+                                      _handleFilterChange(value);
                                     },
                                   );
                                 },
@@ -264,15 +279,26 @@ class _CustomerDetailState extends State<CustomerDetail> {
                         ),
                         if (data.customer.orders.isEmpty)
                           EmptyList(
-                            image: SvgPicture.asset(
-                              TImages.catBox,
-                              width: 140,
-                              height: 101.45,
-                            ),
-                            title: "Belum ada transaksi, nih!",
-                            subTitle:
-                                "${data.customer.name} sampai saat ini belum pernah melakukan transaksi.",
-                          ),
+                              image: SvgPicture.asset(
+                                TImages.catBox,
+                                width: 140,
+                                height: 101.45,
+                              ),
+                              title: (!isFilterActive)
+                                  ? "Belum ada transaksi, nih!"
+                                  : "Pembelian tidak titemuakn",
+                              subTitle: (!isFilterActive)
+                                  ? "${data.customer.name} sampai saat ini belum pernah melakukan transaksi."
+                                  : "Ubah tanggal atau ganti filter status untuk melihat pembelian dari ${data.customer.name}",
+                              action: (!isFilterActive)
+                                  ? SizedBox.shrink()
+                                  : TextButton(
+                                      onPressed: _handleClearFilter,
+                                      child: TextActionL(
+                                        "Hapus Filter",
+                                        color: TColors.primary,
+                                      ),
+                                    )),
                         if (data.customer.orders.isNotEmpty)
                           Expanded(
                             child: ListView.builder(

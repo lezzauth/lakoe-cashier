@@ -22,9 +22,10 @@ class ReportProductSalesPaginationCubit
         productId,
         ListOrderByProductDto(
           cursor: dto?.cursor,
+          status: dto?.status,
+          template: dto?.template,
           from: dto?.from,
           to: dto?.to,
-          template: dto?.template,
         ),
       );
 
@@ -37,9 +38,10 @@ class ReportProductSalesPaginationCubit
             productId: productId,
             dto: ListOrderByProductDto(
               cursor: response.nextCursor,
+              status: currentState.dto?.status,
+              template: currentState.dto?.template,
               from: currentState.dto?.from,
               to: currentState.dto?.to,
-              template: currentState.dto?.template,
             ),
           ),
         );
@@ -49,9 +51,10 @@ class ReportProductSalesPaginationCubit
           productId: productId,
           dto: ListOrderByProductDto(
             cursor: response.nextCursor,
+            status: dto?.status,
+            template: dto?.template,
             from: dto?.from,
             to: dto?.to,
-            template: dto?.template,
           ),
         ));
       }

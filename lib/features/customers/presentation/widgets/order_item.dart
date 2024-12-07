@@ -39,15 +39,11 @@ class OrderItem extends StatelessWidget {
             ),
           ),
         ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: Stack(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 14,
-              ),
+              padding: EdgeInsets.symmetric(vertical: 14),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment:
@@ -58,7 +54,7 @@ class OrderItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(bottom: 8.0),
+                        margin: EdgeInsets.only(bottom: 8.0),
                         child: RichText(
                           text: TextSpan(
                             style: GoogleFonts.inter(

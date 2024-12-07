@@ -56,7 +56,7 @@ class ProductOrderItem extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                         text: order.customerName == "GUEST"
-                            ? "Umum"
+                            ? "Tamu"
                             : order.customerName,
                         children: [
                           TextSpan(

@@ -6,18 +6,18 @@ import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart'
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:lakoe_pos/features/customers/presentation/widgets/filter_status_content.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/filters/order_date_filter.dart';
+import 'package:lakoe_pos/features/reports/presentation/widgets/filter_status_content.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
-import 'package:outlet_repository/outlet_repository.dart';
+import 'package:product_repository/product_repository.dart';
 
-class FilterOrdersByCustomer extends StatefulWidget {
-  final DetailCustomerOutletDto value;
-  final ValueChanged<DetailCustomerOutletDto> onChanged;
+class FilterOrdersByProduct extends StatefulWidget {
+  final ListOrderByProductDto value;
+  final ValueChanged<ListOrderByProductDto> onChanged;
   final Function()? onClear;
 
-  const FilterOrdersByCustomer({
+  const FilterOrdersByProduct({
     super.key,
     required this.value,
     required this.onChanged,
@@ -25,10 +25,10 @@ class FilterOrdersByCustomer extends StatefulWidget {
   });
 
   @override
-  State<FilterOrdersByCustomer> createState() => _FilterOrdersByCustomerState();
+  State<FilterOrdersByProduct> createState() => _FilterOrdersByProductState();
 }
 
-class _FilterOrdersByCustomerState extends State<FilterOrdersByCustomer> {
+class _FilterOrdersByProductState extends State<FilterOrdersByProduct> {
   final List<LabelValue<String>> _statuses = [
     const LabelValue(label: "Berlangsung", value: "OPEN"),
     const LabelValue(label: "Selesai", value: "COMPLETED"),
