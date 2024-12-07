@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/features/customers/presentation/widgets/filter_orders.dart';
+import 'package:logman/logman.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
@@ -15,7 +17,6 @@ import 'package:lakoe_pos/features/customers/application/cubit/customer_detail/c
 import 'package:lakoe_pos/features/customers/application/cubit/customer_detail/customer_detail_filter_state.dart';
 import 'package:lakoe_pos/features/customers/application/cubit/customer_detail/customer_detail_state.dart';
 import 'package:lakoe_pos/features/customers/presentation/widgets/order_item.dart';
-import 'package:lakoe_pos/features/orders/common/widgets/filters/order_date_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
@@ -75,15 +76,12 @@ class _CustomerDetailState extends State<CustomerDetail> {
         final arguments =
             ModalRoute.of(context)!.settings.arguments as CustomerModel;
 
+        CustomerDetailFilterState filterState =
+            context.read<CustomerDetailFilterCubit>().state;
+
         context.read<CustomerDetailCubit>().findOne(
               customerId: arguments.id,
-              dto: DetailCustomerOutletDto(
-                from: state.from,
-                template: ["ALL", "CUSTOM"].contains(state.template)
-                    ? null
-                    : state.template,
-                to: state.to,
-              ),
+              dto: filterState.toDetailCustomerOutletDto,
             );
       },
       child: Scaffold(
@@ -163,123 +161,103 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                   color: TColors.primary,
                                 ),
                               ),
-                              // Column(
-                              //   mainAxisSize: MainAxisSize.min,
-                              //   crossAxisAlignment: CrossAxisAlignment.end,
-                              //   children: [
-                              //     Row(
-                              //       mainAxisAlignment: MainAxisAlignment.end,
-                              //       children: [
-                              //         SvgPicture.asset(
-                              //           TImages.lakoeCoin,
-                              //           height: 20,
-                              //           width: 20,
-                              //         ),
-                              //         const SizedBox(width: 4),
-                              //         TextHeading4(
-                              //           data.customer.owners.first.coin
-                              //               .toString(),
-                              //         ),
-                              //       ],
-                              //     ),
-                              //     const TextBodyS(
-                              //       "Poin",
-                              //       color: TColors.neutralDarkLight,
-                              //     ),
-                              //   ],
-                              // ),
                             ],
                           ),
                         ),
                         Container(
                           height: 4,
                           color: TColors.neutralLightMedium,
-                          margin: const EdgeInsets.only(top: 8.0, bottom: 16.0),
+                          margin: EdgeInsets.only(top: 8.0, bottom: 16.0),
                         ),
                         Container(
-                          padding: const EdgeInsets.only(
-                              top: 6.0, left: 16, right: 16),
+                          padding: EdgeInsets.only(top: 6.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                margin: const EdgeInsets.only(bottom: 8),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const TextHeading3("Riwayat Transaksi"),
-                                    TextBodyS(
-                                      "Total ${data.customer.count.orders} transaksi",
-                                      color: TColors.neutralDarkLight,
-                                    ),
-                                  ],
-                                ),
-                              ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
-                                child: Row(
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Expanded(
-                                      child: CustomerSummaryCard(
-                                        title: "Total Belanja",
-                                        value: TFormatter.formatToRupiah(
-                                          double.parse(data.summary.totalPrice),
-                                        ),
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 8),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const TextHeading3(
+                                              "Riwayat Transaksi"),
+                                          TextBodyS(
+                                            "Total ${data.customer.count.orders} transaksi",
+                                            color: TColors.neutralDarkLight,
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: CustomerSummaryCard(
-                                        title: "Menu Favorit",
-                                        value: data.summary.favorite,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 8),
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: SizedBox(
-                                    width: double.maxFinite,
-                                    child: Row(
-                                      children: [
-                                        Wrap(
-                                          direction: Axis.horizontal,
-                                          alignment: WrapAlignment.start,
-                                          spacing: 8,
-                                          children: [
-                                            BlocBuilder<
-                                                CustomerDetailFilterCubit,
-                                                CustomerDetailFilterState>(
-                                              builder: (context, state) {
-                                                return OrderDateFilter(
-                                                  from: state.from,
-                                                  template: state.template,
-                                                  to: state.to,
-                                                  onChanged:
-                                                      (template, from, to) {
-                                                    context
-                                                        .read<
-                                                            CustomerDetailFilterCubit>()
-                                                        .setFilter(
-                                                          template: template,
-                                                          from: from,
-                                                          to: to,
-                                                        );
-                                                  },
-                                                );
-                                              },
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: CustomerSummaryCard(
+                                              title: "Total Belanja",
+                                              value: TFormatter.formatToRupiah(
+                                                double.parse(
+                                                    data.summary.totalPrice),
+                                              ),
                                             ),
-                                          ],
-                                        ),
-                                      ],
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: CustomerSummaryCard(
+                                              title: "Menu Favorit",
+                                              value: data.summary.favorite,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
+                              ),
+                              BlocBuilder<CustomerDetailFilterCubit,
+                                  CustomerDetailFilterState>(
+                                builder: (context, state) {
+                                  return FilterOrders(
+                                    value: state.toDetailCustomerOutletDto,
+                                    onClear: () {
+                                      context
+                                          .read<CustomerDetailFilterCubit>()
+                                          .clearFilter();
+                                    },
+                                    onChanged: (value) {
+                                      Logman.instance.info("VALUE $value");
+
+                                      final from = value.template == "CUSTOM"
+                                          ? DateTime.parse(value.from!)
+                                          : value.from != null
+                                              ? DateTime.parse(value.from!)
+                                              : null;
+
+                                      final to = value.template == "CUSTOM"
+                                          ? DateTime.parse(value.to!)
+                                          : value.to != null
+                                              ? DateTime.parse(value.to!)
+                                              : null;
+
+                                      context
+                                          .read<CustomerDetailFilterCubit>()
+                                          .setFilter(
+                                            status: value.status,
+                                            template: value.template,
+                                            from: from,
+                                            to: to,
+                                          );
+                                    },
+                                  );
+                                },
                               ),
                             ],
                           ),

@@ -9,6 +9,7 @@ part of 'outlet.dart';
 _$DetailCustomerOutletDtoImpl _$$DetailCustomerOutletDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$DetailCustomerOutletDtoImpl(
+      status: json['status'] as String?,
       from: json['from'] as String?,
       to: json['to'] as String?,
       template: json['template'] as String?,
@@ -17,6 +18,7 @@ _$DetailCustomerOutletDtoImpl _$$DetailCustomerOutletDtoImplFromJson(
 Map<String, dynamic> _$$DetailCustomerOutletDtoImplToJson(
         _$DetailCustomerOutletDtoImpl instance) =>
     <String, dynamic>{
+      'status': instance.status,
       'from': instance.from,
       'to': instance.to,
       'template': instance.template,

@@ -56,6 +56,7 @@ class _OrderDateFilterContentState extends State<OrderDateFilterContent> {
           ),
           ..._templates.map((template) {
             return CustomRadioTile(
+              title: template.label,
               value: template.value,
               groupValue: _groupValue,
               onChanged: (value) {
@@ -63,7 +64,6 @@ class _OrderDateFilterContentState extends State<OrderDateFilterContent> {
                   _groupValue = value!;
                 });
               },
-              title: template.label,
             );
           }),
           if (_groupValue == "CUSTOM")
@@ -71,17 +71,15 @@ class _OrderDateFilterContentState extends State<OrderDateFilterContent> {
               hideLabel: true,
               from: widget.from == null
                   ? DateTime.now()
-                      .copyWith(hour: 0, minute: 0, second: 0, millisecond: 0)
-                  : DateTime.parse(widget.from!)
-                      .toLocal()
-                      .copyWith(hour: 0, minute: 0, second: 0, millisecond: 0),
+                  : DateTime.parse(widget.from!).toLocal(),
               to: widget.to == null
                   ? DateTime.now()
                   : DateTime.parse(widget.to!).toLocal(),
               onSubmit: ({from, to}) {
-                final customFrom = from!
-                    .copyWith(hour: 0, minute: 0, second: 0, millisecond: 0);
-                final customTo = to;
+                final customFrom =
+                    DateTime(from!.year, from.month, from.day, 00, 00, 00, 000);
+                final customTo =
+                    DateTime(to!.year, to.month, to.day, 23, 59, 59, 999);
                 Navigator.pop(
                   context,
                   OrderDateFilterValue(

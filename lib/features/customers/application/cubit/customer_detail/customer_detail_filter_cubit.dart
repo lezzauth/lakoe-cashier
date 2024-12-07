@@ -3,21 +3,23 @@ import 'package:lakoe_pos/features/customers/application/cubit/customer_detail/c
 
 class CustomerDetailFilterCubit extends Cubit<CustomerDetailFilterState> {
   CustomerDetailFilterCubit()
-      : super(const CustomerDetailFilterState(template: "ALL"));
+      : super(const CustomerDetailFilterState(template: "ALL", status: "ALL"));
 
   void setFilter({
+    String? status,
+    String? template,
     DateTime? from,
     DateTime? to,
-    required String template,
   }) {
     emit(CustomerDetailFilterState(
-      from: from?.toUtc().toIso8601String(),
-      to: to?.toUtc().toIso8601String(),
-      template: template,
+      status: status ?? state.status,
+      template: template ?? state.template,
+      from: from?.toIso8601String(),
+      to: to?.toIso8601String(),
     ));
   }
 
   void clearFilter() {
-    emit(const CustomerDetailFilterState(template: "ALL"));
+    emit(const CustomerDetailFilterState(template: "ALL", status: "ALL"));
   }
 }

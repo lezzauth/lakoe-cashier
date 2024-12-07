@@ -6,6 +6,7 @@ part 'outlet.g.dart';
 @freezed
 class DetailCustomerOutletDto with _$DetailCustomerOutletDto {
   const factory DetailCustomerOutletDto({
+    String? status,
     String? from,
     String? to,
     String? template,
@@ -15,14 +16,36 @@ class DetailCustomerOutletDto with _$DetailCustomerOutletDto {
       _$DetailCustomerOutletDtoFromJson(json);
 }
 
+extension CopyWithExtension on DetailCustomerOutletDto {
+  DetailCustomerOutletDto copyWith({
+    String? status,
+    String? from,
+    String? to,
+    String? template,
+  }) {
+    return DetailCustomerOutletDto(
+      status: status ?? this.status,
+      from: from ?? this.from,
+      to: to ?? this.to,
+      template: template ?? this.template,
+    );
+  }
+}
+
 extension QueryStringExtension on DetailCustomerOutletDto {
   String toQueryString() {
-    final Map<String, dynamic> queryParams = toJson();
+    final Map<String, dynamic> queryParams = {
+      "status": status,
+      "from": from,
+      "to": to,
+      "template": template,
+    };
 
     queryParams.removeWhere((key, value) => value == null);
 
     return queryParams.entries
-        .map((entry) => '${entry.key}=${entry.value.toString()}')
+        .map((entry) =>
+            '${entry.key}=${Uri.encodeComponent(entry.value.toString())}')
         .join('&');
   }
 }

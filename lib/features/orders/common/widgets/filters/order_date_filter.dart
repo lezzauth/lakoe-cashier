@@ -68,7 +68,8 @@ class _OrderDateFilterState extends State<OrderDateFilter> {
 
   @override
   Widget build(BuildContext context) {
-    bool isNotEmpty = widget.to != null && widget.from != null;
+    bool isNotEmpty = widget.template != "ALL" && widget.template != "CUSTOM" ||
+        widget.to != null && widget.from != null;
 
     return FilterChip(
       onSelected: (value) {
