@@ -38,4 +38,17 @@ class OrderCashierFilterCubit extends Cubit<OrderCashierFilterState> {
       sort: "NEWEST",
     ));
   }
+
+  bool hasFilterChanged() {
+    const defaultState = OrderCashierFilterState(
+      status: "OPEN",
+      source: "CASHIER",
+      sort: "NEWEST",
+    );
+
+    final currentDto = state.toFindAllOrderDto;
+    final defaultDto = defaultState.toFindAllOrderDto;
+
+    return currentDto != defaultDto;
+  }
 }

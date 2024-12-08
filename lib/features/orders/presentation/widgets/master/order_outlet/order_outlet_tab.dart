@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/filter/order_outlet_filter.dart';
@@ -22,7 +23,7 @@ class OrderOutlet extends StatefulWidget {
 }
 
 class _OrderOutletState extends State<OrderOutlet> {
-  bool isFilterUsed = false;
+  bool _isFilterUsed = false;
 
   Future<void> onRefresh() async {
     OrdersFilterState filterState = context.read<OrdersFilterCubit>().state;
@@ -40,6 +41,13 @@ class _OrderOutletState extends State<OrderOutlet> {
   void initState() {
     super.initState();
     context.read<OrdersCubit>().init();
+  }
+
+  void _handleClearFilter() {
+    setState(() {
+      _isFilterUsed = false;
+    });
+    context.read<OrdersFilterCubit>().clearFilter();
   }
 
   @override
@@ -70,20 +78,27 @@ class _OrderOutletState extends State<OrderOutlet> {
                     builder: (context, state) {
                       return OrderOutletFilter(
                         value: state.toFindAllOrderDto,
+                        isFilterUsed: _isFilterUsed,
                         onChanged: (value) {
-                          context.read<OrdersFilterCubit>().setFilter(
-                                sort: value.sort,
-                                source: value.source,
-                                type: value.type,
-                                status: value.status,
-                                template: value.template,
-                                from: value.template == "CUSTOM"
-                                    ? DateTime.parse(value.from!)
-                                    : null,
-                                to: value.template == "CUSTOM"
-                                    ? DateTime.parse(value.to!)
-                                    : null,
-                              );
+                          final cubit = context.read<OrdersFilterCubit>();
+
+                          cubit.setFilter(
+                            sort: value.sort,
+                            source: value.source,
+                            type: value.type,
+                            status: value.status,
+                            template: value.template,
+                            from: value.template == "CUSTOM"
+                                ? DateTime.parse(value.from!)
+                                : null,
+                            to: value.template == "CUSTOM"
+                                ? DateTime.parse(value.to!)
+                                : null,
+                          );
+
+                          setState(() {
+                            _isFilterUsed = cubit.hasFilterChanged();
+                          });
                         },
                       );
                     },
@@ -125,9 +140,21 @@ class _OrderOutletState extends State<OrderOutlet> {
                                     width: 276,
                                     height: 200,
                                   ),
-                                  title: "Belum ada pesanan, nih!",
-                                  subTitle:
-                                      "Saat ini kamu belum pernah melakukan transaksi sama sekali.",
+                                  title: (!_isFilterUsed)
+                                      ? "Belum ada pesanan, nih!"
+                                      : "Pesanan tidak ditemukan",
+                                  subTitle: (!_isFilterUsed)
+                                      ? "Saat ini kamu belum pernah melakukan transaksi sama sekali."
+                                      : "Ubah tanggal atau hapus filter untuk melihat penjualan kamu.",
+                                  action: (!_isFilterUsed)
+                                      ? SizedBox.shrink()
+                                      : TextButton(
+                                          onPressed: _handleClearFilter,
+                                          child: TextActionL(
+                                            "Hapus Filter",
+                                            color: TColors.primary,
+                                          ),
+                                        ),
                                 ),
                               ),
                           ],

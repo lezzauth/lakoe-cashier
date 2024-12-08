@@ -29,4 +29,13 @@ class OrdersFilterCubit extends Cubit<OrdersFilterState> {
   void clearFilter() {
     emit(const OrdersFilterState(sort: "NEWEST"));
   }
+
+  bool hasFilterChanged() {
+    const defaultState = OrdersFilterState(sort: "NEWEST");
+
+    final currentDto = state.toFindAllOrderDto;
+    final defaultDto = defaultState.toFindAllOrderDto;
+
+    return currentDto != defaultDto;
+  }
 }

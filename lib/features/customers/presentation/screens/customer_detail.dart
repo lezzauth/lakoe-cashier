@@ -40,7 +40,7 @@ class CustomerDetail extends StatefulWidget {
 }
 
 class _CustomerDetailState extends State<CustomerDetail> {
-  bool isFilterActive = false;
+  bool isFilterUsed = false;
 
   Future<void> _onRefresh() async {
     WidgetsBinding.instance.addPostFrameCallback(
@@ -77,7 +77,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
         (value.status == null || value.status == "ALL");
 
     setState(() {
-      isFilterActive = !isAllNull;
+      isFilterUsed = !isAllNull;
     });
 
     final from = value.template == "CUSTOM"
@@ -102,7 +102,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
 
   void _handleClearFilter() {
     setState(() {
-      isFilterActive = false;
+      isFilterUsed = false;
     });
     context.read<CustomerDetailFilterCubit>().clearFilter();
   }
@@ -279,26 +279,27 @@ class _CustomerDetailState extends State<CustomerDetail> {
                         ),
                         if (data.customer.orders.isEmpty)
                           EmptyList(
-                              image: SvgPicture.asset(
-                                TImages.catBox,
-                                width: 140,
-                                height: 101.45,
-                              ),
-                              title: (!isFilterActive)
-                                  ? "Belum ada transaksi, nih!"
-                                  : "Pembelian tidak titemuakn",
-                              subTitle: (!isFilterActive)
-                                  ? "${data.customer.name} sampai saat ini belum pernah melakukan transaksi."
-                                  : "Ubah tanggal atau ganti filter status untuk melihat pembelian dari ${data.customer.name}",
-                              action: (!isFilterActive)
-                                  ? SizedBox.shrink()
-                                  : TextButton(
-                                      onPressed: _handleClearFilter,
-                                      child: TextActionL(
-                                        "Hapus Filter",
-                                        color: TColors.primary,
-                                      ),
-                                    )),
+                            image: SvgPicture.asset(
+                              TImages.catBox,
+                              width: 140,
+                              height: 101.45,
+                            ),
+                            title: (!isFilterUsed)
+                                ? "Belum ada transaksi, nih!"
+                                : "Pembelian tidak titemuakn",
+                            subTitle: (!isFilterUsed)
+                                ? "${data.customer.name} sampai saat ini belum pernah melakukan transaksi."
+                                : "Ubah tanggal atau ganti filter status untuk melihat pembelian dari ${data.customer.name}",
+                            action: (!isFilterUsed)
+                                ? SizedBox.shrink()
+                                : TextButton(
+                                    onPressed: _handleClearFilter,
+                                    child: TextActionL(
+                                      "Hapus Filter",
+                                      color: TColors.primary,
+                                    ),
+                                  ),
+                          ),
                         if (data.customer.orders.isNotEmpty)
                           Expanded(
                             child: ListView.builder(

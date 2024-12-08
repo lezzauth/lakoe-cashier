@@ -56,7 +56,7 @@ class ReportProductSales extends StatefulWidget {
 class _ReportProductSalesState extends State<ReportProductSales> {
   final ScrollController _scrollController = ScrollController();
 
-  bool isFilterActive = false;
+  bool isFilterUsed = false;
 
   Widget _buildRank(int rank) {
     String icon = "";
@@ -116,7 +116,7 @@ class _ReportProductSalesState extends State<ReportProductSales> {
         (value.status == null || value.status == "ALL");
 
     setState(() {
-      isFilterActive = !isAllNull;
+      isFilterUsed = !isAllNull;
     });
 
     final from = value.template == "CUSTOM"
@@ -141,7 +141,7 @@ class _ReportProductSalesState extends State<ReportProductSales> {
 
   void _handleClearFilter() {
     setState(() {
-      isFilterActive = false;
+      isFilterUsed = false;
     });
     context.read<ReportProductSalesPaginationFilterCubit>().clearFilter();
   }
@@ -405,13 +405,13 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                     width: 140,
                                     height: 101.45,
                                   ),
-                                  title: (!isFilterActive)
+                                  title: (!isFilterUsed)
                                       ? "${product.name} belum pernah terjual"
                                       : "Penjualan tidak ditemukan",
-                                  subTitle: (!isFilterActive)
+                                  subTitle: (!isFilterUsed)
                                       ? "Yuk, promosikan lagi produk ini. Siapa tahu, pelanggan kamu belum tahu."
                                       : "Ubah tanggal atau ganti filter status untuk melihat penjualan ${product.name}",
-                                  action: (!isFilterActive)
+                                  action: (!isFilterUsed)
                                       ? SizedBox.shrink()
                                       : TextButton(
                                           onPressed: _handleClearFilter,

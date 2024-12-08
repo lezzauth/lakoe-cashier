@@ -24,6 +24,7 @@ class TIcons {
   static const String calendar = "assets/icons/calendar.svg";
   static const String copy = "assets/icons/copy.svg";
   static const String filter = "assets/icons/filter.svg";
+  static const String filterBold = "assets/icons/filter-bold.svg";
   static const String camera = "assets/icons/camera.svg";
   static const String download = "assets/icons/download.svg";
   static const String map = "assets/icons/map.svg";
@@ -63,7 +64,7 @@ class TIcons {
 
   static const String card = "assets/icons/card.svg";
   static const String history = "assets/icons/history.svg";
-  static const String filters = "assets/icons/filters.svg";
+  static const String filterColor = "assets/icons/filter-color.svg";
   static const String handMoney = "assets/icons/hand-money.svg";
   static const String linkSquare = "assets/icons/link-square.svg";
   static const String pieChart = "assets/icons/pie-chart.svg";

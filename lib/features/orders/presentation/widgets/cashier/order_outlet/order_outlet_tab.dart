@@ -23,6 +23,8 @@ class OrderCashierOutlet extends StatefulWidget {
 }
 
 class _OrderCashierOutletState extends State<OrderCashierOutlet> {
+  bool _isFilterUsed = false;
+
   Future<void> onRefresh() async {
     OrderCashierFilterState filterState =
         context.read<OrderCashierFilterCubit>().state;
@@ -40,6 +42,13 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
   void initState() {
     super.initState();
     context.read<OrderCashierCubit>().init();
+  }
+
+  void _handleClearFilter() {
+    setState(() {
+      _isFilterUsed = false;
+    });
+    context.read<OrderCashierFilterCubit>().clearFilter();
   }
 
   @override
@@ -68,13 +77,20 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                     builder: (context, state) {
                       return OrderOutletFilter(
                         value: state.toFindAllOrderDto,
+                        isFilterUsed: _isFilterUsed,
                         onChanged: (value) {
-                          context.read<OrderCashierFilterCubit>().setFilter(
-                                status: value.status,
-                                sort: value.sort,
-                                source: value.source,
-                                type: value.type,
-                              );
+                          final cubit = context.read<OrderCashierFilterCubit>();
+
+                          cubit.setFilter(
+                            status: value.status,
+                            sort: value.sort,
+                            source: value.source,
+                            type: value.type,
+                          );
+
+                          setState(() {
+                            _isFilterUsed = cubit.hasFilterChanged();
+                          });
                         },
                       );
                     },
@@ -121,9 +137,21 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                                     width: 276,
                                     height: 200,
                                   ),
-                                  title: "Belum ada pesanan, nih!",
-                                  subTitle:
-                                      "Saat ini belum ada pesanan masuk. Yuk, bikin pesanan pertama untuk hari ini.",
+                                  title: (!_isFilterUsed)
+                                      ? "Belum ada pesanan, nih!"
+                                      : "Pesanan tidak ditemukan",
+                                  subTitle: (!_isFilterUsed)
+                                      ? "Saat ini belum ada pesanan masuk. Yuk, bikin pesanan pertama untuk hari ini."
+                                      : "Ganti status atau hapus filter untuk melihat pesanan hari ini.",
+                                  action: (!_isFilterUsed)
+                                      ? SizedBox.shrink()
+                                      : TextButton(
+                                          onPressed: _handleClearFilter,
+                                          child: TextActionL(
+                                            "Hapus Filter",
+                                            color: TColors.primary,
+                                          ),
+                                        ),
                                 ),
                               ),
                           ],

@@ -12,11 +12,13 @@ import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 class OrderOutletFilter extends StatefulWidget {
   final FindAllOrderCashierDto value;
   final ValueChanged<FindAllOrderCashierDto> onChanged;
+  final bool isFilterUsed;
 
   const OrderOutletFilter({
     super.key,
     required this.value,
     required this.onChanged,
+    this.isFilterUsed = false,
   });
 
   @override
@@ -24,7 +26,7 @@ class OrderOutletFilter extends StatefulWidget {
 }
 
 class _OrderOutletFilterState extends State<OrderOutletFilter> {
-  bool isFilterUsed = false;
+  bool _isFilterUsed = false;
 
   List<LabelValue<String>> statuses = [
     const LabelValue(label: "Berlangsung", value: "OPEN"),
@@ -52,10 +54,12 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
 
       if (result != null) {
         setState(() {
-          isFilterUsed = result['isFilterUsed'] as bool;
+          _isFilterUsed = result['isFilterUsed'] as bool;
         });
       }
     }
+
+    bool isFilterActive = widget.isFilterUsed && _isFilterUsed;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,29 +101,24 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
           color: Colors.white,
           padding: const EdgeInsets.only(left: 8),
           child: InputChip(
+            selected: isFilterActive,
             label: Row(
               children: [
-                const UiIcons(
-                  TIcons.filter,
+                UiIcons(
+                  (!isFilterActive) ? TIcons.filter : TIcons.filterBold,
                   color: TColors.primary,
                   size: 16,
                 ),
-                const SizedBox(width: 4),
-                const TextBodyM(
-                  "Filter",
-                  color: TColors.neutralDarkDarkest,
-                ),
-                if (isFilterUsed) ...[
-                  const SizedBox(width: 4),
-                  Container(
-                    height: 8,
-                    width: 8,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: TColors.error,
-                    ),
-                  )
-                ],
+                SizedBox(width: 4),
+                (!isFilterActive)
+                    ? TextBodyM(
+                        "Filter",
+                        color: TColors.neutralDarkDarkest,
+                      )
+                    : TextHeading4(
+                        "Filter",
+                        color: TColors.primary,
+                      ),
               ],
             ),
             onPressed: onFilterOpen,

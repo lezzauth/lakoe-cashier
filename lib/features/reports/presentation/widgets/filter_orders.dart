@@ -62,7 +62,7 @@ class _FilterOrdersByProductState extends State<FilterOrdersByProduct> {
 
   @override
   Widget build(BuildContext context) {
-    bool isFilterActive = widget.value.template != null ||
+    bool isFilterUsed = widget.value.template != null ||
         widget.value.from != null ||
         widget.value.status != null;
 
@@ -162,7 +162,7 @@ class _FilterOrdersByProductState extends State<FilterOrdersByProduct> {
                         }).toList(),
                       ),
                       const SizedBox(width: 8),
-                      if (isFilterActive)
+                      if (isFilterUsed)
                         TextButton(
                           onPressed: widget.onClear,
                           child: const TextActionL(
