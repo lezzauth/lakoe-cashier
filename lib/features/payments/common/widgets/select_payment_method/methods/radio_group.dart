@@ -37,14 +37,14 @@ class PaymentMethodRadioGroup extends StatelessWidget {
       {"value": "DEBIT"}
     ];
 
-    return Wrap(
-      spacing: 12,
-      runSpacing: 12,
-      children: List.generate(
-        items.length,
-        (index) {
-          return LayoutBuilder(builder: (context, constraints) {
-            final bottomSheetWidth = constraints.maxWidth;
+    return LayoutBuilder(builder: (context, constraints) {
+      final bottomSheetWidth = constraints.maxWidth;
+      return Wrap(
+        spacing: 12,
+        runSpacing: 12,
+        children: List.generate(
+          items.length,
+          (index) {
             return SizedBox(
               width: (items.length % 2 != 0 && index == 0)
                   ? bottomSheetWidth
@@ -57,10 +57,10 @@ class PaymentMethodRadioGroup extends StatelessWidget {
                 onLimited: onLimitedPressed,
               ),
             );
-          });
-        },
-      ),
-    );
+          },
+        ),
+      );
+    });
 
     // return Column(
     //   mainAxisSize: MainAxisSize.min,

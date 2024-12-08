@@ -48,26 +48,34 @@ class PaymentMethodRadio extends StatelessWidget {
       return TColors.neutralLightMedium;
     }
 
-    return Expanded(
-      child: InkWell(
-        onTap: () {
-          if (limited) {
-            if (onLimited != null) onLimited!();
-            return;
-          }
-          onChanged(value);
-        },
-        borderRadius: BorderRadius.circular(12.0),
-        child: Container(
-          height: 58,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0),
-            color: getCardColor(),
-            border: Border.all(color: getBorderColor(), width: 1),
-          ),
-          child: ResponsiveLayout(
-            mobile: switch (value) {
+    return InkWell(
+      onTap: () {
+        if (limited) {
+          if (onLimited != null) onLimited!();
+          return;
+        }
+        onChanged(value);
+      },
+      borderRadius: BorderRadius.circular(12.0),
+      child: Container(
+        height: 58,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          color: getCardColor(),
+          border: Border.all(color: getBorderColor(), width: 1),
+        ),
+        child: ResponsiveLayout(
+          mobile: switch (value) {
+            "CASH" => CashPaymentRadioContent(selected: selected),
+            "BANK_TRANSFER" =>
+              BankTransferPaymentRadioContent(selected: selected),
+            "QR_CODE" => QrisPaymentRadioContent(selected: selected),
+            "DEBIT" => DebitPaymentRadioContent(selected: selected),
+            _ => const SizedBox(),
+          },
+          tablet: Center(
+            child: switch (value) {
               "CASH" => CashPaymentRadioContent(selected: selected),
               "BANK_TRANSFER" =>
                 BankTransferPaymentRadioContent(selected: selected),
@@ -75,16 +83,6 @@ class PaymentMethodRadio extends StatelessWidget {
               "DEBIT" => DebitPaymentRadioContent(selected: selected),
               _ => const SizedBox(),
             },
-            tablet: Center(
-              child: switch (value) {
-                "CASH" => CashPaymentRadioContent(selected: selected),
-                "BANK_TRANSFER" =>
-                  BankTransferPaymentRadioContent(selected: selected),
-                "QR_CODE" => QrisPaymentRadioContent(selected: selected),
-                "DEBIT" => DebitPaymentRadioContent(selected: selected),
-                _ => const SizedBox(),
-              },
-            ),
           ),
         ),
       ),
