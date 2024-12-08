@@ -6,6 +6,7 @@ import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_state.dart';
 import 'package:lakoe_pos/utils/helpers/error_handler.dart';
+import 'package:logman/logman.dart';
 
 class EmployeeMasterCubit extends Cubit<EmployeeMasterState> {
   final EmployeeRepository _employeeRepository = EmployeeRepositoryImpl();
@@ -47,6 +48,7 @@ class EmployeeMasterCubit extends Cubit<EmployeeMasterState> {
     } catch (e) {
       if (e is DioException) {
         final resError = e.error as DioExceptionModel;
+        Logman.instance.info("resError $resError");
         emit(EmployeeMasterActionError(resError));
         return;
       }

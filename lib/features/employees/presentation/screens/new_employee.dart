@@ -82,13 +82,13 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
         if (state is EmployeeMasterActionSuccess) {
           Navigator.pop(context, true);
         } else if (state is EmployeeMasterActionError) {
-          if (state.res.message!.contains("pin already used")) {
+          if (state.res.statusCode == 409) {
             CustomToast.show(
               "PIN sudah digunakan kasir lain.",
               position: 'bottom',
               duration: 2,
             );
-          } else {
+          } else if (state.res.statusCode == 402) {
             showModalBottomSheet(
               context: context,
               enableDrag: false,
@@ -131,6 +131,7 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
           child: Scaffold(
             appBar: CustomAppbar(
               title: "Tambah Kasir Baru",
+              handleBackButton: () => Navigator.pop(context, true),
               actions: [
                 TextButton(
                     onPressed: !isLoading ? _onSubmitted : null,

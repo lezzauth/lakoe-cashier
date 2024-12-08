@@ -59,7 +59,7 @@ class ItemPageView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 52),
+                    padding: EdgeInsets.symmetric(horizontal: 52),
                     child: Column(
                       children: [
                         if (withLogo)
@@ -94,51 +94,48 @@ class ItemPageView extends StatelessWidget {
                   ),
                 ],
               ),
-        tablet: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 100),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 100),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (withLogo)
-                        SvgPicture.asset(
-                          TImages.primaryLogoLakoe,
-                          height: 32,
-                        ),
-                      if (title != null)
-                        TextHeading1(
-                          title!,
-                          color: TColors.neutralDarkDark,
-                          textAlign: TextAlign.center,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      SizedBox(height: 16),
-                      TextBodyXL(
-                        description!,
+        tablet: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 100),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (withLogo)
+                      SvgPicture.asset(
+                        TImages.primaryLogoLakoe,
+                        height: 32,
+                      ),
+                    if (title != null)
+                      TextHeading1(
+                        title!,
                         color: TColors.neutralDarkDark,
                         textAlign: TextAlign.center,
+                        fontWeight: FontWeight.w900,
                       ),
-                    ],
-                  ),
+                    SizedBox(height: 16),
+                    TextBodyXL(
+                      description!,
+                      color: TColors.neutralDarkDark,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Image.asset(
-                    asset,
-                    height: 320,
-                  ),
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Image.asset(
+                  asset,
+                  height: 320,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

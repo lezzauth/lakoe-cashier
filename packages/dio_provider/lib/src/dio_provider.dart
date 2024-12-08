@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:app_config_provider/app_config_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/src/logging/logman_dio_interceptor.dart';
@@ -68,45 +66,54 @@ class DioProvider {
   ) async {
     if (e.response != null) {
       try {
-        final errorModel = DioExceptionModel.fromJson(
-            e.response!.data as Map<String, dynamic>);
+        if (e.response!.statusCode == 502) {
+          _showMaintenanceBottomSheet();
 
-        switch (e.response!.statusCode) {
-          case 401:
-            return handler.reject(
-              _createDioException(
-                e,
-                "jwt expired",
-                "Token has expired",
-              ),
-            );
-          case 402:
-            return handler.reject(
-              _createDioException(
-                e,
-                "Insufficient quota of item",
-                "Quota limit has been reached",
-              ),
-            );
-          case 404:
-            return handler.reject(
-              _createDioException(e, "Client error - 404", ""),
-            );
-          case 429:
-            return handler.reject(
-              _createDioException(e, "Too many request (429)", ""),
-            );
-          case 502:
-            _showMaintenanceBottomSheet();
-            break;
+          return handler.reject(DioException(
+            requestOptions: e.requestOptions,
+            error: DioExceptionModel(statusCode: 502, message: e.message),
+            type: DioExceptionType.badResponse,
+          ));
+        } else {
+          final errorModel = DioExceptionModel.fromJson(
+              e.response!.data as Map<String, dynamic>);
+
+          switch (e.response!.statusCode) {
+            case 401:
+              return handler.reject(
+                _createDioException(e, "jwt expired", "Token has expired"),
+              );
+            case 402:
+              return handler.reject(
+                _createDioException(e, "Insufficient quota of item",
+                    "Quota limit has been reached"),
+              );
+            case 404:
+              return handler.reject(
+                _createDioException(e, "Client error - 404", ""),
+              );
+            case 429:
+              return handler.reject(
+                _createDioException(e, "Too many request (429)", ""),
+              );
+            case 502:
+              _showMaintenanceBottomSheet();
+              break;
+          }
+          return handler.reject(DioException(
+            requestOptions: e.requestOptions,
+            error: errorModel,
+            type: DioExceptionType.badResponse,
+          ));
         }
-        return handler.reject(DioException(
-          requestOptions: e.requestOptions,
-          error: errorModel,
-          type: DioExceptionType.badResponse,
-        ));
       } catch (e) {
-        Logman.instance.error("Error parsing error response: $e");
+        // _createDioException(
+        //   DioException(requestOptions: RequestOptions()),
+        //   "502",
+        //   "",
+        // );
+        Logman.instance.error("HHH  $e");
+        // Logman.instance.error("Error parsing error response: ${e.toString()}");
       }
     } else if (_isConnectionError(e)) {
       _showConnectionErrorToast();
@@ -207,7 +214,6 @@ class DioProvider {
         type: DioExceptionType.badResponse,
       ));
     } else {
-      log("Response is not a Map: $responseData");
       return handler.reject(DioException(
         requestOptions: e.requestOptions,
         error: "Unknown error",
@@ -234,8 +240,11 @@ class RetryInterceptor extends Interceptor {
   final int maxRetries;
   final int retryDelay;
 
-  RetryInterceptor(
-      {required this.dio, this.maxRetries = 3, this.retryDelay = 1000});
+  RetryInterceptor({
+    required this.dio,
+    this.maxRetries = 3,
+    this.retryDelay = 1000,
+  });
 
   @override
   Future<void> onError(

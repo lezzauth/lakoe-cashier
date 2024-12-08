@@ -144,6 +144,7 @@ class _NewProductScreenState extends State<NewProductScreen>
             child: Scaffold(
               appBar: CustomAppbar(
                 title: "Produk Baru",
+                handleBackButton: () => Navigator.pop(context, true),
                 actions: [
                   TextButton(
                     onPressed: isFormValid ? onSubmit : null,

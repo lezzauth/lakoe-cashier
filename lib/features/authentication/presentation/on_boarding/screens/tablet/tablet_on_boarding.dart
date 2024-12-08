@@ -111,7 +111,7 @@ class _TabletOnBoardingState extends State<TabletOnBoarding> {
               ItemPageView(
                 title: "QR Order dari Meja",
                 description:
-                    "Cukup scan QR di meja, pelanggan bisa pesan langsung dari HP mereka!",
+                    "Cukup scan QR di meja, pelanggan bisa pesan langsung dari HP customer.",
                 asset: TImages.onboarding2,
                 isTextInputActive: _isTextInputActive,
               ),
