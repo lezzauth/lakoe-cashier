@@ -26,8 +26,8 @@ class OrderCashierFilterCubit extends Cubit<OrderCashierFilterState> {
       status: status ?? state.status ?? "OPEN",
       type: type ?? state.type,
       template: template ?? state.template,
-      from: from?.toIso8601String(),
-      to: to?.toIso8601String(),
+      from: from?.toIso8601String() ?? state.from,
+      to: to?.toIso8601String() ?? state.to,
     ));
   }
 

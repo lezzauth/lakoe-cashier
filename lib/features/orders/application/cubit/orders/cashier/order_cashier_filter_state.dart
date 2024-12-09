@@ -23,12 +23,12 @@ class OrderCashierFilterState extends Equatable {
   });
 
   FindAllOrderCashierDto get toFindAllOrderDto => FindAllOrderCashierDto(
-        search: search,
+        search: search == '' ? null : search,
         sort: sort,
         source: source,
-        status: status,
+        status: status == 'ALL' ? null : status,
         type: type == 'ALL' ? null : type,
-        template: template,
+        template: template == 'ALL' ? null : template,
         from: from,
         to: to,
       );

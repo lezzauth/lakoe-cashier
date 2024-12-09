@@ -33,6 +33,7 @@ class OrderMaster extends StatelessWidget {
   OrderMaster({super.key});
 
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +47,7 @@ class OrderMaster extends StatelessWidget {
         search: SearchField(
           hintText: "Cari pesanan disini...",
           controller: _searchController,
+          focusNode: _searchFocusNode,
           debounceTime: 500,
           onChanged: (value) {
             if (previousScreen == "ExploreProduct") {
@@ -55,7 +57,7 @@ class OrderMaster extends StatelessWidget {
             }
           },
         ),
-        bottom: const TabContainer(
+        bottom: TabContainer(
           tabs: [
             TabItem(title: "Kasir"),
             TabItem(title: "QR Meja", counter: 2)
@@ -63,17 +65,23 @@ class OrderMaster extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 4.0),
+        padding: EdgeInsets.only(top: 4.0),
         child: (previousScreen == "ExploreProduct")
             ? TabBarView(
                 children: [
-                  OrderCashierOutlet(),
+                  OrderCashierOutlet(
+                    searchController: _searchController,
+                    searchFocusNode: _searchFocusNode,
+                  ),
                   OrderCashierOnline(),
                 ],
               )
             : TabBarView(
                 children: [
-                  OrderOutlet(),
+                  OrderOutlet(
+                    searchController: _searchController,
+                    searchFocusNode: _searchFocusNode,
+                  ),
                   OrderOnline(),
                 ],
               ),

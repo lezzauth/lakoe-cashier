@@ -16,13 +16,13 @@ class OrdersFilterCubit extends Cubit<OrdersFilterState> {
   }) {
     emit(OrdersFilterState(
       search: search ?? state.search,
-      sort: sort ?? state.sort,
+      sort: sort ?? state.sort ?? "NEWEST",
       source: source ?? state.source,
       status: status ?? state.status,
       type: type ?? state.type,
       template: template ?? state.template,
-      from: from?.toIso8601String(),
-      to: to?.toIso8601String(),
+      from: from?.toIso8601String() ?? state.from,
+      to: to?.toIso8601String() ?? state.to,
     ));
   }
 

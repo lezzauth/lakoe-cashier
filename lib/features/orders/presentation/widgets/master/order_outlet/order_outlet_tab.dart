@@ -16,7 +16,14 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
 class OrderOutlet extends StatefulWidget {
-  const OrderOutlet({super.key});
+  const OrderOutlet({
+    super.key,
+    this.searchController,
+    this.searchFocusNode,
+  });
+
+  final TextEditingController? searchController;
+  final FocusNode? searchFocusNode;
 
   @override
   State<OrderOutlet> createState() => _OrderOutletState();
@@ -24,6 +31,7 @@ class OrderOutlet extends StatefulWidget {
 
 class _OrderOutletState extends State<OrderOutlet> {
   bool _isFilterUsed = false;
+  String _keyWordSearch = "";
 
   Future<void> onRefresh() async {
     OrdersFilterState filterState = context.read<OrdersFilterCubit>().state;
@@ -44,10 +52,52 @@ class _OrderOutletState extends State<OrderOutlet> {
   }
 
   void _handleClearFilter() {
-    setState(() {
-      _isFilterUsed = false;
-    });
-    context.read<OrdersFilterCubit>().clearFilter();
+    if (_keyWordSearch.isNotEmpty) {
+      widget.searchFocusNode!.requestFocus();
+      widget.searchController!.selection = TextSelection(
+        baseOffset: 0,
+        extentOffset: widget.searchController!.text.length,
+      );
+    } else {
+      context.read<OrdersFilterCubit>().clearFilter();
+      setState(() {
+        _isFilterUsed = false;
+      });
+    }
+  }
+
+  String _determineTitle() {
+    if (!_isFilterUsed && _keyWordSearch.isEmpty) {
+      return "Belum ada pesanan, nih!";
+    } else if (_keyWordSearch.isNotEmpty) {
+      return "Pencarian tidak ditemukan";
+    } else {
+      return "Pesanan tidak ditemukan";
+    }
+  }
+
+  String _determineSubTitle() {
+    if (!_isFilterUsed && _keyWordSearch.isEmpty) {
+      return "Saat ini kamu belum pernah melakukan transaksi sama sekali.";
+    } else if (_keyWordSearch.isNotEmpty) {
+      return "Coba cari dengan no. order, no. meja atau nama pelanggan yang lain";
+    } else {
+      return "Ubah tanggal atau hapus filter untuk melihat penjualan kamu.";
+    }
+  }
+
+  Widget _buildActionButton() {
+    if (!_isFilterUsed && _keyWordSearch.isEmpty) {
+      return SizedBox.shrink();
+    } else {
+      return TextButton(
+        onPressed: _handleClearFilter,
+        child: TextActionL(
+          _keyWordSearch.isNotEmpty ? "Ubah Pencarian" : "Hapus Filter",
+          color: TColors.primary,
+        ),
+      );
+    }
   }
 
   @override
@@ -60,6 +110,10 @@ class _OrderOutletState extends State<OrderOutlet> {
         BlocListener<OrdersFilterCubit, OrdersFilterState>(
           listener: (context, state) {
             context.read<OrdersCubit>().findAll(state.toFindAllOrderDto);
+
+            setState(() {
+              _keyWordSearch = state.toFindAllOrderDto.search ?? "";
+            });
           },
         )
       ],
@@ -106,8 +160,11 @@ class _OrderOutletState extends State<OrderOutlet> {
                 ),
                 Expanded(
                   child: BlocBuilder<OrdersCubit, OrdersState>(
-                    builder: (context, state) => switch (state) {
-                      OrdersLoadSuccess(:final orders) => CustomScrollView(
+                    builder: (context, state) {
+                      if (state is OrdersLoadSuccess) {
+                        final orders = state.orders;
+
+                        return CustomScrollView(
                           slivers: [
                             if (orders.isNotEmpty) ...[
                               SliverList.builder(
@@ -130,49 +187,47 @@ class _OrderOutletState extends State<OrderOutlet> {
                                 },
                               ),
                               const SliverToBoxAdapter(
-                                  child: SizedBox(height: 72)),
+                                child: SizedBox(height: 72),
+                              ),
                             ],
                             if (orders.isEmpty)
                               SliverToBoxAdapter(
                                 child: EmptyList(
-                                  image: SvgPicture.asset(
-                                    TImages.catBox,
-                                    width: 276,
-                                    height: 200,
-                                  ),
-                                  title: (!_isFilterUsed)
-                                      ? "Belum ada pesanan, nih!"
-                                      : "Pesanan tidak ditemukan",
-                                  subTitle: (!_isFilterUsed)
-                                      ? "Saat ini kamu belum pernah melakukan transaksi sama sekali."
-                                      : "Ubah tanggal atau hapus filter untuk melihat penjualan kamu.",
-                                  action: (!_isFilterUsed)
-                                      ? SizedBox.shrink()
-                                      : TextButton(
-                                          onPressed: _handleClearFilter,
-                                          child: TextActionL(
-                                            "Hapus Filter",
-                                            color: TColors.primary,
-                                          ),
+                                  image: _keyWordSearch.isNotEmpty
+                                      ? null
+                                      : SvgPicture.asset(
+                                          TImages.catBox,
+                                          width: 276,
+                                          height: 200,
                                         ),
+                                  title: _determineTitle(),
+                                  subTitle: _determineSubTitle(),
+                                  action: _buildActionButton(),
                                 ),
                               ),
                           ],
-                        ),
-                      OrdersLoadFailure() => ListShimmer(
+                        );
+                      } else if (state is OrdersLoadFailure) {
+                        return EmptyList(
+                          title: "Gagal memuat data, nih!",
+                          subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
+                          action: TextButton(
+                            onPressed: onRefresh,
+                            child: TextActionL(
+                              "Coba Lagi",
+                              color: TColors.primary,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return const ListShimmer(
                           crossAlignment: "center",
                           circleAvatar: true,
                           sizeAvatar: 48,
                           heightTitle: 16,
                           heightSubtitle: 12,
-                        ),
-                      _ => const ListShimmer(
-                          crossAlignment: "center",
-                          circleAvatar: true,
-                          sizeAvatar: 48,
-                          heightTitle: 16,
-                          heightSubtitle: 12,
-                        ),
+                        );
+                      }
                     },
                   ),
                 )

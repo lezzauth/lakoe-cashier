@@ -40,6 +40,7 @@ class EmptyList extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextHeading2(title),
+                    SizedBox(height: 4),
                     Container(
                       constraints: const BoxConstraints(
                         maxWidth: 311,

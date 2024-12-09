@@ -23,7 +23,7 @@ class OrdersFilterState extends Equatable {
   });
 
   FindAllOrderDto get toFindAllOrderDto => FindAllOrderDto(
-        search: search,
+        search: search == '' ? null : search,
         sort: sort,
         source: source,
         status: status == 'ALL' ? null : status,
