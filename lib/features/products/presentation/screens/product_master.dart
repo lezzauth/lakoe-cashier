@@ -7,6 +7,7 @@ import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/form/search_field.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
 import 'package:lakoe_pos/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
@@ -42,6 +43,9 @@ class ProductMaster extends StatefulWidget {
 }
 
 class _ProductMasterState extends State<ProductMaster> {
+  final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+
   Future<void> onRefresh() async {
     if (!mounted) return;
 
@@ -74,6 +78,14 @@ class _ProductMasterState extends State<ProductMaster> {
     onRefresh();
   }
 
+  void _handleChangeKeyword() {
+    _searchFocusNode.requestFocus();
+    _searchController.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: _searchController.text.length,
+    );
+  }
+
   Widget _buildProductList(List<ProductModel> products) {
     final filterState = context.read<ProductMasterFilterCubit>().state;
 
@@ -93,6 +105,13 @@ class _ProductMasterState extends State<ProductMaster> {
       return EmptyList(
         title: "Pencarian tidak ditemukan",
         subTitle: "Coba cari dengan nama produk yang lain.",
+        action: TextButton(
+          onPressed: _handleChangeKeyword,
+          child: TextActionL(
+            "Ubah Pencarian",
+            color: TColors.primary,
+          ),
+        ),
       );
     }
 
@@ -193,6 +212,9 @@ class _ProductMasterState extends State<ProductMaster> {
         appBar: CustomAppbar(
           search: SearchField(
             hintText: "Cari produk disini...",
+            controller: _searchController,
+            focusNode: _searchFocusNode,
+            debounceTime: 500,
             onChanged: (value) {
               context.read<ProductMasterFilterCubit>().setFilter(name: value);
             },

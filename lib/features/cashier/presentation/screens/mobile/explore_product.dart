@@ -33,6 +33,7 @@ class ExploreProductMobile extends StatefulWidget {
 class _ExploreProductMobileState extends State<ExploreProductMobile> {
   bool isBottomSheetVisible = false;
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
 
   Future<void> _onRefresh() async {
     if (!mounted) return;
@@ -121,6 +122,7 @@ class _ExploreProductMobileState extends State<ExploreProductMobile> {
                         return SearchField(
                           hintText: "Cari menu disini…",
                           controller: _searchController,
+                          focusNode: _searchFocusNode,
                           debounceTime: 500,
                           onChanged: (value) {
                             context
@@ -185,7 +187,10 @@ class _ExploreProductMobileState extends State<ExploreProductMobile> {
                     ),
                   ),
                 ),
-                CashierProductList(),
+                CashierProductList(
+                  searchController: _searchController,
+                  searchFocusNode: _searchFocusNode,
+                ),
                 SliverToBoxAdapter(
                   child: SizedBox(height: 80),
                 ),

@@ -31,7 +31,7 @@ class OrderCashierOutlet extends StatefulWidget {
 
 class _OrderCashierOutletState extends State<OrderCashierOutlet> {
   bool _isFilterUsed = false;
-  String _keyWordSearch = "";
+  String _keywordSearch = "";
 
   Future<void> onRefresh() async {
     OrderCashierFilterState filterState =
@@ -53,7 +53,7 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
   }
 
   void _handleClearFilter() {
-    if (_keyWordSearch.isNotEmpty) {
+    if (_keywordSearch.isNotEmpty) {
       widget.searchFocusNode!.requestFocus();
       widget.searchController!.selection = TextSelection(
         baseOffset: 0,
@@ -68,9 +68,9 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
   }
 
   String _determineTitle() {
-    if (!_isFilterUsed && _keyWordSearch.isEmpty) {
+    if (!_isFilterUsed && _keywordSearch.isEmpty) {
       return "Belum ada pesanan, nih!";
-    } else if (_keyWordSearch.isNotEmpty) {
+    } else if (_keywordSearch.isNotEmpty) {
       return "Pencarian tidak ditemukan";
     } else {
       return "Pesanan tidak ditemukan";
@@ -78,9 +78,9 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
   }
 
   String _determineSubTitle() {
-    if (!_isFilterUsed && _keyWordSearch.isEmpty) {
+    if (!_isFilterUsed && _keywordSearch.isEmpty) {
       return "Saat ini belum ada pesanan masuk. Yuk, bikin pesanan pertama untuk hari ini.";
-    } else if (_keyWordSearch.isNotEmpty) {
+    } else if (_keywordSearch.isNotEmpty) {
       return "Coba cari dengan no. order, no. meja atau nama pelanggan yang lain";
     } else {
       return "Ganti status atau hapus filter untuk melihat pesanan hari ini.";
@@ -88,13 +88,13 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
   }
 
   Widget _buildActionButton() {
-    if (!_isFilterUsed && _keyWordSearch.isEmpty) {
+    if (!_isFilterUsed && _keywordSearch.isEmpty) {
       return SizedBox.shrink();
     } else {
       return TextButton(
         onPressed: _handleClearFilter,
         child: TextActionL(
-          _keyWordSearch.isNotEmpty ? "Ubah Pencarian" : "Hapus Filter",
+          _keywordSearch.isNotEmpty ? "Ubah Pencarian" : "Hapus Filter",
           color: TColors.primary,
         ),
       );
@@ -110,7 +110,7 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
             context.read<OrderCashierCubit>().findAll(state.toFindAllOrderDto);
 
             setState(() {
-              _keyWordSearch = state.toFindAllOrderDto.search ?? "";
+              _keywordSearch = state.toFindAllOrderDto.search ?? "";
             });
           },
         ),
@@ -188,7 +188,7 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                             if (orders.isEmpty)
                               SliverToBoxAdapter(
                                 child: EmptyList(
-                                  image: _keyWordSearch.isNotEmpty
+                                  image: _keywordSearch.isNotEmpty
                                       ? null
                                       : SvgPicture.asset(
                                           TImages.catBox,

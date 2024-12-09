@@ -7,6 +7,7 @@ import 'package:lakoe_pos/common/widgets/form/search_field.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
@@ -38,6 +39,8 @@ class CategoryMaster extends StatefulWidget {
 
 class _CategoryMasterState extends State<CategoryMaster> {
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+
   Future<void> onRefresh() async {
     CategoryMasterFilterState filterState =
         context.read<CategoryMasterFilterCubit>().state;
@@ -51,6 +54,14 @@ class _CategoryMasterState extends State<CategoryMaster> {
   void initState() {
     super.initState();
     context.read<CategoryMasterCubit>().init();
+  }
+
+  void _handleChangeKeyword() {
+    _searchFocusNode.requestFocus();
+    _searchController.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: _searchController.text.length,
+    );
   }
 
   @override
@@ -70,6 +81,7 @@ class _CategoryMasterState extends State<CategoryMaster> {
           search: SearchField(
             hintText: "Cari kategori disini…",
             controller: _searchController,
+            focusNode: _searchFocusNode,
             debounceTime: 500,
             onChanged: (value) {
               context
@@ -98,10 +110,17 @@ class _CategoryMasterState extends State<CategoryMaster> {
                               if (filterState.search != null &&
                                   filterState.search!.isNotEmpty) {
                                 return SliverToBoxAdapter(
-                                  child: const EmptyList(
+                                  child: EmptyList(
                                     title: "Pencarian tidak ditemukan",
                                     subTitle:
                                         "Coba cari dengan nama kategori yang lain.",
+                                    action: TextButton(
+                                      onPressed: _handleChangeKeyword,
+                                      child: const TextActionL(
+                                        "Ubah Pencarian",
+                                        color: TColors.primary,
+                                      ),
+                                    ),
                                   ),
                                 );
                               }

@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
@@ -13,7 +14,10 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ProductGrid extends StatefulWidget {
-  const ProductGrid({super.key});
+  const ProductGrid({super.key, this.searchController, this.searchFocusNode});
+
+  final TextEditingController? searchController;
+  final FocusNode? searchFocusNode;
 
   @override
   State<ProductGrid> createState() => _ProductGridState();
@@ -28,6 +32,14 @@ class _ProductGridState extends State<ProductGrid> {
     context.read<CartCubit>().updateQuantity(product, quantity);
   }
 
+  void _handleChangeKeyword() {
+    widget.searchFocusNode!.requestFocus();
+    widget.searchController!.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: widget.searchController!.text.length,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CashierProductCubit, CashierProductState>(
@@ -35,10 +47,18 @@ class _ProductGridState extends State<ProductGrid> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         sliver: switch (state) {
           CashierProductLoadSuccess(:final products) => products.isEmpty
-              ? const SliverFillRemaining(
+              ? SliverFillRemaining(
                   child: EmptyList(
-                      title: "Pencarian tidak ditemukan",
-                      subTitle: "Coba cari dengan nama produk yang lain"),
+                    title: "Pencarian tidak ditemukan",
+                    subTitle: "Coba cari dengan nama produk yang lain",
+                    action: TextButton(
+                      onPressed: _handleChangeKeyword,
+                      child: TextActionL(
+                        "Ubah Pencarian",
+                        color: TColors.primary,
+                      ),
+                    ),
+                  ),
                 )
               : BlocBuilder<CartCubit, CartState>(
                   builder: (context, cartState) {

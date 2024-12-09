@@ -18,15 +18,21 @@ class CustomerMasterCubit extends Cubit<CustomerMasterState> {
   Future<void> findAll(FindAllCustomerDto dto) async {
     try {
       emit(CustomerMasterLoadInProgress());
-      List<CustomerModel> initCustomers = [
-        const CustomerModel(
-          id: "-",
-          name: "Umum",
-          email: "",
-          phoneNumber: "-",
-          address: "",
-        ),
-      ];
+
+      List<CustomerModel> initCustomers = [];
+
+      if (dto.search == null || dto.search!.isEmpty) {
+        initCustomers = [
+          const CustomerModel(
+            id: "-",
+            name: "Tamu",
+            email: "",
+            phoneNumber: "-",
+            address: "",
+          ),
+        ];
+      }
+
       final customers = await customerRepository.findAll(dto);
       initCustomers.addAll(customers);
       emit(CustomerMasterLoadSuccess(customers: initCustomers));

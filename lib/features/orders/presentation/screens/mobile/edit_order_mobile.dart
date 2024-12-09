@@ -34,6 +34,8 @@ class OrderEditMobile extends StatefulWidget {
 
 class _OrderEditMobileState extends State<OrderEditMobile> {
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+
   void _onInit() async {
     _onRefresh();
   }
@@ -126,13 +128,13 @@ class _OrderEditMobileState extends State<OrderEditMobile> {
           search: SearchField(
             hintText: "Cari menu disini...",
             controller: _searchController,
+            focusNode: _searchFocusNode,
             debounceTime: 500,
             onChanged: (value) {
               context.read<CashierProductFilterCubit>().setFilter(name: value);
             },
           ),
         ),
-        backgroundColor: TColors.neutralLightLight,
         body: Scrollbar(
           child: RefreshIndicator(
             onRefresh: _onRefresh,
@@ -167,7 +169,6 @@ class _OrderEditMobileState extends State<OrderEditMobile> {
                 SliverToBoxAdapter(
                   child: Container(
                     padding: const EdgeInsets.only(top: 8),
-                    color: TColors.neutralLightLightest,
                     child: BlocBuilder<CashierProductFilterCubit,
                         CashierProductFilterState>(
                       builder: (context, filterState) {
@@ -197,13 +198,16 @@ class _OrderEditMobileState extends State<OrderEditMobile> {
                 ),
                 SliverToBoxAdapter(
                   child: Container(
-                    height: 12,
+                    height: 8,
                     color: TColors.neutralLightLightest,
                   ),
                 ),
                 BlocBuilder<CartCubit, CartState>(
                     builder: (context, cartState) {
-                  return const CashierProductList();
+                  return CashierProductList(
+                    searchController: _searchController,
+                    searchFocusNode: _searchFocusNode,
+                  );
                 }),
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 80),

@@ -47,6 +47,7 @@ class _ExploreProductTabletContentState
     extends State<ExploreProductTabletContent> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -190,6 +191,7 @@ class _ExploreProductTabletContentState
                                             child: SearchField(
                                               hintText: "Cari menu disini…",
                                               controller: _searchController,
+                                              focusNode: _searchFocusNode,
                                               debounceTime: 500,
                                               onChanged: (value) {
                                                 context
@@ -207,7 +209,10 @@ class _ExploreProductTabletContentState
                               ),
                             ),
                           ),
-                          ProductGrid()
+                          ProductGrid(
+                            searchController: _searchController,
+                            searchFocusNode: _searchFocusNode,
+                          )
                         ],
                       ),
                     ),

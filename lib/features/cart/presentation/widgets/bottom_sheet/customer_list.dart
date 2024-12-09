@@ -44,6 +44,7 @@ class CartCustomerListContent extends StatefulWidget {
 
 class _CartCustomerListContentState extends State<CartCustomerListContent> {
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
 
   Future<void> _onInit() async {
     await context.read<CartCustomerCubit>().init();
@@ -64,9 +65,12 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
         .findAll(FindAllCustomerDto(search: filterState.search));
   }
 
-  Future<void> clearSearch() async {
-    context.read<CartCustomerFilterCubit>().clearFilter();
-    _searchController.clear();
+  void _handleChangeKeyword() {
+    _searchFocusNode.requestFocus();
+    _searchController.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: _searchController.text.length,
+    );
   }
 
   @override
@@ -86,6 +90,7 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                 child: SearchField(
                   hintText: "Cari pelanggan...",
                   controller: _searchController,
+                  focusNode: _searchFocusNode,
                   debounceTime: 500,
                   onChanged: (value) {
                     context
@@ -105,9 +110,9 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                           title: "Pencarian tidak ditemukan",
                           subTitle: "Coba cari dengan nama pelanggan yang lain",
                           action: TextButton(
-                            onPressed: clearSearch,
+                            onPressed: _handleChangeKeyword,
                             child: TextActionL(
-                              "Hapus Pencarian",
+                              "Ubah Pencarian",
                               color: TColors.primary,
                             ),
                           ),

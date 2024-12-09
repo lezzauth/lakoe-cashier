@@ -5,6 +5,7 @@ import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/form/search_field.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
 import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
 import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_filter_cubit.dart';
@@ -39,6 +40,8 @@ class MasterCustomer extends StatefulWidget {
 
 class _MasterCustomerState extends State<MasterCustomer> {
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+
   Future<void> _onRefresh() async {
     context.read<CustomerMasterCubit>().findAll(FindAllCustomerDto());
   }
@@ -48,6 +51,14 @@ class _MasterCustomerState extends State<MasterCustomer> {
     super.initState();
 
     context.read<CustomerMasterCubit>().init();
+  }
+
+  void _handleChangeKeyword() {
+    _searchFocusNode.requestFocus();
+    _searchController.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: _searchController.text.length,
+    );
   }
 
   @override
@@ -74,6 +85,7 @@ class _MasterCustomerState extends State<MasterCustomer> {
           search: SearchField(
             hintText: "Cari pelanggan...",
             controller: _searchController,
+            focusNode: _searchFocusNode,
             debounceTime: 500,
             onChanged: (value) {
               context
@@ -87,45 +99,64 @@ class _MasterCustomerState extends State<MasterCustomer> {
             onRefresh: _onRefresh,
             backgroundColor: TColors.neutralLightLightest,
             child: BlocBuilder<CustomerMasterCubit, CustomerMasterState>(
-              builder: (context, state) => ErrorWrapper(
-                connectionIssue: state is ConnectionIssue,
-                fetchError: state is CustomerMasterLoadFailure,
-                onRefresh: _onRefresh,
-                child: switch (state) {
-                  CustomerMasterLoadSuccess(:final customers) => customers
-                          .isNotEmpty
-                      ? ListView.builder(
-                          itemCount: customers.length,
+              builder: (context, state) {
+                return ErrorWrapper(
+                  connectionIssue: state is ConnectionIssue,
+                  fetchError: state is CustomerMasterLoadFailure,
+                  onRefresh: _onRefresh,
+                  child: () {
+                    if (state is CustomerMasterLoadSuccess) {
+                      final customers = state.customers;
+
+                      if (customers.isNotEmpty) {
+                        return ListView.builder(
+                          itemCount: customers
+                              .where((customer) => customer.id != "-")
+                              .length,
                           itemBuilder: (context, index) {
-                            CustomerModel customer = customers.elementAt(index);
+                            final filteredCustomers = customers
+                                .where((customer) => customer.id != "-")
+                                .toList();
+
+                            CustomerModel customer = filteredCustomers[index];
 
                             return CustomerContactItem(
                               customer: customer,
-                              onTap: customer.id == "-"
-                                  ? null
-                                  : () {
-                                      Navigator.pushNamed(
-                                        context,
-                                        "/customers/detail",
-                                        arguments: customer,
-                                      );
-                                    },
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  "/customers/detail",
+                                  arguments: customer,
+                                );
+                              },
                             );
                           },
-                        )
-                      : const EmptyList(
-                          title: "Belum ada pelanggan, nih!",
-                          subTitle: "Yuk! Daftarkan pelanggan kamu.",
-                        ),
-                  _ => ListShimmer(
-                      crossAlignment: "center",
-                      circleAvatar: true,
-                      sizeAvatar: 40.0,
-                      heightTitle: 16.0,
-                      heightSubtitle: 12.0,
-                    ),
-                },
-              ),
+                        );
+                      } else {
+                        return EmptyList(
+                          title: "Pencarian tidak ditemukan",
+                          subTitle: "Coba cari dengan nama pelanggan yang lain",
+                          action: TextButton(
+                            onPressed: _handleChangeKeyword,
+                            child: TextActionL(
+                              "Ubah Pencarian",
+                              color: TColors.primary,
+                            ),
+                          ),
+                        );
+                      }
+                    } else {
+                      return const ListShimmer(
+                        crossAlignment: "center",
+                        circleAvatar: true,
+                        sizeAvatar: 40.0,
+                        heightTitle: 16.0,
+                        heightSubtitle: 12.0,
+                      );
+                    }
+                  }(),
+                );
+              },
             ),
           ),
         ),
