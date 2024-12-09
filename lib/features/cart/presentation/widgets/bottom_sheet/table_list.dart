@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
@@ -55,6 +58,10 @@ class _TableListContentState extends State<TableListContent> {
     _onInit();
   }
 
+  Future<void> onRefresh() async {
+    context.read<TableMasterCubit>().init();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<TableMasterFilterCubit, TableMasterFilterState>(
@@ -88,103 +95,120 @@ class _TableListContentState extends State<TableListContent> {
               },
             ),
             Expanded(
-                child: BlocBuilder<TableMasterCubit, TableMasterState>(
-              builder: (context, state) => switch (state) {
-                TableMasterLoadSuccess(:final tables) => ListView.builder(
-                    itemCount: tables.length,
-                    itemBuilder: (context, index) {
-                      TableModel table = tables.elementAt(index);
+              child: BlocBuilder<TableMasterCubit, TableMasterState>(
+                builder: (context, state) {
+                  if (state is TableMasterLoadSuccess) {
+                    final tables = state.tables;
 
-                      bool isFreeTable = table.id == "-";
+                    return ListView.builder(
+                      itemCount: tables.length,
+                      itemBuilder: (context, index) {
+                        TableModel table = tables.elementAt(index);
 
-                      String title = table.no;
-                      String subtitle = "${table.capacity} Orang • Indoor";
+                        bool isFreeTable = table.id == "-";
 
-                      bool selected = table.id == (widget.value?.id ?? "-");
+                        String title = table.no;
+                        String subtitle =
+                            "${table.capacity} Orang • ${table.outletRoom!.name}";
 
-                      if (isFreeTable) {
-                        title = "Bebas";
-                        subtitle = "-";
-                      }
+                        bool selected = table.id == (widget.value?.id ?? "-");
 
-                      return Container(
-                        decoration: const BoxDecoration(
+                        if (isFreeTable) {
+                          title = "Bebas";
+                          subtitle = "-";
+                        }
+
+                        return Container(
+                          decoration: const BoxDecoration(
                             border: Border(
-                                bottom: BorderSide(
-                          width: 1,
-                          color: TColors.neutralLightMedium,
-                        ))),
-                        child: ListTile(
-                          leading: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              color: TColors.highlightLightest,
-                              borderRadius: BorderRadius.circular(
-                                40,
-                              ),
-                            ),
-                            child: const Center(
-                              child: UiIcons(
-                                TIcons.tableRestaurant,
-                                size: 20,
-                                color: TColors.primary,
+                              bottom: BorderSide(
+                                width: 1,
+                                color: TColors.neutralLightMedium,
                               ),
                             ),
                           ),
-                          title: TextHeading4(title),
-                          subtitle: TextBodyS(
-                            subtitle,
-                            color: TColors.neutralDarkLight,
-                          ),
-                          onTap: () {
-                            Navigator.pop(
-                              context,
-                              isFreeTable
-                                  ? TableModel(
-                                      id: "-",
-                                      no: "Bebas",
-                                      capacity: 0,
-                                      outletId: "",
-                                      outletRoomId: "",
-                                      createdAt: "",
-                                      updatedAt: "",
-                                      outletRoom: OutletRoom(
+                          child: ListTile(
+                            leading: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: TColors.highlightLightest,
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              child: const Center(
+                                child: UiIcons(
+                                  TIcons.tableRestaurant,
+                                  size: 20,
+                                  color: TColors.primary,
+                                ),
+                              ),
+                            ),
+                            title: TextHeading4(title),
+                            subtitle: TextBodyS(
+                              subtitle,
+                              color: TColors.neutralDarkLight,
+                            ),
+                            onTap: () {
+                              Navigator.pop(
+                                context,
+                                isFreeTable
+                                    ? TableModel(
                                         id: "-",
-                                        name: "Bebas",
+                                        no: "Bebas",
+                                        capacity: 0,
                                         outletId: "",
+                                        outletRoomId: "",
                                         createdAt: "",
                                         updatedAt: "",
-                                      ),
-                                    )
-                                  : table,
-                            );
-                          },
-                          trailing: selected
-                              ? const UiIcons(
-                                  TIcons.check,
-                                  color: TColors.primary,
-                                )
-                              : const UiIcons(
-                                  TIcons.arrowRight,
-                                  size: 12,
-                                  color: TColors.neutralDarkLightest,
-                                ),
+                                        outletRoom: OutletRoom(
+                                          id: "-",
+                                          name: "Bebas",
+                                          outletId: "",
+                                          createdAt: "",
+                                          updatedAt: "",
+                                        ),
+                                      )
+                                    : table,
+                              );
+                            },
+                            trailing: selected
+                                ? const UiIcons(
+                                    TIcons.check,
+                                    color: TColors.primary,
+                                  )
+                                : const UiIcons(
+                                    TIcons.arrowRight,
+                                    size: 12,
+                                    color: TColors.neutralDarkLightest,
+                                  ),
+                          ),
+                        );
+                      },
+                    );
+                  } else if (state is TableMasterLoadFailure) {
+                    return EmptyList(
+                      title: "Gagal memuat data, nih!",
+                      subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
+                      action: TextButton(
+                        onPressed: onRefresh,
+                        child: TextActionL(
+                          "Coba Lagi",
+                          color: TColors.primary,
                         ),
-                      );
-                    },
-                  ),
-                TableMasterLoadFailure(:final error) => Center(
-                    child: TextBodyS(
-                      error,
-                      color: TColors.error,
-                    ),
-                  ),
-                _ => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-              },
-            ))
+                      ),
+                    );
+                  } else {
+                    return ListShimmer(
+                      crossAlignment: "center",
+                      circleAvatar: true,
+                      sizeAvatar: 40.0,
+                      heightTitle: 16.0,
+                      heightSubtitle: 12.0,
+                    );
+                  }
+                },
+              ),
+            )
           ],
         ),
         floatingActionButton: SizedBox(

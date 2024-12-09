@@ -7,4 +7,8 @@ class CartCustomerFilterCubit extends Cubit<CartCustomerFilterState> {
   void setFilter({String? search}) {
     emit(CartCustomerFilterState(search: search ?? state.search));
   }
+
+  void clearFilter() {
+    emit(CartCustomerFilterState());
+  }
 }

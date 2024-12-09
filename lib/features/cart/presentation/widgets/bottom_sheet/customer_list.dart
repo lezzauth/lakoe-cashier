@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lakoe_pos/common/widgets/form/search_field.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/customer/cart_customer_cubit.dart';
@@ -52,6 +55,20 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
     _onInit();
   }
 
+  Future<void> onRefresh() async {
+    CartCustomerFilterState filterState =
+        context.read<CartCustomerFilterCubit>().state;
+
+    context
+        .read<CartCustomerCubit>()
+        .findAll(FindAllCustomerDto(search: filterState.search));
+  }
+
+  Future<void> clearSearch() async {
+    context.read<CartCustomerFilterCubit>().clearFilter();
+    _searchController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<CartCustomerFilterCubit, CartCustomerFilterState>(
@@ -79,72 +96,106 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
               ),
               Expanded(
                 child: BlocBuilder<CartCustomerCubit, CartCustomerState>(
-                    builder: (context, state) => switch (state) {
-                          CartCustomerLoadSuccess(:final customers) =>
-                            ListView.builder(
-                              itemCount: customers.length,
-                              itemBuilder: (context, index) {
-                                CustomerModel customer =
-                                    customers.elementAt(index);
-                                bool selected =
-                                    customer.id == (widget.value?.id ?? "-");
+                  builder: (context, state) {
+                    if (state is CartCustomerLoadSuccess) {
+                      final customers = state.customers;
 
-                                return Container(
-                                  decoration: const BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                    width: 1,
-                                    color: TColors.neutralLightMedium,
-                                  ))),
-                                  child: ListTile(
-                                    leading: SvgPicture.asset(
-                                      TImages.contactAvatar,
-                                      height: 40,
-                                      width: 40,
-                                    ),
-                                    title: TextHeading4(customer.name),
-                                    subtitle: TextBodyS(
-                                      (customer.phoneNumber == '-')
-                                          ? customer.phoneNumber
-                                          : PhoneNumberFormatter
-                                              .formatForDisplay(
-                                                  customer.phoneNumber),
-                                      color: TColors.neutralDarkLight,
-                                    ),
-                                    onTap: () {
-                                      Navigator.pop(
-                                          context,
-                                          customer.id == "-"
-                                              ? CustomerModel(
-                                                  id: "-",
-                                                  name: "Tamu",
-                                                  email: "",
-                                                  phoneNumber: "-",
-                                                  address: "",
-                                                )
-                                              : customer);
-                                    },
-                                    trailing: selected
-                                        ? const UiIcons(
-                                            TIcons.check,
-                                            color: TColors.primary,
-                                          )
-                                        : const UiIcons(
-                                            TIcons.arrowRight,
-                                            size: 12,
-                                            color: TColors.neutralDarkLightest,
-                                          ),
-                                  ),
+                      if (customers.isEmpty) {
+                        return EmptyList(
+                          title: "Pencarian tidak ditemukan",
+                          subTitle: "Coba cari dengan nama pelanggan yang lain",
+                          action: TextButton(
+                            onPressed: clearSearch,
+                            child: TextActionL(
+                              "Hapus Pencarian",
+                              color: TColors.primary,
+                            ),
+                          ),
+                        );
+                      }
+
+                      return ListView.builder(
+                        itemCount: customers.length,
+                        itemBuilder: (context, index) {
+                          CustomerModel customer = customers.elementAt(index);
+                          bool selected =
+                              customer.id == (widget.value?.id ?? "-");
+
+                          return Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  width: 1,
+                                  color: TColors.neutralLightMedium,
+                                ),
+                              ),
+                            ),
+                            child: ListTile(
+                              leading: SvgPicture.asset(
+                                TImages.contactAvatar,
+                                height: 40,
+                                width: 40,
+                              ),
+                              title: TextHeading4(customer.name),
+                              subtitle: TextBodyS(
+                                (customer.phoneNumber == '-')
+                                    ? customer.phoneNumber
+                                    : PhoneNumberFormatter.formatForDisplay(
+                                        customer.phoneNumber,
+                                      ),
+                                color: TColors.neutralDarkLight,
+                              ),
+                              onTap: () {
+                                Navigator.pop(
+                                  context,
+                                  customer.id == "-"
+                                      ? CustomerModel(
+                                          id: "-",
+                                          name: "Tamu",
+                                          email: "",
+                                          phoneNumber: "-",
+                                          address: "",
+                                        )
+                                      : customer,
                                 );
                               },
+                              trailing: selected
+                                  ? const UiIcons(
+                                      TIcons.check,
+                                      color: TColors.primary,
+                                    )
+                                  : const UiIcons(
+                                      TIcons.arrowRight,
+                                      size: 12,
+                                      color: TColors.neutralDarkLightest,
+                                    ),
                             ),
-                          CartCustomerLoadFailure() => const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          _ => const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                        }),
+                          );
+                        },
+                      );
+                    } else if (state is CartCustomerLoadFailure) {
+                      return EmptyList(
+                        title: "Gagal memuat data, nih!",
+                        subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
+                        action: TextButton(
+                          onPressed: onRefresh,
+                          child: TextActionL(
+                            "Coba Lagi",
+                            color: TColors.primary,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return ListShimmer(
+                        crossAlignment: "center",
+                        circleAvatar: true,
+                        sizeAvatar: 40.0,
+                        heightTitle: 16.0,
+                        heightSubtitle: 12.0,
+                      );
+                    }
+                  },
+                ),
               )
             ],
           ),

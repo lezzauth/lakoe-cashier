@@ -178,6 +178,8 @@ class _TableNewState extends State<TableNew> {
                     formKey: _formKey,
                     table: dummyTableModel,
                     tableNumber: dummyTableModel.no,
+                    isLoading: state is TableMasterActionInProgress,
+                    onSubmit: () => _onSubmit(),
                   ),
                 );
               }),

@@ -54,9 +54,8 @@ class _TableMasterState extends State<TableMaster> {
   }
 
   Future<void> _onGoToCreateScreen() async {
-    TableModel? newTable =
-        await Navigator.pushNamed(context, "/tables/new") as TableModel?;
-    if (newTable == null) return;
+    bool? newTable = await Navigator.pushNamed(context, "/tables/new") as bool?;
+    if (newTable != true) return;
     _onRefresh();
   }
 

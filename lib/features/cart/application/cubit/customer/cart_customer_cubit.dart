@@ -14,12 +14,23 @@ class CartCustomerCubit extends Cubit<CartCustomerState> {
   Future<void> findAll(FindAllCustomerDto dto) async {
     try {
       emit(CartCustomerLoadInProgress());
-      List<CustomerModel> initCustomers = [
-        const CustomerModel(
-            id: "-", name: "Tamu", email: "", phoneNumber: "-", address: ""),
-      ];
+      List<CustomerModel> initCustomers = [];
+
+      if (dto.search == null || dto.search!.isEmpty) {
+        initCustomers = [
+          const CustomerModel(
+            id: "-",
+            name: "Tamu",
+            email: "",
+            phoneNumber: "-",
+            address: "",
+          ),
+        ];
+      }
+
       final customers = await customerRepository.findAll(dto);
       initCustomers.addAll(customers);
+
       emit(CartCustomerLoadSuccess(customers: initCustomers));
     } catch (e) {
       emit(CartCustomerLoadFailure(e.toString()));

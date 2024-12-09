@@ -19,7 +19,12 @@ final class CartCustomerLoadSuccess extends CartCustomerState {
   CartCustomerLoadSuccess({
     this.customers = const [
       CustomerModel(
-          id: "-", name: "Tamu", email: "", phoneNumber: "-", address: ""),
+        id: "-",
+        name: "Tamu",
+        email: "",
+        phoneNumber: "-",
+        address: "",
+      ),
     ],
   });
 
