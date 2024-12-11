@@ -78,8 +78,8 @@ class _FilterOrdersByCustomerState extends State<FilterOrdersByCustomer> {
               color: Colors.white,
               padding: const EdgeInsets.only(right: 8),
               child: OrderDateFilter(
-                from: widget.value.from,
                 template: widget.value.template ?? "ALL",
+                from: widget.value.from,
                 to: widget.value.to,
                 onChanged: (template, from, to) {
                   widget.onChanged(widget.value.copyWith(

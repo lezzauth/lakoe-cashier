@@ -136,18 +136,26 @@ class _OrderOutletState extends State<OrderOutlet> {
                         onChanged: (value) {
                           final cubit = context.read<OrdersFilterCubit>();
 
+                          final from = value.template == "CUSTOM"
+                              ? DateTime.parse(value.from!)
+                              : value.from != null
+                                  ? DateTime.parse(value.from!)
+                                  : null;
+
+                          final to = value.template == "CUSTOM"
+                              ? DateTime.parse(value.to!)
+                              : value.to != null
+                                  ? DateTime.parse(value.to!)
+                                  : null;
+
                           cubit.setFilter(
                             sort: value.sort,
                             source: value.source,
                             type: value.type,
                             status: value.status,
                             template: value.template,
-                            from: value.template == "CUSTOM"
-                                ? DateTime.parse(value.from!)
-                                : null,
-                            to: value.template == "CUSTOM"
-                                ? DateTime.parse(value.to!)
-                                : null,
+                            from: from,
+                            to: to,
                           );
 
                           setState(() {

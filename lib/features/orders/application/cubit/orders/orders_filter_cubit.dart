@@ -21,8 +21,8 @@ class OrdersFilterCubit extends Cubit<OrdersFilterState> {
       status: status ?? state.status,
       type: type ?? state.type,
       template: template ?? state.template,
-      from: from?.toIso8601String() ?? state.from,
-      to: to?.toIso8601String() ?? state.to,
+      from: from?.toIso8601String(),
+      to: to?.toIso8601String(),
     ));
   }
 
