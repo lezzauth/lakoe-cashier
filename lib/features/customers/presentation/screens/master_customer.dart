@@ -1,6 +1,7 @@
 import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/form/search_field.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
@@ -13,6 +14,7 @@ import 'package:lakoe_pos/features/customers/application/cubit/customer_master/c
 import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_state.dart';
 import 'package:lakoe_pos/features/customers/common/widgets/customer_contact/customer_contact_item.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
 class MasterCustomerScreen extends StatefulWidget {
   const MasterCustomerScreen({super.key});
@@ -109,15 +111,33 @@ class _MasterCustomerState extends State<MasterCustomer> {
                       final customers = state.customers;
 
                       if (customers.isNotEmpty) {
-                        return ListView.builder(
-                          itemCount: customers
-                              .where((customer) => customer.id != "-")
-                              .length,
-                          itemBuilder: (context, index) {
-                            final filteredCustomers = customers
-                                .where((customer) => customer.id != "-")
-                                .toList();
+                        final filteredCustomers = customers
+                            .where((customer) => customer.id != "-")
+                            .toList();
 
+                        if (filteredCustomers.isEmpty) {
+                          return EmptyList(
+                            image: SvgPicture.asset(TImages.catBox, width: 200),
+                            title: "Belum ada pelanggan",
+                            subTitle: "Yuk, buat data pelanggan pertamamu.",
+                            action: TextButton(
+                              onPressed: () async {
+                                bool? newCustomer = await Navigator.pushNamed(
+                                    context, "/customers/new") as bool?;
+                                if (newCustomer != true) return;
+                                _onRefresh();
+                              },
+                              child: TextActionL(
+                                "Buat Baru",
+                                color: TColors.primary,
+                              ),
+                            ),
+                          );
+                        }
+
+                        return ListView.builder(
+                          itemCount: filteredCustomers.length,
+                          itemBuilder: (context, index) {
                             CustomerModel customer = filteredCustomers[index];
 
                             return CustomerContactItem(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_cubit.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_filter_cubit.dart';
@@ -13,6 +16,7 @@ import 'package:lakoe_pos/features/tables/common/widgets/table_item.dart';
 import 'package:lakoe_pos/features/tables/presentation/widgets/filter/table_location_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableMasterScreen extends StatelessWidget {
@@ -35,6 +39,8 @@ class TableMaster extends StatefulWidget {
 }
 
 class _TableMasterState extends State<TableMaster> {
+  bool tableIsEmpty = false;
+
   Future<void> _onRefresh() async {
     if (!mounted) return;
 
@@ -92,23 +98,25 @@ class _TableMasterState extends State<TableMaster> {
               ),
             )
           ],
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(48),
-            child: BlocBuilder<TableMasterFilterCubit, TableMasterFilterState>(
-                builder: (context, state) {
-              return SizedBox(
-                width: double.infinity,
-                child: TableLocationFilter(
-                  value: state.outletRoomId,
-                  onChanged: (value) {
-                    context
-                        .read<TableMasterFilterCubit>()
-                        .setFilter(outletRoomId: value);
-                  },
-                ),
-              );
-            }),
-          ),
+          bottom: (!tableIsEmpty)
+              ? PreferredSize(
+                  preferredSize: const Size.fromHeight(48),
+                  child: BlocBuilder<TableMasterFilterCubit,
+                      TableMasterFilterState>(builder: (context, state) {
+                    return SizedBox(
+                      width: double.infinity,
+                      child: TableLocationFilter(
+                        value: state.outletRoomId,
+                        onChanged: (value) {
+                          context
+                              .read<TableMasterFilterCubit>()
+                              .setFilter(outletRoomId: value);
+                        },
+                      ),
+                    );
+                  }),
+                )
+              : null,
         ),
         body: Scrollbar(
           child: RefreshIndicator(
@@ -125,6 +133,27 @@ class _TableMasterState extends State<TableMaster> {
                       final tables = state.tables
                           .where((table) => table.id != "-")
                           .toList();
+
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        setState(() {
+                          tableIsEmpty = tables.isEmpty;
+                        });
+                      });
+
+                      if (tables.isEmpty) {
+                        return EmptyList(
+                          image: SvgPicture.asset(TImages.catBox, width: 200),
+                          title: "Belum ada meja",
+                          subTitle: "Yuk, simpan meja yang kamu punya.",
+                          action: TextButton(
+                            onPressed: _onGoToCreateScreen,
+                            child: TextActionL(
+                              "Buat Baru",
+                              color: TColors.primary,
+                            ),
+                          ),
+                        );
+                      }
 
                       return ListView.builder(
                         itemCount: tables.length,
