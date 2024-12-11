@@ -107,7 +107,7 @@ class _BankVerifyContentState extends State<BankVerifyContent> {
         }
 
         if (state is BankVerifyActionFailure) {
-          if (state.error.contains("503")) {
+          if (state.error.contains("503") || state.error.contains("500")) {
             final TextEditingController controller = TextEditingController();
 
             final GlobalKey<FormBuilderState> formKey =

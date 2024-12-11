@@ -107,13 +107,7 @@ class DioProvider {
           ));
         }
       } catch (e) {
-        // _createDioException(
-        //   DioException(requestOptions: RequestOptions()),
-        //   "502",
-        //   "",
-        // );
-        Logman.instance.error("HHH  $e");
-        // Logman.instance.error("Error parsing error response: ${e.toString()}");
+        Logman.instance.error("Error parsing error response: ${e.toString()}");
       }
     } else if (_isConnectionError(e)) {
       _showConnectionErrorToast();

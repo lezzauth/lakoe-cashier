@@ -22,8 +22,8 @@ class BankVerifyCubit extends Cubit<BankVerifyState> {
         case 400:
           errorMessage = "Invalid request (400)";
           break;
-        case 401:
-          errorMessage = "Unauthorized (401)";
+        case 500:
+          errorMessage = "Internal Server Error (500)";
           break;
         default:
           errorMessage = "Error: ${dioError.message}";
