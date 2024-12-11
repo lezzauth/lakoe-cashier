@@ -5,7 +5,6 @@ import 'package:lakoe_pos/common/widgets/form/search_field.dart';
 import 'package:lakoe_pos/common/widgets/ui/tab/tab_container.dart';
 import 'package:lakoe_pos/common/widgets/ui/tab/tab_item.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_filter_cubit.dart';
-import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_filter_state.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_online/order_online_tab.dart';
@@ -53,18 +52,7 @@ class OrderMaster extends StatelessWidget {
           debounceTime: 500,
           onChanged: (value) {
             if (previousScreen == "ExploreProduct") {
-              OrderCashierFilterState filterState =
-                  context.read<OrderCashierFilterCubit>().state;
-
-              context.read<OrderCashierFilterCubit>().setFilter(
-                    search: value,
-                    from: filterState.from != null
-                        ? DateTime.parse(filterState.from!)
-                        : null,
-                    to: filterState.to != null
-                        ? DateTime.parse(filterState.to!)
-                        : null,
-                  );
+              context.read<OrderCashierFilterCubit>().setFilter(search: value);
             } else {
               OrdersFilterState filterState =
                   context.read<OrdersFilterCubit>().state;
