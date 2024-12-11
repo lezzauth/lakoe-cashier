@@ -117,7 +117,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
   List<_OtherItem> otherSettingItems = [
     _OtherItem(
       title: "Paket & Riwayat",
-      routeName: "/",
+      routeName: "/packages/history",
       iconSrc: TIcons.billAlt,
       isNewItem: false,
     ),

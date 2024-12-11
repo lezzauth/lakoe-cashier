@@ -40,7 +40,7 @@ class _OrderInfoSectionState extends State<OrderInfoSection> {
       child: Column(
         children: [
           _SectionItem(
-            trailingText: "${TFormatter.orderDate(
+            trailingText: "${TFormatter.dateTime(
               widget.order.createdAt.toIso8601String(),
             )} WIB",
             icon: TIcons.calendar2,

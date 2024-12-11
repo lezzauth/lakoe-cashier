@@ -31,7 +31,7 @@ class TFormatter {
     }
   }
 
-  static String orderDate(String isoDate, {bool withDay = false}) {
+  static String dateTime(String isoDate, {bool withDay = false}) {
     DateTime dateTime = DateTime.parse(isoDate).toLocal();
     DateTime now = DateTime.now();
 

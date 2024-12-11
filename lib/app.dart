@@ -11,6 +11,7 @@ import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/cre
 import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/otp_input.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
+import 'package:lakoe_pos/features/packages/presentation/screens/history/history_purchase_package.dart';
 import 'package:logman/logman.dart';
 import 'package:lakoe_pos/application/cubit/bank_list_cubit.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/account_edit.dart';
@@ -424,6 +425,8 @@ class App extends StatelessWidget {
             "/packages": (context) => const PackageMasterScreen(),
             "/packages/detail": (context) => const PackageDetailScreen(),
             "/boost": (context) => const BoostDetailScreen(),
+            "/packages/history": (context) =>
+                const HistoryPurchasePackageScreen(),
 
             // Checkout
             "/checkout": (context) => const ChekcoutMasterScreen(),

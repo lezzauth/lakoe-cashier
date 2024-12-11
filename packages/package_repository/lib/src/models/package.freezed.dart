@@ -3094,3 +3094,624 @@ abstract class _PaymentActionModel implements PaymentActionModel {
   _$$PaymentActionModelImplCopyWith<_$PaymentActionModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+ListHistoryPurchaseModel _$ListHistoryPurchaseModelFromJson(
+    Map<String, dynamic> json) {
+  return _ListHistoryPurchaseModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ListHistoryPurchaseModel {
+  String get id => throw _privateConstructorUsedError;
+  String get paymentMethod => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  String get paidAmount => throw _privateConstructorUsedError;
+  String get amount => throw _privateConstructorUsedError;
+  int get period => throw _privateConstructorUsedError;
+  String get startPeriod => throw _privateConstructorUsedError;
+  String get endPeriod => throw _privateConstructorUsedError;
+  String get ownerId => throw _privateConstructorUsedError;
+  String? get externalId => throw _privateConstructorUsedError;
+  String get packageName => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
+  String get updatedAt => throw _privateConstructorUsedError;
+
+  /// Serializes this ListHistoryPurchaseModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of ListHistoryPurchaseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ListHistoryPurchaseModelCopyWith<ListHistoryPurchaseModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ListHistoryPurchaseModelCopyWith<$Res> {
+  factory $ListHistoryPurchaseModelCopyWith(ListHistoryPurchaseModel value,
+          $Res Function(ListHistoryPurchaseModel) then) =
+      _$ListHistoryPurchaseModelCopyWithImpl<$Res, ListHistoryPurchaseModel>;
+  @useResult
+  $Res call(
+      {String id,
+      String paymentMethod,
+      String status,
+      String paidAmount,
+      String amount,
+      int period,
+      String startPeriod,
+      String endPeriod,
+      String ownerId,
+      String? externalId,
+      String packageName,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class _$ListHistoryPurchaseModelCopyWithImpl<$Res,
+        $Val extends ListHistoryPurchaseModel>
+    implements $ListHistoryPurchaseModelCopyWith<$Res> {
+  _$ListHistoryPurchaseModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ListHistoryPurchaseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? paymentMethod = null,
+    Object? status = null,
+    Object? paidAmount = null,
+    Object? amount = null,
+    Object? period = null,
+    Object? startPeriod = null,
+    Object? endPeriod = null,
+    Object? ownerId = null,
+    Object? externalId = freezed,
+    Object? packageName = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidAmount: null == paidAmount
+          ? _value.paidAmount
+          : paidAmount // ignore: cast_nullable_to_non_nullable
+              as String,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as String,
+      period: null == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as int,
+      startPeriod: null == startPeriod
+          ? _value.startPeriod
+          : startPeriod // ignore: cast_nullable_to_non_nullable
+              as String,
+      endPeriod: null == endPeriod
+          ? _value.endPeriod
+          : endPeriod // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerId: null == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      externalId: freezed == externalId
+          ? _value.externalId
+          : externalId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      packageName: null == packageName
+          ? _value.packageName
+          : packageName // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ListHistoryPurchaseModelImplCopyWith<$Res>
+    implements $ListHistoryPurchaseModelCopyWith<$Res> {
+  factory _$$ListHistoryPurchaseModelImplCopyWith(
+          _$ListHistoryPurchaseModelImpl value,
+          $Res Function(_$ListHistoryPurchaseModelImpl) then) =
+      __$$ListHistoryPurchaseModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String paymentMethod,
+      String status,
+      String paidAmount,
+      String amount,
+      int period,
+      String startPeriod,
+      String endPeriod,
+      String ownerId,
+      String? externalId,
+      String packageName,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class __$$ListHistoryPurchaseModelImplCopyWithImpl<$Res>
+    extends _$ListHistoryPurchaseModelCopyWithImpl<$Res,
+        _$ListHistoryPurchaseModelImpl>
+    implements _$$ListHistoryPurchaseModelImplCopyWith<$Res> {
+  __$$ListHistoryPurchaseModelImplCopyWithImpl(
+      _$ListHistoryPurchaseModelImpl _value,
+      $Res Function(_$ListHistoryPurchaseModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ListHistoryPurchaseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? paymentMethod = null,
+    Object? status = null,
+    Object? paidAmount = null,
+    Object? amount = null,
+    Object? period = null,
+    Object? startPeriod = null,
+    Object? endPeriod = null,
+    Object? ownerId = null,
+    Object? externalId = freezed,
+    Object? packageName = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_$ListHistoryPurchaseModelImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      paidAmount: null == paidAmount
+          ? _value.paidAmount
+          : paidAmount // ignore: cast_nullable_to_non_nullable
+              as String,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as String,
+      period: null == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as int,
+      startPeriod: null == startPeriod
+          ? _value.startPeriod
+          : startPeriod // ignore: cast_nullable_to_non_nullable
+              as String,
+      endPeriod: null == endPeriod
+          ? _value.endPeriod
+          : endPeriod // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerId: null == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      externalId: freezed == externalId
+          ? _value.externalId
+          : externalId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      packageName: null == packageName
+          ? _value.packageName
+          : packageName // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ListHistoryPurchaseModelImpl implements _ListHistoryPurchaseModel {
+  const _$ListHistoryPurchaseModelImpl(
+      {required this.id,
+      required this.paymentMethod,
+      required this.status,
+      required this.paidAmount,
+      required this.amount,
+      required this.period,
+      required this.startPeriod,
+      required this.endPeriod,
+      required this.ownerId,
+      this.externalId,
+      required this.packageName,
+      required this.createdAt,
+      required this.updatedAt});
+
+  factory _$ListHistoryPurchaseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ListHistoryPurchaseModelImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String paymentMethod;
+  @override
+  final String status;
+  @override
+  final String paidAmount;
+  @override
+  final String amount;
+  @override
+  final int period;
+  @override
+  final String startPeriod;
+  @override
+  final String endPeriod;
+  @override
+  final String ownerId;
+  @override
+  final String? externalId;
+  @override
+  final String packageName;
+  @override
+  final String createdAt;
+  @override
+  final String updatedAt;
+
+  @override
+  String toString() {
+    return 'ListHistoryPurchaseModel(id: $id, paymentMethod: $paymentMethod, status: $status, paidAmount: $paidAmount, amount: $amount, period: $period, startPeriod: $startPeriod, endPeriod: $endPeriod, ownerId: $ownerId, externalId: $externalId, packageName: $packageName, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ListHistoryPurchaseModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.paidAmount, paidAmount) ||
+                other.paidAmount == paidAmount) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.period, period) || other.period == period) &&
+            (identical(other.startPeriod, startPeriod) ||
+                other.startPeriod == startPeriod) &&
+            (identical(other.endPeriod, endPeriod) ||
+                other.endPeriod == endPeriod) &&
+            (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
+            (identical(other.externalId, externalId) ||
+                other.externalId == externalId) &&
+            (identical(other.packageName, packageName) ||
+                other.packageName == packageName) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      paymentMethod,
+      status,
+      paidAmount,
+      amount,
+      period,
+      startPeriod,
+      endPeriod,
+      ownerId,
+      externalId,
+      packageName,
+      createdAt,
+      updatedAt);
+
+  /// Create a copy of ListHistoryPurchaseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ListHistoryPurchaseModelImplCopyWith<_$ListHistoryPurchaseModelImpl>
+      get copyWith => __$$ListHistoryPurchaseModelImplCopyWithImpl<
+          _$ListHistoryPurchaseModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ListHistoryPurchaseModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ListHistoryPurchaseModel implements ListHistoryPurchaseModel {
+  const factory _ListHistoryPurchaseModel(
+      {required final String id,
+      required final String paymentMethod,
+      required final String status,
+      required final String paidAmount,
+      required final String amount,
+      required final int period,
+      required final String startPeriod,
+      required final String endPeriod,
+      required final String ownerId,
+      final String? externalId,
+      required final String packageName,
+      required final String createdAt,
+      required final String updatedAt}) = _$ListHistoryPurchaseModelImpl;
+
+  factory _ListHistoryPurchaseModel.fromJson(Map<String, dynamic> json) =
+      _$ListHistoryPurchaseModelImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get paymentMethod;
+  @override
+  String get status;
+  @override
+  String get paidAmount;
+  @override
+  String get amount;
+  @override
+  int get period;
+  @override
+  String get startPeriod;
+  @override
+  String get endPeriod;
+  @override
+  String get ownerId;
+  @override
+  String? get externalId;
+  @override
+  String get packageName;
+  @override
+  String get createdAt;
+  @override
+  String get updatedAt;
+
+  /// Create a copy of ListHistoryPurchaseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ListHistoryPurchaseModelImplCopyWith<_$ListHistoryPurchaseModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+DetailPurchaseModel _$DetailPurchaseModelFromJson(Map<String, dynamic> json) {
+  return _DetailPurchaseModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DetailPurchaseModel {
+  PurchaseModel get purchase => throw _privateConstructorUsedError;
+  PaymentRequestModel get paymentRequest => throw _privateConstructorUsedError;
+
+  /// Serializes this DetailPurchaseModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of DetailPurchaseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $DetailPurchaseModelCopyWith<DetailPurchaseModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DetailPurchaseModelCopyWith<$Res> {
+  factory $DetailPurchaseModelCopyWith(
+          DetailPurchaseModel value, $Res Function(DetailPurchaseModel) then) =
+      _$DetailPurchaseModelCopyWithImpl<$Res, DetailPurchaseModel>;
+  @useResult
+  $Res call({PurchaseModel purchase, PaymentRequestModel paymentRequest});
+
+  $PurchaseModelCopyWith<$Res> get purchase;
+  $PaymentRequestModelCopyWith<$Res> get paymentRequest;
+}
+
+/// @nodoc
+class _$DetailPurchaseModelCopyWithImpl<$Res, $Val extends DetailPurchaseModel>
+    implements $DetailPurchaseModelCopyWith<$Res> {
+  _$DetailPurchaseModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of DetailPurchaseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? purchase = null,
+    Object? paymentRequest = null,
+  }) {
+    return _then(_value.copyWith(
+      purchase: null == purchase
+          ? _value.purchase
+          : purchase // ignore: cast_nullable_to_non_nullable
+              as PurchaseModel,
+      paymentRequest: null == paymentRequest
+          ? _value.paymentRequest
+          : paymentRequest // ignore: cast_nullable_to_non_nullable
+              as PaymentRequestModel,
+    ) as $Val);
+  }
+
+  /// Create a copy of DetailPurchaseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PurchaseModelCopyWith<$Res> get purchase {
+    return $PurchaseModelCopyWith<$Res>(_value.purchase, (value) {
+      return _then(_value.copyWith(purchase: value) as $Val);
+    });
+  }
+
+  /// Create a copy of DetailPurchaseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PaymentRequestModelCopyWith<$Res> get paymentRequest {
+    return $PaymentRequestModelCopyWith<$Res>(_value.paymentRequest, (value) {
+      return _then(_value.copyWith(paymentRequest: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$DetailPurchaseModelImplCopyWith<$Res>
+    implements $DetailPurchaseModelCopyWith<$Res> {
+  factory _$$DetailPurchaseModelImplCopyWith(_$DetailPurchaseModelImpl value,
+          $Res Function(_$DetailPurchaseModelImpl) then) =
+      __$$DetailPurchaseModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({PurchaseModel purchase, PaymentRequestModel paymentRequest});
+
+  @override
+  $PurchaseModelCopyWith<$Res> get purchase;
+  @override
+  $PaymentRequestModelCopyWith<$Res> get paymentRequest;
+}
+
+/// @nodoc
+class __$$DetailPurchaseModelImplCopyWithImpl<$Res>
+    extends _$DetailPurchaseModelCopyWithImpl<$Res, _$DetailPurchaseModelImpl>
+    implements _$$DetailPurchaseModelImplCopyWith<$Res> {
+  __$$DetailPurchaseModelImplCopyWithImpl(_$DetailPurchaseModelImpl _value,
+      $Res Function(_$DetailPurchaseModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of DetailPurchaseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? purchase = null,
+    Object? paymentRequest = null,
+  }) {
+    return _then(_$DetailPurchaseModelImpl(
+      purchase: null == purchase
+          ? _value.purchase
+          : purchase // ignore: cast_nullable_to_non_nullable
+              as PurchaseModel,
+      paymentRequest: null == paymentRequest
+          ? _value.paymentRequest
+          : paymentRequest // ignore: cast_nullable_to_non_nullable
+              as PaymentRequestModel,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$DetailPurchaseModelImpl implements _DetailPurchaseModel {
+  const _$DetailPurchaseModelImpl(
+      {required this.purchase, required this.paymentRequest});
+
+  factory _$DetailPurchaseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DetailPurchaseModelImplFromJson(json);
+
+  @override
+  final PurchaseModel purchase;
+  @override
+  final PaymentRequestModel paymentRequest;
+
+  @override
+  String toString() {
+    return 'DetailPurchaseModel(purchase: $purchase, paymentRequest: $paymentRequest)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DetailPurchaseModelImpl &&
+            (identical(other.purchase, purchase) ||
+                other.purchase == purchase) &&
+            (identical(other.paymentRequest, paymentRequest) ||
+                other.paymentRequest == paymentRequest));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, purchase, paymentRequest);
+
+  /// Create a copy of DetailPurchaseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DetailPurchaseModelImplCopyWith<_$DetailPurchaseModelImpl> get copyWith =>
+      __$$DetailPurchaseModelImplCopyWithImpl<_$DetailPurchaseModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$DetailPurchaseModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _DetailPurchaseModel implements DetailPurchaseModel {
+  const factory _DetailPurchaseModel(
+          {required final PurchaseModel purchase,
+          required final PaymentRequestModel paymentRequest}) =
+      _$DetailPurchaseModelImpl;
+
+  factory _DetailPurchaseModel.fromJson(Map<String, dynamic> json) =
+      _$DetailPurchaseModelImpl.fromJson;
+
+  @override
+  PurchaseModel get purchase;
+  @override
+  PaymentRequestModel get paymentRequest;
+
+  /// Create a copy of DetailPurchaseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DetailPurchaseModelImplCopyWith<_$DetailPurchaseModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

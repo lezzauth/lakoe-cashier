@@ -77,7 +77,7 @@ class OrderItem extends StatelessWidget {
                         ),
                       ),
                       TextBodyS(
-                        TFormatter.orderDate(order.createdAt),
+                        TFormatter.dateTime(order.createdAt),
                         color: TColors.neutralDarkLight,
                       ),
                     ],

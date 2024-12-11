@@ -171,3 +171,36 @@ class PaymentActionModel with _$PaymentActionModel {
   factory PaymentActionModel.fromJson(Map<String, dynamic> json) =>
       _$PaymentActionModelFromJson(json);
 }
+
+@freezed
+class ListHistoryPurchaseModel with _$ListHistoryPurchaseModel {
+  const factory ListHistoryPurchaseModel({
+    required String id,
+    required String paymentMethod,
+    required String status,
+    required String paidAmount,
+    required String amount,
+    required int period,
+    required String startPeriod,
+    required String endPeriod,
+    required String ownerId,
+    String? externalId,
+    required String packageName,
+    required String createdAt,
+    required String updatedAt,
+  }) = _ListHistoryPurchaseModel;
+
+  factory ListHistoryPurchaseModel.fromJson(Map<String, dynamic> json) =>
+      _$ListHistoryPurchaseModelFromJson(json);
+}
+
+@freezed
+class DetailPurchaseModel with _$DetailPurchaseModel {
+  const factory DetailPurchaseModel({
+    required PurchaseModel purchase,
+    required PaymentRequestModel paymentRequest,
+  }) = _DetailPurchaseModel;
+
+  factory DetailPurchaseModel.fromJson(Map<String, dynamic> json) =>
+      _$DetailPurchaseModelFromJson(json);
+}

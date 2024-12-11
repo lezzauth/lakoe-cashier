@@ -273,7 +273,7 @@ class _OnlineShopOrderTrackState extends State<OnlineShopOrderTrack> {
                                               margin: const EdgeInsets.only(
                                                   bottom: 4),
                                               child: TextBodyS(
-                                                TFormatter.orderDate(
+                                                TFormatter.dateTime(
                                                   history.updatedAt,
                                                   withDay: true,
                                                 ),

@@ -246,7 +246,7 @@ class _SuccessConfirmationPaymentContentState
                                             children: [
                                               const TextReceipt("Tanggal"),
                                               TextReceipt(
-                                                TFormatter.orderDate(arguments
+                                                TFormatter.dateTime(arguments
                                                     .payment
                                                     .transaction
                                                     .createdAt),

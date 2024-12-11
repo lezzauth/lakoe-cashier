@@ -392,7 +392,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                               ),
                                             Expanded(
                                               child: TextBodyM(
-                                                TFormatter.orderDate(
+                                                TFormatter.dateTime(
                                                   order.createdAt,
                                                   withDay: true,
                                                 ),

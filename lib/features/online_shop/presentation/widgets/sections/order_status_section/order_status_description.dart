@@ -26,7 +26,7 @@ class OrderStatusDescription extends StatelessWidget {
             ),
             children: [
               TextSpan(
-                text: "${TFormatter.orderDate(
+                text: "${TFormatter.dateTime(
                   order.createdAt.add(Duration(days: 1)).toIso8601String(),
                 )} WIB",
                 style: GoogleFonts.inter(
