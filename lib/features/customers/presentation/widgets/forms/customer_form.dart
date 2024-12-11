@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -132,7 +133,8 @@ class _CustomerFormState extends State<CustomerForm> {
                         ),
                         keyboardType: TextInputType.phone,
                         inputFormatters: [
-                          PhoneNumberFormatter(isDisplayFormat: true)
+                          PhoneNumberFormatter(isDisplayFormat: true),
+                          LengthLimitingTextInputFormatter(14),
                         ],
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.maxLength(14,

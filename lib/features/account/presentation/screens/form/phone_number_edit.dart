@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -229,7 +230,10 @@ class _PhoneNumberEditScreenState extends State<PhoneNumberEditScreen> {
                                     });
                                   },
                                   keyboardType: TextInputType.phone,
-                                  inputFormatters: [PhoneNumberFormatter()],
+                                  inputFormatters: [
+                                    PhoneNumberFormatter(),
+                                    LengthLimitingTextInputFormatter(14),
+                                  ],
                                   validator: FormBuilderValidators.compose([
                                     FormBuilderValidators.startsWith("8",
                                         errorText:
