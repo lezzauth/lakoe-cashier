@@ -68,6 +68,11 @@ class _DashboardState extends State<Dashboard> {
     super.dispose();
   }
 
+  Future<void> _onRefresh() async {
+    context.read<CashierCubit>().getOpenCashier();
+    context.read<CashierReportCubit>().init();
+  }
+
   void handleDeeplink() {
     _sub = uriLinkStream.listen((Uri? uri) {
       if (uri != null &&
@@ -111,139 +116,152 @@ class _DashboardState extends State<Dashboard> {
                 ),
               );
         },
-        child: Scaffold(
-          appBar: DashboardAppbar(),
-          body: SafeArea(
-            child: ListView(
-              children: [
-                ResponsiveLayout(
-                  mobile: MainMenu(),
-                  tablet: MainMenuTablet(),
-                ),
+        child: Scrollbar(
+          child: RefreshIndicator(
+            onRefresh: _onRefresh,
+            backgroundColor: TColors.neutralLightLightest,
+            child: Scaffold(
+              appBar: DashboardAppbar(),
+              body: SafeArea(
+                child: ListView(
+                  children: [
+                    ResponsiveLayout(
+                      mobile: MainMenu(),
+                      tablet: MainMenuTablet(),
+                    ),
 
-                ResponsiveLayout(
-                  mobile: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 24),
-                    child: ItemMenuContainer(),
-                  ),
-                  tablet: SizedBox.shrink(),
-                ),
+                    ResponsiveLayout(
+                      mobile: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 24),
+                        child: ItemMenuContainer(),
+                      ),
+                      tablet: SizedBox.shrink(),
+                    ),
 
-                // Container(
-                //   padding: EdgeInsets.symmetric(horizontal: 24),
-                //   margin: EdgeInsets.only(bottom: 12),
-                //   child: DashboardBanner(),
-                // ),
-                // Container(
-                //   padding: EdgeInsets.symmetric(horizontal: 24),
-                //   margin: EdgeInsets.only(bottom: 12),
-                //   child: AIBanner(),
-                // ),
+                    // Container(
+                    //   padding: EdgeInsets.symmetric(horizontal: 24),
+                    //   margin: EdgeInsets.only(bottom: 12),
+                    //   child: DashboardBanner(),
+                    // ),
+                    // Container(
+                    //   padding: EdgeInsets.symmetric(horizontal: 24),
+                    //   margin: EdgeInsets.only(bottom: 12),
+                    //   child: AIBanner(),
+                    // ),
 
-                Container(
-                  height: 4,
-                  color: TColors.neutralLightMedium,
-                ),
+                    Container(
+                      height: 4,
+                      color: TColors.neutralLightMedium,
+                    ),
 
-                Container(
-                  margin: EdgeInsets.only(bottom: 12, top: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  child: TextHeading2(
-                    "Laporan singkat kamu, nih!",
-                    color: TColors.neutralDarkDark,
-                  ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 12, top: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      child: TextHeading2(
+                        "Laporan singkat kamu, nih!",
+                        color: TColors.neutralDarkDark,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 12),
+                      child: DashboardFilter(),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      margin: EdgeInsets.only(bottom: 12),
+                      child: DashboardDaySelectFilter(),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      margin: EdgeInsets.only(bottom: 12),
+                      child:
+                          BlocBuilder<CashierReportCubit, CashierReportState>(
+                        builder: (context, state) {
+                          if (state is CashierReportLoadSuccess) {
+                            final report = state.report;
+                            return ResponsiveLayout(
+                              tablet: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Expanded(
+                                    child: SalesSummary(
+                                      totalSales: report.total_sales,
+                                    ),
+                                  ),
+                                  SizedBox(width: 16),
+                                  Expanded(
+                                    child: OrderSummary(
+                                      totalTransactions:
+                                          report.total_transactions,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              mobile: Column(
+                                children: [
+                                  SalesSummary(
+                                    totalSales: report.total_sales,
+                                  ),
+                                  SizedBox(height: 16),
+                                  OrderSummary(
+                                    totalTransactions:
+                                        report.total_transactions,
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else if (state is CashierReportLoadFailure) {
+                            // final error = state.error;
+                            return ResponsiveLayout(
+                              tablet: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Expanded(
+                                    child: SalesSummaryFailed(
+                                      onRefresh: () {
+                                        context
+                                            .read<CashierReportCubit>()
+                                            .init();
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(width: 16),
+                                  Expanded(
+                                    child: OrderSummaryFailed(
+                                      onRefresh: () {
+                                        context
+                                            .read<CashierReportCubit>()
+                                            .init();
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              mobile: Column(
+                                children: [
+                                  SalesSummaryFailed(
+                                    onRefresh: () {
+                                      context.read<CashierReportCubit>().init();
+                                    },
+                                  ),
+                                  SizedBox(height: 16),
+                                  OrderSummaryFailed(
+                                    onRefresh: () {
+                                      context.read<CashierReportCubit>().init();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return ShimmerCardReport();
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 12),
-                  child: DashboardFilter(),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  margin: EdgeInsets.only(bottom: 12),
-                  child: DashboardDaySelectFilter(),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  margin: EdgeInsets.only(bottom: 12),
-                  child: BlocBuilder<CashierReportCubit, CashierReportState>(
-                    builder: (context, state) {
-                      if (state is CashierReportLoadSuccess) {
-                        final report = state.report;
-                        return ResponsiveLayout(
-                          tablet: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Expanded(
-                                child: SalesSummary(
-                                  totalSales: report.total_sales,
-                                ),
-                              ),
-                              SizedBox(width: 16),
-                              Expanded(
-                                child: OrderSummary(
-                                  totalTransactions: report.total_transactions,
-                                ),
-                              ),
-                            ],
-                          ),
-                          mobile: Column(
-                            children: [
-                              SalesSummary(
-                                totalSales: report.total_sales,
-                              ),
-                              SizedBox(height: 16),
-                              OrderSummary(
-                                totalTransactions: report.total_transactions,
-                              ),
-                            ],
-                          ),
-                        );
-                      } else if (state is CashierReportLoadFailure) {
-                        // final error = state.error;
-                        return ResponsiveLayout(
-                          tablet: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Expanded(
-                                child: SalesSummaryFailed(
-                                  onRefresh: () {
-                                    context.read<CashierReportCubit>().init();
-                                  },
-                                ),
-                              ),
-                              SizedBox(width: 16),
-                              Expanded(
-                                child: OrderSummaryFailed(
-                                  onRefresh: () {
-                                    context.read<CashierReportCubit>().init();
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          mobile: Column(
-                            children: [
-                              SalesSummaryFailed(
-                                onRefresh: () {
-                                  context.read<CashierReportCubit>().init();
-                                },
-                              ),
-                              SizedBox(height: 16),
-                              OrderSummaryFailed(
-                                onRefresh: () {
-                                  context.read<CashierReportCubit>().init();
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                      } else {
-                        return ShimmerCardReport();
-                      }
-                    },
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),

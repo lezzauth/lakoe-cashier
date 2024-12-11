@@ -111,7 +111,9 @@ class _MainMenuTabletState extends State<MainMenuTablet> {
                         decoration: BoxDecoration(
                           gradient: state is CashierAlreadyOpen
                               ? TColors.greenGradient
-                              : TColors.redGradient,
+                              : state is GetCashierInProgress
+                                  ? TColors.neutralGradient
+                                  : TColors.redGradient,
                           borderRadius: BorderRadius.circular(16.0),
                         ),
                         child: Stack(
