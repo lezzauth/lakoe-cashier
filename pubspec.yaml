@@ -59,6 +59,8 @@ dependencies:
     path: packages/online_shop_repository
   package_repository:
     path: packages/package_repository
+  payment_repository:
+    path: packages/payment_repository
 
   token_provider:
     path: packages/token_provider

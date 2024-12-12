@@ -8,6 +8,7 @@ class PaymentSectionItem extends StatelessWidget {
   final String subTitle;
   final bool isActive;
   final bool lastItem;
+  final ValueChanged<bool>? onToggleActive;
 
   const PaymentSectionItem({
     super.key,
@@ -15,6 +16,7 @@ class PaymentSectionItem extends StatelessWidget {
     required this.subTitle,
     this.isActive = false,
     this.lastItem = false,
+    required this.onToggleActive,
   });
 
   @override
@@ -55,10 +57,7 @@ class PaymentSectionItem extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            Switch(
-              value: isActive,
-              onChanged: (value) {},
-            )
+            Switch(value: isActive, onChanged: onToggleActive)
           ],
         ),
       ),
