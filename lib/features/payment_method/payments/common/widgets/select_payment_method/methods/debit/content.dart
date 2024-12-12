@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_cubit.dart';
-import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_filter_cubit.dart';
-import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_filter_state.dart';
-import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/qris/footer.dart';
-import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/qris/form.dart';
-import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/radio_group.dart';
+import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_cubit.dart';
+import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_filter_cubit.dart';
+import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_filter_state.dart';
+import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/methods/debit/footer.dart';
+import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/methods/debit/form.dart';
+import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/methods/radio_group.dart';
 
-class QrisPaymentContent extends StatefulWidget {
-  const QrisPaymentContent({
+class DebitPaymentContent extends StatefulWidget {
+  const DebitPaymentContent({
     super.key,
     required this.amount,
   });
@@ -17,23 +17,23 @@ class QrisPaymentContent extends StatefulWidget {
   final double amount;
 
   @override
-  State<QrisPaymentContent> createState() => _QrisPaymentContentState();
+  State<DebitPaymentContent> createState() => DebitPaymentContentState();
 }
 
-class _QrisPaymentContentState extends State<QrisPaymentContent> {
+class DebitPaymentContentState extends State<DebitPaymentContent> {
   final _formKey = GlobalKey<FormBuilderState>();
+
   bool _isFormValid = false;
-  bool useQRISStatic = false;
 
   void _onSubmitted() {
     FocusScope.of(context).unfocus();
+
     if (_isFormValid && _formKey.currentState?.saveAndValidate() == true) {
       dynamic value = _formKey.currentState?.value;
-
-      context.read<PaymentCubit>().setQRCodePayment(
+      context.read<PaymentCubit>().setDebitCreditPayment(
+            accountNumber: "",
             paidAmount: widget.amount,
-            paidFrom: useQRISStatic ? "CASHIER" : "EDC",
-            approvalCode: useQRISStatic ? null : value["codeApproval"],
+            approvalCode: value["codeApproval"],
           );
     }
   }
@@ -61,9 +61,7 @@ class _QrisPaymentContentState extends State<QrisPaymentContent> {
                   builder: (context, state) {
                     return Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0,
-                        vertical: 12.0,
-                      ),
+                          horizontal: 20.0, vertical: 12.0),
                       child: PaymentMethodRadioGroup(
                         value: state.paymentMethod,
                         onChanged: (value) {
@@ -76,16 +74,7 @@ class _QrisPaymentContentState extends State<QrisPaymentContent> {
                     );
                   },
                 ),
-                QrisPaymentForm(
-                  useQRISStatic: useQRISStatic,
-                  onSubmitted: _onSubmitted,
-                  onChanged: (bool value) {
-                    setState(() {
-                      useQRISStatic = value;
-                      _isFormValid = value;
-                    });
-                  },
-                ),
+                DebitPaymentForm(onSubmitted: _onSubmitted),
               ],
             ),
           ),
@@ -93,7 +82,7 @@ class _QrisPaymentContentState extends State<QrisPaymentContent> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: QrisPaymentFooter(
+            child: DebitPaymentFooter(
               onCanceled: () {
                 Navigator.pop(context);
               },

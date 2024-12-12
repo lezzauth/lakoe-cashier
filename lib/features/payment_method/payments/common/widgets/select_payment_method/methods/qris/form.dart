@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:lakoe_pos/common/widgets/form/custom_checkbox.dart';
 import 'package:lakoe_pos/common/widgets/form/form_label.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
@@ -13,12 +11,10 @@ class QrisPaymentForm extends StatefulWidget {
   const QrisPaymentForm({
     super.key,
     this.useQRISStatic = false,
-    required this.onChanged,
     required this.onSubmitted,
   });
 
   final bool useQRISStatic;
-  final ValueChanged<bool> onChanged;
   final VoidCallback onSubmitted;
 
   @override
@@ -38,22 +34,6 @@ class _QrisPaymentFormState extends State<QrisPaymentForm> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Row(
-                  children: [
-                    CustomCheckbox(
-                      value: widget.useQRISStatic,
-                      onChanged: widget.onChanged,
-                    ),
-                    SizedBox(width: 12),
-                    TextBodyL(
-                      "Tidak menggunakan mesin EDC",
-                      color: TColors.neutralDarkDark,
-                    ),
-                  ],
-                ),
-              ),
               if (!widget.useQRISStatic)
                 Container(
                   margin: const EdgeInsets.only(top: 8.0),

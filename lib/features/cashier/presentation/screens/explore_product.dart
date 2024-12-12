@@ -10,6 +10,7 @@ import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_pro
 import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
 import 'package:lakoe_pos/features/cashier/presentation/screens/tablet/explore_product.dart';
 import 'package:lakoe_pos/features/cashier/presentation/screens/mobile/explore_product.dart';
+import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 
 class ExploreProductScreen extends StatefulWidget {
   const ExploreProductScreen({super.key});
@@ -44,6 +45,7 @@ class _ExploreProductState extends State<ExploreProduct> {
     context.read<CashierOrderCubit>().init();
     context.read<CashierProductCubit>().init();
     context.read<CashierCategoryCubit>().init();
+    context.read<PaymentMethodCubit>().findAll();
   }
 
   @override

@@ -12,12 +12,14 @@ class EmptyList extends StatelessWidget {
     required this.title,
     required this.subTitle,
     this.action,
+    this.withTopSpace = true,
   });
 
   final SvgPicture? image;
   final String title;
   final String subTitle;
   final Widget? action;
+  final bool withTopSpace;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class EmptyList extends StatelessWidget {
       scrollDirection: Axis.vertical,
       child: Center(
         child: Container(
-          margin: const EdgeInsets.only(top: 92),
+          margin: EdgeInsets.only(top: withTopSpace ? 92 : 0),
           child: Column(
             children: [
               image ??

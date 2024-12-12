@@ -8,9 +8,9 @@ import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_sta
 import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_state.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
 import 'package:lakoe_pos/features/cart/presentation/widgets/content/cart_content_tablet.dart';
-import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_state.dart';
-import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/select_payment_method_tablet.dart';
-import 'package:lakoe_pos/features/payments/data/arguments/success_confirmation_payment_argument.dart';
+import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_state.dart';
+import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/select_payment_method_tablet.dart';
+import 'package:lakoe_pos/features/payment_method/payments/data/arguments/success_confirmation_payment_argument.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class ExploreProductDrawerTablet extends StatefulWidget {

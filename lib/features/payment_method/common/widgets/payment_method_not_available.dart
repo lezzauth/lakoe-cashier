@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/device/device_uility.dart';
 
-class SelectPaymentMethodNotAvailable extends StatelessWidget {
-  const SelectPaymentMethodNotAvailable({super.key});
+class PaymentMethodNotAvailable extends StatelessWidget {
+  const PaymentMethodNotAvailable({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +18,9 @@ class SelectPaymentMethodNotAvailable extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              margin: const EdgeInsets.only(bottom: 16.0),
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: const TextHeading2(
-                "Oops! Metode pembayaran ini belum bisa kamu gunakan.",
+                "Oops! Kamu belum mengaktifkan metode pembayaran",
               ),
             ),
             Container(
@@ -39,33 +37,8 @@ class SelectPaymentMethodNotAvailable extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 4),
-                        child: const TextHeading3(
-                          "Metode Pembayaran",
-                          color: TColors.neutralDarkDark,
-                        ),
-                      ),
-                      const TextBodyM(
-                        "Kamu perlu melakukan verifikasi akun untuk dapat menggunakan fitur QRIS",
-                        color: TColors.neutralDarkMedium,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 4),
-                        child: const TextHeading3(
-                          "Transfer Bank",
-                          color: TColors.neutralDarkDark,
-                        ),
-                      ),
-                      const TextBodyM(
-                        "Kamu perlu melengkapi data Rekening Bank kamu agar bisa menggunakan metode pembayaran Transfer Bank.",
+                      TextBodyM(
+                        "Silakan aktifkan dulu metode pembayaran yang ingin digunakan. Minimal ada satu metode pembayaran yang aktif.",
                         color: TColors.neutralDarkMedium,
                       ),
                     ],
@@ -82,9 +55,10 @@ class SelectPaymentMethodNotAvailable extends StatelessWidget {
                       height: 48,
                       child: OutlinedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, "/settings");
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/payment_method");
                         },
-                        child: const TextActionL(
+                        child: TextActionL(
                           "Atur Sekarang",
                           color: TColors.primary,
                         ),

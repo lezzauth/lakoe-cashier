@@ -17,7 +17,7 @@ import 'package:lakoe_pos/features/bill/data/arguments/template_order_model.dart
 import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_state.dart';
-import 'package:lakoe_pos/features/payments/data/arguments/success_confirmation_payment_argument.dart';
+import 'package:lakoe_pos/features/payment_method/payments/data/arguments/success_confirmation_payment_argument.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/constants/payment_method_strings.dart';

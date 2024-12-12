@@ -24,6 +24,7 @@ class PaymentMethodCubit extends Cubit<PaymentMethodState> {
 
       final res = await _repository.setActive(dto);
       emit(PaymentMethodActionSuccess(res: res));
+      await findAll();
     } catch (e) {
       emit(PaymentMethodInActionFailure(e.toString()));
     }

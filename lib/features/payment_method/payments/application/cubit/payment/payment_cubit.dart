@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_state.dart';
+import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_state.dart';
 
 class PaymentCubit extends Cubit<PaymentState> {
   PaymentCubit() : super(PaymentInitial());

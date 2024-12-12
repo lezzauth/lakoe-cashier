@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_1.dart';
-import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_cubit.dart';
-import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_filter_cubit.dart';
-import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_filter_state.dart';
-import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_state.dart';
-import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/bank_transfer/content.dart';
-import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/cash/content.dart';
-import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/debit/content.dart';
-import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/methods/qris/content.dart';
+import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_cubit.dart';
+import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_filter_cubit.dart';
+import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_filter_state.dart';
+import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_state.dart';
+import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/methods/bank_transfer/content.dart';
+import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/methods/cash/content.dart';
+import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/methods/debit/content.dart';
+import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/methods/qris/content.dart';
 
 class SelectPaymentMethodTablet extends StatefulWidget {
   const SelectPaymentMethodTablet({
@@ -72,18 +72,11 @@ class _SelectPaymentMethodTabletState extends State<SelectPaymentMethodTablet> {
               Expanded(
                 child: BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
                   builder: (context, state) => switch (state.paymentMethod) {
-                    "CASH" => CashPaymentContent(
-                        amount: amount,
-                      ),
-                    "QR_CODE" => QrisPaymentContent(
-                        amount: amount,
-                      ),
-                    "DEBIT" => DebitPaymentContent(
-                        amount: amount,
-                      ),
-                    "BANK_TRANSFER" => BankTransferPaymentContent(
-                        amount: amount,
-                      ),
+                    "CASH" => CashPaymentContent(amount: amount),
+                    "QR_CODE" => QrisPaymentContent(amount: amount),
+                    "DEBIT" => DebitPaymentContent(amount: amount),
+                    "BANK_TRANSFER" =>
+                      BankTransferPaymentContent(amount: amount),
                     _ => const SizedBox(),
                   },
                 ),

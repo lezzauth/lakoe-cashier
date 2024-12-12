@@ -13,9 +13,12 @@ import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_state.dart
 import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
 import 'package:lakoe_pos/features/cart/presentation/widgets/content/cart_content.dart';
 import 'package:lakoe_pos/features/cart/presentation/widgets/footer/cart_footer.dart';
-import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_state.dart';
-import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
-import 'package:lakoe_pos/features/payments/data/arguments/success_confirmation_payment_argument.dart';
+import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
+import 'package:lakoe_pos/features/payment_method/application/payment_method_state.dart';
+import 'package:lakoe_pos/features/payment_method/common/widgets/payment_method_not_available.dart';
+import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_state.dart';
+import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/select_payment_method.dart';
+import 'package:lakoe_pos/features/payment_method/payments/data/arguments/success_confirmation_payment_argument.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class CartScreen extends StatelessWidget {
@@ -160,22 +163,50 @@ class _CartState extends State<Cart> {
   }
 
   Future<void> onCompleteOrder(double amount) async {
-    await showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      builder: (context) {
-        return CustomBottomsheet(
-          child: SelectPaymentMethod(
-            amount: amount,
-            onPaymentCash: _onCashPaid,
-            onPaymentBankTransfer: _onBankTransferPaid,
-            onPaymentDebitCredit: _onDebitCreditPaid,
-            onPaymentQRCode: _onQRCodePaid,
-          ),
+    PaymentMethodState state = context.read<PaymentMethodCubit>().state;
+
+    if (state is PaymentMethodLoadSuccess) {
+      final activePaymentMethods =
+          state.paymentMethod.where((method) => method.isActive).toList();
+
+      if (activePaymentMethods.isEmpty) {
+        return showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) {
+            return const CustomBottomsheet(
+              child: PaymentMethodNotAvailable(),
+            );
+          },
         );
-      },
-    );
+      }
+      await showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        useSafeArea: true,
+        builder: (context) {
+          return CustomBottomsheet(
+            child: SelectPaymentMethod(
+              amount: amount,
+              onPaymentCash: _onCashPaid,
+              onPaymentBankTransfer: _onBankTransferPaid,
+              onPaymentDebitCredit: _onDebitCreditPaid,
+              onPaymentQRCode: _onQRCodePaid,
+            ),
+          );
+        },
+      );
+    } else {
+      return showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return const CustomBottomsheet(
+            child: PaymentMethodNotAvailable(),
+          );
+        },
+      );
+    }
   }
 
   @override

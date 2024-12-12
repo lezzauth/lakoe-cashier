@@ -8,6 +8,9 @@ import 'package:lakoe_pos/common/widgets/ui/bottomsheet/general_information.dart
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/ui/tags/order_status/tag_strong_order_status.dart';
+import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
+import 'package:lakoe_pos/features/payment_method/application/payment_method_state.dart';
+import 'package:lakoe_pos/features/payment_method/common/widgets/payment_method_not_available.dart';
 import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:owner_repository/owner_repository.dart';
@@ -33,10 +36,10 @@ import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.d
 import 'package:lakoe_pos/features/orders/data/models.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/ui/customer_table_card.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/ui/tags/solid_order_online_status_tag.dart';
-import 'package:lakoe_pos/features/payments/application/cubit/payment/payment_state.dart';
-import 'package:lakoe_pos/features/payments/common/widgets/select_payment_method/select_payment_method.dart';
-import 'package:lakoe_pos/features/payments/data/arguments/success_confirmation_payment_argument.dart';
-import 'package:lakoe_pos/features/payments/data/models/payment_method_return_model.dart';
+import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_state.dart';
+import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/select_payment_method.dart';
+import 'package:lakoe_pos/features/payment_method/payments/data/arguments/success_confirmation_payment_argument.dart';
+import 'package:lakoe_pos/features/payment_method/payments/data/models/payment_method_return_model.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/product/action/product_note_action.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
@@ -77,12 +80,6 @@ class _OrderDetailState extends State<OrderDetail> {
   final ScrollController _scrollController = ScrollController();
   bool _isScrolled = false;
   bool _isCashier = false;
-
-  List<_BillPriceItem> listBillPriceItem = [
-    _BillPriceItem(label: "Subtotal", price: "Rp20.000"),
-    _BillPriceItem(label: "Pajak (5%)", price: "Rp1.000"),
-    _BillPriceItem(label: "Service Charge (2%)", price: "Rp400"),
-  ];
 
   ScrollController scrollController = ScrollController();
   Future<void> _onRefresh() async {
@@ -188,30 +185,58 @@ class _OrderDetailState extends State<OrderDetail> {
     required double amount,
     required OrderModel order,
   }) async {
-    await showModalBottomSheet<PaymentMethodReturnModel>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      builder: (context) {
-        return CustomBottomsheet(
-          child: SelectPaymentMethod(
-            amount: amount,
-            onPaymentCash: (value) {
-              _onCashPaid(data: value, order: order);
-            },
-            onPaymentBankTransfer: (value) {
-              _onBankTransferPaid(data: value, order: order);
-            },
-            onPaymentDebitCredit: (value) {
-              _onDebitCreditPaid(data: value, order: order);
-            },
-            onPaymentQRCode: (value) {
-              _onQRCodePaid(data: value, order: order);
-            },
-          ),
+    PaymentMethodState state = context.read<PaymentMethodCubit>().state;
+
+    if (state is PaymentMethodLoadSuccess) {
+      final activePaymentMethods =
+          state.paymentMethod.where((method) => method.isActive).toList();
+
+      if (activePaymentMethods.isEmpty) {
+        return showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) {
+            return const CustomBottomsheet(
+              child: PaymentMethodNotAvailable(),
+            );
+          },
         );
-      },
-    );
+      }
+      await showModalBottomSheet<PaymentMethodReturnModel>(
+        context: context,
+        isScrollControlled: true,
+        useSafeArea: true,
+        builder: (context) {
+          return CustomBottomsheet(
+            child: SelectPaymentMethod(
+              amount: amount,
+              onPaymentCash: (value) {
+                _onCashPaid(data: value, order: order);
+              },
+              onPaymentBankTransfer: (value) {
+                _onBankTransferPaid(data: value, order: order);
+              },
+              onPaymentDebitCredit: (value) {
+                _onDebitCreditPaid(data: value, order: order);
+              },
+              onPaymentQRCode: (value) {
+                _onQRCodePaid(data: value, order: order);
+              },
+            ),
+          );
+        },
+      );
+    } else {
+      return showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return const CustomBottomsheet(
+            child: PaymentMethodNotAvailable(),
+          );
+        },
+      );
+    }
   }
 
   double _getOrderTotal(OrderModel order) {

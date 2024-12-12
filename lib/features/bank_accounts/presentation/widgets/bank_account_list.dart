@@ -95,7 +95,7 @@ class _BankAccountListState extends State<BankAccountList> {
             : EmptyList(
                 title: "Belum ada bank tersimpan, nih!",
                 subTitle:
-                    "Kamu bisa menyimpan 3 nomor rekening kamu untuk kebutuhan operasional.",
+                    "Kamu bisa menyimpan 3 nomor rekening untuk kebutuhan pembayaran.",
                 image: SvgPicture.asset(
                   TImages.bankAccountEmpty,
                   width: 252,

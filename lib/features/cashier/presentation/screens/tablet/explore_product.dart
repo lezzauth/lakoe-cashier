@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_cubit.dart';
@@ -20,6 +21,9 @@ import 'package:lakoe_pos/features/cashier/presentation/widgets/appbar/explore_p
 import 'package:lakoe_pos/features/cashier/presentation/widgets/drawer/explore_product_drawer_tablet.dart';
 import 'package:lakoe_pos/features/cashier/presentation/widgets/open_order_list.dart';
 import 'package:lakoe_pos/features/cashier/presentation/widgets/product_grid.dart';
+import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
+import 'package:lakoe_pos/features/payment_method/application/payment_method_state.dart';
+import 'package:lakoe_pos/features/payment_method/common/widgets/payment_method_not_available.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/filter/product_category_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 
@@ -239,11 +243,7 @@ class _ExploreProductTabletContentState
                             child: CartFooter(
                               labelButtonCart: "Proses Pesanan",
                               onCompleted: (value) {
-                                _scaffoldKey.currentState!.openEndDrawer();
-                                _searchController.clear();
-                                context
-                                    .read<CashierProductFilterCubit>()
-                                    .setFilter(name: "");
+                                onCompleteOrder(value);
                               },
                               onSaved: _onCartSaved,
                             ),
@@ -259,5 +259,39 @@ class _ExploreProductTabletContentState
         ),
       ),
     );
+  }
+
+  Future<void> onCompleteOrder(double value) async {
+    PaymentMethodState state = context.read<PaymentMethodCubit>().state;
+
+    if (state is PaymentMethodLoadSuccess) {
+      final activePaymentMethods =
+          state.paymentMethod.where((method) => method.isActive).toList();
+
+      if (activePaymentMethods.isEmpty) {
+        return showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) {
+            return const CustomBottomsheet(
+              child: PaymentMethodNotAvailable(),
+            );
+          },
+        );
+      }
+      _scaffoldKey.currentState!.openEndDrawer();
+      _searchController.clear();
+      context.read<CashierProductFilterCubit>().setFilter(name: "");
+    } else {
+      return showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return const CustomBottomsheet(
+            child: PaymentMethodNotAvailable(),
+          );
+        },
+      );
+    }
   }
 }
