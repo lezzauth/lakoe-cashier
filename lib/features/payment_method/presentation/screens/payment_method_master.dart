@@ -12,6 +12,7 @@ import 'package:lakoe_pos/features/payment_method/application/payment_method_sta
 import 'package:lakoe_pos/features/payment_method/presentation/widgets/section/section_card.dart';
 import 'package:lakoe_pos/features/payment_method/presentation/widgets/section/section_item.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:payment_repository/payment_repository.dart';
 
 class PaymentMethodMasterScreen extends StatelessWidget {
@@ -38,7 +39,7 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
   @override
   void initState() {
     super.initState();
-    CustomToast.init;
+    CustomToast.init(context);
     _onInit();
   }
 
@@ -56,8 +57,12 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
       }).toList();
 
       if (activeMethods.length == 1 && !newValue) {
-        CustomToast.show(
-          "Minimal ada satu metode pembayaran aktif!",
+        CustomToast.showWithContext(
+          context,
+          "Minimal ada satu metode aktif!",
+          icon: TIcons.warning,
+          position: 'bottom',
+          duration: 2,
         );
         HapticFeedback.vibrate();
       } else {
@@ -86,9 +91,11 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
             await _savePaymentMethodChanges(context);
 
             if (mounted) {
-              CustomToast.show(
-                "Perubahan berhasil disimpan!",
-                position: 'center',
+              CustomToast.showWithContext(
+                context,
+                "Metode pembayaran tersimpan",
+                icon: TIcons.checkBold,
+                position: 'bottom',
                 backgroundColor: TColors.success,
                 duration: 2,
               );
@@ -113,8 +120,12 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
     }).toList();
 
     if (activeMethods.isEmpty) {
-      CustomToast.show(
-        "Minimal ada satu metode pembayaran aktif!",
+      CustomToast.showWithContext(
+        context,
+        "Minimal ada satu metode aktif!",
+        icon: TIcons.warning,
+        position: 'bottom',
+        duration: 2,
       );
       HapticFeedback.vibrate();
       return;
@@ -137,9 +148,11 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
           temporaryChanges.clear();
         });
 
-        CustomToast.show(
-          "Perubahan berhasil disimpan!",
-          position: 'center',
+        CustomToast.showWithContext(
+          context,
+          "Metode pembayaran tersimpan",
+          icon: TIcons.checkBold,
+          position: 'bottom',
           backgroundColor: TColors.success,
           duration: 2,
         );
@@ -148,7 +161,13 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
       } catch (error) {
         if (!mounted) return;
 
-        CustomToast.show("Gagal menyimpan perubahan. Coba lagi!");
+        CustomToast.showWithContext(
+          context,
+          "Gagal menyimpan perubahan. Coba lagi!",
+          position: 'bottom',
+          backgroundColor: TColors.error,
+          duration: 2,
+        );
         HapticFeedback.vibrate();
       }
     }

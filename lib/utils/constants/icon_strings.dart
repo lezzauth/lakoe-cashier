@@ -16,6 +16,7 @@ class TIcons {
   static const String homeLock = "assets/icons/home-lock.svg";
   static const String warning = "assets/icons/warning.svg";
   static const String check = "assets/icons/check.svg";
+  static const String checkBold = "assets/icons/check-bold.svg";
   static const String bag = "assets/icons/bag.svg";
   static const String servingDome = "assets/icons/serving-dome.svg";
   static const String hamburgerMenu = "assets/icons/hamburger-menu.svg";
