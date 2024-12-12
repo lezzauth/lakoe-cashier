@@ -152,7 +152,9 @@ class _MainMenuTabletState extends State<MainMenuTablet> {
                                         ),
                                       ),
                                       Text(
-                                        "Buka Kasir",
+                                        state is CashierAlreadyOpen
+                                            ? "Buka Kasir"
+                                            : "Mulai Buka Kasir",
                                         style: GoogleFonts.inter(
                                           fontSize: TSizes.fontSizeBodyL,
                                           fontWeight: FontWeight.w700,

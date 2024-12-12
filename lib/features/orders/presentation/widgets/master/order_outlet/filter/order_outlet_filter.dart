@@ -66,8 +66,8 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
             onChanged: (template, from, to) {
               widget.onChanged(widget.value.copyWith(
                 template: template,
-                from: from?.toUtc().toIso8601String(),
-                to: to?.toUtc().toIso8601String(),
+                from: from?.toIso8601String(),
+                to: to?.toIso8601String(),
               ));
             },
           ),
