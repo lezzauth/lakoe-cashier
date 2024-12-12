@@ -78,15 +78,11 @@ class _MainMenuState extends State<MainMenu> {
   Widget build(BuildContext context) {
     return BlocBuilder<OnboardingTransactionCubit, OnboardingTransactionState>(
       builder: (context, onboardingState) => switch (onboardingState) {
-        OnboardingTransactionLoadSuccess(
-          :final isProductCompleted,
-          :final isBankAccountCompleted
-        ) =>
+        OnboardingTransactionLoadSuccess(:final isProductCompleted) =>
           BlocBuilder<CashierCubit, CashierState>(
             builder: (context, state) => GestureDetector(
               onTap: () {
-                bool isOnboardingNotCompleted =
-                    !isProductCompleted || !isBankAccountCompleted;
+                bool isOnboardingNotCompleted = !isProductCompleted;
 
                 if (isOnboardingNotCompleted) {
                   _onOnboardingOpen();

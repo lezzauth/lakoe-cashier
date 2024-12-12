@@ -47,11 +47,7 @@ class _OnboardingTransactionScreenState
       ),
       body: BlocBuilder<OnboardingTransactionCubit, OnboardingTransactionState>(
         builder: (context, state) => switch (state) {
-          OnboardingTransactionLoadSuccess(
-            :final isBankAccountCompleted,
-            :final isProductCompleted
-          ) =>
-            Column(
+          OnboardingTransactionLoadSuccess(:final isProductCompleted) => Column(
               children: [
                 Expanded(
                   child: SingleChildScrollView(
@@ -84,14 +80,6 @@ class _OnboardingTransactionScreenState
                           onTap:
                               isProductCompleted ? null : _onGoToCreateProduct,
                         ),
-                        SizedBox(height: 8),
-                        CheckItem(
-                          checked: isBankAccountCompleted,
-                          title: "Satu rekening bank",
-                          onTap: isBankAccountCompleted
-                              ? null
-                              : _onGoToCreateBankAccount,
-                        ),
                       ],
                     ),
                   ),
@@ -111,14 +99,12 @@ class _OnboardingTransactionScreenState
                   child: SizedBox(
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: (!state.isBankAccountCompleted ||
-                              !state.isProductCompleted)
+                      onPressed: (!state.isProductCompleted)
                           ? null
                           : () {
                               Navigator.pop(
                                 context,
-                                state.isBankAccountCompleted &&
-                                    state.isProductCompleted,
+                                state.isProductCompleted,
                               );
                             },
                       child: const TextActionL("Lanjutan"),
