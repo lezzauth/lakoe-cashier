@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/popup_confirmation.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_state.dart';
+import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/bank_account_not_available.dart';
 import 'package:lakoe_pos/features/payment_method/presentation/widgets/section/section_card.dart';
 import 'package:lakoe_pos/features/payment_method/presentation/widgets/section/section_item.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:logman/logman.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:payment_repository/payment_repository.dart';
 
 class PaymentMethodMasterScreen extends StatelessWidget {
@@ -34,6 +40,7 @@ class PaymentMethodMaster extends StatefulWidget {
 class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
   Map<String, bool> temporaryChanges = {};
   List<PaymentMethod> paymentMethods = [];
+  List<OwnerBankModel> bankAccounts = [];
   bool _isSaveButtonEnabled = false;
 
   @override
@@ -41,13 +48,19 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
     super.initState();
     CustomToast.init(context);
     _onInit();
+    _getBankAccount();
   }
 
   Future<void> _onInit() async {
     await context.read<PaymentMethodCubit>().findAll();
   }
 
+  Future<void> _getBankAccount() async {
+    await context.read<BankAccountMasterCubit>().init();
+  }
+
   void _updatePaymentMethodStatus(String id, bool newValue) {
+    Logman.instance.info("OOO ${bankAccounts.length}");
     setState(() {
       final activeMethods = paymentMethods.where((method) {
         final isActive = temporaryChanges.containsKey(method.id)
@@ -55,6 +68,23 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
             : method.isActive;
         return isActive;
       }).toList();
+
+      final isBankTransfer = paymentMethods.any(
+          (method) => method.id == id && method.channel == 'BANK_TRANSFER');
+
+      if (isBankTransfer && newValue && bankAccounts.isEmpty) {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) {
+            return const CustomBottomsheet(
+              child: BankAccountNotAvailable(),
+            );
+          },
+        );
+        HapticFeedback.vibrate();
+        return;
+      }
 
       if (activeMethods.length == 1 && !newValue) {
         CustomToast.showWithContext(
@@ -175,8 +205,23 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PaymentMethodCubit, PaymentMethodState>(
-      listener: (context, state) {},
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PaymentMethodCubit, PaymentMethodState>(
+          listener: (context, state) {},
+        ),
+        BlocListener<BankAccountMasterCubit, BankAccountMasterState>(
+          listener: (context, state) {
+            if (state is BankAccountMasterLoadSuccess) {
+              bankAccounts = state.bankAccounts;
+              Logman.instance.info("XXX: ${state.bankAccounts}");
+            } else if (state is BankAccountMasterLoadFailure) {
+              Logman.instance
+                  .error("Failed to load bank accounts: ${state.error}");
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         appBar: CustomAppbar(
           title: "Metode Pembayaran",

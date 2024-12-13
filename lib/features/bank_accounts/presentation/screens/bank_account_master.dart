@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
-// import 'package:lakoe_pos/common/widgets/form/search_field.dart';
 import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
 import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_filter_cubit.dart';
 import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_filter_state.dart';
@@ -30,8 +29,6 @@ class BankAccountMaster extends StatefulWidget {
 }
 
 class _BankAccountMasterState extends State<BankAccountMaster> {
-  // final TextEditingController _searchController = TextEditingController();
-
   Future<void> _onRefresh() async {
     context.read<BankAccountMasterCubit>().findAll();
   }

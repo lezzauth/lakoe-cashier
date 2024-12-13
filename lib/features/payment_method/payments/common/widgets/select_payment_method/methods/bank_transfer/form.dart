@@ -65,7 +65,7 @@ class _BankTransferPaymentFormState extends State<BankTransferPaymentForm> {
                           children: bankAccounts
                               .map(
                                 (account) => Container(
-                                  margin: const EdgeInsets.only(bottom: 12),
+                                  margin: const EdgeInsets.only(bottom: 20),
                                   child: BankAccountRadio(
                                     value: account.id,
                                     groupValue: field.value ?? "",

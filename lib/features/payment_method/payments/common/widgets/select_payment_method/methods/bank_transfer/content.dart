@@ -108,7 +108,7 @@ class _BankTransferPaymentContentState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 20),
+                      margin: EdgeInsets.only(bottom: 12),
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: TextHeading3("Pilih rekening bank"),
                     ),

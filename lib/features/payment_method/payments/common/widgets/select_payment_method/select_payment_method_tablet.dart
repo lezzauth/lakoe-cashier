@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_cubit.dart';
 import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_filter_cubit.dart';
@@ -10,6 +12,8 @@ import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select
 import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/methods/cash/content.dart';
 import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/methods/debit/content.dart';
 import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/methods/qris/content.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 
 class SelectPaymentMethodTablet extends StatefulWidget {
   const SelectPaymentMethodTablet({
@@ -63,9 +67,30 @@ class _SelectPaymentMethodTabletState extends State<SelectPaymentMethodTablet> {
         ],
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: const CustomAppbar(
+          appBar: CustomAppbar(
             title: "",
-            leading: TextHeading1("Pembayaran"),
+            leading: const TextHeading1("Pembayaran"),
+            actions: [
+              Padding(
+                  padding: EdgeInsets.only(right: 4),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/payment_method");
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        UiIcons(
+                          TIcons.dashboardSettings,
+                          color: TColors.primary,
+                          size: 14,
+                        ),
+                        SizedBox(width: 4),
+                        TextActionL("Ubah", color: TColors.primary),
+                      ],
+                    ),
+                  ))
+            ],
           ),
           body: Column(
             children: [

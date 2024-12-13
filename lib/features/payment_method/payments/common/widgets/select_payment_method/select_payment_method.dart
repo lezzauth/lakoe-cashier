@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_cubit.dart';
 import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_filter_cubit.dart';
@@ -9,6 +11,8 @@ import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select
 import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/methods/cash/content.dart';
 import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/methods/debit/content.dart';
 import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/methods/qris/content.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/device/device_uility.dart';
 
 class SelectPaymentMethod extends StatefulWidget {
@@ -65,13 +69,31 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(20, 16, 20, 4),
-                    child: TextHeading2("Metode pembayaran"),
-                  )
-                ],
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 12, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextHeading2("Metode pembayaran"),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/payment_method");
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          UiIcons(
+                            TIcons.dashboardSettings,
+                            color: TColors.primary,
+                            size: 14,
+                          ),
+                          SizedBox(width: 4),
+                          TextActionL("Ubah", color: TColors.primary),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
               BlocBuilder<PaymentFilterCubit, PaymentFilterState>(
                 builder: (context, state) => switch (state.paymentMethod) {

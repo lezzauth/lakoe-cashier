@@ -218,7 +218,7 @@ class _BankAccountFormState extends State<BankAccountForm> {
             width: double.infinity,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: ElevatedButton(
-              onPressed: _isFormValid ? _onSubmit : null,
+              onPressed: _isFormValid || !widget.isLoading ? _onSubmit : null,
               child: widget.isLoading
                   ? SizedBox(
                       height: 16,

@@ -58,10 +58,20 @@ class _QrisPaymentContentState extends State<QrisPaymentContent> {
           final hasNeedEdc =
               activePaymentMethods.any((method) => method.isNeedEdc);
 
+          final hasNeedEdcFalse =
+              activePaymentMethods.any((method) => !method.isNeedEdc);
+
           final showQrisPaymentForm =
               (activePaymentMethods.length > 1 && hasNeedEdc) ||
                   (activePaymentMethods.length == 1 && hasNeedEdc);
 
+          // if (hasNeedEdcFalse) {
+          //   WidgetsBinding.instance.addPostFrameCallback((_) {
+          //     setState(() {
+          //       useQRISStatic = false;
+          //     });
+          //   });
+          // }
           if (!showQrisPaymentForm) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               setState(() {
@@ -107,7 +117,7 @@ class _QrisPaymentContentState extends State<QrisPaymentContent> {
                           );
                         },
                       ),
-                      if (showQrisPaymentForm)
+                      if (showQrisPaymentForm && hasNeedEdcFalse)
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 12, horizontal: 20),
@@ -132,7 +142,7 @@ class _QrisPaymentContentState extends State<QrisPaymentContent> {
                         ),
                       if (!showQrisPaymentForm || useQRISStatic)
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          margin: EdgeInsets.fromLTRB(20, 12, 20, 12),
                           padding: EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 12,

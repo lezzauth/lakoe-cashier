@@ -55,6 +55,7 @@ class BankAccountNotAvailable extends StatelessWidget {
                       height: 48,
                       child: OutlinedButton(
                         onPressed: () {
+                          Navigator.pop(context);
                           Navigator.pushNamed(context, "/bank_accounts");
                         },
                         child: TextActionL(
