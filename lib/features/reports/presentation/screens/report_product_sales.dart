@@ -17,7 +17,6 @@ import 'package:lakoe_pos/features/reports/application/cubit/report_product_sale
 import 'package:lakoe_pos/features/reports/application/cubit/report_product_sales/report_product_sales_pagination_state.dart';
 import 'package:lakoe_pos/features/reports/application/cubit/report_product_sales/report_product_sales_state.dart';
 import 'package:lakoe_pos/features/reports/data/arguments.dart';
-import 'package:lakoe_pos/features/reports/presentation/widgets/cards/purchase_history_summary_card.dart';
 import 'package:lakoe_pos/features/reports/presentation/widgets/filter_orders.dart';
 import 'package:lakoe_pos/features/reports/presentation/widgets/product_order_item.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
@@ -87,15 +86,6 @@ class _ReportProductSalesState extends State<ReportProductSales> {
     return TextHeading5("#$rank");
   }
 
-  void _onInit() {
-    context
-        .read<ReportProductSalesCubit>()
-        .findOne(widget.arguments.product.id);
-    context
-        .read<ReportProductSalesPaginationCubit>()
-        .fetchData(productId: widget.arguments.product.id);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -107,6 +97,28 @@ class _ReportProductSalesState extends State<ReportProductSales> {
         context.read<ReportProductSalesPaginationCubit>().loadMoreItems();
       }
     });
+  }
+
+  void _onInit() {
+    context
+        .read<ReportProductSalesCubit>()
+        .findOne(widget.arguments.product.id);
+    context
+        .read<ReportProductSalesPaginationCubit>()
+        .fetchData(productId: widget.arguments.product.id);
+  }
+
+  Future<void> _onRefresh() async {
+    if (!mounted) return;
+
+    ReportProductSalesPaginationFilterState filterState =
+        context.read<ReportProductSalesPaginationFilterCubit>().state;
+
+    context.read<ReportProductSalesPaginationCubit>().reset();
+    context.read<ReportProductSalesPaginationCubit>().fetchData(
+          productId: widget.arguments.product.id,
+          dto: filterState.toListOrderByProductDto,
+        );
   }
 
   void _handleFilterChange(ListOrderByProductDto value) {
@@ -161,21 +173,20 @@ class _ReportProductSalesState extends State<ReportProductSales> {
             );
       },
       child: Scaffold(
-        appBar: const CustomAppbar(
+        appBar: CustomAppbar(
           title: "Laporan Penjualan Produk",
         ),
         body: Scrollbar(
           child: RefreshIndicator(
             backgroundColor: TColors.neutralLightLightest,
-            onRefresh: () async {
-              return await Future.delayed(const Duration(milliseconds: 200));
-            },
+            onRefresh: _onRefresh,
             child:
                 BlocBuilder<ReportProductSalesCubit, ReportProductSalesState>(
               builder: (context, state) {
                 if (state is ReportProductSalesLoadSuccess) {
                   final product = state.product;
                   return CustomScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
                     controller: _scrollController,
                     slivers: [
                       SliverToBoxAdapter(
@@ -269,107 +280,111 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                             "Riwayat Penjualan",
                                             color: TColors.neutralDarkDarkest,
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8),
-                                      child: Column(
-                                        children: [
-                                          IntrinsicHeight(
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child:
-                                                      PurchaseHistorySummaryCard(
-                                                    strongCard: true,
-                                                    title: "Total Keuntungan",
-                                                    value: TFormatter
-                                                        .formatToRupiah(
-                                                      double.parse("1000000"),
-                                                    ),
-                                                    onTap: () {},
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 12),
-                                                Container(
-                                                  width: 120,
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12),
-                                                    color: TColors
-                                                        .neutralLightLight,
-                                                    border: Border.all(
-                                                      width: 1,
-                                                      color: TColors
-                                                          .neutralLightMedium,
-                                                    ),
-                                                  ),
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                    horizontal: 16,
-                                                    vertical: 12,
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      TextHeading5(
-                                                        "Terjual",
-                                                        color: TColors
-                                                            .neutralDarkLightest,
-                                                      ),
-                                                      const SizedBox(height: 8),
-                                                      TextHeading3(
-                                                        "${widget.arguments.product.soldCount} produk",
-                                                        color: TColors
-                                                            .neutralDarkDarkest,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          const SizedBox(height: 12),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child:
-                                                    PurchaseHistorySummaryCard(
-                                                  title: "Total Penjualan",
-                                                  value:
-                                                      TFormatter.formatToRupiah(
-                                                    double.parse(
-                                                        product.profit),
-                                                  ),
-                                                  onTap: () {},
-                                                ),
-                                              ),
-                                              const SizedBox(width: 12),
-                                              Expanded(
-                                                child:
-                                                    PurchaseHistorySummaryCard(
-                                                  title: "Total Terhutang",
-                                                  value:
-                                                      TFormatter.formatToRupiah(
-                                                    double.parse("10000"),
-                                                  ),
-                                                  onTap: () {},
-                                                ),
-                                              ),
-                                            ],
+                                          TextBodyM(
+                                            "Terjual ${widget.arguments.product.soldCount} produk",
+                                            color: TColors.neutralDarkLightest,
                                           ),
                                         ],
                                       ),
                                     ),
+                                    // Container(
+                                    //   padding: const EdgeInsets.symmetric(
+                                    //       vertical: 8),
+                                    //   child: Column(
+                                    //     children: [
+                                    //       IntrinsicHeight(
+                                    //         child: Row(
+                                    //           children: [
+                                    //             Expanded(
+                                    //               child:
+                                    //                   PurchaseHistorySummaryCard(
+                                    //                 strongCard: true,
+                                    //                 title: "Total Keuntungan",
+                                    //                 value: TFormatter
+                                    //                     .formatToRupiah(
+                                    //                   double.parse("1000000"),
+                                    //                 ),
+                                    //                 onTap: () {},
+                                    //               ),
+                                    //             ),
+                                    //             const SizedBox(width: 12),
+                                    //             Container(
+                                    //               width: 120,
+                                    //               alignment:
+                                    //                   Alignment.centerLeft,
+                                    //               decoration: BoxDecoration(
+                                    //                 borderRadius:
+                                    //                     BorderRadius.circular(
+                                    //                         12),
+                                    //                 color: TColors
+                                    //                     .neutralLightLight,
+                                    //                 border: Border.all(
+                                    //                   width: 1,
+                                    //                   color: TColors
+                                    //                       .neutralLightMedium,
+                                    //                 ),
+                                    //               ),
+                                    //               padding: const EdgeInsets
+                                    //                   .symmetric(
+                                    //                 horizontal: 16,
+                                    //                 vertical: 12,
+                                    //               ),
+                                    //               child: Column(
+                                    //                 mainAxisSize:
+                                    //                     MainAxisSize.min,
+                                    //                 crossAxisAlignment:
+                                    //                     CrossAxisAlignment
+                                    //                         .start,
+                                    //                 children: [
+                                    //                   TextHeading5(
+                                    //                     "Terjual",
+                                    //                     color: TColors
+                                    //                         .neutralDarkLightest,
+                                    //                   ),
+                                    //                   const SizedBox(height: 8),
+                                    //                   TextHeading3(
+                                    //                     "${widget.arguments.product.soldCount} produk",
+                                    //                     color: TColors
+                                    //                         .neutralDarkDarkest,
+                                    //                   ),
+                                    //                 ],
+                                    //               ),
+                                    //             ),
+                                    //           ],
+                                    //         ),
+                                    //       ),
+                                    //       const SizedBox(height: 12),
+                                    //       Row(
+                                    //         children: [
+                                    //           Expanded(
+                                    //             child:
+                                    //                 PurchaseHistorySummaryCard(
+                                    //               title: "Total Penjualan",
+                                    //               value:
+                                    //                   TFormatter.formatToRupiah(
+                                    //                 double.parse(
+                                    //                     product.profit),
+                                    //               ),
+                                    //               onTap: () {},
+                                    //             ),
+                                    //           ),
+                                    //           const SizedBox(width: 12),
+                                    //           Expanded(
+                                    //             child:
+                                    //                 PurchaseHistorySummaryCard(
+                                    //               title: "Total Terhutang",
+                                    //               value:
+                                    //                   TFormatter.formatToRupiah(
+                                    //                 double.parse("10000"),
+                                    //               ),
+                                    //               onTap: () {},
+                                    //             ),
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -435,14 +450,23 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                           } else if (state
                               is ReportProductSalesPaginationLoadFailure) {
                             return SliverToBoxAdapter(
-                              child: OrderItemShimmer(
-                                hasAvatar: false,
+                              child: EmptyList(
+                                title: "Gagal memuat data, nih!",
+                                subTitle:
+                                    "Ada sedikit gangguan. Coba coba lagi, ya",
+                                action: TextButton(
+                                  onPressed: _onRefresh,
+                                  child: TextActionL(
+                                    "Coba Lagi",
+                                    color: TColors.primary,
+                                  ),
+                                ),
                               ),
                             );
                           } else {
                             return const SliverToBoxAdapter(
-                              child: Center(
-                                child: CircularProgressIndicator(),
+                              child: OrderItemShimmer(
+                                hasAvatar: false,
                               ),
                             );
                           }
