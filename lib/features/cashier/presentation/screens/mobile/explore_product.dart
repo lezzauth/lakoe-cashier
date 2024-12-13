@@ -16,7 +16,7 @@ import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_pro
 import 'package:lakoe_pos/features/cashier/presentation/widgets/appbar/explore_product_appbar.dart';
 import 'package:lakoe_pos/features/cashier/presentation/widgets/button/cart_count_floating_action_button.dart';
 import 'package:lakoe_pos/features/cashier/presentation/widgets/open_order_list.dart';
-import 'package:lakoe_pos/features/cashier/presentation/widgets/product_list.dart';
+import 'package:lakoe_pos/features/cashier/presentation/widgets/cashier_product_list.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/filter/product_category_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';

@@ -20,7 +20,7 @@ import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_pro
 import 'package:lakoe_pos/features/cashier/presentation/widgets/appbar/explore_product_appbar.dart';
 import 'package:lakoe_pos/features/cashier/presentation/widgets/drawer/explore_product_drawer_tablet.dart';
 import 'package:lakoe_pos/features/cashier/presentation/widgets/open_order_list.dart';
-import 'package:lakoe_pos/features/cashier/presentation/widgets/product_grid.dart';
+import 'package:lakoe_pos/features/cashier/presentation/widgets/cashier_product_grid.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_state.dart';
 import 'package:lakoe_pos/features/payment_method/common/widgets/payment_method_not_available.dart';
@@ -213,7 +213,7 @@ class _ExploreProductTabletContentState
                               ),
                             ),
                           ),
-                          ProductGrid(
+                          CashierProductGrid(
                             searchController: _searchController,
                             searchFocusNode: _searchFocusNode,
                           )

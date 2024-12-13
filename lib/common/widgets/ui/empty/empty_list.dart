@@ -30,12 +30,7 @@ class EmptyList extends StatelessWidget {
           margin: EdgeInsets.only(top: withTopSpace ? 92 : 0),
           child: Column(
             children: [
-              image ??
-                  SvgPicture.asset(
-                    TImages.searchEmpty,
-                    height: 200,
-                    width: 276,
-                  ),
+              image ?? SvgPicture.asset(TImages.searchEmpty, height: 160),
               Container(
                 margin: const EdgeInsets.only(top: 28.0),
                 child: Column(

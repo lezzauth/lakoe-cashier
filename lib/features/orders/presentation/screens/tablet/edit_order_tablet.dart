@@ -20,7 +20,7 @@ import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_pro
 import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
 import 'package:lakoe_pos/features/cashier/presentation/widgets/drawer/explore_product_drawer_tablet.dart';
-import 'package:lakoe_pos/features/cashier/presentation/widgets/product_grid.dart';
+import 'package:lakoe_pos/features/cashier/presentation/widgets/cashier_product_grid.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/order_add_item/order_add_item_cubit.dart';
 import 'package:lakoe_pos/features/orders/data/arguments/order_edit_argument.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/filter/product_category_filter.dart';
@@ -199,7 +199,7 @@ class _OrderEditTabletContentState extends State<OrderEditTabletContent> {
                               ),
                             ),
                           ),
-                          ProductGrid(
+                          CashierProductGrid(
                             searchController: _searchController,
                             searchFocusNode: _searchFocusNode,
                           )

@@ -1,29 +1,32 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/product_card_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
 import 'package:lakoe_pos/features/cart/data/models/cart_model.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_state.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/product/explore_product_card.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:product_repository/product_repository.dart';
 
-class ProductGrid extends StatefulWidget {
-  const ProductGrid({super.key, this.searchController, this.searchFocusNode});
+class CashierProductGrid extends StatefulWidget {
+  const CashierProductGrid(
+      {super.key, this.searchController, this.searchFocusNode});
 
   final TextEditingController? searchController;
   final FocusNode? searchFocusNode;
 
   @override
-  State<ProductGrid> createState() => _ProductGridState();
+  State<CashierProductGrid> createState() => _ProductGridState();
 }
 
-class _ProductGridState extends State<ProductGrid> {
+class _ProductGridState extends State<CashierProductGrid> {
   void _onAddToCart(ProductModel product) {
     context.read<CartCubit>().addCart(product);
   }
@@ -38,6 +41,17 @@ class _ProductGridState extends State<ProductGrid> {
       baseOffset: 0,
       extentOffset: widget.searchController!.text.length,
     );
+  }
+
+  Future<void> _onRefresh() async {
+    if (!mounted) return;
+    CashierProductFilterState filterState =
+        context.read<CashierProductFilterCubit>().state;
+
+    await context.read<CashierProductCubit>().findAll(
+          categoryId: filterState.categoryId,
+          name: filterState.name,
+        );
   }
 
   @override
@@ -91,24 +105,21 @@ class _ProductGridState extends State<ProductGrid> {
                     );
                   },
                 ),
-          CashierProductLoadFailure(:final error) => SliverFillRemaining(
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 24),
-                color: TColors.neutralLightLight,
-                child: Center(
-                  child: TextBodyS(
-                    error,
-                    color: TColors.error,
+          CashierProductLoadFailure() => SliverFillRemaining(
+              child: EmptyList(
+                title: "Gagal memuat data, nih!",
+                subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
+                action: TextButton(
+                  onPressed: _onRefresh,
+                  child: TextActionL(
+                    "Coba Lagi",
+                    color: TColors.primary,
                   ),
                 ),
               ),
             ),
           _ => SliverFillRemaining(
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 24),
-                color: TColors.neutralLightLight,
-                child: const Center(child: CircularProgressIndicator()),
-              ),
+              child: ProductCardShimmer(),
             ),
         },
       ),

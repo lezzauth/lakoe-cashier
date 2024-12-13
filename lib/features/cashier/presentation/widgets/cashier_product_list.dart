@@ -8,6 +8,8 @@ import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
 import 'package:lakoe_pos/features/cart/data/models/cart_model.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_state.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/product/explore_product_item.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
@@ -46,6 +48,17 @@ class _CashierProductListState extends State<CashierProductList> {
       baseOffset: 0,
       extentOffset: widget.searchController!.text.length,
     );
+  }
+
+  Future<void> _onRefresh() async {
+    if (!mounted) return;
+    CashierProductFilterState filterState =
+        context.read<CashierProductFilterCubit>().state;
+
+    await context.read<CashierProductCubit>().findAll(
+          categoryId: filterState.categoryId,
+          name: filterState.name,
+        );
   }
 
   @override
@@ -99,7 +112,17 @@ class _CashierProductListState extends State<CashierProductList> {
               },
             ),
           CashierProductLoadFailure() => SliverToBoxAdapter(
-              child: ListShimmer(),
+              child: EmptyList(
+                title: "Gagal memuat data, nih!",
+                subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
+                action: TextButton(
+                  onPressed: _onRefresh,
+                  child: TextActionL(
+                    "Coba Lagi",
+                    color: TColors.primary,
+                  ),
+                ),
+              ),
             ),
           _ => SliverToBoxAdapter(
               child: ListShimmer(),
