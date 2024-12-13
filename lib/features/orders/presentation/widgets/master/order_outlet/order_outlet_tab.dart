@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/order_item_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/filter/order_outlet_filter.dart';
 import 'package:order_repository/order_repository.dart';
-import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_state.dart';
@@ -228,13 +228,7 @@ class _OrderOutletState extends State<OrderOutlet> {
                           ),
                         );
                       } else {
-                        return const ListShimmer(
-                          crossAlignment: "center",
-                          circleAvatar: true,
-                          sizeAvatar: 48,
-                          heightTitle: 16,
-                          heightSubtitle: 12,
-                        );
+                        return OrderItemShimmer();
                       }
                     },
                   ),

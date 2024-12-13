@@ -2,7 +2,7 @@ import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/order_item_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
@@ -215,13 +215,7 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                           ),
                         );
                       } else {
-                        return ListShimmer(
-                          crossAlignment: "center",
-                          circleAvatar: true,
-                          sizeAvatar: 48,
-                          heightTitle: 16,
-                          heightSubtitle: 12,
-                        );
+                        return OrderItemShimmer();
                       }
                     },
                   ),

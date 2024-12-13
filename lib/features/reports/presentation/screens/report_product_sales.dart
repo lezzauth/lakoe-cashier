@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/order_item_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
@@ -435,11 +435,8 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                           } else if (state
                               is ReportProductSalesPaginationLoadFailure) {
                             return SliverToBoxAdapter(
-                              child: Center(
-                                child: TextBodyS(
-                                  state.error,
-                                  color: TColors.error,
-                                ),
+                              child: OrderItemShimmer(
+                                hasAvatar: false,
                               ),
                             );
                           } else {

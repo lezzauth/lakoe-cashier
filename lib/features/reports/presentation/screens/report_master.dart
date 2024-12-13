@@ -48,14 +48,25 @@ class ReportMaster extends StatefulWidget {
 }
 
 class _ReportMasterState extends State<ReportMaster> {
-  void _onInit() {
-    context.read<ReportMasterCubit>().init();
-  }
-
   @override
   void initState() {
     super.initState();
     _onInit();
+  }
+
+  void _onInit() {
+    context.read<ReportMasterCubit>().init();
+  }
+
+  Future<void> _onRefresh() async {
+    if (!mounted) return;
+
+    ReportMasterFilterState filterState =
+        context.read<ReportMasterFilterCubit>().state;
+
+    await context
+        .read<ReportMasterCubit>()
+        .findAll(dto: filterState.toGetOutletReportDto);
   }
 
   @override
@@ -77,56 +88,33 @@ class _ReportMasterState extends State<ReportMaster> {
         body: Scrollbar(
           child: RefreshIndicator(
             backgroundColor: TColors.neutralLightLight,
-            onRefresh: () async {
-              return await Future.delayed(Duration(milliseconds: 200));
-            },
+            onRefresh: _onRefresh,
             child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: BlocBuilder<ReportMasterCubit, ReportMasterState>(
-              builder: (context, state) => switch (state) {
-                ReportMasterLoadSuccess(:final report) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      BlocBuilder<ReportMasterFilterCubit,
-                          ReportMasterFilterState>(builder: (context, state) {
-                        return DatePresetRangeFilter(
-                          onChanged: ({
-                            duration,
-                            from,
-                            preset,
-                            template,
-                            to,
-                          }) {
-                            context.read<ReportMasterFilterCubit>().setFilter(
-                                  duration: duration,
-                                  from: from,
-                                  preset: preset,
-                                  template: template,
-                                  to: to,
-                                );
-                          },
-                          duration: state.duration,
-                          from: state.from,
-                          preset: state.preset,
-                          template: state.template,
-                          to: state.to,
-                        );
-                      }),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        child: SizedBox(
-                          height: 44,
-                          child: BlocBuilder<ReportMasterFilterCubit,
+                  builder: (context, state) => switch (state) {
+                    ReportMasterLoadSuccess(:final report) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          BlocBuilder<ReportMasterFilterCubit,
                                   ReportMasterFilterState>(
                               builder: (context, state) {
-                            return DateStepperFilter(
-                              onChanged: ({from, template, to}) {
+                            return DatePresetRangeFilter(
+                              onChanged: ({
+                                duration,
+                                from,
+                                preset,
+                                template,
+                                to,
+                              }) {
                                 context
                                     .read<ReportMasterFilterCubit>()
                                     .setFilter(
+                                      duration: duration,
                                       from: from,
+                                      preset: preset,
                                       template: template,
                                       to: to,
-                                      preset: template,
                                     );
                               },
                               duration: state.duration,
@@ -136,203 +124,229 @@ class _ReportMasterState extends State<ReportMaster> {
                               to: state.to,
                             );
                           }),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: BlocBuilder<ReportMasterFilterCubit,
-                            ReportMasterFilterState>(
-                          builder: (context, filterState) {
-                            return SalesTotalCard(
-                              onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  useSafeArea: true,
-                                  builder: (context) {
-                                    return DetailAmount(
-                                      label: "Total Penjualan",
-                                      amount: report.totalSales,
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            child: SizedBox(
+                              height: 44,
+                              child: BlocBuilder<ReportMasterFilterCubit,
+                                      ReportMasterFilterState>(
+                                  builder: (context, state) {
+                                return DateStepperFilter(
+                                  onChanged: ({from, template, to}) {
+                                    context
+                                        .read<ReportMasterFilterCubit>()
+                                        .setFilter(
+                                          from: from,
+                                          template: template,
+                                          to: to,
+                                          preset: template,
+                                        );
+                                  },
+                                  duration: state.duration,
+                                  from: state.from,
+                                  preset: state.preset,
+                                  template: state.template,
+                                  to: state.to,
+                                );
+                              }),
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 12),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: BlocBuilder<ReportMasterFilterCubit,
+                                ReportMasterFilterState>(
+                              builder: (context, filterState) {
+                                return SalesTotalCard(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      useSafeArea: true,
+                                      builder: (context) {
+                                        return DetailAmount(
+                                          label: "Total Penjualan",
+                                          amount: report.totalSales,
+                                        );
+                                      },
+                                    );
+                                  },
+                                  preset: filterState.preset,
+                                  totalSales: report.totalSales,
+                                  totalPastSales: report.totalPastSales,
+                                  duration: filterState.duration,
+                                  totalSalesDiff: report.totalSalesDiffComputed,
+                                );
+                              },
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 12),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: ReportCard(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        useSafeArea: true,
+                                        builder: (context) {
+                                          return DetailAmount(
+                                            label: "Rata-rata transaksi",
+                                            amount: report.averageSales,
+                                          );
+                                        },
+                                      );
+                                    },
+                                    icon: const UiIcons(
+                                      TIcons.pieChartOutline,
+                                      size: 20,
+                                      color: TColors.primary,
+                                    ),
+                                    label: "Rata2 Transaksi",
+                                    amount: TFormatter.formatToRupiah(
+                                      report.averageSales == "NaN"
+                                          ? 0
+                                          : double.parse(
+                                              report.averageSales,
+                                            ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: ReportCard(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        useSafeArea: true,
+                                        builder: (context) {
+                                          return DetailAmount(
+                                            label: "Total Keuntungan Transaksi",
+                                            amount: report.totalProfit,
+                                          );
+                                        },
+                                      );
+                                    },
+                                    icon: const UiIcons(
+                                      TIcons.billCheckedOutline,
+                                      size: 20,
+                                      color: TColors.primary,
+                                    ),
+                                    label: "Total Keuntungan",
+                                    amount: TFormatter.formatToRupiah(
+                                      double.parse(
+                                        report.totalProfit,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: ProductTransactionReportCard(
+                              totalProductSold: report.totalProductSold,
+                              totalTransaction: report.totalTransaction,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(
+                                top: 16, left: 20, right: 20),
+                            margin: const EdgeInsets.only(bottom: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const TextHeading3(
+                                  "Produk Terlaris",
+                                  color: TColors.neutralDarkDarkest,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, "/reports/best_seller");
+                                  },
+                                  child: const TextHeading4(
+                                    "Lihat semua",
+                                    color: TColors.primary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          if (report.bestSalesProduct.isNotEmpty)
+                            ...report.bestSalesProduct.take(3).map(
+                              (product) {
+                                int index =
+                                    report.bestSalesProduct.indexOf(product);
+
+                                String? image =
+                                    product.images.elementAtOrNull(0);
+
+                                return BestSellerProductTile(
+                                  imageSrc: image,
+                                  sold: product.soldCount,
+                                  name: product.name,
+                                  rank: index + 1,
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      "/reports/best_seller/detail",
+                                      arguments: ReportProductSalesArguments(
+                                        rank: index + 1,
+                                        product: product,
+                                      ),
                                     );
                                   },
                                 );
                               },
-                              preset: filterState.preset,
-                              totalSales: report.totalSales,
-                              totalPastSales: report.totalPastSales,
-                              duration: filterState.duration,
-                              totalSalesDiff: report.totalSalesDiffComputed,
-                            );
-                          },
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: ReportCard(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    useSafeArea: true,
-                                    builder: (context) {
-                                      return DetailAmount(
-                                        label: "Rata-rata transaksi",
-                                        amount: report.averageSales,
-                                      );
-                                    },
-                                  );
-                                },
-                                icon: const UiIcons(
-                                  TIcons.pieChartOutline,
-                                  size: 20,
-                                  color: TColors.primary,
-                                ),
-                                label: "Rata2 Transaksi",
-                                amount: TFormatter.formatToRupiah(
-                                  report.averageSales == "NaN"
-                                      ? 0
-                                      : double.parse(
-                                          report.averageSales,
-                                        ),
-                                ),
+                            )
+                          else
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 32,
+                                vertical: 20,
                               ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: ReportCard(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    useSafeArea: true,
-                                    builder: (context) {
-                                      return DetailAmount(
-                                        label: "Total Keuntungan Transaksi",
-                                        amount: report.totalProfit,
-                                      );
-                                    },
-                                  );
-                                },
-                                icon: const UiIcons(
-                                  TIcons.billCheckedOutline,
-                                  size: 20,
-                                  color: TColors.primary,
-                                ),
-                                label: "Total Keuntungan",
-                                amount: TFormatter.formatToRupiah(
-                                  double.parse(
-                                    report.totalProfit,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(bottom: 20),
+                                    child: SvgPicture.asset(
+                                      TImages.productEmpty,
+                                      height: 101.45,
+                                      width: 140,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: ProductTransactionReportCard(
-                          totalProductSold: report.totalProductSold,
-                          totalTransaction: report.totalTransaction,
-                        ),
-                      ),
-                      Container(
-                        padding:
-                            const EdgeInsets.only(top: 16, left: 20, right: 20),
-                        margin: const EdgeInsets.only(bottom: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const TextHeading3(
-                              "Produk Terlaris",
-                              color: TColors.neutralDarkDarkest,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, "/reports/best_seller");
-                              },
-                              child: const TextHeading4(
-                                "Lihat semua",
-                                color: TColors.primary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (report.bestSalesProduct.isNotEmpty)
-                        ...report.bestSalesProduct.take(3).map(
-                          (product) {
-                            int index =
-                                report.bestSalesProduct.indexOf(product);
-
-                            String? image = product.images.elementAtOrNull(0);
-
-                            return BestSellerProductTile(
-                              imageSrc: image,
-                              sold: product.soldCount,
-                              name: product.name,
-                              rank: index + 1,
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  "/reports/best_seller/detail",
-                                  arguments: ReportProductSalesArguments(
-                                    rank: index + 1,
-                                    product: product,
+                                  Container(
+                                    margin: const EdgeInsets.only(bottom: 4),
+                                    child: const TextHeading3(
+                                      "Belum ada yang laku, nih!",
+                                      color: TColors.neutralDarkDarkest,
+                                    ),
                                   ),
-                                );
-                              },
-                            );
-                          },
-                        )
-                      else
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 32,
-                            vertical: 20,
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(bottom: 20),
-                                child: SvgPicture.asset(
-                                  TImages.productEmpty,
-                                  height: 101.45,
-                                  width: 140,
-                                  fit: BoxFit.cover,
-                                ),
+                                  const SizedBox(
+                                    width: 265,
+                                    child: TextBodyS(
+                                      "Kamu saat ini belum memiliki penjualan produk apapun",
+                                      color: TColors.neutralDarkLight,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Container(
-                                margin: const EdgeInsets.only(bottom: 4),
-                                child: const TextHeading3(
-                                  "Belum ada yang laku, nih!",
-                                  color: TColors.neutralDarkDarkest,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 265,
-                                child: TextBodyS(
-                                  "Kamu saat ini belum memiliki penjualan produk apapun",
-                                  color: TColors.neutralDarkLight,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                    ],
-                  ),
-                ReportMasterLoadFailure(:final error) =>
-                  RepostMasterShimmer(errorText: error),
-                _ => RepostMasterShimmer(),
-              },
-            )),
+                            ),
+                        ],
+                      ),
+                    ReportMasterLoadFailure(:final error) =>
+                      RepostMasterShimmer(errorText: error),
+                    _ => RepostMasterShimmer(),
+                  },
+                )),
           ),
         ),
       ),
