@@ -8,8 +8,8 @@ import 'package:lakoe_pos/features/packages/presentation/widgets/table_compariso
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
-class TabViewPackage extends StatelessWidget {
-  const TabViewPackage({
+class PriceInfoSection extends StatelessWidget {
+  const PriceInfoSection({
     super.key,
     required this.index,
     required this.packageData,

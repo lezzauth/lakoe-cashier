@@ -1,6 +1,8 @@
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_cubit.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_cubit.dart';
@@ -103,6 +105,18 @@ class _ExploreProductDrawerTabletState
         );
   }
 
+  Future<void> _onRefresh() async {
+    if (!mounted) return;
+    CartState cartState = context.read<CartCubit>().state;
+    CartDetailFilterState filterState =
+        context.read<CartDetailFilterCubit>().state;
+
+    await context.read<CartDetailCubit>().previewOrderPrice(
+          type: filterState.type,
+          carts: cartState.carts,
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<CartDetailCubit, CartDetailState>(
@@ -146,8 +160,18 @@ class _ExploreProductDrawerTabletState
                             onPaymentDebitCredit: _onDebitCreditPaid,
                             onPaymentQRCode: _onQRCodePaid,
                           ),
-                        CartDetailLoadFailure() =>
-                          Center(child: CircularProgressIndicator()),
+                        CartDetailLoadFailure() => EmptyList(
+                            title: "Gagal memuat data, nih!",
+                            subTitle:
+                                "Ada sedikit gangguan. Coba coba lagi, ya",
+                            action: TextButton(
+                              onPressed: _onRefresh,
+                              child: TextActionL(
+                                "Coba Lagi",
+                                color: TColors.primary,
+                              ),
+                            ),
+                          ),
                         _ => Center(child: CircularProgressIndicator()),
                       },
                     ),

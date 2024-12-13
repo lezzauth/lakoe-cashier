@@ -317,8 +317,16 @@ class _CustomerDetailState extends State<CustomerDetail> {
                   ),
                 );
               } else if (state is CustomerDetailLoadFailure) {
-                return Center(
-                  child: CircularProgressIndicator(),
+                return EmptyList(
+                  title: "Gagal memuat data, nih!",
+                  subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
+                  action: TextButton(
+                    onPressed: _onRefresh,
+                    child: TextActionL(
+                      "Coba Lagi",
+                      color: TColors.primary,
+                    ),
+                  ),
                 );
               } else {
                 return const Center(

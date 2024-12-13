@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/general_information.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/ui/tags/order_status/tag_strong_order_status.dart';
@@ -641,7 +642,20 @@ class _OrderDetailState extends State<OrderDetail> {
               );
             } else if (state is OrderDetailLoadFailure) {
               return Scaffold(
-                body: SizedBox.shrink(),
+                appBar: CustomAppbar(
+                  title: "Detail Order",
+                ),
+                body: EmptyList(
+                  title: "Gagal memuat data, nih!",
+                  subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
+                  action: TextButton(
+                    onPressed: _onRefresh,
+                    child: TextActionL(
+                      "Coba Lagi",
+                      color: TColors.primary,
+                    ),
+                  ),
+                ),
               );
             } else {
               return Scaffold(

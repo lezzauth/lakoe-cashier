@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/appbar/light_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_state.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
@@ -84,12 +85,13 @@ class _PreviewProofTransferState extends State<PreviewProofTransfer> {
                     ],
                   ),
                 ),
-              OrderDetailLoadFailure(:final error) => Scaffold(
-                  body: Center(
-                    child: TextBodyS(
-                      error,
-                      color: TColors.error,
-                    ),
+              OrderDetailLoadFailure() => Scaffold(
+                  appBar: CustomAppbar(
+                    title: "Bukti Transfer",
+                  ),
+                  body: EmptyList(
+                    title: "Gagal memuat data, nih!",
+                    subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
                   ),
                 ),
               _ => const Scaffold(

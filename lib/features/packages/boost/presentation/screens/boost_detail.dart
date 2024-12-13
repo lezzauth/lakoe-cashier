@@ -255,7 +255,7 @@ class _BoostDetailScreenState extends State<BoostDetailScreen>
                             TabItem(title: "1 Tahun"),
                           ],
                         ),
-                        TabViewPackage(
+                        PriceInfoSection(
                           index: _selectedIndex,
                           id: id!,
                           title: title!,
@@ -284,8 +284,8 @@ class _BoostDetailScreenState extends State<BoostDetailScreen>
   }
 }
 
-class TabViewPackage extends StatelessWidget {
-  const TabViewPackage({
+class PriceInfoSection extends StatelessWidget {
+  const PriceInfoSection({
     super.key,
     required this.index,
     required this.packageInfo,

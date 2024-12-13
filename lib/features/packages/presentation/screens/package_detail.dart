@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:package_repository/package_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/appbar/light_appbar.dart';
@@ -11,7 +13,7 @@ import 'package:lakoe_pos/features/packages/application/cubit/package_detail/pac
 import 'package:lakoe_pos/features/packages/application/cubit/package_detail/package_detail_state.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_master_cubit.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_master_state.dart';
-import 'package:lakoe_pos/features/packages/presentation/widgets/tab_view_package.dart';
+import 'package:lakoe_pos/features/packages/presentation/widgets/price_info_section.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:shimmer/shimmer.dart';
@@ -77,6 +79,25 @@ class _PackageDetailScreenState extends State<PackageDetailScreen>
       } else if (scrollController.offset <= 50 && isScrolled) {
         isScrolled = false;
         _setSystemUIOverlayStyle(dark: false);
+      }
+    });
+  }
+
+  Future<void> _onRefresh() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+      if (args != null && args.containsKey('packageName')) {
+        String packageNameArg = args['packageName'] as String;
+
+        setState(() {
+          packageName = packageNameArg;
+        });
+
+        context
+            .read<PackageDetailCubit>()
+            .findOne(packageNameArg.toUpperCase());
       }
     });
   }
@@ -200,7 +221,7 @@ class _PackageDetailScreenState extends State<PackageDetailScreen>
                                             packages.firstWhere((package) =>
                                                 package.name == packageName);
 
-                                        return TabViewPackage(
+                                        return PriceInfoSection(
                                           index: _selectedIndex,
                                           packageData: detail,
                                           litePackage: litePackage,
@@ -234,8 +255,16 @@ class _PackageDetailScreenState extends State<PackageDetailScreen>
                     ),
                   ],
                 ),
-              PackageDetailLoadFailure() => Center(
-                  child: CircularProgressIndicator(),
+              PackageDetailLoadFailure() => EmptyList(
+                  title: "Gagal memuat data, nih!",
+                  subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
+                  action: TextButton(
+                    onPressed: _onRefresh,
+                    child: TextActionL(
+                      "Coba Lagi",
+                      color: TColors.primary,
+                    ),
+                  ),
                 ),
               _ => Center(
                   child: CircularProgressIndicator(),
