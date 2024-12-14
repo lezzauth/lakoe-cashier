@@ -175,7 +175,7 @@ class DioProvider {
                   imageSrc: TImages.badRequest,
                   title: "Lagi di-tune up, sebentar lagi beres!",
                   description:
-                      "Tenang, akan segera kembali. Kamu bisa mencobanya sebentar lagi. Terimakasih udah sabar ya!",
+                      "Tenang, Kamu bisa mencobanya sebentar lagi. Terimakasih udah sabar ya!",
                   actionTitlePrimary: "Oke. Mengerti",
                   onActionPrimary: () {
                     Navigator.pop(context);

@@ -286,7 +286,7 @@ class _CustomerDetailState extends State<CustomerDetail> {
                             ),
                             title: (!isFilterUsed)
                                 ? "Belum ada transaksi, nih!"
-                                : "Pembelian tidak titemuakn",
+                                : "Pembelian tidak ditemukan",
                             subTitle: (!isFilterUsed)
                                 ? "${data.customer.name} sampai saat ini belum pernah melakukan transaksi."
                                 : "Ubah tanggal atau ganti filter status untuk melihat pembelian dari ${data.customer.name}",

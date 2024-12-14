@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
-import 'package:package_repository/package_repository.dart';
+import 'package:owner_repository/owner_repository.dart';
 
 class CardItemHistory extends StatelessWidget {
   const CardItemHistory({super.key, required this.data});
 
-  final ListHistoryPurchaseModel data;
+  final HistoryPurchaseModel data;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +26,7 @@ class CardItemHistory extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Column(
             mainAxisSize: MainAxisSize.min,
@@ -46,11 +47,14 @@ class CardItemHistory extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              TextBodyM(
+              TextBodyS(
                 data.status,
-                color: TColors.success,
+                color:
+                    (data.status != "UNPAID") ? TColors.success : TColors.error,
+                fontWeight: FontWeight.bold,
               ),
-              TextHeading3(
+              SizedBox(height: 6),
+              TextHeading4(
                 TFormatter.formatToRupiah(double.parse(data.amount)),
                 fontWeight: FontWeight.w900,
                 color: TColors.neutralDarkDark,

@@ -11,6 +11,7 @@ import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/cre
 import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/otp_input.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/history/purchase_history_cubit.dart';
 import 'package:lakoe_pos/features/packages/presentation/screens/history/history_purchase_package.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 import 'package:logman/logman.dart';
@@ -228,7 +229,9 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => PackageMasterCubit()),
         BlocProvider(create: (context) => PackageDetailCubit()),
         BlocProvider(create: (context) => PurchaseCubit()),
-        BlocProvider(create: (context) => PurchaseCubit()),
+
+        // Purchase History
+        BlocProvider(create: (context) => PurchaseHistoryCubit()),
 
         //Payment Method
         BlocProvider(create: (context) => PaymentMethodCubit()),
