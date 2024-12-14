@@ -17,7 +17,7 @@ class PurchaseCubit extends Cubit<PurchaseState> {
         dto: dto,
         packageName: packageName,
       );
-      emit(PurchaseActionSuccess(response: res));
+      emit(PurchaseActionSuccess(res: res));
     } catch (e) {
       emit(PurchaseActionFailure(e.toString()));
     }

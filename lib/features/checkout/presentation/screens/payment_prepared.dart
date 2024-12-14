@@ -52,18 +52,18 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
       listener: (context, state) {
         if (state is PurchaseActionInProgress) {
         } else if (state is PurchaseActionSuccess) {
-          final PurchaseResponseModel response = state.response;
+          final PurchaseResponseModel res = state.res;
 
-          if (response.paymentRequest.paymentMethod.type == "EWALLET") {
+          if (res.paymentRequest.paymentMethod.type == "EWALLET") {
             PaymentActionModel selectedAction;
 
-            selectedAction = response.paymentRequest.actions.firstWhere(
+            selectedAction = res.paymentRequest.actions.firstWhere(
               (action) => action.urlType == "DEEPLINK",
-              orElse: () => response.paymentRequest.actions.firstWhere(
+              orElse: () => res.paymentRequest.actions.firstWhere(
                 (action) => action.urlType == "MOBILE",
-                orElse: () => response.paymentRequest.actions.firstWhere(
+                orElse: () => res.paymentRequest.actions.firstWhere(
                   (action) => action.urlType == "WEB",
-                  orElse: () => response.paymentRequest.actions.firstWhere(
+                  orElse: () => res.paymentRequest.actions.firstWhere(
                     (action) => action.qrCode != null,
                     orElse: () => PaymentActionModel(
                       action: null,
@@ -101,14 +101,17 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
                 },
               );
             }
-          } else if (response.paymentRequest.paymentMethod.type ==
+          } else if (res.paymentRequest.paymentMethod.type ==
               "VIRTUAL_ACCOUNT") {
             Navigator.pushNamed(
               context,
               "/payment/confirmation",
               arguments: {
-                'selectedCategory': selectedCategory,
                 'selectedMethod': selectedMethod,
+                'purchases': PurchaseResponseModel(
+                  paymentRequest: state.res.paymentRequest,
+                  purchase: state.res.purchase,
+                ),
               },
             );
           }

@@ -78,6 +78,7 @@ class TIcons {
   static const String hashtag = "assets/icons/hashtag.svg";
   static const String hashtagBold = "assets/icons/hashtag-bold.svg";
   static const String timer = "assets/icons/timer.svg";
+  static const String hourGlass = "assets/icons/hour-glass.svg";
   static const String document = "assets/icons/document.svg";
   static const String star = "assets/icons/star.svg";
   static const String shieldKeyhole = "assets/icons/shield-keyhole.svg";

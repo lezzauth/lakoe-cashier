@@ -437,9 +437,9 @@ class App extends StatelessWidget {
 
             // Checkout
             "/checkout": (context) => const ChekcoutMasterScreen(),
+            "/payment/prepared": (context) => const PaymentPreparedScreen(),
             "/payment/confirmation": (context) =>
                 const PaymentConfirmationScreen(),
-            "/payment/prepared": (context) => const PaymentPreparedScreen(),
             "/payment/success": (context) => const PaymentSuccessScreen(),
 
             //Webview

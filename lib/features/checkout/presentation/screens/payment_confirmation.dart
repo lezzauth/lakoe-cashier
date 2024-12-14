@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
@@ -13,6 +15,9 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/features/checkout/data/payment_method_model.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
+import 'package:logman/logman.dart';
+import 'package:package_repository/package_repository.dart';
 
 class PaymentConfirmationScreen extends StatefulWidget {
   const PaymentConfirmationScreen({super.key});
@@ -27,7 +32,13 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
   TabController? _tabController;
   Map<String, dynamic>? args;
 
-  PaymentCategory? selectedCategory;
+  late Timer _timer;
+  late DateTime _targetTime;
+  String _remainingTime = "00:00:00";
+
+  PaymentRequestModel? payment;
+  PurchaseModel? purchase;
+
   PaymentMethod? selectedMethod;
   List<String> stepsList = [];
 
@@ -35,6 +46,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    _startCountdown();
   }
 
   @override
@@ -43,16 +55,55 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
 
     args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
+    Logman.instance.info("arguments=> ${args!['purchases'].paymentRequest}");
+
     if (args != null) {
-      selectedCategory = args!['selectedCategory'];
       selectedMethod = args!['selectedMethod'];
+      payment = args!['purchases'].paymentRequest;
+      purchase = args!['purchases'].purchase;
+      _targetTime = args!['purchases']
+          .paymentRequest
+          .paymentMethod
+          .virtualAccount!
+          .channelProperties
+          .expiresAt;
     }
   }
 
   @override
   void dispose() {
     _tabController?.dispose();
+    _timer.cancel();
     super.dispose();
+  }
+
+  void _startCountdown() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      final currentTime = DateTime.now();
+      final difference = _targetTime.difference(currentTime);
+
+      if (difference.isNegative) {
+        timer.cancel();
+        setState(() {
+          _remainingTime = "00:00:00";
+        });
+      } else {
+        setState(() {
+          int days = difference.inDays;
+          int hours = difference.inHours % 24;
+          int minutes = difference.inMinutes % 60;
+          int seconds = difference.inSeconds % 60;
+
+          if (days > 0) {
+            _remainingTime =
+                "$days Hari ${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
+          } else {
+            _remainingTime =
+                "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
+          }
+        });
+      }
+    });
   }
 
   Widget _buildStepsText(String steps) {
@@ -139,6 +190,10 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
 
   @override
   Widget build(BuildContext context) {
+    String virtualAccount = payment!
+        .paymentMethod.virtualAccount!.channelProperties.virtualAccountNumber;
+    int amount = payment!.paymentMethod.virtualAccount!.amount;
+
     return PopScope(
       onPopInvokedWithResult: (popDisposition, popResult) async {
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -180,17 +235,18 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                         color: TColors.neutralDarkDark,
                       ),
                       Wrap(
-                        spacing: 8.0,
+                        spacing: 4.0,
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           UiIcons(
-                            TIcons.timer,
-                            size: 20,
+                            TIcons.hourGlass,
+                            size: 16,
                             color: TColors.error,
                           ),
                           TextHeading2(
-                            "23:59:58",
+                            _remainingTime,
                             color: TColors.error,
+                            fontWeight: FontWeight.w800,
                           ),
                         ],
                       ),
@@ -249,11 +305,6 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                                             color: TColors.neutralDarkDark,
                                           ),
                                         ),
-                                        SizedBox(width: 12),
-                                        TextActionL(
-                                          "Ganti",
-                                          color: TColors.primary,
-                                        ),
                                       ],
                                     ),
                                   ),
@@ -266,7 +317,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                                     child: Row(
                                       children: [
                                         TextHeading2(
-                                          "381659999832775",
+                                          virtualAccount,
                                           color: TColors.neutralDarkDark,
                                         ),
                                         SizedBox(width: 8),
@@ -312,7 +363,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                                   child: Row(
                                     children: [
                                       TextHeading2(
-                                        "Rp56.250",
+                                        TFormatter.formatToRupiah(amount),
                                         color: TColors.neutralDarkDark,
                                       ),
                                       SizedBox(width: 8),
@@ -323,11 +374,6 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                                       ),
                                     ],
                                   ),
-                                ),
-                                SizedBox(width: 12),
-                                TextActionL(
-                                  "Lihat Detail",
-                                  color: TColors.primary,
                                 ),
                               ],
                             ),
