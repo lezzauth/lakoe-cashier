@@ -78,14 +78,17 @@ class _FilterOrdersByCustomerState extends State<FilterOrdersByCustomer> {
               color: Colors.white,
               padding: const EdgeInsets.only(right: 8),
               child: OrderDateFilter(
-                template: widget.value.template ?? "ALL",
+                template: widget.value.from != null || widget.value.to != null
+                    ? "CUSTOM"
+                    : (widget.value.template ?? "ALL"),
                 from: widget.value.from,
                 to: widget.value.to,
                 onChanged: (template, from, to) {
                   widget.onChanged(widget.value.copyWith(
-                    template: template,
-                    from: from?.toUtc().toIso8601String(),
-                    to: to?.toUtc().toIso8601String(),
+                    template:
+                        (from != null || to != null) ? "CUSTOM" : template,
+                    from: from?.toIso8601String(),
+                    to: to?.toIso8601String(),
                   ));
                 },
               ),

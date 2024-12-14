@@ -34,7 +34,7 @@ class DateStepperFilter extends StatefulWidget {
 }
 
 class _DateStepperFilterState extends State<DateStepperFilter> {
-  DateTime now = DateTime.now().toUtc();
+  DateTime now = DateTime.now();
 
   String _getFormattedDateBasedOnFilter() {
     DateTime now = DateTime.now();
