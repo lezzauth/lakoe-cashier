@@ -3,19 +3,20 @@ import 'dart:io';
 import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_state.dart';
-import 'package:point_of_sales_cashier/features/employees/presentation/widgets/forms/employee_form.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_state.dart';
+import 'package:lakoe_pos/features/employees/presentation/widgets/forms/employee_form.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/image_picker_field.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class NewEmployeeScreen extends StatefulWidget {
   const NewEmployeeScreen({super.key});
@@ -47,12 +48,15 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
     }
     File? profilePictureFile = profilePicture?.file;
 
+    String phoneNumber =
+        PhoneNumberFormatter.formatForRequest(value["phoneNumber"]);
+
     await context.read<EmployeeMasterCubit>().create(
           profilePictureFile,
           CreateEmployeeDto(
             name: value["name"],
             pin: value["pin"],
-            phoneNumber: value["phoneNumber"],
+            phoneNumber: phoneNumber,
             role: "CASHIER",
             email: email,
           ),
@@ -78,35 +82,39 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
         if (state is EmployeeMasterActionSuccess) {
           Navigator.pop(context, true);
         } else if (state is EmployeeMasterActionError) {
-          if (state.res.message!.contains("pin already used")) {
+          if (state.res.statusCode == 409) {
             CustomToast.show(
               "PIN sudah digunakan kasir lain.",
               position: 'bottom',
               duration: 2,
             );
-          } else {
+          } else if (state.res.statusCode == 402) {
             showModalBottomSheet(
               context: context,
               enableDrag: false,
               isDismissible: false,
               builder: (context) {
-                return CustomBottomsheet(
-                  hasGrabber: false,
-                  child: ErrorDisplay(
-                    imageSrc: TImages.limitQuota,
-                    title: "Upgrade paket, yuk!",
-                    description:
-                        "Paket kamu saat ini belum bisa tambah karyawan baru. Upgrade, yuk!",
-                    actionTitlePrimary: "Lihat Paket",
-                    onActionPrimary: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, "/packages");
-                    },
-                    actionTitleSecondary: "Nanti Saja",
-                    onActionSecondary: () {
-                      Navigator.pop(context);
-                      Navigator.pop(context, true);
-                    },
+                return PopScope(
+                  canPop: false,
+                  onPopInvokedWithResult: (didPop, result) async {},
+                  child: CustomBottomsheet(
+                    hasGrabber: false,
+                    child: ErrorDisplay(
+                      imageSrc: TImages.limitQuota,
+                      title: "Upgrade paket, yuk!",
+                      description:
+                          "Paket kamu saat ini belum bisa tambah karyawan baru. Upgrade, yuk!",
+                      actionTitlePrimary: "Lihat Paket",
+                      onActionPrimary: () {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, "/packages");
+                      },
+                      actionTitleSecondary: "Nanti Saja",
+                      onActionSecondary: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context, true);
+                      },
+                    ),
                   ),
                 );
               },
@@ -118,10 +126,12 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
         bool isLoading = state is EmployeeMasterActionInProgress;
 
         return ErrorWrapper(
+          connectionIssue: state is ConnectionIssue,
           actionError: state is EmployeeMasterActionFailure,
           child: Scaffold(
             appBar: CustomAppbar(
               title: "Tambah Kasir Baru",
+              handleBackButton: () => Navigator.pop(context, true),
               actions: [
                 TextButton(
                     onPressed: !isLoading ? _onSubmitted : null,

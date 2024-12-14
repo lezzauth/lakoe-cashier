@@ -1,6 +1,6 @@
 import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/customer/cart_customer_state.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/customer/cart_customer_state.dart';
 
 class CartCustomerCubit extends Cubit<CartCustomerState> {
   final CustomerRepository customerRepository = CustomerRepositoryImpl();
@@ -14,12 +14,23 @@ class CartCustomerCubit extends Cubit<CartCustomerState> {
   Future<void> findAll(FindAllCustomerDto dto) async {
     try {
       emit(CartCustomerLoadInProgress());
-      List<CustomerModel> initCustomers = [
-        const CustomerModel(
-            id: "-", name: "Umum", email: "", phoneNumber: "-", address: ""),
-      ];
+      List<CustomerModel> initCustomers = [];
+
+      if (dto.search == null || dto.search!.isEmpty) {
+        initCustomers = [
+          const CustomerModel(
+            id: "-",
+            name: "Tamu",
+            email: "",
+            phoneNumber: "-",
+            address: "",
+          ),
+        ];
+      }
+
       final customers = await customerRepository.findAll(dto);
       initCustomers.addAll(customers);
+
       emit(CartCustomerLoadSuccess(customers: initCustomers));
     } catch (e) {
       emit(CartCustomerLoadFailure(e.toString()));

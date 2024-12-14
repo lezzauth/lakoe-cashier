@@ -1,11 +1,11 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_state.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_state.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_state.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_state.dart';
+import 'package:lakoe_pos/utils/helpers/error_handler.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ProductMasterCubit extends Cubit<ProductMasterState> {
@@ -22,8 +22,17 @@ class ProductMasterCubit extends Cubit<ProductMasterState> {
       emit(ProductMasterLoadInProgress());
       final products = await _productRepository.findAll(dto);
       emit(ProductMasterLoadSuccess(products: products));
-    } catch (e, stackTrace) {
-      log(e.toString(), stackTrace: stackTrace);
+    } on DioException catch (e) {
+      handleDioException<ProductMasterState>(
+        e,
+        emit: (state) => emit(state),
+        connectionIssueState: ConnectionIssue(
+          'Failed to resolve hostname. Please check your DNS or internet connection.',
+        ),
+        timeoutState: ConnectionIssue('Request timed out. Please try again.'),
+        unexpectedState: ProductMasterLoadFailure(e.toString()),
+      );
+    } catch (e) {
       emit(ProductMasterLoadFailure(e.toString()));
     }
   }

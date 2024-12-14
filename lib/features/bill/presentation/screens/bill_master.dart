@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart' hide Image;
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_small.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/bill/data/arguments/template_order_model.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/bill_view.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
+import 'package:lakoe_pos/common/widgets/ui/separator/separator.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/bill/text_small.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
+import 'package:lakoe_pos/features/bill/data/arguments/template_order_model.dart';
+import 'package:lakoe_pos/features/bill/presentation/widgets/bill_view.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BillMasterScreen extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owner_repository/owner_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
 
 class BankAccountMasterCubit extends Cubit<BankAccountMasterState> {
   final OwnerRepository _ownerRepository = OwnerRepositoryImpl();

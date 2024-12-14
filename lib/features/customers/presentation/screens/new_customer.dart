@@ -2,16 +2,16 @@ import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_state.dart';
-import 'package:point_of_sales_cashier/features/customers/presentation/widgets/forms/new_customer_form.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
+import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_state.dart';
+import 'package:lakoe_pos/features/customers/presentation/widgets/forms/customer_form.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class NewCustomerScreen extends StatefulWidget {
   const NewCustomerScreen({super.key});
@@ -35,7 +35,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
         PhoneNumberFormatter.formatForRequest(value["phoneNumber"]);
 
     await context.read<CustomerMasterCubit>().create(
-          CreateCustomerDto(
+          CustomerDto(
             name: value["name"],
             phoneNumber: phoneNumber,
             address: value["address"],
@@ -56,23 +56,27 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
             enableDrag: false,
             isDismissible: false,
             builder: (context) {
-              return CustomBottomsheet(
-                hasGrabber: false,
-                child: ErrorDisplay(
-                  imageSrc: TImages.limitQuota,
-                  title: "Pelanggan penuh, nih!",
-                  description:
-                      "20 pelanggan sudah tersimpan. Upgrade untuk simpan lebih banyak!",
-                  actionTitlePrimary: "Lihat Paket",
-                  onActionPrimary: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, "/packages");
-                  },
-                  actionTitleSecondary: "Nanti Saja",
-                  onActionSecondary: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context, true);
-                  },
+              return PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (didPop, result) async {},
+                child: CustomBottomsheet(
+                  hasGrabber: false,
+                  child: ErrorDisplay(
+                    imageSrc: TImages.limitQuota,
+                    title: "Pelanggan penuh, nih!",
+                    description:
+                        "20 pelanggan sudah tersimpan. Upgrade untuk simpan lebih banyak!",
+                    actionTitlePrimary: "Lihat Paket",
+                    onActionPrimary: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "/packages");
+                    },
+                    actionTitleSecondary: "Nanti Saja",
+                    onActionSecondary: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context, true);
+                    },
+                  ),
                 ),
               );
             },
@@ -105,7 +109,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
           ],
         ),
         body: SingleChildScrollView(
-          child: NewCustomerForm(
+          child: CustomerForm(
             formKey: _formKey,
           ),
         ),

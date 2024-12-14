@@ -20,9 +20,8 @@ Map<String, dynamic> _$$FindAllCustomerDtoImplToJson(
       'search': instance.search,
     };
 
-_$CreateCustomerDtoImpl _$$CreateCustomerDtoImplFromJson(
-        Map<String, dynamic> json) =>
-    _$CreateCustomerDtoImpl(
+_$CustomerDtoImpl _$$CustomerDtoImplFromJson(Map<String, dynamic> json) =>
+    _$CustomerDtoImpl(
       name: json['name'] as String,
       phoneNumber: json['phoneNumber'] as String,
       outletId: json['outletId'] as String?,
@@ -30,8 +29,7 @@ _$CreateCustomerDtoImpl _$$CreateCustomerDtoImplFromJson(
       address: json['address'] as String?,
     );
 
-Map<String, dynamic> _$$CreateCustomerDtoImplToJson(
-        _$CreateCustomerDtoImpl instance) =>
+Map<String, dynamic> _$$CustomerDtoImplToJson(_$CustomerDtoImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'phoneNumber': instance.phoneNumber,

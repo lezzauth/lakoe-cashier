@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/form/search_field.dart';
 
 const Duration debounceDuration = Duration(milliseconds: 500);
 

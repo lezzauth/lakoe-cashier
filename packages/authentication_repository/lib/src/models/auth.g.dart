@@ -83,3 +83,15 @@ Map<String, dynamic> _$$RefreshTokenResImplToJson(
       'tokenExpireIn': instance.tokenExpireIn,
       'refreshTokenExpireIn': instance.refreshTokenExpireIn,
     };
+
+_$GenerateTokenResImpl _$$GenerateTokenResImplFromJson(
+        Map<String, dynamic> json) =>
+    _$GenerateTokenResImpl(
+      token: json['token'] as String,
+    );
+
+Map<String, dynamic> _$$GenerateTokenResImplToJson(
+        _$GenerateTokenResImpl instance) =>
+    <String, dynamic>{
+      'token': instance.token,
+    };

@@ -3,24 +3,24 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_repository/order_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_state.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_state.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/button/cart_count_floating_action_button.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/product_list.dart';
-import 'package:point_of_sales_cashier/features/orders/application/cubit/order_add_item/order_add_item_cubit.dart';
-import 'package:point_of_sales_cashier/features/orders/data/arguments/order_edit_argument.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/customer_table_card.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/filter/product_category_filter.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/category/cashier_category_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/category/cashier_category_state.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_state.dart';
+import 'package:lakoe_pos/features/cashier/presentation/widgets/button/cart_count_floating_action_button.dart';
+import 'package:lakoe_pos/features/cashier/presentation/widgets/cashier_product_list.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_add_item/order_add_item_cubit.dart';
+import 'package:lakoe_pos/features/orders/data/arguments/order_edit_argument.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/ui/customer_table_card.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/filter/product_category_filter.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:product_repository/product_repository.dart';
 
 class OrderEditMobile extends StatefulWidget {
@@ -34,6 +34,8 @@ class OrderEditMobile extends StatefulWidget {
 
 class _OrderEditMobileState extends State<OrderEditMobile> {
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+
   void _onInit() async {
     _onRefresh();
   }
@@ -126,13 +128,13 @@ class _OrderEditMobileState extends State<OrderEditMobile> {
           search: SearchField(
             hintText: "Cari menu disini...",
             controller: _searchController,
+            focusNode: _searchFocusNode,
             debounceTime: 500,
             onChanged: (value) {
               context.read<CashierProductFilterCubit>().setFilter(name: value);
             },
           ),
         ),
-        backgroundColor: TColors.neutralLightLight,
         body: Scrollbar(
           child: RefreshIndicator(
             onRefresh: _onRefresh,
@@ -156,6 +158,7 @@ class _OrderEditMobileState extends State<OrderEditMobile> {
                           child: TextHeading3("Order #${order.no}"),
                         ),
                         CustomerAndTableInformation(
+                          order: order,
                           customer: order.customer,
                           table: order.table,
                         ),
@@ -166,7 +169,6 @@ class _OrderEditMobileState extends State<OrderEditMobile> {
                 SliverToBoxAdapter(
                   child: Container(
                     padding: const EdgeInsets.only(top: 8),
-                    color: TColors.neutralLightLightest,
                     child: BlocBuilder<CashierProductFilterCubit,
                         CashierProductFilterState>(
                       builder: (context, filterState) {
@@ -196,13 +198,16 @@ class _OrderEditMobileState extends State<OrderEditMobile> {
                 ),
                 SliverToBoxAdapter(
                   child: Container(
-                    height: 12,
+                    height: 8,
                     color: TColors.neutralLightLightest,
                   ),
                 ),
                 BlocBuilder<CartCubit, CartState>(
                     builder: (context, cartState) {
-                  return const CashierProductList();
+                  return CashierProductList(
+                    searchController: _searchController,
+                    searchFocusNode: _searchFocusNode,
+                  );
                 }),
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 80),

@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
-import 'package:point_of_sales_cashier/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
-import 'package:point_of_sales_cashier/features/home/application/cubit/onboarding_transaction/onboarding_transaction_state.dart';
-import 'package:point_of_sales_cashier/features/home/data/arguments/open_cashier_pin_argument.dart';
-import 'package:point_of_sales_cashier/features/home/presentation/dashboard/widgets/forms/initial_balance_form.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
-import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_state.dart';
+import 'package:lakoe_pos/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
+import 'package:lakoe_pos/features/home/application/cubit/onboarding_transaction/onboarding_transaction_state.dart';
+import 'package:lakoe_pos/features/home/data/arguments/open_cashier_pin_argument.dart';
+import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/forms/initial_balance_form.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/constants/sizes.dart';
+import 'package:lakoe_pos/utils/device/device_uility.dart';
 import 'package:shimmer/shimmer.dart';
 
 class MainMenu extends StatefulWidget {
@@ -78,22 +78,18 @@ class _MainMenuState extends State<MainMenu> {
   Widget build(BuildContext context) {
     return BlocBuilder<OnboardingTransactionCubit, OnboardingTransactionState>(
       builder: (context, onboardingState) => switch (onboardingState) {
-        OnboardingTransactionLoadSuccess(
-          :final isProductCompleted,
-          :final isBankAccountCompleted
-        ) =>
+        OnboardingTransactionLoadSuccess(:final isProductCompleted) =>
           BlocBuilder<CashierCubit, CashierState>(
             builder: (context, state) => GestureDetector(
               onTap: () {
-                bool isOnboardingNotCompleted =
-                    !isProductCompleted || !isBankAccountCompleted;
+                bool isOnboardingNotCompleted = !isProductCompleted;
 
                 if (isOnboardingNotCompleted) {
                   _onOnboardingOpen();
                   return;
                 }
 
-                if (state is! CashierOpened) {
+                if (state is! CashierAlreadyOpen) {
                   onCashierOpened();
                 } else {
                   onCashierAlreadyOpened();
@@ -103,9 +99,11 @@ class _MainMenuState extends State<MainMenu> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Container(
                   decoration: BoxDecoration(
-                    gradient: state is CashierOpened
+                    gradient: state is CashierAlreadyOpen
                         ? TColors.greenGradient
-                        : TColors.redGradient,
+                        : state is GetCashierInProgress
+                            ? TColors.neutralGradient
+                            : TColors.redGradient,
                     borderRadius: BorderRadius.circular(
                       16.0,
                     ),
@@ -138,14 +136,16 @@ class _MainMenuState extends State<MainMenu> {
                                     bottom: 12,
                                   ),
                                   child: UiIcons(
-                                    state is CashierOpened
+                                    state is CashierAlreadyOpen
                                         ? TIcons.lock
                                         : TIcons.cashier,
                                     color: TColors.neutralLightLightest,
                                   ),
                                 ),
                                 Text(
-                                  "Buka Kasir",
+                                  state is CashierAlreadyOpen
+                                      ? "Buka Kasir"
+                                      : "Mulai Buka Kasir",
                                   style: GoogleFonts.inter(
                                     fontSize: TSizes.fontSizeBodyL,
                                     fontWeight: FontWeight.w700,
@@ -154,7 +154,7 @@ class _MainMenuState extends State<MainMenu> {
                                 )
                               ],
                             ),
-                            if (state is CashierOpened)
+                            if (state is CashierAlreadyOpen)
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -162,7 +162,7 @@ class _MainMenuState extends State<MainMenu> {
                                   Container(
                                     margin: const EdgeInsets.only(bottom: 4.0),
                                     child: Text(
-                                      "Kasir: ",
+                                      "Kasir",
                                       style: GoogleFonts.inter(
                                         fontSize: TSizes.fontSizeBodyM,
                                         fontWeight: FontWeight.w400,

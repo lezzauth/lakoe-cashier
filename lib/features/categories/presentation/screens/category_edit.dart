@@ -2,13 +2,13 @@ import 'package:category_repository/category_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/popup_confirmation.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_state.dart';
-import 'package:point_of_sales_cashier/features/categories/presentation/widgets/forms/category_form.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/popup_confirmation.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/features/categories/application/cubit/category_master/category_master_cubit.dart';
+import 'package:lakoe_pos/features/categories/application/cubit/category_master/category_master_state.dart';
+import 'package:lakoe_pos/features/categories/presentation/widgets/forms/category_form.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class CategoryEditScreen extends StatefulWidget {
   const CategoryEditScreen({super.key});
@@ -96,12 +96,12 @@ class _CategoryEditScreenState extends State<CategoryEditScreen> {
                         _onSubmit(arguments.id);
                       },
                 child: state is CategoryMasterActionInProgress
-                    ? const SizedBox(
+                    ? SizedBox(
                         height: 16,
                         width: 16,
                         child: CircularProgressIndicator(),
                       )
-                    : const TextActionL(
+                    : TextActionL(
                         "SIMPAN",
                         color: TColors.primary,
                       ),
@@ -109,7 +109,7 @@ class _CategoryEditScreenState extends State<CategoryEditScreen> {
             ],
           ),
           body: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
                   CategoryForm(

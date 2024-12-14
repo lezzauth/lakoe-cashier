@@ -91,6 +91,15 @@ class TColors {
     end: Alignment.bottomCenter,
   );
 
+  static const LinearGradient neutralGradient = LinearGradient(
+    colors: [
+      Color(0xFFD0D2DB),
+      Color(0xFF6F7075),
+    ],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+
   // Figma Colors
   // ===
   // Highlight

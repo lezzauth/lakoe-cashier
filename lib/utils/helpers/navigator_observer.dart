@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class CustomNavigatorObserver extends NavigatorObserver {
   @override
@@ -42,14 +42,14 @@ class CustomNavigatorObserver extends NavigatorObserver {
           systemNavigationBarColor: TColors.neutralLightLight,
         ),
       );
-    } else if (route?.settings.name == "/packages/grow") {
+    } else if (route?.settings.name == "/account/detail_package") {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.light.copyWith(
           statusBarColor: Colors.transparent,
           systemNavigationBarColor: TColors.neutralLightLight,
         ),
       );
-    } else if (route?.settings.name == "/packages/pro") {
+    } else if (route?.settings.name == "/packages/detail") {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.light.copyWith(
           statusBarColor: Colors.transparent,

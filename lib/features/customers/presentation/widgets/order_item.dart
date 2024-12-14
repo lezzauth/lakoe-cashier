@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/features/orders/common/widgets/ui/tags/order_status/tag_thin_order_status.dart';
 import 'package:outlet_repository/outlet_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
-import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/sizes.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class OrderItem extends StatelessWidget {
   final DetailCustomerOrder order;
@@ -20,11 +19,8 @@ class OrderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isPaid = order.status == "COMPLETED";
-    bool isCancel = order.status == "CANCELLED";
-    String tag = isPaid
-        ? order.transactions.first.paymentMethod
-        : (isCancel ? "CANCEL" : "NONE");
+    String status = order.status;
+    bool isPaid = order.paymentStatus == "PAID";
 
     return GestureDetector(
       onTap: () {
@@ -43,15 +39,11 @@ class OrderItem extends StatelessWidget {
             ),
           ),
         ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: Stack(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 14,
-              ),
+              padding: EdgeInsets.symmetric(vertical: 14),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment:
@@ -62,7 +54,7 @@ class OrderItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(bottom: 8.0),
+                        margin: EdgeInsets.only(bottom: 8.0),
                         child: RichText(
                           text: TextSpan(
                             style: GoogleFonts.inter(
@@ -85,7 +77,7 @@ class OrderItem extends StatelessWidget {
                         ),
                       ),
                       TextBodyS(
-                        TFormatter.orderDate(order.createdAt),
+                        TFormatter.dateTime(order.createdAt),
                         color: TColors.neutralDarkLight,
                       ),
                     ],
@@ -94,56 +86,20 @@ class OrderItem extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 5),
-                        child: TagPaymentMethod(tag: tag),
+                      TextBodyM(
+                        TFormatter.formatToRupiah(double.parse(order.price)),
+                        fontWeight: FontWeight.w800,
+                        color: TColors.neutralDarkDarkest,
                       ),
-                      RichText(
-                        text: TextSpan(
-                          text: "Total: ",
-                          style: GoogleFonts.inter(
-                            fontSize: TSizes.fontSizeBodyS,
-                            color: TColors.neutralDarkLight,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: TFormatter.formatToRupiah(
-                                double.parse(order.price),
-                              ),
-                              style: GoogleFonts.inter(
-                                fontSize: TSizes.fontSizeBodyM,
-                                fontWeight: FontWeight.w800,
-                                color: TColors.neutralDarkDarkest,
-                              ),
-                            ),
-                          ],
-                        ),
+                      Container(
+                        margin: EdgeInsets.only(top: 6),
+                        child: TagThinOrderStatus(tag: status),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            if (isPaid)
-              Positioned(
-                right: 40,
-                bottom: 20,
-                child: SvgPicture.asset(
-                  TImages.stampPaid,
-                  width: 40,
-                  height: 40,
-                ),
-              ),
-            if (isCancel)
-              Positioned(
-                right: 40,
-                bottom: 20,
-                child: SvgPicture.asset(
-                  TImages.stampCancel,
-                  width: 40,
-                  height: 40,
-                ),
-              ),
           ],
         ),
       ),

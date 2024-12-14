@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_s.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 
 class ImagePickerWrapperValue {
   File? file;

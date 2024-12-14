@@ -1,6 +1,6 @@
 import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_detail/employee_detail_state.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_detail/employee_detail_state.dart';
 
 class EmployeeDetailCubit extends Cubit<EmployeeDetailState> {
   final EmployeeRepository _employeeRepository = EmployeeRepositoryImpl();

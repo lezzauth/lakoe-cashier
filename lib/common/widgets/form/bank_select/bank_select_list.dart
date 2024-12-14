@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
-import 'package:point_of_sales_cashier/application/cubit/bank_list_state.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/bank_select/bank_radio_tile.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
+import 'package:lakoe_pos/application/cubit/bank_list_cubit.dart';
+import 'package:lakoe_pos/application/cubit/bank_list_state.dart';
+import 'package:lakoe_pos/common/widgets/form/bank_select/bank_radio_tile.dart';
+import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/device/device_uility.dart';
 import 'package:public_repository/public_repository.dart';
 
 class BankSelectList extends StatefulWidget {

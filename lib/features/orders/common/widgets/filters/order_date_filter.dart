@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/features/orders/common/widgets/filters/order_date_filter/order_date_filter_content.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/features/orders/common/widgets/filters/order_date_filter/order_date_filter_content.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 
 class OrderDateFilter extends StatefulWidget {
   const OrderDateFilter({
@@ -54,9 +54,9 @@ class _OrderDateFilterState extends State<OrderDateFilter> {
       builder: (context) {
         return CustomBottomsheet(
           child: OrderDateFilterContent(
+            template: widget.template,
             from: widget.from,
             to: widget.to,
-            template: widget.template,
           ),
         );
       },
@@ -68,7 +68,8 @@ class _OrderDateFilterState extends State<OrderDateFilter> {
 
   @override
   Widget build(BuildContext context) {
-    bool isNotEmpty = widget.to != null && widget.from != null;
+    bool isNotEmpty = widget.template != "ALL" && widget.template != "CUSTOM" ||
+        widget.to != null && widget.from != null;
 
     return FilterChip(
       onSelected: (value) {

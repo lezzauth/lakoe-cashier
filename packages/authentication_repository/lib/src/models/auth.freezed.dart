@@ -944,3 +944,154 @@ abstract class _RefreshTokenRes implements RefreshTokenRes {
   _$$RefreshTokenResImplCopyWith<_$RefreshTokenResImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+GenerateTokenRes _$GenerateTokenResFromJson(Map<String, dynamic> json) {
+  return _GenerateTokenRes.fromJson(json);
+}
+
+/// @nodoc
+mixin _$GenerateTokenRes {
+  String get token => throw _privateConstructorUsedError;
+
+  /// Serializes this GenerateTokenRes to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of GenerateTokenRes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $GenerateTokenResCopyWith<GenerateTokenRes> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GenerateTokenResCopyWith<$Res> {
+  factory $GenerateTokenResCopyWith(
+          GenerateTokenRes value, $Res Function(GenerateTokenRes) then) =
+      _$GenerateTokenResCopyWithImpl<$Res, GenerateTokenRes>;
+  @useResult
+  $Res call({String token});
+}
+
+/// @nodoc
+class _$GenerateTokenResCopyWithImpl<$Res, $Val extends GenerateTokenRes>
+    implements $GenerateTokenResCopyWith<$Res> {
+  _$GenerateTokenResCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of GenerateTokenRes
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+  }) {
+    return _then(_value.copyWith(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$GenerateTokenResImplCopyWith<$Res>
+    implements $GenerateTokenResCopyWith<$Res> {
+  factory _$$GenerateTokenResImplCopyWith(_$GenerateTokenResImpl value,
+          $Res Function(_$GenerateTokenResImpl) then) =
+      __$$GenerateTokenResImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String token});
+}
+
+/// @nodoc
+class __$$GenerateTokenResImplCopyWithImpl<$Res>
+    extends _$GenerateTokenResCopyWithImpl<$Res, _$GenerateTokenResImpl>
+    implements _$$GenerateTokenResImplCopyWith<$Res> {
+  __$$GenerateTokenResImplCopyWithImpl(_$GenerateTokenResImpl _value,
+      $Res Function(_$GenerateTokenResImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of GenerateTokenRes
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+  }) {
+    return _then(_$GenerateTokenResImpl(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$GenerateTokenResImpl implements _GenerateTokenRes {
+  const _$GenerateTokenResImpl({required this.token});
+
+  factory _$GenerateTokenResImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GenerateTokenResImplFromJson(json);
+
+  @override
+  final String token;
+
+  @override
+  String toString() {
+    return 'GenerateTokenRes(token: $token)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GenerateTokenResImpl &&
+            (identical(other.token, token) || other.token == token));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, token);
+
+  /// Create a copy of GenerateTokenRes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GenerateTokenResImplCopyWith<_$GenerateTokenResImpl> get copyWith =>
+      __$$GenerateTokenResImplCopyWithImpl<_$GenerateTokenResImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GenerateTokenResImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _GenerateTokenRes implements GenerateTokenRes {
+  const factory _GenerateTokenRes({required final String token}) =
+      _$GenerateTokenResImpl;
+
+  factory _GenerateTokenRes.fromJson(Map<String, dynamic> json) =
+      _$GenerateTokenResImpl.fromJson;
+
+  @override
+  String get token;
+
+  /// Create a copy of GenerateTokenRes
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GenerateTokenResImplCopyWith<_$GenerateTokenResImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

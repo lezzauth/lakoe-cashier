@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_form_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_form_state.dart';
-import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/completing_data_form/business_information_form.dart';
-import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/completing_data_form/owner_information_form.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/completing_data/completing_data_form_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/completing_data/completing_data_form_state.dart';
+import 'package:lakoe_pos/features/authentication/presentation/completing_data/widgets/completing_data_form/business_information_form.dart';
+import 'package:lakoe_pos/features/authentication/presentation/completing_data/widgets/completing_data_form/owner_information_form.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/sizes.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class CompletingDataFormPage extends StatefulWidget {
   const CompletingDataFormPage({

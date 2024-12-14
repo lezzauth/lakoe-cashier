@@ -14,7 +14,7 @@ final class CashierOrderLoadInProgress extends CashierOrderState {
 }
 
 final class CashierOrderLoadSuccess extends CashierOrderState {
-  final List<OrderCashierItemResponse> orders;
+  final List<OrderCashierItemRes> orders;
 
   CashierOrderLoadSuccess({
     required this.orders,
@@ -31,4 +31,13 @@ final class CashierOrderLoadFailure extends CashierOrderState {
 
   @override
   List<Object?> get props => [error];
+}
+
+final class ConnectionIssue extends CashierOrderState {
+  final String message;
+
+  ConnectionIssue(this.message);
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
 }

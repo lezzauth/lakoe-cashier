@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 
 class MapsScreen extends StatefulWidget {
   const MapsScreen({super.key});

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/custom_radio.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/form/custom_radio.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class CustomRadioTile<T> extends StatelessWidget {
   final T value;
   final T groupValue;
   final Widget? leading;
   final String title;
+  final String? subtitle;
   final ValueChanged<T?> onChanged;
   final BoxDecoration? decoration;
 
@@ -18,6 +20,7 @@ class CustomRadioTile<T> extends StatelessWidget {
     required this.onChanged,
     this.leading,
     required this.title,
+    this.subtitle,
     this.decoration,
   });
 
@@ -28,10 +31,16 @@ class CustomRadioTile<T> extends StatelessWidget {
       children: [
         ListTile(
           onTap: () => onChanged(value),
-          title: TextBodyL(
+          title: TextHeading4(
             title,
             color: TColors.neutralDarkDarkest,
           ),
+          subtitle: subtitle != null
+              ? TextBodyM(
+                  subtitle!,
+                  color: TColors.neutralDarkLightest,
+                )
+              : null,
           leading: leading,
           trailing: CustomRadio(
             value: value,

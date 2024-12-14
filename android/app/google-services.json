@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "846504682033",
+    "project_id": "lakoe-pos-dev",
+    "storage_bucket": "lakoe-pos-dev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846504682033:android:0603b6f28d3521b94bab10",
+        "android_client_info": {
+          "package_name": "com.lakoe.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLdqdelIFdzeMItfbzYfAHxwlEx52R8gU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

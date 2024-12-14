@@ -20,7 +20,7 @@ class OutletDto with _$OutletDto {
 class RegisterDto with _$RegisterDto {
   const factory RegisterDto({
     required String name,
-    required String email,
+    String? email,
     required String phoneNumber,
     required String pin,
     required OutletDto outlet,
@@ -61,4 +61,14 @@ class RefreshTokenDto with _$RefreshTokenDto {
 
   factory RefreshTokenDto.fromJson(Map<String, Object?> json) =>
       _$RefreshTokenDtoFromJson(json);
+}
+
+@freezed
+class GenerateTokenDto with _$GenerateTokenDto {
+  const factory GenerateTokenDto({
+    required String pin,
+  }) = _GenerateTokenDto;
+
+  factory GenerateTokenDto.fromJson(Map<String, Object?> json) =>
+      _$GenerateTokenDtoFromJson(json);
 }

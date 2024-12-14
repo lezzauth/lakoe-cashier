@@ -63,3 +63,12 @@ final class TableMasterReachesLimit extends TableMasterState {
   @override
   List<Object?> get props => [res];
 }
+
+final class ConnectionIssue extends TableMasterState {
+  final String message;
+
+  ConnectionIssue(this.message);
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}

@@ -261,3 +261,19 @@ Map<String, dynamic> _$$PaymentActionModelImplToJson(
       'url': instance.url,
       'qrCode': instance.qrCode,
     };
+
+_$DetailPurchaseModelImpl _$$DetailPurchaseModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$DetailPurchaseModelImpl(
+      purchase:
+          PurchaseModel.fromJson(json['purchase'] as Map<String, dynamic>),
+      paymentRequest: PaymentRequestModel.fromJson(
+          json['paymentRequest'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$DetailPurchaseModelImplToJson(
+        _$DetailPurchaseModelImpl instance) =>
+    <String, dynamic>{
+      'purchase': instance.purchase,
+      'paymentRequest': instance.paymentRequest,
+    };

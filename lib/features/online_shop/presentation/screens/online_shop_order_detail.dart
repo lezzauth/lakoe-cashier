@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_shop_repository/online_shop_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/features/online_shop/application/cubit/shop_order_detail_cubit/shop_order_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/online_shop/application/cubit/shop_order_detail_cubit/shop_order_detail_state.dart';
-import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_detail_argument.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/sections/order_info_section/order_info_section.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/sections/order_price_breakdown_section/order_price_breakdown_section.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/sections/order_product_detail_section/order_product_detail_section.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/sections/order_shipping_detail_section/order_shipping_detail_section.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/sections/order_status_section/order_status_section.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/features/online_shop/application/cubit/shop_order_detail_cubit/shop_order_detail_cubit.dart';
+import 'package:lakoe_pos/features/online_shop/application/cubit/shop_order_detail_cubit/shop_order_detail_state.dart';
+import 'package:lakoe_pos/features/online_shop/data/arguments/online_shop_order_detail_argument.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/widgets/sections/order_info_section/order_info_section.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/widgets/sections/order_price_breakdown_section/order_price_breakdown_section.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/widgets/sections/order_product_detail_section/order_product_detail_section.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/widgets/sections/order_shipping_detail_section/order_shipping_detail_section.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/widgets/sections/order_status_section/order_status_section.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class OnlineShopOrderDetailScreen extends StatelessWidget {
   const OnlineShopOrderDetailScreen({super.key, required this.arguments});

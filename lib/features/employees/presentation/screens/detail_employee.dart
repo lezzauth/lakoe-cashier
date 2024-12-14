@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_detail/employee_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_detail/employee_detail_state.dart';
-import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_detail_argument.dart';
-import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_detail/employee_detail_cubit.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_detail/employee_detail_state.dart';
+import 'package:lakoe_pos/features/employees/data/arguments/employee_detail_argument.dart';
+import 'package:lakoe_pos/features/employees/data/arguments/employee_edit_argument.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class DetailEmployeeScreen extends StatelessWidget {
   const DetailEmployeeScreen({super.key, required this.arguments});

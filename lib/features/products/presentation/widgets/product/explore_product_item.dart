@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/counter.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/common/widgets/form/counter.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/product/action/product_note_action.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/product/base_product_item.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ExploreProductItem extends StatelessWidget {

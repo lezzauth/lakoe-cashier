@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerText extends StatelessWidget {

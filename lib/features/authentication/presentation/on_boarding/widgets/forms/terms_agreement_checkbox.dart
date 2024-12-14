@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/custom_checkbox.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/form/custom_checkbox.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class TermsAgreementCheckbox extends StatelessWidget {
   final bool value;

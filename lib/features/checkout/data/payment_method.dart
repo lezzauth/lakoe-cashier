@@ -1,5 +1,5 @@
-import 'package:point_of_sales_cashier/features/checkout/data/payment_method_model.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/features/checkout/data/payment_method_model.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
 List<PaymentCategory> paymentMethod = [
   PaymentCategory(

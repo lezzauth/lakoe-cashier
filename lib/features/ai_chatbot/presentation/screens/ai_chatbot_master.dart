@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/ai_chatbot/application/cubit/whatsapp/whatsapp_auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/ai_chatbot/application/cubit/whatsapp/whatsapp_auth_state.dart';
-import 'package:point_of_sales_cashier/features/ai_chatbot/application/cubit/whatsapp/whatsapp_session_cubit.dart';
-import 'package:point_of_sales_cashier/features/ai_chatbot/application/cubit/whatsapp/whatsapp_session_state.dart';
-import 'package:point_of_sales_cashier/features/ai_chatbot/presentation/widgets/add_customer_service.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/features/ai_chatbot/application/cubit/whatsapp/whatsapp_auth_cubit.dart';
+import 'package:lakoe_pos/features/ai_chatbot/application/cubit/whatsapp/whatsapp_auth_state.dart';
+import 'package:lakoe_pos/features/ai_chatbot/application/cubit/whatsapp/whatsapp_session_cubit.dart';
+import 'package:lakoe_pos/features/ai_chatbot/application/cubit/whatsapp/whatsapp_session_state.dart';
+import 'package:lakoe_pos/features/ai_chatbot/presentation/widgets/add_customer_service.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:whatsapp_repository/whatsapp_repository.dart';
 
 class AIChatbotMasterScreen extends StatelessWidget {

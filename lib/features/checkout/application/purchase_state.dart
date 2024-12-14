@@ -14,12 +14,12 @@ final class PurchaseActionInProgress extends PurchaseState {
 }
 
 final class PurchaseActionSuccess extends PurchaseState {
-  final PurchaseResponseModel response;
+  final PurchaseResponseModel res;
 
-  PurchaseActionSuccess({required this.response});
+  PurchaseActionSuccess({required this.res});
 
   @override
-  List<Object?> get props => [response];
+  List<Object?> get props => [res];
 }
 
 final class PurchaseActionFailure extends PurchaseState {

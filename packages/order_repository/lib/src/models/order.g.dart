@@ -15,6 +15,7 @@ _$OrderItemResImpl _$$OrderItemResImplFromJson(Map<String, dynamic> json) =>
       customerType: json['customerType'] as String,
       type: json['type'] as String,
       source: json['source'] as String,
+      status: json['status'] as String,
       customer: json['customer'] == null
           ? null
           : OrderItemCustomer.fromJson(
@@ -33,6 +34,7 @@ Map<String, dynamic> _$$OrderItemResImplToJson(_$OrderItemResImpl instance) =>
       'customerType': instance.customerType,
       'type': instance.type,
       'source': instance.source,
+      'status': instance.status,
       'customer': instance.customer,
       'table': instance.table,
     };

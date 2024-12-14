@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/otp_input/otp_input_state.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/otp_input/otp_input_state.dart';
 import 'package:token_provider/token_provider.dart';
 
 class OtpInputCubit extends Cubit<OtpInputState> {
@@ -18,7 +18,10 @@ class OtpInputCubit extends Cubit<OtpInputState> {
       emit(OtpInputActionInProgress());
       final res = await _authenticationRepository.verifyOTP(dto);
       _tokenProvider.setAuthToken(res.token, res.tokenExpireIn);
-      _tokenProvider.setAuthRefreshToken(res.refreshToken);
+      _tokenProvider.setAuthRefreshToken(
+        res.refreshToken,
+        res.refreshTokenExpireIn,
+      );
 
       switch (res.action) {
         case "LOGIN":

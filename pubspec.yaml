@@ -1,4 +1,4 @@
-name: point_of_sales_cashier
+name: lakoe_pos
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -59,6 +59,8 @@ dependencies:
     path: packages/online_shop_repository
   package_repository:
     path: packages/package_repository
+  payment_repository:
+    path: packages/payment_repository
 
   token_provider:
     path: packages/token_provider
@@ -127,6 +129,7 @@ dependencies:
   fluttertoast: ^8.2.8
   logman: ^0.0.21
   package_info_plus: ^8.1.0
+  firebase_core: ^3.8.0
 
 dev_dependencies:
   flutter_test:

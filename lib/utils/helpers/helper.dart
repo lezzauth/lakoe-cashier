@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
-import 'package:point_of_sales_cashier/utils/constants/bank_name_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/constants/bank_name_strings.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class THelper {
@@ -65,10 +65,10 @@ class THelper {
   }
 
   static List<DateTime> getStartEndWeek(DateTime now) {
-    int currentWeekday = now.weekday;
+    int today = now.weekday;
 
-    DateTime startOfWeek = now.subtract(Duration(days: currentWeekday - 1));
-    DateTime endOfWeek = now.add(Duration(days: 7 - currentWeekday));
+    DateTime startOfWeek = now.subtract(Duration(days: today - 1));
+    DateTime endOfWeek = now.add(Duration(days: 7 - today));
 
     return [startOfWeek, endOfWeek];
   }
@@ -138,7 +138,7 @@ class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll('#', '');
     if (hexColor.length == 6) {
-      hexColor = 'FF$hexColor'; // Add FF for 100% opacity
+      hexColor = 'FF$hexColor';
     }
     return int.parse(hexColor, radix: 16);
   }

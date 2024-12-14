@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
-import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
+import 'package:lakoe_pos/features/cart/data/models/cart_model.dart';
 import 'package:collection/collection.dart';
 import 'package:product_repository/product_repository.dart';
 

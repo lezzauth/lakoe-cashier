@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outlet_repository/outlet_repository.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_report_state.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_report_state.dart';
 
 class CashierReportCubit extends Cubit<CashierReportState> {
   final OutletRepository _outletRepository = OutletRepositoryImpl();

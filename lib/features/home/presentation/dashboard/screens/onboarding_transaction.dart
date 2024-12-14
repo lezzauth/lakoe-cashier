@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/items/check_item.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
-import 'package:point_of_sales_cashier/features/home/application/cubit/onboarding_transaction/onboarding_transaction_state.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/items/check_item.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
+import 'package:lakoe_pos/features/home/application/cubit/onboarding_transaction/onboarding_transaction_state.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnboardingTransactionScreen extends StatefulWidget {
@@ -19,6 +19,12 @@ class OnboardingTransactionScreen extends StatefulWidget {
 
 class _OnboardingTransactionScreenState
     extends State<OnboardingTransactionScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _onInit;
+  }
+
   void _onInit() {
     context.read<OnboardingTransactionCubit>().init();
   }
@@ -41,11 +47,7 @@ class _OnboardingTransactionScreenState
       ),
       body: BlocBuilder<OnboardingTransactionCubit, OnboardingTransactionState>(
         builder: (context, state) => switch (state) {
-          OnboardingTransactionLoadSuccess(
-            :final isBankAccountCompleted,
-            :final isProductCompleted
-          ) =>
-            Column(
+          OnboardingTransactionLoadSuccess(:final isProductCompleted) => Column(
               children: [
                 Expanded(
                   child: SingleChildScrollView(
@@ -78,14 +80,6 @@ class _OnboardingTransactionScreenState
                           onTap:
                               isProductCompleted ? null : _onGoToCreateProduct,
                         ),
-                        SizedBox(height: 8),
-                        CheckItem(
-                          checked: isBankAccountCompleted,
-                          title: "Satu rekening bank",
-                          onTap: isBankAccountCompleted
-                              ? null
-                              : _onGoToCreateBankAccount,
-                        ),
                       ],
                     ),
                   ),
@@ -105,14 +99,12 @@ class _OnboardingTransactionScreenState
                   child: SizedBox(
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: (!state.isBankAccountCompleted ||
-                              !state.isProductCompleted)
+                      onPressed: (!state.isProductCompleted)
                           ? null
                           : () {
                               Navigator.pop(
                                 context,
-                                state.isBankAccountCompleted &&
-                                    state.isProductCompleted,
+                                state.isProductCompleted,
                               );
                             },
                       child: const TextActionL("Lanjutan"),

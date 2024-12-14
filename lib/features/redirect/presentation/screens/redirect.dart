@@ -7,14 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:logman/logman.dart';
-import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_state.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:token_provider/token_provider.dart';
 
 class RedirectScreen extends StatefulWidget {
@@ -25,11 +26,13 @@ class RedirectScreen extends StatefulWidget {
 }
 
 class _RedirectScreenState extends State<RedirectScreen> {
+  bool navigated = false;
   bool isBottomSheetVisible = false;
-  late final StreamSubscription<List<ConnectivityResult>>
-      _connectivitySubscription;
 
-  Future<void> _loadFlavor() async {
+  late final StreamSubscription<List<ConnectivityResult>>
+      connectivitySubscription;
+
+  Future<void> loadFlavor() async {
     final AppDataProvider appDataProvider = AppDataProvider();
     final flavor = await appDataProvider.flavor;
 
@@ -53,35 +56,41 @@ class _RedirectScreenState extends State<RedirectScreen> {
   @override
   void initState() {
     super.initState();
-    _loadFlavor();
+    loadFlavor();
+    init();
+  }
+
+  @override
+  void dispose() {
+    connectivitySubscription.cancel();
+    super.dispose();
+  }
+
+  void init() {
     context.read<AuthCubit>().initialize();
 
-    _connectivitySubscription =
+    connectivitySubscription =
         Connectivity().onConnectivityChanged.listen((result) {
       if (result != ConnectivityResult.none) {
         if (!mounted) return;
+        if (isBottomSheetVisible) {
+          Navigator.pop(context);
+          isBottomSheetVisible = false;
+
+          CustomToast.show(
+            "Internet terhubung kembali",
+            backgroundColor: TColors.success,
+          );
+        }
+
         context.read<AuthCubit>().initialize();
       }
     });
   }
 
-  @override
-  void dispose() {
-    _connectivitySubscription.cancel();
-    super.dispose();
-  }
-
-  Future<void> openWifiSettings() async {
+  Future<void> openSettings() async {
     final intent = AndroidIntent(
-      action: 'android.settings.WIFI_SETTINGS',
-      flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
-    );
-    await intent.launch();
-  }
-
-  Future<void> openMobileDataSettings() async {
-    final intent = AndroidIntent(
-      action: 'android.settings.DATA_ROAMING_SETTINGS',
+      action: 'android.settings.SETTINGS',
       flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
     );
     await intent.launch();
@@ -97,57 +106,78 @@ class _RedirectScreenState extends State<RedirectScreen> {
         final TokenProvider tokenProvider = TokenProvider();
         final token = await tokenProvider.getAuthToken();
 
-        if (!mounted) return;
+        if (state is AuthLoadInProgress) {
+          Logman.instance
+              .info('AuthState is in progress, waiting for result...');
+          return;
+        }
 
-        if (token == null || token.isEmpty) {
+        if (!navigated && (token == null || token.isEmpty)) {
+          Logman.instance.info("[Redirect] Token is Empty");
+          navigated = true;
           Navigator.popAndPushNamed(context, "/on-boarding");
           return;
         }
 
-        if (state is AuthNotReady && !isBottomSheetVisible) {
+        if (state is ConnectionIssue && !isBottomSheetVisible) {
           isBottomSheetVisible = true;
+
           if (!mounted) return;
 
-          showModalBottomSheet(
+          await showModalBottomSheet(
             context: context,
             enableDrag: false,
             isDismissible: false,
             builder: (context) {
-              return CustomBottomsheet(
-                hasGrabber: false,
-                child: ErrorDisplay(
-                  imageSrc: TImages.noConnection,
-                  title: "Yah, internetnya mati…",
-                  description:
-                      "Coba cek WiFi atau kuota internet kamu dan nanti coba lagi ya.",
-                  actionTitlePrimary: "Pengaturan",
-                  onActionPrimary: () {
-                    openWifiSettings();
-                    Navigator.pop(context);
-                    isBottomSheetVisible = false;
-                  },
-                  actionTitleSecondary: "Coba Lagi",
-                  onActionSecondary: () {
-                    context.read<AuthCubit>().initialize();
-                    Navigator.pop(context);
-                    isBottomSheetVisible = false;
-                  },
+              return PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (didPop, result) async {},
+                child: CustomBottomsheet(
+                  hasGrabber: false,
+                  child: ErrorDisplay(
+                    imageSrc: TImages.noConnection,
+                    title: "Koneksi internet aman ngga?",
+                    description:
+                        "Coba cek WiFi atau kuota internet kamu dulu terus bisa dicoba lagi, ya!",
+                    actionTitlePrimary: "Pengaturan",
+                    onActionPrimary: () {
+                      isBottomSheetVisible = false;
+                      Navigator.pop(context);
+                      openSettings();
+                    },
+                    actionTitleSecondary: "Coba Lagi",
+                    onActionSecondary: () async {
+                      isBottomSheetVisible = false;
+                      Navigator.pop(context);
+                      await Future.delayed(Duration(seconds: 2));
+                      init();
+                    },
+                  ),
                 ),
               );
             },
-          );
+          ).whenComplete(() {
+            isBottomSheetVisible = false;
+          });
           return;
         }
 
-        if (state is AuthReady) {
-          Navigator.popAndPushNamed(context, "/cashier");
-        } else if (state is UncompletedProfile ||
-            (state is TokenExpired &&
-                state.res.statusCode == 401 &&
-                !state.isTokenRefreshed) ||
-            (state is NotFound && state.res.statusCode == 404)) {
-          await tokenProvider.clearAll();
-          Navigator.popAndPushNamed(context, "/on-boarding");
+        if (!navigated) {
+          if (state is AuthReady) {
+            Logman.instance.info("[Redirect] Auth is ready");
+            navigated = true;
+            Navigator.popAndPushNamed(context, "/cashier");
+            return;
+          } else if ((state is AuthNotReady) ||
+              (state is TokenExpired &&
+                  state.res.statusCode == 401 &&
+                  !state.isTokenRefreshed) ||
+              (state is NotFound && state.res.statusCode == 404)) {
+            Logman.instance.info("[Redirect] Non-Auth is ready");
+            navigated = true;
+            Navigator.popAndPushNamed(context, "/on-boarding");
+            return;
+          }
         }
       },
       child: BlocListener<CashierCubit, CashierState>(

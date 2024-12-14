@@ -25,16 +25,35 @@ class TokenProvider {
   }
 
   Future<String?> getAuthRefreshToken() async {
-    return await _storage.read(key: 'auth_refresh_token');
+    final refreshToken = await _storage.read(key: 'auth_refresh_token');
+    final refreshExpiry = await _storage.read(key: 'refresh_token_expiry');
+
+    if (refreshExpiry != null &&
+        DateTime.now().millisecondsSinceEpoch > int.parse(refreshExpiry)) {
+      await clearAuthRefreshToken();
+      return null;
+    }
+
+    return refreshToken;
   }
 
-  Future<void> setAuthRefreshToken(String token) async {
+  Future<void> setAuthRefreshToken(
+      String token, int refreshTokenExpireIn) async {
     await _storage.write(key: 'auth_refresh_token', value: token);
+    final expiryTimestamp =
+        DateTime.now().millisecondsSinceEpoch + (refreshTokenExpireIn * 1000);
+    await _storage.write(
+        key: 'refresh_token_expiry', value: expiryTimestamp.toString());
   }
 
   Future<void> clearAuthToken() async {
     await _storage.delete(key: 'auth_token');
     await _storage.delete(key: 'token_expiry');
+  }
+
+  Future<void> clearAuthRefreshToken() async {
+    await _storage.delete(key: 'auth_refresh_token');
+    await _storage.delete(key: 'refresh_token_expiry');
   }
 
   Future<String?> getCashierToken() async {

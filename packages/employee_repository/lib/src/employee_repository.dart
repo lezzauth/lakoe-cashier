@@ -20,6 +20,9 @@ abstract class EmployeeRepository {
     required UpdateEmployeeDto dto,
   });
   Future<EmployeeModel> delete(String id);
+  Future<RequestOtpRes> requestOTP(String id, RequestOtpDto dto);
+  Future<VerifyOtpRes> verifyOTP(String id, VerifyOtpDto dto);
+  Future<EmployeeModel> updatePIN(String id, UpdatePinDto dto);
 }
 
 class EmployeeRepositoryImpl implements EmployeeRepository {
@@ -120,6 +123,42 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
 
     final response = await _dio.delete(
       "$_baseURL/$id",
+      options: options,
+    );
+    return EmployeeModel.fromJson(response.data);
+  }
+
+  @override
+  Future<RequestOtpRes> requestOTP(String id, RequestOtpDto dto) async {
+    final options = await _getOptions();
+
+    final response = await _dio.post(
+      "$_baseURL/$id/otp",
+      data: dto.toJson(),
+      options: options,
+    );
+    return RequestOtpRes.fromJson(response.data);
+  }
+
+  @override
+  Future<VerifyOtpRes> verifyOTP(String id, VerifyOtpDto dto) async {
+    final options = await _getOptions();
+
+    final response = await _dio.post(
+      "$_baseURL/$id/otp/verify",
+      data: dto.toJson(),
+      options: options,
+    );
+    return VerifyOtpRes.fromJson(response.data);
+  }
+
+  @override
+  Future<EmployeeModel> updatePIN(String id, UpdatePinDto dto) async {
+    final options = await _getOptions();
+
+    final response = await _dio.patch(
+      "$_baseURL/$id/update-pin",
+      data: dto.toJson(),
       options: options,
     );
     return EmployeeModel.fromJson(response.data);

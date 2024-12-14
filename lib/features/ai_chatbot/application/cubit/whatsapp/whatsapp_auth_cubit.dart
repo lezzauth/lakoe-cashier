@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/ai_chatbot/application/cubit/whatsapp/whatsapp_auth_state.dart';
+import 'package:lakoe_pos/features/ai_chatbot/application/cubit/whatsapp/whatsapp_auth_state.dart';
 import 'package:whatsapp_repository/whatsapp_repository.dart';
 
 class WhatsappAuthCubit extends Cubit<WhatsappAuthState> {

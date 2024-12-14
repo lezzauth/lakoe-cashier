@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_form.dart/tax_form_state.dart';
-import 'package:point_of_sales_cashier/features/taxes/presentation/widgets/form/field/other_tax_field.dart';
+import 'package:lakoe_pos/features/taxes/application/cubit/tax_form.dart/tax_form_state.dart';
+import 'package:lakoe_pos/features/taxes/presentation/widgets/form/field/other_tax_field.dart';
 
 class TaxFormCubit extends Cubit<TaxFormState> {
   TaxFormCubit()

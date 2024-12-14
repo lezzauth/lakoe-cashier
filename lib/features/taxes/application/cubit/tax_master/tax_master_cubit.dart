@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owner_repository/owner_repository.dart';
-import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_master/tax_master_state.dart';
-import 'package:point_of_sales_cashier/features/taxes/data/models.dart';
+import 'package:lakoe_pos/features/taxes/application/cubit/tax_master/tax_master_state.dart';
+import 'package:lakoe_pos/features/taxes/data/models.dart';
 
 class TaxMasterCubit extends Cubit<TaxMasterState> {
   final OwnerRepository _ownerRepository = OwnerRepositoryImpl();

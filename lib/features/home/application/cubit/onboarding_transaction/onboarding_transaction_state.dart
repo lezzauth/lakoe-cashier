@@ -16,15 +16,13 @@ final class OnboardingTransactionLoadInProgress
 final class OnboardingTransactionLoadSuccess
     extends OnboardingTransactionState {
   final bool isProductCompleted;
-  final bool isBankAccountCompleted;
 
   OnboardingTransactionLoadSuccess({
-    required this.isBankAccountCompleted,
     required this.isProductCompleted,
   });
 
   @override
-  List<Object?> get props => [isProductCompleted, isBankAccountCompleted];
+  List<Object?> get props => [isProductCompleted];
 }
 
 final class OnboardingTransactionLoadFailure

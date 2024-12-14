@@ -31,7 +31,7 @@ class TFormatter {
     }
   }
 
-  static String orderDate(String isoDate, {bool withDay = false}) {
+  static String dateTime(String isoDate, {bool withDay = false}) {
     DateTime dateTime = DateTime.parse(isoDate).toLocal();
     DateTime now = DateTime.now();
 
@@ -46,7 +46,7 @@ class TFormatter {
     }
 
     String formattedDate =
-        DateFormat("${withDay ? "EEEE, " : ""}dd MMM yyyy, HH:mm", "id_ID")
+        DateFormat("${withDay ? "" : ""}dd MMM yyyy, HH:mm", "id_ID")
             .format(dateTime);
     return "$formattedDate $timeZone";
   }
@@ -70,6 +70,14 @@ class TFormatter {
   }
 
   static String censoredPhoneNumber(String text) {
+    if (text.startsWith('+62')) {
+      text = '0${text.substring(3)}';
+    } else if (text.startsWith('62')) {
+      text = '0${text.substring(2)}';
+    } else if (!text.startsWith('08')) {
+      text = '0$text';
+    }
+
     return text.replaceRange(
         text.length - 7, text.length - 3, List.filled(4, "*").join());
   }
@@ -153,6 +161,8 @@ class PhoneNumberFormatter extends TextInputFormatter {
       TextEditingValue oldValue, TextEditingValue newValue) {
     String newText = newValue.text;
 
+    newText = newText.replaceAll(RegExp(r'[^0-9]'), '');
+
     if (isDisplayFormat) {
       newText = formatForDisplay(newText);
     } else {
@@ -164,11 +174,9 @@ class PhoneNumberFormatter extends TextInputFormatter {
         newText = newText.replaceFirst('08', '8');
       }
 
-      newText = newText.replaceAll(RegExp(r'[^0-9]'), '');
-
       if (newText.length > 10) {
         newText =
-            '${newText.substring(0, 3)}-${newText.substring(3, 7)}-${newText.substring(7, 11)}';
+            '${newText.substring(0, 3)}-${newText.substring(3, 7)}-${newText.substring(7)}';
       } else if (newText.length > 7) {
         newText =
             '${newText.substring(0, 3)}-${newText.substring(3, 7)}-${newText.substring(7)}';
@@ -209,7 +217,7 @@ class PhoneNumberFormatter extends TextInputFormatter {
     }
 
     if (cleanedPhoneNumber.length > 11) {
-      return '${cleanedPhoneNumber.substring(0, 4)}-${cleanedPhoneNumber.substring(4, 8)}-${cleanedPhoneNumber.substring(8, 12)}';
+      return '${cleanedPhoneNumber.substring(0, 4)}-${cleanedPhoneNumber.substring(4, 8)}-${cleanedPhoneNumber.substring(8)}';
     } else if (cleanedPhoneNumber.length > 8) {
       return '${cleanedPhoneNumber.substring(0, 4)}-${cleanedPhoneNumber.substring(4, 8)}-${cleanedPhoneNumber.substring(8)}';
     } else if (cleanedPhoneNumber.length > 4) {

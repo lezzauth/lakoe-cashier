@@ -1,16 +1,16 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_form_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_screen_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_screen_state.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/completing_data/completing_data_state.dart';
-import 'package:point_of_sales_cashier/features/authentication/data/arguments/completing_data_argument.dart';
-import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/completing_data_form_page.dart';
-import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/form_step_indicator.dart';
-import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/widgets/pin_input_page.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/completing_data/completing_data_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/completing_data/completing_data_form_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/completing_data/completing_data_screen_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/completing_data/completing_data_screen_state.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/completing_data/completing_data_state.dart';
+import 'package:lakoe_pos/features/authentication/data/arguments/completing_data_argument.dart';
+import 'package:lakoe_pos/features/authentication/presentation/completing_data/widgets/completing_data_form_page.dart';
+import 'package:lakoe_pos/features/authentication/presentation/completing_data/widgets/form_step_indicator.dart';
+import 'package:lakoe_pos/features/authentication/presentation/completing_data/widgets/pin_input_page.dart';
 
 class CompletingDataScreen extends StatelessWidget {
   const CompletingDataScreen({super.key, required this.arguments});

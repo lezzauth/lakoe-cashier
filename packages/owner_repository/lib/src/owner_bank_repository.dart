@@ -7,9 +7,7 @@ import 'package:token_provider/token_provider.dart';
 
 abstract class OwnerBankRepository {
   Future<List<OwnerBankModel>> findAll();
-  Future<OwnerBankModel> create({
-    required CreateOwnerBankDto dto,
-  });
+  Future<OwnerBankModel> create({required CreateOwnerBankDto dto});
   Future<OwnerBankModel> update({
     required String bankId,
     required UpdateOwnerBankDto dto,

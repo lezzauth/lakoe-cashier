@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
-import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_completed_cubit.dart';
-import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_completed/order_online/order_online_tab.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_completed/order_outlet/order_outlet_tab.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_online/order_online_tab.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/order_outlet/order_outlet_tab.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/ui/tab/tab_container.dart';
+import 'package:lakoe_pos/common/widgets/ui/tab/tab_item.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_filter_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_online/order_online_tab.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/order_outlet_tab.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_online/order_online_tab.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_outlet/order_outlet_tab.dart';
 
 class OrderMasterScreen extends StatelessWidget {
   const OrderMasterScreen({super.key});
@@ -18,8 +19,8 @@ class OrderMasterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => OrderMasterFilterCubit()),
-        BlocProvider(create: (context) => OrderMasterCompletedCubit()),
+        BlocProvider(create: (context) => OrdersFilterCubit()),
+        BlocProvider(create: (context) => OrderCashierFilterCubit()),
       ],
       child: DefaultTabController(
         length: 2,
@@ -29,22 +30,17 @@ class OrderMasterScreen extends StatelessWidget {
   }
 }
 
-class OrderMasterCompletedFilterCubit {}
-
 class OrderMaster extends StatelessWidget {
-  OrderMaster({
-    super.key,
-  });
+  OrderMaster({super.key});
 
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve arguments from the route
     final args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-    // Extract specific values from the arguments
     final String? previousScreen = args?['previousScreen'];
 
     return Scaffold(
@@ -52,36 +48,53 @@ class OrderMaster extends StatelessWidget {
         search: SearchField(
           hintText: "Cari pesanan disini...",
           controller: _searchController,
+          focusNode: _searchFocusNode,
           debounceTime: 500,
           onChanged: (value) {
-            context.read<OrderMasterFilterCubit>().setFilter(
-                  search: value,
-                );
+            if (previousScreen == "ExploreProduct") {
+              context.read<OrderCashierFilterCubit>().setFilter(search: value);
+            } else {
+              OrdersFilterState filterState =
+                  context.read<OrdersFilterCubit>().state;
+
+              context.read<OrdersFilterCubit>().setFilter(
+                    search: value,
+                    from: filterState.from != null
+                        ? DateTime.parse(filterState.from!)
+                        : null,
+                    to: filterState.to != null
+                        ? DateTime.parse(filterState.to!)
+                        : null,
+                  );
+            }
           },
         ),
-        bottom: const TabContainer(
+        bottom: TabContainer(
           tabs: [
-            TabItem(title: "Outlet"),
-            TabItem(
-              title: "Online",
-              // counter: 2,
-            )
+            TabItem(title: "Kasir"),
+            TabItem(title: "QR Meja", counter: 2)
           ],
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 4.0),
+        padding: EdgeInsets.only(top: 4.0),
         child: (previousScreen == "ExploreProduct")
             ? TabBarView(
                 children: [
-                  OrderOutletTab(),
-                  OrderOnlineTab(),
+                  OrderCashierOutlet(
+                    searchController: _searchController,
+                    searchFocusNode: _searchFocusNode,
+                  ),
+                  OrderCashierOnline(),
                 ],
               )
             : TabBarView(
                 children: [
-                  OrderOutletCompletedTab(),
-                  OrderOnlineCompletedTab(),
+                  OrderOutlet(
+                    searchController: _searchController,
+                    searchFocusNode: _searchFocusNode,
+                  ),
+                  OrderOnline(),
                 ],
               ),
       ),

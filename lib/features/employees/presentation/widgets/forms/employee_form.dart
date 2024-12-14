@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
+import 'package:lakoe_pos/common/widgets/form/form_label.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/image_picker_field.dart';
+import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class EmployeeForm extends StatefulWidget {
   const EmployeeForm({
@@ -86,24 +87,6 @@ class _EmployeeFormState extends State<EmployeeForm> {
                 ],
               ),
             ),
-            // Container(
-            //   margin: const EdgeInsets.only(bottom: 8.0),
-            //   child: Row(
-            //     children: [
-            //       Expanded(
-            //           child: Column(
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //           const FormLabel("Kategori"),
-            //           Container(
-            //             margin: const EdgeInsets.only(bottom: 8),
-            //             child: const RolesField(),
-            //           ),
-            //         ],
-            //       ))
-            //     ],
-            //   ),
-            // ),
             Container(
               margin: const EdgeInsets.only(bottom: 16.0),
               child: Column(
@@ -118,7 +101,8 @@ class _EmployeeFormState extends State<EmployeeForm> {
                     ),
                     keyboardType: TextInputType.phone,
                     inputFormatters: [
-                      PhoneNumberFormatter(isDisplayFormat: true)
+                      PhoneNumberFormatter(isDisplayFormat: true),
+                      LengthLimitingTextInputFormatter(14),
                     ],
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.maxLength(14,

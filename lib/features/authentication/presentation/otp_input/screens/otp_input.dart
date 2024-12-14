@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:logman/logman.dart';
 import 'package:pinput/pinput.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/otp_input/otp_input_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/otp_input/otp_input_state.dart';
-import 'package:point_of_sales_cashier/features/authentication/data/arguments/completing_data_argument.dart';
-import 'package:point_of_sales_cashier/features/authentication/data/arguments/otp_input_argument.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/otp_input/otp_input_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/otp_input/otp_input_state.dart';
+import 'package:lakoe_pos/features/authentication/data/arguments/completing_data_argument.dart';
+import 'package:lakoe_pos/features/authentication/data/arguments/otp_input_argument.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/sizes.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class OtpInputScreen extends StatelessWidget {
   const OtpInputScreen({super.key, required this.arguments});
@@ -41,7 +43,7 @@ class OtpInput extends StatefulWidget {
 
 class _OtpInputState extends State<OtpInput>
     with SingleTickerProviderStateMixin {
-  final TextEditingController _optController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
   late AnimationController _animationController;
   late Animation<double> _animation;
 
@@ -86,7 +88,7 @@ class _OtpInputState extends State<OtpInput>
 
   @override
   void dispose() {
-    _optController.dispose();
+    _otpController.dispose();
     _animationController.dispose();
     super.dispose();
   }
@@ -154,31 +156,23 @@ class _OtpInputState extends State<OtpInput>
                         child: Column(
                           children: [
                             Container(
-                              margin: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
+                              margin: EdgeInsets.only(bottom: 8.0),
+                              child: TextHeading2(
                                 "Verifikasi Nomor WhatsApp",
-                                style: GoogleFonts.inter(
-                                  fontSize: TSizes.fontSizeHeading3,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
-                            Text(
-                              "Masukkan 4 digit kode OTP yang telah kami kirimkan melalui WhatsApp untuk melanjutkan.",
-                              style: GoogleFonts.inter(
-                                fontSize: TSizes.fontSizeBodyS,
-                                color: TColors.neutralDarkMedium,
-                              ),
+                            TextBodyM(
+                              "Masukkan 4 angka kode OTP yang sudah kami kirimkan ke nomor WhatsApp dibawah ini:",
+                              color: TColors.neutralDarkMedium,
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 12),
-                            Text(
+                            TextBodyM(
                               TFormatter.censoredPhoneNumber(
                                   widget.arguments.target),
-                              style: GoogleFonts.inter(
-                                fontSize: TSizes.fontSizeBodyS,
-                                color: TColors.neutralDarkMedium,
-                              ),
+                              color: TColors.neutralDarkMedium,
+                              fontWeight: FontWeight.bold,
                               textAlign: TextAlign.center,
                             ),
                           ],
@@ -195,7 +189,7 @@ class _OtpInputState extends State<OtpInput>
                               length: 4,
                               autofocus: true,
                               obscureText: true,
-                              controller: _optController,
+                              controller: _otpController,
                               onCompleted: (value) {
                                 context
                                     .read<OtpInputCubit>()
@@ -204,7 +198,7 @@ class _OtpInputState extends State<OtpInput>
                                       code: value,
                                     ));
 
-                                _optController.clear();
+                                _otpController.clear();
                               },
                             ),
                           );

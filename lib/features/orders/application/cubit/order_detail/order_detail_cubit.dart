@@ -1,7 +1,7 @@
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_repository/order_repository.dart';
-import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_state.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_state.dart';
 
 class OrderDetailCubit extends Cubit<OrderDetailState> {
   final OrderRepository _orderRepository = OrderRepositoryImpl();
@@ -20,8 +20,8 @@ class OrderDetailCubit extends Cubit<OrderDetailState> {
   }
 
   Future<void> completeOrder(String id, CompleteOrderDto dto) async {
-    emit(OrderDetailActionInProgress());
     try {
+      emit(OrderDetailActionInProgress());
       final res = await _cashierRepository.completeOrder(id, dto);
       emit(OrderDetailActionSuccess(completeResponse: res));
     } catch (e) {
@@ -30,8 +30,8 @@ class OrderDetailCubit extends Cubit<OrderDetailState> {
   }
 
   Future<void> cancelOrder(String id) async {
-    emit(OrderDetailActionInProgress());
     try {
+      emit(OrderDetailActionInProgress());
       final res = await _cashierRepository.cancelOrder(id);
       emit(OrderDetailActionSuccess(cancelResponse: res));
     } catch (e) {

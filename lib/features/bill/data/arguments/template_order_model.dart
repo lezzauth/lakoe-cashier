@@ -128,5 +128,7 @@ class TemplateOrderModel {
               address: "Tebet,Jakarta Selatan, DKI Jakarta",
             ),
           ],
+          createdAt: DateTime.now().toIso8601String(),
+          updatedAt: DateTime.now().toIso8601String(),
         );
 }

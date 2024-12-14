@@ -171,3 +171,14 @@ class PaymentActionModel with _$PaymentActionModel {
   factory PaymentActionModel.fromJson(Map<String, dynamic> json) =>
       _$PaymentActionModelFromJson(json);
 }
+
+@freezed
+class DetailPurchaseModel with _$DetailPurchaseModel {
+  const factory DetailPurchaseModel({
+    required PurchaseModel purchase,
+    required PaymentRequestModel paymentRequest,
+  }) = _DetailPurchaseModel;
+
+  factory DetailPurchaseModel.fromJson(Map<String, dynamic> json) =>
+      _$DetailPurchaseModelFromJson(json);
+}

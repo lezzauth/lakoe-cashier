@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_ai_sop_new_argument.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/widgets/cards/sop_item_card.dart';
-import 'package:point_of_sales_cashier/features/online_shop/utils/constants/sop_items.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/features/online_shop/data/arguments/online_shop_ai_sop_new_argument.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/widgets/cards/sop_item_card.dart';
+import 'package:lakoe_pos/features/online_shop/utils/constants/sop_items.dart';
 
 class OnlineShopAISOPNewScreen extends StatefulWidget {
   const OnlineShopAISOPNewScreen({super.key, required this.arguments});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/shimmer/chips_shimmer.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/chips_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 class RepostMasterShimmer extends StatelessWidget {
@@ -82,7 +82,7 @@ class RepostMasterShimmer extends StatelessWidget {
             ),
             SizedBox(height: 12),
             Container(
-              height: 24,
+              height: 20,
               width: 120,
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               decoration: BoxDecoration(
@@ -99,9 +99,8 @@ class RepostMasterShimmer extends StatelessWidget {
                     child: Row(
                       children: [
                         Container(
-                          height: 60,
-                          width: 60,
-                          margin: EdgeInsets.symmetric(vertical: 12),
+                          height: 44,
+                          width: 44,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             color: TColors.neutralDarkDark,
@@ -116,7 +115,7 @@ class RepostMasterShimmer extends StatelessWidget {
                               Container(
                                 height: 16,
                                 width: 160,
-                                margin: EdgeInsets.symmetric(vertical: 6),
+                                margin: EdgeInsets.symmetric(vertical: 4),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   color: TColors.neutralDarkDark,
@@ -125,7 +124,7 @@ class RepostMasterShimmer extends StatelessWidget {
                               Container(
                                 height: 12,
                                 width: 120,
-                                margin: EdgeInsets.symmetric(vertical: 6),
+                                margin: EdgeInsets.symmetric(vertical: 4),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   color: TColors.neutralDarkDark,

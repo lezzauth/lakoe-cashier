@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
-import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_state.dart';
-import 'package:point_of_sales_cashier/features/tables/presentation/widgets/forms/table_information_form.dart';
-import 'package:point_of_sales_cashier/features/tables/presentation/widgets/tabs/table_new_qr_order_tab.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
+import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/tab/tab_container.dart';
+import 'package:lakoe_pos/common/widgets/ui/tab/tab_item.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_cubit.dart';
+import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_state.dart';
+import 'package:lakoe_pos/features/tables/presentation/widgets/forms/table_information_form.dart';
+import 'package:lakoe_pos/features/tables/presentation/widgets/tabs/table_qr_order_tab.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableNewScreen extends StatelessWidget {
@@ -76,30 +76,34 @@ class _TableNewState extends State<TableNew> {
         BlocListener<TableMasterCubit, TableMasterState>(
           listener: (context, state) {
             if (state is TableMasterActionSuccess) {
-              Navigator.pop(context, state.data);
+              Navigator.pop(context, true);
             } else if (state is TableMasterReachesLimit) {
               showModalBottomSheet(
                 context: context,
                 enableDrag: false,
                 isDismissible: false,
                 builder: (context) {
-                  return CustomBottomsheet(
-                    hasGrabber: false,
-                    child: ErrorDisplay(
-                      imageSrc: TImages.limitQuota,
-                      title: "Meja maksimal, nih!",
-                      description:
-                          "Sudah 5 QR Meja. Upgrade untuk tambah meja QR!",
-                      actionTitlePrimary: "Lihat Paket",
-                      onActionPrimary: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, "/packages");
-                      },
-                      actionTitleSecondary: "Nanti Saja",
-                      onActionSecondary: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context, true);
-                      },
+                  return PopScope(
+                    canPop: false,
+                    onPopInvokedWithResult: (didPop, result) async {},
+                    child: CustomBottomsheet(
+                      hasGrabber: false,
+                      child: ErrorDisplay(
+                        imageSrc: TImages.limitQuota,
+                        title: "Meja maksimal, nih!",
+                        description:
+                            "Sudah 5 QR Meja. Upgrade untuk tambah meja QR!",
+                        actionTitlePrimary: "Lihat Paket",
+                        onActionPrimary: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/packages");
+                        },
+                        actionTitleSecondary: "Nanti Saja",
+                        onActionSecondary: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context, true);
+                        },
+                      ),
                     ),
                   );
                 },
@@ -143,9 +147,7 @@ class _TableNewState extends State<TableNew> {
                 mobile: TabContainer(
                   tabs: [
                     TabItem(title: "Info Meja"),
-                    TabItem(
-                      title: "QR Order",
-                    )
+                    TabItem(title: "QR Order")
                   ],
                 ),
                 tablet: SizedBox.shrink(),
@@ -156,25 +158,28 @@ class _TableNewState extends State<TableNew> {
             mobile: TabBarView(
               children: [
                 SingleChildScrollView(
-                  padding: const EdgeInsets.only(top: 16),
+                  padding: EdgeInsets.only(top: 16),
                   child: TableInformationForm(
                     formKey: _formKey,
                     tableNumber: dummyTableModel.no,
+                    table: dummyTableModel,
                   ),
                 ),
-                const TableNewQrOrderTab(),
+                TableQrOrderTab(),
               ],
             ),
             tablet: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(0, 16, 40, 16),
+              padding: EdgeInsets.fromLTRB(0, 16, 40, 16),
               child: BlocBuilder<TableMasterCubit, TableMasterState>(
                   builder: (context, state) {
                 return SingleChildScrollView(
-                  padding: const EdgeInsets.only(top: 16),
+                  padding: EdgeInsets.only(top: 16),
                   child: TableInformationForm(
                     formKey: _formKey,
                     table: dummyTableModel,
                     tableNumber: dummyTableModel.no,
+                    isLoading: state is TableMasterActionInProgress,
+                    onSubmit: () => _onSubmit(),
                   ),
                 );
               }),

@@ -1,6 +1,6 @@
 import 'package:category_repository/category_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_state.dart';
+import 'package:lakoe_pos/features/products/application/cubit/category/product_master_category_state.dart';
 
 class ProductMasterCategoryCubit extends Cubit<ProductMasterCategoryState> {
   final CategoryRepository _categoryRepository = CategoryRepositoryImpl();

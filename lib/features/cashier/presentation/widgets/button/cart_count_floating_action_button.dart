@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
-import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
+import 'package:lakoe_pos/features/cart/data/models/cart_model.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class CartCountFloatingAction extends StatelessWidget {
   const CartCountFloatingAction({

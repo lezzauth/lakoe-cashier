@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logman/logman.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_state.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_state.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/content/cart_content_tablet.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/footer/cart_footer.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_state.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/appbar/explore_product_appbar.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/drawer/explore_product_drawer_tablet.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/open_order_list.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/product_grid.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/filter/product_category_filter.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_state.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_state.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
+import 'package:lakoe_pos/features/cart/presentation/widgets/content/cart_content_tablet.dart';
+import 'package:lakoe_pos/features/cart/presentation/widgets/footer/cart_footer.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/category/cashier_category_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/category/cashier_category_state.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/order/cashier_order_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
+import 'package:lakoe_pos/features/cashier/presentation/widgets/appbar/explore_product_appbar.dart';
+import 'package:lakoe_pos/features/cashier/presentation/widgets/drawer/explore_product_drawer_tablet.dart';
+import 'package:lakoe_pos/features/cashier/presentation/widgets/open_order_list.dart';
+import 'package:lakoe_pos/features/cashier/presentation/widgets/cashier_product_grid.dart';
+import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
+import 'package:lakoe_pos/features/payment_method/application/payment_method_state.dart';
+import 'package:lakoe_pos/features/payment_method/common/widgets/payment_method_not_available.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/filter/product_category_filter.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class ExploreProductTablet extends StatelessWidget {
   const ExploreProductTablet({super.key});
@@ -48,6 +51,7 @@ class _ExploreProductTabletContentState
     extends State<ExploreProductTabletContent> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -96,7 +100,6 @@ class _ExploreProductTabletContentState
   Widget build(BuildContext context) {
     return BlocListener<CartDetailCubit, CartDetailState>(
       listener: (context, state) {
-        Logman.instance.info("STATE IS $state");
         if (state is CartDetailActionSuccess) {
           context.read<CartCubit>().reset();
           context.read<CashierOrderCubit>().findAll();
@@ -192,6 +195,7 @@ class _ExploreProductTabletContentState
                                             child: SearchField(
                                               hintText: "Cari menu disini…",
                                               controller: _searchController,
+                                              focusNode: _searchFocusNode,
                                               debounceTime: 500,
                                               onChanged: (value) {
                                                 context
@@ -209,7 +213,10 @@ class _ExploreProductTabletContentState
                               ),
                             ),
                           ),
-                          ProductGrid()
+                          CashierProductGrid(
+                            searchController: _searchController,
+                            searchFocusNode: _searchFocusNode,
+                          )
                         ],
                       ),
                     ),
@@ -236,11 +243,7 @@ class _ExploreProductTabletContentState
                             child: CartFooter(
                               labelButtonCart: "Proses Pesanan",
                               onCompleted: (value) {
-                                _scaffoldKey.currentState!.openEndDrawer();
-                                _searchController.clear();
-                                context
-                                    .read<CashierProductFilterCubit>()
-                                    .setFilter(name: "");
+                                onCompleteOrder(value);
                               },
                               onSaved: _onCartSaved,
                             ),
@@ -256,5 +259,39 @@ class _ExploreProductTabletContentState
         ),
       ),
     );
+  }
+
+  Future<void> onCompleteOrder(double value) async {
+    PaymentMethodState state = context.read<PaymentMethodCubit>().state;
+
+    if (state is PaymentMethodLoadSuccess) {
+      final activePaymentMethods =
+          state.paymentMethod.where((method) => method.isActive).toList();
+
+      if (activePaymentMethods.isEmpty) {
+        return showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) {
+            return const CustomBottomsheet(
+              child: PaymentMethodNotAvailable(),
+            );
+          },
+        );
+      }
+      _scaffoldKey.currentState!.openEndDrawer();
+      _searchController.clear();
+      context.read<CashierProductFilterCubit>().setFilter(name: "");
+    } else {
+      return showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return const CustomBottomsheet(
+            child: PaymentMethodNotAvailable(),
+          );
+        },
+      );
+    }
   }
 }

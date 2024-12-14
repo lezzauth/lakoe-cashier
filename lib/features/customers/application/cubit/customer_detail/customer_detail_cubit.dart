@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logman/logman.dart';
 import 'package:outlet_repository/outlet_repository.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_state.dart';
+import 'package:lakoe_pos/features/customers/application/cubit/customer_detail/customer_detail_state.dart';
 
 class CustomerDetailCubit extends Cubit<CustomerDetailState> {
   final OutletRepository _outletRepository = OutletRepositoryImpl();

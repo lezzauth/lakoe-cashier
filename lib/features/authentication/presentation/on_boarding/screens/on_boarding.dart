@@ -1,13 +1,13 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/on_boarding/on_boarding_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/on_boarding/on_boarding_state.dart';
-import 'package:point_of_sales_cashier/features/authentication/data/arguments/otp_input_argument.dart';
-import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/mobile/mobile_on_boarding.dart';
-import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/tablet/tablet_on_boarding.dart';
+import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/on_boarding/on_boarding_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/on_boarding/on_boarding_state.dart';
+import 'package:lakoe_pos/features/authentication/data/arguments/otp_input_argument.dart';
+import 'package:lakoe_pos/features/authentication/presentation/on_boarding/screens/mobile/mobile_on_boarding.dart';
+import 'package:lakoe_pos/features/authentication/presentation/on_boarding/screens/tablet/tablet_on_boarding.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -35,32 +35,18 @@ class _OnBoardingState extends State<OnBoarding> {
   bool _isFormValid = false;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  onSubmit() {
-    FocusScope.of(context).unfocus();
-    bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
-
-    if (!isFormValid) {
-      return;
-    }
-
-    dynamic value = _formKey.currentState?.value;
-    context
-        .read<OnBoardingCubit>()
-        .requestOTP(RequestOTPDto(phoneNumber: "+62${value["phoneNumber"]}"));
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: BlocConsumer<OnBoardingCubit, OnBoardingState>(
         listener: (context, state) {
           if (state is OnBoardingActionFailure) {
-            return;
+            if (state.error.contains("429")) {
+              CustomToast.show(
+                "Tunggu 10 detik lagi, ya!",
+                position: "bottom",
+              );
+            }
           }
 
           if (state is OnBoardingActionSuccess) {

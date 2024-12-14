@@ -22,7 +22,7 @@ class OrderRepositoryImpl implements OrderRepository {
   final AppDataProvider _appDataProvider = AppDataProvider();
 
   Future<Options> _getOptions() async {
-    final token = await _tokenProvider.getCashierToken();
+    final token = await _tokenProvider.getAuthToken();
     if (token == null) return Options();
 
     return Options(headers: {"Authorization": "Bearer $token"});

@@ -1,25 +1,17 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_data_provider/app_data_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
-import 'package:logman/logman.dart';
 import 'package:outlet_repository/src/dto/outlet.dart';
 import 'package:outlet_repository/src/models/outlet.dart';
 import 'package:token_provider/token_provider.dart';
 
 abstract class OutletRepository {
-  Future<DetailCustomerOutletResponse> detailCustomerOutlet({
-    required String customerId,
-    DetailCustomerOutletDto? dto,
-  });
-  Future<OutletSalesModel> getOutletSales({
-    GetOutletSalesDto? dto,
-  });
-  Future<OutletReportModel> getOutletReports({
-    GetOutletReportDto? dto,
-  });
+  Future<DetailCustomerOutletResponse> detailCustomerOutlet(
+      {required String customerId, DetailCustomerOutletDto? dto});
+  Future<OutletSalesModel> getOutletSales({GetOutletSalesDto? dto});
+  Future<OutletReportModel> getOutletReports({GetOutletReportDto? dto});
   Future<OutletModel> getDetailOutlet();
   Future<OutletModel> update(File? image, UpdateOutletDto dto);
 }
@@ -49,8 +41,6 @@ class OutletRepositoryImpl implements OutletRepository {
       "$_baseURL/$outletId/customers/$customerId?${dto == null ? "" : dto.toQueryString()}",
       options: options,
     );
-
-    Logman.instance.info(jsonEncode(res.data));
 
     return DetailCustomerOutletResponse.fromJson(res.data);
   }

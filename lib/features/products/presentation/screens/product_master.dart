@@ -3,22 +3,24 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_cubit.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_state.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_filter_state.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_state.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/filter/product_category_filter.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
+import 'package:lakoe_pos/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
+import 'package:lakoe_pos/features/products/application/cubit/category/product_master_category_cubit.dart';
+import 'package:lakoe_pos/features/products/application/cubit/category/product_master_category_state.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_cubit.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_filter_cubit.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_filter_state.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_state.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/filter/product_category_filter.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/product/base_product_item.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ProductMasterScreen extends StatelessWidget {
@@ -41,6 +43,9 @@ class ProductMaster extends StatefulWidget {
 }
 
 class _ProductMasterState extends State<ProductMaster> {
+  final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+
   Future<void> onRefresh() async {
     if (!mounted) return;
 
@@ -73,6 +78,14 @@ class _ProductMasterState extends State<ProductMaster> {
     onRefresh();
   }
 
+  void _handleChangeKeyword() {
+    _searchFocusNode.requestFocus();
+    _searchController.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: _searchController.text.length,
+    );
+  }
+
   Widget _buildProductList(List<ProductModel> products) {
     final filterState = context.read<ProductMasterFilterCubit>().state;
 
@@ -92,6 +105,13 @@ class _ProductMasterState extends State<ProductMaster> {
       return EmptyList(
         title: "Pencarian tidak ditemukan",
         subTitle: "Coba cari dengan nama produk yang lain.",
+        action: TextButton(
+          onPressed: _handleChangeKeyword,
+          child: TextActionL(
+            "Ubah Pencarian",
+            color: TColors.primary,
+          ),
+        ),
       );
     }
 
@@ -121,7 +141,7 @@ class _ProductMasterState extends State<ProductMaster> {
             ),
             child: BaseProductItem(
               name: product.name,
-              price: int.parse(product.price),
+              price: double.parse(product.price).round(),
               image: image != null
                   ? Image.network(
                       image,
@@ -178,11 +198,23 @@ class _ProductMasterState extends State<ProductMaster> {
                 );
           },
         ),
+        BlocListener<ProductMasterCubit, ProductMasterState>(
+          listener: (context, state) {
+            if (state is ProductMasterLoadSuccess) {
+              if (state.products.length == 1) {
+                context.read<OnboardingTransactionCubit>().init();
+              }
+            }
+          },
+        )
       ],
       child: Scaffold(
         appBar: CustomAppbar(
           search: SearchField(
             hintText: "Cari produk disini...",
+            controller: _searchController,
+            focusNode: _searchFocusNode,
+            debounceTime: 500,
             onChanged: (value) {
               context.read<ProductMasterFilterCubit>().setFilter(name: value);
             },
@@ -226,6 +258,7 @@ class _ProductMasterState extends State<ProductMaster> {
                 Expanded(
                   child: BlocBuilder<ProductMasterCubit, ProductMasterState>(
                     builder: (context, state) => ErrorWrapper(
+                      connectionIssue: state is ConnectionIssue,
                       fetchError: state is ProductMasterLoadFailure,
                       onRefresh: onRefresh,
                       child: switch (state) {

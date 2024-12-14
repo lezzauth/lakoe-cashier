@@ -2,20 +2,21 @@ import 'package:category_repository/category_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_filter_state.dart';
-import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_state.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/formatters/category_icon_formatter.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
+import 'package:lakoe_pos/features/categories/application/cubit/category_master/category_master_cubit.dart';
+import 'package:lakoe_pos/features/categories/application/cubit/category_master/category_master_filter_cubit.dart';
+import 'package:lakoe_pos/features/categories/application/cubit/category_master/category_master_filter_state.dart';
+import 'package:lakoe_pos/features/categories/application/cubit/category_master/category_master_state.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/formatters/category_icon_formatter.dart';
 
 class CategoryMasterScreen extends StatelessWidget {
   const CategoryMasterScreen({super.key});
@@ -38,6 +39,8 @@ class CategoryMaster extends StatefulWidget {
 
 class _CategoryMasterState extends State<CategoryMaster> {
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+
   Future<void> onRefresh() async {
     CategoryMasterFilterState filterState =
         context.read<CategoryMasterFilterCubit>().state;
@@ -50,8 +53,15 @@ class _CategoryMasterState extends State<CategoryMaster> {
   @override
   void initState() {
     super.initState();
-
     context.read<CategoryMasterCubit>().init();
+  }
+
+  void _handleChangeKeyword() {
+    _searchFocusNode.requestFocus();
+    _searchController.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: _searchController.text.length,
+    );
   }
 
   @override
@@ -71,6 +81,7 @@ class _CategoryMasterState extends State<CategoryMaster> {
           search: SearchField(
             hintText: "Cari kategori disini…",
             controller: _searchController,
+            focusNode: _searchFocusNode,
             debounceTime: 500,
             onChanged: (value) {
               context
@@ -85,6 +96,7 @@ class _CategoryMasterState extends State<CategoryMaster> {
             onRefresh: onRefresh,
             child: BlocBuilder<CategoryMasterCubit, CategoryMasterState>(
               builder: (context, state) => ErrorWrapper(
+                connectionIssue: state is ConnectionIssue,
                 fetchError: state is CategoryMasterLoadFailure,
                 onRefresh: onRefresh,
                 child: switch (state) {
@@ -98,10 +110,17 @@ class _CategoryMasterState extends State<CategoryMaster> {
                               if (filterState.search != null &&
                                   filterState.search!.isNotEmpty) {
                                 return SliverToBoxAdapter(
-                                  child: const EmptyList(
+                                  child: EmptyList(
                                     title: "Pencarian tidak ditemukan",
                                     subTitle:
                                         "Coba cari dengan nama kategori yang lain.",
+                                    action: TextButton(
+                                      onPressed: _handleChangeKeyword,
+                                      child: const TextActionL(
+                                        "Ubah Pencarian",
+                                        color: TColors.primary,
+                                      ),
+                                    ),
                                   ),
                                 );
                               }
@@ -119,8 +138,19 @@ class _CategoryMasterState extends State<CategoryMaster> {
                           SliverList.builder(
                             itemCount: categories.length,
                             itemBuilder: (context, index) {
+                              List<CategoryModel> sortedCategories =
+                                  List.from(categories);
+                              sortedCategories.sort((a, b) {
+                                if (a.name.contains("Umum")) {
+                                  return -1;
+                                } else if (b.name.contains("Umum")) {
+                                  return 1;
+                                }
+                                return 0;
+                              });
+
                               CategoryModel category =
-                                  categories.elementAt(index);
+                                  sortedCategories.elementAt(index);
 
                               return Column(
                                 children: [

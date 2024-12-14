@@ -25,3 +25,16 @@ final class CashierCloseFailure extends CashierState {
   final String message;
   CashierCloseFailure({required this.message});
 }
+
+final class GetCashierInProgress extends CashierState {}
+
+final class CashierAlreadyOpen extends CashierState {
+  final OperatorModel operator;
+
+  CashierAlreadyOpen({required this.operator});
+}
+
+final class GetCashierFailure extends CashierState {
+  final String message;
+  GetCashierFailure({required this.message});
+}

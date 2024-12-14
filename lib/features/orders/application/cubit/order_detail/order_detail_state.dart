@@ -38,7 +38,7 @@ final class OrderDetailActionInProgress extends OrderDetailState {
 }
 
 final class OrderDetailActionSuccess extends OrderDetailState {
-  final CompleteOrderResponse? completeResponse;
+  final CompleteOrderRes? completeResponse;
   final CancelOrderResponse? cancelResponse;
 
   OrderDetailActionSuccess({

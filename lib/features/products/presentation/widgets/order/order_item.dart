@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/constants/sizes.dart';
 
 class OrderItem extends StatelessWidget {
   final int no;
@@ -38,7 +38,7 @@ class OrderItem extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 8.0),
               child: RichText(
                 text: TextSpan(
-                    text: "Order: ",
+                    text: "Order ",
                     style: GoogleFonts.inter(
                       fontSize: TSizes.fontSizeBodyS,
                       color: TColors.neutralDarkLight,
@@ -68,10 +68,17 @@ class OrderItem extends StatelessWidget {
                       size: 12,
                       color: TColors.neutralDarkLightest,
                     ),
-                    TextHeading5(customerName.isEmpty ? "Umum" : customerName),
+                    SizedBox(
+                      width: 80,
+                      child: TextHeading5(
+                        customerName.isEmpty ? "Tamu" : customerName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 8),
                 Wrap(
                   direction: Axis.horizontal,
                   crossAxisAlignment: WrapCrossAlignment.center,

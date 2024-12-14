@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/buttons/tertiary_button.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/buttons/tertiary_button.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class OnlineShopAIDescriptionScreen extends StatefulWidget {
   const OnlineShopAIDescriptionScreen({super.key});

@@ -1,8 +1,9 @@
-import 'dart:developer';
-
 import 'package:cashier_repository/cashier_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_state.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/order/cashier_order_state.dart';
+import 'package:lakoe_pos/utils/helpers/error_handler.dart';
+import 'package:logman/logman.dart';
 
 class CashierOrderCubit extends Cubit<CashierOrderState> {
   final CashierRepository _cashierRepository = CashierRepositoryImpl();
@@ -17,13 +18,24 @@ class CashierOrderCubit extends Cubit<CashierOrderState> {
     try {
       emit(CashierOrderLoadInProgress());
       final orders = await _cashierRepository
-          .findAllOrderCashier(const FindAllOrderCashierDto(status: "OPEN"));
-      emit(CashierOrderLoadSuccess(
-        orders: orders,
+          .findAllOrderCashier(const FindAllOrderCashierDto(
+        status: "OPEN",
+        sort: "NEWEST",
       ));
-    } catch (e, stackTrace) {
-      log("findAll err: ${e.toString()}",
-          name: "OrderCubit.findAll", stackTrace: stackTrace);
+      emit(CashierOrderLoadSuccess(orders: orders));
+    } on DioException catch (e) {
+      handleDioException<CashierOrderState>(
+        e,
+        emit: (state) => emit(state),
+        connectionIssueState: ConnectionIssue(
+          'Failed to resolve hostname. Please check your DNS or internet connection.',
+        ),
+        timeoutState: ConnectionIssue('Request timed out. Please try again.'),
+        unexpectedState: CashierOrderLoadFailure(e.toString()),
+      );
+    } catch (e) {
+      Logman.instance
+          .error("[CashierOrderCubit] Catch findAll(): ${e.toString()}");
       emit(CashierOrderLoadFailure(e.toString()));
     }
   }

@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:package_repository/package_repository.dart';
-import 'package:package_repository/src/models/package.dart';
 import 'package:package_repository/src/purchase_repository.dart';
 import 'package:token_provider/token_provider.dart';
 

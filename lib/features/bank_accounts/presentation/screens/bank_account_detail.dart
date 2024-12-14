@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owner_repository/owner_repository.dart';
-import 'package:point_of_sales_cashier/common/data/models.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/bank_verify/bank_verify.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/data/arguments/bank_account_detail_argument.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/presentation/widgets/forms/bank_account_form.dart';
+import 'package:lakoe_pos/common/data/models.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/bank_verify/bank_verify.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
+import 'package:lakoe_pos/features/bank_accounts/data/arguments/bank_account_detail_argument.dart';
+import 'package:lakoe_pos/features/bank_accounts/presentation/widgets/forms/bank_account_form.dart';
 import 'package:public_repository/public_repository.dart';
 
 class BankAccountDetailScreen extends StatefulWidget {
@@ -53,11 +53,15 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
       isDismissible: false,
       enableDrag: false,
       builder: (context) {
-        return BankVerify(
-          bankCode: bank!.bankCode,
-          accountNumber: value["accountNumber"],
-          bankName: bank.bankName,
-          name: bank.name,
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {},
+          child: BankVerify(
+            bankCode: bank!.bankCode,
+            accountNumber: value["accountNumber"],
+            bankName: bank.bankName,
+            name: bank.name,
+          ),
         );
       },
     );
@@ -102,22 +106,22 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
           onSubmitted: (value, bank, previousAccountNumber) {
             FocusScope.of(context).unfocus();
             _onSubmitted(
-              arguments.account.id,
+              arguments.bank.id,
               value: value,
               bank: bank,
               previousAccountNumber: previousAccountNumber,
             );
           },
-          onDeleted: isOnlyAccount || arguments.account.isPrimary
+          onDeleted: isOnlyAccount || arguments.bank.isPrimary
               ? null
               : () async {
-                  return await _onDeleted(arguments.account.id);
+                  return await _onDeleted(arguments.bank.id);
                 },
           isLoading: state is BankAccountMasterActionInProgress,
           initialValue: {
-            "name": arguments.account.name,
-            "accountNumber": arguments.account.accountNumber,
-            "isPrimary": arguments.account.isPrimary,
+            "name": arguments.bank.name,
+            "accountNumber": arguments.bank.accountNumber,
+            "isPrimary": arguments.bank.isPrimary,
           },
         ),
       ),

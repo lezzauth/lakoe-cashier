@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:outlet_repository/outlet_repository.dart';
-import 'package:point_of_sales_cashier/features/outlets/application/outlet_state.dart';
+import 'package:lakoe_pos/features/outlets/application/outlet_state.dart';
 
 class OutletCubit extends Cubit<OutletState> {
   final OutletRepository outletRepository = OutletRepositoryImpl();

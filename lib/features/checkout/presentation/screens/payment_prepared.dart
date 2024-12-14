@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/ui/loading_screen.dart';
 import 'package:package_repository/package_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
-import 'package:point_of_sales_cashier/features/checkout/application/purchase_cubit.dart';
-import 'package:point_of_sales_cashier/features/checkout/application/purchase_state.dart';
-import 'package:point_of_sales_cashier/features/checkout/data/payment_method_model.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
+import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
+import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
+import 'package:lakoe_pos/features/checkout/data/payment_method_model.dart';
+import 'package:lakoe_pos/utils/helpers/helper.dart';
 
 class PaymentPreparedScreen extends StatefulWidget {
   const PaymentPreparedScreen({super.key});
@@ -53,18 +52,18 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
       listener: (context, state) {
         if (state is PurchaseActionInProgress) {
         } else if (state is PurchaseActionSuccess) {
-          final PurchaseResponseModel response = state.response;
+          final PurchaseResponseModel res = state.res;
 
-          if (response.paymentRequest.paymentMethod.type == "EWALLET") {
+          if (res.paymentRequest.paymentMethod.type == "EWALLET") {
             PaymentActionModel selectedAction;
 
-            selectedAction = response.paymentRequest.actions.firstWhere(
+            selectedAction = res.paymentRequest.actions.firstWhere(
               (action) => action.urlType == "DEEPLINK",
-              orElse: () => response.paymentRequest.actions.firstWhere(
+              orElse: () => res.paymentRequest.actions.firstWhere(
                 (action) => action.urlType == "MOBILE",
-                orElse: () => response.paymentRequest.actions.firstWhere(
+                orElse: () => res.paymentRequest.actions.firstWhere(
                   (action) => action.urlType == "WEB",
-                  orElse: () => response.paymentRequest.actions.firstWhere(
+                  orElse: () => res.paymentRequest.actions.firstWhere(
                     (action) => action.qrCode != null,
                     orElse: () => PaymentActionModel(
                       action: null,
@@ -102,50 +101,23 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
                 },
               );
             }
-          } else if (response.paymentRequest.paymentMethod.type ==
+          } else if (res.paymentRequest.paymentMethod.type ==
               "VIRTUAL_ACCOUNT") {
             Navigator.pushNamed(
               context,
               "/payment/confirmation",
               arguments: {
-                'selectedCategory': selectedCategory,
                 'selectedMethod': selectedMethod,
+                'purchases': PurchaseResponseModel(
+                  paymentRequest: state.res.paymentRequest,
+                  purchase: state.res.purchase,
+                ),
               },
             );
           }
         }
       },
-      child: Scaffold(
-        body: Container(
-          color: TColors.neutralLightLightest,
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 200),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 60,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100.0),
-                      child: LinearProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(TColors.primary),
-                        backgroundColor: TColors.neutralLightMedium,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  TextBodyL(
-                    "Tunggu sebantar, ya!",
-                    color: TColors.neutralDarkLight,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+      child: LoadingScreen(),
     );
   }
 }
