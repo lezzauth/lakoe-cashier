@@ -4,6 +4,7 @@ import 'package:cashier_repository/cashier_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/bottomsheets/info_bagde_status.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/general_information.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
@@ -413,8 +414,25 @@ class _OrderDetailState extends State<OrderDetail> {
                                                 status: order.type,
                                               )
                                             else
-                                              TagStrongOrderStatus(
-                                                tag: order.status,
+                                              InkWell(
+                                                splashColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                onTap: () {
+                                                  showModalBottomSheet(
+                                                    context: context,
+                                                    isScrollControlled: true,
+                                                    builder: (context) {
+                                                      return CustomBottomsheet(
+                                                        child:
+                                                            InfoBagdeStatus(),
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                                child: TagStrongOrderStatus(
+                                                  tag: order.status,
+                                                ),
                                               ),
                                             Expanded(
                                               child: TextBodyM(

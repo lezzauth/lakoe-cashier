@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lakoe_pos/common/widgets/bottomsheets/info_bagde_status.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/ui/tags/order_status/tag_thin_order_status.dart';
 import 'package:outlet_repository/outlet_repository.dart';
@@ -93,7 +95,22 @@ class OrderItem extends StatelessWidget {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 6),
-                        child: TagThinOrderStatus(tag: status),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) {
+                                return CustomBottomsheet(
+                                  child: InfoBagdeStatus(isStrong: false),
+                                );
+                              },
+                            );
+                          },
+                          child: TagThinOrderStatus(tag: status),
+                        ),
                       ),
                     ],
                   ),

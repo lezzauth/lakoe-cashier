@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lakoe_pos/common/widgets/bottomsheets/info_bagde_status.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
@@ -188,7 +190,22 @@ class OrderListItem extends StatelessWidget {
                           margin: const EdgeInsets.only(top: 6),
                           child: (isCashier)
                               ? SizedBox.shrink()
-                              : TagThinOrderStatus(tag: status),
+                              : InkWell(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (context) {
+                                        return CustomBottomsheet(
+                                          child:
+                                              InfoBagdeStatus(isStrong: false),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: TagThinOrderStatus(tag: status)),
                         ),
                       ],
                     ),

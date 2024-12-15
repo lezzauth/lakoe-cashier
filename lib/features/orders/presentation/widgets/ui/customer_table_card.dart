@@ -69,7 +69,7 @@ class CustomerAndTableInformation extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: TextActionL("Oke. Mengerti"),
+                    child: TextActionL("Oke! Paham"),
                   ),
                 ),
               ],

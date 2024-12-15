@@ -338,7 +338,7 @@ TableRow _buildTableRow(
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
-                                      child: TextActionL("Oke. Mengerti"),
+                                      child: TextActionL("Oke! Paham"),
                                     ),
                                   ),
                                 ],

@@ -176,7 +176,7 @@ class DioProvider {
                   title: "Lagi di-tune up, sebentar lagi beres!",
                   description:
                       "Tenang, Kamu bisa mencobanya sebentar lagi. Terimakasih udah sabar ya!",
-                  actionTitlePrimary: "Oke. Mengerti",
+                  actionTitlePrimary: "Oke! Paham",
                   onActionPrimary: () {
                     Navigator.pop(context);
                     dioProviderCubit.setBottomSheetState(false);
