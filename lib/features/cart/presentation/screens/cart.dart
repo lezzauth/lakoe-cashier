@@ -90,9 +90,10 @@ class _CartState extends State<Cart> {
     await context.read<CartDetailCubit>().saveAndCompleteOrder(
           carts: cartState.carts,
           dto: CompleteCashOrderDto(
+            paymentMethod: "CASH",
             paidAmount: data.paidAmount,
             change: data.change,
-            paymentMethod: "CASH",
+            customerId: filterState.customer?.id,
           ),
           type: filterState.type,
           customerId: filterState.customer?.id,

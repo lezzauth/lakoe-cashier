@@ -56,8 +56,24 @@ class _ReportProductSalesState extends State<ReportProductSales> {
   final ScrollController _scrollController = ScrollController();
 
   bool isFilterUsed = false;
+  bool _updateProduct = false;
 
-  Widget _buildRank(int rank) {
+  Future<void> _onGoToEditScreen(ProductModel product) async {
+    bool? updateProduct = await Navigator.pushNamed(
+      context,
+      "/products/edit",
+      arguments: product,
+    ) as bool?;
+
+    if (updateProduct != true) return;
+    context.read<ReportProductSalesCubit>().findOne(product.id);
+
+    setState(() {
+      _updateProduct = updateProduct ?? false;
+    });
+  }
+
+  Widget _buildRank(int rank, ProductModel product) {
     String icon = "";
 
     switch (rank) {
@@ -71,6 +87,16 @@ class _ReportProductSalesState extends State<ReportProductSales> {
         icon = "👍";
         break;
       default:
+    }
+
+    if (rank == 0) {
+      return TextButton(
+        onPressed: () => _onGoToEditScreen(product),
+        child: TextActionL(
+          "Ubah",
+          color: TColors.primary,
+        ),
+      );
     }
 
     if (rank <= 3) {
@@ -160,21 +186,29 @@ class _ReportProductSalesState extends State<ReportProductSales> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ReportProductSalesPaginationFilterCubit,
-        ReportProductSalesPaginationFilterState>(
-      listener: (context, state) {
-        ReportProductSalesPaginationFilterState filterState =
-            context.read<ReportProductSalesPaginationFilterCubit>().state;
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ReportProductSalesPaginationFilterCubit,
+            ReportProductSalesPaginationFilterState>(
+          listener: (context, state) {
+            ReportProductSalesPaginationFilterState filterState =
+                context.read<ReportProductSalesPaginationFilterCubit>().state;
 
-        context.read<ReportProductSalesPaginationCubit>().reset();
-        context.read<ReportProductSalesPaginationCubit>().fetchData(
-              productId: widget.arguments.product.id,
-              dto: filterState.toListOrderByProductDto,
-            );
-      },
+            context.read<ReportProductSalesPaginationCubit>().reset();
+            context.read<ReportProductSalesPaginationCubit>().fetchData(
+                  productId: widget.arguments.product.id,
+                  dto: filterState.toListOrderByProductDto,
+                );
+          },
+        ),
+        BlocListener<ReportProductSalesCubit, ReportProductSalesState>(
+          listener: (context, state) {},
+        )
+      ],
       child: Scaffold(
         appBar: CustomAppbar(
           title: "Laporan Penjualan Produk",
+          handleBackButton: () => Navigator.pop(context, _updateProduct),
         ),
         body: Scrollbar(
           child: RefreshIndicator(
@@ -191,9 +225,9 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                     slivers: [
                       SliverToBoxAdapter(
                         child: Container(
-                          padding: const EdgeInsets.only(
+                          padding: EdgeInsets.only(
                             left: 20,
-                            right: 20,
+                            right: (widget.arguments.rank == 0) ? 12 : 20,
                             top: 12,
                             bottom: 20,
                           ),
@@ -252,7 +286,7 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                   ],
                                 ),
                               ),
-                              _buildRank(widget.arguments.rank),
+                              _buildRank(widget.arguments.rank, product),
                             ],
                           ),
                         ),
@@ -280,10 +314,14 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                             "Riwayat Penjualan",
                                             color: TColors.neutralDarkDarkest,
                                           ),
-                                          TextBodyM(
-                                            "Terjual ${widget.arguments.product.soldCount} produk",
-                                            color: TColors.neutralDarkLightest,
-                                          ),
+                                          if (widget.arguments.product
+                                                  .soldCount !=
+                                              0)
+                                            TextBodyM(
+                                              "Terjual ${widget.arguments.product.soldCount} produk",
+                                              color:
+                                                  TColors.neutralDarkLightest,
+                                            ),
                                         ],
                                       ),
                                     ),

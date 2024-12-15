@@ -33,7 +33,7 @@ _$CompleteCashOrderDtoImpl _$$CompleteCashOrderDtoImplFromJson(
       paidAmount: (json['paidAmount'] as num).toDouble(),
       change: (json['change'] as num).toDouble(),
       customerId: json['customerId'] as String?,
-      redeemCoinAmount: json['redeemCoinAmount'] as String?,
+      redeemCoinAmount: (json['redeemCoinAmount'] as num?)?.toDouble() ?? 0,
     );
 
 Map<String, dynamic> _$$CompleteCashOrderDtoImplToJson(

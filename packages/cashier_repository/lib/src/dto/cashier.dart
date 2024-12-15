@@ -32,7 +32,7 @@ class CompleteCashOrderDto extends CompleteOrderDto
     required double paidAmount,
     required double change,
     String? customerId,
-    String? redeemCoinAmount,
+    @Default(0) double redeemCoinAmount,
   }) = _CompleteCashOrderDto;
 
   factory CompleteCashOrderDto.fromJson(Map<String, Object?> json) =>

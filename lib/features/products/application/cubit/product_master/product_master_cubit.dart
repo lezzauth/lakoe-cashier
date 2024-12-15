@@ -37,6 +37,16 @@ class ProductMasterCubit extends Cubit<ProductMasterState> {
     }
   }
 
+  Future<void> findOne(String id) async {
+    try {
+      emit(ProductMasterActionInProgress());
+      await _productRepository.findOne(id);
+      emit(ProductMasterActionSuccess());
+    } catch (e) {
+      ProductActionFailure(e.toString());
+    }
+  }
+
   Future<void> create(List<File> images, CreateProductDto dto) async {
     try {
       emit(ProductMasterActionInProgress());

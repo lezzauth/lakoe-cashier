@@ -217,21 +217,11 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                 padding: EdgeInsets.symmetric(horizontal: 16),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
                                       margin: const EdgeInsets.only(bottom: 8),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const TextHeading3(
-                                              "Riwayat Transaksi"),
-                                          TextBodyS(
-                                            "Total ${data.customer.count.orders} transaksi",
-                                            color: TColors.neutralDarkLight,
-                                          ),
-                                        ],
-                                      ),
+                                      child: TextHeading3("Riwayat Pembelian"),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -250,8 +240,9 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                           const SizedBox(width: 12),
                                           Expanded(
                                             child: CustomerSummaryCard(
-                                              title: "Menu Favorit",
-                                              value: data.summary.favorite,
+                                              title: "Total Pembelian",
+                                              value: TFormatter.formatNumber(
+                                                  data.customer.count.orders),
                                             ),
                                           ),
                                         ],
@@ -285,10 +276,10 @@ class _CustomerDetailState extends State<CustomerDetail> {
                               height: 101.45,
                             ),
                             title: (!isFilterUsed)
-                                ? "Belum ada transaksi, nih!"
+                                ? "Belum ada pembelian, nih!"
                                 : "Pembelian tidak ditemukan",
                             subTitle: (!isFilterUsed)
-                                ? "${data.customer.name} sampai saat ini belum pernah melakukan transaksi."
+                                ? "${data.customer.name} sampai saat ini belum pernah melakukan pembelian."
                                 : "Ubah tanggal atau ganti filter status untuk melihat pembelian dari ${data.customer.name}",
                             action: (!isFilterUsed)
                                 ? SizedBox.shrink()
@@ -341,84 +332,6 @@ class _CustomerDetailState extends State<CustomerDetail> {
   }
 }
 
-class TagPaymentMethod extends StatelessWidget {
-  const TagPaymentMethod({super.key, required this.tag});
-
-  final String tag;
-
-  @override
-  Widget build(BuildContext context) {
-    String getTagLabel() {
-      switch (tag) {
-        case "CASH":
-          return "Cash";
-        case "QR_CODE":
-          return "QRIS";
-        case "DEBIT":
-          return "Debit";
-        case "BANK_TRANSFER":
-          return "Bank Transfer";
-        case "UNPAID":
-          return "Belum Dibayar";
-        case "CANCEL":
-          return "-";
-        default:
-          return "-";
-      }
-    }
-
-    Color getTagBackgroundColor() {
-      switch (tag) {
-        case "CASH":
-          return TColors.successLight;
-        case "QR_CODE":
-          return TColors.infoLight;
-        case "DEBIT":
-          return TColors.warningLight;
-        case "BANK_TRANSFER":
-          return TColors.neutralLightMedium;
-        case "UNPAID":
-          return TColors.neutralLightMedium;
-        case "CANCEL":
-          return TColors.neutralLightMedium;
-        default:
-          return TColors.successLight;
-      }
-    }
-
-    Color getTagTextColor() {
-      switch (tag) {
-        case "CASH":
-          return TColors.success;
-        case "QR_CODE":
-          return TColors.info;
-        case "DEBIT":
-          return TColors.warningDark;
-        case "BANK_TRANSFER":
-          return TColors.neutralDarkDark;
-        case "UNPAID":
-          return TColors.neutralDarkDark;
-        case "CANCEL":
-          return TColors.neutralDarkDark;
-        default:
-          return TColors.success;
-      }
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      decoration: BoxDecoration(
-        color: getTagBackgroundColor(),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: TextHeading5(
-        getTagLabel(),
-        color: getTagTextColor(),
-      ),
-    );
-  }
-}
-
 class CustomerSummaryCard extends StatelessWidget {
   const CustomerSummaryCard({
     super.key,
@@ -458,6 +371,8 @@ class CustomerSummaryCard extends StatelessWidget {
           TextHeading3(
             value,
             color: TColors.neutralDarkDarkest,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

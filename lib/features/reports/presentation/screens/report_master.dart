@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:logman/logman.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/filters/date-filter/date_preset_range_filter.dart';
@@ -361,16 +362,17 @@ class DetailAmount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Logman.instance.info("amount $amount");
     return CustomBottomsheet(
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: const EdgeInsets.only(
+                padding: EdgeInsets.only(
                   top: 16,
                   bottom: 32,
                 ),
@@ -381,7 +383,7 @@ class DetailAmount extends StatelessWidget {
                       label,
                       color: TColors.neutralDarkLight,
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     TextHeading1(
                       TFormatter.formatToRupiah(
                         amount == "NaN" ? 0 : double.parse(amount).round(),
@@ -395,7 +397,7 @@ class DetailAmount extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 child: OutlinedButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const TextActionL("Oke, Tutup"),
+                  child: TextActionL("Oke, Tutup"),
                 ),
               ),
             ],

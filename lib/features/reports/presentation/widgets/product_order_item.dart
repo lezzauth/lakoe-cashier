@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
-import 'package:lakoe_pos/features/customers/presentation/screens/customer_detail.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/sizes.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
@@ -72,9 +72,7 @@ class ProductOrderItem extends StatelessWidget {
                     ),
                   ),
                   TextBodyS(
-                    TFormatter.dateTime(
-                      order.createdAt,
-                    ),
+                    TFormatter.dateTime(order.createdAt),
                     color: TColors.neutralDarkLight,
                   ),
                 ],
@@ -97,9 +95,7 @@ class ProductOrderItem extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: TFormatter.formatToRupiah(
-                            double.parse(
-                              order.price,
-                            ),
+                            double.parse(order.price),
                           ),
                           style: GoogleFonts.inter(
                             fontSize: TSizes.fontSizeBodyM,
@@ -115,6 +111,72 @@ class ProductOrderItem extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class TagPaymentMethod extends StatelessWidget {
+  const TagPaymentMethod({super.key, required this.tag});
+
+  final String tag;
+
+  @override
+  Widget build(BuildContext context) {
+    String getTagLabel() {
+      switch (tag) {
+        case "CASH":
+          return "Cash";
+        case "QR_CODE":
+          return "QRIS";
+        case "DEBIT":
+          return "Debit/Credit";
+        case "BANK_TRANSFER":
+          return "Bank Transfer";
+        default:
+          return "Belum Dibayar";
+      }
+    }
+
+    Color getTagBackgroundColor() {
+      switch (tag) {
+        case "CASH":
+          return TColors.highlightLightest;
+        case "QR_CODE":
+          return TColors.infoLight;
+        case "DEBIT":
+          return TColors.warningLight;
+        case "BANK_TRANSFER":
+          return TColors.successLight;
+        default:
+          return TColors.neutralLightMedium;
+      }
+    }
+
+    Color getTagTextColor() {
+      switch (tag) {
+        case "CASH":
+          return TColors.highlightDark;
+        case "QR_CODE":
+          return TColors.info;
+        case "DEBIT":
+          return TColors.warning;
+        case "BANK_TRANSFER":
+          return TColors.success;
+        default:
+          return TColors.neutralDarkDark;
+      }
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      decoration: BoxDecoration(
+        color: getTagBackgroundColor(),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: TextHeading5(
+        getTagLabel(),
+        color: getTagTextColor(),
       ),
     );
   }

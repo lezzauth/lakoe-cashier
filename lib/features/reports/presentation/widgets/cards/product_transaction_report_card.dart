@@ -60,7 +60,7 @@ class ProductTransactionReportCard extends StatelessWidget {
               color: TColors.neutralLightLight,
             ),
             child: const UiIcons(
-              TIcons.cardTransfer,
+              TIcons.box2,
               size: 20,
               color: TColors.primary,
             ),
@@ -72,7 +72,7 @@ class ProductTransactionReportCard extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(bottom: 4),
                   child: const TextBodyS(
-                    "Total Transaksi",
+                    "Total Pesanan",
                     color: TColors.neutralDarkLightest,
                   ),
                 ),

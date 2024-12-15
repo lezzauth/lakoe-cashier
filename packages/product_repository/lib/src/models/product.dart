@@ -20,6 +20,7 @@ class ProductModel with _$ProductModel {
     required String availability,
     required String profit,
     String? favoriteCustomerId,
+    required int sold,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, Object?> json) =>

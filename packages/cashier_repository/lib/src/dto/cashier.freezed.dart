@@ -267,7 +267,7 @@ mixin _$CompleteCashOrderDto {
   double get paidAmount => throw _privateConstructorUsedError;
   double get change => throw _privateConstructorUsedError;
   String? get customerId => throw _privateConstructorUsedError;
-  String? get redeemCoinAmount => throw _privateConstructorUsedError;
+  double get redeemCoinAmount => throw _privateConstructorUsedError;
 
   /// Serializes this CompleteCashOrderDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -290,7 +290,7 @@ abstract class $CompleteCashOrderDtoCopyWith<$Res> {
       double paidAmount,
       double change,
       String? customerId,
-      String? redeemCoinAmount});
+      double redeemCoinAmount});
 }
 
 /// @nodoc
@@ -313,7 +313,7 @@ class _$CompleteCashOrderDtoCopyWithImpl<$Res,
     Object? paidAmount = null,
     Object? change = null,
     Object? customerId = freezed,
-    Object? redeemCoinAmount = freezed,
+    Object? redeemCoinAmount = null,
   }) {
     return _then(_value.copyWith(
       paymentMethod: null == paymentMethod
@@ -332,10 +332,10 @@ class _$CompleteCashOrderDtoCopyWithImpl<$Res,
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
-      redeemCoinAmount: freezed == redeemCoinAmount
+      redeemCoinAmount: null == redeemCoinAmount
           ? _value.redeemCoinAmount
           : redeemCoinAmount // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double,
     ) as $Val);
   }
 }
@@ -353,7 +353,7 @@ abstract class _$$CompleteCashOrderDtoImplCopyWith<$Res>
       double paidAmount,
       double change,
       String? customerId,
-      String? redeemCoinAmount});
+      double redeemCoinAmount});
 }
 
 /// @nodoc
@@ -373,7 +373,7 @@ class __$$CompleteCashOrderDtoImplCopyWithImpl<$Res>
     Object? paidAmount = null,
     Object? change = null,
     Object? customerId = freezed,
-    Object? redeemCoinAmount = freezed,
+    Object? redeemCoinAmount = null,
   }) {
     return _then(_$CompleteCashOrderDtoImpl(
       paymentMethod: null == paymentMethod
@@ -392,10 +392,10 @@ class __$$CompleteCashOrderDtoImplCopyWithImpl<$Res>
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
-      redeemCoinAmount: freezed == redeemCoinAmount
+      redeemCoinAmount: null == redeemCoinAmount
           ? _value.redeemCoinAmount
           : redeemCoinAmount // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double,
     ));
   }
 }
@@ -408,7 +408,7 @@ class _$CompleteCashOrderDtoImpl implements _CompleteCashOrderDto {
       required this.paidAmount,
       required this.change,
       this.customerId,
-      this.redeemCoinAmount});
+      this.redeemCoinAmount = 0});
 
   factory _$CompleteCashOrderDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CompleteCashOrderDtoImplFromJson(json);
@@ -422,7 +422,8 @@ class _$CompleteCashOrderDtoImpl implements _CompleteCashOrderDto {
   @override
   final String? customerId;
   @override
-  final String? redeemCoinAmount;
+  @JsonKey()
+  final double redeemCoinAmount;
 
   @override
   String toString() {
@@ -474,7 +475,7 @@ abstract class _CompleteCashOrderDto implements CompleteCashOrderDto {
       required final double paidAmount,
       required final double change,
       final String? customerId,
-      final String? redeemCoinAmount}) = _$CompleteCashOrderDtoImpl;
+      final double redeemCoinAmount}) = _$CompleteCashOrderDtoImpl;
 
   factory _CompleteCashOrderDto.fromJson(Map<String, dynamic> json) =
       _$CompleteCashOrderDtoImpl.fromJson;
@@ -488,7 +489,7 @@ abstract class _CompleteCashOrderDto implements CompleteCashOrderDto {
   @override
   String? get customerId;
   @override
-  String? get redeemCoinAmount;
+  double get redeemCoinAmount;
 
   /// Create a copy of CompleteCashOrderDto
   /// with the given fields replaced by the non-null parameter values.

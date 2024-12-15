@@ -19,8 +19,10 @@ import 'package:lakoe_pos/features/products/application/cubit/product_master/pro
 import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_state.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/filter/product_category_filter.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/product/base_product_item.dart';
+import 'package:lakoe_pos/features/reports/data/arguments.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:outlet_repository/outlet_repository.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ProductMasterScreen extends StatelessWidget {
@@ -61,11 +63,20 @@ class _ProductMasterState extends State<ProductMaster> {
         );
   }
 
-  Future<void> _onGoToEditScreen(ProductModel product) async {
-    bool? updateProduct =
-        await Navigator.pushNamed(context, "/products/edit", arguments: product)
-            as bool?;
-
+  Future<void> _onGoToReportScreen(ProductModel product, int index) async {
+    bool? updateProduct = await Navigator.pushNamed(
+      context,
+      "/reports/best_seller/detail",
+      arguments: ReportProductSalesArguments(
+        rank: 0,
+        product: OutletReportBestSalesProductModel(
+          id: product.id,
+          name: product.name,
+          images: product.images,
+          soldCount: product.sold,
+        ),
+      ),
+    ) as bool?;
     if (updateProduct != true) return;
     onRefresh();
   }
@@ -124,7 +135,7 @@ class _ProductMasterState extends State<ProductMaster> {
 
         return InkWell(
           onTap: () {
-            _onGoToEditScreen(product);
+            _onGoToReportScreen(product, index);
           },
           child: Container(
             padding: const EdgeInsets.symmetric(
