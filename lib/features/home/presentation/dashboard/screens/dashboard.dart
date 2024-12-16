@@ -190,7 +190,7 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                   SizedBox(width: 16),
                                   Expanded(
-                                    child: OrderSummary(
+                                    child: OrderSummaryReport(
                                       totalTransactions:
                                           report.total_transactions,
                                     ),
@@ -203,7 +203,7 @@ class _DashboardState extends State<Dashboard> {
                                     totalSales: report.total_sales,
                                   ),
                                   SizedBox(height: 16),
-                                  OrderSummary(
+                                  OrderSummaryReport(
                                     totalTransactions:
                                         report.total_transactions,
                                   ),

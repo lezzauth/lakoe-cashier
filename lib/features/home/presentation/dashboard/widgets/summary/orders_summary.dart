@@ -12,8 +12,8 @@ import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/constants/sizes.dart';
 import 'package:shimmer/shimmer.dart';
 
-class OrderSummary extends StatelessWidget {
-  const OrderSummary({super.key, required this.totalTransactions});
+class OrderSummaryReport extends StatelessWidget {
+  const OrderSummaryReport({super.key, required this.totalTransactions});
 
   final OutletReportTotalTransactionModel totalTransactions;
 
@@ -66,7 +66,7 @@ class OrderSummary extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.only(bottom: 8),
                         child: Text(
-                          "Pesanan",
+                          "Transaksi",
                           style: GoogleFonts.inter(
                             color: TColors.neutralDarkDarkest,
                             fontSize: TSizes.fontSizeHeading3,
@@ -157,7 +157,7 @@ class OrderSummaryFailed extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.only(bottom: 8),
                         child: Text(
-                          "Pesanan",
+                          "Transaksi",
                           style: GoogleFonts.inter(
                             color: TColors.neutralDarkDarkest,
                             fontSize: TSizes.fontSizeHeading3,
