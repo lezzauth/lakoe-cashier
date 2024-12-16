@@ -18,14 +18,14 @@ class BankAccountNotAvailable extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: const TextHeading2(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextHeading2(
                 "Oops! Kamu belum menyimpan rekening bank",
               ),
             ),
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(
+              padding: EdgeInsets.symmetric(
                 horizontal: 20.0,
                 vertical: 12,
               ),
@@ -47,7 +47,7 @@ class BankAccountNotAvailable extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(20.0),
               child: Row(
                 children: [
                   Expanded(
@@ -56,25 +56,25 @@ class BankAccountNotAvailable extends StatelessWidget {
                       child: OutlinedButton(
                         onPressed: () {
                           Navigator.pop(context);
-                          Navigator.pushNamed(context, "/bank_accounts");
                         },
                         child: TextActionL(
-                          "Atur Sekarang",
+                          "Nanti saja",
                           color: TColors.primary,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: SizedBox(
                       height: 48,
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.pop(context);
+                          Navigator.pushNamed(context, "/bank_accounts");
                         },
-                        child: const TextActionL(
-                          "Nanti saja",
+                        child: TextActionL(
+                          "Atur Sekarang",
                           color: TColors.neutralLightLightest,
                         ),
                       ),
