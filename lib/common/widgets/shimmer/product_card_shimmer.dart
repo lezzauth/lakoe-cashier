@@ -15,7 +15,7 @@ class ProductCardShimmer extends StatelessWidget {
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
       ),
-      itemCount: 5,
+      itemCount: 10,
       itemBuilder: (context, index) {
         return Container(
           clipBehavior: Clip.antiAlias,

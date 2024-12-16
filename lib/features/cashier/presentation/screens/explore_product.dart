@@ -8,8 +8,8 @@ import 'package:lakoe_pos/features/cashier/application/cubit/order/cashier_order
 import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_cubit.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
-import 'package:lakoe_pos/features/cashier/presentation/screens/tablet/explore_product.dart';
-import 'package:lakoe_pos/features/cashier/presentation/screens/mobile/explore_product.dart';
+import 'package:lakoe_pos/features/cashier/presentation/screens/tablet/explore_product_tablet.dart';
+import 'package:lakoe_pos/features/cashier/presentation/screens/mobile/explore_product_mobile.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 
 class ExploreProductScreen extends StatefulWidget {

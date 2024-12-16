@@ -47,8 +47,11 @@ class ExploreProductItem extends StatelessWidget {
               width: 1,
             ),
           ),
-          margin: const EdgeInsets.only(bottom: 8.0),
+          margin: EdgeInsets.only(bottom: 8.0),
           child: BaseProductItem(
+            name: product.name,
+            price: int.parse(product.price),
+            notes: notes,
             image: image != null
                 ? Image.network(
                     image,
@@ -61,9 +64,6 @@ class ExploreProductItem extends StatelessWidget {
                     height: 60,
                     width: 60,
                   ),
-            name: product.name,
-            price: int.parse(product.price),
-            notes: notes,
             counter: selected
                 ? Counter(
                     value: qty,

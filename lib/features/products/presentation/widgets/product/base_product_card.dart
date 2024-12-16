@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
@@ -10,6 +11,7 @@ class BaseProductCard extends StatelessWidget {
   final int price;
   final bool selected;
   final Widget? counter;
+  final bool isNotAvailable;
 
   const BaseProductCard({
     super.key,
@@ -18,6 +20,7 @@ class BaseProductCard extends StatelessWidget {
     this.price = 0,
     this.selected = false,
     this.counter,
+    this.isNotAvailable = false,
   });
 
   @override
@@ -51,6 +54,27 @@ class BaseProductCard extends StatelessWidget {
                 width: 208,
                 child: image,
               ),
+              if (isNotAvailable)
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.5),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(16),
+                      ),
+                    ),
+                  ),
+                ),
+              if (isNotAvailable)
+                Positioned.fill(
+                  child: Center(
+                    child: TextBodyL(
+                      "Tidak Tersedia",
+                      color: TColors.neutralLightLightest,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               if (counter != null) counter!,
             ],
           ),
