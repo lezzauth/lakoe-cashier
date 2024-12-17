@@ -2,6 +2,7 @@ import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/order_item_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
@@ -9,11 +10,13 @@ import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_filter_state.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_state.dart';
-import 'package:lakoe_pos/features/orders/common/widgets/order_list_item/order_list_item.dart';
+import 'package:lakoe_pos/features/orders/common/widgets/order_item/order_card_item.dart';
+import 'package:lakoe_pos/features/orders/common/widgets/order_item/order_list_item.dart';
 import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_outlet/filter/order_outlet_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class OrderCashierOutlet extends StatefulWidget {
   const OrderCashierOutlet({
@@ -103,6 +106,8 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
+
     return MultiBlocListener(
       listeners: [
         BlocListener<OrderCashierFilterCubit, OrderCashierFilterState>(
@@ -116,6 +121,8 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
         ),
       ],
       child: Scaffold(
+        backgroundColor:
+            isMobile ? TColors.neutralLightLightest : TColors.neutralLightLight,
         body: Scrollbar(
           child: RefreshIndicator(
             onRefresh: onRefresh,
@@ -159,27 +166,60 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                         return CustomScrollView(
                           slivers: [
                             if (orders.isNotEmpty) ...[
-                              SliverList.builder(
-                                itemCount: orders.length,
-                                itemBuilder: (context, index) {
-                                  OrderCashierItemRes order =
-                                      orders.elementAt(index);
+                              ResponsiveLayout(
+                                mobile: SliverList.builder(
+                                  itemCount: orders.length,
+                                  itemBuilder: (context, index) {
+                                    OrderCashierItemRes order =
+                                        orders.elementAt(index);
 
-                                  return OrderListItem(
-                                    isCashier: true,
-                                    order: order,
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                        context,
-                                        "/orders/detail",
-                                        arguments: OrderDetailArgument(
-                                          id: order.id,
-                                          isCashier: true,
-                                        ),
+                                    return OrderListItem(
+                                      isCashier: true,
+                                      order: order,
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          "/orders/detail",
+                                          arguments: OrderDetailArgument(
+                                            id: order.id,
+                                            isCashier: true,
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                                tablet: SliverPadding(
+                                  padding: EdgeInsets.fromLTRB(20, 8, 20, 8),
+                                  sliver: SliverGrid.builder(
+                                    gridDelegate:
+                                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 360,
+                                      mainAxisExtent: 114,
+                                      childAspectRatio: 360 / 114,
+                                      crossAxisSpacing: 12,
+                                      mainAxisSpacing: 12,
+                                    ),
+                                    itemCount: orders.length,
+                                    itemBuilder: (context, index) {
+                                      OrderCashierItemRes order =
+                                          orders.elementAt(index);
+
+                                      return OrderCardItem(
+                                        order: order,
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            "/orders/detail",
+                                            arguments: OrderDetailArgument(
+                                              id: order.id,
+                                            ),
+                                          );
+                                        },
                                       );
                                     },
-                                  );
-                                },
+                                  ),
+                                ),
                               ),
                               const SliverToBoxAdapter(
                                 child: SizedBox(height: 72),
@@ -215,7 +255,10 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                           ),
                         );
                       } else {
-                        return OrderItemShimmer();
+                        return ResponsiveLayout(
+                          mobile: OrderItemListShimmer(),
+                          tablet: OrderItemCardShimmer(),
+                        );
                       }
                     },
                   ),

@@ -503,9 +503,7 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                             );
                           } else {
                             return const SliverToBoxAdapter(
-                              child: OrderItemShimmer(
-                                hasAvatar: false,
-                              ),
+                              child: OrderItemListShimmer(hasAvatar: false),
                             );
                           }
                         },

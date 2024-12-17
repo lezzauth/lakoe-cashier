@@ -11,6 +11,7 @@ import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outl
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:order_repository/order_repository.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class OrderOutletFilter extends StatefulWidget {
   final FindAllOrderDto value;
@@ -70,6 +71,8 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
     bool isFilterUsed = widget.value.template != null ||
         widget.value.from != null ||
         widget.value.status != null;
+
+    bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -152,7 +155,9 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
           ],
         ),
         Container(
-          color: Colors.white,
+          color: isMobile
+              ? TColors.neutralLightLightest
+              : TColors.neutralLightLight,
           padding: const EdgeInsets.only(left: 8),
           child: InputChip(
             selected: isFilterActive,

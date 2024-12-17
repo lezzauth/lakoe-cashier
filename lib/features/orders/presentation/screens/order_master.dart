@@ -7,6 +7,8 @@ import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/order_outlet_tab.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_outlet/order_outlet_tab.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class OrderMasterScreen extends StatelessWidget {
   const OrderMasterScreen({super.key});
@@ -38,9 +40,11 @@ class OrderMaster extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
     final String? previousScreen = args?['previousScreen'];
+    bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
 
     return Scaffold(
       appBar: CustomAppbar(
+        backgroundColor: isMobile ? null : TColors.neutralLightLight,
         search: SearchField(
           hintText: "Cari pesanan disini...",
           controller: _searchController,
@@ -73,7 +77,7 @@ class OrderMaster extends StatelessWidget {
         // ),
       ),
       body: Padding(
-        padding: EdgeInsets.only(top: 4.0),
+        padding: EdgeInsets.only(top: isMobile ? 4.0 : 0.0),
         child: (previousScreen == "ExploreProduct")
             ? OrderCashierOutlet(
                 searchController: _searchController,

@@ -205,7 +205,8 @@ class OrderListItem extends StatelessWidget {
                                       },
                                     );
                                   },
-                                  child: TagThinOrderStatus(tag: status)),
+                                  child: TagThinOrderStatus(tag: status),
+                                ),
                         ),
                       ],
                     ),

@@ -8,6 +8,7 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_outlet/filter/order_outlet_advanced_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class OrderOutletFilter extends StatefulWidget {
   final FindAllOrderCashierDto value;
@@ -36,6 +37,8 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
+
     onFilterOpen() async {
       final result = await showModalBottomSheet<Map<String, dynamic>>(
         context: context,
@@ -72,7 +75,9 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
               direction: Axis.horizontal,
               alignment: WrapAlignment.start,
               spacing: 8.0,
-              children: statuses.map((status) {
+              children: statuses
+                  .where((status) => !(isMobile && status.value == "CANCELLED"))
+                  .map((status) {
                 bool selected = status.value == widget.value.status;
                 return InputChip(
                   label: selected
@@ -98,7 +103,9 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
           ),
         ),
         Container(
-          color: Colors.white,
+          color: isMobile
+              ? TColors.neutralLightLightest
+              : TColors.neutralLightLight,
           padding: const EdgeInsets.only(left: 8),
           child: InputChip(
             selected: isFilterActive,
