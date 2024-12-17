@@ -1,4 +1,3 @@
-import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -7,7 +6,6 @@ import 'package:lakoe_pos/common/widgets/form/form_label.dart';
 import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/popup_confirmation.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
-import 'package:lakoe_pos/features/tables/common/widgets/preview_qr_table.dart';
 import 'package:lakoe_pos/features/tables/presentation/widgets/forms/field/location_field.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
@@ -38,7 +36,7 @@ class TableInformationForm extends StatefulWidget {
 }
 
 class _TableInformationFormState extends State<TableInformationForm> {
-  final AppDataProvider _appDataProvider = AppDataProvider();
+  // final AppDataProvider _appDataProvider = AppDataProvider();
   late String tableNumber;
 
   @override
@@ -81,72 +79,72 @@ class _TableInformationFormState extends State<TableInformationForm> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ResponsiveLayout(
-          mobile: SizedBox.shrink(),
-          tablet: Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: 16),
-                  padding: EdgeInsets.symmetric(horizontal: 60),
-                  child: FutureBuilder<List<String?>>(
-                    future: Future.wait([
-                      _appDataProvider.colorBrand,
-                      _appDataProvider.logoBrand,
-                    ]),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData && snapshot.data != null) {
-                        final String? colorBrandData = snapshot.data![0];
-                        final String? logoBrandData = snapshot.data![1];
+        // ResponsiveLayout(
+        //   mobile: SizedBox.shrink(),
+        //   tablet: Expanded(
+        //     child: Column(
+        //       mainAxisSize: MainAxisSize.min,
+        //       crossAxisAlignment: CrossAxisAlignment.stretch,
+        //       children: [
+        //         Container(
+        //           margin: EdgeInsets.only(right: 16),
+        //           padding: EdgeInsets.symmetric(horizontal: 60),
+        //           child: FutureBuilder<List<String?>>(
+        //             future: Future.wait([
+        //               _appDataProvider.colorBrand,
+        //               _appDataProvider.logoBrand,
+        //             ]),
+        //             builder: (context, snapshot) {
+        //               if (snapshot.hasData && snapshot.data != null) {
+        //                 final String? colorBrandData = snapshot.data![0];
+        //                 final String? logoBrandData = snapshot.data![1];
 
-                        int argColorInt = 0xFFFD6E00;
-                        if (colorBrandData != null) {
-                          argColorInt = int.parse(
-                              colorBrandData.replaceFirst("0x", ""),
-                              radix: 16);
-                        }
+        //                 int argColorInt = 0xFFFD6E00;
+        //                 if (colorBrandData != null) {
+        //                   argColorInt = int.parse(
+        //                       colorBrandData.replaceFirst("0x", ""),
+        //                       radix: 16);
+        //                 }
 
-                        return PreviewQrTable(
-                          widget.table?.id ?? DateTime.timestamp().toString(),
-                          logo: logoBrandData ?? "",
-                          colorBrand: argColorInt,
-                          tableNumber: tableNumber,
-                        );
-                      } else {
-                        return PreviewQrTable(
-                          widget.table?.id ?? DateTime.timestamp().toString(),
-                          logo: "",
-                          colorBrand: 0xFFFD6E00,
-                          tableNumber: tableNumber,
-                        );
-                      }
-                    },
-                  ),
-                ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 60),
-                  child: Expanded(
-                    child: SizedBox(
-                      height: 48,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/tables/edit/brand");
-                        },
-                        child: TextActionL(
-                          "Ubah Logo & Warna",
-                          color: TColors.primary,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
+        //                 return PreviewQrTable(
+        //                   widget.table?.id ?? DateTime.timestamp().toString(),
+        //                   logo: logoBrandData ?? "",
+        //                   colorBrand: argColorInt,
+        //                   tableNumber: tableNumber,
+        //                 );
+        //               } else {
+        //                 return PreviewQrTable(
+        //                   widget.table?.id ?? DateTime.timestamp().toString(),
+        //                   logo: "",
+        //                   colorBrand: 0xFFFD6E00,
+        //                   tableNumber: tableNumber,
+        //                 );
+        //               }
+        //             },
+        //           ),
+        //         ),
+        //         SizedBox(height: 20),
+        //         Padding(
+        //           padding: EdgeInsets.symmetric(horizontal: 60),
+        //           child: Expanded(
+        //             child: SizedBox(
+        //               height: 48,
+        //               child: OutlinedButton(
+        //                 onPressed: () {
+        //                   Navigator.pushNamed(context, "/tables/edit/brand");
+        //                 },
+        //                 child: TextActionL(
+        //                   "Ubah Logo & Warna",
+        //                   color: TColors.primary,
+        //                 ),
+        //               ),
+        //             ),
+        //           ),
+        //         )
+        //       ],
+        //     ),
+        //   ),
+        // ),
         Expanded(
           child: Column(
             children: [

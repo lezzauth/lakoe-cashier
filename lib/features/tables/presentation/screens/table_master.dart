@@ -86,7 +86,7 @@ class _TableMasterState extends State<TableMaster> {
       ],
       child: Scaffold(
         appBar: CustomAppbar(
-          title: "Meja & QR Order",
+          title: "Manajemen Meja",
           actions: [
             const SizedBox(width: 5),
             IconButton(

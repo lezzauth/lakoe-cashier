@@ -97,7 +97,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       iconSrc: TIcons.box,
     ),
     _SettingItem(
-      title: "Meja & QR Order",
+      title: "Manajemen Meja",
       routeName: "/tables",
       iconSrc: TIcons.tableRestaurant,
     ),

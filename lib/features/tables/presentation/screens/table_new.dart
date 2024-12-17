@@ -5,13 +5,10 @@ import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
 import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:lakoe_pos/common/widgets/ui/tab/tab_container.dart';
-import 'package:lakoe_pos/common/widgets/ui/tab/tab_item.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_cubit.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_state.dart';
 import 'package:lakoe_pos/features/tables/presentation/widgets/forms/table_information_form.dart';
-import 'package:lakoe_pos/features/tables/presentation/widgets/tabs/table_qr_order_tab.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:table_repository/table_repository.dart';
@@ -141,50 +138,66 @@ class _TableNewState extends State<TableNew> {
                 tablet: SizedBox.shrink(),
               ),
             ],
-            bottom: PreferredSize(
-              preferredSize: Size.fromHeight(48.0),
-              child: ResponsiveLayout(
-                mobile: TabContainer(
-                  tabs: [
-                    TabItem(title: "Info Meja"),
-                    TabItem(title: "QR Order")
-                  ],
-                ),
-                tablet: SizedBox.shrink(),
-              ),
-            ),
+            // bottom: PreferredSize(
+            //   preferredSize: Size.fromHeight(48.0),
+            //   child: ResponsiveLayout(
+            //     mobile: TabContainer(
+            //       tabs: [
+            //         TabItem(title: "Info Meja"),
+            //         TabItem(title: "QR Order")
+            //       ],
+            //     ),
+            //     tablet: SizedBox.shrink(),
+            //   ),
+            // ),
           ),
-          body: ResponsiveLayout(
-            mobile: TabBarView(
-              children: [
-                SingleChildScrollView(
-                  padding: EdgeInsets.only(top: 16),
-                  child: TableInformationForm(
-                    formKey: _formKey,
-                    tableNumber: dummyTableModel.no,
-                    table: dummyTableModel,
-                  ),
+          body: SingleChildScrollView(
+            child: BlocBuilder<TableMasterCubit, TableMasterState>(
+                builder: (context, state) {
+              return SingleChildScrollView(
+                padding: EdgeInsets.only(top: 16),
+                child: TableInformationForm(
+                  formKey: _formKey,
+                  table: dummyTableModel,
+                  tableNumber: dummyTableModel.no,
+                  isLoading: state is TableMasterActionInProgress,
+                  onSubmit: () => _onSubmit(),
                 ),
-                TableQrOrderTab(),
-              ],
-            ),
-            tablet: SingleChildScrollView(
-              padding: EdgeInsets.fromLTRB(0, 16, 40, 16),
-              child: BlocBuilder<TableMasterCubit, TableMasterState>(
-                  builder: (context, state) {
-                return SingleChildScrollView(
-                  padding: EdgeInsets.only(top: 16),
-                  child: TableInformationForm(
-                    formKey: _formKey,
-                    table: dummyTableModel,
-                    tableNumber: dummyTableModel.no,
-                    isLoading: state is TableMasterActionInProgress,
-                    onSubmit: () => _onSubmit(),
-                  ),
-                );
-              }),
-            ),
+              );
+            }),
           ),
+
+          // ResponsiveLayout(
+          //   mobile: TabBarView(
+          //     children: [
+          //       SingleChildScrollView(
+          //         padding: EdgeInsets.only(top: 16),
+          //         child: TableInformationForm(
+          //           formKey: _formKey,
+          //           tableNumber: dummyTableModel.no,
+          //           table: dummyTableModel,
+          //         ),
+          //       ),
+          //       TableQrOrderTab(),
+          //     ],
+          //   ),
+          //   tablet: SingleChildScrollView(
+          //     padding: EdgeInsets.fromLTRB(0, 16, 40, 16),
+          //     child: BlocBuilder<TableMasterCubit, TableMasterState>(
+          //         builder: (context, state) {
+          //       return SingleChildScrollView(
+          //         padding: EdgeInsets.only(top: 16),
+          //         child: TableInformationForm(
+          //           formKey: _formKey,
+          //           table: dummyTableModel,
+          //           tableNumber: dummyTableModel.no,
+          //           isLoading: state is TableMasterActionInProgress,
+          //           onSubmit: () => _onSubmit(),
+          //         ),
+          //       );
+          //     }),
+          //   ),
+          // ),
         ),
       ),
     );

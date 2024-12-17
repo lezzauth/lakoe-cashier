@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/form/search_field.dart';
-import 'package:lakoe_pos/common/widgets/ui/tab/tab_container.dart';
-import 'package:lakoe_pos/common/widgets/ui/tab/tab_item.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
-import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_online/order_online_tab.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/order_outlet_tab.dart';
-import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_online/order_online_tab.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_outlet/order_outlet_tab.dart';
 
 class OrderMasterScreen extends StatelessWidget {
@@ -69,34 +65,44 @@ class OrderMaster extends StatelessWidget {
             }
           },
         ),
-        bottom: TabContainer(
-          tabs: [
-            TabItem(title: "Kasir"),
-            TabItem(title: "QR Meja", counter: 2)
-          ],
-        ),
+        // bottom: TabContainer(
+        //   tabs: [
+        //     TabItem(title: "Kasir"),
+        //     TabItem(title: "QR Meja", counter: 2)
+        //   ],
+        // ),
       ),
       body: Padding(
         padding: EdgeInsets.only(top: 4.0),
         child: (previousScreen == "ExploreProduct")
-            ? TabBarView(
-                children: [
-                  OrderCashierOutlet(
-                    searchController: _searchController,
-                    searchFocusNode: _searchFocusNode,
-                  ),
-                  OrderCashierOnline(),
-                ],
+            ? OrderCashierOutlet(
+                searchController: _searchController,
+                searchFocusNode: _searchFocusNode,
               )
-            : TabBarView(
-                children: [
-                  OrderOutlet(
-                    searchController: _searchController,
-                    searchFocusNode: _searchFocusNode,
-                  ),
-                  OrderOnline(),
-                ],
+            : OrderOutlet(
+                searchController: _searchController,
+                searchFocusNode: _searchFocusNode,
               ),
+
+        // (previousScreen == "ExploreProduct")
+        //     ? TabBarView(
+        //         children: [
+        //           OrderCashierOutlet(
+        //             searchController: _searchController,
+        //             searchFocusNode: _searchFocusNode,
+        //           ),
+        //           OrderCashierOnline(),
+        //         ],
+        //       )
+        //     : TabBarView(
+        //         children: [
+        //           OrderOutlet(
+        //             searchController: _searchController,
+        //             searchFocusNode: _searchFocusNode,
+        //           ),
+        //           OrderOnline(),
+        //         ],
+        //       ),
       ),
     );
   }
