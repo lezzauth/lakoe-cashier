@@ -64,10 +64,23 @@ class SalesTotalCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(bottom: 4),
-                    child: const TextHeading5(
-                      "Total Penjualan",
-                      color: TColors.neutralDarkLightest,
+                    margin: EdgeInsets.only(bottom: 4),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextHeading5(
+                          "Total Penjualan",
+                          color: TColors.neutralDarkLightest,
+                        ),
+                        SizedBox(
+                          width: 24,
+                          child: UiIcons(
+                            TIcons.info,
+                            color: TColors.neutralDarkLightest,
+                            size: 14,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Container(

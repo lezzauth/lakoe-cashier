@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:logman/logman.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
@@ -168,6 +169,8 @@ class _ReportMasterState extends State<ReportMaster> {
                                         return DetailAmount(
                                           label: "Total Penjualan",
                                           amount: report.totalSales,
+                                          description:
+                                              "Total penjualan adalah akumulasi pendapatan dari semua pesanan yang sudah dibayar (paid) dalam periode tertentu. Pesanan yang belum dibayar tidak termasuk dalam total ini.",
                                         );
                                       },
                                     );
@@ -197,6 +200,8 @@ class _ReportMasterState extends State<ReportMaster> {
                                           return DetailAmount(
                                             label: "Rata-rata transaksi",
                                             amount: report.averageSales,
+                                            description:
+                                                "Rata-rata transaksi adalah nilai rata-rata dari total penjualan dibagi jumlah transaksi yang terjadi. Rumusnya: Total Penjualan ÷ Jumlah Transaksi.",
                                           );
                                         },
                                       );
@@ -226,8 +231,10 @@ class _ReportMasterState extends State<ReportMaster> {
                                         useSafeArea: true,
                                         builder: (context) {
                                           return DetailAmount(
-                                            label: "Total Keuntungan Transaksi",
+                                            label: "Total Keuntungan (Bersih)",
                                             amount: report.totalProfit,
+                                            description:
+                                                "Keuntungan bersih adalah selisih antara harga jual dan harga modal produk. Rumusnya: Harga Jual - Harga Modal.",
                                           );
                                         },
                                       );
@@ -358,7 +365,14 @@ class _ReportMasterState extends State<ReportMaster> {
 class DetailAmount extends StatelessWidget {
   final String label;
   final String amount;
-  const DetailAmount({super.key, required this.label, required this.amount});
+  final String? description;
+
+  const DetailAmount({
+    super.key,
+    required this.label,
+    required this.amount,
+    this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -389,6 +403,27 @@ class DetailAmount extends StatelessWidget {
                         amount == "NaN" ? 0 : double.parse(amount).round(),
                       ),
                     ),
+                    if (description != null)
+                      Padding(
+                        padding: EdgeInsets.only(top: 12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextBodyS(
+                              "————",
+                              color: TColors.neutralLightDark,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(height: 4),
+                            TextBodyM(
+                              description ?? "",
+                              color: TColors.neutralDarkDark,
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -397,7 +432,7 @@ class DetailAmount extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 child: OutlinedButton(
                   onPressed: () => Navigator.pop(context),
-                  child: TextActionL("Oke, Tutup"),
+                  child: TextActionL("Oke! Paham"),
                 ),
               ),
             ],

@@ -55,7 +55,7 @@ class CustomerAndTableInformation extends StatelessWidget {
                     SizedBox(height: 4),
                     TextBodyM(
                       type == "DINEIN"
-                          ? "Layanan untuk pelanggan yang menikmati makanan atau minuman langsung di tempat Anda."
+                          ? "Layanan untuk pelanggan yang menikmati makanan atau minuman langsung di tempat."
                           : "Layanan untuk pelanggan yang membeli makanan atau minuman untuk dibawa pulang (dibungkus).",
                       color: TColors.neutralDarkDark,
                     ),

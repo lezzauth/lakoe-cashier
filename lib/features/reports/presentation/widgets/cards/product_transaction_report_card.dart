@@ -72,7 +72,7 @@ class ProductTransactionReportCard extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(bottom: 4),
                   child: const TextBodyS(
-                    "Total Transaksi",
+                    "Jumlah Transaksi",
                     color: TColors.neutralDarkLightest,
                   ),
                 ),

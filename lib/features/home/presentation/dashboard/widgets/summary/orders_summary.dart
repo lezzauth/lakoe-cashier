@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_report_filter_cubit.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_report_filter_state.dart';
@@ -34,6 +39,53 @@ class OrderSummaryReport extends StatelessWidget {
     return "";
   }
 
+  void detailContextTerm(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return CustomBottomsheet(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 12,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextHeading3(
+                      "Maksudnya transaksi itu apa?",
+                      color: TColors.neutralDarkDark,
+                    ),
+                    SizedBox(height: 4),
+                    TextBodyM(
+                      "Transaksi adalah total pesanan yang sudah dibayar oleh pelanggan. Setiap transaksi mencakup pesanan yang telah selesai diproses dan dicatat dalam sistem, baik itu pembayaran tunai, non-tunai, atau metode lainnya.",
+                      color: TColors.neutralDarkDark,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24),
+                SizedBox(
+                  height: 48,
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: TextActionL("Oke! Paham"),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,14 +115,32 @@ class OrderSummaryReport extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 8),
-                        child: Text(
-                          "Transaksi",
-                          style: GoogleFonts.inter(
-                            color: TColors.neutralDarkDarkest,
-                            fontSize: TSizes.fontSizeHeading3,
-                            fontWeight: FontWeight.w600,
+                      InkWell(
+                        onTap: () => detailContextTerm(context),
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 8),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Transaksi",
+                                style: GoogleFonts.inter(
+                                  color: TColors.neutralDarkDarkest,
+                                  fontSize: TSizes.fontSizeHeading3,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 24,
+                                child: UiIcons(
+                                  TIcons.info,
+                                  color: TColors.neutralDarkLightest,
+                                  size: 14,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

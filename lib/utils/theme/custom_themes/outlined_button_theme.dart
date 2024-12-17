@@ -8,36 +8,39 @@ class TOutlinedButtonTheme {
 
   static OutlinedButtonThemeData lightTheme = OutlinedButtonThemeData(
     style: ButtonStyle(
-        side: WidgetStateBorderSide.resolveWith(
-          (states) {
-            bool isDisabled = states.contains(WidgetState.disabled);
+      elevation: WidgetStatePropertyAll(TSizes.buttonElevation),
+      side: WidgetStateBorderSide.resolveWith(
+        (states) {
+          bool isDisabled = states.contains(WidgetState.disabled);
 
-            return BorderSide(
-              color: isDisabled ? TColors.neutralLightDarkest : TColors.primary,
-              width: 1.5,
-            );
-          },
-        ),
-        shape: const WidgetStatePropertyAll(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(
-                12.0,
-              ),
-            ),
+          return BorderSide(
+            color: isDisabled ? TColors.neutralLightDarkest : TColors.primary,
+            width: 1.5,
+          );
+        },
+      ),
+      padding: WidgetStateProperty.all(
+        EdgeInsets.all(TSizes.buttonVerticalPadding),
+      ),
+      shape: WidgetStatePropertyAll(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(TSizes.buttonRadius),
           ),
         ),
-        textStyle: WidgetStateTextStyle.resolveWith(
-          (states) {
-            bool isDisabled = states.contains(WidgetState.disabled);
+      ),
+      textStyle: WidgetStateTextStyle.resolveWith(
+        (states) {
+          bool isDisabled = states.contains(WidgetState.disabled);
 
-            return GoogleFonts.inter(
-              fontSize: TSizes.fontSizeActionL,
-              color: isDisabled ? TColors.neutralDarkLightest : TColors.primary,
-              fontWeight: FontWeight.w600,
-            );
-          },
-        )),
+          return GoogleFonts.inter(
+            fontSize: TSizes.fontSizeActionL,
+            color: isDisabled ? TColors.neutralDarkLightest : TColors.primary,
+            fontWeight: FontWeight.w600,
+          );
+        },
+      ),
+    ),
   );
   static OutlinedButtonThemeData darkTheme = lightTheme;
 }

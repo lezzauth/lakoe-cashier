@@ -258,10 +258,8 @@ class App extends StatelessWidget {
           supportedLocales: const [Locale("id"), Locale('en')],
           builder: (context, child) {
             return ResponsiveBreakpoints.builder(
-              // child: child!,
               child: Builder(
                 builder: (context) {
-                  // Mengatur orientasi berdasarkan breakpoint
                   if (ResponsiveBreakpoints.of(context).smallerThan(TABLET)) {
                     SystemChrome.setPreferredOrientations([
                       DeviceOrientation.portraitUp,
