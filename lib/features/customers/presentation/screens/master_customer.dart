@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
@@ -12,6 +13,7 @@ import 'package:lakoe_pos/features/customers/application/cubit/customer_master/c
 import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_filter_cubit.dart';
 import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_filter_state.dart';
 import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_state.dart';
+import 'package:lakoe_pos/features/customers/common/widgets/customer_contact/customer_contact_card.dart';
 import 'package:lakoe_pos/features/customers/common/widgets/customer_contact/customer_contact_item.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
@@ -135,22 +137,50 @@ class _MasterCustomerState extends State<MasterCustomer> {
                           );
                         }
 
-                        return ListView.builder(
-                          itemCount: filteredCustomers.length,
-                          itemBuilder: (context, index) {
-                            CustomerModel customer = filteredCustomers[index];
+                        return ResponsiveLayout(
+                          mobile: ListView.builder(
+                            itemCount: filteredCustomers.length,
+                            itemBuilder: (context, index) {
+                              CustomerModel customer = filteredCustomers[index];
 
-                            return CustomerContactItem(
-                              customer: customer,
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  "/customers/detail",
-                                  arguments: customer,
-                                );
-                              },
-                            );
-                          },
+                              return CustomerContactItem(
+                                customer: customer,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    "/customers/detail",
+                                    arguments: customer,
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          tablet: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: GridView.builder(
+                                gridDelegate:
+                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 240,
+                                  mainAxisExtent: 60,
+                                  childAspectRatio: 240 / 60,
+                                  crossAxisSpacing: 16,
+                                  mainAxisSpacing: 16,
+                                ),
+                                itemCount: filteredCustomers.length,
+                                itemBuilder: (context, i) {
+                                  CustomerModel customer = filteredCustomers[i];
+                                  return CustomerContactCard(
+                                    customer: customer,
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        "/customers/detail",
+                                        arguments: customer,
+                                      );
+                                    },
+                                  );
+                                }),
+                          ),
                         );
                       } else {
                         return EmptyList(
