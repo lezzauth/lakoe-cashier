@@ -8,6 +8,7 @@ import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/order_item/order_card_item.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/order_item/order_list_item.dart';
+import 'package:lakoe_pos/features/orders/presentation/screens/tablet/order_detail_tablet.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/filter/order_outlet_filter.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
@@ -35,6 +36,7 @@ class OrderOutlet extends StatefulWidget {
 class _OrderOutletState extends State<OrderOutlet> {
   bool _isFilterUsed = false;
   String _keywordSearch = "";
+  String? selectedOrderId;
 
   Future<void> onRefresh() async {
     OrdersFilterState filterState = context.read<OrdersFilterCubit>().state;
@@ -125,167 +127,192 @@ class _OrderOutletState extends State<OrderOutlet> {
       child: Scaffold(
         backgroundColor:
             isMobile ? TColors.neutralLightLightest : TColors.neutralLightLight,
-        body: Scrollbar(
-          child: RefreshIndicator(
-            onRefresh: onRefresh,
-            backgroundColor: TColors.neutralLightLightest,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: BlocBuilder<OrdersFilterCubit, OrdersFilterState>(
-                    builder: (context, state) {
-                      return OrderOutletFilter(
-                        value: state.toFindAllOrderDto,
-                        isFilterUsed: _isFilterUsed,
-                        onClear: () {
-                          setState(() {
-                            _isFilterUsed = false;
-                          });
-                          context.read<OrdersFilterCubit>().clearFilter();
-                        },
-                        onChanged: (value) {
-                          final cubit = context.read<OrdersFilterCubit>();
+        body: Row(
+          children: [
+            Expanded(
+              child: Scrollbar(
+                child: RefreshIndicator(
+                  onRefresh: onRefresh,
+                  backgroundColor: TColors.neutralLightLightest,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child:
+                            BlocBuilder<OrdersFilterCubit, OrdersFilterState>(
+                          builder: (context, state) {
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: OrderOutletFilter(
+                                value: state.toFindAllOrderDto,
+                                isFilterUsed: _isFilterUsed,
+                                onClear: () {
+                                  setState(() {
+                                    _isFilterUsed = false;
+                                  });
+                                  context
+                                      .read<OrdersFilterCubit>()
+                                      .clearFilter();
+                                },
+                                onChanged: (value) {
+                                  final cubit =
+                                      context.read<OrdersFilterCubit>();
 
-                          final from = value.template == "CUSTOM"
-                              ? DateTime.parse(value.from!)
-                              : value.from != null
-                                  ? DateTime.parse(value.from!)
-                                  : null;
+                                  final from = value.template == "CUSTOM"
+                                      ? DateTime.parse(value.from!)
+                                      : value.from != null
+                                          ? DateTime.parse(value.from!)
+                                          : null;
 
-                          final to = value.template == "CUSTOM"
-                              ? DateTime.parse(value.to!)
-                              : value.to != null
-                                  ? DateTime.parse(value.to!)
-                                  : null;
+                                  final to = value.template == "CUSTOM"
+                                      ? DateTime.parse(value.to!)
+                                      : value.to != null
+                                          ? DateTime.parse(value.to!)
+                                          : null;
 
-                          cubit.setFilter(
-                            sort: value.sort,
-                            source: value.source,
-                            type: value.type,
-                            status: value.status,
-                            template: value.template,
-                            from: from,
-                            to: to,
-                          );
+                                  cubit.setFilter(
+                                    sort: value.sort,
+                                    source: value.source,
+                                    type: value.type,
+                                    status: value.status,
+                                    template: value.template,
+                                    from: from,
+                                    to: to,
+                                  );
 
-                          setState(() {
-                            _isFilterUsed = cubit.hasFilterChanged();
-                          });
-                        },
-                      );
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: BlocBuilder<OrdersCubit, OrdersState>(
-                    builder: (context, state) {
-                      if (state is OrdersLoadSuccess) {
-                        final orders = state.orders;
+                                  setState(() {
+                                    _isFilterUsed = cubit.hasFilterChanged();
+                                  });
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: BlocBuilder<OrdersCubit, OrdersState>(
+                          builder: (context, state) {
+                            if (state is OrdersLoadSuccess) {
+                              final orders = state.orders;
 
-                        return CustomScrollView(
-                          slivers: [
-                            if (orders.isNotEmpty) ...[
-                              ResponsiveLayout(
-                                mobile: SliverList.builder(
-                                  itemCount: orders.length,
-                                  itemBuilder: (context, index) {
-                                    OrderItemRes order =
-                                        orders.elementAt(index);
+                              return CustomScrollView(
+                                slivers: [
+                                  if (orders.isNotEmpty) ...[
+                                    ResponsiveLayout(
+                                      mobile: SliverList.builder(
+                                        itemCount: orders.length,
+                                        itemBuilder: (context, index) {
+                                          OrderItemRes order =
+                                              orders.elementAt(index);
 
-                                    return OrderListItem(
-                                      order: order,
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          "/orders/detail",
-                                          arguments: OrderDetailArgument(
-                                            id: order.id,
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                                tablet: SliverPadding(
-                                  padding: EdgeInsets.fromLTRB(20, 8, 20, 8),
-                                  sliver: SliverGrid.builder(
-                                    gridDelegate:
-                                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 360,
-                                      mainAxisExtent: 114,
-                                      childAspectRatio: 360 / 114,
-                                      crossAxisSpacing: 12,
-                                      mainAxisSpacing: 12,
-                                    ),
-                                    itemCount: orders.length,
-                                    itemBuilder: (context, index) {
-                                      OrderItemRes order =
-                                          orders.elementAt(index);
-
-                                      return OrderCardItem(
-                                        order: order,
-                                        onTap: () {
-                                          Navigator.pushNamed(
-                                            context,
-                                            "/orders/detail",
-                                            arguments: OrderDetailArgument(
-                                              id: order.id,
-                                            ),
+                                          return OrderListItem(
+                                            order: order,
+                                            onTap: () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                "/orders/detail",
+                                                arguments: OrderDetailArgument(
+                                                  id: order.id,
+                                                ),
+                                              );
+                                            },
                                           );
                                         },
-                                      );
-                                    },
+                                      ),
+                                      tablet: SliverPadding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(20, 8, 20, 8),
+                                        sliver: SliverGrid.builder(
+                                          gridDelegate:
+                                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent: 360,
+                                            mainAxisExtent: 115.5,
+                                            childAspectRatio: 360 / 115.5,
+                                            crossAxisSpacing: 12,
+                                            mainAxisSpacing: 12,
+                                          ),
+                                          itemCount: orders.length,
+                                          itemBuilder: (context, index) {
+                                            OrderItemRes order =
+                                                orders.elementAt(index);
+
+                                            bool selctedItem =
+                                                selectedOrderId == order.id;
+
+                                            return OrderCardItem(
+                                              selected: selctedItem,
+                                              order: order,
+                                              onTap: () {
+                                                setState(() {
+                                                  if (selectedOrderId ==
+                                                      order.id) {
+                                                    selectedOrderId = null;
+                                                  } else {
+                                                    selectedOrderId = order.id;
+                                                  }
+                                                });
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                  if (orders.isEmpty)
+                                    SliverToBoxAdapter(
+                                      child: EmptyList(
+                                        image: _keywordSearch.isNotEmpty
+                                            ? null
+                                            : SvgPicture.asset(
+                                                TImages.catBox,
+                                                width: 276,
+                                                height: 200,
+                                              ),
+                                        title: _determineTitle(),
+                                        subTitle: _determineSubTitle(),
+                                        action: _buildActionButton(),
+                                      ),
+                                    ),
+                                ],
+                              );
+                            } else if (state is OrdersLoadFailure) {
+                              return EmptyList(
+                                title: "Gagal memuat data, nih!",
+                                subTitle:
+                                    "Ada sedikit gangguan. Coba coba lagi, ya",
+                                action: TextButton(
+                                  onPressed: onRefresh,
+                                  child: TextActionL(
+                                    "Coba Lagi",
+                                    color: TColors.primary,
                                   ),
                                 ),
-                              ),
-                              const SliverToBoxAdapter(
-                                child: SizedBox(height: 72),
-                              ),
-                            ],
-                            if (orders.isEmpty)
-                              SliverToBoxAdapter(
-                                child: EmptyList(
-                                  image: _keywordSearch.isNotEmpty
-                                      ? null
-                                      : SvgPicture.asset(
-                                          TImages.catBox,
-                                          width: 276,
-                                          height: 200,
-                                        ),
-                                  title: _determineTitle(),
-                                  subTitle: _determineSubTitle(),
-                                  action: _buildActionButton(),
-                                ),
-                              ),
-                          ],
-                        );
-                      } else if (state is OrdersLoadFailure) {
-                        return EmptyList(
-                          title: "Gagal memuat data, nih!",
-                          subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
-                          action: TextButton(
-                            onPressed: onRefresh,
-                            child: TextActionL(
-                              "Coba Lagi",
-                              color: TColors.primary,
-                            ),
-                          ),
-                        );
-                      } else {
-                        return ResponsiveLayout(
-                          mobile: OrderItemListShimmer(),
-                          tablet: OrderItemCardShimmer(),
-                        );
-                      }
-                    },
+                              );
+                            } else {
+                              return ResponsiveLayout(
+                                mobile: OrderItemListShimmer(),
+                                tablet: OrderItemCardShimmer(),
+                              );
+                            }
+                          },
+                        ),
+                      )
+                    ],
                   ),
-                )
-              ],
+                ),
+              ),
             ),
-          ),
+            if (selectedOrderId != null)
+              Visibility(
+                visible: selectedOrderId != null,
+                child: OrderDetailTablet(
+                  key: ValueKey(selectedOrderId),
+                  arguments: OrderDetailArgument(id: selectedOrderId!),
+                ),
+              ),
+          ],
         ),
       ),
     );

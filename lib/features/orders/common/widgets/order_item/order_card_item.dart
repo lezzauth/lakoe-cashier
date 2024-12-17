@@ -18,12 +18,14 @@ class OrderCardItem extends StatelessWidget {
     this.onTap,
     this.isWithQR = false,
     this.isCashier = false,
+    this.selected = false,
   });
 
   final dynamic order;
   final Function()? onTap;
   final bool isWithQR;
   final bool isCashier;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,12 @@ class OrderCardItem extends StatelessWidget {
             decoration: BoxDecoration(
               color: TColors.neutralLightLightest,
               borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: selected
+                    ? TColors.highlightDark
+                    : TColors.neutralLightLightest,
+                width: selected ? 1.5 : 0.0,
+              ),
             ),
             child: Column(
               children: [

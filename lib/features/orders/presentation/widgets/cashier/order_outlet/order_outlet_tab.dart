@@ -13,6 +13,7 @@ import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order
 import 'package:lakoe_pos/features/orders/common/widgets/order_item/order_card_item.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/order_item/order_list_item.dart';
 import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
+import 'package:lakoe_pos/features/orders/presentation/screens/tablet/order_detail_tablet.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_outlet/filter/order_outlet_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
@@ -35,6 +36,7 @@ class OrderCashierOutlet extends StatefulWidget {
 class _OrderCashierOutletState extends State<OrderCashierOutlet> {
   bool _isFilterUsed = false;
   String _keywordSearch = "";
+  String? selectedOrderId;
 
   Future<void> onRefresh() async {
     OrderCashierFilterState filterState =
@@ -123,149 +125,183 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
       child: Scaffold(
         backgroundColor:
             isMobile ? TColors.neutralLightLightest : TColors.neutralLightLight,
-        body: Scrollbar(
-          child: RefreshIndicator(
-            onRefresh: onRefresh,
-            backgroundColor: TColors.neutralLightLightest,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: BlocBuilder<OrderCashierFilterCubit,
-                      OrderCashierFilterState>(
-                    builder: (context, state) {
-                      return OrderOutletFilter(
-                        value: state.toFindAllOrderDto,
-                        isFilterUsed: _isFilterUsed,
-                        onChanged: (value) {
-                          final cubit = context.read<OrderCashierFilterCubit>();
+        body: Row(
+          children: [
+            Expanded(
+              child: Scrollbar(
+                child: RefreshIndicator(
+                  onRefresh: onRefresh,
+                  backgroundColor: TColors.neutralLightLightest,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: BlocBuilder<OrderCashierFilterCubit,
+                            OrderCashierFilterState>(
+                          builder: (context, state) {
+                            return OrderOutletFilter(
+                              value: state.toFindAllOrderDto,
+                              isFilterUsed: _isFilterUsed,
+                              onChanged: (value) {
+                                final cubit =
+                                    context.read<OrderCashierFilterCubit>();
 
-                          cubit.setFilter(
-                            sort: value.sort,
-                            source: value.source,
-                            type: value.type,
-                            status: value.status,
-                          );
+                                cubit.setFilter(
+                                  sort: value.sort,
+                                  source: value.source,
+                                  type: value.type,
+                                  status: value.status,
+                                );
 
-                          setState(() {
-                            _isFilterUsed = cubit.hasFilterChanged();
-                          });
-                        },
-                      );
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: BlocBuilder<OrderCashierCubit, OrderCashierState>(
-                    builder: (context, state) {
-                      if (state is OrderCashierLoadSuccess) {
-                        final orders = state.orders;
+                                setState(() {
+                                  _isFilterUsed = cubit.hasFilterChanged();
+                                });
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child:
+                            BlocBuilder<OrderCashierCubit, OrderCashierState>(
+                          builder: (context, state) {
+                            if (state is OrderCashierLoadSuccess) {
+                              final orders = state.orders;
 
-                        return CustomScrollView(
-                          slivers: [
-                            if (orders.isNotEmpty) ...[
-                              ResponsiveLayout(
-                                mobile: SliverList.builder(
-                                  itemCount: orders.length,
-                                  itemBuilder: (context, index) {
-                                    OrderCashierItemRes order =
-                                        orders.elementAt(index);
+                              return CustomScrollView(
+                                slivers: [
+                                  if (orders.isNotEmpty) ...[
+                                    ResponsiveLayout(
+                                      mobile: SliverList.builder(
+                                        itemCount: orders.length,
+                                        itemBuilder: (context, index) {
+                                          OrderCashierItemRes order =
+                                              orders.elementAt(index);
 
-                                    return OrderListItem(
-                                      isCashier: true,
-                                      order: order,
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          "/orders/detail",
-                                          arguments: OrderDetailArgument(
-                                            id: order.id,
+                                          return OrderListItem(
                                             isCashier: true,
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                                tablet: SliverPadding(
-                                  padding: EdgeInsets.fromLTRB(20, 8, 20, 8),
-                                  sliver: SliverGrid.builder(
-                                    gridDelegate:
-                                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 360,
-                                      mainAxisExtent: 114,
-                                      childAspectRatio: 360 / 114,
-                                      crossAxisSpacing: 12,
-                                      mainAxisSpacing: 12,
-                                    ),
-                                    itemCount: orders.length,
-                                    itemBuilder: (context, index) {
-                                      OrderCashierItemRes order =
-                                          orders.elementAt(index);
-
-                                      return OrderCardItem(
-                                        order: order,
-                                        onTap: () {
-                                          Navigator.pushNamed(
-                                            context,
-                                            "/orders/detail",
-                                            arguments: OrderDetailArgument(
-                                              id: order.id,
-                                            ),
+                                            order: order,
+                                            onTap: () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                "/orders/detail",
+                                                arguments: OrderDetailArgument(
+                                                  id: order.id,
+                                                  isCashier: true,
+                                                ),
+                                              );
+                                            },
                                           );
                                         },
-                                      );
-                                    },
+                                      ),
+                                      tablet: SliverPadding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(20, 8, 20, 8),
+                                        sliver: SliverGrid.builder(
+                                          gridDelegate:
+                                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent: 360,
+                                            mainAxisExtent: 115.5,
+                                            childAspectRatio: 360 / 115.5,
+                                            crossAxisSpacing: 12,
+                                            mainAxisSpacing: 12,
+                                          ),
+                                          itemCount: orders.length,
+                                          itemBuilder: (context, index) {
+                                            OrderCashierItemRes order =
+                                                orders.elementAt(index);
+
+                                            bool selctedItem =
+                                                selectedOrderId == order.id;
+
+                                            return OrderCardItem(
+                                              selected: selctedItem,
+                                              order: order,
+                                              onTap: () {
+                                                // Navigator.pushNamed(
+                                                //   context,
+                                                //   "/orders/detail",
+                                                //   arguments: OrderDetailArgument(
+                                                //     id: order.id,
+                                                //   ),
+                                                // );
+
+                                                setState(() {
+                                                  if (selectedOrderId ==
+                                                      order.id) {
+                                                    selectedOrderId = null;
+                                                  } else {
+                                                    selectedOrderId = order.id;
+                                                  }
+                                                });
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    const SliverToBoxAdapter(
+                                      child: SizedBox(height: 72),
+                                    ),
+                                  ],
+                                  if (orders.isEmpty)
+                                    SliverToBoxAdapter(
+                                      child: EmptyList(
+                                        image: _keywordSearch.isNotEmpty
+                                            ? null
+                                            : SvgPicture.asset(
+                                                TImages.catBox,
+                                                width: 276,
+                                                height: 200,
+                                              ),
+                                        title: _determineTitle(),
+                                        subTitle: _determineSubTitle(),
+                                        action: _buildActionButton(),
+                                      ),
+                                    ),
+                                ],
+                              );
+                            } else if (state is OrderCashierLoadFailure) {
+                              return EmptyList(
+                                title: "Gagal memuat data, nih!",
+                                subTitle:
+                                    "Ada sedikit gangguan. Coba coba lagi, ya",
+                                action: TextButton(
+                                  onPressed: onRefresh,
+                                  child: TextActionL(
+                                    "Coba Lagi",
+                                    color: TColors.primary,
                                   ),
                                 ),
-                              ),
-                              const SliverToBoxAdapter(
-                                child: SizedBox(height: 72),
-                              ),
-                            ],
-                            if (orders.isEmpty)
-                              SliverToBoxAdapter(
-                                child: EmptyList(
-                                  image: _keywordSearch.isNotEmpty
-                                      ? null
-                                      : SvgPicture.asset(
-                                          TImages.catBox,
-                                          width: 276,
-                                          height: 200,
-                                        ),
-                                  title: _determineTitle(),
-                                  subTitle: _determineSubTitle(),
-                                  action: _buildActionButton(),
-                                ),
-                              ),
-                          ],
-                        );
-                      } else if (state is OrderCashierLoadFailure) {
-                        return EmptyList(
-                          title: "Gagal memuat data, nih!",
-                          subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
-                          action: TextButton(
-                            onPressed: onRefresh,
-                            child: TextActionL(
-                              "Coba Lagi",
-                              color: TColors.primary,
-                            ),
-                          ),
-                        );
-                      } else {
-                        return ResponsiveLayout(
-                          mobile: OrderItemListShimmer(),
-                          tablet: OrderItemCardShimmer(),
-                        );
-                      }
-                    },
+                              );
+                            } else {
+                              return ResponsiveLayout(
+                                mobile: OrderItemListShimmer(),
+                                tablet: OrderItemCardShimmer(),
+                              );
+                            }
+                          },
+                        ),
+                      )
+                    ],
                   ),
-                )
-              ],
+                ),
+              ),
             ),
-          ),
+            if (selectedOrderId != null)
+              Visibility(
+                visible: selectedOrderId != null,
+                child: OrderDetailTablet(
+                  key: ValueKey(selectedOrderId),
+                  arguments: OrderDetailArgument(
+                    id: selectedOrderId!,
+                    isCashier: true,
+                  ),
+                ),
+              ),
+          ],
         ),
         floatingActionButton: SizedBox(
           height: 40,

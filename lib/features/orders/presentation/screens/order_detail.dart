@@ -8,6 +8,7 @@ import 'package:lakoe_pos/common/widgets/bottomsheets/info_bagde_status.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/general_information.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/ui/tags/order_status/tag_strong_order_status.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
@@ -55,14 +56,17 @@ class OrderDetailScreen extends StatelessWidget {
   const OrderDetailScreen({
     super.key,
     required this.arguments,
+    this.isTabletView = false,
   });
 
   final OrderDetailArgument arguments;
+  final bool isTabletView;
 
   @override
   Widget build(BuildContext context) {
     return OrderDetail(
       arguments: arguments,
+      isTabletView: isTabletView,
     );
   }
 }
@@ -71,8 +75,11 @@ class OrderDetail extends StatefulWidget {
   const OrderDetail({
     super.key,
     required this.arguments,
+    this.isTabletView = false,
   });
+
   final OrderDetailArgument arguments;
+  final bool isTabletView;
 
   @override
   State<OrderDetail> createState() => _OrderDetailState();
@@ -353,7 +360,10 @@ class _OrderDetailState extends State<OrderDetail> {
               final order = state.order;
               return Scaffold(
                 appBar: CustomAppbar(
-                  title: "Order ${order.no}",
+                  title: (widget.isTabletView) ? "" : "Order #${order.no}",
+                  leading: (widget.isTabletView)
+                      ? TextHeading1("Order #${order.no}")
+                      : null,
                   isScrolled: _isScrolled,
                   actions: [
                     order.status == "OPEN"
