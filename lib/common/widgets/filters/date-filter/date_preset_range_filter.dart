@@ -7,6 +7,7 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class DatePresetRangeFilter extends StatefulWidget {
   const DatePresetRangeFilter({
@@ -41,6 +42,7 @@ class _DatePresetRangeFilterState extends State<DatePresetRangeFilter> {
     const LabelValue(label: "Hari ini", value: "TODAY"),
     const LabelValue(label: "Minggu ini", value: "THISWEEK"),
     const LabelValue(label: "Bulan ini", value: "THISMONTH"),
+    const LabelValue(label: "Tentukan Tanggal", value: "CUSTOM"),
   ];
 
   bool _isSameDate(DateTime date1, DateTime date2) {
@@ -130,6 +132,7 @@ class _DatePresetRangeFilterState extends State<DatePresetRangeFilter> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
     bool isDateRangeSelected = widget.template == null && widget.preset != null;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -142,21 +145,31 @@ class _DatePresetRangeFilterState extends State<DatePresetRangeFilter> {
               padding: const EdgeInsets.only(left: 20),
               child: Wrap(
                 spacing: 8.0,
-                children: _templates.map((template) {
+                children: _templates
+                    .where(
+                        (template) => !(isMobile && template.value == "CUSTOM"))
+                    .map((template) {
                   bool selected = widget.template == template.value;
                   return InputChip(
-                    label: selected
+                    label: (selected ||
+                            (template.value == "CUSTOM" && isDateRangeSelected))
                         ? TextHeading4(
                             template.label,
                             color: TColors.primary,
                           )
                         : TextBodyM(template.label),
-                    selected: selected,
+                    selected: (template.value == "CUSTOM")
+                        ? isDateRangeSelected
+                        : selected,
                     onSelected: (value) {
-                      widget.onChanged(
-                        template: template.value,
-                        preset: template.value,
-                      );
+                      if (template.value == "CUSTOM") {
+                        _onPickDateRange();
+                      } else {
+                        widget.onChanged(
+                          template: template.value,
+                          preset: template.value,
+                        );
+                      }
                     },
                   );
                 }).toList(),
@@ -164,31 +177,33 @@ class _DatePresetRangeFilterState extends State<DatePresetRangeFilter> {
             ),
           ),
         ),
-        Container(
-          color: Colors.white,
-          padding: const EdgeInsets.only(right: 20, left: 8, top: 4, bottom: 4),
-          child: SizedBox(
-            height: 34,
-            width: 34,
-            child: InputChip(
-              padding: EdgeInsets.zero,
-              label: Container(
-                alignment: Alignment.center,
-                child: UiIcons(
-                  TIcons.calendar,
-                  size: 20,
-                  color: isDateRangeSelected
-                      ? TColors.primary
-                      : TColors.neutralDarkDarkest,
+        if (isMobile)
+          Container(
+            color: Colors.white,
+            padding:
+                const EdgeInsets.only(right: 20, left: 8, top: 4, bottom: 4),
+            child: SizedBox(
+              height: 34,
+              width: 34,
+              child: InputChip(
+                padding: EdgeInsets.zero,
+                label: Container(
+                  alignment: Alignment.center,
+                  child: UiIcons(
+                    TIcons.calendar,
+                    size: 20,
+                    color: isDateRangeSelected
+                        ? TColors.primary
+                        : TColors.neutralDarkDarkest,
+                  ),
                 ),
+                selected: isDateRangeSelected,
+                onSelected: (value) {
+                  _onPickDateRange();
+                },
               ),
-              selected: isDateRangeSelected,
-              onSelected: (value) {
-                _onPickDateRange();
-              },
             ),
           ),
-        ),
       ],
     );
   }

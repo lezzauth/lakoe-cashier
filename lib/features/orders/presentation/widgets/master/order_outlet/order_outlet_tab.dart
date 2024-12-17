@@ -133,6 +133,12 @@ class _OrderOutletState extends State<OrderOutlet> {
                       return OrderOutletFilter(
                         value: state.toFindAllOrderDto,
                         isFilterUsed: _isFilterUsed,
+                        onClear: () {
+                          setState(() {
+                            _isFilterUsed = false;
+                          });
+                          context.read<OrdersFilterCubit>().clearFilter();
+                        },
                         onChanged: (value) {
                           final cubit = context.read<OrdersFilterCubit>();
 

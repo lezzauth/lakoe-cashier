@@ -10,6 +10,7 @@ import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_rep
 import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_report_filter_state.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class DashboardFilter extends StatefulWidget {
   const DashboardFilter({super.key});
@@ -23,6 +24,7 @@ class _DashboardFilterState extends State<DashboardFilter> {
     const LabelValue(label: "Hari ini", value: "TODAY"),
     const LabelValue(label: "Minggu ini", value: "THISWEEK"),
     const LabelValue(label: "Bulan ini", value: "THISMONTH"),
+    const LabelValue(label: "Tentukan Tanggal", value: "CUSTOM"),
   ];
 
   bool _isSameDate(DateTime date1, DateTime date2) {
@@ -113,6 +115,8 @@ class _DashboardFilterState extends State<DashboardFilter> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
+
     return BlocBuilder<CashierReportFilterCubit, CashierReportFilterState>(
         builder: (context, state) {
       bool isDateRangeSelected = state.template == null && state.preset != null;
@@ -127,20 +131,31 @@ class _DashboardFilterState extends State<DashboardFilter> {
                 padding: const EdgeInsets.only(left: 24),
                 child: Wrap(
                   spacing: 8.0,
-                  children: _templates.map((template) {
+                  children: _templates
+                      .where((template) =>
+                          !(isMobile && template.value == "CUSTOM"))
+                      .map((template) {
                     bool selected = state.template == template.value;
                     return InputChip(
-                      label: selected
+                      label: (selected ||
+                              (template.value == "CUSTOM" &&
+                                  isDateRangeSelected))
                           ? TextHeading4(
                               template.label,
                               color: TColors.primary,
                             )
                           : TextBodyM(template.label),
-                      selected: selected,
+                      selected: (template.value == "CUSTOM")
+                          ? isDateRangeSelected
+                          : selected,
                       onSelected: (value) {
-                        context
-                            .read<CashierReportFilterCubit>()
-                            .setFilter(template: template.value);
+                        if (template.value == "CUSTOM") {
+                          _onPickDateRange(state);
+                        } else {
+                          context
+                              .read<CashierReportFilterCubit>()
+                              .setFilter(template: template.value);
+                        }
                       },
                     );
                   }).toList(),
@@ -148,34 +163,34 @@ class _DashboardFilterState extends State<DashboardFilter> {
               ),
             ),
           ),
-
-          Container(
-            color: Colors.white,
-            padding:
-                const EdgeInsets.only(right: 24, left: 8, top: 4, bottom: 4),
-            child: SizedBox(
-              height: 34,
-              width: 34,
-              child: InputChip(
-                padding: EdgeInsets.zero,
-                label: Container(
-                  alignment: Alignment.center,
-                  child: UiIcons(
-                    TIcons.calendar,
-                    size: 20,
-                    color: isDateRangeSelected
-                        ? TColors.primary
-                        : TColors.neutralDarkDarkest,
+          if (isMobile)
+            Container(
+              color: Colors.white,
+              padding:
+                  const EdgeInsets.only(right: 24, left: 8, top: 4, bottom: 4),
+              child: SizedBox(
+                height: 34,
+                width: 34,
+                child: InputChip(
+                  padding: EdgeInsets.zero,
+                  label: Container(
+                    alignment: Alignment.center,
+                    child: UiIcons(
+                      TIcons.calendar,
+                      size: 20,
+                      color: isDateRangeSelected
+                          ? TColors.primary
+                          : TColors.neutralDarkDarkest,
+                    ),
                   ),
+                  selected: isDateRangeSelected,
+                  onSelected: (value) {
+                    _onPickDateRange(state);
+                    // Navigator.pushNamed(context, "/cashier/transaction-date");
+                  },
                 ),
-                selected: isDateRangeSelected,
-                onSelected: (value) {
-                  _onPickDateRange(state);
-                  // Navigator.pushNamed(context, "/cashier/transaction-date");
-                },
               ),
             ),
-          ),
           // SizedBox(
           //   height: 32,
           //   width: 32,

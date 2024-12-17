@@ -31,7 +31,7 @@ class _OrderOutletFilterState extends State<OrderOutletFilter> {
   List<LabelValue<String>> statuses = [
     const LabelValue(label: "Berlangsung", value: "OPEN"),
     const LabelValue(label: "Selesai", value: "COMPLETED"),
-    // const LabelValue(label: "Dibatalkan", value: "CANCELLED"),
+    const LabelValue(label: "Dibatalkan", value: "CANCELLED"),
   ];
 
   @override
