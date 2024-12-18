@@ -25,7 +25,6 @@ class BankAccountForm extends StatefulWidget {
   final Function(
     dynamic value,
     BankListModel? bank,
-    String previousAccountNumber,
   ) onSubmitted;
   final Future Function()? onDeleted;
   final bool isLoading;
@@ -52,10 +51,8 @@ class _BankAccountFormState extends State<BankAccountForm> {
     dynamic value = _formKey.currentState?.value;
 
     final bank = await context.read<BankListCubit>().findOne(value["name"]);
-    String previousAccountNumber =
-        widget.initialValue["accountNumber"] ?? value["accountNumber"];
 
-    widget.onSubmitted(value, bank, previousAccountNumber);
+    widget.onSubmitted(value, bank);
   }
 
   void _showPopupConfirmation(BuildContext context) {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
-import 'package:logman/logman.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/filters/date-filter/date_preset_range_filter.dart';
@@ -376,7 +375,6 @@ class DetailAmount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Logman.instance.info("amount $amount");
     return CustomBottomsheet(
       child: SafeArea(
         child: Padding(

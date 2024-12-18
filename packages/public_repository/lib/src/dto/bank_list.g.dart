@@ -9,13 +9,13 @@ part of 'bank_list.dart';
 _$GetBankAccountDtoImpl _$$GetBankAccountDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$GetBankAccountDtoImpl(
-      bankCode: json['bankCode'] as String,
-      accountNumber: json['accountNumber'] as String,
+      noRekening: json['noRekening'] as String,
+      kodeBank: json['kodeBank'] as String,
     );
 
 Map<String, dynamic> _$$GetBankAccountDtoImplToJson(
         _$GetBankAccountDtoImpl instance) =>
     <String, dynamic>{
-      'bankCode': instance.bankCode,
-      'accountNumber': instance.accountNumber,
+      'noRekening': instance.noRekening,
+      'kodeBank': instance.kodeBank,
     };

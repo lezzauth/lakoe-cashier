@@ -5,7 +5,6 @@ import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:logman/logman.dart';
 import 'package:pinput/pinput.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_cubit.dart';
@@ -125,7 +124,6 @@ class _OtpInputState extends State<OtpInput>
               context, "/cashier", ModalRoute.withName("/cashier"));
         } else if (state is OtpInputActionFailure) {
           _animationController.forward();
-          Logman.instance.info(state.res.message!);
           if (state.res.message!.contains("expired") && isRepeat) {
             setState(() {
               messageError = "Kode OTP salah. Silakan kirim ulang.";

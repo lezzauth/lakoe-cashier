@@ -23,12 +23,14 @@ class BankVerify extends StatefulWidget {
     required this.bankCode,
     required this.bankName,
     required this.accountNumber,
+    this.accountName,
     required this.name,
   });
 
   final String bankCode;
   final String bankName;
   final String accountNumber;
+  final String? accountName;
   final String name;
 
   @override
@@ -42,6 +44,7 @@ class _BankVerifyState extends State<BankVerify> {
       create: (context) => BankVerifyCubit(),
       child: BankVerifyContent(
         accountNumber: widget.accountNumber,
+        accountName: widget.accountName ?? "",
         bankCode: widget.bankCode,
         bankName: widget.bankName,
         name: widget.name,
@@ -56,12 +59,14 @@ class BankVerifyContent extends StatefulWidget {
     required this.bankCode,
     required this.bankName,
     required this.accountNumber,
+    required this.accountName,
     required this.name,
   });
 
   final String bankCode;
   final String bankName;
   final String accountNumber;
+  final String accountName;
   final String name;
 
   @override
@@ -75,8 +80,8 @@ class _BankVerifyContentState extends State<BankVerifyContent> {
 
     context.read<BankVerifyCubit>().verify(
           GetBankAccountDto(
-            bankCode: widget.bankCode,
-            accountNumber: widget.accountNumber,
+            noRekening: widget.accountNumber,
+            kodeBank: widget.bankCode,
           ),
         );
   }
@@ -86,28 +91,70 @@ class _BankVerifyContentState extends State<BankVerifyContent> {
     return BlocListener<BankVerifyCubit, BankVerifyState>(
       listener: (context, state) async {
         if (state is BankVerifyActionSuccess) {
-          final result = await showModalBottomSheet<BankVerifyArgument?>(
-            context: context,
-            isScrollControlled: true,
-            barrierColor: Colors.transparent,
-            builder: (context) {
-              return CustomBottomsheet(
-                child: BankVerifyConfirmation(
-                  accountName: state.account.accountName,
-                  accountNumber: widget.accountNumber,
-                  bankName: widget.bankName,
-                  name: widget.name,
-                ),
-              );
-            },
-          );
+          bool isSameName =
+              state.account.data.accountName == widget.accountName;
+          if (isSameName) {
+            Navigator.pop(
+              context,
+              BankVerifyArgument(
+                accountName: state.account.data.accountName,
+                accountNumber: widget.accountNumber,
+                bankName: widget.bankName,
+                name: widget.name,
+              ),
+            );
+          } else {
+            final result = await showModalBottomSheet<BankVerifyArgument?>(
+              context: context,
+              isScrollControlled: true,
+              barrierColor: Colors.transparent,
+              builder: (context) {
+                return CustomBottomsheet(
+                  child: BankVerifyConfirmation(
+                    accountName: state.account.data.accountName,
+                    accountNumber: widget.accountNumber,
+                    bankName: widget.bankName,
+                    name: widget.name,
+                  ),
+                );
+              },
+            );
 
-          if (!context.mounted) return;
-          Navigator.pop(context, result);
+            if (!context.mounted) return;
+            Navigator.pop(context, result);
+          }
         }
 
         if (state is BankVerifyActionFailure) {
-          if (state.error.contains("503") || state.error.contains("500")) {
+          if (state.status == "33") {
+            final result = await showModalBottomSheet<BankVerifyArgument?>(
+              context: context,
+              isScrollControlled: true,
+              isDismissible: false,
+              enableDrag: false,
+              barrierColor: Colors.transparent,
+              builder: (context) {
+                return PopScope(
+                  canPop: false,
+                  onPopInvokedWithResult: (didPop, result) async {},
+                  child: CustomBottomsheet(
+                      hasGrabber: false,
+                      child: GeneralInformation(
+                        imageSrc: TImages.generalIllustration,
+                        title: "Rekening tidak ditemukan",
+                        description:
+                            "Yuk! Cek lagi nomor rekening yang kamu, pastikan sesuai dengan bank-nya, ya!",
+                        onAction: () {
+                          Navigator.pop(context);
+                        },
+                        actionTitle: "Cek Lagi",
+                      )),
+                );
+              },
+            );
+            if (!context.mounted) return;
+            Navigator.pop(context, result);
+          } else {
             final TextEditingController controller = TextEditingController();
 
             final GlobalKey<FormBuilderState> formKey =
@@ -194,27 +241,6 @@ class _BankVerifyContentState extends State<BankVerifyContent> {
 
             if (!context.mounted) return;
 
-            Navigator.pop(context, result);
-          } else {
-            final result = await showModalBottomSheet<BankVerifyArgument?>(
-              context: context,
-              isScrollControlled: true,
-              barrierColor: Colors.transparent,
-              builder: (context) {
-                return CustomBottomsheet(
-                    child: GeneralInformation(
-                  imageSrc: TImages.generalIllustration,
-                  title: "Rekening tidak ditemukan",
-                  description:
-                      "Yuk! Cek lagi nomor rekening yang kamu, pastikan sesuai dengan bank-nya, ya!",
-                  onAction: () {
-                    Navigator.pop(context);
-                  },
-                  actionTitle: "Cek Lagi",
-                ));
-              },
-            );
-            if (!context.mounted) return;
             Navigator.pop(context, result);
           }
         }

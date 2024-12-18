@@ -31,8 +31,12 @@ mixin _$BankListModel {
   @JsonKey(name: "code")
   String get code => throw _privateConstructorUsedError;
 
+  /// Serializes this BankListModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of BankListModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BankListModelCopyWith<BankListModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -61,6 +65,8 @@ class _$BankListModelCopyWithImpl<$Res, $Val extends BankListModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of BankListModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -119,6 +125,8 @@ class __$$BankListModelImplCopyWithImpl<$Res>
       _$BankListModelImpl _value, $Res Function(_$BankListModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BankListModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -202,12 +210,14 @@ class _$BankListModelImpl implements _BankListModel {
             (identical(other.code, code) || other.code == code));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, bankCode, bankName, swiftCode, name, code);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BankListModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BankListModelImplCopyWith<_$BankListModelImpl> get copyWith =>
@@ -247,8 +257,11 @@ abstract class _BankListModel implements BankListModel {
   @override
   @JsonKey(name: "code")
   String get code;
+
+  /// Create a copy of BankListModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BankListModelImplCopyWith<_$BankListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -260,12 +273,16 @@ GetBankAccountResponse _$GetBankAccountResponseFromJson(
 
 /// @nodoc
 mixin _$GetBankAccountResponse {
-  bool get status => throw _privateConstructorUsedError;
-  String get msg => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  String get message => throw _privateConstructorUsedError;
   BankAccountModel get data => throw _privateConstructorUsedError;
 
+  /// Serializes this GetBankAccountResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetBankAccountResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetBankAccountResponseCopyWith<GetBankAccountResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -276,7 +293,7 @@ abstract class $GetBankAccountResponseCopyWith<$Res> {
           $Res Function(GetBankAccountResponse) then) =
       _$GetBankAccountResponseCopyWithImpl<$Res, GetBankAccountResponse>;
   @useResult
-  $Res call({bool status, String msg, BankAccountModel data});
+  $Res call({String status, String message, BankAccountModel data});
 
   $BankAccountModelCopyWith<$Res> get data;
 }
@@ -292,21 +309,23 @@ class _$GetBankAccountResponseCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetBankAccountResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? status = null,
-    Object? msg = null,
+    Object? message = null,
     Object? data = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as bool,
-      msg: null == msg
-          ? _value.msg
-          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
               as String,
       data: null == data
           ? _value.data
@@ -315,6 +334,8 @@ class _$GetBankAccountResponseCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of GetBankAccountResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $BankAccountModelCopyWith<$Res> get data {
@@ -333,7 +354,7 @@ abstract class _$$GetBankAccountResponseImplCopyWith<$Res>
       __$$GetBankAccountResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool status, String msg, BankAccountModel data});
+  $Res call({String status, String message, BankAccountModel data});
 
   @override
   $BankAccountModelCopyWith<$Res> get data;
@@ -349,21 +370,23 @@ class __$$GetBankAccountResponseImplCopyWithImpl<$Res>
       $Res Function(_$GetBankAccountResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetBankAccountResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? status = null,
-    Object? msg = null,
+    Object? message = null,
     Object? data = null,
   }) {
     return _then(_$GetBankAccountResponseImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as bool,
-      msg: null == msg
-          ? _value.msg
-          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
               as String,
       data: null == data
           ? _value.data
@@ -377,21 +400,21 @@ class __$$GetBankAccountResponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$GetBankAccountResponseImpl implements _GetBankAccountResponse {
   const _$GetBankAccountResponseImpl(
-      {required this.status, required this.msg, required this.data});
+      {required this.status, required this.message, required this.data});
 
   factory _$GetBankAccountResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$GetBankAccountResponseImplFromJson(json);
 
   @override
-  final bool status;
+  final String status;
   @override
-  final String msg;
+  final String message;
   @override
   final BankAccountModel data;
 
   @override
   String toString() {
-    return 'GetBankAccountResponse(status: $status, msg: $msg, data: $data)';
+    return 'GetBankAccountResponse(status: $status, message: $message, data: $data)';
   }
 
   @override
@@ -400,15 +423,17 @@ class _$GetBankAccountResponseImpl implements _GetBankAccountResponse {
         (other.runtimeType == runtimeType &&
             other is _$GetBankAccountResponseImpl &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.msg, msg) || other.msg == msg) &&
+            (identical(other.message, message) || other.message == message) &&
             (identical(other.data, data) || other.data == data));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, status, msg, data);
+  int get hashCode => Object.hash(runtimeType, status, message, data);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetBankAccountResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetBankAccountResponseImplCopyWith<_$GetBankAccountResponseImpl>
@@ -425,21 +450,24 @@ class _$GetBankAccountResponseImpl implements _GetBankAccountResponse {
 
 abstract class _GetBankAccountResponse implements GetBankAccountResponse {
   const factory _GetBankAccountResponse(
-      {required final bool status,
-      required final String msg,
+      {required final String status,
+      required final String message,
       required final BankAccountModel data}) = _$GetBankAccountResponseImpl;
 
   factory _GetBankAccountResponse.fromJson(Map<String, dynamic> json) =
       _$GetBankAccountResponseImpl.fromJson;
 
   @override
-  bool get status;
+  String get status;
   @override
-  String get msg;
+  String get message;
   @override
   BankAccountModel get data;
+
+  /// Create a copy of GetBankAccountResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetBankAccountResponseImplCopyWith<_$GetBankAccountResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -450,17 +478,21 @@ BankAccountModel _$BankAccountModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$BankAccountModel {
-  @JsonKey(name: "bankcode")
+  @JsonKey(name: "kodeBank")
   String get bankCode => throw _privateConstructorUsedError;
-  @JsonKey(name: "bankname")
+  @JsonKey(name: "namaBank")
   String get bankName => throw _privateConstructorUsedError;
-  @JsonKey(name: "accountnumber")
+  @JsonKey(name: "noRekening")
   String get accountNumber => throw _privateConstructorUsedError;
-  @JsonKey(name: "accountname")
+  @JsonKey(name: "nama")
   String get accountName => throw _privateConstructorUsedError;
 
+  /// Serializes this BankAccountModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of BankAccountModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BankAccountModelCopyWith<BankAccountModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -472,10 +504,10 @@ abstract class $BankAccountModelCopyWith<$Res> {
       _$BankAccountModelCopyWithImpl<$Res, BankAccountModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: "bankcode") String bankCode,
-      @JsonKey(name: "bankname") String bankName,
-      @JsonKey(name: "accountnumber") String accountNumber,
-      @JsonKey(name: "accountname") String accountName});
+      {@JsonKey(name: "kodeBank") String bankCode,
+      @JsonKey(name: "namaBank") String bankName,
+      @JsonKey(name: "noRekening") String accountNumber,
+      @JsonKey(name: "nama") String accountName});
 }
 
 /// @nodoc
@@ -488,6 +520,8 @@ class _$BankAccountModelCopyWithImpl<$Res, $Val extends BankAccountModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of BankAccountModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -526,10 +560,10 @@ abstract class _$$BankAccountModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "bankcode") String bankCode,
-      @JsonKey(name: "bankname") String bankName,
-      @JsonKey(name: "accountnumber") String accountNumber,
-      @JsonKey(name: "accountname") String accountName});
+      {@JsonKey(name: "kodeBank") String bankCode,
+      @JsonKey(name: "namaBank") String bankName,
+      @JsonKey(name: "noRekening") String accountNumber,
+      @JsonKey(name: "nama") String accountName});
 }
 
 /// @nodoc
@@ -540,6 +574,8 @@ class __$$BankAccountModelImplCopyWithImpl<$Res>
       $Res Function(_$BankAccountModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BankAccountModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -573,25 +609,25 @@ class __$$BankAccountModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BankAccountModelImpl implements _BankAccountModel {
   const _$BankAccountModelImpl(
-      {@JsonKey(name: "bankcode") required this.bankCode,
-      @JsonKey(name: "bankname") required this.bankName,
-      @JsonKey(name: "accountnumber") required this.accountNumber,
-      @JsonKey(name: "accountname") required this.accountName});
+      {@JsonKey(name: "kodeBank") required this.bankCode,
+      @JsonKey(name: "namaBank") required this.bankName,
+      @JsonKey(name: "noRekening") required this.accountNumber,
+      @JsonKey(name: "nama") required this.accountName});
 
   factory _$BankAccountModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$BankAccountModelImplFromJson(json);
 
   @override
-  @JsonKey(name: "bankcode")
+  @JsonKey(name: "kodeBank")
   final String bankCode;
   @override
-  @JsonKey(name: "bankname")
+  @JsonKey(name: "namaBank")
   final String bankName;
   @override
-  @JsonKey(name: "accountnumber")
+  @JsonKey(name: "noRekening")
   final String accountNumber;
   @override
-  @JsonKey(name: "accountname")
+  @JsonKey(name: "nama")
   final String accountName;
 
   @override
@@ -614,12 +650,14 @@ class _$BankAccountModelImpl implements _BankAccountModel {
                 other.accountName == accountName));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, bankCode, bankName, accountNumber, accountName);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BankAccountModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BankAccountModelImplCopyWith<_$BankAccountModelImpl> get copyWith =>
@@ -636,29 +674,32 @@ class _$BankAccountModelImpl implements _BankAccountModel {
 
 abstract class _BankAccountModel implements BankAccountModel {
   const factory _BankAccountModel(
-          {@JsonKey(name: "bankcode") required final String bankCode,
-          @JsonKey(name: "bankname") required final String bankName,
-          @JsonKey(name: "accountnumber") required final String accountNumber,
-          @JsonKey(name: "accountname") required final String accountName}) =
+          {@JsonKey(name: "kodeBank") required final String bankCode,
+          @JsonKey(name: "namaBank") required final String bankName,
+          @JsonKey(name: "noRekening") required final String accountNumber,
+          @JsonKey(name: "nama") required final String accountName}) =
       _$BankAccountModelImpl;
 
   factory _BankAccountModel.fromJson(Map<String, dynamic> json) =
       _$BankAccountModelImpl.fromJson;
 
   @override
-  @JsonKey(name: "bankcode")
+  @JsonKey(name: "kodeBank")
   String get bankCode;
   @override
-  @JsonKey(name: "bankname")
+  @JsonKey(name: "namaBank")
   String get bankName;
   @override
-  @JsonKey(name: "accountnumber")
+  @JsonKey(name: "noRekening")
   String get accountNumber;
   @override
-  @JsonKey(name: "accountname")
+  @JsonKey(name: "nama")
   String get accountName;
+
+  /// Create a copy of BankAccountModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BankAccountModelImplCopyWith<_$BankAccountModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

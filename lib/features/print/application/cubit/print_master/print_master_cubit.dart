@@ -262,17 +262,6 @@ class PrintMasterCubit extends Cubit<PrintMasterState> {
     ));
 
     try {
-      // bool isBonded = await isDeviceBonded(device);
-
-      // if (!isBonded) {
-      //   Logman.instance.info('Device is not bonded. Pairing now...');
-
-      //   await BluetoothConnection.toAddress(device.address);
-
-      // } else {
-      //   Logman.instance.info('Device is already bonded.');
-      // }
-
       Logman.instance
           .info('Connecting to device: ${device.name} (${device.address})');
 

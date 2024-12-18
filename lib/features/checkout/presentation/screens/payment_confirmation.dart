@@ -16,7 +16,6 @@ import 'package:lakoe_pos/features/checkout/data/payment_method_model.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
-import 'package:logman/logman.dart';
 import 'package:package_repository/package_repository.dart';
 
 class PaymentConfirmationScreen extends StatefulWidget {
@@ -54,8 +53,6 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
     super.didChangeDependencies();
 
     args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
-    Logman.instance.info("arguments=> ${args!['purchases'].paymentRequest}");
 
     if (args != null) {
       selectedMethod = args!['selectedMethod'];

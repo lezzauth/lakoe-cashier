@@ -60,7 +60,6 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
   }
 
   void _updatePaymentMethodStatus(String id, bool newValue) {
-    Logman.instance.info("OOO ${bankAccounts.length}");
     setState(() {
       final activeMethods = paymentMethods.where((method) {
         final isActive = temporaryChanges.containsKey(method.id)
@@ -214,7 +213,6 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
           listener: (context, state) {
             if (state is BankAccountMasterLoadSuccess) {
               bankAccounts = state.bankAccounts;
-              Logman.instance.info("XXX: ${state.bankAccounts}");
             } else if (state is BankAccountMasterLoadFailure) {
               Logman.instance
                   .error("Failed to load bank accounts: ${state.error}");

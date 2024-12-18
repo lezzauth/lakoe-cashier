@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:lakoe_pos/common/data/models.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
@@ -24,6 +26,12 @@ class BankAccountDetailScreen extends StatefulWidget {
 }
 
 class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+    CustomToast.init(context);
+  }
+
   Future<void> _onSubmitted(
     String bankId, {
     dynamic value,
@@ -32,21 +40,18 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
   }) async {
     if (!context.mounted) return;
 
-    final bool isAccountNumberChanged =
-        value["accountNumber"] != previousAccountNumber;
-
-    if (!isAccountNumberChanged) {
-      await context.read<BankAccountMasterCubit>().update(
-            bankId: bankId,
-            dto: UpdateOwnerBankDto(
-              name: value["name"],
-              accountNumber: value["accountNumber"],
-              accountName: value["accountName"],
-              isPrimary: value["isPrimary"] ?? false,
-            ),
-          );
-      return;
-    }
+    // if (!isAccountNumberChanged) {
+    //   await context.read<BankAccountMasterCubit>().update(
+    //         bankId: bankId,
+    //         dto: UpdateOwnerBankDto(
+    //           name: value["name"],
+    //           accountNumber: value["accountNumber"],
+    //           accountName: widget.arguments.bank.accountName,
+    //           isPrimary: value["isPrimary"] ?? false,
+    //         ),
+    //       );
+    //   return;
+    // }
 
     final result = await showModalBottomSheet<BankVerifyArgument?>(
       context: context,
@@ -59,6 +64,7 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
           child: BankVerify(
             bankCode: bank!.bankCode,
             accountNumber: value["accountNumber"],
+            accountName: widget.arguments.bank.accountName,
             bankName: bank.bankName,
             name: bank.name,
           ),
@@ -69,16 +75,24 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
     if (result == null) return;
 
     if (!mounted) return;
-
-    await context.read<BankAccountMasterCubit>().update(
-          bankId: bankId,
-          dto: UpdateOwnerBankDto(
-            name: result.name,
-            accountNumber: result.accountNumber,
-            accountName: result.accountName,
-            isPrimary: value["isPrimary"] ?? false,
-          ),
-        );
+    if (result.accountName != widget.arguments.bank.accountName) {
+      await context.read<BankAccountMasterCubit>().update(
+            bankId: bankId,
+            dto: UpdateOwnerBankDto(
+              name: result.name,
+              accountNumber: result.accountNumber,
+              accountName: result.accountName,
+              isPrimary: value["isPrimary"] ?? false,
+            ),
+          );
+    } else {
+      CustomToast.showWithContext(
+        context,
+        "Tidak ditemukan perubahan rekening.",
+        icon: TIcons.warning,
+        duration: 2,
+      );
+    }
   }
 
   Future<void> _onDeleted(String bankId) async {
@@ -103,13 +117,12 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
           title: "Ubah Rekening Bank",
         ),
         body: BankAccountForm(
-          onSubmitted: (value, bank, previousAccountNumber) {
+          onSubmitted: (value, bank) {
             FocusScope.of(context).unfocus();
             _onSubmitted(
               arguments.bank.id,
               value: value,
               bank: bank,
-              previousAccountNumber: previousAccountNumber,
             );
           },
           onDeleted: isOnlyAccount || arguments.bank.isPrimary

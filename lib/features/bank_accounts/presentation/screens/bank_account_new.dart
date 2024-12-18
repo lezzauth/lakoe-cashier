@@ -21,7 +21,6 @@ class _BankAccountNewScreenState extends State<BankAccountNewScreen> {
   Future<void> _onSubmitted(
     dynamic value,
     BankListModel? bank,
-    String previousAccountNumber,
   ) async {
     if (!context.mounted) return;
 

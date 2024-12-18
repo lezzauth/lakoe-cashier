@@ -77,12 +77,12 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
         child: Scaffold(
           appBar: CustomAppbar(title: "Daftar Rekening Bank"),
           body: Padding(
-            padding: const EdgeInsets.only(top: 20.0),
+            padding: EdgeInsets.only(top: 20.0),
             child: Scrollbar(
               child: RefreshIndicator(
                 onRefresh: _onRefresh,
                 backgroundColor: TColors.neutralLightLightest,
-                child: const BankAccountList(),
+                child: BankAccountList(),
               ),
             ),
           ),
@@ -99,7 +99,7 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
                           ),
                           onPressed: _onGoToCreateScreen,
                           elevation: 0,
-                          child: const Icon(
+                          child: Icon(
                             Icons.add,
                             size: 24,
                           ),

@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/utils/helpers/error_handler.dart';
-import 'package:logman/logman.dart';
 import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_state.dart';
 
 class CustomerMasterCubit extends Cubit<CustomerMasterState> {
@@ -47,7 +46,6 @@ class CustomerMasterCubit extends Cubit<CustomerMasterState> {
         unexpectedState: CustomerMasterLoadFailure(e.toString()),
       );
     } catch (e) {
-      Logman.instance.error(e);
       emit(CustomerMasterLoadFailure(e.toString()));
     }
   }
