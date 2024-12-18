@@ -787,11 +787,14 @@ class OrderOutetOnClosedAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onComplete,
-      child: const TextActionL(
-        "Lunasi Pesanan",
-        color: TColors.neutralLightLightest,
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: onComplete,
+        child: const TextActionL(
+          "Lunasi Pesanan",
+          color: TColors.neutralLightLightest,
+        ),
       ),
     );
   }
@@ -1080,14 +1083,4 @@ class ContactWhatsapp extends StatelessWidget {
       ),
     );
   }
-}
-
-class _BillPriceItem {
-  final String label;
-  final String price;
-
-  _BillPriceItem({
-    required this.label,
-    required this.price,
-  });
 }
