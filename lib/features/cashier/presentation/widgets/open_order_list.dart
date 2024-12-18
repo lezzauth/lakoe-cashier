@@ -11,7 +11,14 @@ import 'package:shimmer/shimmer.dart';
 class CashierOpenOrderList extends StatelessWidget {
   const CashierOpenOrderList({
     super.key,
+    this.isMobile = false,
+    this.onTap,
+    this.selectedOrderId,
   });
+
+  final bool isMobile;
+  final ValueChanged<OrderDetailArgument>? onTap;
+  final String? selectedOrderId;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +38,7 @@ class CashierOpenOrderList extends StatelessWidget {
                       context,
                       "/orders",
                       arguments: {
-                        "previousScreen": "ExploreProduct",
+                        "previousScreen": "cashier",
                       },
                     );
 
@@ -41,21 +48,28 @@ class CashierOpenOrderList extends StatelessWidget {
                 ),
                 ...orders.map(
                   (order) => OrderItem(
+                    selected: selectedOrderId == order.id,
                     no: order.no,
                     customerName: order.customer?.name ?? "Tamu",
                     tableName: order.table?.no ?? "Bebas",
                     onTap: () async {
-                      await Navigator.pushNamed(
-                        context,
-                        "/orders/detail",
-                        arguments: OrderDetailArgument(
-                          id: order.id,
-                          isCashier: true,
-                        ),
-                      );
+                      if (isMobile) {
+                        await Navigator.pushNamed(
+                          context,
+                          "/orders/detail",
+                          arguments: OrderDetailArgument(
+                            id: order.id,
+                            isCashier: true,
+                          ),
+                        );
 
-                      if (!context.mounted) return;
-                      context.read<CashierOrderCubit>().findAll();
+                        if (!context.mounted) return;
+                        context.read<CashierOrderCubit>().findAll();
+                      } else {
+                        onTap!(
+                          OrderDetailArgument(id: order.id, isCashier: true),
+                        );
+                      }
                     },
                   ),
                 ),

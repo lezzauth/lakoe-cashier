@@ -31,6 +31,8 @@ class CashierCubit extends Cubit<CashierState> {
       emit(CashierCloseInProgress());
       await _cashierRepository.closeCashier(dto);
       emit(CashierClosed());
+
+      await _tokenProvider.clearCashierToken();
     } catch (e) {
       emit(CashierCloseFailure(message: e.toString()));
     }

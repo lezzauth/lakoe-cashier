@@ -11,6 +11,7 @@ class OrderItem extends StatelessWidget {
   final String customerName;
   final String tableName;
   final Function()? onTap;
+  final bool selected;
 
   const OrderItem({
     super.key,
@@ -18,6 +19,7 @@ class OrderItem extends StatelessWidget {
     this.tableName = "",
     this.onTap,
     required this.no,
+    this.selected = false,
   });
 
   @override
@@ -27,8 +29,14 @@ class OrderItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: TColors.neutralLightLightest,
-          border: Border.all(color: TColors.neutralLightMedium, width: 1),
+          color: selected
+              ? TColors.highlightLightest
+              : TColors.neutralLightLightest,
+          border: Border.all(
+            color:
+                selected ? TColors.highlightDark : TColors.neutralLightMedium,
+            width: 1,
+          ),
         ),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         child: Column(

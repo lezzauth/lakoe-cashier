@@ -126,7 +126,10 @@ class _ExploreProductDrawerTabletState
           Navigator.popAndPushNamed(
             context,
             "/payments/success_confirmation",
-            arguments: SuccessConfirmationPaymentArgument(payment: state.res),
+            arguments: SuccessConfirmationPaymentArgument(
+              payment: state.res,
+              isCashier: true,
+            ),
           );
         }
       },

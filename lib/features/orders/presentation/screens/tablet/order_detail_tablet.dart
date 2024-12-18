@@ -15,7 +15,7 @@ class _OrderDetailTabletState extends State<OrderDetailTablet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 380,
+      width: 400,
       margin: EdgeInsets.only(right: 20),
       child: OrderDetailScreen(
         isTabletView: true,

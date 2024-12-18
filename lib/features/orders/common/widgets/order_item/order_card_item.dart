@@ -54,7 +54,7 @@ class OrderCardItem extends StatelessWidget {
                 color: selected
                     ? TColors.highlightDark
                     : TColors.neutralLightLightest,
-                width: selected ? 1.5 : 0.0,
+                width: 1,
               ),
             ),
             child: Column(

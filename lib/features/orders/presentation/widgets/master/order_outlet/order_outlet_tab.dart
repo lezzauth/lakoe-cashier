@@ -10,6 +10,7 @@ import 'package:lakoe_pos/features/orders/common/widgets/order_item/order_card_i
 import 'package:lakoe_pos/features/orders/common/widgets/order_item/order_list_item.dart';
 import 'package:lakoe_pos/features/orders/presentation/screens/tablet/order_detail_tablet.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/filter/order_outlet_filter.dart';
+import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
@@ -54,6 +55,7 @@ class _OrderOutletState extends State<OrderOutlet> {
   void initState() {
     super.initState();
     context.read<OrdersCubit>().init();
+    context.read<PaymentMethodCubit>().findAll();
   }
 
   void _handleClearFilter() {

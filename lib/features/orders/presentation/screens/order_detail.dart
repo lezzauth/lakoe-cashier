@@ -10,6 +10,8 @@ import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/ui/tags/order_status/tag_strong_order_status.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_state.dart';
@@ -337,16 +339,49 @@ class _OrderDetailState extends State<OrderDetail> {
     return MultiBlocListener(
         listeners: [
           BlocListener<OrderDetailCubit, OrderDetailState>(
-            listener: (context, state) {
+            listener: (context, state) async {
               if (state is OrderDetailActionSuccess) {
                 if (state.completeResponse != null) {
-                  Navigator.popAndPushNamed(
-                    context,
-                    "/payments/success_confirmation",
-                    arguments: SuccessConfirmationPaymentArgument(
-                      payment: state.completeResponse!,
-                    ),
-                  );
+                  if (_isCashier) {
+                    Navigator.popAndPushNamed(
+                      context,
+                      "/payments/success_confirmation",
+                      arguments: SuccessConfirmationPaymentArgument(
+                        payment: state.completeResponse!,
+                        isCashier: _isCashier,
+                      ),
+                    );
+                  } else {
+                    Navigator.pop(context);
+                    bool? result = await Navigator.pushNamed(
+                      context,
+                      "/payments/success_confirmation",
+                      arguments: SuccessConfirmationPaymentArgument(
+                        payment: state.completeResponse!,
+                        isCashier: _isCashier,
+                      ),
+                    ) as bool?;
+
+                    Logman.instance.info("XXX DO $result");
+
+                    if (!result!) return;
+                    context
+                        .read<OrderDetailCubit>()
+                        .findOne(widget.arguments.id);
+                    OrdersFilterState filterState =
+                        context.read<OrdersFilterCubit>().state;
+                    final cubit = context.read<OrdersFilterCubit>();
+
+                    cubit.setFilter(
+                      sort: filterState.sort,
+                      source: filterState.source,
+                      type: filterState.type,
+                      status: 'ALL',
+                      template: filterState.template,
+                      from: DateTime.parse(filterState.from!),
+                      to: DateTime.parse(filterState.to!),
+                    );
+                  }
                 } else {
                   Navigator.pop(context, true);
                 }

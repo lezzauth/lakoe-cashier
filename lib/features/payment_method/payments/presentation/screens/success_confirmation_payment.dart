@@ -68,6 +68,7 @@ class _SuccessConfirmationPaymentScreenState
 
 class SuccessConfirmationPaymentContent extends StatefulWidget {
   const SuccessConfirmationPaymentContent({super.key, required this.arguments});
+
   final SuccessConfirmationPaymentArgument arguments;
 
   @override
@@ -90,12 +91,16 @@ class _SuccessConfirmationPaymentContentState
     _onInit();
   }
 
-  void _handlePrintReceipt(
+  void _handleReceipt(
     BuildContext context,
     OrderModel order,
-    Function(BuildContext, OwnerProfileModel, OrderModel, String,
-            ScrollController)
-        action,
+    Function(
+      BuildContext,
+      OwnerProfileModel,
+      OrderModel,
+      String,
+      ScrollController,
+    ) action,
   ) {
     final billMasterState = context.read<BillMasterCubit>().state;
     String footNote = billMasterState.footNote;
@@ -113,6 +118,37 @@ class _SuccessConfirmationPaymentContentState
     }
 
     action(context, profile, order, footNote, _scrollController);
+  }
+
+  void _onShareReceipt(BuildContext context, OrderModel order) async {
+    _handleReceipt(
+      context,
+      order,
+      (context, profile, order, footNote, scrollController) {
+        ReceiptHelper.showDetailBill(
+          context,
+          profile: profile,
+          order: order,
+          footNote: footNote,
+          scrollController: scrollController,
+        );
+      },
+    );
+  }
+
+  void _onPrintReceipt(BuildContext context, OrderModel order) async {
+    _handleReceipt(
+      context,
+      order,
+      (context, profile, order, footNote, scrollController) {
+        TBill.printReceipt(
+          context,
+          profile,
+          order,
+          footNote,
+        );
+      },
+    );
   }
 
   @override
@@ -134,7 +170,7 @@ class _SuccessConfirmationPaymentContentState
 
                 if (isAutoPrint && !_doPrinting) {
                   _doPrinting = true;
-                  _handlePrintReceipt(
+                  _handleReceipt(
                     context,
                     order,
                     (context, profile, order, footNote, scrollController) {
@@ -148,20 +184,23 @@ class _SuccessConfirmationPaymentContentState
                   );
                 }
                 return PopScope(
+                  canPop: widget.arguments.isCashier,
                   onPopInvokedWithResult: (popDisposition, popResult) async {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      if (mounted) {
-                        context.read<CartCubit>().reset();
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (widget.arguments.isCashier) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (mounted) {
+                          context.read<CartCubit>().reset();
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             "/cashier/explore-products",
                             (route) => false,
                           );
-                        });
-                      }
-                    });
-                    return Future.value(null);
+                        }
+                      });
+                      return Future.value(null);
+                    } else {
+                      Navigator.pop(context, true);
+                    }
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -185,16 +224,14 @@ class _SuccessConfirmationPaymentContentState
                                 ),
                               ),
                               Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 32),
-                                margin: const EdgeInsets.only(bottom: 20),
+                                padding: EdgeInsets.symmetric(horizontal: 32),
+                                margin: EdgeInsets.only(bottom: 20),
                                 child: Center(
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Container(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 8),
+                                        margin: EdgeInsets.only(bottom: 8),
                                         child: TextHeading1(
                                           TFormatter.formatToRupiah(
                                             double.parse(arguments
@@ -202,7 +239,7 @@ class _SuccessConfirmationPaymentContentState
                                           ),
                                         ),
                                       ),
-                                      const TextBodyM(
+                                      TextBodyM(
                                         "Yeay! Transaksi berhasil.  🎉",
                                         color: Color(0xFF656F77),
                                       )
@@ -211,12 +248,11 @@ class _SuccessConfirmationPaymentContentState
                                 ),
                               ),
                               Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 32),
+                                padding: EdgeInsets.symmetric(horizontal: 32),
                                 child: Column(
                                   children: [
                                     Container(
-                                      padding: const EdgeInsets.symmetric(
+                                      padding: EdgeInsets.symmetric(
                                         horizontal: 16,
                                         vertical: 16,
                                       ),
@@ -232,19 +268,19 @@ class _SuccessConfirmationPaymentContentState
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              const TextReceipt("No. Order"),
+                                              TextReceipt("No. Order"),
                                               TextReceipt(
                                                 "#${arguments.payment.order.no}",
                                                 fontWeight: FontWeight.w600,
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(height: 8),
+                                          SizedBox(height: 8),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              const TextReceipt("Tanggal"),
+                                              TextReceipt("Tanggal"),
                                               TextReceipt(
                                                 TFormatter.dateTime(arguments
                                                     .payment
@@ -254,12 +290,12 @@ class _SuccessConfirmationPaymentContentState
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(height: 8),
+                                          SizedBox(height: 8),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              const TextReceipt("Pembayaran"),
+                                              TextReceipt("Pembayaran"),
                                               TextReceipt(
                                                 TPaymentMethodName.getName(
                                                   arguments.payment.transaction
@@ -271,19 +307,18 @@ class _SuccessConfirmationPaymentContentState
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(height: 8),
-                                          const Separator(
+                                          SizedBox(height: 8),
+                                          Separator(
                                             color: TColors.neutralLightDark,
                                             height: 1,
                                             dashWidth: 5.0,
                                           ),
-                                          const SizedBox(height: 8),
+                                          SizedBox(height: 8),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              const TextReceipt(
-                                                  "Uang Diterima"),
+                                              TextReceipt("Uang Diterima"),
                                               TextReceipt(
                                                 TFormatter.formatToRupiah(
                                                   double.parse(arguments.payment
@@ -293,13 +328,12 @@ class _SuccessConfirmationPaymentContentState
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(height: 8),
+                                          SizedBox(height: 8),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              const TextReceipt(
-                                                  "Total Tagihan"),
+                                              TextReceipt("Total Tagihan"),
                                               TextReceipt(
                                                 TFormatter.formatToRupiah(
                                                   double.parse(arguments.payment
@@ -312,7 +346,7 @@ class _SuccessConfirmationPaymentContentState
                                         ],
                                       ),
                                     ),
-                                    const Padding(
+                                    Padding(
                                       padding: EdgeInsets.symmetric(
                                         horizontal: 12.0,
                                       ),
@@ -323,7 +357,7 @@ class _SuccessConfirmationPaymentContentState
                                       ),
                                     ),
                                     Container(
-                                      padding: const EdgeInsets.symmetric(
+                                      padding: EdgeInsets.symmetric(
                                         horizontal: 16,
                                         vertical: 12,
                                       ),
@@ -336,7 +370,7 @@ class _SuccessConfirmationPaymentContentState
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          const TextReceipt(
+                                          TextReceipt(
                                             "Kembalian",
                                             fontWeight: FontWeight.bold,
                                             fontSize: TSizes.fontSizeHeading2,
@@ -362,8 +396,8 @@ class _SuccessConfirmationPaymentContentState
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 32, vertical: 12),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -376,50 +410,16 @@ class _SuccessConfirmationPaymentContentState
                                       children: [
                                         Expanded(
                                           child: OutlinedButton(
-                                            onPressed: () async {
-                                              _handlePrintReceipt(
-                                                context,
-                                                order,
-                                                (context,
-                                                    profile,
-                                                    order,
-                                                    footNote,
-                                                    scrollController) {
-                                                  ReceiptHelper.showDetailBill(
-                                                    context,
-                                                    profile: profile,
-                                                    order: order,
-                                                    footNote: footNote,
-                                                    scrollController:
-                                                        scrollController,
-                                                  );
-                                                },
-                                              );
-                                            },
+                                            onPressed: () =>
+                                                _onShareReceipt(context, order),
                                             child: TextActionL("Bagikan Struk"),
                                           ),
                                         ),
-                                        const SizedBox(width: 12),
+                                        SizedBox(width: 12),
                                         Expanded(
                                           child: OutlinedButton(
-                                            onPressed: () {
-                                              _handlePrintReceipt(
-                                                context,
-                                                order,
-                                                (context,
-                                                    profile,
-                                                    order,
-                                                    footNote,
-                                                    scrollController) {
-                                                  TBill.printReceipt(
-                                                    context,
-                                                    profile,
-                                                    order,
-                                                    footNote,
-                                                  );
-                                                },
-                                              );
-                                            },
+                                            onPressed: () =>
+                                                _onPrintReceipt(context, order),
                                             child: TextActionL("Cetak Struk"),
                                           ),
                                         ),
@@ -467,17 +467,20 @@ class _SuccessConfirmationPaymentContentState
                                 },
                               ),
                             ),
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    "/cashier/explore-products",
-                                    (route) => false,
-                                  );
-                                },
-                                child: TextActionL("Buat Pesanan Baru"),
+                            Visibility(
+                              visible: widget.arguments.isCashier,
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      "/cashier/explore-products",
+                                      (route) => false,
+                                    );
+                                  },
+                                  child: TextActionL("Buat Pesanan Baru"),
+                                ),
                               ),
                             )
                           ],

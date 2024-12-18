@@ -233,6 +233,7 @@ class _CartState extends State<Cart> {
               "/payments/success_confirmation",
               arguments: SuccessConfirmationPaymentArgument(
                 payment: state.res,
+                isCashier: true,
               ),
             );
           });

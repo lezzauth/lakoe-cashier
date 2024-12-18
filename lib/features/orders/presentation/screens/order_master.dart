@@ -51,7 +51,7 @@ class OrderMaster extends StatelessWidget {
           focusNode: _searchFocusNode,
           debounceTime: 500,
           onChanged: (value) {
-            if (previousScreen == "ExploreProduct") {
+            if (previousScreen == "cashier") {
               context.read<OrderCashierFilterCubit>().setFilter(search: value);
             } else {
               OrdersFilterState filterState =
@@ -78,7 +78,7 @@ class OrderMaster extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.only(top: isMobile ? 4.0 : 0.0),
-        child: (previousScreen == "ExploreProduct")
+        child: (previousScreen == "cashier")
             ? OrderCashierOutlet(
                 searchController: _searchController,
                 searchFocusNode: _searchFocusNode,
@@ -88,7 +88,7 @@ class OrderMaster extends StatelessWidget {
                 searchFocusNode: _searchFocusNode,
               ),
 
-        // (previousScreen == "ExploreProduct")
+        // (previousScreen == "cashier")
         //     ? TabBarView(
         //         children: [
         //           OrderCashierOutlet(

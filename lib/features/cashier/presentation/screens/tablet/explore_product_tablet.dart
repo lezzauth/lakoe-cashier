@@ -21,6 +21,8 @@ import 'package:lakoe_pos/features/cashier/presentation/widgets/appbar/explore_p
 import 'package:lakoe_pos/features/cashier/presentation/widgets/drawer/explore_product_drawer_tablet.dart';
 import 'package:lakoe_pos/features/cashier/presentation/widgets/open_order_list.dart';
 import 'package:lakoe_pos/features/cashier/presentation/widgets/cashier_product_grid.dart';
+import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
+import 'package:lakoe_pos/features/orders/presentation/screens/tablet/order_detail_tablet.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_state.dart';
 import 'package:lakoe_pos/features/payment_method/common/widgets/payment_method_not_available.dart';
@@ -52,6 +54,8 @@ class _ExploreProductTabletContentState
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
+
+  String? selectedOrderId;
 
   @override
   void initState() {
@@ -150,7 +154,18 @@ class _ExploreProductTabletContentState
                                       ],
                                     ),
                                   ),
-                                  CashierOpenOrderList(),
+                                  CashierOpenOrderList(
+                                    selectedOrderId: selectedOrderId,
+                                    onTap: (value) {
+                                      setState(() {
+                                        if (selectedOrderId == value.id) {
+                                          selectedOrderId = null;
+                                        } else {
+                                          selectedOrderId = value.id;
+                                        }
+                                      });
+                                    },
+                                  ),
                                 ],
                               ),
                             ),
@@ -189,9 +204,11 @@ class _ExploreProductTabletContentState
                                             ),
                                           ),
                                           Container(
-                                            width: 450,
+                                            width: 260,
                                             padding: EdgeInsets.only(
-                                                right: 24, left: 12),
+                                              right: 24,
+                                              left: 12,
+                                            ),
                                             child: SearchField(
                                               hintText: "Cari menu disini…",
                                               controller: _searchController,
@@ -228,7 +245,7 @@ class _ExploreProductTabletContentState
                   return Visibility(
                     visible: state.carts.isNotEmpty,
                     child: SizedBox(
-                      width: 440,
+                      width: 400,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -254,6 +271,17 @@ class _ExploreProductTabletContentState
                   );
                 },
               ),
+              if (selectedOrderId != null)
+                Visibility(
+                  visible: selectedOrderId != null,
+                  child: OrderDetailTablet(
+                    key: ValueKey(selectedOrderId),
+                    arguments: OrderDetailArgument(
+                      id: selectedOrderId!,
+                      isCashier: true,
+                    ),
+                  ),
+                ),
             ],
           ),
         ),

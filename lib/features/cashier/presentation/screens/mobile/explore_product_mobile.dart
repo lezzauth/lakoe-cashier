@@ -152,7 +152,7 @@ class _ExploreProductMobileState extends State<ExploreProductMobile> {
                             ],
                           ),
                         ),
-                        CashierOpenOrderList(),
+                        CashierOpenOrderList(isMobile: true),
                       ],
                     ),
                   ),

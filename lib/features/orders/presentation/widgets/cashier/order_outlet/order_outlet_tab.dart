@@ -15,6 +15,7 @@ import 'package:lakoe_pos/features/orders/common/widgets/order_item/order_list_i
 import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:lakoe_pos/features/orders/presentation/screens/tablet/order_detail_tablet.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_outlet/filter/order_outlet_filter.dart';
+import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -55,6 +56,7 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
   void initState() {
     super.initState();
     context.read<OrderCashierCubit>().init();
+    context.read<PaymentMethodCubit>().findAll();
   }
 
   void _handleClearFilter() {
@@ -220,14 +222,6 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                                               selected: selctedItem,
                                               order: order,
                                               onTap: () {
-                                                // Navigator.pushNamed(
-                                                //   context,
-                                                //   "/orders/detail",
-                                                //   arguments: OrderDetailArgument(
-                                                //     id: order.id,
-                                                //   ),
-                                                // );
-
                                                 setState(() {
                                                   if (selectedOrderId ==
                                                       order.id) {

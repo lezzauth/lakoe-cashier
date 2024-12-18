@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:app_data_provider/app_data_provider.dart';
 import 'package:cashier_repository/src/dto/cashier.dart';
@@ -22,10 +21,7 @@ abstract class CashierRepository {
     SaveOrderDto saveOrderDto,
     CompleteOrderDto completeOrderDto,
   );
-  Future<CompleteOrderRes> completeOrder(
-    String id,
-    CompleteOrderDto dto,
-  );
+  Future<CompleteOrderRes> completeOrder(String id, CompleteOrderDto dto);
   Future<CancelOrderResponse> cancelOrder(String id);
   Future<List<OrderCashierItemRes>> findAllOrderCashier(
       FindAllOrderCashierDto? dto);
@@ -39,10 +35,15 @@ class CashierRepositoryImpl implements CashierRepository {
   final AppDataProvider _appDataProvider = AppDataProvider();
 
   Future<Options> _getOptions() async {
-    final token = await _tokenProvider.getCashierToken();
-    if (token == null) return Options();
+    final tokenCashier = await _tokenProvider.getCashierToken();
+    final tokenAuth = await _tokenProvider.getAuthToken();
+    if (tokenCashier == null && tokenAuth == null) return Options();
 
-    return Options(headers: {"Authorization": "Bearer $token"});
+    if (tokenCashier == null) {
+      return Options(headers: {"Authorization": "Bearer $tokenAuth"});
+    }
+
+    return Options(headers: {"Authorization": "Bearer $tokenCashier"});
   }
 
   @override
@@ -111,7 +112,6 @@ class CashierRepositoryImpl implements CashierRepository {
       data: dto.copyWith(outletId: outletId).toJson(),
       options: options,
     );
-    log('saveOrder: ${response.data} | ${dto.toJson()}');
     return SaveOrderResponse.fromJson(response.data);
   }
 
