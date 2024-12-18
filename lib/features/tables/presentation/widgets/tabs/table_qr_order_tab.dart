@@ -82,24 +82,21 @@ class _TableQrOrderTabState extends State<TableQrOrderTab> {
         ),
         Padding(
           padding: EdgeInsets.all(20.0),
-          child: SizedBox(
-            height: 48,
-            child: OutlinedButton(
-              onPressed: () async {
-                bool? result =
-                    await Navigator.pushNamed(context, "/tables/edit/brand")
-                        as bool?;
+          child: OutlinedButton(
+            onPressed: () async {
+              bool? result =
+                  await Navigator.pushNamed(context, "/tables/edit/brand")
+                      as bool?;
 
-                if (result == true) {
-                  if (mounted) {
-                    context.read<OutletCubit>().init();
-                  }
+              if (result == true) {
+                if (mounted) {
+                  context.read<OutletCubit>().init();
                 }
-              },
-              child: TextActionL(
-                "Ubah Logo & Warna",
-                color: TColors.primary,
-              ),
+              }
+            },
+            child: TextActionL(
+              "Ubah Logo & Warna",
+              color: TColors.primary,
             ),
           ),
         )

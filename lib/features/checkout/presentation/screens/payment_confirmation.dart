@@ -441,13 +441,10 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.all(20),
-                                child: SizedBox(
-                                  height: 48,
-                                  child: OutlinedButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: const TextActionL("Oke! Paham"),
-                                  ),
+                                padding: EdgeInsets.all(20),
+                                child: OutlinedButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: TextActionL("Oke! Paham"),
                                 ),
                               ),
                             ],

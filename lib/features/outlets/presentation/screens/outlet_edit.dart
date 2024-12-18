@@ -365,7 +365,8 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                                                     color: Color(selectedColor),
                                                     columnSpacing: 12,
                                                     padding: EdgeInsets.all(20),
-                                                    wheelDiameter: screenWidth,
+                                                    wheelDiameter: 320,
+                                                    // wheelDiameter: screenWidth,
                                                     wheelWidth: 12,
                                                     wheelHasBorder: true,
                                                     onColorChanged:
@@ -386,20 +387,13 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                                                     },
                                                   ),
                                                   Container(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            20),
-                                                    child: SizedBox(
-                                                      height: 48,
-                                                      child: OutlinedButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child:
-                                                            const TextActionL(
-                                                                "Pilih Warna"),
-                                                      ),
+                                                    padding: EdgeInsets.all(20),
+                                                    child: OutlinedButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: TextActionL(
+                                                          "Pilih Warna"),
                                                     ),
                                                   ),
                                                 ],

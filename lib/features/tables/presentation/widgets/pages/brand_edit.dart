@@ -287,17 +287,13 @@ class _BrandEditScreenState extends State<BrandEditScreen> {
                                                   },
                                                 ),
                                                 Container(
-                                                  padding:
-                                                      const EdgeInsets.all(20),
-                                                  child: SizedBox(
-                                                    height: 48,
-                                                    child: OutlinedButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: const TextActionL(
-                                                          "Pilih Warna"),
-                                                    ),
+                                                  padding: EdgeInsets.all(20),
+                                                  child: OutlinedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: TextActionL(
+                                                        "Pilih Warna"),
                                                   ),
                                                 ),
                                               ],

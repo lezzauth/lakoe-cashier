@@ -20,7 +20,10 @@ class TOutlinedButtonTheme {
         },
       ),
       padding: WidgetStateProperty.all(
-        EdgeInsets.all(TSizes.buttonVerticalPadding),
+        EdgeInsets.symmetric(
+          vertical: TSizes.buttonVerticalPadding,
+          horizontal: TSizes.buttonHorizontalPadding,
+        ),
       ),
       shape: WidgetStatePropertyAll(
         RoundedRectangleBorder(

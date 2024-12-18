@@ -169,14 +169,11 @@ class _BankSelectListState extends State<BankSelectList> {
                 ),
               ),
             ),
-            child: SizedBox(
-              height: 48,
-              child: ElevatedButton(
-                onPressed: () {
-                  widget.onChanged(_value);
-                },
-                child: const TextActionL("Lanjutkan"),
-              ),
+            child: ElevatedButton(
+              onPressed: () {
+                widget.onChanged(_value);
+              },
+              child: const TextActionL("Lanjutkan"),
             ),
           ),
         ],

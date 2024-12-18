@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
-import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_cubit.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_state.dart';
@@ -72,29 +71,49 @@ class _TableEditState extends State<TableEdit> {
           appBar: CustomAppbar(
             title: "Ubah Meja ${arguments.no}",
             actions: [
-              ResponsiveLayout(
-                mobile: BlocBuilder<TableMasterCubit, TableMasterState>(
-                    builder: (context, state) {
-                  return TextButton(
-                    onPressed: state is TableMasterActionInProgress
-                        ? null
-                        : () => _onSubmit(arguments.id),
-                    child: state is TableMasterActionInProgress
-                        ? const SizedBox(
-                            height: 16,
-                            width: 16,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 1.2,
-                            ),
-                          )
-                        : const TextActionL(
-                            "SIMPAN",
-                            color: TColors.primary,
+              // ResponsiveLayout(
+              //   mobile: BlocBuilder<TableMasterCubit, TableMasterState>(
+              //       builder: (context, state) {
+              //     return TextButton(
+              //       onPressed: state is TableMasterActionInProgress
+              //           ? null
+              //           : () => _onSubmit(arguments.id),
+              //       child: state is TableMasterActionInProgress
+              //           ? const SizedBox(
+              //               height: 16,
+              //               width: 16,
+              //               child: CircularProgressIndicator(
+              //                 strokeWidth: 1.2,
+              //               ),
+              //             )
+              //           : const TextActionL(
+              //               "SIMPAN",
+              //               color: TColors.primary,
+              //             ),
+              //     );
+              //   }),
+              //   tablet: SizedBox.shrink(),
+              // ),
+              BlocBuilder<TableMasterCubit, TableMasterState>(
+                  builder: (context, state) {
+                return TextButton(
+                  onPressed: state is TableMasterActionInProgress
+                      ? null
+                      : () => _onSubmit(arguments.id),
+                  child: state is TableMasterActionInProgress
+                      ? const SizedBox(
+                          height: 16,
+                          width: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 1.2,
                           ),
-                  );
-                }),
-                tablet: SizedBox.shrink(),
-              ),
+                        )
+                      : const TextActionL(
+                          "SIMPAN",
+                          color: TColors.primary,
+                        ),
+                );
+              }),
             ],
             // bottom: PreferredSize(
             //   preferredSize: Size.fromHeight(48.0),

@@ -579,7 +579,8 @@ class _OrderDetailState extends State<OrderDetail> {
                               ),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(16, 12, 16, 20),
+                              padding: EdgeInsets.fromLTRB(
+                                  16, 8, 16, widget.isTabletView ? 8 : 20),
                               child: OrderOutletAction(
                                   isPaid: order.status == "COMPLETED",
                                   isCancel: order.status == "CANCELLED",
@@ -760,27 +761,15 @@ class OrderOutetOnProgressAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox(
-          height: 48,
-          child: OutlinedButton(
-            onPressed: onEditOrder,
-            child: const TextActionL(
-              "Ubah Pesanan",
-              color: TColors.primary,
-            ),
-          ),
+        OutlinedButton(
+          onPressed: onEditOrder,
+          child: TextActionL("Ubah Pesanan"),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12),
         Expanded(
-          child: SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: onComplete,
-              child: const TextActionL(
-                "Bayar & Selesaikan",
-                color: TColors.neutralLightLightest,
-              ),
-            ),
+          child: ElevatedButton(
+            onPressed: onComplete,
+            child: TextActionL("Bayar & Selesaikan"),
           ),
         ),
       ],
@@ -798,15 +787,11 @@ class OrderOutetOnClosedAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 48,
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: onComplete,
-        child: const TextActionL(
-          "Lunasi Pesanan",
-          color: TColors.neutralLightLightest,
-        ),
+    return ElevatedButton(
+      onPressed: onComplete,
+      child: const TextActionL(
+        "Lunasi Pesanan",
+        color: TColors.neutralLightLightest,
       ),
     );
   }
@@ -827,38 +812,26 @@ class OrderOutletPaidAction extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: SizedBox(
-            height: 48,
-            child: OutlinedButton(
-              onPressed: onShare,
-              child: const TextActionL(
-                "Bagikan",
-                color: TColors.primary,
-              ),
-            ),
+          child: OutlinedButton(
+            onPressed: onShare,
+            child: TextActionL("Bagikan"),
           ),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12),
         Expanded(
-          child: SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: onPrint,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  UiIcons(
-                    TIcons.printer,
-                    size: 20,
-                    color: TColors.highlightLightest,
-                  ),
-                  SizedBox(width: 8),
-                  const TextActionL(
-                    "Cetak",
-                    color: TColors.neutralLightLightest,
-                  ),
-                ],
-              ),
+          child: ElevatedButton(
+            onPressed: onPrint,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                UiIcons(
+                  TIcons.printer,
+                  size: 16,
+                  color: TColors.highlightLightest,
+                ),
+                SizedBox(width: 8),
+                TextActionL("Cetak"),
+              ],
             ),
           ),
         ),
@@ -929,35 +902,29 @@ class OrderOnlineNewAction extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: SizedBox(
-            height: 48,
-            child: OutlinedButton(
-              style: const ButtonStyle(
-                side: WidgetStatePropertyAll(
-                  BorderSide(
-                    width: 1,
-                    color: TColors.error,
-                  ),
+          child: OutlinedButton(
+            style: const ButtonStyle(
+              side: WidgetStatePropertyAll(
+                BorderSide(
+                  width: 1,
+                  color: TColors.error,
                 ),
               ),
-              onPressed: onDeclined,
-              child: const TextActionL(
-                "Tolak Pesanan",
-                color: TColors.primary,
-              ),
+            ),
+            onPressed: onDeclined,
+            child: const TextActionL(
+              "Tolak Pesanan",
+              color: TColors.primary,
             ),
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: onProcessed,
-              child: const TextActionL(
-                "Proses Pesanan",
-                color: TColors.neutralLightLightest,
-              ),
+          child: ElevatedButton(
+            onPressed: onProcessed,
+            child: const TextActionL(
+              "Proses Pesanan",
+              color: TColors.neutralLightLightest,
             ),
           ),
         ),
@@ -979,14 +946,11 @@ class OrderOnlineOnProgressAction extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: onComplete,
-              child: const TextActionL(
-                "Selesaikan Pesanan",
-                color: TColors.neutralLightLightest,
-              ),
+          child: ElevatedButton(
+            onPressed: onComplete,
+            child: const TextActionL(
+              "Selesaikan Pesanan",
+              color: TColors.neutralLightLightest,
             ),
           ),
         ),
@@ -1010,27 +974,21 @@ class OrderOnlineDoneAction extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: SizedBox(
-            height: 48,
-            child: OutlinedButton(
-              onPressed: onShare,
-              child: const TextActionL(
-                "Bagikan",
-                color: TColors.primary,
-              ),
+          child: OutlinedButton(
+            onPressed: onShare,
+            child: const TextActionL(
+              "Bagikan",
+              color: TColors.primary,
             ),
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: onPrint,
-              child: const TextActionL(
-                "Cetak",
-                color: TColors.neutralLightLightest,
-              ),
+          child: ElevatedButton(
+            onPressed: onPrint,
+            child: const TextActionL(
+              "Cetak",
+              color: TColors.neutralLightLightest,
             ),
           ),
         ),

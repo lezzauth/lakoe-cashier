@@ -203,27 +203,21 @@ class _QrisPaymentScreenState extends State<QrisPaymentScreen> {
             Row(
               children: [
                 Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: OutlinedButton(
-                      onPressed: () {},
-                      child: const TextActionL(
-                        "Cetak QRIS",
-                        color: TColors.primary,
-                      ),
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    child: const TextActionL(
+                      "Cetak QRIS",
+                      color: TColors.primary,
                     ),
                   ),
                 ),
                 const SizedBox(width: 6),
                 Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const TextActionL(
-                        "Cek Pembayaran",
-                        color: TColors.neutralLightLightest,
-                      ),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: const TextActionL(
+                      "Cek Pembayaran",
+                      color: TColors.neutralLightLightest,
                     ),
                   ),
                 ),

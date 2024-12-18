@@ -60,12 +60,9 @@ class AccessPermission extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: onRequest,
-                      child: TextActionL(actionTitle ?? "Berikan Izin"),
-                    ),
+                  child: ElevatedButton(
+                    onPressed: onRequest,
+                    child: TextActionL(actionTitle ?? "Berikan Izin"),
                   ),
                 ),
               ],

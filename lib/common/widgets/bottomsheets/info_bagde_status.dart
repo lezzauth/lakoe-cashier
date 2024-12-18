@@ -140,7 +140,6 @@ class InfoBagdeStatus extends StatelessWidget {
             SizedBox(height: 20),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
-              height: 48,
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: () {

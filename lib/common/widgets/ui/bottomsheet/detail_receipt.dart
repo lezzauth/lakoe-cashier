@@ -112,7 +112,7 @@ class DetailReceiptBottomSheet extends StatelessWidget {
                         children: [
                           UiIcons(
                             TIcons.printer,
-                            size: 20,
+                            size: 16,
                             color: TColors.primary,
                           ),
                           SizedBox(width: 8),

@@ -183,60 +183,54 @@ class _OrderOutletAdvancedFilterState extends State<OrderOutletAdvancedFilter> {
           child: Row(
             children: [
               Expanded(
-                child: SizedBox(
-                  height: 48,
-                  child: OutlinedButton(
-                    onPressed: () {
-                      widget.onFilterChanged(
-                        widget.value.copyWith(
-                          sort: "NEWEST",
-                          status: "ALL",
-                          type: "ALL",
-                        ),
-                      );
-                      setState(() {
-                        isFilterUsed = false;
-                      });
-                      Navigator.pop(context, {'isFilterUsed': false});
-                    },
-                    child: TextActionL(
-                      "Hapus",
-                      color: TColors.primary,
-                    ),
+                child: OutlinedButton(
+                  onPressed: () {
+                    widget.onFilterChanged(
+                      widget.value.copyWith(
+                        sort: "NEWEST",
+                        status: "ALL",
+                        type: "ALL",
+                      ),
+                    );
+                    setState(() {
+                      isFilterUsed = false;
+                    });
+                    Navigator.pop(context, {'isFilterUsed': false});
+                  },
+                  child: TextActionL(
+                    "Hapus",
+                    color: TColors.primary,
                   ),
                 ),
               ),
               SizedBox(width: 12),
               Expanded(
-                child: SizedBox(
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: (selectedSortValue == "NEWEST" &&
-                            selectedStatusValue == null &&
-                            selectedTypesValue == null &&
-                            isFilterUsed)
-                        ? null
-                        : () {
-                            widget.onFilterChanged(
-                              widget.value.copyWith(
-                                sort: selectedSortValue,
-                                status: selectedStatusValue,
-                                type: selectedTypesValue,
-                              ),
-                            );
-                            bool isFiltered = selectedSortValue != "NEWEST" ||
-                                (selectedStatusValue ?? "ALL") != "ALL" ||
-                                (selectedTypesValue ?? "ALL") != "ALL";
-                            setState(() {
-                              isFilterUsed = isFiltered;
-                            });
-                            Navigator.pop(
-                                context, {'isFilterUsed': isFilterUsed});
-                          },
-                    child: TextActionL(
-                      "Pasang",
-                      color: TColors.neutralLightLightest,
-                    ),
+                child: ElevatedButton(
+                  onPressed: (selectedSortValue == "NEWEST" &&
+                          selectedStatusValue == null &&
+                          selectedTypesValue == null &&
+                          isFilterUsed)
+                      ? null
+                      : () {
+                          widget.onFilterChanged(
+                            widget.value.copyWith(
+                              sort: selectedSortValue,
+                              status: selectedStatusValue,
+                              type: selectedTypesValue,
+                            ),
+                          );
+                          bool isFiltered = selectedSortValue != "NEWEST" ||
+                              (selectedStatusValue ?? "ALL") != "ALL" ||
+                              (selectedTypesValue ?? "ALL") != "ALL";
+                          setState(() {
+                            isFilterUsed = isFiltered;
+                          });
+                          Navigator.pop(
+                              context, {'isFilterUsed': isFilterUsed});
+                        },
+                  child: TextActionL(
+                    "Pasang",
+                    color: TColors.neutralLightLightest,
                   ),
                 ),
               )

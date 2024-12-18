@@ -138,58 +138,58 @@ class _OrderOutletState extends State<OrderOutlet> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child:
-                            BlocBuilder<OrdersFilterCubit, OrdersFilterState>(
-                          builder: (context, state) {
-                            return SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: OrderOutletFilter(
-                                value: state.toFindAllOrderDto,
-                                isFilterUsed: _isFilterUsed,
-                                onClear: () {
-                                  setState(() {
-                                    _isFilterUsed = false;
-                                  });
-                                  context
-                                      .read<OrdersFilterCubit>()
-                                      .clearFilter();
-                                },
-                                onChanged: (value) {
-                                  final cubit =
-                                      context.read<OrdersFilterCubit>();
+                      BlocBuilder<OrdersFilterCubit, OrdersFilterState>(
+                        builder: (context, state) {
+                          return SingleChildScrollView(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            physics: (isMobile || selectedOrderId == null)
+                                ? NeverScrollableScrollPhysics()
+                                : AlwaysScrollableScrollPhysics(),
+                            scrollDirection:
+                                (isMobile || selectedOrderId == null)
+                                    ? Axis.vertical
+                                    : Axis.horizontal,
+                            child: OrderOutletFilter(
+                              value: state.toFindAllOrderDto,
+                              isFilterUsed: _isFilterUsed,
+                              onClear: () {
+                                setState(() {
+                                  _isFilterUsed = false;
+                                });
+                                context.read<OrdersFilterCubit>().clearFilter();
+                              },
+                              onChanged: (value) {
+                                final cubit = context.read<OrdersFilterCubit>();
 
-                                  final from = value.template == "CUSTOM"
-                                      ? DateTime.parse(value.from!)
-                                      : value.from != null
-                                          ? DateTime.parse(value.from!)
-                                          : null;
+                                final from = value.template == "CUSTOM"
+                                    ? DateTime.parse(value.from!)
+                                    : value.from != null
+                                        ? DateTime.parse(value.from!)
+                                        : null;
 
-                                  final to = value.template == "CUSTOM"
-                                      ? DateTime.parse(value.to!)
-                                      : value.to != null
-                                          ? DateTime.parse(value.to!)
-                                          : null;
+                                final to = value.template == "CUSTOM"
+                                    ? DateTime.parse(value.to!)
+                                    : value.to != null
+                                        ? DateTime.parse(value.to!)
+                                        : null;
 
-                                  cubit.setFilter(
-                                    sort: value.sort,
-                                    source: value.source,
-                                    type: value.type,
-                                    status: value.status,
-                                    template: value.template,
-                                    from: from,
-                                    to: to,
-                                  );
+                                cubit.setFilter(
+                                  sort: value.sort,
+                                  source: value.source,
+                                  type: value.type,
+                                  status: value.status,
+                                  template: value.template,
+                                  from: from,
+                                  to: to,
+                                );
 
-                                  setState(() {
-                                    _isFilterUsed = cubit.hasFilterChanged();
-                                  });
-                                },
-                              ),
-                            );
-                          },
-                        ),
+                                setState(() {
+                                  _isFilterUsed = cubit.hasFilterChanged();
+                                });
+                              },
+                            ),
+                          );
+                        },
                       ),
                       Expanded(
                         child: BlocBuilder<OrdersCubit, OrdersState>(

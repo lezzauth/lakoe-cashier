@@ -51,32 +51,26 @@ class BankAccountNotAvailable extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: SizedBox(
-                      height: 48,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: TextActionL(
-                          "Nanti saja",
-                          color: TColors.primary,
-                        ),
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: TextActionL(
+                        "Nanti saja",
+                        color: TColors.primary,
                       ),
                     ),
                   ),
                   SizedBox(width: 12),
                   Expanded(
-                    child: SizedBox(
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.pushNamed(context, "/bank_accounts");
-                        },
-                        child: TextActionL(
-                          "Atur Sekarang",
-                          color: TColors.neutralLightLightest,
-                        ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, "/bank_accounts");
+                      },
+                      child: TextActionL(
+                        "Atur Sekarang",
+                        color: TColors.neutralLightLightest,
                       ),
                     ),
                   )

@@ -27,13 +27,13 @@ class GeneralInformation extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                margin: const EdgeInsets.only(bottom: 20),
+                margin: EdgeInsets.only(bottom: 20),
                 child: Image.asset(
                   imageSrc,
                   height: 72.46,
@@ -41,7 +41,7 @@ class GeneralInformation extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(bottom: 8),
+                margin: EdgeInsets.only(bottom: 8),
                 child: TextHeading2(
                   title,
                   color: TColors.neutralDarkDarkest,
@@ -56,13 +56,10 @@ class GeneralInformation extends StatelessWidget {
         ),
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(20),
-          child: SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: onAction,
-              child: TextActionL(actionTitle ?? "Berikan Izin"),
-            ),
+          padding: EdgeInsets.all(20),
+          child: ElevatedButton(
+            onPressed: onAction,
+            child: TextActionL(actionTitle ?? "Berikan Izin"),
           ),
         ),
       ],

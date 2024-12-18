@@ -23,12 +23,9 @@ class DebitPaymentFooter extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: SizedBox(
-                height: 48,
-                child: ElevatedButton(
-                  onPressed: isFormValid ? onSubmitted : null,
-                  child: const TextActionL("Selesaikan"),
-                ),
+              child: ElevatedButton(
+                onPressed: isFormValid ? onSubmitted : null,
+                child: const TextActionL("Selesaikan"),
               ),
             ),
           ],
@@ -38,9 +35,9 @@ class DebitPaymentFooter extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.fromLTRB(24, 12, 24, 12),
             alignment: Alignment.bottomCenter,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(
                   width: 1,
@@ -51,24 +48,20 @@ class DebitPaymentFooter extends StatelessWidget {
             child: Row(
               children: [
                 SizedBox(
-                  height: 48,
                   width: 140,
                   child: OutlinedButton(
                     onPressed: onCanceled,
-                    child: const TextActionL(
+                    child: TextActionL(
                       "Batalkan",
                       color: TColors.primary,
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: isFormValid ? onSubmitted : null,
-                      child: const TextActionL("Selesaikan"),
-                    ),
+                  child: ElevatedButton(
+                    onPressed: isFormValid ? onSubmitted : null,
+                    child: TextActionL("Selesaikan"),
                   ),
                 ),
               ],

@@ -249,25 +249,21 @@ class _CreateTableLocationFormState extends State<CreateTableLocationForm> {
               child: Row(
                 children: [
                   Expanded(
-                    child: SizedBox(
-                      height: 48,
-                      child: BlocBuilder<TableMasterLocationCubit,
-                          TableMasterLocationState>(builder: (context, state) {
-                        return ElevatedButton(
-                          onPressed:
-                              state is TableMasterLocationActionInProgress
-                                  ? null
-                                  : _onSubmit,
-                          child: state is TableMasterLocationActionInProgress
-                              ? const SizedBox(
-                                  width: 16,
-                                  height: 16,
-                                  child: CircularProgressIndicator(),
-                                )
-                              : const TextActionL("Simpan"),
-                        );
-                      }),
-                    ),
+                    child: BlocBuilder<TableMasterLocationCubit,
+                        TableMasterLocationState>(builder: (context, state) {
+                      return ElevatedButton(
+                        onPressed: state is TableMasterLocationActionInProgress
+                            ? null
+                            : _onSubmit,
+                        child: state is TableMasterLocationActionInProgress
+                            ? const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(),
+                              )
+                            : const TextActionL("Simpan"),
+                      );
+                    }),
                   ),
                 ],
               ),

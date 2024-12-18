@@ -86,87 +86,79 @@ class OrderCardItem extends StatelessWidget {
                     ),
                     SizedBox(width: 12),
                     Flexible(
-                      child: Row(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Flexible(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextHeading4(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: TextHeading4(
                                   customerName,
                                   color: TColors.neutralDarkDarkest,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                 ),
-                                SizedBox(height: 2),
-                                Row(
-                                  children: [
-                                    TextBodyXS(
-                                      "Order #$no",
-                                      color: TColors.neutralDarkLight,
-                                      fontWeight: FontWeight.bold,
+                              ),
+                              (isCashier)
+                                  ? SizedBox.shrink()
+                                  : InkWell(
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) {
+                                            return CustomBottomsheet(
+                                              child: InfoBagdeStatus(
+                                                  isStrong: false),
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: TagThinOrderStatus(tag: status),
                                     ),
-                                    Container(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 2),
-                                      child: TextBodyS(
-                                        "/",
-                                        color: TColors.neutralDarkLightest,
-                                      ),
-                                    ),
-                                    TextBodyXS(
-                                      tableName,
-                                      color: TColors.neutralDarkLight,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 2),
-                                          child: TextBodyS(
-                                            "/",
-                                            color: TColors.neutralDarkLightest,
-                                          ),
-                                        ),
-                                        TextBodyXS(
-                                          (type == "DINEIN")
-                                              ? "Dine In"
-                                              : "Takeaway",
-                                          color: TColors.neutralDarkLight,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                            ],
                           ),
-                          SizedBox(width: 12),
-                          Container(
-                            child: (isCashier)
-                                ? SizedBox.shrink()
-                                : InkWell(
-                                    splashColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        isScrollControlled: true,
-                                        builder: (context) {
-                                          return CustomBottomsheet(
-                                            child: InfoBagdeStatus(
-                                                isStrong: false),
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: TagThinOrderStatus(tag: status),
+                          SizedBox(height: 2),
+                          Row(
+                            children: [
+                              TextBodyXS(
+                                "Order #$no",
+                                color: TColors.neutralDarkLight,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 2),
+                                child: TextBodyS(
+                                  "/",
+                                  color: TColors.neutralDarkLightest,
+                                ),
+                              ),
+                              TextBodyXS(
+                                tableName,
+                                color: TColors.neutralDarkLight,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 2),
+                                    child: TextBodyS(
+                                      "/",
+                                      color: TColors.neutralDarkLightest,
+                                    ),
                                   ),
+                                  TextBodyXS(
+                                    (type == "DINEIN") ? "Dine In" : "Takeaway",
+                                    color: TColors.neutralDarkLight,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ],
                       ),

@@ -77,18 +77,15 @@ class _DatePickerState extends State<DatePicker> {
             child: Row(
               children: [
                 Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        widget.onChanged(
-                          selectedDate ??
-                              widget.initialDateTime ??
-                              DateTime.now(),
-                        );
-                      },
-                      child: TextActionL("Pilih"),
-                    ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      widget.onChanged(
+                        selectedDate ??
+                            widget.initialDateTime ??
+                            DateTime.now(),
+                      );
+                    },
+                    child: TextActionL("Pilih"),
                   ),
                 ),
               ],

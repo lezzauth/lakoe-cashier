@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:lakoe_pos/common/widgets/form/form_label.dart';
-import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/popup_confirmation.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/tables/presentation/widgets/forms/field/location_field.dart';
@@ -267,34 +266,33 @@ class _TableInformationFormState extends State<TableInformationForm> {
                         ],
                       ),
                     ),
-                    ResponsiveLayout(
-                      mobile: SizedBox.shrink(),
-                      tablet: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 12,
-                          horizontal: 16,
-                        ),
-                        child: SizedBox(
-                          height: 48,
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed:
-                                widget.isLoading ? null : widget.onSubmit,
-                            child: widget.isLoading
-                                ? SizedBox(
-                                    height: 16,
-                                    width: 16,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 1.5,
-                                    ),
-                                  )
-                                : TextActionL(
-                                    "Simpan",
-                                  ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // ResponsiveLayout(
+                    //   mobile: SizedBox.shrink(),
+                    //   tablet: Padding(
+                    //     padding: const EdgeInsets.symmetric(
+                    //       vertical: 12,
+                    //       horizontal: 16,
+                    //     ),
+                    //     child: SizedBox(
+                    //       width: double.infinity,
+                    //       child: ElevatedButton(
+                    //         onPressed:
+                    //             widget.isLoading ? null : widget.onSubmit,
+                    //         child: widget.isLoading
+                    //             ? SizedBox(
+                    //                 height: 16,
+                    //                 width: 16,
+                    //                 child: CircularProgressIndicator(
+                    //                   strokeWidth: 1.5,
+                    //                 ),
+                    //               )
+                    //             : TextActionL(
+                    //                 "Simpan",
+                    //               ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

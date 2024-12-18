@@ -368,86 +368,59 @@ class _SuccessConfirmationPaymentContentState
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              margin: const EdgeInsets.only(bottom: 12),
+                              margin: EdgeInsets.only(bottom: 8),
                               child: BlocBuilder<OrderDetailCubit,
                                   OrderDetailState>(
                                 builder: (context, state) => switch (state) {
                                   OrderDetailLoadSuccess(:final order) => Row(
                                       children: [
                                         Expanded(
-                                          child: SizedBox(
-                                            height: 48,
-                                            child: OutlinedButton(
-                                              onPressed: () async {
-                                                _handlePrintReceipt(
-                                                  context,
-                                                  order,
-                                                  (context,
-                                                      profile,
-                                                      order,
-                                                      footNote,
-                                                      scrollController) {
-                                                    ReceiptHelper
-                                                        .showDetailBill(
-                                                      context,
-                                                      profile: profile,
-                                                      order: order,
-                                                      footNote: footNote,
-                                                      scrollController:
-                                                          scrollController,
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                              style: const ButtonStyle(
-                                                padding: WidgetStatePropertyAll(
-                                                  EdgeInsets.symmetric(
-                                                    horizontal: 0,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: const TextActionL(
-                                                "Bagikan Struk",
-                                                color: TColors.primary,
-                                              ),
-                                            ),
+                                          child: OutlinedButton(
+                                            onPressed: () async {
+                                              _handlePrintReceipt(
+                                                context,
+                                                order,
+                                                (context,
+                                                    profile,
+                                                    order,
+                                                    footNote,
+                                                    scrollController) {
+                                                  ReceiptHelper.showDetailBill(
+                                                    context,
+                                                    profile: profile,
+                                                    order: order,
+                                                    footNote: footNote,
+                                                    scrollController:
+                                                        scrollController,
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: TextActionL("Bagikan Struk"),
                                           ),
                                         ),
                                         const SizedBox(width: 12),
                                         Expanded(
-                                          child: SizedBox(
-                                            height: 48,
-                                            child: OutlinedButton(
-                                              onPressed: () {
-                                                _handlePrintReceipt(
-                                                  context,
-                                                  order,
-                                                  (context,
-                                                      profile,
-                                                      order,
-                                                      footNote,
-                                                      scrollController) {
-                                                    TBill.printReceipt(
-                                                      context,
-                                                      profile,
-                                                      order,
-                                                      footNote,
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                              style: const ButtonStyle(
-                                                padding: WidgetStatePropertyAll(
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 16),
-                                                ),
-                                              ),
-                                              child: const TextActionL(
-                                                "Cetak Struk",
-                                                color: TColors.primary,
-                                                maxLines: 1,
-                                              ),
-                                            ),
+                                          child: OutlinedButton(
+                                            onPressed: () {
+                                              _handlePrintReceipt(
+                                                context,
+                                                order,
+                                                (context,
+                                                    profile,
+                                                    order,
+                                                    footNote,
+                                                    scrollController) {
+                                                  TBill.printReceipt(
+                                                    context,
+                                                    profile,
+                                                    order,
+                                                    footNote,
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: TextActionL("Cetak Struk"),
                                           ),
                                         ),
                                       ],
@@ -455,9 +428,8 @@ class _SuccessConfirmationPaymentContentState
                                   _ => Row(
                                       children: [
                                         Shimmer.fromColors(
-                                          baseColor: const Color(0xFFE8E9F1),
-                                          highlightColor:
-                                              const Color(0xFFF8F9FE),
+                                          baseColor: Color(0xFFE8E9F1),
+                                          highlightColor: Color(0xFFF8F9FE),
                                           child: Container(
                                             height: 48,
                                             decoration: BoxDecoration(
@@ -472,11 +444,10 @@ class _SuccessConfirmationPaymentContentState
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(width: 12),
+                                        SizedBox(width: 12),
                                         Shimmer.fromColors(
-                                          baseColor: const Color(0xFFE8E9F1),
-                                          highlightColor:
-                                              const Color(0xFFF8F9FE),
+                                          baseColor: Color(0xFFE8E9F1),
+                                          highlightColor: Color(0xFFF8F9FE),
                                           child: Container(
                                             height: 48,
                                             decoration: BoxDecoration(
@@ -498,7 +469,6 @@ class _SuccessConfirmationPaymentContentState
                             ),
                             SizedBox(
                               width: double.infinity,
-                              height: 48,
                               child: ElevatedButton(
                                 onPressed: () {
                                   Navigator.pushNamedAndRemoveUntil(
@@ -507,10 +477,7 @@ class _SuccessConfirmationPaymentContentState
                                     (route) => false,
                                   );
                                 },
-                                child: const TextActionL(
-                                  "Buat Pesanan Baru",
-                                  color: TColors.neutralLightLightest,
-                                ),
+                                child: TextActionL("Buat Pesanan Baru"),
                               ),
                             )
                           ],

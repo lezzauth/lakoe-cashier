@@ -72,12 +72,9 @@ class _DownloadQrOrderContentState extends State<DownloadQrOrderContent> {
               child: Row(
                 children: [
                   Expanded(
-                    child: SizedBox(
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: TextActionL("Lanjutkan"),
-                      ),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: TextActionL("Lanjutkan"),
                     ),
                   ),
                 ],

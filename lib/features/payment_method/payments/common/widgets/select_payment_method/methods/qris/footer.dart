@@ -23,12 +23,9 @@ class QrisPaymentFooter extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: SizedBox(
-                height: 48,
-                child: ElevatedButton(
-                  onPressed: isFormValid ? onSubmitted : null,
-                  child: const TextActionL("Selesaikan"),
-                ),
+              child: ElevatedButton(
+                onPressed: isFormValid ? onSubmitted : null,
+                child: const TextActionL("Selesaikan"),
               ),
             ),
           ],
@@ -38,7 +35,7 @@ class QrisPaymentFooter extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.fromLTRB(24, 12, 24, 12),
             alignment: Alignment.bottomCenter,
             decoration: const BoxDecoration(
               color: TColors.neutralLightLightest,
@@ -52,7 +49,6 @@ class QrisPaymentFooter extends StatelessWidget {
             child: Row(
               children: [
                 SizedBox(
-                  height: 48,
                   width: 140,
                   child: OutlinedButton(
                     onPressed: onCanceled,
@@ -64,12 +60,9 @@ class QrisPaymentFooter extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: isFormValid ? onSubmitted : null,
-                      child: const TextActionL("Selesaikan"),
-                    ),
+                  child: ElevatedButton(
+                    onPressed: isFormValid ? onSubmitted : null,
+                    child: const TextActionL("Selesaikan"),
                   ),
                 ),
               ],

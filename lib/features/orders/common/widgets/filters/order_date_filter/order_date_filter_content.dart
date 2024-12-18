@@ -96,12 +96,9 @@ class _OrderDateFilterContentState extends State<OrderDateFilterContent> {
               child: Row(
                 children: [
                   Expanded(
-                    child: SizedBox(
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: _onSubmit,
-                        child: const TextActionL("Pasang"),
-                      ),
+                    child: ElevatedButton(
+                      onPressed: _onSubmit,
+                      child: const TextActionL("Pasang"),
                     ),
                   ),
                 ],

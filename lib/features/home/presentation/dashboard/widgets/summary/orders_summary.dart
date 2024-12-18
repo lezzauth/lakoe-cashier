@@ -69,7 +69,6 @@ class OrderSummaryReport extends StatelessWidget {
                 ),
                 SizedBox(height: 24),
                 SizedBox(
-                  height: 48,
                   width: double.infinity,
                   child: OutlinedButton(
                     onPressed: () {

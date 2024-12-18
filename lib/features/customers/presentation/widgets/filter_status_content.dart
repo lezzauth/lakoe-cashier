@@ -61,12 +61,9 @@ class _FilterStatusContentState extends State<FilterStatusContent> {
             child: Row(
               children: [
                 Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: _applyStatus,
-                      child: const TextActionL("Pasang"),
-                    ),
+                  child: ElevatedButton(
+                    onPressed: _applyStatus,
+                    child: const TextActionL("Pasang"),
                   ),
                 ),
               ],

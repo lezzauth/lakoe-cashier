@@ -177,37 +177,31 @@ class _TableDetailPageState extends State<TableDetailPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const TextActionL(
-                        "Download",
-                        color: TColors.neutralLightLightest,
-                      ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const TextActionL(
+                      "Download",
+                      color: TColors.neutralLightLightest,
                     ),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: OutlinedButton(
-                      onPressed: () async {
-                        bool? editedTable = await Navigator.pushNamed(
-                          context,
-                          "/tables/edit",
-                          arguments: widget.table,
-                        ) as bool?;
-                        if (editedTable != true) return;
-                        Navigator.pop(context, true);
-                      },
-                      child: const TextActionL(
-                        "Ubah Meja",
-                        color: TColors.primary,
-                      ),
+                  child: OutlinedButton(
+                    onPressed: () async {
+                      bool? editedTable = await Navigator.pushNamed(
+                        context,
+                        "/tables/edit",
+                        arguments: widget.table,
+                      ) as bool?;
+                      if (editedTable != true) return;
+                      Navigator.pop(context, true);
+                    },
+                    child: const TextActionL(
+                      "Ubah Meja",
+                      color: TColors.primary,
                     ),
                   ),
                 ),

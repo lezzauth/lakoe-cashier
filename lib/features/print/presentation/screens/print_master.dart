@@ -600,39 +600,33 @@ class BillAction extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: onTestPrint,
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 8,
-                children: [
-                  UiIcons(
-                    TIcons.printer,
-                    size: 20,
-                    color: TColors.neutralLightLightest,
-                    onTap: () {},
-                  ),
-                  const TextActionL(
-                    "Tes Print",
-                    color: TColors.neutralLightLightest,
-                  ),
-                ],
-              ),
+          child: ElevatedButton(
+            onPressed: onTestPrint,
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 8,
+              children: [
+                UiIcons(
+                  TIcons.printer,
+                  size: 16,
+                  color: TColors.neutralLightLightest,
+                  onTap: () {},
+                ),
+                const TextActionL(
+                  "Tes Print",
+                  color: TColors.neutralLightLightest,
+                ),
+              ],
             ),
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: SizedBox(
-            height: 48,
-            child: OutlinedButton(
-              onPressed: onShowBill,
-              child: const TextActionL(
-                "Contoh Struk",
-                color: TColors.primary,
-              ),
+          child: OutlinedButton(
+            onPressed: onShowBill,
+            child: const TextActionL(
+              "Contoh Struk",
+              color: TColors.primary,
             ),
           ),
         ),

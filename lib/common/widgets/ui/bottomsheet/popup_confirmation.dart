@@ -80,44 +80,38 @@ class _ChangesConfirmationState extends State<PopupConfirmation> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Expanded(
-                    child: SizedBox(
-                      height: 48,
-                      child: OutlinedButton(
-                        onPressed: widget.secondaryAction,
-                        child: widget.isSecondaryActionLoading
-                            ? const SizedBox(
-                                height: 16,
-                                width: 16,
-                                child: CircularProgressIndicator(
-                                  color: TColors.primary,
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : TextActionL(
-                                widget.labelButtonSecondary,
+                    child: OutlinedButton(
+                      onPressed: widget.secondaryAction,
+                      child: widget.isSecondaryActionLoading
+                          ? const SizedBox(
+                              height: 16,
+                              width: 16,
+                              child: CircularProgressIndicator(
+                                color: TColors.primary,
+                                strokeWidth: 2,
                               ),
-                      ),
+                            )
+                          : TextActionL(
+                              widget.labelButtonSecondary,
+                            ),
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: SizedBox(
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: widget.primaryAction,
-                        child: widget.isPrimaryActionLoading
-                            ? const SizedBox(
-                                height: 16,
-                                width: 16,
-                                child: CircularProgressIndicator(
-                                  color: TColors.neutralLightLightest,
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : TextActionL(
-                                widget.labelButtonPrimary,
+                    child: ElevatedButton(
+                      onPressed: widget.primaryAction,
+                      child: widget.isPrimaryActionLoading
+                          ? const SizedBox(
+                              height: 16,
+                              width: 16,
+                              child: CircularProgressIndicator(
+                                color: TColors.neutralLightLightest,
+                                strokeWidth: 2,
                               ),
-                      ),
+                            )
+                          : TextActionL(
+                              widget.labelButtonPrimary,
+                            ),
                     ),
                   ),
                 ],

@@ -185,10 +185,8 @@ class _BillEditScreenState extends State<BillEditScreen> {
                               },
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 16),
+                              padding: EdgeInsets.symmetric(vertical: 12),
                               child: SizedBox(
-                                height: 48,
                                 width: double.infinity,
                                 child: ElevatedButton(
                                   onPressed: _onSubmitted,

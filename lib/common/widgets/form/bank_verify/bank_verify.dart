@@ -165,26 +165,22 @@ class _BankVerifyContentState extends State<BankVerifyContent> {
                             const SizedBox(height: 16),
                             SizedBox(
                               width: double.infinity,
-                              child: SizedBox(
-                                height: 48,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    if (formKey.currentState
-                                            ?.saveAndValidate() ??
-                                        false) {
-                                      Navigator.pop(
-                                        context,
-                                        BankVerifyArgument(
-                                          bankName: widget.bankName,
-                                          accountNumber: widget.accountNumber,
-                                          accountName: controller.text,
-                                          name: widget.name,
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  child: TextActionL("Konfirmasi"),
-                                ),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (formKey.currentState?.saveAndValidate() ??
+                                      false) {
+                                    Navigator.pop(
+                                      context,
+                                      BankVerifyArgument(
+                                        bankName: widget.bankName,
+                                        accountNumber: widget.accountNumber,
+                                        accountName: controller.text,
+                                        name: widget.name,
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: TextActionL("Konfirmasi"),
                               ),
                             ),
                           ],

@@ -428,7 +428,6 @@ class DetailAmount extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 48,
                 width: MediaQuery.of(context).size.width,
                 child: OutlinedButton(
                   onPressed: () => Navigator.pop(context),

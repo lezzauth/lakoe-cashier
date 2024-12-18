@@ -83,18 +83,14 @@ class _BillMasterState extends State<BillMaster> {
             alignment: Alignment.bottomCenter,
             child: Container(
               color: TColors.neutralLightLight,
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
               child: SizedBox(
-                height: 48,
                 width: double.infinity,
                 child: OutlinedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, "/bill/edit");
                   },
-                  child: const TextActionL(
-                    "Ubah Catatan Kaki",
-                    color: TColors.primary,
-                  ),
+                  child: TextActionL("Ubah Catatan Kaki"),
                 ),
               ),
             ),

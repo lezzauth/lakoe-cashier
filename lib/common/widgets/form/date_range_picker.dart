@@ -121,12 +121,9 @@ class _DateRangePickerState extends State<DateRangePicker> {
           child: Row(
             children: [
               Expanded(
-                child: SizedBox(
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: isFormValid ? _onSubmit : null,
-                    child: const TextActionL("Pasang"),
-                  ),
+                child: ElevatedButton(
+                  onPressed: isFormValid ? _onSubmit : null,
+                  child: const TextActionL("Pasang"),
                 ),
               ),
             ],

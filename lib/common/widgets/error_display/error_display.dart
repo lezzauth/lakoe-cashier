@@ -59,7 +59,7 @@ class ErrorDisplay extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(20),
             child: Row(
               children: [
                 actionTitleSecondary != null
@@ -67,12 +67,10 @@ class ErrorDisplay extends StatelessWidget {
                         child: Row(
                           children: [
                             Expanded(
-                              child: SizedBox(
-                                height: 48,
-                                child: OutlinedButton(
-                                  onPressed: onActionSecondary,
-                                  child: TextActionL(actionTitleSecondary ??
-                                      "Secondary Action"),
+                              child: OutlinedButton(
+                                onPressed: onActionSecondary,
+                                child: TextActionL(
+                                  actionTitleSecondary ?? "Secondary Action",
                                 ),
                               ),
                             ),
@@ -82,12 +80,9 @@ class ErrorDisplay extends StatelessWidget {
                       )
                     : SizedBox(),
                 Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: onActionPrimary,
-                      child: TextActionL(actionTitlePrimary ?? "Tutup"),
-                    ),
+                  child: ElevatedButton(
+                    onPressed: onActionPrimary,
+                    child: TextActionL(actionTitlePrimary ?? "Tutup"),
                   ),
                 ),
               ],

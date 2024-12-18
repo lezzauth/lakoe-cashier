@@ -113,40 +113,28 @@ class _BankVerifyConfirmationState extends State<BankVerifyConfirmation> {
           child: Row(
             children: [
               Expanded(
-                child: SizedBox(
-                  height: 48,
-                  child: OutlinedButton(
-                    onPressed: () async {
-                      Navigator.pop(context);
-                    },
-                    child: const TextActionL(
-                      "Perbaiki",
-                      color: TColors.primary,
-                    ),
-                  ),
+                child: OutlinedButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                  child: TextActionL("Perbaiki"),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: SizedBox(
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(
-                        context,
-                        BankVerifyArgument(
-                          bankName: widget.bankName,
-                          accountNumber: widget.accountNumber,
-                          accountName: widget.accountName,
-                          name: widget.name,
-                        ),
-                      );
-                    },
-                    child: const TextActionL(
-                      "Simpan",
-                      color: TColors.neutralLightLightest,
-                    ),
-                  ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(
+                      context,
+                      BankVerifyArgument(
+                        bankName: widget.bankName,
+                        accountNumber: widget.accountNumber,
+                        accountName: widget.accountName,
+                        name: widget.name,
+                      ),
+                    );
+                  },
+                  child: TextActionL("Simpan"),
                 ),
               ),
             ],

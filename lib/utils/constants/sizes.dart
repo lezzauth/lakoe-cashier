@@ -23,7 +23,8 @@ class TSizes {
 
   // Button Sizes
   static const double buttonRadius = 12.0;
-  static const double buttonVerticalPadding = 15.5;
+  static const double buttonVerticalPadding = 14;
+  static const double buttonHorizontalPadding = 20;
   static const double buttonElevation = 0;
 
   // Input Sizes

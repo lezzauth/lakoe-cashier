@@ -42,7 +42,7 @@ class _FilterStatusContentState extends State<FilterStatusContent> {
         children: [
           Container(
             padding: EdgeInsets.only(left: 20, right: 20),
-            child: TextHeading2("Pilih status REPORT"),
+            child: TextHeading2("Pilih status"),
           ),
           ..._statuses.map((status) {
             return CustomRadioTile(
@@ -61,12 +61,9 @@ class _FilterStatusContentState extends State<FilterStatusContent> {
             child: Row(
               children: [
                 Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: _applyStatus,
-                      child: const TextActionL("Pasang"),
-                    ),
+                  child: ElevatedButton(
+                    onPressed: _applyStatus,
+                    child: TextActionL("Pasang"),
                   ),
                 ),
               ],

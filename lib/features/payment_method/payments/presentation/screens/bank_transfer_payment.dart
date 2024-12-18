@@ -330,14 +330,11 @@ class _BankTransferPaymentScreenState extends State<BankTransferPaymentScreen> {
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
-              child: SizedBox(
-                height: 48,
-                child: ElevatedButton(
-                  onPressed: _isFormValid ? _onSubmitted : null,
-                  child: const TextActionL(
-                    "Selesaikan",
-                    color: TColors.neutralLightLightest,
-                  ),
+              child: ElevatedButton(
+                onPressed: _isFormValid ? _onSubmitted : null,
+                child: const TextActionL(
+                  "Selesaikan",
+                  color: TColors.neutralLightLightest,
                 ),
               ),
             ),

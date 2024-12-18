@@ -24,18 +24,15 @@ class CashPaymentFooter extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: SizedBox(
-                height: 48,
-                child: BlocBuilder<CartDetailCubit, CartDetailState>(
-                  builder: (context, state) {
-                    return ElevatedButton(
-                      onPressed: state is CartDetailActionInProgress
-                          ? null
-                          : onSubmitted,
-                      child: const TextActionL("Bayar & Selesaikan"),
-                    );
-                  },
-                ),
+              child: BlocBuilder<CartDetailCubit, CartDetailState>(
+                builder: (context, state) {
+                  return ElevatedButton(
+                    onPressed: state is CartDetailActionInProgress
+                        ? null
+                        : onSubmitted,
+                    child: const TextActionL("Bayar & Selesaikan"),
+                  );
+                },
               ),
             ),
           ],
@@ -45,7 +42,7 @@ class CashPaymentFooter extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.fromLTRB(24, 12, 24, 12),
             alignment: Alignment.bottomCenter,
             decoration: const BoxDecoration(
               color: TColors.neutralLightLightest,
@@ -59,7 +56,6 @@ class CashPaymentFooter extends StatelessWidget {
             child: Row(
               children: [
                 SizedBox(
-                  height: 48,
                   width: 140,
                   child: OutlinedButton(
                     onPressed: onCanceled,
@@ -71,18 +67,15 @@ class CashPaymentFooter extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: BlocBuilder<CartDetailCubit, CartDetailState>(
-                      builder: (context, state) {
-                        return ElevatedButton(
-                          onPressed: state is CartDetailActionInProgress
-                              ? null
-                              : onSubmitted,
-                          child: const TextActionL("Bayar & Selesaikan"),
-                        );
-                      },
-                    ),
+                  child: BlocBuilder<CartDetailCubit, CartDetailState>(
+                    builder: (context, state) {
+                      return ElevatedButton(
+                        onPressed: state is CartDetailActionInProgress
+                            ? null
+                            : onSubmitted,
+                        child: const TextActionL("Bayar & Selesaikan"),
+                      );
+                    },
                   ),
                 ),
               ],
