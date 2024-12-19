@@ -18,19 +18,19 @@ import 'package:lakoe_pos/utils/constants/sizes.dart';
 import 'package:lakoe_pos/utils/device/device_uility.dart';
 import 'package:shimmer/shimmer.dart';
 
-class MainMenuTablet extends StatefulWidget {
+class AccessCashierTablet extends StatefulWidget {
   final Function()? onTap;
 
-  const MainMenuTablet({
+  const AccessCashierTablet({
     super.key,
     this.onTap,
   });
 
   @override
-  State<MainMenuTablet> createState() => _MainMenuTabletState();
+  State<AccessCashierTablet> createState() => _AccessCashierTabletState();
 }
 
-class _MainMenuTabletState extends State<MainMenuTablet> {
+class _AccessCashierTabletState extends State<AccessCashierTablet> {
   onCashierOpened() {
     return showModalBottomSheet(
       context: context,

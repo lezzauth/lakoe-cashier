@@ -17,19 +17,19 @@ import 'package:lakoe_pos/utils/constants/sizes.dart';
 import 'package:lakoe_pos/utils/device/device_uility.dart';
 import 'package:shimmer/shimmer.dart';
 
-class MainMenu extends StatefulWidget {
+class AccessCashier extends StatefulWidget {
   final Function()? onTap;
 
-  const MainMenu({
+  const AccessCashier({
     super.key,
     this.onTap,
   });
 
   @override
-  State<MainMenu> createState() => _MainMenuState();
+  State<AccessCashier> createState() => _AccessCashierState();
 }
 
-class _MainMenuState extends State<MainMenu> {
+class _AccessCashierState extends State<AccessCashier> {
   onCashierOpened() {
     return showModalBottomSheet(
       context: context,
@@ -80,7 +80,7 @@ class _MainMenuState extends State<MainMenu> {
       builder: (context, onboardingState) => switch (onboardingState) {
         OnboardingTransactionLoadSuccess(:final isProductCompleted) =>
           BlocBuilder<CashierCubit, CashierState>(
-            builder: (context, state) => GestureDetector(
+            builder: (context, stateCashier) => GestureDetector(
               onTap: () {
                 bool isOnboardingNotCompleted = !isProductCompleted;
 
@@ -89,7 +89,7 @@ class _MainMenuState extends State<MainMenu> {
                   return;
                 }
 
-                if (state is! CashierAlreadyOpen) {
+                if (stateCashier is! CashierAlreadyOpen) {
                   onCashierOpened();
                 } else {
                   onCashierAlreadyOpened();
@@ -99,9 +99,9 @@ class _MainMenuState extends State<MainMenu> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Container(
                   decoration: BoxDecoration(
-                    gradient: state is CashierAlreadyOpen
+                    gradient: stateCashier is CashierAlreadyOpen
                         ? TColors.greenGradient
-                        : state is GetCashierInProgress
+                        : stateCashier is GetCashierInProgress
                             ? TColors.neutralGradient
                             : TColors.redGradient,
                     borderRadius: BorderRadius.circular(
@@ -136,14 +136,14 @@ class _MainMenuState extends State<MainMenu> {
                                     bottom: 12,
                                   ),
                                   child: UiIcons(
-                                    state is CashierAlreadyOpen
+                                    stateCashier is CashierAlreadyOpen
                                         ? TIcons.lock
                                         : TIcons.cashier,
                                     color: TColors.neutralLightLightest,
                                   ),
                                 ),
                                 Text(
-                                  state is CashierAlreadyOpen
+                                  stateCashier is CashierAlreadyOpen
                                       ? "Buka Kasir"
                                       : "Mulai Buka Kasir",
                                   style: GoogleFonts.inter(
@@ -154,7 +154,7 @@ class _MainMenuState extends State<MainMenu> {
                                 )
                               ],
                             ),
-                            if (state is CashierAlreadyOpen)
+                            if (stateCashier is CashierAlreadyOpen)
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -171,7 +171,7 @@ class _MainMenuState extends State<MainMenu> {
                                     ),
                                   ),
                                   Text(
-                                    state.operator.name,
+                                    stateCashier.operator.name,
                                     style: GoogleFonts.inter(
                                       fontSize: TSizes.fontSizeBodyL,
                                       fontWeight: FontWeight.w700,

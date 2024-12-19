@@ -17,8 +17,8 @@ import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/appbar/da
 import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/filter/dashboard_day_select_filter.dart';
 import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/filter/dashboard_filter.dart';
 import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/item_menu/item_menu_container.dart';
-import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/main_menu/main_menu.dart';
-import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/main_menu/main_menu_tablet.dart';
+import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/main_menu/access_cashier.dart';
+import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/main_menu/access_cashier_tablet.dart';
 import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/summary/sales_summary.dart';
 import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/summary/orders_summary.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
@@ -126,8 +126,8 @@ class _DashboardState extends State<Dashboard> {
                 child: ListView(
                   children: [
                     ResponsiveLayout(
-                      mobile: MainMenu(),
-                      tablet: MainMenuTablet(),
+                      mobile: AccessCashier(),
+                      tablet: AccessCashierTablet(),
                     ),
 
                     ResponsiveLayout(

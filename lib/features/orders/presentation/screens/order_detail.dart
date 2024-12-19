@@ -323,7 +323,7 @@ class _OrderDetailState extends State<OrderDetail> {
         return CustomBottomsheet(
           child: GeneralInformation(
             imageSrc: TImages.generalIllustration,
-            title: "Masuk ke Halaman Kasir",
+            title: "Masuk ke halaman kasir",
             description:
                 "Untuk $actionLabel pesanan ini, kamu perlu masuk ke halaman kasir terlebih dahulu.",
             onAction: () {
