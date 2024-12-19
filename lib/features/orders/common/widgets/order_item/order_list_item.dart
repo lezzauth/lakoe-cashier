@@ -172,7 +172,7 @@ class OrderListItem extends StatelessWidget {
                                     "Total",
                                     color: TColors.neutralDarkLight,
                                   ),
-                                  SizedBox(height: 4),
+                                  SizedBox(height: 6),
                                   TextBodyM(
                                     TFormatter.formatToRupiah(
                                         double.parse(price)),

@@ -1815,12 +1815,15 @@ OrderCashierItemRes _$OrderCashierItemResFromJson(Map<String, dynamic> json) {
 mixin _$OrderCashierItemRes {
   String get id => throw _privateConstructorUsedError;
   int get no => throw _privateConstructorUsedError;
-  String get price => throw _privateConstructorUsedError;
-  String get paymentStatus => throw _privateConstructorUsedError;
-  String get customerType => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
   String get source => throw _privateConstructorUsedError;
+  String get customerType => throw _privateConstructorUsedError;
+  String get paymentStatus => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
+  String? get closedAt => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
+  String get updatedAt => throw _privateConstructorUsedError;
   OrderCashierItemCustomer? get customer => throw _privateConstructorUsedError;
   OrderCashierItemTable? get table => throw _privateConstructorUsedError;
 
@@ -1843,12 +1846,15 @@ abstract class $OrderCashierItemResCopyWith<$Res> {
   $Res call(
       {String id,
       int no,
-      String price,
-      String paymentStatus,
-      String customerType,
       String type,
+      String price,
       String source,
+      String customerType,
+      String paymentStatus,
       String status,
+      String? closedAt,
+      String createdAt,
+      String updatedAt,
       OrderCashierItemCustomer? customer,
       OrderCashierItemTable? table});
 
@@ -1873,12 +1879,15 @@ class _$OrderCashierItemResCopyWithImpl<$Res, $Val extends OrderCashierItemRes>
   $Res call({
     Object? id = null,
     Object? no = null,
-    Object? price = null,
-    Object? paymentStatus = null,
-    Object? customerType = null,
     Object? type = null,
+    Object? price = null,
     Object? source = null,
+    Object? customerType = null,
+    Object? paymentStatus = null,
     Object? status = null,
+    Object? closedAt = freezed,
+    Object? createdAt = null,
+    Object? updatedAt = null,
     Object? customer = freezed,
     Object? table = freezed,
   }) {
@@ -1891,29 +1900,41 @@ class _$OrderCashierItemResCopyWithImpl<$Res, $Val extends OrderCashierItemRes>
           ? _value.no
           : no // ignore: cast_nullable_to_non_nullable
               as int,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as String,
-      paymentStatus: null == paymentStatus
-          ? _value.paymentStatus
-          : paymentStatus // ignore: cast_nullable_to_non_nullable
-              as String,
-      customerType: null == customerType
-          ? _value.customerType
-          : customerType // ignore: cast_nullable_to_non_nullable
-              as String,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
               as String,
       source: null == source
           ? _value.source
           : source // ignore: cast_nullable_to_non_nullable
               as String,
+      customerType: null == customerType
+          ? _value.customerType
+          : customerType // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      closedAt: freezed == closedAt
+          ? _value.closedAt
+          : closedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
       customer: freezed == customer
           ? _value.customer
@@ -1966,12 +1987,15 @@ abstract class _$$OrderCashierItemResImplCopyWith<$Res>
   $Res call(
       {String id,
       int no,
-      String price,
-      String paymentStatus,
-      String customerType,
       String type,
+      String price,
       String source,
+      String customerType,
+      String paymentStatus,
       String status,
+      String? closedAt,
+      String createdAt,
+      String updatedAt,
       OrderCashierItemCustomer? customer,
       OrderCashierItemTable? table});
 
@@ -1996,12 +2020,15 @@ class __$$OrderCashierItemResImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? no = null,
-    Object? price = null,
-    Object? paymentStatus = null,
-    Object? customerType = null,
     Object? type = null,
+    Object? price = null,
     Object? source = null,
+    Object? customerType = null,
+    Object? paymentStatus = null,
     Object? status = null,
+    Object? closedAt = freezed,
+    Object? createdAt = null,
+    Object? updatedAt = null,
     Object? customer = freezed,
     Object? table = freezed,
   }) {
@@ -2014,29 +2041,41 @@ class __$$OrderCashierItemResImplCopyWithImpl<$Res>
           ? _value.no
           : no // ignore: cast_nullable_to_non_nullable
               as int,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as String,
-      paymentStatus: null == paymentStatus
-          ? _value.paymentStatus
-          : paymentStatus // ignore: cast_nullable_to_non_nullable
-              as String,
-      customerType: null == customerType
-          ? _value.customerType
-          : customerType // ignore: cast_nullable_to_non_nullable
-              as String,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
               as String,
       source: null == source
           ? _value.source
           : source // ignore: cast_nullable_to_non_nullable
               as String,
+      customerType: null == customerType
+          ? _value.customerType
+          : customerType // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      closedAt: freezed == closedAt
+          ? _value.closedAt
+          : closedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
       customer: freezed == customer
           ? _value.customer
@@ -2056,12 +2095,15 @@ class _$OrderCashierItemResImpl implements _OrderCashierItemRes {
   const _$OrderCashierItemResImpl(
       {required this.id,
       required this.no,
-      required this.price,
-      required this.paymentStatus,
-      required this.customerType,
       required this.type,
+      required this.price,
       required this.source,
+      required this.customerType,
+      required this.paymentStatus,
       required this.status,
+      this.closedAt,
+      required this.createdAt,
+      required this.updatedAt,
       this.customer,
       this.table});
 
@@ -2073,17 +2115,23 @@ class _$OrderCashierItemResImpl implements _OrderCashierItemRes {
   @override
   final int no;
   @override
-  final String price;
-  @override
-  final String paymentStatus;
-  @override
-  final String customerType;
-  @override
   final String type;
+  @override
+  final String price;
   @override
   final String source;
   @override
+  final String customerType;
+  @override
+  final String paymentStatus;
+  @override
   final String status;
+  @override
+  final String? closedAt;
+  @override
+  final String createdAt;
+  @override
+  final String updatedAt;
   @override
   final OrderCashierItemCustomer? customer;
   @override
@@ -2091,7 +2139,7 @@ class _$OrderCashierItemResImpl implements _OrderCashierItemRes {
 
   @override
   String toString() {
-    return 'OrderCashierItemRes(id: $id, no: $no, price: $price, paymentStatus: $paymentStatus, customerType: $customerType, type: $type, source: $source, status: $status, customer: $customer, table: $table)';
+    return 'OrderCashierItemRes(id: $id, no: $no, type: $type, price: $price, source: $source, customerType: $customerType, paymentStatus: $paymentStatus, status: $status, closedAt: $closedAt, createdAt: $createdAt, updatedAt: $updatedAt, customer: $customer, table: $table)';
   }
 
   @override
@@ -2101,14 +2149,20 @@ class _$OrderCashierItemResImpl implements _OrderCashierItemRes {
             other is _$OrderCashierItemResImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.no, no) || other.no == no) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.price, price) || other.price == price) &&
-            (identical(other.paymentStatus, paymentStatus) ||
-                other.paymentStatus == paymentStatus) &&
+            (identical(other.source, source) || other.source == source) &&
             (identical(other.customerType, customerType) ||
                 other.customerType == customerType) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.source, source) || other.source == source) &&
+            (identical(other.paymentStatus, paymentStatus) ||
+                other.paymentStatus == paymentStatus) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.closedAt, closedAt) ||
+                other.closedAt == closedAt) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.customer, customer) ||
                 other.customer == customer) &&
             (identical(other.table, table) || other.table == table));
@@ -2116,8 +2170,21 @@ class _$OrderCashierItemResImpl implements _OrderCashierItemRes {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, no, price, paymentStatus,
-      customerType, type, source, status, customer, table);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      no,
+      type,
+      price,
+      source,
+      customerType,
+      paymentStatus,
+      status,
+      closedAt,
+      createdAt,
+      updatedAt,
+      customer,
+      table);
 
   /// Create a copy of OrderCashierItemRes
   /// with the given fields replaced by the non-null parameter values.
@@ -2140,12 +2207,15 @@ abstract class _OrderCashierItemRes implements OrderCashierItemRes {
   const factory _OrderCashierItemRes(
       {required final String id,
       required final int no,
-      required final String price,
-      required final String paymentStatus,
-      required final String customerType,
       required final String type,
+      required final String price,
       required final String source,
+      required final String customerType,
+      required final String paymentStatus,
       required final String status,
+      final String? closedAt,
+      required final String createdAt,
+      required final String updatedAt,
       final OrderCashierItemCustomer? customer,
       final OrderCashierItemTable? table}) = _$OrderCashierItemResImpl;
 
@@ -2157,17 +2227,23 @@ abstract class _OrderCashierItemRes implements OrderCashierItemRes {
   @override
   int get no;
   @override
-  String get price;
-  @override
-  String get paymentStatus;
-  @override
-  String get customerType;
-  @override
   String get type;
+  @override
+  String get price;
   @override
   String get source;
   @override
+  String get customerType;
+  @override
+  String get paymentStatus;
+  @override
   String get status;
+  @override
+  String? get closedAt;
+  @override
+  String get createdAt;
+  @override
+  String get updatedAt;
   @override
   OrderCashierItemCustomer? get customer;
   @override

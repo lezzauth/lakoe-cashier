@@ -1,9 +1,11 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/order_item_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/order_item/order_card_item.dart';
@@ -11,6 +13,7 @@ import 'package:lakoe_pos/features/orders/common/widgets/order_item/order_list_i
 import 'package:lakoe_pos/features/orders/presentation/screens/tablet/order_detail_tablet.dart';
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/filter/order_outlet_filter.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
@@ -199,70 +202,24 @@ class _OrderOutletState extends State<OrderOutlet> {
                             if (state is OrdersLoadSuccess) {
                               final orders = state.orders;
 
+                              final groupedOrders = groupBy(
+                                orders,
+                                (OrderItemRes order) {
+                                  final date = order.createdAt.split('T')[0];
+                                  return date;
+                                },
+                              );
+
                               return CustomScrollView(
                                 slivers: [
                                   if (orders.isNotEmpty) ...[
                                     ResponsiveLayout(
-                                      mobile: SliverList.builder(
-                                        itemCount: orders.length,
-                                        itemBuilder: (context, index) {
-                                          OrderItemRes order =
-                                              orders.elementAt(index);
-
-                                          return OrderListItem(
-                                            order: order,
-                                            onTap: () async {
-                                              bool? result =
-                                                  await Navigator.pushNamed(
-                                                context,
-                                                "/orders/detail",
-                                                arguments: OrderDetailArgument(
-                                                  id: order.id,
-                                                ),
-                                              ) as bool?;
-
-                                              if (!result!) return;
-                                              _onRefresh();
-                                            },
-                                          );
-                                        },
+                                      mobile: MobileOrdersView(
+                                        groupedOrders: groupedOrders,
+                                        onRefresh: _onRefresh,
                                       ),
-                                      tablet: SliverPadding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(20, 8, 20, 8),
-                                        sliver: SliverGrid.builder(
-                                          gridDelegate:
-                                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                                            maxCrossAxisExtent: 360,
-                                            mainAxisExtent: 115.5,
-                                            childAspectRatio: 360 / 115.5,
-                                            crossAxisSpacing: 12,
-                                            mainAxisSpacing: 12,
-                                          ),
-                                          itemCount: orders.length,
-                                          itemBuilder: (context, index) {
-                                            OrderItemRes order =
-                                                orders.elementAt(index);
-
-                                            bool selctedItem =
-                                                selectedOrderId == order.id;
-
-                                            return OrderCardItem(
-                                              selected: selctedItem,
-                                              order: order,
-                                              onTap: () {
-                                                setState(() {
-                                                  if (selectedOrderId ==
-                                                      order.id) {
-                                                    selectedOrderId = null;
-                                                  } else {
-                                                    selectedOrderId = order.id;
-                                                  }
-                                                });
-                                              },
-                                            );
-                                          },
-                                        ),
+                                      tablet: TabletOrdersView(
+                                        orders: orders,
                                       ),
                                     ),
                                   ],
@@ -320,6 +277,120 @@ class _OrderOutletState extends State<OrderOutlet> {
               ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MobileOrdersView extends StatelessWidget {
+  final Map<String, List<OrderItemRes>> groupedOrders;
+  final Function _onRefresh;
+
+  const MobileOrdersView({
+    Key? key,
+    required this.groupedOrders,
+    required Function onRefresh,
+  })  : _onRefresh = onRefresh,
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          String date = groupedOrders.keys.elementAt(index);
+          List<OrderItemRes> ordersByDate = groupedOrders[date]!;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.fromLTRB(
+                  16,
+                  index == 0 ? 8 : 24,
+                  16,
+                  0,
+                ),
+                child: TextHeading5(
+                  "${TFormatter.dateTime(date, withTime: false)} (${ordersByDate.length} pesanan)",
+                  color: TColors.neutralDarkLightest,
+                ),
+              ),
+              ...ordersByDate.map((order) {
+                return OrderListItem(
+                  order: order,
+                  onTap: () async {
+                    bool? result = await Navigator.pushNamed(
+                      context,
+                      "/orders/detail",
+                      arguments: OrderDetailArgument(
+                        id: order.id,
+                      ),
+                    ) as bool?;
+
+                    if (result == true) {
+                      _onRefresh();
+                    }
+                  },
+                );
+              }).toList(),
+            ],
+          );
+        },
+        childCount: groupedOrders.keys.length,
+      ),
+    );
+  }
+}
+
+class TabletOrdersView extends StatefulWidget {
+  final List<OrderItemRes> orders;
+
+  const TabletOrdersView({
+    Key? key,
+    required this.orders,
+  }) : super(key: key);
+
+  @override
+  State<TabletOrdersView> createState() => _TabletOrdersViewState();
+}
+
+class _TabletOrdersViewState extends State<TabletOrdersView> {
+  String? selectedOrderId;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+      sliver: SliverGrid.builder(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 360,
+          mainAxisExtent: 115.5,
+          childAspectRatio: 360 / 115.5,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+        ),
+        itemCount: widget.orders.length,
+        itemBuilder: (context, index) {
+          OrderItemRes order = widget.orders.elementAt(index);
+
+          bool selectedItem = selectedOrderId == order.id;
+
+          return OrderCardItem(
+            selected: selectedItem,
+            order: order,
+            onTap: () {
+              setState(() {
+                if (selectedOrderId == order.id) {
+                  selectedOrderId = null;
+                } else {
+                  selectedOrderId = order.id;
+                }
+              });
+            },
+          );
+        },
       ),
     );
   }

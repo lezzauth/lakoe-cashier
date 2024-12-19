@@ -31,7 +31,8 @@ class TFormatter {
     }
   }
 
-  static String dateTime(String isoDate, {bool withDay = false}) {
+  static String dateTime(String isoDate,
+      {bool withDay = false, bool withTime = true}) {
     DateTime dateTime = DateTime.parse(isoDate).toLocal();
     DateTime now = DateTime.now();
 
@@ -42,13 +43,19 @@ class TFormatter {
     String timeZone = getIndonesianTimeZone(dateTime);
 
     if (isToday) {
+      if (!withTime) {
+        return "Hari ini";
+      }
       return "Hari ini, ${DateFormat("HH:mm", "id_ID").format(dateTime)} $timeZone";
     }
 
-    String formattedDate =
-        DateFormat("${withDay ? "" : ""}dd MMM yyyy, HH:mm", "id_ID")
-            .format(dateTime);
-    return "$formattedDate $timeZone";
+    // Format tanggal
+    String formattedDate = DateFormat(
+      "${withDay ? "EEEE, " : ""}dd MMM yyyy${withTime ? ", HH:mm" : ""}",
+      "id_ID",
+    ).format(dateTime);
+
+    return withTime ? "$formattedDate $timeZone" : formattedDate;
   }
 
   static String billDate(String dateStr) {

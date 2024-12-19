@@ -8,7 +8,6 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/ui/tags/order_status/tag_thin_order_status.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
-import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class OrderCardItem extends StatelessWidget {
@@ -35,8 +34,8 @@ class OrderCardItem extends StatelessWidget {
     String status = order.status;
     String customerName = order.customer?.name ?? "Tamu";
     String tableName = order.table?.no ?? "Bebas";
-    bool isPaid = order.paymentStatus == "PAID";
-    bool isCancel = order.status == "CANCELLED";
+    // bool isPaid = order.paymentStatus == "PAID";
+    // bool isCancel = order.status == "CANCELLED";
 
     return InkWell(
       onTap: onTap,
@@ -86,23 +85,79 @@ class OrderCardItem extends StatelessWidget {
                     ),
                     SizedBox(width: 12),
                     Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: TextHeading4(
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextHeading4(
                                   customerName,
                                   color: TColors.neutralDarkDarkest,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                 ),
-                              ),
-                              (isCashier)
-                                  ? SizedBox.shrink()
-                                  : InkWell(
+                                SizedBox(height: 4),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Flexible(
+                                      child: TextBodyXS(
+                                        "Order #$no",
+                                        color: TColors.neutralDarkLight,
+                                        fontWeight: FontWeight.bold,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                    Container(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 2),
+                                      child: TextBodyS(
+                                        "-",
+                                        color: TColors.neutralDarkLightest,
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: TextBodyXS(
+                                        tableName,
+                                        color: TColors.neutralDarkLight,
+                                        fontWeight: FontWeight.bold,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                    // Container(
+                                    //   padding:
+                                    //       EdgeInsets.symmetric(horizontal: 2),
+                                    //   child: TextBodyS(
+                                    //     "/",
+                                    //     color: TColors.neutralDarkLightest,
+                                    //   ),
+                                    // ),
+                                    // Flexible(
+                                    //   child: TextBodyXS(
+                                    //     (type == "DINEIN")
+                                    //         ? "Dine In"
+                                    //         : "Takeaway",
+                                    //     color: TColors.neutralDarkLight,
+                                    //     fontWeight: FontWeight.bold,
+                                    //     overflow: TextOverflow.ellipsis,
+                                    //     maxLines: 1,
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          (isCashier)
+                              ? SizedBox.shrink()
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    InkWell(
                                       splashColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () {
@@ -119,47 +174,13 @@ class OrderCardItem extends StatelessWidget {
                                       },
                                       child: TagThinOrderStatus(tag: status),
                                     ),
-                            ],
-                          ),
-                          SizedBox(height: 2),
-                          Row(
-                            children: [
-                              TextBodyXS(
-                                "Order #$no",
-                                color: TColors.neutralDarkLight,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 2),
-                                child: TextBodyS(
-                                  "/",
-                                  color: TColors.neutralDarkLightest,
-                                ),
-                              ),
-                              TextBodyXS(
-                                tableName,
-                                color: TColors.neutralDarkLight,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 2),
-                                    child: TextBodyS(
-                                      "/",
-                                      color: TColors.neutralDarkLightest,
+                                    SizedBox(height: 4),
+                                    TextBodyXS(
+                                      TFormatter.dateTime(order.createdAt),
+                                      color: TColors.neutralDarkLight,
                                     ),
-                                  ),
-                                  TextBodyXS(
-                                    (type == "DINEIN") ? "Dine In" : "Takeaway",
-                                    color: TColors.neutralDarkLight,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                  ],
+                                ),
                         ],
                       ),
                     ),
@@ -184,26 +205,26 @@ class OrderCardItem extends StatelessWidget {
               ],
             ),
           ),
-          if (isPaid)
-            Positioned(
-              right: 40,
-              bottom: 20,
-              child: SvgPicture.asset(
-                TImages.stampPaid,
-                width: 60,
-                height: 60,
-              ),
-            ),
-          if (isCancel)
-            Positioned(
-              right: 40,
-              bottom: 20,
-              child: SvgPicture.asset(
-                TImages.stampCancel,
-                width: 60,
-                height: 60,
-              ),
-            ),
+          // if (isPaid)
+          //   Positioned(
+          //     right: 40,
+          //     bottom: 20,
+          //     child: SvgPicture.asset(
+          //       TImages.stampPaid,
+          //       width: 60,
+          //       height: 60,
+          //     ),
+          //   ),
+          // if (isCancel)
+          //   Positioned(
+          //     right: 40,
+          //     bottom: 20,
+          //     child: SvgPicture.asset(
+          //       TImages.stampCancel,
+          //       width: 60,
+          //       height: 60,
+          //     ),
+          //   ),
         ],
       ),
     );

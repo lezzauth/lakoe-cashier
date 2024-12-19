@@ -7,9 +7,17 @@ class TextBodyXS extends StatelessWidget {
   final FontWeight fontWeight;
   final double fontSize = TSizes.fontSizeBodyXS;
   final Color? color;
+  final TextOverflow? overflow;
+  final int? maxLines;
 
-  const TextBodyXS(this.data,
-      {super.key, this.fontWeight = FontWeight.w400, this.color});
+  const TextBodyXS(
+    this.data, {
+    super.key,
+    this.fontWeight = FontWeight.w400,
+    this.color,
+    this.overflow,
+    this.maxLines,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +28,8 @@ class TextBodyXS extends StatelessWidget {
         fontWeight: fontWeight,
         fontSize: fontSize,
       ),
+      overflow: overflow,
+      maxLines: maxLines,
     );
   }
 }
