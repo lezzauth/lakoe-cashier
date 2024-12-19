@@ -484,6 +484,8 @@ mixin _$ProductOrderModel {
   String get orderId => throw _privateConstructorUsedError;
   String get customerName => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  String get paymentStatus => throw _privateConstructorUsedError;
   String? get paymentMethod => throw _privateConstructorUsedError;
   int get itemTotal => throw _privateConstructorUsedError;
   String get price => throw _privateConstructorUsedError;
@@ -508,6 +510,8 @@ abstract class $ProductOrderModelCopyWith<$Res> {
       {String orderId,
       String customerName,
       String createdAt,
+      String status,
+      String paymentStatus,
       String? paymentMethod,
       int itemTotal,
       String price});
@@ -531,6 +535,8 @@ class _$ProductOrderModelCopyWithImpl<$Res, $Val extends ProductOrderModel>
     Object? orderId = null,
     Object? customerName = null,
     Object? createdAt = null,
+    Object? status = null,
+    Object? paymentStatus = null,
     Object? paymentMethod = freezed,
     Object? itemTotal = null,
     Object? price = null,
@@ -547,6 +553,14 @@ class _$ProductOrderModelCopyWithImpl<$Res, $Val extends ProductOrderModel>
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
               as String,
       paymentMethod: freezed == paymentMethod
           ? _value.paymentMethod
@@ -576,6 +590,8 @@ abstract class _$$ProductOrderModelImplCopyWith<$Res>
       {String orderId,
       String customerName,
       String createdAt,
+      String status,
+      String paymentStatus,
       String? paymentMethod,
       int itemTotal,
       String price});
@@ -597,6 +613,8 @@ class __$$ProductOrderModelImplCopyWithImpl<$Res>
     Object? orderId = null,
     Object? customerName = null,
     Object? createdAt = null,
+    Object? status = null,
+    Object? paymentStatus = null,
     Object? paymentMethod = freezed,
     Object? itemTotal = null,
     Object? price = null,
@@ -613,6 +631,14 @@ class __$$ProductOrderModelImplCopyWithImpl<$Res>
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
               as String,
       paymentMethod: freezed == paymentMethod
           ? _value.paymentMethod
@@ -637,6 +663,8 @@ class _$ProductOrderModelImpl implements _ProductOrderModel {
       {required this.orderId,
       required this.customerName,
       required this.createdAt,
+      required this.status,
+      required this.paymentStatus,
       this.paymentMethod,
       required this.itemTotal,
       required this.price});
@@ -651,6 +679,10 @@ class _$ProductOrderModelImpl implements _ProductOrderModel {
   @override
   final String createdAt;
   @override
+  final String status;
+  @override
+  final String paymentStatus;
+  @override
   final String? paymentMethod;
   @override
   final int itemTotal;
@@ -659,7 +691,7 @@ class _$ProductOrderModelImpl implements _ProductOrderModel {
 
   @override
   String toString() {
-    return 'ProductOrderModel(orderId: $orderId, customerName: $customerName, createdAt: $createdAt, paymentMethod: $paymentMethod, itemTotal: $itemTotal, price: $price)';
+    return 'ProductOrderModel(orderId: $orderId, customerName: $customerName, createdAt: $createdAt, status: $status, paymentStatus: $paymentStatus, paymentMethod: $paymentMethod, itemTotal: $itemTotal, price: $price)';
   }
 
   @override
@@ -672,6 +704,9 @@ class _$ProductOrderModelImpl implements _ProductOrderModel {
                 other.customerName == customerName) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.paymentStatus, paymentStatus) ||
+                other.paymentStatus == paymentStatus) &&
             (identical(other.paymentMethod, paymentMethod) ||
                 other.paymentMethod == paymentMethod) &&
             (identical(other.itemTotal, itemTotal) ||
@@ -682,7 +717,7 @@ class _$ProductOrderModelImpl implements _ProductOrderModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, orderId, customerName, createdAt,
-      paymentMethod, itemTotal, price);
+      status, paymentStatus, paymentMethod, itemTotal, price);
 
   /// Create a copy of ProductOrderModel
   /// with the given fields replaced by the non-null parameter values.
@@ -706,6 +741,8 @@ abstract class _ProductOrderModel implements ProductOrderModel {
       {required final String orderId,
       required final String customerName,
       required final String createdAt,
+      required final String status,
+      required final String paymentStatus,
       final String? paymentMethod,
       required final int itemTotal,
       required final String price}) = _$ProductOrderModelImpl;
@@ -719,6 +756,10 @@ abstract class _ProductOrderModel implements ProductOrderModel {
   String get customerName;
   @override
   String get createdAt;
+  @override
+  String get status;
+  @override
+  String get paymentStatus;
   @override
   String? get paymentMethod;
   @override

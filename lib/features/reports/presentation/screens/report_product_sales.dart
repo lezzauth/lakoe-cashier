@@ -314,14 +314,14 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                             "Riwayat Penjualan",
                                             color: TColors.neutralDarkDarkest,
                                           ),
-                                          if (widget.arguments.product
-                                                  .soldCount !=
-                                              0)
-                                            TextBodyM(
-                                              "Terjual ${widget.arguments.product.soldCount} produk",
-                                              color:
-                                                  TColors.neutralDarkLightest,
-                                            ),
+                                          // if (widget.arguments.product
+                                          //         .soldCount !=
+                                          //     0)
+                                          //   TextBodyM(
+                                          //     "Terjual ${widget.arguments.product.soldCount} produk",
+                                          //     color:
+                                          //         TColors.neutralDarkLightest,
+                                          //   ),
                                         ],
                                       ),
                                     ),
@@ -481,6 +481,7 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                 itemBuilder: (context, index) {
                                   ProductOrderModel order =
                                       state.data.elementAt(index);
+
                                   return ProductOrderItem(order: order);
                                 },
                               );

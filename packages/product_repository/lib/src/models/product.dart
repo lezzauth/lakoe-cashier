@@ -33,6 +33,8 @@ class ProductOrderModel with _$ProductOrderModel {
     required String orderId,
     required String customerName,
     required String createdAt,
+    required String status,
+    required String paymentStatus,
     String? paymentMethod,
     required int itemTotal,
     required String price,
