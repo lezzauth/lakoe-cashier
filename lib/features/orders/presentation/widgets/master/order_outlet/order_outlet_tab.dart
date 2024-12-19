@@ -39,7 +39,7 @@ class _OrderOutletState extends State<OrderOutlet> {
   String _keywordSearch = "";
   String? selectedOrderId;
 
-  Future<void> onRefresh() async {
+  Future<void> _onRefresh() async {
     OrdersFilterState filterState = context.read<OrdersFilterCubit>().state;
 
     final updatedFilterState = filterState.sort == null
@@ -134,7 +134,7 @@ class _OrderOutletState extends State<OrderOutlet> {
             Expanded(
               child: Scrollbar(
                 child: RefreshIndicator(
-                  onRefresh: onRefresh,
+                  onRefresh: _onRefresh,
                   backgroundColor: TColors.neutralLightLightest,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -211,14 +211,18 @@ class _OrderOutletState extends State<OrderOutlet> {
 
                                           return OrderListItem(
                                             order: order,
-                                            onTap: () {
-                                              Navigator.pushNamed(
+                                            onTap: () async {
+                                              bool? result =
+                                                  await Navigator.pushNamed(
                                                 context,
                                                 "/orders/detail",
                                                 arguments: OrderDetailArgument(
                                                   id: order.id,
                                                 ),
-                                              );
+                                              ) as bool?;
+
+                                              if (!result!) return;
+                                              _onRefresh();
                                             },
                                           );
                                         },
@@ -285,7 +289,7 @@ class _OrderOutletState extends State<OrderOutlet> {
                                 subTitle:
                                     "Ada sedikit gangguan. Coba coba lagi, ya",
                                 action: TextButton(
-                                  onPressed: onRefresh,
+                                  onPressed: _onRefresh,
                                   child: TextActionL(
                                     "Coba Lagi",
                                     color: TColors.primary,
