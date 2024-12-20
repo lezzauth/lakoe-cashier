@@ -1083,7 +1083,7 @@ packages:
     source: hosted
     version: "1.3.0"
   logman:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: logman
       sha256: "5b0be63bc8bbca004628985a06283e91ea49a9066f040a16935fdbaed1736c1d"
