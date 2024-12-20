@@ -4,6 +4,7 @@ import 'package:android_intent_plus/flag.dart';
 import 'package:app_data_provider/app_data_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:logman/logman.dart';
@@ -17,6 +18,7 @@ import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_sta
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:token_provider/token_provider.dart';
+import 'package:uni_links/uni_links.dart';
 
 class RedirectScreen extends StatefulWidget {
   const RedirectScreen({super.key});
@@ -31,12 +33,13 @@ class _RedirectScreenState extends State<RedirectScreen> {
 
   late final StreamSubscription<List<ConnectivityResult>>
       connectivitySubscription;
+  StreamSubscription? deeplinkSubscription;
 
   Future<void> loadFlavor() async {
     final AppDataProvider appDataProvider = AppDataProvider();
     final flavor = await appDataProvider.flavor;
 
-    if (flavor == "Development") {
+    if (flavor == "dev") {
       Logman.instance.info('App started!');
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -58,11 +61,14 @@ class _RedirectScreenState extends State<RedirectScreen> {
     super.initState();
     loadFlavor();
     init();
+    _initInitialDeeplink();
+    _listenToDeeplink();
   }
 
   @override
   void dispose() {
     connectivitySubscription.cancel();
+    deeplinkSubscription?.cancel();
     super.dispose();
   }
 
@@ -86,6 +92,72 @@ class _RedirectScreenState extends State<RedirectScreen> {
         context.read<AuthCubit>().initialize();
       }
     });
+  }
+
+  Future<void> _initInitialDeeplink() async {
+    try {
+      final initialUri = await getInitialLink(); // Fetch initial deeplink
+      if (initialUri != null) {
+        Logman.instance.info("Initial deeplink detected: $initialUri");
+        _handleDeeplink(Uri.parse(initialUri));
+      } else {
+        Logman.instance.error("No initial deeplink detected.");
+      }
+    } on PlatformException catch (e) {
+      Logman.instance.error("Error fetching initial deeplink: $e");
+    }
+  }
+
+  void _listenToDeeplink() {
+    deeplinkSubscription = uriLinkStream.listen((Uri? uri) {
+      if (uri != null) {
+        Logman.instance.info("Received deeplink: $uri");
+        if (!navigated) {
+          _handleDeeplink(uri);
+          navigated = true;
+        }
+      } else {
+        Logman.instance.error("Received null deeplink.");
+      }
+    }, onError: (err) {
+      Logman.instance.error("Error in deeplink stream: $err");
+    });
+  }
+
+  void _handleDeeplink(Uri uri) {
+    if (navigated) {
+      Logman.instance
+          .info("Deeplink navigation already performed, skipping...");
+      return;
+    }
+
+    Logman.instance.info("Handling deeplink: $uri");
+    final path = uri.path;
+    final status = uri.queryParameters['status'];
+    final package = uri.queryParameters['package'];
+
+    Logman.instance.info("Path: $path, Status: $status, Package: $package");
+
+    if (path == "/payment" && status != null && package != null) {
+      navigated = true;
+      if (status == "success") {
+        Navigator.pushNamed(
+          context,
+          "/payment/success",
+          arguments: {'packageName': package.toUpperCase()},
+        );
+      } else if (status == "failed") {
+        Navigator.pushNamed(
+          context,
+          "/payment/failed",
+          arguments: {'packageName': package.toUpperCase()},
+        );
+      } else {
+        Logman.instance.error("Invalid status value: $status");
+      }
+    } else {
+      Logman.instance.error("Invalid path or missing parameters in deeplink.");
+    }
   }
 
   Future<void> openSettings() async {
@@ -164,20 +236,37 @@ class _RedirectScreenState extends State<RedirectScreen> {
 
         if (!navigated) {
           if (state is AuthReady) {
-            Logman.instance.info("[Redirect] Auth is ready");
-            navigated = true;
-            Navigator.popAndPushNamed(context, "/cashier");
-            return;
+            final currentRoute = ModalRoute.of(context)?.settings.name;
+
+            // Hindari navigasi ulang jika navigasi sudah dilakukan oleh deeplink
+            if (currentRoute == "/payment/success" ||
+                currentRoute == "/payment/failed") {
+              Logman.instance.info(
+                  "[Redirect] Skipping navigation, deeplink already handled.");
+              return;
+            }
+
+            // Navigasi ke cashier jika tidak ada deeplink
+            if (currentRoute != "/cashier") {
+              Logman.instance.info("[Redirect] Navigating to /cashier");
+              navigated = true;
+              Navigator.popAndPushNamed(context, "/cashier");
+            } else {
+              Logman.instance.info(
+                  "[Redirect] Already on /cashier, no navigation needed.");
+            }
           } else if ((state is AuthNotReady) ||
               (state is TokenExpired &&
                   state.res.statusCode == 401 &&
                   !state.isTokenRefreshed) ||
               (state is NotFound && state.res.statusCode == 404)) {
-            Logman.instance.info("[Redirect] Non-Auth is ready");
+            Logman.instance.info("[Redirect] Navigating to /on-boarding");
             navigated = true;
             Navigator.popAndPushNamed(context, "/on-boarding");
-            return;
           }
+        } else {
+          Logman.instance
+              .info("[Redirect] Navigation already performed, skipping...");
         }
       },
       child: BlocListener<CashierCubit, CashierState>(

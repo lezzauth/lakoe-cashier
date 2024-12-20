@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.lakoe.app">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />  
@@ -48,8 +48,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="app.lakoe" android:host="payment" android:path="/success" />
-                <data android:scheme="app.lakoe" android:host="payment" android:path="/failed" />
+                <data android:scheme="lakoe" android:host="package" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

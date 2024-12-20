@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/edit_acccount_pin.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/otp_input.dart';
+import 'package:lakoe_pos/features/checkout/presentation/screens/payment_failed.dart';
 import 'package:lakoe_pos/features/customers/presentation/screens/edit_customer.dart';
 import 'package:lakoe_pos/features/employees/data/arguments/forgot_pin_dto.dart';
 import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/create_new_pin.dart';
@@ -143,13 +146,85 @@ import 'package:lakoe_pos/features/taxes/presentation/screens/tax_master.dart';
 import 'package:lakoe_pos/utils/helpers/navigator_observer.dart';
 import 'package:lakoe_pos/utils/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:uni_links/uni_links.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   final String flavor;
 
   const App({super.key, required this.flavor});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  StreamSubscription? _deeplinkSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _initInitialDeeplink();
+    _listenToDeeplink();
+  }
+
+  @override
+  void dispose() {
+    _deeplinkSubscription?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _initInitialDeeplink() async {
+    try {
+      final initialUri = await getInitialUri();
+      if (initialUri != null) {
+        Logman.instance
+            .info("[Global] Initial deeplink detected: \$initialUri");
+        _handleGlobalDeeplink(initialUri);
+      }
+    } catch (e) {
+      Logman.instance.error("[Global] Error getting initial deeplink: \$e");
+    }
+  }
+
+  void _listenToDeeplink() {
+    Logman.instance.info("[Global] Listening to global deeplink...");
+    _deeplinkSubscription = uriLinkStream.listen(
+      (uri) {
+        if (uri != null) {
+          Logman.instance.info("[Global] Deeplink received: $uri");
+          _handleGlobalDeeplink(uri);
+        }
+      },
+      onError: (err) {
+        Logman.instance.error("[Global] Error in deeplink stream: \$err");
+      },
+    );
+  }
+
+  void _handleGlobalDeeplink(Uri uri) {
+    Logman.instance.info("[Global] Deeplink: $uri");
+    final path = uri.path;
+    final status = uri.queryParameters['status'];
+    final package = uri.queryParameters['package'];
+    Logman.instance
+        .info("[Global] Log: Path: $path, Status: $status, Package: $package");
+
+    if (path == "/payment" && status == "success") {
+      navigatorKey.currentState?.pushNamed(
+        "/payment/success",
+        arguments: {'packageName': package!.toUpperCase()},
+      );
+    } else if (path == "/payment" && status == "failed") {
+      navigatorKey.currentState?.pushNamed(
+        "/payment/failed",
+        arguments: {'packageName': package!.toUpperCase()},
+      );
+    } else {
+      Logman.instance.error("Unhandled global deeplink: $uri");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -439,6 +514,7 @@ class App extends StatelessWidget {
             "/payment/confirmation": (context) =>
                 const PaymentConfirmationScreen(),
             "/payment/success": (context) => const PaymentSuccessScreen(),
+            "/payment/failed": (context) => const PaymentFailedScreen(),
 
             //Webview
             "/terms_conditions": (context) => const TermsConditionScreen(),

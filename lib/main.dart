@@ -10,8 +10,8 @@ final AppDataProvider _appDataProvider = AppDataProvider();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await _appDataProvider.setFlavor('Production');
-  AppConfigProvider.setFlavor('Production');
+  await _appDataProvider.setFlavor('prod');
+  AppConfigProvider.setFlavor('prod');
 
   await dotenv.load(fileName: ".env");
   await initializeDateFormatting("id_ID", null);
@@ -19,5 +19,5 @@ void main() async {
   final dioProvider = DioProvider();
   addRetryInterceptor(dioProvider.dio);
 
-  runApp(const App(flavor: 'Production'));
+  runApp(const App(flavor: 'prod'));
 }

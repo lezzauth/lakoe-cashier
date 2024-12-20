@@ -22,7 +22,6 @@ import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/main_menu
 import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/summary/sales_summary.dart';
 import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/summary/orders_summary.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
-import 'package:uni_links/uni_links.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -59,7 +58,6 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     _onInit();
-    handleDeeplink();
   }
 
   @override
@@ -71,20 +69,6 @@ class _DashboardState extends State<Dashboard> {
   Future<void> _onRefresh() async {
     context.read<CashierCubit>().getOpenCashier();
     context.read<CashierReportCubit>().init();
-  }
-
-  void handleDeeplink() {
-    _sub = uriLinkStream.listen((Uri? uri) {
-      if (uri != null &&
-          uri.scheme == 'app.lakoe' &&
-          uri.host == 'payment' &&
-          uri.path == '/success') {
-        if (!mounted) return;
-        Navigator.pushNamed(context, "/payment/success");
-      } else {}
-    }, onError: (err) {
-      // Error handling
-    });
   }
 
   @override
