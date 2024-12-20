@@ -110,6 +110,12 @@ class _OrderOutletState extends State<OrderOutlet> {
     }
   }
 
+  void _onOrderSelected(String? orderId) {
+    setState(() {
+      selectedOrderId = orderId;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
@@ -166,17 +172,13 @@ class _OrderOutletState extends State<OrderOutlet> {
                               onChanged: (value) {
                                 final cubit = context.read<OrdersFilterCubit>();
 
-                                final from = value.template == "CUSTOM"
-                                    ? DateTime.parse(value.from!)
-                                    : value.from != null
-                                        ? DateTime.parse(value.from!)
-                                        : null;
+                                DateTime? parseDate(String? date) {
+                                  if (date == null) return null;
+                                  return DateTime.parse(date);
+                                }
 
-                                final to = value.template == "CUSTOM"
-                                    ? DateTime.parse(value.to!)
-                                    : value.to != null
-                                        ? DateTime.parse(value.to!)
-                                        : null;
+                                final from = parseDate(value.from);
+                                final to = parseDate(value.to);
 
                                 cubit.setFilter(
                                   sort: value.sort,
@@ -220,6 +222,8 @@ class _OrderOutletState extends State<OrderOutlet> {
                                       ),
                                       tablet: TabletOrdersView(
                                         orders: orders,
+                                        selectedOrderId: selectedOrderId,
+                                        onOrderSelected: _onOrderSelected,
                                       ),
                                     ),
                                   ],
@@ -285,13 +289,11 @@ class _OrderOutletState extends State<OrderOutlet> {
 class MobileOrdersView extends StatelessWidget {
   final Map<String, List<OrderItemRes>> groupedOrders;
   final Function _onRefresh;
-
   const MobileOrdersView({
-    Key? key,
+    super.key,
     required this.groupedOrders,
     required Function onRefresh,
-  })  : _onRefresh = onRefresh,
-        super(key: key);
+  }) : _onRefresh = onRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -346,18 +348,22 @@ class MobileOrdersView extends StatelessWidget {
 
 class TabletOrdersView extends StatefulWidget {
   final List<OrderItemRes> orders;
+  final String? selectedOrderId;
+  final ValueChanged<String?> onOrderSelected;
 
   const TabletOrdersView({
-    Key? key,
+    super.key,
     required this.orders,
-  }) : super(key: key);
+    required this.selectedOrderId,
+    required this.onOrderSelected,
+  });
 
   @override
   State<TabletOrdersView> createState() => _TabletOrdersViewState();
 }
 
 class _TabletOrdersViewState extends State<TabletOrdersView> {
-  String? selectedOrderId;
+  String? _selectedId;
 
   @override
   Widget build(BuildContext context) {
@@ -375,17 +381,17 @@ class _TabletOrdersViewState extends State<TabletOrdersView> {
         itemBuilder: (context, index) {
           OrderItemRes order = widget.orders.elementAt(index);
 
-          bool selectedItem = selectedOrderId == order.id;
+          bool selectedItem = _selectedId == order.id;
 
           return OrderCardItem(
             selected: selectedItem,
             order: order,
             onTap: () {
               setState(() {
-                if (selectedOrderId == order.id) {
-                  selectedOrderId = null;
+                if (selectedItem) {
+                  widget.onOrderSelected(null);
                 } else {
-                  selectedOrderId = order.id;
+                  widget.onOrderSelected(order.id);
                 }
               });
             },
