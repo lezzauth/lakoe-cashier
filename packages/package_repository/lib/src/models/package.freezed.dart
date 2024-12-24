@@ -28,6 +28,10 @@ mixin _$PackageModel {
   int? get tables => throw _privateConstructorUsedError;
   int? get hardwareIntergation => throw _privateConstructorUsedError;
   int get price => throw _privateConstructorUsedError;
+  int? get period => throw _privateConstructorUsedError;
+  int? get discount => throw _privateConstructorUsedError;
+  int? get pricePerMonth => throw _privateConstructorUsedError;
+  int? get savePerMonth => throw _privateConstructorUsedError;
 
   /// Serializes this PackageModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,7 +57,11 @@ abstract class $PackageModelCopyWith<$Res> {
       int? customers,
       int? tables,
       int? hardwareIntergation,
-      int price});
+      int price,
+      int? period,
+      int? discount,
+      int? pricePerMonth,
+      int? savePerMonth});
 }
 
 /// @nodoc
@@ -79,6 +87,10 @@ class _$PackageModelCopyWithImpl<$Res, $Val extends PackageModel>
     Object? tables = freezed,
     Object? hardwareIntergation = freezed,
     Object? price = null,
+    Object? period = freezed,
+    Object? discount = freezed,
+    Object? pricePerMonth = freezed,
+    Object? savePerMonth = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -113,6 +125,22 @@ class _$PackageModelCopyWithImpl<$Res, $Val extends PackageModel>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as int,
+      period: freezed == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as int?,
+      discount: freezed == discount
+          ? _value.discount
+          : discount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pricePerMonth: freezed == pricePerMonth
+          ? _value.pricePerMonth
+          : pricePerMonth // ignore: cast_nullable_to_non_nullable
+              as int?,
+      savePerMonth: freezed == savePerMonth
+          ? _value.savePerMonth
+          : savePerMonth // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -133,7 +161,11 @@ abstract class _$$PackageModelImplCopyWith<$Res>
       int? customers,
       int? tables,
       int? hardwareIntergation,
-      int price});
+      int price,
+      int? period,
+      int? discount,
+      int? pricePerMonth,
+      int? savePerMonth});
 }
 
 /// @nodoc
@@ -157,6 +189,10 @@ class __$$PackageModelImplCopyWithImpl<$Res>
     Object? tables = freezed,
     Object? hardwareIntergation = freezed,
     Object? price = null,
+    Object? period = freezed,
+    Object? discount = freezed,
+    Object? pricePerMonth = freezed,
+    Object? savePerMonth = freezed,
   }) {
     return _then(_$PackageModelImpl(
       name: null == name
@@ -191,6 +227,22 @@ class __$$PackageModelImplCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as int,
+      period: freezed == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as int?,
+      discount: freezed == discount
+          ? _value.discount
+          : discount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pricePerMonth: freezed == pricePerMonth
+          ? _value.pricePerMonth
+          : pricePerMonth // ignore: cast_nullable_to_non_nullable
+              as int?,
+      savePerMonth: freezed == savePerMonth
+          ? _value.savePerMonth
+          : savePerMonth // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -206,7 +258,11 @@ class _$PackageModelImpl implements _PackageModel {
       this.customers,
       this.tables,
       this.hardwareIntergation,
-      required this.price});
+      required this.price,
+      this.period,
+      this.discount,
+      this.pricePerMonth,
+      this.savePerMonth});
 
   factory _$PackageModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PackageModelImplFromJson(json);
@@ -227,10 +283,18 @@ class _$PackageModelImpl implements _PackageModel {
   final int? hardwareIntergation;
   @override
   final int price;
+  @override
+  final int? period;
+  @override
+  final int? discount;
+  @override
+  final int? pricePerMonth;
+  @override
+  final int? savePerMonth;
 
   @override
   String toString() {
-    return 'PackageModel(name: $name, orders: $orders, products: $products, employees: $employees, customers: $customers, tables: $tables, hardwareIntergation: $hardwareIntergation, price: $price)';
+    return 'PackageModel(name: $name, orders: $orders, products: $products, employees: $employees, customers: $customers, tables: $tables, hardwareIntergation: $hardwareIntergation, price: $price, period: $period, discount: $discount, pricePerMonth: $pricePerMonth, savePerMonth: $savePerMonth)';
   }
 
   @override
@@ -249,13 +313,32 @@ class _$PackageModelImpl implements _PackageModel {
             (identical(other.tables, tables) || other.tables == tables) &&
             (identical(other.hardwareIntergation, hardwareIntergation) ||
                 other.hardwareIntergation == hardwareIntergation) &&
-            (identical(other.price, price) || other.price == price));
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.period, period) || other.period == period) &&
+            (identical(other.discount, discount) ||
+                other.discount == discount) &&
+            (identical(other.pricePerMonth, pricePerMonth) ||
+                other.pricePerMonth == pricePerMonth) &&
+            (identical(other.savePerMonth, savePerMonth) ||
+                other.savePerMonth == savePerMonth));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, orders, products,
-      employees, customers, tables, hardwareIntergation, price);
+  int get hashCode => Object.hash(
+      runtimeType,
+      name,
+      orders,
+      products,
+      employees,
+      customers,
+      tables,
+      hardwareIntergation,
+      price,
+      period,
+      discount,
+      pricePerMonth,
+      savePerMonth);
 
   /// Create a copy of PackageModel
   /// with the given fields replaced by the non-null parameter values.
@@ -282,7 +365,11 @@ abstract class _PackageModel implements PackageModel {
       final int? customers,
       final int? tables,
       final int? hardwareIntergation,
-      required final int price}) = _$PackageModelImpl;
+      required final int price,
+      final int? period,
+      final int? discount,
+      final int? pricePerMonth,
+      final int? savePerMonth}) = _$PackageModelImpl;
 
   factory _PackageModel.fromJson(Map<String, dynamic> json) =
       _$PackageModelImpl.fromJson;
@@ -303,6 +390,14 @@ abstract class _PackageModel implements PackageModel {
   int? get hardwareIntergation;
   @override
   int get price;
+  @override
+  int? get period;
+  @override
+  int? get discount;
+  @override
+  int? get pricePerMonth;
+  @override
+  int? get savePerMonth;
 
   /// Create a copy of PackageModel
   /// with the given fields replaced by the non-null parameter values.

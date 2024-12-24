@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:lakoe_pos/features/packages/presentation/screens/package_master.dart';
@@ -70,12 +71,21 @@ class CardPackageItem extends StatelessWidget {
                                         "Mulai dari",
                                         color: TColors.neutralDarkLightest,
                                       ),
-                                    TextHeading2(
-                                      item.price == 0
-                                          ? "Gratis"
-                                          : TFormatter.formatToRupiah(
-                                              item.price),
-                                      color: TColors.neutralDarkDark,
+                                    Row(
+                                      children: [
+                                        TextHeading2(
+                                          item.price == 0
+                                              ? "Gratis"
+                                              : TFormatter.formatToRupiah(
+                                                  item.price),
+                                          color: TColors.neutralDarkDark,
+                                        ),
+                                        if (item.price != 0)
+                                          TextBodyS(
+                                            " /bulan",
+                                            color: TColors.neutralDarkLightest,
+                                          ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -104,15 +114,17 @@ class CardPackageItem extends StatelessWidget {
                                   ),
                                 if (item.isActive == true)
                                   Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 4),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
                                     decoration: BoxDecoration(
-                                      color: TColors.neutralLightMedium,
+                                      color: TColors.success,
                                       borderRadius: BorderRadius.circular(4),
                                     ),
-                                    child: const TextHeading5(
-                                      "Paket kamu saat ini",
-                                      color: TColors.neutralDarkDark,
+                                    child: TextHeading5(
+                                      "Paket aktif saat ini",
+                                      color: TColors.neutralLightLightest,
                                     ),
                                   ),
                               ],

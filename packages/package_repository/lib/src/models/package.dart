@@ -14,6 +14,10 @@ class PackageModel with _$PackageModel {
     int? tables,
     int? hardwareIntergation,
     required int price,
+    int? period,
+    int? discount,
+    int? pricePerMonth,
+    int? savePerMonth,
   }) = _PackageModel;
 
   factory PackageModel.fromJson(Map<String, dynamic> json) =>

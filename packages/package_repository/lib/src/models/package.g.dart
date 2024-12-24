@@ -16,6 +16,10 @@ _$PackageModelImpl _$$PackageModelImplFromJson(Map<String, dynamic> json) =>
       tables: (json['tables'] as num?)?.toInt(),
       hardwareIntergation: (json['hardwareIntergation'] as num?)?.toInt(),
       price: (json['price'] as num).toInt(),
+      period: (json['period'] as num?)?.toInt(),
+      discount: (json['discount'] as num?)?.toInt(),
+      pricePerMonth: (json['pricePerMonth'] as num?)?.toInt(),
+      savePerMonth: (json['savePerMonth'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$PackageModelImplToJson(_$PackageModelImpl instance) =>
@@ -28,6 +32,10 @@ Map<String, dynamic> _$$PackageModelImplToJson(_$PackageModelImpl instance) =>
       'tables': instance.tables,
       'hardwareIntergation': instance.hardwareIntergation,
       'price': instance.price,
+      'period': instance.period,
+      'discount': instance.discount,
+      'pricePerMonth': instance.pricePerMonth,
+      'savePerMonth': instance.savePerMonth,
     };
 
 _$PackagePriceModelImpl _$$PackagePriceModelImplFromJson(

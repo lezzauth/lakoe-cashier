@@ -33,7 +33,7 @@ class _PackageDetailScreenState extends State<PackageDetailScreen>
   final double scrollThreshold = 100.0;
 
   TabController? _tabController;
-  int _selectedIndex = 0;
+  int _selectedIndex = 3;
 
   String packageName = "GROW";
 
@@ -58,7 +58,7 @@ class _PackageDetailScreenState extends State<PackageDetailScreen>
       }
     });
 
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 4, initialIndex: 3, vsync: this);
     _tabController?.addListener(() {
       setState(() {
         _selectedIndex = _tabController!.index;
@@ -200,7 +200,6 @@ class _PackageDetailScreenState extends State<PackageDetailScreen>
                                     hasPadding: true,
                                     controller: _tabController,
                                     tabs: detail.map((package) {
-                                      // Convert period 12 to "1 Tahun", otherwise keep period as is
                                       final title = package.period == 12
                                           ? "1 Tahun"
                                           : "${package.period} Bulan";

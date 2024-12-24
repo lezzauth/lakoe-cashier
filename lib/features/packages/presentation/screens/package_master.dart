@@ -134,7 +134,7 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
                                   name: package.name,
                                   logo: _getPackageLogo(package.name),
                                   description: _getPackageDesc(package.name),
-                                  price: package.price,
+                                  price: package.pricePerMonth ?? 0,
                                   color: _getPackageColor(package.name),
                                   isActive: package.name == profile.packageName,
                                 );
@@ -142,14 +142,14 @@ class _PackageMasterScreenState extends State<PackageMasterScreen>
                               return CardPackageItem(data: listCardItemPackage);
                             } else if (state is PackageMasterLoadFailure) {
                               return Container(
-                                margin: const EdgeInsets.only(top: 112),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0),
+                                margin: EdgeInsets.only(top: 112),
+                                padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const TextHeading2(
-                                        "Saatnya Naik Level,\nSaatnya Upgrade Lakoe."),
+                                    TextHeading2(
+                                      "Saatnya Naik Level,\nSaatnya Upgrade Lakoe.",
+                                    ),
                                     Center(
                                       child: EmptyList(
                                         title: "Gagal memuat data, nih!",
