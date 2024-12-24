@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
@@ -11,6 +10,45 @@ class CardItemHistory extends StatelessWidget {
 
   final PurchaseModel data;
   final Function()? onTap;
+
+  String getTagLabel(String status) {
+    switch (status) {
+      case "PENDING":
+        return "Menunggu Pembayaran";
+      case "SUCCEEDED":
+        return "Sukses";
+      case "FAILED":
+        return "Gagal";
+      default:
+        return "-";
+    }
+  }
+
+  Color getTagBackgroundColor(String status) {
+    switch (status) {
+      case "PENDING":
+        return TColors.warning;
+      case "SUCCEEDED":
+        return TColors.success;
+      case "FAILED":
+        return TColors.error;
+      default:
+        return TColors.neutralDarkDark;
+    }
+  }
+
+  Color getTagTextColor(String status) {
+    switch (status) {
+      case "PENDING":
+        return TColors.neutralDarkDark;
+      case "SUCCEEDED":
+        return TColors.neutralLightLightest;
+      case "FAILED":
+        return TColors.neutralLightLightest;
+      default:
+        return TColors.neutralLightLightest;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +75,14 @@ class CardItemHistory extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextHeading3(
+                TextHeading4(
                   "Paket ${TFormatter.capitalizeEachWord(data.packageName)} - ${data.period} Bulan",
                   color: TColors.neutralDarkDark,
+                  fontWeight: FontWeight.w700,
                 ),
                 SizedBox(height: 4),
                 TextBodyS(
-                  TFormatter.dateTime(data.createdAt),
+                  TFormatter.dateTime(data.createdAt, withTime: false),
                   color: TColors.neutralDarkLight,
                 ),
               ],
@@ -52,12 +91,20 @@ class CardItemHistory extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                TextBodyS(
-                  data.status,
-                  color: (data.status != "UNPAID")
-                      ? TColors.success
-                      : TColors.error,
-                  fontWeight: FontWeight.bold,
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    color: getTagBackgroundColor(data.status),
+                  ),
+                  child: TextBodyS(
+                    getTagLabel(data.status),
+                    color: getTagTextColor(data.status),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 SizedBox(height: 6),
                 TextHeading4(

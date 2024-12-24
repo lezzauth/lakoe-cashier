@@ -213,6 +213,136 @@ abstract class _PurchaseDetail implements PurchaseDetail {
       throw _privateConstructorUsedError;
 }
 
+/// @nodoc
+mixin _$FindAllPurchaseDto {
+  String? get status => throw _privateConstructorUsedError;
+
+  /// Create a copy of FindAllPurchaseDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $FindAllPurchaseDtoCopyWith<FindAllPurchaseDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $FindAllPurchaseDtoCopyWith<$Res> {
+  factory $FindAllPurchaseDtoCopyWith(
+          FindAllPurchaseDto value, $Res Function(FindAllPurchaseDto) then) =
+      _$FindAllPurchaseDtoCopyWithImpl<$Res, FindAllPurchaseDto>;
+  @useResult
+  $Res call({String? status});
+}
+
+/// @nodoc
+class _$FindAllPurchaseDtoCopyWithImpl<$Res, $Val extends FindAllPurchaseDto>
+    implements $FindAllPurchaseDtoCopyWith<$Res> {
+  _$FindAllPurchaseDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of FindAllPurchaseDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+  }) {
+    return _then(_value.copyWith(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$FindAllPurchaseDtoImplCopyWith<$Res>
+    implements $FindAllPurchaseDtoCopyWith<$Res> {
+  factory _$$FindAllPurchaseDtoImplCopyWith(_$FindAllPurchaseDtoImpl value,
+          $Res Function(_$FindAllPurchaseDtoImpl) then) =
+      __$$FindAllPurchaseDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? status});
+}
+
+/// @nodoc
+class __$$FindAllPurchaseDtoImplCopyWithImpl<$Res>
+    extends _$FindAllPurchaseDtoCopyWithImpl<$Res, _$FindAllPurchaseDtoImpl>
+    implements _$$FindAllPurchaseDtoImplCopyWith<$Res> {
+  __$$FindAllPurchaseDtoImplCopyWithImpl(_$FindAllPurchaseDtoImpl _value,
+      $Res Function(_$FindAllPurchaseDtoImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of FindAllPurchaseDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+  }) {
+    return _then(_$FindAllPurchaseDtoImpl(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FindAllPurchaseDtoImpl implements _FindAllPurchaseDto {
+  const _$FindAllPurchaseDtoImpl({this.status});
+
+  @override
+  final String? status;
+
+  @override
+  String toString() {
+    return 'FindAllPurchaseDto(status: $status)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FindAllPurchaseDtoImpl &&
+            (identical(other.status, status) || other.status == status));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, status);
+
+  /// Create a copy of FindAllPurchaseDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FindAllPurchaseDtoImplCopyWith<_$FindAllPurchaseDtoImpl> get copyWith =>
+      __$$FindAllPurchaseDtoImplCopyWithImpl<_$FindAllPurchaseDtoImpl>(
+          this, _$identity);
+}
+
+abstract class _FindAllPurchaseDto implements FindAllPurchaseDto {
+  const factory _FindAllPurchaseDto({final String? status}) =
+      _$FindAllPurchaseDtoImpl;
+
+  @override
+  String? get status;
+
+  /// Create a copy of FindAllPurchaseDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$FindAllPurchaseDtoImplCopyWith<_$FindAllPurchaseDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 PurchaseModel _$PurchaseModelFromJson(Map<String, dynamic> json) {
   return _PurchaseModel.fromJson(json);
 }

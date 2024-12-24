@@ -4,7 +4,7 @@ import 'package:owner_repository/owner_repository.dart';
 import 'package:token_provider/token_provider.dart';
 
 abstract class PurchaseRepository {
-  Future<List<PurchaseModel>> findAll();
+  Future<List<PurchaseModel>> findAll(FindAllPurchaseDto? dto);
   Future<PurchaseDetail> findOne(String id);
 }
 
@@ -21,11 +21,11 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
   }
 
   @override
-  Future<List<PurchaseModel>> findAll() async {
+  Future<List<PurchaseModel>> findAll(FindAllPurchaseDto? dto) async {
     final Options options = await _getOptions();
 
     final res = await _dio.get<List<dynamic>>(
-      _baseURL,
+      "$_baseURL?${dto?.toQueryString()}",
       options: options,
     );
 

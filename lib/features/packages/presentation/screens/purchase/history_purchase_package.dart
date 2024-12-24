@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/common/data/models.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/features/checkout/application/filters/filter_purchase_cubit.dart';
+import 'package:lakoe_pos/features/checkout/application/filters/filter_purchase_state.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
 import 'package:lakoe_pos/features/packages/presentation/widgets/card_item_history.dart';
@@ -13,130 +17,199 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:owner_repository/owner_repository.dart';
 
-class HistoryPurchasePackageScreen extends StatefulWidget {
+class HistoryPurchasePackageScreen extends StatelessWidget {
   const HistoryPurchasePackageScreen({super.key});
 
   @override
-  State<HistoryPurchasePackageScreen> createState() =>
-      _HistoryPurchasePackageScreenState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => FilterPurchaseCubit()),
+      ],
+      child: const HistoryPurchasePackage(),
+    );
+  }
 }
 
-class _HistoryPurchasePackageScreenState
-    extends State<HistoryPurchasePackageScreen> {
+class HistoryPurchasePackage extends StatefulWidget {
+  const HistoryPurchasePackage({super.key});
+
+  @override
+  State<HistoryPurchasePackage> createState() => _HistoryPurchasePackageState();
+}
+
+class _HistoryPurchasePackageState extends State<HistoryPurchasePackage> {
+  final List<LabelValue<String>> _statuses = [
+    const LabelValue(label: "Pending", value: "UNPAID"),
+    const LabelValue(label: "Berhasil", value: "PAID"),
+    const LabelValue(label: "Gagal", value: "FAILED"),
+    const LabelValue(label: "Expired", value: "EXPIRED"),
+    // const LabelValue(label: "Pending", value: "PENDING"),
+    // const LabelValue(label: "Berhasil", value: "SUCCEEDED"),
+    // const LabelValue(label: "Gagal", value: "FAILED"),
+  ];
+
   @override
   void initState() {
     super.initState();
-    context.read<PurchaseCubit>().findAll();
+    context.read<PurchaseCubit>().init();
   }
 
   Future<void> _onRefresh() async {
-    await context.read<PurchaseCubit>().findAll();
+    FilterPurchaseState filterState = context.read<FilterPurchaseCubit>().state;
+    await context
+        .read<PurchaseCubit>()
+        .findAll(filterState.toFindAllPurchaseDto);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppbar(
-        title: "Paket & Riwayat",
-      ),
-      body: Scrollbar(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 12.0),
-                child: TextHeading3(
-                  "Paket Aktif",
-                  color: TColors.neutralDarkDarkest,
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<FilterPurchaseCubit, FilterPurchaseState>(
+          listener: (context, state) {
+            context.read<PurchaseCubit>().findAll(state.toFindAllPurchaseDto);
+          },
+        ),
+      ],
+      child: Scaffold(
+        appBar: CustomAppbar(
+          title: "Paket & Riwayat",
+        ),
+        body: Scrollbar(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(bottom: 12.0),
+                  child: TextHeading3(
+                    "Paket Aktif",
+                    color: TColors.neutralDarkDarkest,
+                  ),
                 ),
-              ),
-              CardItemPackageActive(),
-              Container(
-                margin: EdgeInsets.only(bottom: 12.0, top: 24),
-                child: TextHeading3(
-                  "Riwayat Pembelian",
-                  color: TColors.neutralDarkDarkest,
+                CardItemPackageActive(),
+                Container(
+                  margin: EdgeInsets.only(bottom: 8.0, top: 24),
+                  child: TextHeading3(
+                    "Riwayat Pembelian",
+                    color: TColors.neutralDarkDarkest,
+                  ),
                 ),
-              ),
-              BlocBuilder<PurchaseCubit, PurchaseState>(
-                  builder: (context, state) {
-                if (state is PurchaseLoadSuccess) {
-                  if (state.purchases.isEmpty) {
-                    return EmptyList(
-                      image: SvgPicture.asset(
-                        TImages.catBox,
-                        width: 140,
-                        height: 101.45,
+                BlocBuilder<FilterPurchaseCubit, FilterPurchaseState>(
+                    builder: (context, state) {
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 8),
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      alignment: WrapAlignment.start,
+                      spacing: 8.0,
+                      children: _statuses.map((status) {
+                        bool selected =
+                            status.value == state.toFindAllPurchaseDto.status;
+                        return InputChip(
+                          label: selected
+                              ? TextHeading4(
+                                  status.label,
+                                  color: TColors.primary,
+                                )
+                              : TextBodyM(
+                                  status.label,
+                                  color: TColors.neutralDarkDarkest,
+                                ),
+                          selected: selected,
+                          onPressed: () {
+                            final cubit = context.read<FilterPurchaseCubit>();
+                            if (selected) {
+                              cubit.setFilter(status: "ALL");
+                            } else {
+                              cubit.setFilter(status: status.value);
+                            }
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  );
+                }),
+                BlocBuilder<PurchaseCubit, PurchaseState>(
+                    builder: (context, state) {
+                  if (state is PurchaseLoadSuccess) {
+                    if (state.purchases.isEmpty) {
+                      return EmptyList(
+                        image: SvgPicture.asset(
+                          TImages.catBox,
+                          width: 140,
+                          height: 101.45,
+                        ),
+                        title: "Belum ada riwayat pembelian",
+                        subTitle:
+                            " Yuk, Upgrade paket Lakoe bersama dengan bertumbuhnya bisnis kamu.",
+                        action: TextButton(
+                          onPressed: () =>
+                              Navigator.pushNamed(context, "/packages"),
+                          child: TextActionL(
+                            "Explore Paket",
+                            color: TColors.primary,
+                          ),
+                        ),
+                      );
+                    }
+                    return Expanded(
+                      child: ListView.builder(
+                          itemCount: state.purchases.length,
+                          itemBuilder: (context, index) {
+                            PurchaseModel purchase = state.purchases[index];
+                            return CardItemHistory(
+                                data: purchase,
+                                onTap: () async {
+                                  bool? result = await Navigator.pushNamed(
+                                    context,
+                                    "/packages/purchase/detail",
+                                    arguments: purchase,
+                                  ) as bool?;
+
+                                  if (result == true) {
+                                    _onRefresh();
+                                  }
+                                });
+                          }),
+                    );
+                  } else if (state is PurchaseLoadInProgress) {
+                    return Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
                       ),
-                      title: "Belum ada riwayat pembelian",
-                      subTitle:
-                          " Yuk, Upgrade paket Lakoe bersama dengan bertumbuhnya bisnis kamu.",
+                    );
+                  } else if (state is PurchaseLoadFailure) {
+                    return EmptyList(
+                      title: "Gagal memuat data, nih!",
+                      subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
                       action: TextButton(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, "/packages"),
+                        onPressed: _onRefresh,
                         child: TextActionL(
-                          "Explore Paket",
+                          "Coba Lagi",
+                          color: TColors.primary,
+                        ),
+                      ),
+                    );
+                  } else {
+                    return EmptyList(
+                      title: "Bentar, ada masalah tak terduga, nih!",
+                      subTitle: "Tenang, kamu bisa mencobanya lagi, kok",
+                      action: TextButton(
+                        onPressed: _onRefresh,
+                        child: TextActionL(
+                          "Coba Lagi",
                           color: TColors.primary,
                         ),
                       ),
                     );
                   }
-                  return Expanded(
-                    child: ListView.builder(
-                        itemCount: state.purchases.length,
-                        itemBuilder: (context, index) {
-                          PurchaseModel purchase = state.purchases[index];
-                          return CardItemHistory(
-                              data: purchase,
-                              onTap: () async {
-                                bool? result = await Navigator.pushNamed(
-                                  context,
-                                  "/packages/purchase/detail",
-                                  arguments: purchase,
-                                ) as bool?;
-
-                                if (result == true) {
-                                  _onRefresh();
-                                }
-                              });
-                        }),
-                  );
-                } else if (state is PurchaseLoadInProgress) {
-                  return Expanded(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                } else if (state is PurchaseLoadFailure) {
-                  return EmptyList(
-                    title: "Gagal memuat data, nih!",
-                    subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
-                    action: TextButton(
-                      onPressed: _onRefresh,
-                      child: TextActionL(
-                        "Coba Lagi",
-                        color: TColors.primary,
-                      ),
-                    ),
-                  );
-                } else {
-                  return EmptyList(
-                    title: "Bentar, ada masalah tak terduga, nih!",
-                    subTitle: "Tenang, kamu bisa mencobanya lagi, kok",
-                    action: TextButton(
-                      onPressed: _onRefresh,
-                      child: TextActionL(
-                        "Coba Lagi",
-                        color: TColors.primary,
-                      ),
-                    ),
-                  );
-                }
-              }),
-            ],
+                }),
+              ],
+            ),
           ),
         ),
       ),

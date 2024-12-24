@@ -15,6 +15,30 @@ class PurchaseDetail with _$PurchaseDetail {
 }
 
 @freezed
+class FindAllPurchaseDto with _$FindAllPurchaseDto {
+  const factory FindAllPurchaseDto({String? status}) = _FindAllPurchaseDto;
+}
+
+extension CopyWithExtension on FindAllPurchaseDto {
+  FindAllPurchaseDto copyWith({String? status}) {
+    return FindAllPurchaseDto(status: status ?? this.status);
+  }
+}
+
+extension QueryStringExtension on FindAllPurchaseDto {
+  String toQueryString() {
+    final Map<String, dynamic> queryParams = {"status": status};
+
+    queryParams.removeWhere((key, value) => value == null);
+
+    return queryParams.entries
+        .map((entry) =>
+            '${entry.key}=${Uri.encodeComponent(entry.value.toString())}')
+        .join('&');
+  }
+}
+
+@freezed
 class PurchaseModel with _$PurchaseModel {
   const factory PurchaseModel({
     required String id,

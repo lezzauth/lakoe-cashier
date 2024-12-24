@@ -80,7 +80,7 @@ class _DetailPurchaseState extends State<DetailPurchase> {
       case "FAILED":
         return "Gagal";
       default:
-        return "Menunggu Pembayaran";
+        return "-";
     }
   }
 

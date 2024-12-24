@@ -9,10 +9,14 @@ class PurchaseCubit extends Cubit<PurchaseState> {
 
   PurchaseCubit() : super(PurchaseInitial());
 
-  Future<void> findAll() async {
+  Future<void> init() async {
+    await findAll(FindAllPurchaseDto());
+  }
+
+  Future<void> findAll(FindAllPurchaseDto? dto) async {
     try {
       emit(PurchaseLoadInProgress());
-      final res = await _repositoryOwner.purchase.findAll();
+      final res = await _repositoryOwner.purchase.findAll(dto);
       emit(PurchaseLoadSuccess(purchases: res));
     } catch (e) {
       emit(PurchaseLoadFailure(e.toString()));
