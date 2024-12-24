@@ -475,9 +475,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                               color: TColors.neutralLightLightest,
                             ),
                             SizedBox(width: 8),
-                            const TextActionL(
-                              "Bayar",
-                            ),
+                            TextActionL("Bayar"),
                           ],
                         ),
                       ),

@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-PaymentMethod _$PaymentMethodFromJson(Map<String, dynamic> json) {
-  return _PaymentMethod.fromJson(json);
+PaymentMethodCashier _$PaymentMethodCashierFromJson(Map<String, dynamic> json) {
+  return _PaymentMethodCashier.fromJson(json);
 }
 
 /// @nodoc
-mixin _$PaymentMethod {
+mixin _$PaymentMethodCashier {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   bool get isNeedEdc => throw _privateConstructorUsedError;
@@ -29,21 +29,21 @@ mixin _$PaymentMethod {
   String get title => throw _privateConstructorUsedError;
   String? get icon => throw _privateConstructorUsedError;
 
-  /// Serializes this PaymentMethod to a JSON map.
+  /// Serializes this PaymentMethodCashier to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of PaymentMethod
+  /// Create a copy of PaymentMethodCashier
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PaymentMethodCopyWith<PaymentMethod> get copyWith =>
+  $PaymentMethodCashierCopyWith<PaymentMethodCashier> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PaymentMethodCopyWith<$Res> {
-  factory $PaymentMethodCopyWith(
-          PaymentMethod value, $Res Function(PaymentMethod) then) =
-      _$PaymentMethodCopyWithImpl<$Res, PaymentMethod>;
+abstract class $PaymentMethodCashierCopyWith<$Res> {
+  factory $PaymentMethodCashierCopyWith(PaymentMethodCashier value,
+          $Res Function(PaymentMethodCashier) then) =
+      _$PaymentMethodCashierCopyWithImpl<$Res, PaymentMethodCashier>;
   @useResult
   $Res call(
       {String id,
@@ -57,16 +57,17 @@ abstract class $PaymentMethodCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PaymentMethodCopyWithImpl<$Res, $Val extends PaymentMethod>
-    implements $PaymentMethodCopyWith<$Res> {
-  _$PaymentMethodCopyWithImpl(this._value, this._then);
+class _$PaymentMethodCashierCopyWithImpl<$Res,
+        $Val extends PaymentMethodCashier>
+    implements $PaymentMethodCashierCopyWith<$Res> {
+  _$PaymentMethodCashierCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of PaymentMethod
+  /// Create a copy of PaymentMethodCashier
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -118,11 +119,11 @@ class _$PaymentMethodCopyWithImpl<$Res, $Val extends PaymentMethod>
 }
 
 /// @nodoc
-abstract class _$$PaymentMethodImplCopyWith<$Res>
-    implements $PaymentMethodCopyWith<$Res> {
-  factory _$$PaymentMethodImplCopyWith(
-          _$PaymentMethodImpl value, $Res Function(_$PaymentMethodImpl) then) =
-      __$$PaymentMethodImplCopyWithImpl<$Res>;
+abstract class _$$PaymentMethodCashierImplCopyWith<$Res>
+    implements $PaymentMethodCashierCopyWith<$Res> {
+  factory _$$PaymentMethodCashierImplCopyWith(_$PaymentMethodCashierImpl value,
+          $Res Function(_$PaymentMethodCashierImpl) then) =
+      __$$PaymentMethodCashierImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -137,14 +138,14 @@ abstract class _$$PaymentMethodImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$PaymentMethodImplCopyWithImpl<$Res>
-    extends _$PaymentMethodCopyWithImpl<$Res, _$PaymentMethodImpl>
-    implements _$$PaymentMethodImplCopyWith<$Res> {
-  __$$PaymentMethodImplCopyWithImpl(
-      _$PaymentMethodImpl _value, $Res Function(_$PaymentMethodImpl) _then)
+class __$$PaymentMethodCashierImplCopyWithImpl<$Res>
+    extends _$PaymentMethodCashierCopyWithImpl<$Res, _$PaymentMethodCashierImpl>
+    implements _$$PaymentMethodCashierImplCopyWith<$Res> {
+  __$$PaymentMethodCashierImplCopyWithImpl(_$PaymentMethodCashierImpl _value,
+      $Res Function(_$PaymentMethodCashierImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of PaymentMethod
+  /// Create a copy of PaymentMethodCashier
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -158,7 +159,7 @@ class __$$PaymentMethodImplCopyWithImpl<$Res>
     Object? title = null,
     Object? icon = freezed,
   }) {
-    return _then(_$PaymentMethodImpl(
+    return _then(_$PaymentMethodCashierImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -197,8 +198,8 @@ class __$$PaymentMethodImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PaymentMethodImpl implements _PaymentMethod {
-  const _$PaymentMethodImpl(
+class _$PaymentMethodCashierImpl implements _PaymentMethodCashier {
+  const _$PaymentMethodCashierImpl(
       {required this.id,
       required this.name,
       required this.isNeedEdc,
@@ -208,8 +209,8 @@ class _$PaymentMethodImpl implements _PaymentMethod {
       required this.title,
       this.icon});
 
-  factory _$PaymentMethodImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PaymentMethodImplFromJson(json);
+  factory _$PaymentMethodCashierImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PaymentMethodCashierImplFromJson(json);
 
   @override
   final String id;
@@ -230,14 +231,14 @@ class _$PaymentMethodImpl implements _PaymentMethod {
 
   @override
   String toString() {
-    return 'PaymentMethod(id: $id, name: $name, isNeedEdc: $isNeedEdc, isActive: $isActive, description: $description, channel: $channel, title: $title, icon: $icon)';
+    return 'PaymentMethodCashier(id: $id, name: $name, isNeedEdc: $isNeedEdc, isActive: $isActive, description: $description, channel: $channel, title: $title, icon: $icon)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PaymentMethodImpl &&
+            other is _$PaymentMethodCashierImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.isNeedEdc, isNeedEdc) ||
@@ -256,24 +257,26 @@ class _$PaymentMethodImpl implements _PaymentMethod {
   int get hashCode => Object.hash(runtimeType, id, name, isNeedEdc, isActive,
       description, channel, title, icon);
 
-  /// Create a copy of PaymentMethod
+  /// Create a copy of PaymentMethodCashier
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PaymentMethodImplCopyWith<_$PaymentMethodImpl> get copyWith =>
-      __$$PaymentMethodImplCopyWithImpl<_$PaymentMethodImpl>(this, _$identity);
+  _$$PaymentMethodCashierImplCopyWith<_$PaymentMethodCashierImpl>
+      get copyWith =>
+          __$$PaymentMethodCashierImplCopyWithImpl<_$PaymentMethodCashierImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$PaymentMethodImplToJson(
+    return _$$PaymentMethodCashierImplToJson(
       this,
     );
   }
 }
 
-abstract class _PaymentMethod implements PaymentMethod {
-  const factory _PaymentMethod(
+abstract class _PaymentMethodCashier implements PaymentMethodCashier {
+  const factory _PaymentMethodCashier(
       {required final String id,
       required final String name,
       required final bool isNeedEdc,
@@ -281,10 +284,10 @@ abstract class _PaymentMethod implements PaymentMethod {
       required final String description,
       required final String channel,
       required final String title,
-      final String? icon}) = _$PaymentMethodImpl;
+      final String? icon}) = _$PaymentMethodCashierImpl;
 
-  factory _PaymentMethod.fromJson(Map<String, dynamic> json) =
-      _$PaymentMethodImpl.fromJson;
+  factory _PaymentMethodCashier.fromJson(Map<String, dynamic> json) =
+      _$PaymentMethodCashierImpl.fromJson;
 
   @override
   String get id;
@@ -303,12 +306,12 @@ abstract class _PaymentMethod implements PaymentMethod {
   @override
   String? get icon;
 
-  /// Create a copy of PaymentMethod
+  /// Create a copy of PaymentMethodCashier
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PaymentMethodImplCopyWith<_$PaymentMethodImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$PaymentMethodCashierImplCopyWith<_$PaymentMethodCashierImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 SetActiveResponse _$SetActiveResponseFromJson(Map<String, dynamic> json) {

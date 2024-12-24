@@ -36,7 +36,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
   String _remainingTime = "00:00:00";
 
   PaymentRequestModel? payment;
-  PurchaseModel? purchase;
+  Purchase? purchase;
 
   PaymentMethod? selectedMethod;
   List<String> stepsList = [];
@@ -187,9 +187,12 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
 
   @override
   Widget build(BuildContext context) {
-    String virtualAccount = payment!
-        .paymentMethod.virtualAccount!.channelProperties.virtualAccountNumber;
-    int amount = payment!.paymentMethod.virtualAccount!.amount;
+    String virtualAccount = payment == null
+        ? ''
+        : payment!.paymentMethod.virtualAccount!.channelProperties
+            .virtualAccountNumber;
+    int amount =
+        payment == null ? 0 : payment!.paymentMethod.virtualAccount!.amount;
 
     return PopScope(
       onPopInvokedWithResult: (popDisposition, popResult) async {
@@ -291,14 +294,18 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                                     child: Row(
                                       children: [
                                         Image.asset(
-                                          selectedMethod!.logo,
+                                          selectedMethod == null
+                                              ? ''
+                                              : selectedMethod!.logo,
                                           width: 32,
                                           height: 32,
                                         ),
                                         SizedBox(width: 12),
                                         Expanded(
                                           child: TextHeading4(
-                                            "Bank ${selectedMethod!.name}",
+                                            selectedMethod == null
+                                                ? ''
+                                                : "Bank ${selectedMethod!.name}",
                                             color: TColors.neutralDarkDark,
                                           ),
                                         ),

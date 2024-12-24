@@ -3,7 +3,7 @@ import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
 List<PaymentCategory> paymentMethod = [
   PaymentCategory(
-    categoryName: "E-Wallet",
+    categoryName: "E-WALLET",
     methods: [
       PaymentMethod(name: "LinkAja", logo: TImages.linkaja),
       PaymentMethod(name: "OVO", logo: TImages.ovo),
@@ -12,7 +12,7 @@ List<PaymentCategory> paymentMethod = [
     ],
   ),
   PaymentCategory(
-    categoryName: "Bank Transfer",
+    categoryName: "VIRTUAL_ACCOUNT",
     methods: [
       PaymentMethod(
         name: "BCA",
@@ -39,10 +39,11 @@ Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
           PaymentMedia(
             mediaName: "ATM",
             steps: """
-Buka aplikasi **ATM**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+Masukkan **Kartu ATM** BCA, lalu **masukkan PIN**.
+Pilih menu **Transaksi Lainnya**, kemudian pilih **Transfer**.
+Pilih menu **ke Rekening BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Benar** untuk melanjutkan.
+Tekan **Ya** jika sudah benar. Transaksi Anda telah selesai.
 """,
           ),
         ],

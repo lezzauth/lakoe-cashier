@@ -4,9 +4,9 @@ import 'package:android_intent_plus/flag.dart';
 import 'package:app_data_provider/app_data_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/utils/helpers/deeplink_handler.dart';
 import 'package:logman/logman.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
@@ -18,7 +18,6 @@ import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_sta
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:token_provider/token_provider.dart';
-import 'package:uni_links/uni_links.dart';
 
 class RedirectScreen extends StatefulWidget {
   const RedirectScreen({super.key});
@@ -31,9 +30,10 @@ class _RedirectScreenState extends State<RedirectScreen> {
   bool navigated = false;
   bool isBottomSheetVisible = false;
 
+  final DeeplinkHandler _deeplinkHandler = DeeplinkHandler();
+
   late final StreamSubscription<List<ConnectivityResult>>
       connectivitySubscription;
-  StreamSubscription? deeplinkSubscription;
 
   Future<void> loadFlavor() async {
     final AppDataProvider appDataProvider = AppDataProvider();
@@ -61,15 +61,56 @@ class _RedirectScreenState extends State<RedirectScreen> {
     super.initState();
     loadFlavor();
     init();
-    _initInitialDeeplink();
-    _listenToDeeplink();
+    _deeplinkHandler.init(
+      onDeeplinkReceived: _handleDeeplink,
+      onError: () {
+        Logman.instance.error("[Redirect] Failed to handle deeplink.");
+      },
+    );
   }
 
   @override
   void dispose() {
     connectivitySubscription.cancel();
-    deeplinkSubscription?.cancel();
+    _deeplinkHandler.dispose();
     super.dispose();
+  }
+
+  void _handleDeeplink(Uri uri) {
+    if (navigated) {
+      Logman.instance.info(
+          "[Redirect] Deeplink navigation already performed, skipping...");
+      return;
+    }
+
+    Logman.instance.info("[Redirect] Handling deeplink: $uri");
+    final path = uri.path;
+    final status = uri.queryParameters['status'];
+    final package = uri.queryParameters['package'];
+
+    if (path == "/payment" && status != null && package != null) {
+      _deeplinkHandler.dispose();
+      navigated = true;
+
+      if (status == "success") {
+        Navigator.pushNamed(
+          context,
+          "/payment/success",
+          arguments: {'packageName': package.toUpperCase()},
+        );
+      } else if (status == "failed") {
+        Navigator.pushNamed(
+          context,
+          "/payment/failed",
+          arguments: {'packageName': package.toUpperCase()},
+        );
+      } else {
+        Logman.instance.error("[Redirect] Invalid status value: $status");
+      }
+    } else {
+      Logman.instance
+          .error("[Redirect] Invalid path or missing parameters in deeplink.");
+    }
   }
 
   void init() {
@@ -92,72 +133,6 @@ class _RedirectScreenState extends State<RedirectScreen> {
         context.read<AuthCubit>().initialize();
       }
     });
-  }
-
-  Future<void> _initInitialDeeplink() async {
-    try {
-      final initialUri = await getInitialLink(); // Fetch initial deeplink
-      if (initialUri != null) {
-        Logman.instance.info("Initial deeplink detected: $initialUri");
-        _handleDeeplink(Uri.parse(initialUri));
-      } else {
-        Logman.instance.error("No initial deeplink detected.");
-      }
-    } on PlatformException catch (e) {
-      Logman.instance.error("Error fetching initial deeplink: $e");
-    }
-  }
-
-  void _listenToDeeplink() {
-    deeplinkSubscription = uriLinkStream.listen((Uri? uri) {
-      if (uri != null) {
-        Logman.instance.info("Received deeplink: $uri");
-        if (!navigated) {
-          _handleDeeplink(uri);
-          navigated = true;
-        }
-      } else {
-        Logman.instance.error("Received null deeplink.");
-      }
-    }, onError: (err) {
-      Logman.instance.error("Error in deeplink stream: $err");
-    });
-  }
-
-  void _handleDeeplink(Uri uri) {
-    if (navigated) {
-      Logman.instance
-          .info("Deeplink navigation already performed, skipping...");
-      return;
-    }
-
-    Logman.instance.info("Handling deeplink: $uri");
-    final path = uri.path;
-    final status = uri.queryParameters['status'];
-    final package = uri.queryParameters['package'];
-
-    Logman.instance.info("Path: $path, Status: $status, Package: $package");
-
-    if (path == "/payment" && status != null && package != null) {
-      navigated = true;
-      if (status == "success") {
-        Navigator.pushNamed(
-          context,
-          "/payment/success",
-          arguments: {'packageName': package.toUpperCase()},
-        );
-      } else if (status == "failed") {
-        Navigator.pushNamed(
-          context,
-          "/payment/failed",
-          arguments: {'packageName': package.toUpperCase()},
-        );
-      } else {
-        Logman.instance.error("Invalid status value: $status");
-      }
-    } else {
-      Logman.instance.error("Invalid path or missing parameters in deeplink.");
-    }
   }
 
   Future<void> openSettings() async {

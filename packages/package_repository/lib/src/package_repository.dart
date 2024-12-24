@@ -9,10 +9,6 @@ abstract class PackageRepository {
 
   Future<List<PackageModel>> findAll();
   Future<List<PackagePriceModel>> findOne(String name);
-  Future<PurchaseModel> create({
-    required PurchaseDto dto,
-    required String? packageName,
-  });
 }
 
 class PackageRepositoryImpl implements PackageRepository {
@@ -50,20 +46,5 @@ class PackageRepositoryImpl implements PackageRepository {
     return response.data!
         .map((element) => PackagePriceModel.fromJson(element))
         .toList();
-  }
-
-  @override
-  Future<PurchaseModel> create({
-    required PurchaseDto dto,
-    required String? packageName,
-  }) async {
-    final Options options = await _getOptions();
-
-    final response = await _dio.post(
-      "$_baseURL/$packageName/purchase",
-      data: dto.toJson(),
-      options: options,
-    );
-    return PurchaseModel.fromJson(response.data);
   }
 }

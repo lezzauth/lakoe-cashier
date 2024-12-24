@@ -39,7 +39,7 @@ class PaymentMethodMaster extends StatefulWidget {
 
 class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
   Map<String, bool> temporaryChanges = {};
-  List<PaymentMethod> paymentMethods = [];
+  List<PaymentMethodCashier> paymentMethods = [];
   List<OwnerBankModel> bankAccounts = [];
   bool _isSaveButtonEnabled = false;
 

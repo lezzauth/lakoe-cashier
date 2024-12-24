@@ -1,11 +1,33 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:package_repository/package_repository.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
 
 class PurchaseCubit extends Cubit<PurchaseState> {
-  final PackageRepository _packageRepository = PackageRepositoryImpl();
+  final PackageRepository _repositoryPackage = PackageRepositoryImpl();
+  final OwnerRepository _repositoryOwner = OwnerRepositoryImpl();
 
   PurchaseCubit() : super(PurchaseInitial());
+
+  Future<void> findAll() async {
+    try {
+      emit(PurchaseLoadInProgress());
+      final res = await _repositoryOwner.purchase.findAll();
+      emit(PurchaseLoadSuccess(purchases: res));
+    } catch (e) {
+      emit(PurchaseLoadFailure(e.toString()));
+    }
+  }
+
+  Future<void> findOne(String id) async {
+    try {
+      emit(PurchaseDetailInProgress());
+      final res = await _repositoryOwner.purchase.findOne(id);
+      emit(PurchaseDetailSuccess(res: res));
+    } catch (e) {
+      emit(PurchaseDetailFailure(e.toString()));
+    }
+  }
 
   Future<void> create({
     required PurchaseDto dto,
@@ -13,7 +35,7 @@ class PurchaseCubit extends Cubit<PurchaseState> {
   }) async {
     try {
       emit(PurchaseActionInProgress());
-      final res = await _packageRepository.purchase.create(
+      final res = await _repositoryPackage.purchase.create(
         dto: dto,
         packageName: packageName,
       );

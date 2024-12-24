@@ -63,8 +63,7 @@ Map<String, dynamic> _$$PackagePriceModelImplToJson(
 _$PurchaseResponseModelImpl _$$PurchaseResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$PurchaseResponseModelImpl(
-      purchase:
-          PurchaseModel.fromJson(json['purchase'] as Map<String, dynamic>),
+      purchase: Purchase.fromJson(json['purchase'] as Map<String, dynamic>),
       paymentRequest: PaymentRequestModel.fromJson(
           json['paymentRequest'] as Map<String, dynamic>),
     );
@@ -76,8 +75,8 @@ Map<String, dynamic> _$$PurchaseResponseModelImplToJson(
       'paymentRequest': instance.paymentRequest,
     };
 
-_$PurchaseModelImpl _$$PurchaseModelImplFromJson(Map<String, dynamic> json) =>
-    _$PurchaseModelImpl(
+_$PurchaseImpl _$$PurchaseImplFromJson(Map<String, dynamic> json) =>
+    _$PurchaseImpl(
       id: json['id'] as String,
       paymentMethod: json['paymentMethod'] as String,
       status: json['status'] as String,
@@ -93,7 +92,7 @@ _$PurchaseModelImpl _$$PurchaseModelImplFromJson(Map<String, dynamic> json) =>
       updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
 
-Map<String, dynamic> _$$PurchaseModelImplToJson(_$PurchaseModelImpl instance) =>
+Map<String, dynamic> _$$PurchaseImplToJson(_$PurchaseImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'paymentMethod': instance.paymentMethod,
@@ -265,8 +264,7 @@ Map<String, dynamic> _$$PaymentActionModelImplToJson(
 _$DetailPurchaseModelImpl _$$DetailPurchaseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$DetailPurchaseModelImpl(
-      purchase:
-          PurchaseModel.fromJson(json['purchase'] as Map<String, dynamic>),
+      purchase: Purchase.fromJson(json['purchase'] as Map<String, dynamic>),
       paymentRequest: PaymentRequestModel.fromJson(
           json['paymentRequest'] as Map<String, dynamic>),
     );

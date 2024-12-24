@@ -173,6 +173,8 @@ PurchaseDto _$PurchaseDtoFromJson(Map<String, dynamic> json) {
 mixin _$PurchaseDto {
   int get period => throw _privateConstructorUsedError;
   String get paymentMethod => throw _privateConstructorUsedError;
+  String? get successReturnUrl => throw _privateConstructorUsedError;
+  String? get failedReturnUrl => throw _privateConstructorUsedError;
 
   /// Serializes this PurchaseDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -190,7 +192,11 @@ abstract class $PurchaseDtoCopyWith<$Res> {
           PurchaseDto value, $Res Function(PurchaseDto) then) =
       _$PurchaseDtoCopyWithImpl<$Res, PurchaseDto>;
   @useResult
-  $Res call({int period, String paymentMethod});
+  $Res call(
+      {int period,
+      String paymentMethod,
+      String? successReturnUrl,
+      String? failedReturnUrl});
 }
 
 /// @nodoc
@@ -210,6 +216,8 @@ class _$PurchaseDtoCopyWithImpl<$Res, $Val extends PurchaseDto>
   $Res call({
     Object? period = null,
     Object? paymentMethod = null,
+    Object? successReturnUrl = freezed,
+    Object? failedReturnUrl = freezed,
   }) {
     return _then(_value.copyWith(
       period: null == period
@@ -220,6 +228,14 @@ class _$PurchaseDtoCopyWithImpl<$Res, $Val extends PurchaseDto>
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
               as String,
+      successReturnUrl: freezed == successReturnUrl
+          ? _value.successReturnUrl
+          : successReturnUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      failedReturnUrl: freezed == failedReturnUrl
+          ? _value.failedReturnUrl
+          : failedReturnUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -232,7 +248,11 @@ abstract class _$$PurchaseDtoImplCopyWith<$Res>
       __$$PurchaseDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int period, String paymentMethod});
+  $Res call(
+      {int period,
+      String paymentMethod,
+      String? successReturnUrl,
+      String? failedReturnUrl});
 }
 
 /// @nodoc
@@ -250,6 +270,8 @@ class __$$PurchaseDtoImplCopyWithImpl<$Res>
   $Res call({
     Object? period = null,
     Object? paymentMethod = null,
+    Object? successReturnUrl = freezed,
+    Object? failedReturnUrl = freezed,
   }) {
     return _then(_$PurchaseDtoImpl(
       period: null == period
@@ -260,6 +282,14 @@ class __$$PurchaseDtoImplCopyWithImpl<$Res>
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
               as String,
+      successReturnUrl: freezed == successReturnUrl
+          ? _value.successReturnUrl
+          : successReturnUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      failedReturnUrl: freezed == failedReturnUrl
+          ? _value.failedReturnUrl
+          : failedReturnUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -267,7 +297,11 @@ class __$$PurchaseDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PurchaseDtoImpl implements _PurchaseDto {
-  const _$PurchaseDtoImpl({required this.period, required this.paymentMethod});
+  const _$PurchaseDtoImpl(
+      {required this.period,
+      required this.paymentMethod,
+      this.successReturnUrl,
+      this.failedReturnUrl});
 
   factory _$PurchaseDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$PurchaseDtoImplFromJson(json);
@@ -276,10 +310,14 @@ class _$PurchaseDtoImpl implements _PurchaseDto {
   final int period;
   @override
   final String paymentMethod;
+  @override
+  final String? successReturnUrl;
+  @override
+  final String? failedReturnUrl;
 
   @override
   String toString() {
-    return 'PurchaseDto(period: $period, paymentMethod: $paymentMethod)';
+    return 'PurchaseDto(period: $period, paymentMethod: $paymentMethod, successReturnUrl: $successReturnUrl, failedReturnUrl: $failedReturnUrl)';
   }
 
   @override
@@ -289,12 +327,17 @@ class _$PurchaseDtoImpl implements _PurchaseDto {
             other is _$PurchaseDtoImpl &&
             (identical(other.period, period) || other.period == period) &&
             (identical(other.paymentMethod, paymentMethod) ||
-                other.paymentMethod == paymentMethod));
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.successReturnUrl, successReturnUrl) ||
+                other.successReturnUrl == successReturnUrl) &&
+            (identical(other.failedReturnUrl, failedReturnUrl) ||
+                other.failedReturnUrl == failedReturnUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, period, paymentMethod);
+  int get hashCode => Object.hash(
+      runtimeType, period, paymentMethod, successReturnUrl, failedReturnUrl);
 
   /// Create a copy of PurchaseDto
   /// with the given fields replaced by the non-null parameter values.
@@ -315,7 +358,9 @@ class _$PurchaseDtoImpl implements _PurchaseDto {
 abstract class _PurchaseDto implements PurchaseDto {
   const factory _PurchaseDto(
       {required final int period,
-      required final String paymentMethod}) = _$PurchaseDtoImpl;
+      required final String paymentMethod,
+      final String? successReturnUrl,
+      final String? failedReturnUrl}) = _$PurchaseDtoImpl;
 
   factory _PurchaseDto.fromJson(Map<String, dynamic> json) =
       _$PurchaseDtoImpl.fromJson;
@@ -324,6 +369,10 @@ abstract class _PurchaseDto implements PurchaseDto {
   int get period;
   @override
   String get paymentMethod;
+  @override
+  String? get successReturnUrl;
+  @override
+  String? get failedReturnUrl;
 
   /// Create a copy of PurchaseDto
   /// with the given fields replaced by the non-null parameter values.

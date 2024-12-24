@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
-import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
@@ -27,10 +27,10 @@ class DashboardAppbar extends StatelessWidget implements PreferredSizeWidget {
               height: 20,
               width: 77.1,
             ),
-            BlocBuilder<AuthCubit, AuthState>(
+            BlocBuilder<OwnerCubit, OwnerState>(
               builder: (context, state) {
-                if (state is AuthReady) {
-                  final profile = state.profile;
+                if (state is OwnerLoadSuccess) {
+                  final profile = state.owner;
                   return Wrap(
                     spacing: 20.0,
                     crossAxisAlignment: WrapCrossAlignment.center,

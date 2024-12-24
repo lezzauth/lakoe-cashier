@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_state.dart';
-import 'package:lakoe_pos/features/products/application/cubit/product_state.dart';
 import 'package:lakoe_pos/utils/helpers/error_handler.dart';
 import 'package:product_repository/product_repository.dart';
 
@@ -43,7 +42,7 @@ class ProductMasterCubit extends Cubit<ProductMasterState> {
       await _productRepository.findOne(id);
       emit(ProductMasterActionSuccess());
     } catch (e) {
-      ProductActionFailure(e.toString());
+      ProductMasterActionFailure(e.toString());
     }
   }
 
@@ -58,7 +57,7 @@ class ProductMasterCubit extends Cubit<ProductMasterState> {
         emit(ProductMasterReachesLimit(limit));
         return;
       }
-      ProductActionFailure(e.toString());
+      ProductMasterActionFailure(e.toString());
     }
   }
 
@@ -72,7 +71,7 @@ class ProductMasterCubit extends Cubit<ProductMasterState> {
       await _productRepository.update(id, images, dto);
       emit(ProductMasterActionSuccess());
     } catch (e) {
-      ProductActionFailure(e.toString());
+      ProductMasterActionFailure(e.toString());
     }
   }
 }

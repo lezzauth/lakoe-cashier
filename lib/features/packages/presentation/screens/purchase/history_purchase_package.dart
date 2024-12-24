@@ -6,8 +6,8 @@ import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:lakoe_pos/features/packages/application/cubit/history/purchase_history_cubit.dart';
-import 'package:lakoe_pos/features/packages/application/cubit/history/purchase_history_state.dart';
+import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
+import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
 import 'package:lakoe_pos/features/packages/presentation/widgets/card_item_history.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
@@ -26,11 +26,11 @@ class _HistoryPurchasePackageScreenState
   @override
   void initState() {
     super.initState();
-    context.read<PurchaseHistoryCubit>().findAll();
+    context.read<PurchaseCubit>().findAll();
   }
 
   Future<void> _onRefresh() async {
-    await context.read<PurchaseHistoryCubit>().findAll();
+    await context.read<PurchaseCubit>().findAll();
   }
 
   @override
@@ -61,9 +61,9 @@ class _HistoryPurchasePackageScreenState
                   color: TColors.neutralDarkDarkest,
                 ),
               ),
-              BlocBuilder<PurchaseHistoryCubit, PurchaseHistoryState>(
+              BlocBuilder<PurchaseCubit, PurchaseState>(
                   builder: (context, state) {
-                if (state is PurchaseHistoryLoadSuccess) {
+                if (state is PurchaseLoadSuccess) {
                   if (state.purchases.isEmpty) {
                     return EmptyList(
                       image: SvgPicture.asset(
@@ -88,14 +88,29 @@ class _HistoryPurchasePackageScreenState
                     child: ListView.builder(
                         itemCount: state.purchases.length,
                         itemBuilder: (context, index) {
-                          HistoryPurchaseModel purchase =
-                              state.purchases[index];
-                          return CardItemHistory(data: purchase);
+                          PurchaseModel purchase = state.purchases[index];
+                          return CardItemHistory(
+                              data: purchase,
+                              onTap: () async {
+                                bool? result = await Navigator.pushNamed(
+                                  context,
+                                  "/packages/purchase/detail",
+                                  arguments: purchase,
+                                ) as bool?;
+
+                                if (result == true) {
+                                  _onRefresh();
+                                }
+                              });
                         }),
                   );
-                } else if (state is PurchaseHistoryLoadInProgress) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (state is PurchaseHistoryLoadFailure) {
+                } else if (state is PurchaseLoadInProgress) {
+                  return Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                } else if (state is PurchaseLoadFailure) {
                   return EmptyList(
                     title: "Gagal memuat data, nih!",
                     subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",

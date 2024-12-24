@@ -32,7 +32,7 @@ class TFormatter {
   }
 
   static String dateTime(String isoDate,
-      {bool withDay = false, bool withTime = true}) {
+      {bool withDay = false, bool withTime = true, bool withTimeZone = true}) {
     DateTime dateTime = DateTime.parse(isoDate).toLocal();
     DateTime now = DateTime.now();
 
@@ -46,6 +46,11 @@ class TFormatter {
       if (!withTime) {
         return "Hari ini";
       }
+
+      if (!withTimeZone) {
+        return "Hari ini, ${DateFormat("HH:mm", "id_ID").format(dateTime)}";
+      }
+
       return "Hari ini, ${DateFormat("HH:mm", "id_ID").format(dateTime)} $timeZone";
     }
 
@@ -55,7 +60,9 @@ class TFormatter {
       "id_ID",
     ).format(dateTime);
 
-    return withTime ? "$formattedDate $timeZone" : formattedDate;
+    return withTime
+        ? "$formattedDate ${withTimeZone ? timeZone : ""}"
+        : formattedDate;
   }
 
   static String billDate(String dateStr) {

@@ -14,7 +14,7 @@ final class PaymentMethodLoadInProgress extends PaymentMethodState {
 }
 
 final class PaymentMethodLoadSuccess extends PaymentMethodState {
-  final List<PaymentMethod> paymentMethod;
+  final List<PaymentMethodCashier> paymentMethod;
 
   PaymentMethodLoadSuccess({required this.paymentMethod});
 

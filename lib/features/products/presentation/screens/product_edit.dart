@@ -8,7 +8,6 @@ import 'package:lakoe_pos/features/products/application/cubit/product_master/for
 import 'package:lakoe_pos/features/products/application/cubit/product_master/form/product_form_state.dart';
 import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_cubit.dart';
 import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_state.dart';
-import 'package:lakoe_pos/features/products/application/cubit/product_state.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/forms/product_information_form.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
@@ -176,7 +175,7 @@ class _ProductEditState extends State<ProductEdit>
                     actions: [
                       TextButton(
                         onPressed: () => onSubmit(arguments.id),
-                        child: state is ProductActionInProgress
+                        child: state is ProductMasterActionInProgress
                             ? const SizedBox(
                                 height: 16,
                                 width: 16,

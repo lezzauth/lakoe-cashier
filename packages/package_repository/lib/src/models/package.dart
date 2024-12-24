@@ -42,7 +42,7 @@ class PackagePriceModel with _$PackagePriceModel {
 @freezed
 class PurchaseResponseModel with _$PurchaseResponseModel {
   const factory PurchaseResponseModel({
-    required PurchaseModel purchase,
+    required Purchase purchase,
     required PaymentRequestModel paymentRequest,
   }) = _PurchaseResponseModel;
 
@@ -51,8 +51,8 @@ class PurchaseResponseModel with _$PurchaseResponseModel {
 }
 
 @freezed
-class PurchaseModel with _$PurchaseModel {
-  const factory PurchaseModel({
+class Purchase with _$Purchase {
+  const factory Purchase({
     required String id,
     required String paymentMethod,
     required String status,
@@ -66,10 +66,10 @@ class PurchaseModel with _$PurchaseModel {
     required String packageName,
     required DateTime createdAt,
     required DateTime updatedAt,
-  }) = _PurchaseModel;
+  }) = _Purchase;
 
-  factory PurchaseModel.fromJson(Map<String, dynamic> json) =>
-      _$PurchaseModelFromJson(json);
+  factory Purchase.fromJson(Map<String, dynamic> json) =>
+      _$PurchaseFromJson(json);
 }
 
 @freezed
@@ -175,7 +175,7 @@ class PaymentActionModel with _$PaymentActionModel {
 @freezed
 class DetailPurchaseModel with _$DetailPurchaseModel {
   const factory DetailPurchaseModel({
-    required PurchaseModel purchase,
+    required Purchase purchase,
     required PaymentRequestModel paymentRequest,
   }) = _DetailPurchaseModel;
 

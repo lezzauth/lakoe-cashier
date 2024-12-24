@@ -6,8 +6,9 @@ part of 'payment.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PaymentMethodImpl _$$PaymentMethodImplFromJson(Map<String, dynamic> json) =>
-    _$PaymentMethodImpl(
+_$PaymentMethodCashierImpl _$$PaymentMethodCashierImplFromJson(
+        Map<String, dynamic> json) =>
+    _$PaymentMethodCashierImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       isNeedEdc: json['isNeedEdc'] as bool,
@@ -18,7 +19,8 @@ _$PaymentMethodImpl _$$PaymentMethodImplFromJson(Map<String, dynamic> json) =>
       icon: json['icon'] as String?,
     );
 
-Map<String, dynamic> _$$PaymentMethodImplToJson(_$PaymentMethodImpl instance) =>
+Map<String, dynamic> _$$PaymentMethodCashierImplToJson(
+        _$PaymentMethodCashierImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

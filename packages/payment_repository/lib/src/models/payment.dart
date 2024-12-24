@@ -4,8 +4,8 @@ part 'payment.g.dart';
 part 'payment.freezed.dart';
 
 @freezed
-class PaymentMethod with _$PaymentMethod {
-  const factory PaymentMethod({
+class PaymentMethodCashier with _$PaymentMethodCashier {
+  const factory PaymentMethodCashier({
     required String id,
     required String name,
     required bool isNeedEdc,
@@ -14,10 +14,10 @@ class PaymentMethod with _$PaymentMethod {
     required String channel,
     required String title,
     String? icon,
-  }) = _PaymentMethod;
+  }) = _PaymentMethodCashier;
 
-  factory PaymentMethod.fromJson(Map<String, dynamic> json) =>
-      _$PaymentMethodFromJson(json);
+  factory PaymentMethodCashier.fromJson(Map<String, dynamic> json) =>
+      _$PaymentMethodCashierFromJson(json);
 }
 
 @freezed

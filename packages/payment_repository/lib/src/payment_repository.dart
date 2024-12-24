@@ -4,7 +4,7 @@ import 'package:payment_repository/payment_repository.dart';
 import 'package:token_provider/token_provider.dart';
 
 abstract class PaymentMethodRepository {
-  Future<List<PaymentMethod>> findAll();
+  Future<List<PaymentMethodCashier>> findAll();
   Future<List<SetActiveResponse>> setActive(
       List<SetActivePaymentMethodDto> dto);
 }
@@ -22,12 +22,14 @@ class PaymentMethodRepositoryImpl implements PaymentMethodRepository {
   }
 
   @override
-  Future<List<PaymentMethod>> findAll() async {
+  Future<List<PaymentMethodCashier>> findAll() async {
     final Options options = await _getOptions();
 
     final res = await _dio.get<List<dynamic>>(_baseURL, options: options);
 
-    return res.data!.map((item) => PaymentMethod.fromJson(item)).toList();
+    return res.data!
+        .map((item) => PaymentMethodCashier.fromJson(item))
+        .toList();
   }
 
   @override

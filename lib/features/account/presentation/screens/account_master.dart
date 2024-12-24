@@ -117,7 +117,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
   List<_OtherItem> otherSettingItems = [
     _OtherItem(
       title: "Paket & Riwayat",
-      routeName: "/packages/history",
+      routeName: "/packages/purchase/history",
       iconSrc: TIcons.billAlt,
       isNewItem: false,
     ),
@@ -367,7 +367,6 @@ class ProfileCard extends StatelessWidget {
                               ),
                               const SizedBox(height: 2.0),
                               TextBodyS(
-                                // profile.phoneNumber.replaceFirst('+', ''),
                                 PhoneNumberFormatter.formatForDisplay(
                                     profile.phoneNumber),
                                 color: TColors.neutralDarkLight,

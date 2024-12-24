@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_1.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/helpers/deeplink_handler.dart';
 
 class PaymentSuccessScreen extends StatefulWidget {
   const PaymentSuccessScreen({super.key});
@@ -14,6 +17,8 @@ class PaymentSuccessScreen extends StatefulWidget {
 }
 
 class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
+  final DeeplinkHandler _deeplinkHandler = DeeplinkHandler();
+
   Map<String, dynamic>? args;
   String packageName = "Grow";
   String assetLogo = TImages.lakoeXGrow;
@@ -23,6 +28,7 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<OwnerCubit>().init();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
@@ -64,6 +70,7 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
 
   @override
   void dispose() {
+    _deeplinkHandler.dispose();
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         systemNavigationBarColor: Colors.white,
@@ -84,6 +91,7 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
       onPopInvokedWithResult: (popDisposition, popResult) async {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) {
+            _deeplinkHandler.dispose();
             Navigator.pushNamedAndRemoveUntil(
               context,
               "/cashier",
@@ -151,6 +159,7 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                     child: OutlinedButton(
                       onPressed: () {
+                        _deeplinkHandler.dispose();
                         Navigator.pushNamedAndRemoveUntil(
                           context,
                           "/cashier",

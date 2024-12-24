@@ -4,11 +4,12 @@ import 'package:owner_repository/owner_repository.dart';
 import 'package:token_provider/token_provider.dart';
 
 abstract class PurchaseRepository {
-  Future<List<HistoryPurchaseModel>> findAll();
+  Future<List<PurchaseModel>> findAll();
+  Future<PurchaseDetail> findOne(String id);
 }
 
 class PurchaseRepositoryImpl implements PurchaseRepository {
-  final String _baseURL = "/owners";
+  final String _baseURL = "/owners/purchases";
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
 
@@ -20,14 +21,26 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
   }
 
   @override
-  Future<List<HistoryPurchaseModel>> findAll() async {
+  Future<List<PurchaseModel>> findAll() async {
     final Options options = await _getOptions();
 
     final res = await _dio.get<List<dynamic>>(
-      "$_baseURL/purchases",
+      _baseURL,
       options: options,
     );
 
-    return res.data!.map((e) => HistoryPurchaseModel.fromJson(e)).toList();
+    return res.data!.map((e) => PurchaseModel.fromJson(e)).toList();
+  }
+
+  @override
+  Future<PurchaseDetail> findOne(String id) async {
+    final Options options = await _getOptions();
+
+    final response = await _dio.get(
+      "$_baseURL/$id",
+      options: options,
+    );
+
+    return PurchaseDetail.fromJson(response.data);
   }
 }

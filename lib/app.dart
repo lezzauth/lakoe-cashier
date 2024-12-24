@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,9 +12,10 @@ import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/cre
 import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/otp_input.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
-import 'package:lakoe_pos/features/packages/application/cubit/history/purchase_history_cubit.dart';
-import 'package:lakoe_pos/features/packages/presentation/screens/history/history_purchase_package.dart';
+import 'package:lakoe_pos/features/packages/presentation/screens/purchase/detail_purchase.dart';
+import 'package:lakoe_pos/features/packages/presentation/screens/purchase/history_purchase_package.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
+import 'package:lakoe_pos/utils/helpers/deeplink_handler.dart';
 import 'package:logman/logman.dart';
 import 'package:lakoe_pos/application/cubit/bank_list_cubit.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/account_edit.dart';
@@ -145,8 +144,8 @@ import 'package:lakoe_pos/features/taxes/application/cubit/tax_master/tax_master
 import 'package:lakoe_pos/features/taxes/presentation/screens/tax_master.dart';
 import 'package:lakoe_pos/utils/helpers/navigator_observer.dart';
 import 'package:lakoe_pos/utils/theme/theme.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:uni_links/uni_links.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -160,69 +159,53 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  StreamSubscription? _deeplinkSubscription;
+  final DeeplinkHandler _deeplinkHandler = DeeplinkHandler();
 
   @override
   void initState() {
     super.initState();
-    _initInitialDeeplink();
-    _listenToDeeplink();
-  }
-
-  @override
-  void dispose() {
-    _deeplinkSubscription?.cancel();
-    super.dispose();
-  }
-
-  Future<void> _initInitialDeeplink() async {
-    try {
-      final initialUri = await getInitialUri();
-      if (initialUri != null) {
-        Logman.instance
-            .info("[Global] Initial deeplink detected: \$initialUri");
-        _handleGlobalDeeplink(initialUri);
-      }
-    } catch (e) {
-      Logman.instance.error("[Global] Error getting initial deeplink: \$e");
-    }
-  }
-
-  void _listenToDeeplink() {
-    Logman.instance.info("[Global] Listening to global deeplink...");
-    _deeplinkSubscription = uriLinkStream.listen(
-      (uri) {
-        if (uri != null) {
-          Logman.instance.info("[Global] Deeplink received: $uri");
-          _handleGlobalDeeplink(uri);
-        }
-      },
-      onError: (err) {
-        Logman.instance.error("[Global] Error in deeplink stream: \$err");
+    _deeplinkHandler.init(
+      onDeeplinkReceived: _handleGlobalDeeplink,
+      onError: () {
+        Logman.instance.error("[App] Failed to handle deeplink.");
       },
     );
   }
 
+  @override
+  void dispose() {
+    _deeplinkHandler.dispose();
+    super.dispose();
+  }
+
   void _handleGlobalDeeplink(Uri uri) {
-    Logman.instance.info("[Global] Deeplink: $uri");
+    Logman.instance.info("[App] Handling deeplink: $uri");
+
     final path = uri.path;
     final status = uri.queryParameters['status'];
     final package = uri.queryParameters['package'];
-    Logman.instance
-        .info("[Global] Log: Path: $path, Status: $status, Package: $package");
 
-    if (path == "/payment" && status == "success") {
-      navigatorKey.currentState?.pushNamed(
-        "/payment/success",
-        arguments: {'packageName': package!.toUpperCase()},
-      );
-    } else if (path == "/payment" && status == "failed") {
-      navigatorKey.currentState?.pushNamed(
-        "/payment/failed",
-        arguments: {'packageName': package!.toUpperCase()},
-      );
+    Logman.instance.info(
+      "[App] Log: Path: $path, Status: $status, Package: $package",
+    );
+
+    if (path == "/payment" && status != null && package != null) {
+      _deeplinkHandler.dispose();
+      if (status == "success") {
+        navigatorKey.currentState?.pushNamed(
+          "/payment/success",
+          arguments: {'packageName': package.toUpperCase()},
+        );
+      } else if (status == "failed") {
+        navigatorKey.currentState?.pushNamed(
+          "/payment/failed",
+          arguments: {'packageName': package.toUpperCase()},
+        );
+      } else {
+        Logman.instance.error("[App] Invalid status: $status");
+      }
     } else {
-      Logman.instance.error("Unhandled global deeplink: $uri");
+      Logman.instance.error("[App] Invalid deeplink: $uri");
     }
   }
 
@@ -304,9 +287,6 @@ class _AppState extends State<App> {
         BlocProvider(create: (context) => PackageMasterCubit()),
         BlocProvider(create: (context) => PackageDetailCubit()),
         BlocProvider(create: (context) => PurchaseCubit()),
-
-        // Purchase History
-        BlocProvider(create: (context) => PurchaseHistoryCubit()),
 
         //Payment Method
         BlocProvider(create: (context) => PaymentMethodCubit()),
@@ -505,8 +485,12 @@ class _AppState extends State<App> {
             "/packages": (context) => const PackageMasterScreen(),
             "/packages/detail": (context) => const PackageDetailScreen(),
             "/boost": (context) => const BoostDetailScreen(),
-            "/packages/history": (context) =>
+            "/packages/purchase/history": (context) =>
                 const HistoryPurchasePackageScreen(),
+            "/packages/purchase/detail": (context) => DetailPurchaseScreen(
+                  arg: ModalRoute.of(context)!.settings.arguments
+                      as PurchaseModel,
+                ),
 
             // Checkout
             "/checkout": (context) => const ChekcoutMasterScreen(),
