@@ -1,5 +1,8 @@
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:android_intent_plus/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
 import 'package:lakoe_pos/common/widgets/form/search_field.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
@@ -14,6 +17,7 @@ import 'package:lakoe_pos/features/cart/presentation/widgets/footer/cart_footer.
 import 'package:lakoe_pos/features/cashier/application/cubit/category/cashier_category_cubit.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/category/cashier_category_state.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/order/cashier_order_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/order/cashier_order_state.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_cubit.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
@@ -28,6 +32,7 @@ import 'package:lakoe_pos/features/payment_method/application/payment_method_sta
 import 'package:lakoe_pos/features/payment_method/common/widgets/payment_method_not_available.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/filter/product_category_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
 class ExploreProductTablet extends StatelessWidget {
   const ExploreProductTablet({super.key});
@@ -51,6 +56,7 @@ class ExploreProductTabletContent extends StatefulWidget {
 
 class _ExploreProductTabletContentState
     extends State<ExploreProductTabletContent> {
+  bool isBottomSheetVisible = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
@@ -100,21 +106,76 @@ class _ExploreProductTabletContentState
         );
   }
 
+  Future<void> openSettings() async {
+    final intent = AndroidIntent(
+      action: 'android.settings.SETTINGS',
+      flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+    );
+    await intent.launch();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CartDetailCubit, CartDetailState>(
-      listener: (context, state) {
-        if (state is CartDetailActionSuccess) {
-          context.read<CartCubit>().reset();
-          context.read<CashierOrderCubit>().findAll();
-        }
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<CartDetailCubit, CartDetailState>(
+          listener: (context, state) {
+            if (state is CartDetailActionSuccess) {
+              context.read<CartCubit>().reset();
+              context.read<CashierOrderCubit>().findAll();
+            }
 
-        if (state is CartDetailActionSuccess ||
-            state is CartDetailCompleteActionSuccess) {
-          context.read<CartCubit>().reset();
-          context.read<CartDetailFilterCubit>().clearFilter();
-        }
-      },
+            if (state is CartDetailActionSuccess ||
+                state is CartDetailCompleteActionSuccess) {
+              context.read<CartCubit>().reset();
+              context.read<CartDetailFilterCubit>().clearFilter();
+            }
+          },
+        ),
+        BlocListener<CashierOrderCubit, CashierOrderState>(
+          listener: (BuildContext context, CashierOrderState state) {
+            if (state is ConnectionIssue && !isBottomSheetVisible) {
+              isBottomSheetVisible = true;
+              if (!mounted) return;
+
+              showModalBottomSheet(
+                context: context,
+                enableDrag: false,
+                isDismissible: false,
+                builder: (context) {
+                  return PopScope(
+                    canPop: false,
+                    onPopInvokedWithResult: (didPop, result) async {},
+                    child: CustomBottomsheet(
+                      hasGrabber: false,
+                      child: ErrorDisplay(
+                        imageSrc: TImages.noConnection,
+                        title: "Koneksi internet aman ngga?",
+                        description:
+                            "Coba cek WiFi atau kuota internet kamu dulu terus bisa dicoba lagi, ya!",
+                        actionTitlePrimary: "Pengaturan",
+                        onActionPrimary: () {
+                          isBottomSheetVisible = false;
+                          Navigator.pop(context);
+                          openSettings();
+                        },
+                        actionTitleSecondary: "Coba Lagi",
+                        onActionSecondary: () async {
+                          isBottomSheetVisible = false;
+                          Navigator.pop(context);
+                          await Future.delayed(Duration(seconds: 2));
+                          _onRefresh();
+                        },
+                      ),
+                    ),
+                  );
+                },
+              ).whenComplete(() => isBottomSheetVisible = false);
+              return;
+            }
+          },
+        )
+      ],
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
@@ -243,7 +304,7 @@ class _ExploreProductTabletContentState
               BlocBuilder<CartCubit, CartState>(
                 builder: (context, state) {
                   return Visibility(
-                    visible: state.carts.isNotEmpty,
+                    visible: state.carts.isNotEmpty && selectedOrderId == null,
                     child: SizedBox(
                       width: 400,
                       child: Column(

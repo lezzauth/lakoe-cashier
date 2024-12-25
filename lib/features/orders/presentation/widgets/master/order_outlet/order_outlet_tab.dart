@@ -336,7 +336,7 @@ class MobileOrdersView extends StatelessWidget {
                     }
                   },
                 );
-              }).toList(),
+              }),
             ],
           );
         },

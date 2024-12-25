@@ -42,71 +42,79 @@ class OrderMaster extends StatelessWidget {
     final String? previousScreen = args?['previousScreen'];
     bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
 
-    return Scaffold(
-      appBar: CustomAppbar(
-        backgroundColor: isMobile ? null : TColors.neutralLightLight,
-        search: SearchField(
-          hintText: "Cari pesanan disini...",
-          controller: _searchController,
-          focusNode: _searchFocusNode,
-          debounceTime: 500,
-          onChanged: (value) {
-            if (previousScreen == "cashier") {
-              context.read<OrderCashierFilterCubit>().setFilter(search: value);
-            } else {
-              OrdersFilterState filterState =
-                  context.read<OrdersFilterCubit>().state;
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (popDisposition, popResult) async {
+        Navigator.pop(context, true);
+      },
+      child: Scaffold(
+        appBar: CustomAppbar(
+          backgroundColor: isMobile ? null : TColors.neutralLightLight,
+          search: SearchField(
+            hintText: "Cari pesanan disini...",
+            controller: _searchController,
+            focusNode: _searchFocusNode,
+            debounceTime: 500,
+            onChanged: (value) {
+              if (previousScreen == "cashier") {
+                context
+                    .read<OrderCashierFilterCubit>()
+                    .setFilter(search: value);
+              } else {
+                OrdersFilterState filterState =
+                    context.read<OrdersFilterCubit>().state;
 
-              context.read<OrdersFilterCubit>().setFilter(
-                    search: value,
-                    from: filterState.from != null
-                        ? DateTime.parse(filterState.from!)
-                        : null,
-                    to: filterState.to != null
-                        ? DateTime.parse(filterState.to!)
-                        : null,
-                  );
-            }
-          },
+                context.read<OrdersFilterCubit>().setFilter(
+                      search: value,
+                      from: filterState.from != null
+                          ? DateTime.parse(filterState.from!)
+                          : null,
+                      to: filterState.to != null
+                          ? DateTime.parse(filterState.to!)
+                          : null,
+                    );
+              }
+            },
+          ),
+          // bottom: TabContainer(
+          //   tabs: [
+          //     TabItem(title: "Kasir"),
+          //     TabItem(title: "QR Meja", counter: 2)
+          //   ],
+          // ),
         ),
-        // bottom: TabContainer(
-        //   tabs: [
-        //     TabItem(title: "Kasir"),
-        //     TabItem(title: "QR Meja", counter: 2)
-        //   ],
-        // ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.only(top: isMobile ? 4.0 : 0.0),
-        child: (previousScreen == "cashier")
-            ? OrderCashierOutlet(
-                searchController: _searchController,
-                searchFocusNode: _searchFocusNode,
-              )
-            : OrderOutlet(
-                searchController: _searchController,
-                searchFocusNode: _searchFocusNode,
-              ),
+        body: Padding(
+          padding: EdgeInsets.only(top: isMobile ? 4.0 : 0.0),
+          child: (previousScreen == "cashier")
+              ? OrderCashierOutlet(
+                  searchController: _searchController,
+                  searchFocusNode: _searchFocusNode,
+                )
+              : OrderOutlet(
+                  searchController: _searchController,
+                  searchFocusNode: _searchFocusNode,
+                ),
 
-        // (previousScreen == "cashier")
-        //     ? TabBarView(
-        //         children: [
-        //           OrderCashierOutlet(
-        //             searchController: _searchController,
-        //             searchFocusNode: _searchFocusNode,
-        //           ),
-        //           OrderCashierOnline(),
-        //         ],
-        //       )
-        //     : TabBarView(
-        //         children: [
-        //           OrderOutlet(
-        //             searchController: _searchController,
-        //             searchFocusNode: _searchFocusNode,
-        //           ),
-        //           OrderOnline(),
-        //         ],
-        //       ),
+          // (previousScreen == "cashier")
+          //     ? TabBarView(
+          //         children: [
+          //           OrderCashierOutlet(
+          //             searchController: _searchController,
+          //             searchFocusNode: _searchFocusNode,
+          //           ),
+          //           OrderCashierOnline(),
+          //         ],
+          //       )
+          //     : TabBarView(
+          //         children: [
+          //           OrderOutlet(
+          //             searchController: _searchController,
+          //             searchFocusNode: _searchFocusNode,
+          //           ),
+          //           OrderOnline(),
+          //         ],
+          //       ),
+        ),
       ),
     );
   }

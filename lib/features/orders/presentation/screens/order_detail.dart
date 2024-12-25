@@ -341,26 +341,17 @@ class _OrderDetailState extends State<OrderDetail> {
 
     context.read<OrderDetailCubit>().findOne(widget.arguments.id);
 
-    final filterCubit = context.read<OrdersFilterCubit>();
     OrdersFilterState filterState = context.read<OrdersFilterCubit>().state;
+    if (widget.isTabletView) {
+      final cubit = context.read<OrdersFilterCubit>();
+      cubit.setFilter(status: "COMPLETED");
 
-    final updatedFilterState = filterState.sort == null
-        ? filterState.copyWith(sort: 'NEWEST')
-        : filterState.copyWith(status: 'ALL');
-
-    filterCubit.setFilter(
-      sort: updatedFilterState.sort,
-      source: updatedFilterState.source,
-      type: updatedFilterState.type,
-      status: updatedFilterState.status,
-      template: updatedFilterState.template,
-      from: DateTime.parse(updatedFilterState.from!),
-      to: DateTime.parse(updatedFilterState.to!),
-    );
-
-    await context
-        .read<OrdersCubit>()
-        .findAll(updatedFilterState.toFindAllOrderDto);
+      await context
+          .read<OrdersCubit>()
+          .findAll(filterState.toFindAllOrderDto.copyWith(status: "COMPLETED"));
+    } else {
+      await context.read<OrdersCubit>().findAll(filterState.toFindAllOrderDto);
+    }
   }
 
   @override
@@ -368,7 +359,7 @@ class _OrderDetailState extends State<OrderDetail> {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (popDisposition, popResult) async {
-        Navigator.pop(context, _orderUpdated);
+        if (!widget.isTabletView) Navigator.pop(context, _orderUpdated);
       },
       child: MultiBlocListener(
           listeners: [

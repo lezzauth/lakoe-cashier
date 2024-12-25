@@ -83,7 +83,7 @@ class _ExploreProductState extends State<ExploreProduct> {
             },
           ),
         ],
-        child: const ResponsiveLayout(
+        child: ResponsiveLayout(
           mobile: ExploreProductMobile(),
           tablet: ExploreProductTablet(),
         ),

@@ -37,6 +37,7 @@ class CashierRepositoryImpl implements CashierRepository {
   Future<Options> _getOptions() async {
     final tokenCashier = await _tokenProvider.getCashierToken();
     final tokenAuth = await _tokenProvider.getAuthToken();
+
     if (tokenCashier == null && tokenAuth == null) return Options();
 
     if (tokenCashier == null) {
