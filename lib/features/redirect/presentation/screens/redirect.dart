@@ -222,10 +222,10 @@ class _RedirectScreenState extends State<RedirectScreen> {
             }
 
             // Navigasi ke cashier jika tidak ada deeplink
-            if (currentRoute != "/cashier") {
+            if (currentRoute != "/home") {
               Logman.instance.info("[Redirect] Navigating to /cashier");
               navigated = true;
-              Navigator.popAndPushNamed(context, "/cashier");
+              Navigator.popAndPushNamed(context, "/home");
             } else {
               Logman.instance.info(
                   "[Redirect] Already on /cashier, no navigation needed.");

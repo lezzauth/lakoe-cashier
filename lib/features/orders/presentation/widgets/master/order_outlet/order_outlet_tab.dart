@@ -346,7 +346,7 @@ class MobileOrdersView extends StatelessWidget {
   }
 }
 
-class TabletOrdersView extends StatefulWidget {
+class TabletOrdersView extends StatelessWidget {
   final List<OrderItemRes> orders;
   final String? selectedOrderId;
   final ValueChanged<String?> onOrderSelected;
@@ -357,13 +357,6 @@ class TabletOrdersView extends StatefulWidget {
     required this.selectedOrderId,
     required this.onOrderSelected,
   });
-
-  @override
-  State<TabletOrdersView> createState() => _TabletOrdersViewState();
-}
-
-class _TabletOrdersViewState extends State<TabletOrdersView> {
-  String? _selectedId;
 
   @override
   Widget build(BuildContext context) {
@@ -377,23 +370,21 @@ class _TabletOrdersViewState extends State<TabletOrdersView> {
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
         ),
-        itemCount: widget.orders.length,
+        itemCount: orders.length,
         itemBuilder: (context, index) {
-          OrderItemRes order = widget.orders.elementAt(index);
+          OrderItemRes order = orders.elementAt(index);
 
-          bool selectedItem = _selectedId == order.id;
+          bool selectedItem = selectedOrderId == order.id;
 
           return OrderCardItem(
             selected: selectedItem,
             order: order,
             onTap: () {
-              setState(() {
-                if (selectedItem) {
-                  widget.onOrderSelected(null);
-                } else {
-                  widget.onOrderSelected(order.id);
-                }
-              });
+              if (selectedItem) {
+                onOrderSelected(null);
+              } else {
+                onOrderSelected(order.id);
+              }
             },
           );
         },

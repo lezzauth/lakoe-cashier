@@ -186,7 +186,7 @@ class _DashboardFilterState extends State<DashboardFilter> {
                   selected: isDateRangeSelected,
                   onSelected: (value) {
                     _onPickDateRange(state);
-                    // Navigator.pushNamed(context, "/cashier/transaction-date");
+                    // Navigator.pushNamed(context, "/transaction-date");
                   },
                 ),
               ),
@@ -196,7 +196,7 @@ class _DashboardFilterState extends State<DashboardFilter> {
           //   width: 32,
           //   child: OutlinedButton(
           //     onPressed: () async {
-          //       Navigator.pushNamed(context, "/cashier/transaction-date");
+          //       Navigator.pushNamed(context, "/transaction-date");
           //       // final picked = await showDateRangePicker(
           //       //   context: context,
           //       //   lastDate: DateTime(DateTime.now().year + 1),

@@ -48,7 +48,7 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
     if (!mounted) return;
     Navigator.pushNamedAndRemoveUntil(
       context,
-      "/cashier",
+      "/home",
       (route) => false,
     );
   }

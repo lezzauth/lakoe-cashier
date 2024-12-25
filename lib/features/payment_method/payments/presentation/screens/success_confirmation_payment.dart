@@ -192,7 +192,7 @@ class _SuccessConfirmationPaymentContentState
                           context.read<CartCubit>().reset();
                           Navigator.pushNamedAndRemoveUntil(
                             context,
-                            "/cashier/explore-products",
+                            "/cashier",
                             (route) => false,
                           );
                         }
@@ -475,7 +475,7 @@ class _SuccessConfirmationPaymentContentState
                                   onPressed: () {
                                     Navigator.pushNamedAndRemoveUntil(
                                       context,
-                                      "/cashier/explore-products",
+                                      "/cashier",
                                       (route) => false,
                                     );
                                   },

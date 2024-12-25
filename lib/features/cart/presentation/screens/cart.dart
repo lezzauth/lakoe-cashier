@@ -219,7 +219,7 @@ class _CartState extends State<Cart> {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              "/cashier/explore-products",
+              "/cashier",
               (route) => false,
             );
           });

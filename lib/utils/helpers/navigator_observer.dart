@@ -21,7 +21,7 @@ class CustomNavigatorObserver extends NavigatorObserver {
           systemNavigationBarColor: TColors.neutralLightLight,
         ),
       );
-    } else if (route?.settings.name == "/cashier/explore-products") {
+    } else if (route?.settings.name == "/cashier") {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.dark.copyWith(
           statusBarColor: TColors.neutralLightLight,

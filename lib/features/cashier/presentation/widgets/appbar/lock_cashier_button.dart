@@ -32,7 +32,7 @@ class LockCashierButtonState extends State<LockCashierButton> {
           context.read<CartCubit>().reset();
           Navigator.pushNamedAndRemoveUntil(
             context,
-            "/cashier",
+            "/home",
             (route) => false,
           );
         },

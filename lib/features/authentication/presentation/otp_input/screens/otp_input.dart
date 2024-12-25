@@ -121,7 +121,7 @@ class _OtpInputState extends State<OtpInput>
           if (!context.mounted) return;
 
           Navigator.pushNamedAndRemoveUntil(
-              context, "/cashier", ModalRoute.withName("/cashier"));
+              context, "/home", ModalRoute.withName("/home"));
         } else if (state is OtpInputActionFailure) {
           _animationController.forward();
           if (state.res.message!.contains("expired") && isRepeat) {

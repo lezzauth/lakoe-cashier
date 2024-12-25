@@ -200,7 +200,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
           if (mounted) {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              "/cashier",
+              "/home",
               (route) => false,
             );
           }

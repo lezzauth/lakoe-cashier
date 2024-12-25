@@ -29,7 +29,7 @@ class _InitialBalanceFormState extends State<InitialBalanceForm> {
 
     dynamic value = _formKey.currentState?.value;
 
-    Navigator.popAndPushNamed(context, "/cashier/open-cashier-pin",
+    Navigator.popAndPushNamed(context, "/open-cashier-pin",
         arguments: OpenCashierInitial(initialBalance: value["initialBalance"]));
   }
 

@@ -37,7 +37,7 @@ class OrderCashierOutlet extends StatefulWidget {
 class _OrderCashierOutletState extends State<OrderCashierOutlet> {
   bool _isFilterUsed = false;
   String _keywordSearch = "";
-  String? selectedOrderId;
+  String? _selectedOrderId;
 
   Future<void> onRefresh() async {
     OrderCashierFilterState filterState =
@@ -216,18 +216,18 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                                                 orders.elementAt(index);
 
                                             bool selctedItem =
-                                                selectedOrderId == order.id;
+                                                _selectedOrderId == order.id;
 
                                             return OrderCardItem(
                                               selected: selctedItem,
                                               order: order,
                                               onTap: () {
                                                 setState(() {
-                                                  if (selectedOrderId ==
+                                                  if (_selectedOrderId ==
                                                       order.id) {
-                                                    selectedOrderId = null;
+                                                    _selectedOrderId = null;
                                                   } else {
-                                                    selectedOrderId = order.id;
+                                                    _selectedOrderId = order.id;
                                                   }
                                                 });
                                               },
@@ -284,13 +284,13 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                 ),
               ),
             ),
-            if (selectedOrderId != null)
+            if (_selectedOrderId != null)
               Visibility(
-                visible: selectedOrderId != null,
+                visible: _selectedOrderId != null,
                 child: OrderDetailTablet(
-                  key: ValueKey(selectedOrderId),
+                  key: ValueKey(_selectedOrderId),
                   arguments: OrderDetailArgument(
-                    id: selectedOrderId!,
+                    id: _selectedOrderId!,
                     isCashier: true,
                   ),
                 ),

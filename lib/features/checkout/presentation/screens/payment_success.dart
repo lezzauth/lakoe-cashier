@@ -94,7 +94,7 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
             _deeplinkHandler.dispose();
             Navigator.pushNamedAndRemoveUntil(
               context,
-              "/cashier",
+              "/home",
               (route) => false,
             );
           }
@@ -162,7 +162,7 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
                         _deeplinkHandler.dispose();
                         Navigator.pushNamedAndRemoveUntil(
                           context,
-                          "/cashier",
+                          "/home",
                           (route) => false,
                         );
                       },

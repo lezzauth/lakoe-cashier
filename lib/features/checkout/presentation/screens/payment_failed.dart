@@ -86,7 +86,7 @@ class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
           if (mounted) {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              "/cashier",
+              "/home",
               (route) => false,
             );
           }
@@ -153,7 +153,7 @@ class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
                       onPressed: () {
                         Navigator.pushNamedAndRemoveUntil(
                           context,
-                          "/cashier",
+                          "/home",
                           (route) => false,
                         );
                       },

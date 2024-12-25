@@ -89,7 +89,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
         } else if (state is CashierOpened) {
           Navigator.pushNamedAndRemoveUntil(
             context,
-            "/cashier/explore-products",
+            "/cashier",
             (route) => false,
           );
         }
@@ -103,7 +103,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              "/cashier",
+              "/home",
               (route) => false,
             );
           });

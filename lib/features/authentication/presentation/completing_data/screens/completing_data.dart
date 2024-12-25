@@ -127,7 +127,7 @@ class _CompletingDataState extends State<CompletingData> {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
-                      "/cashier",
+                      "/home",
                       (route) => false,
                     );
                   });

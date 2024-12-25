@@ -49,15 +49,14 @@ class _AccessCashierTabletState extends State<AccessCashierTablet> {
   onCashierAlreadyOpened() {
     Navigator.pushNamed(
       context,
-      "/cashier/open-cashier-pin",
+      "/open-cashier-pin",
       arguments: OpenCashierReInitial(),
     );
   }
 
   Future<void> _onOnboardingOpen() async {
     bool? isCompleted =
-        await Navigator.pushNamed(context, "/cashier/onboarding-transaction")
-            as bool?;
+        await Navigator.pushNamed(context, "/cashier/onboarding") as bool?;
 
     _onInit();
 

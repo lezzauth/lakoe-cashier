@@ -346,14 +346,11 @@ class _AppState extends State<App> {
                   arguments: ModalRoute.of(context)!.settings.arguments
                       as CompletingDataArgument,
                 ),
-            "/cashier": (context) => const DashboardScreen(),
-            "/cashier/open-cashier-pin": (context) =>
-                const OpenCashierPinScreen(),
-            "/cashier/transaction-date": (context) =>
-                const TransactionDateScreen(),
-            "/cashier/explore-products": (context) =>
-                const ExploreProductScreen(),
-            "/cashier/onboarding-transaction": (context) =>
+            "/home": (context) => const DashboardScreen(),
+            "/open-cashier-pin": (context) => const OpenCashierPinScreen(),
+            "/transaction-date": (context) => const TransactionDateScreen(),
+            "/cashier": (context) => const ExploreProductScreen(),
+            "/cashier/onboarding": (context) =>
                 const OnboardingTransactionScreen(),
             "/cart": (context) => const CartScreen(),
             // products

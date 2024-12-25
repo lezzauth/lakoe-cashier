@@ -67,7 +67,7 @@ class _ExploreProductState extends State<ExploreProduct> {
           context.read<CartCubit>().reset();
           Navigator.pushNamedAndRemoveUntil(
             context,
-            "/cashier",
+            "/home",
             (route) => false,
           );
         }
