@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:lakoe_pos/common/widgets/form/counter.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/product/action/product_note_action.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
-import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ExploreProductItem extends StatelessWidget {
@@ -33,9 +31,9 @@ class ExploreProductItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: Container(
-          padding: const EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: 8.0,
             vertical: 8.0,
           ),
@@ -52,18 +50,8 @@ class ExploreProductItem extends StatelessWidget {
             name: product.name,
             price: int.parse(product.price),
             notes: notes,
-            image: image != null
-                ? Image.network(
-                    image,
-                    height: 60,
-                    width: 60,
-                    fit: BoxFit.cover,
-                  )
-                : SvgPicture.asset(
-                    TImages.productAvatar,
-                    height: 60,
-                    width: 60,
-                  ),
+            description: product.description ?? "",
+            imageUrl: image,
             counter: selected
                 ? Counter(
                     value: qty,

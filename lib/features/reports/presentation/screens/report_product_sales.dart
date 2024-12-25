@@ -252,18 +252,35 @@ class _ReportProductSalesState extends State<ReportProductSales> {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       margin: const EdgeInsets.only(right: 12),
-                                      child: product.images.isNotEmpty
-                                          ? Image.network(
-                                              product.images[0],
-                                              height: 44,
-                                              width: 44,
-                                              fit: BoxFit.cover,
-                                            )
-                                          : SvgPicture.asset(
-                                              TImages.productAvatar,
-                                              height: 44,
-                                              width: 44,
-                                            ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: product.images.isNotEmpty
+                                            ? FadeInImage.assetNetwork(
+                                                placeholderColor:
+                                                    TColors.neutralLightLight,
+                                                placeholder:
+                                                    TImages.productAvatar,
+                                                image: product.images[0],
+                                                height: 44,
+                                                width: 44,
+                                                fit: BoxFit.cover,
+                                                imageErrorBuilder: (context,
+                                                    error, stackTrace) {
+                                                  return SvgPicture.asset(
+                                                    TImages.productAvatar,
+                                                    height: 44,
+                                                    width: 44,
+                                                    fit: BoxFit.cover,
+                                                  );
+                                                },
+                                              )
+                                            : SvgPicture.asset(
+                                                TImages.productAvatar,
+                                                height: 44,
+                                                width: 44,
+                                                fit: BoxFit.cover,
+                                              ),
+                                      ),
                                     ),
                                     Expanded(
                                       child: Column(

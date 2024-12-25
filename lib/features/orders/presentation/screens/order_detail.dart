@@ -1,5 +1,3 @@
-import 'package:flutter_svg/svg.dart';
-
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -564,18 +562,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                         ),
                                       ),
                                       child: BaseProductItem(
-                                        image: image != null
-                                            ? Image.network(
-                                                image,
-                                                height: 44,
-                                                width: 44,
-                                                fit: BoxFit.cover,
-                                              )
-                                            : SvgPicture.asset(
-                                                TImages.productAvatar,
-                                                height: 44,
-                                                width: 44,
-                                              ),
+                                        imageUrl: image,
                                         name: product.name,
                                         qty: orderItem.quantity,
                                         price: int.parse(product.price),

@@ -63,7 +63,7 @@ class ReportBestSeller extends StatelessWidget {
                         ),
                       ),
                       child: BestSellerProductTile(
-                        imageSrc: image,
+                        imageUrl: image,
                         sold: product.soldCount,
                         name: product.name,
                         rank: index + 1,

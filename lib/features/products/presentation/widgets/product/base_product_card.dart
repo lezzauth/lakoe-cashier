@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class BaseProductCard extends StatelessWidget {
   final String name;
-  final Widget image;
+  final String? imageUrl;
   final int price;
   final bool selected;
   final Widget? counter;
@@ -16,7 +18,7 @@ class BaseProductCard extends StatelessWidget {
   const BaseProductCard({
     super.key,
     this.name = "",
-    required this.image,
+    this.imageUrl,
     this.price = 0,
     this.selected = false,
     this.counter,
@@ -52,7 +54,25 @@ class BaseProductCard extends StatelessWidget {
                 ),
                 height: 165.5,
                 width: 208,
-                child: image,
+                child: Image.network(
+                  imageUrl ?? '',
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return SvgPicture.asset(
+                      TImages.productAvatar,
+                      height: 165.5,
+                      width: 208,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return SvgPicture.asset(
+                      TImages.productAvatar,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                ),
               ),
               if (isNotAvailable)
                 Positioned.fill(
@@ -92,6 +112,7 @@ class BaseProductCard extends StatelessWidget {
                           name,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -101,6 +122,7 @@ class BaseProductCard extends StatelessWidget {
                     child: TextBodyM(
                       TFormatter.formatToRupiah(price),
                       color: TColors.neutralDarkLight,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],

@@ -295,7 +295,7 @@ class _ReportMasterState extends State<ReportMaster> {
                                     product.images.elementAtOrNull(0);
 
                                 return BestSellerProductTile(
-                                  imageSrc: image,
+                                  imageUrl: image,
                                   sold: product.soldCount,
                                   name: product.name,
                                   rank: index + 1,

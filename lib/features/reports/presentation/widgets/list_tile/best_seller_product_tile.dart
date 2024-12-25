@@ -13,14 +13,14 @@ import 'package:lakoe_pos/utils/formatters/formatter.dart';
 class BestSellerProductTile extends StatelessWidget {
   const BestSellerProductTile({
     super.key,
-    required this.imageSrc,
+    required this.imageUrl,
     required this.sold,
     required this.name,
     required this.rank,
     this.onTap,
   });
 
-  final String? imageSrc;
+  final String? imageUrl;
   final int sold;
   final String name;
   final int rank;
@@ -68,18 +68,29 @@ class BestSellerProductTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         clipBehavior: Clip.antiAlias,
-        child: imageSrc != null
-            ? Image.network(
-                imageSrc!,
-                height: 44,
-                width: 44,
-                fit: BoxFit.cover,
-              )
-            : SvgPicture.asset(
-                TImages.productAvatar,
-                height: 44,
-                width: 44,
-              ),
+        child: Image.network(
+          imageUrl ?? '',
+          height: 44,
+          width: 44,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return SvgPicture.asset(
+              TImages.productAvatar,
+              height: 44,
+              width: 44,
+              fit: BoxFit.cover,
+            );
+          },
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return SvgPicture.asset(
+              TImages.productAvatar,
+              height: 44,
+              width: 44,
+              fit: BoxFit.cover,
+            );
+          },
+        ),
       ),
       title: TextHeading4(
         name,

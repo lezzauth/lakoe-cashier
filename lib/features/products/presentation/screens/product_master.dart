@@ -157,18 +157,8 @@ class _ProductMasterState extends State<ProductMaster> {
               child: BaseProductItem(
                 name: product.name,
                 price: double.parse(product.price).round(),
-                image: image != null
-                    ? Image.network(
-                        image,
-                        height: 44,
-                        width: 44,
-                        fit: BoxFit.cover,
-                      )
-                    : SvgPicture.asset(
-                        TImages.productAvatar,
-                        height: 44,
-                        width: 44,
-                      ),
+                imageUrl: image,
+                description: product.description ?? "",
                 notes: product.description ?? "",
                 tag: isNotAvailable
                     ? Container(
@@ -205,7 +195,7 @@ class _ProductMasterState extends State<ProductMaster> {
           itemCount: products.length,
           itemBuilder: (context, index) {
             ProductModel product = products[index];
-            String? image = product.images.elementAtOrNull(0);
+            String? _imageUrl = product.images.elementAtOrNull(0);
             bool isNotAvailable = product.availability != "AVAILABLE";
 
             return InkWell(
@@ -218,18 +208,7 @@ class _ProductMasterState extends State<ProductMaster> {
                 name: product.name,
                 price: int.parse(product.price),
                 isNotAvailable: isNotAvailable,
-                image: image != null
-                    ? Image.network(
-                        image,
-                        height: 165.5,
-                        width: 208,
-                        fit: BoxFit.cover,
-                      )
-                    : SvgPicture.asset(
-                        TImages.productAvatar,
-                        height: 165.5,
-                        width: 208,
-                      ),
+                imageUrl: _imageUrl,
               ),
             );
           },
