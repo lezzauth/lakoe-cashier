@@ -3,6 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_state.dart';
 
+class OrderDetailOpenedCubit extends Cubit<OrderDetailOpenedState> {
+  OrderDetailOpenedCubit() : super(OrderDetailOpenedState(null));
+
+  void selectOrderId(String selectedId) {
+    emit(OrderDetailOpenedState(selectedId));
+  }
+
+  void unselectOrderId() {
+    emit(OrderDetailOpenedState(null));
+  }
+}
+
 class OrderDetailCubit extends Cubit<OrderDetailState> {
   final OrderRepository _orderRepository = OrderRepositoryImpl();
   final CashierRepository _cashierRepository = CashierRepositoryImpl();

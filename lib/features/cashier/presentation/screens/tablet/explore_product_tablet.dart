@@ -25,6 +25,8 @@ import 'package:lakoe_pos/features/cashier/presentation/widgets/appbar/explore_p
 import 'package:lakoe_pos/features/cashier/presentation/widgets/drawer/explore_product_drawer_tablet.dart';
 import 'package:lakoe_pos/features/cashier/presentation/widgets/open_order_list.dart';
 import 'package:lakoe_pos/features/cashier/presentation/widgets/cashier_product_grid.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_state.dart';
 import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
 import 'package:lakoe_pos/features/orders/presentation/screens/tablet/order_detail_tablet.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
@@ -33,6 +35,7 @@ import 'package:lakoe_pos/features/payment_method/common/widgets/payment_method_
 import 'package:lakoe_pos/features/products/presentation/widgets/filter/product_category_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:logman/logman.dart';
 
 class ExploreProductTablet extends StatelessWidget {
   const ExploreProductTablet({super.key});
@@ -60,8 +63,6 @@ class _ExploreProductTabletContentState
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
-
-  String? selectedOrderId;
 
   @override
   void initState() {
@@ -118,6 +119,12 @@ class _ExploreProductTabletContentState
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
+        BlocListener<OrderDetailOpenedCubit, OrderDetailOpenedState>(
+          listener: (context, state) {
+            Logman.instance.info("Cashier Tablet View $state");
+            context.read<CashierOrderCubit>().findAll();
+          },
+        ),
         BlocListener<CartDetailCubit, CartDetailState>(
           listener: (context, state) {
             if (state is CartDetailActionSuccess) {
@@ -211,22 +218,31 @@ class _ExploreProductTabletContentState
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        TextHeading3("Daftar Pesanan"),
+                                        TextHeading3("Daftar Pesanan")
                                       ],
                                     ),
                                   ),
-                                  CashierOpenOrderList(
-                                    selectedOrderId: selectedOrderId,
-                                    onTap: (value) {
-                                      setState(() {
-                                        if (selectedOrderId == value.id) {
-                                          selectedOrderId = null;
+                                  BlocBuilder<OrderDetailOpenedCubit,
+                                          OrderDetailOpenedState>(
+                                      builder: (context, state) {
+                                    return CashierOpenOrderList(
+                                      selectedOrderId: state.selectedId,
+                                      onTap: (value) {
+                                        final cubit = context
+                                            .read<OrderDetailOpenedCubit>();
+
+                                        bool selected =
+                                            value.id == state.selectedId;
+
+                                        if (state.selectedId == null ||
+                                            !selected) {
+                                          cubit.selectOrderId(value.id);
                                         } else {
-                                          selectedOrderId = value.id;
+                                          cubit.unselectOrderId();
                                         }
-                                      });
-                                    },
-                                  ),
+                                      },
+                                    );
+                                  }),
                                 ],
                               ),
                             ),
@@ -302,47 +318,53 @@ class _ExploreProductTabletContentState
                 ),
               ),
               BlocBuilder<CartCubit, CartState>(
-                builder: (context, state) {
-                  return Visibility(
-                    visible: state.carts.isNotEmpty && selectedOrderId == null,
-                    child: SizedBox(
-                      width: 400,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Expanded(
-                            child: CartContentTablet(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 12,
-                              horizontal: 16,
+                builder: (context, stateCart) {
+                  return BlocBuilder<OrderDetailOpenedCubit,
+                      OrderDetailOpenedState>(builder: (context, state) {
+                    return Visibility(
+                      visible: stateCart.carts.isNotEmpty &&
+                          state.selectedId == null,
+                      child: SizedBox(
+                        width: 400,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Expanded(
+                              child: CartContentTablet(),
                             ),
-                            child: CartFooter(
-                              labelButtonCart: "Proses Pesanan",
-                              onCompleted: (value) {
-                                onCompleteOrder(value);
-                              },
-                              onSaved: _onCartSaved,
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 16,
+                              ),
+                              child: CartFooter(
+                                labelButtonCart: "Proses Pesanan",
+                                onCompleted: (value) {
+                                  onCompleteOrder(value);
+                                },
+                                onSaved: _onCartSaved,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  });
                 },
               ),
-              if (selectedOrderId != null)
-                Visibility(
-                  visible: selectedOrderId != null,
+              BlocBuilder<OrderDetailOpenedCubit, OrderDetailOpenedState>(
+                  builder: (context, state) {
+                return Visibility(
+                  visible: state.selectedId != null,
                   child: OrderDetailTablet(
-                    key: ValueKey(selectedOrderId),
+                    key: ValueKey(state.selectedId),
                     arguments: OrderDetailArgument(
-                      id: selectedOrderId!,
+                      id: state.selectedId ?? "",
                       isCashier: true,
                     ),
                   ),
-                ),
+                );
+              }),
             ],
           ),
         ),

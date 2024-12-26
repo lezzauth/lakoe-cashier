@@ -283,7 +283,11 @@ class _OrderDetailState extends State<OrderDetail> {
     action(context, profile, order, footNote, _scrollController);
   }
 
-  void cancelOrder(OrderDetailState state, OrderModel order) async {
+  void showBottomsheetCancelOrder(
+    BuildContext context,
+    OrderDetailState state,
+    OrderModel order,
+  ) async {
     showModalBottomSheet(
       context: context,
       isDismissible: false,
@@ -302,11 +306,32 @@ class _OrderDetailState extends State<OrderDetail> {
             Navigator.pop(context);
           },
           secondaryAction: () async {
-            await context.read<OrderDetailCubit>().cancelOrder(order.id);
+            try {
+              final orderDetailCubit = context.read<OrderDetailCubit>();
+              final orderDetailOpenedCubit =
+                  context.read<OrderDetailOpenedCubit>();
 
-            if (!context.mounted) return;
-            Navigator.pop(context);
-            context.read<OrderCashierCubit>().init();
+              await orderDetailCubit.cancelOrder(order.id);
+
+              if (!context.mounted) return;
+
+              if (widget.isTabletView) {
+                if (context.mounted) {
+                  orderDetailOpenedCubit.unselectOrderId();
+                  Navigator.pop(context, true);
+                } else {
+                  Logman.instance
+                      .info("Widget tidak lagi mounted setelah findAll");
+                }
+              } else {
+                await context.read<OrderCashierCubit>().init();
+
+                if (!context.mounted) return;
+                Navigator.pop(context, true);
+              }
+            } catch (e) {
+              Logman.instance.error("Error: $e");
+            }
           },
         );
       },
@@ -391,7 +416,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       onRefreshOrderData();
                     }
                   } else {
-                    Navigator.pop(context, true);
+                    if (!widget.isTabletView) Navigator.pop(context, true);
                   }
                 }
               },
@@ -415,7 +440,8 @@ class _OrderDetailState extends State<OrderDetail> {
                           ? TextButton(
                               onPressed: () {
                                 if (_isCashier) {
-                                  cancelOrder(state, order);
+                                  showBottomsheetCancelOrder(
+                                      context, state, order);
                                 } else {
                                   showCashierAccessBottomSheet(
                                       context, "membatalkan");

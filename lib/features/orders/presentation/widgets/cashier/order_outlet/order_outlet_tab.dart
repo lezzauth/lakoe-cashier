@@ -6,6 +6,8 @@ import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/order_item_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_state.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_filter_state.dart';
@@ -18,6 +20,7 @@ import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_out
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:logman/logman.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class OrderCashierOutlet extends StatefulWidget {
@@ -37,7 +40,6 @@ class OrderCashierOutlet extends StatefulWidget {
 class _OrderCashierOutletState extends State<OrderCashierOutlet> {
   bool _isFilterUsed = false;
   String _keywordSearch = "";
-  String? _selectedOrderId;
 
   Future<void> onRefresh() async {
     OrderCashierFilterState filterState =
@@ -114,6 +116,12 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
 
     return MultiBlocListener(
       listeners: [
+        BlocListener<OrderDetailOpenedCubit, OrderDetailOpenedState>(
+          listener: (context, state) {
+            Logman.instance.info("Order Cashier Tablet View $state");
+            onRefresh();
+          },
+        ),
         BlocListener<OrderCashierFilterCubit, OrderCashierFilterState>(
           listener: (context, state) {
             context.read<OrderCashierCubit>().findAll(state.toFindAllOrderDto);
@@ -215,23 +223,34 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                                             OrderCashierItemRes order =
                                                 orders.elementAt(index);
 
-                                            bool selctedItem =
-                                                _selectedOrderId == order.id;
+                                            return BlocBuilder<
+                                                    OrderDetailOpenedCubit,
+                                                    OrderDetailOpenedState>(
+                                                builder: (context, state) {
+                                              bool selctedItem =
+                                                  state.selectedId == order.id;
 
-                                            return OrderCardItem(
-                                              selected: selctedItem,
-                                              order: order,
-                                              onTap: () {
-                                                setState(() {
-                                                  if (_selectedOrderId ==
-                                                      order.id) {
-                                                    _selectedOrderId = null;
+                                              return OrderCardItem(
+                                                selected: selctedItem,
+                                                order: order,
+                                                onTap: () {
+                                                  final cubit = context.read<
+                                                      OrderDetailOpenedCubit>();
+
+                                                  bool selected = order.id ==
+                                                      state.selectedId;
+
+                                                  if (state.selectedId ==
+                                                          null ||
+                                                      !selected) {
+                                                    cubit.selectOrderId(
+                                                        order.id);
                                                   } else {
-                                                    _selectedOrderId = order.id;
+                                                    cubit.unselectOrderId();
                                                   }
-                                                });
-                                              },
-                                            );
+                                                },
+                                              );
+                                            });
                                           },
                                         ),
                                       ),
@@ -284,17 +303,19 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
                 ),
               ),
             ),
-            if (_selectedOrderId != null)
-              Visibility(
-                visible: _selectedOrderId != null,
+            BlocBuilder<OrderDetailOpenedCubit, OrderDetailOpenedState>(
+                builder: (context, state) {
+              return Visibility(
+                visible: state.selectedId != null,
                 child: OrderDetailTablet(
-                  key: ValueKey(_selectedOrderId),
+                  key: ValueKey(state.selectedId),
                   arguments: OrderDetailArgument(
-                    id: _selectedOrderId!,
+                    id: state.selectedId ?? "",
                     isCashier: true,
                   ),
                 ),
-              ),
+              );
+            }),
           ],
         ),
         floatingActionButton: SizedBox(

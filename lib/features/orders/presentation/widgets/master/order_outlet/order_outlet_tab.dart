@@ -6,6 +6,8 @@ import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/order_item_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_state.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
 import 'package:lakoe_pos/features/orders/common/widgets/order_item/order_card_item.dart';
@@ -14,6 +16,7 @@ import 'package:lakoe_pos/features/orders/presentation/screens/tablet/order_deta
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/filter/order_outlet_filter.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
+import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
@@ -40,7 +43,6 @@ class OrderOutlet extends StatefulWidget {
 class _OrderOutletState extends State<OrderOutlet> {
   bool _isFilterUsed = false;
   String _keywordSearch = "";
-  String? selectedOrderId;
 
   Future<void> _onRefresh() async {
     OrdersFilterState filterState = context.read<OrdersFilterCubit>().state;
@@ -111,9 +113,18 @@ class _OrderOutletState extends State<OrderOutlet> {
   }
 
   void _onOrderSelected(String? orderId) {
-    setState(() {
-      selectedOrderId = orderId;
-    });
+    final cubit = context.read<OrderDetailOpenedCubit>();
+
+    Logman.instance.info("Order selected: $orderId");
+
+    bool selected = orderId == cubit.state.selectedId;
+    Logman.instance.info("SAMA: $selected");
+
+    if (cubit.state.selectedId == null || !selected) {
+      cubit.selectOrderId(orderId!);
+    } else {
+      cubit.unselectOrderId();
+    }
   }
 
   @override
@@ -150,52 +161,59 @@ class _OrderOutletState extends State<OrderOutlet> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BlocBuilder<OrdersFilterCubit, OrdersFilterState>(
-                        builder: (context, state) {
-                          return SingleChildScrollView(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                            physics: (isMobile || selectedOrderId == null)
-                                ? NeverScrollableScrollPhysics()
-                                : AlwaysScrollableScrollPhysics(),
-                            scrollDirection:
-                                (isMobile || selectedOrderId == null)
-                                    ? Axis.vertical
-                                    : Axis.horizontal,
-                            child: OrderOutletFilter(
-                              value: state.toFindAllOrderDto,
-                              isFilterUsed: _isFilterUsed,
-                              onClear: () {
-                                setState(() {
-                                  _isFilterUsed = false;
-                                });
-                                context.read<OrdersFilterCubit>().clearFilter();
-                              },
-                              onChanged: (value) {
-                                final cubit = context.read<OrdersFilterCubit>();
+                        builder: (context, stateFilter) {
+                          return BlocBuilder<OrderDetailOpenedCubit,
+                                  OrderDetailOpenedState>(
+                              builder: (context, state) {
+                            return SingleChildScrollView(
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                              physics: (isMobile || state.selectedId == null)
+                                  ? NeverScrollableScrollPhysics()
+                                  : AlwaysScrollableScrollPhysics(),
+                              scrollDirection:
+                                  (isMobile || state.selectedId == null)
+                                      ? Axis.vertical
+                                      : Axis.horizontal,
+                              child: OrderOutletFilter(
+                                value: stateFilter.toFindAllOrderDto,
+                                isFilterUsed: _isFilterUsed,
+                                onClear: () {
+                                  setState(() {
+                                    _isFilterUsed = false;
+                                  });
+                                  context
+                                      .read<OrdersFilterCubit>()
+                                      .clearFilter();
+                                },
+                                onChanged: (value) {
+                                  final cubit =
+                                      context.read<OrdersFilterCubit>();
 
-                                DateTime? parseDate(String? date) {
-                                  if (date == null) return null;
-                                  return DateTime.parse(date);
-                                }
+                                  DateTime? parseDate(String? date) {
+                                    if (date == null) return null;
+                                    return DateTime.parse(date);
+                                  }
 
-                                final from = parseDate(value.from);
-                                final to = parseDate(value.to);
+                                  final from = parseDate(value.from);
+                                  final to = parseDate(value.to);
 
-                                cubit.setFilter(
-                                  sort: value.sort,
-                                  source: value.source,
-                                  type: value.type,
-                                  status: value.status,
-                                  template: value.template,
-                                  from: from,
-                                  to: to,
-                                );
+                                  cubit.setFilter(
+                                    sort: value.sort,
+                                    source: value.source,
+                                    type: value.type,
+                                    status: value.status,
+                                    template: value.template,
+                                    from: from,
+                                    to: to,
+                                  );
 
-                                setState(() {
-                                  _isFilterUsed = cubit.hasFilterChanged();
-                                });
-                              },
-                            ),
-                          );
+                                  setState(() {
+                                    _isFilterUsed = cubit.hasFilterChanged();
+                                  });
+                                },
+                              ),
+                            );
+                          });
                         },
                       ),
                       Expanded(
@@ -220,11 +238,16 @@ class _OrderOutletState extends State<OrderOutlet> {
                                         groupedOrders: groupedOrders,
                                         onRefresh: _onRefresh,
                                       ),
-                                      tablet: TabletOrdersView(
-                                        orders: orders,
-                                        selectedOrderId: selectedOrderId,
-                                        onOrderSelected: _onOrderSelected,
-                                      ),
+                                      tablet: BlocBuilder<
+                                              OrderDetailOpenedCubit,
+                                              OrderDetailOpenedState>(
+                                          builder: (context, state) {
+                                        return TabletOrdersView(
+                                          orders: orders,
+                                          selectedOrderId: state.selectedId,
+                                          onOrderSelected: _onOrderSelected,
+                                        );
+                                      }),
                                     ),
                                   ],
                                   if (orders.isEmpty)
@@ -271,14 +294,16 @@ class _OrderOutletState extends State<OrderOutlet> {
                 ),
               ),
             ),
-            if (selectedOrderId != null)
-              Visibility(
-                visible: selectedOrderId != null,
+            BlocBuilder<OrderDetailOpenedCubit, OrderDetailOpenedState>(
+                builder: (context, state) {
+              return Visibility(
+                visible: state.selectedId != null,
                 child: OrderDetailTablet(
-                  key: ValueKey(selectedOrderId),
-                  arguments: OrderDetailArgument(id: selectedOrderId!),
+                  key: ValueKey(state.selectedId),
+                  arguments: OrderDetailArgument(id: state.selectedId ?? ""),
                 ),
-              ),
+              );
+            }),
           ],
         ),
       ),
@@ -380,11 +405,7 @@ class TabletOrdersView extends StatelessWidget {
             selected: selectedItem,
             order: order,
             onTap: () {
-              if (selectedItem) {
-                onOrderSelected(null);
-              } else {
-                onOrderSelected(order.id);
-              }
+              onOrderSelected(order.id);
             },
           );
         },

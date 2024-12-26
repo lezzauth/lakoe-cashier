@@ -22,8 +22,10 @@ class ExploreProductScreen extends StatefulWidget {
 class _ExploreProductScreenState extends State<ExploreProductScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CashierProductFilterCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CashierProductFilterCubit()),
+      ],
       child: const ExploreProduct(),
     );
   }

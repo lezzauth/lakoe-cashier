@@ -176,7 +176,10 @@ class OrderCardItem extends StatelessWidget {
                                     ),
                                     SizedBox(height: 4),
                                     TextBodyXS(
-                                      TFormatter.dateTime(order.createdAt),
+                                      TFormatter.dateTime(
+                                        order.createdAt,
+                                        withTimeZone: false,
+                                      ),
                                       color: TColors.neutralDarkLight,
                                     ),
                                   ],

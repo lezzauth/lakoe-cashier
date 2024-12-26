@@ -225,6 +225,7 @@ class _AppState extends State<App> {
         BlocProvider(create: (context) => OrderCashierCubit()),
         BlocProvider(create: (context) => OrdersCubit()),
         BlocProvider(create: (context) => OrderDetailCubit()),
+        BlocProvider(create: (context) => OrderDetailOpenedCubit()),
 
         // Customer Master
         BlocProvider(create: (context) => CustomerMasterCubit()),
