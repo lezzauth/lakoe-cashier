@@ -91,6 +91,7 @@ class _OrderDetailState extends State<OrderDetail> {
   bool _isScrolled = false;
   bool _isCashier = false;
   bool _orderUpdated = false;
+  bool _isNavigating = false;
 
   ScrollController scrollController = ScrollController();
   Future<void> _onRefresh() async {
@@ -384,7 +385,12 @@ class _OrderDetailState extends State<OrderDetail> {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (popDisposition, popResult) async {
-        if (!widget.isTabletView) Navigator.pop(context, _orderUpdated);
+        if (!widget.isTabletView) {
+          if (!_isNavigating) {
+            _isNavigating = true;
+            Navigator.pop(context, _orderUpdated);
+          }
+        }
       },
       child: MultiBlocListener(
           listeners: [
@@ -433,8 +439,12 @@ class _OrderDetailState extends State<OrderDetail> {
                         ? TextHeading1("Order #${order.no}")
                         : null,
                     isScrolled: _isScrolled,
-                    handleBackButton: () =>
-                        Navigator.pop(context, _orderUpdated),
+                    handleBackButton: () {
+                      if (!_isNavigating) {
+                        _isNavigating = true;
+                        Navigator.pop(context, _orderUpdated);
+                      }
+                    },
                     actions: [
                       order.status == "OPEN"
                           ? TextButton(
