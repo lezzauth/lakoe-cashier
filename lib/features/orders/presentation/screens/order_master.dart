@@ -42,13 +42,24 @@ class OrderMaster extends StatelessWidget {
     final String? previousScreen = args?['previousScreen'];
     bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
 
+    bool isNavigating = false;
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (popDisposition, popResult) async {
-        Navigator.pop(context, true);
+        if (!isNavigating) {
+          isNavigating = true;
+          Navigator.pop(context, true);
+        }
       },
       child: Scaffold(
         appBar: CustomAppbar(
+          handleBackButton: () {
+            if (!isNavigating) {
+              isNavigating = true;
+              Navigator.pop(context, true);
+            }
+          },
           backgroundColor: isMobile ? null : TColors.neutralLightLight,
           search: SearchField(
             hintText: "Cari pesanan disini...",

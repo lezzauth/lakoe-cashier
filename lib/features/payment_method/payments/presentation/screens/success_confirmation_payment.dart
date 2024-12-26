@@ -80,6 +80,7 @@ class _SuccessConfirmationPaymentContentState
     extends State<SuccessConfirmationPaymentContent> {
   final ScrollController _scrollController = ScrollController();
   bool _doPrinting = false;
+  bool _isNavigating = false;
 
   void _onInit() {
     context.read<OrderDetailCubit>().findOne(widget.arguments.payment.order.id);
@@ -186,20 +187,26 @@ class _SuccessConfirmationPaymentContentState
                 return PopScope(
                   canPop: widget.arguments.isCashier,
                   onPopInvokedWithResult: (popDisposition, popResult) async {
-                    if (widget.arguments.isCashier) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (!_isNavigating) {
+                      _isNavigating = true;
+
+                      if (widget.arguments.isCashier) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          if (mounted) {
+                            context.read<CartCubit>().reset();
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              "/cashier",
+                              (route) => false,
+                            );
+                          }
+                        });
+                        return Future.value(null);
+                      } else {
                         if (mounted) {
-                          context.read<CartCubit>().reset();
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            "/cashier",
-                            (route) => false,
-                          );
+                          Navigator.pop(context, true);
                         }
-                      });
-                      return Future.value(null);
-                    } else {
-                      Navigator.pop(context, true);
+                      }
                     }
                   },
                   child: Column(
