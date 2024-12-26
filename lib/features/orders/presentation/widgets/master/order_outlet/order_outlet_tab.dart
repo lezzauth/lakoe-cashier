@@ -61,6 +61,7 @@ class _OrderOutletState extends State<OrderOutlet> {
     super.initState();
     context.read<OrdersCubit>().init();
     context.read<PaymentMethodCubit>().findAll();
+    context.read<OrderDetailOpenedCubit>().unselectOrderId();
   }
 
   void _handleClearFilter() {

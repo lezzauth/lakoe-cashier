@@ -58,6 +58,7 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
     super.initState();
     context.read<OrderCashierCubit>().init();
     context.read<PaymentMethodCubit>().findAll();
+    context.read<OrderDetailOpenedCubit>().unselectOrderId();
   }
 
   void _handleClearFilter() {
@@ -116,9 +117,7 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
     return MultiBlocListener(
       listeners: [
         BlocListener<OrderDetailOpenedCubit, OrderDetailOpenedState>(
-          listener: (context, state) {
-            onRefresh();
-          },
+          listener: (context, state) {},
         ),
         BlocListener<OrderCashierFilterCubit, OrderCashierFilterState>(
           listener: (context, state) {

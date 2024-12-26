@@ -7,6 +7,7 @@ import 'package:lakoe_pos/common/widgets/ui/bottomsheet/general_information.dart
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_1.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/order/cashier_order_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_cubit.dart';
@@ -421,6 +422,11 @@ class _OrderDetailState extends State<OrderDetail> {
                       if (!result!) return;
                       onRefreshOrderData();
                     }
+                  } else if (state.cancelResponse != null) {
+                    context.read<CashierOrderCubit>().findAll();
+                    context.read<OrderCashierCubit>().init();
+
+                    if (!widget.isTabletView) Navigator.pop(context, true);
                   } else {
                     if (!widget.isTabletView) Navigator.pop(context, true);
                   }

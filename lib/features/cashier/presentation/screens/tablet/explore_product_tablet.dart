@@ -66,6 +66,7 @@ class _ExploreProductTabletContentState
   @override
   void initState() {
     super.initState();
+    context.read<OrderDetailOpenedCubit>().unselectOrderId();
     _searchController.clear();
     _onRefresh();
   }
@@ -119,9 +120,7 @@ class _ExploreProductTabletContentState
     return MultiBlocListener(
       listeners: [
         BlocListener<OrderDetailOpenedCubit, OrderDetailOpenedState>(
-          listener: (context, state) {
-            context.read<CashierOrderCubit>().findAll();
-          },
+          listener: (context, state) {},
         ),
         BlocListener<CartDetailCubit, CartDetailState>(
           listener: (context, state) {

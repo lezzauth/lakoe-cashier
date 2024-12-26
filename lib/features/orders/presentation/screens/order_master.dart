@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_filter_state.dart';
@@ -58,6 +59,7 @@ class OrderMaster extends StatelessWidget {
             if (!isNavigating) {
               isNavigating = true;
               Navigator.pop(context, true);
+              context.read<OrderDetailOpenedCubit>().unselectOrderId();
             }
           },
           backgroundColor: isMobile ? null : TColors.neutralLightLight,
