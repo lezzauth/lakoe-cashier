@@ -20,7 +20,6 @@ import 'package:lakoe_pos/features/orders/presentation/widgets/cashier/order_out
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
-import 'package:logman/logman.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class OrderCashierOutlet extends StatefulWidget {
@@ -118,7 +117,6 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
       listeners: [
         BlocListener<OrderDetailOpenedCubit, OrderDetailOpenedState>(
           listener: (context, state) {
-            Logman.instance.info("Order Cashier Tablet View $state");
             onRefresh();
           },
         ),

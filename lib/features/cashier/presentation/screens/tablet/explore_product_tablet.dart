@@ -35,7 +35,6 @@ import 'package:lakoe_pos/features/payment_method/common/widgets/payment_method_
 import 'package:lakoe_pos/features/products/presentation/widgets/filter/product_category_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
-import 'package:logman/logman.dart';
 
 class ExploreProductTablet extends StatelessWidget {
   const ExploreProductTablet({super.key});
@@ -121,7 +120,6 @@ class _ExploreProductTabletContentState
       listeners: [
         BlocListener<OrderDetailOpenedCubit, OrderDetailOpenedState>(
           listener: (context, state) {
-            Logman.instance.info("Cashier Tablet View $state");
             context.read<CashierOrderCubit>().findAll();
           },
         ),
