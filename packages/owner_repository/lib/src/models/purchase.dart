@@ -76,7 +76,7 @@ class PaymentRequest with _$PaymentRequest {
     required String captureMethod,
     required String status,
     required List<Action> actions,
-    required List<Item> items,
+    List<Item>? items,
   }) = _PaymentRequest;
 
   factory PaymentRequest.fromJson(Map<String, dynamic> json) =>
@@ -130,7 +130,7 @@ class VirtualAccount with _$VirtualAccount {
 class ChannelProperties with _$ChannelProperties {
   const factory ChannelProperties({
     required String successReturnUrl,
-    required String failureReturnUrl,
+    String? failureReturnUrl,
   }) = _ChannelProperties;
 
   factory ChannelProperties.fromJson(Map<String, dynamic> json) =>

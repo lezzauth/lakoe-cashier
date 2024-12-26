@@ -77,8 +77,8 @@ _$PaymentRequestImpl _$$PaymentRequestImplFromJson(Map<String, dynamic> json) =>
       actions: (json['actions'] as List<dynamic>)
           .map((e) => Action.fromJson(e as Map<String, dynamic>))
           .toList(),
-      items: (json['items'] as List<dynamic>)
-          .map((e) => Item.fromJson(e as Map<String, dynamic>))
+      items: (json['items'] as List<dynamic>?)
+          ?.map((e) => Item.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -168,7 +168,7 @@ _$ChannelPropertiesImpl _$$ChannelPropertiesImplFromJson(
         Map<String, dynamic> json) =>
     _$ChannelPropertiesImpl(
       successReturnUrl: json['successReturnUrl'] as String,
-      failureReturnUrl: json['failureReturnUrl'] as String,
+      failureReturnUrl: json['failureReturnUrl'] as String?,
     );
 
 Map<String, dynamic> _$$ChannelPropertiesImplToJson(

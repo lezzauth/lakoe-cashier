@@ -817,7 +817,7 @@ mixin _$PaymentRequest {
   String get captureMethod => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   List<Action> get actions => throw _privateConstructorUsedError;
-  List<Item> get items => throw _privateConstructorUsedError;
+  List<Item>? get items => throw _privateConstructorUsedError;
 
   /// Serializes this PaymentRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -848,7 +848,7 @@ abstract class $PaymentRequestCopyWith<$Res> {
       String captureMethod,
       String status,
       List<Action> actions,
-      List<Item> items});
+      List<Item>? items});
 
   $PaymentMethodCopyWith<$Res> get paymentMethod;
 }
@@ -880,7 +880,7 @@ class _$PaymentRequestCopyWithImpl<$Res, $Val extends PaymentRequest>
     Object? captureMethod = null,
     Object? status = null,
     Object? actions = null,
-    Object? items = null,
+    Object? items = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -931,10 +931,10 @@ class _$PaymentRequestCopyWithImpl<$Res, $Val extends PaymentRequest>
           ? _value.actions
           : actions // ignore: cast_nullable_to_non_nullable
               as List<Action>,
-      items: null == items
+      items: freezed == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
-              as List<Item>,
+              as List<Item>?,
     ) as $Val);
   }
 
@@ -970,7 +970,7 @@ abstract class _$$PaymentRequestImplCopyWith<$Res>
       String captureMethod,
       String status,
       List<Action> actions,
-      List<Item> items});
+      List<Item>? items});
 
   @override
   $PaymentMethodCopyWith<$Res> get paymentMethod;
@@ -1001,7 +1001,7 @@ class __$$PaymentRequestImplCopyWithImpl<$Res>
     Object? captureMethod = null,
     Object? status = null,
     Object? actions = null,
-    Object? items = null,
+    Object? items = freezed,
   }) {
     return _then(_$PaymentRequestImpl(
       id: null == id
@@ -1052,10 +1052,10 @@ class __$$PaymentRequestImplCopyWithImpl<$Res>
           ? _value._actions
           : actions // ignore: cast_nullable_to_non_nullable
               as List<Action>,
-      items: null == items
+      items: freezed == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
-              as List<Item>,
+              as List<Item>?,
     ));
   }
 }
@@ -1076,7 +1076,7 @@ class _$PaymentRequestImpl implements _PaymentRequest {
       required this.captureMethod,
       required this.status,
       required final List<Action> actions,
-      required final List<Item> items})
+      final List<Item>? items})
       : _actions = actions,
         _items = items;
 
@@ -1113,12 +1113,14 @@ class _$PaymentRequestImpl implements _PaymentRequest {
     return EqualUnmodifiableListView(_actions);
   }
 
-  final List<Item> _items;
+  final List<Item>? _items;
   @override
-  List<Item> get items {
+  List<Item>? get items {
+    final value = _items;
+    if (value == null) return null;
     if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_items);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -1200,7 +1202,7 @@ abstract class _PaymentRequest implements PaymentRequest {
       required final String captureMethod,
       required final String status,
       required final List<Action> actions,
-      required final List<Item> items}) = _$PaymentRequestImpl;
+      final List<Item>? items}) = _$PaymentRequestImpl;
 
   factory _PaymentRequest.fromJson(Map<String, dynamic> json) =
       _$PaymentRequestImpl.fromJson;
@@ -1230,7 +1232,7 @@ abstract class _PaymentRequest implements PaymentRequest {
   @override
   List<Action> get actions;
   @override
-  List<Item> get items;
+  List<Item>? get items;
 
   /// Create a copy of PaymentRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -2051,7 +2053,7 @@ ChannelProperties _$ChannelPropertiesFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ChannelProperties {
   String get successReturnUrl => throw _privateConstructorUsedError;
-  String get failureReturnUrl => throw _privateConstructorUsedError;
+  String? get failureReturnUrl => throw _privateConstructorUsedError;
 
   /// Serializes this ChannelProperties to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -2069,7 +2071,7 @@ abstract class $ChannelPropertiesCopyWith<$Res> {
           ChannelProperties value, $Res Function(ChannelProperties) then) =
       _$ChannelPropertiesCopyWithImpl<$Res, ChannelProperties>;
   @useResult
-  $Res call({String successReturnUrl, String failureReturnUrl});
+  $Res call({String successReturnUrl, String? failureReturnUrl});
 }
 
 /// @nodoc
@@ -2088,17 +2090,17 @@ class _$ChannelPropertiesCopyWithImpl<$Res, $Val extends ChannelProperties>
   @override
   $Res call({
     Object? successReturnUrl = null,
-    Object? failureReturnUrl = null,
+    Object? failureReturnUrl = freezed,
   }) {
     return _then(_value.copyWith(
       successReturnUrl: null == successReturnUrl
           ? _value.successReturnUrl
           : successReturnUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      failureReturnUrl: null == failureReturnUrl
+      failureReturnUrl: freezed == failureReturnUrl
           ? _value.failureReturnUrl
           : failureReturnUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -2111,7 +2113,7 @@ abstract class _$$ChannelPropertiesImplCopyWith<$Res>
       __$$ChannelPropertiesImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String successReturnUrl, String failureReturnUrl});
+  $Res call({String successReturnUrl, String? failureReturnUrl});
 }
 
 /// @nodoc
@@ -2128,17 +2130,17 @@ class __$$ChannelPropertiesImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? successReturnUrl = null,
-    Object? failureReturnUrl = null,
+    Object? failureReturnUrl = freezed,
   }) {
     return _then(_$ChannelPropertiesImpl(
       successReturnUrl: null == successReturnUrl
           ? _value.successReturnUrl
           : successReturnUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      failureReturnUrl: null == failureReturnUrl
+      failureReturnUrl: freezed == failureReturnUrl
           ? _value.failureReturnUrl
           : failureReturnUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -2147,7 +2149,7 @@ class __$$ChannelPropertiesImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ChannelPropertiesImpl implements _ChannelProperties {
   const _$ChannelPropertiesImpl(
-      {required this.successReturnUrl, required this.failureReturnUrl});
+      {required this.successReturnUrl, this.failureReturnUrl});
 
   factory _$ChannelPropertiesImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChannelPropertiesImplFromJson(json);
@@ -2155,7 +2157,7 @@ class _$ChannelPropertiesImpl implements _ChannelProperties {
   @override
   final String successReturnUrl;
   @override
-  final String failureReturnUrl;
+  final String? failureReturnUrl;
 
   @override
   String toString() {
@@ -2198,7 +2200,7 @@ class _$ChannelPropertiesImpl implements _ChannelProperties {
 abstract class _ChannelProperties implements ChannelProperties {
   const factory _ChannelProperties(
       {required final String successReturnUrl,
-      required final String failureReturnUrl}) = _$ChannelPropertiesImpl;
+      final String? failureReturnUrl}) = _$ChannelPropertiesImpl;
 
   factory _ChannelProperties.fromJson(Map<String, dynamic> json) =
       _$ChannelPropertiesImpl.fromJson;
@@ -2206,7 +2208,7 @@ abstract class _ChannelProperties implements ChannelProperties {
   @override
   String get successReturnUrl;
   @override
-  String get failureReturnUrl;
+  String? get failureReturnUrl;
 
   /// Create a copy of ChannelProperties
   /// with the given fields replaced by the non-null parameter values.
