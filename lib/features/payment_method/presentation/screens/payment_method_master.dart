@@ -119,7 +119,7 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
           primaryAction: () async {
             await _savePaymentMethodChanges(context);
 
-            if (mounted) {
+            if (context.mounted) {
               CustomToast.showWithContext(
                 context,
                 "Metode pembayaran tersimpan",
@@ -171,12 +171,11 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
       try {
         await context.read<PaymentMethodCubit>().setActive(changes);
 
-        if (!mounted) return;
-
         setState(() {
           temporaryChanges.clear();
         });
 
+        if (!context.mounted) return;
         CustomToast.showWithContext(
           context,
           "Metode pembayaran tersimpan",
@@ -267,19 +266,25 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
                     if (nonEdcRequiredMethods.isNotEmpty) ...[
                       PaymentSectionCard(
                         children: nonEdcRequiredMethods
-                            .map(
-                              (item) => PaymentSectionItem(
-                                title: item.name,
-                                subTitle: item.description,
-                                isActive: temporaryChanges.containsKey(item.id)
-                                    ? temporaryChanges[item.id]!
-                                    : item.isActive,
-                                lastItem: false,
-                                onToggleActive: (newValue) {
-                                  _updatePaymentMethodStatus(item.id, newValue);
-                                },
-                              ),
-                            )
+                            .asMap()
+                            .map((index, item) => MapEntry(
+                                  index,
+                                  PaymentSectionItem(
+                                    title: item.name,
+                                    subTitle: item.description,
+                                    isActive:
+                                        temporaryChanges.containsKey(item.id)
+                                            ? temporaryChanges[item.id]!
+                                            : item.isActive,
+                                    lastItem: index ==
+                                        nonEdcRequiredMethods.length - 1,
+                                    onToggleActive: (newValue) {
+                                      _updatePaymentMethodStatus(
+                                          item.id, newValue);
+                                    },
+                                  ),
+                                ))
+                            .values
                             .toList(),
                       ),
                     ],
@@ -295,19 +300,25 @@ class _PaymentMethodMasterState extends State<PaymentMethodMaster> {
                       ),
                       PaymentSectionCard(
                         children: edcRequiredMethods
-                            .map(
-                              (item) => PaymentSectionItem(
-                                title: item.name,
-                                subTitle: item.description,
-                                isActive: temporaryChanges.containsKey(item.id)
-                                    ? temporaryChanges[item.id]!
-                                    : item.isActive,
-                                lastItem: false,
-                                onToggleActive: (newValue) {
-                                  _updatePaymentMethodStatus(item.id, newValue);
-                                },
-                              ),
-                            )
+                            .asMap()
+                            .map((index, item) => MapEntry(
+                                  index,
+                                  PaymentSectionItem(
+                                    title: item.name,
+                                    subTitle: item.description,
+                                    isActive:
+                                        temporaryChanges.containsKey(item.id)
+                                            ? temporaryChanges[item.id]!
+                                            : item.isActive,
+                                    lastItem:
+                                        index == edcRequiredMethods.length - 1,
+                                    onToggleActive: (newValue) {
+                                      _updatePaymentMethodStatus(
+                                          item.id, newValue);
+                                    },
+                                  ),
+                                ))
+                            .values
                             .toList(),
                       ),
                     ],
