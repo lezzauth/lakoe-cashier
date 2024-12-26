@@ -51,6 +51,7 @@ class OrderMaster extends StatelessWidget {
         if (!isNavigating) {
           isNavigating = true;
           Navigator.pop(context, true);
+          context.read<OrderDetailOpenedCubit>().unselectOrderId();
         }
       },
       child: Scaffold(

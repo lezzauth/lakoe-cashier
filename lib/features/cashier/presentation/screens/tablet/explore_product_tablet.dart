@@ -185,6 +185,7 @@ class _ExploreProductTabletContentState
         child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: TColors.neutralLightLightest,
+          endDrawerEnableOpenDragGesture: false,
           endDrawer: ExploreProductDrawerTablet(),
           body: Row(
             mainAxisSize: MainAxisSize.min,
