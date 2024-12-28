@@ -34,8 +34,10 @@ class PackageRepositoryImpl implements PackageRepository {
   Future<List<PackagePriceModel>> findOne(String name) async {
     final Options options = await _getOptions();
 
-    final response =
-        await _dio.get<List<dynamic>>("$_baseURL/$name", options: options);
+    final response = await _dio.get<List<dynamic>>(
+      "$_baseURL/${name.toUpperCase()}",
+      options: options,
+    );
 
     return response.data!
         .map((element) => PackagePriceModel.fromJson(element))

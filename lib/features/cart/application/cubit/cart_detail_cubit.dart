@@ -1,7 +1,10 @@
 import 'dart:developer';
 
 import 'package:cashier_repository/cashier_repository.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_state.dart';
 import 'package:lakoe_pos/features/cart/data/models/cart_model.dart';
@@ -74,10 +77,24 @@ class CartDetailCubit extends Cubit<CartDetailState> {
         tableId: tableId,
       ));
       emit(CartDetailActionSuccess());
-    } catch (e, stackTrace) {
-      log("saveOrder err: ${e.toString()}",
-          name: "CartDetailCubit.saveOrder", stackTrace: stackTrace);
-      emit(CartDetailActionFailure(e.toString()));
+    } catch (e, s) {
+      String errorMessage = "An unexpected error occurred.";
+
+      if (e is DioException) {
+        if (e.error is DioExceptionModel) {
+          final dioExceptionModel = e.error as DioExceptionModel;
+          errorMessage =
+              "${dioExceptionModel.message} (${dioExceptionModel.statusCode}).";
+        } else if (e.response?.statusCode == 402) {
+          errorMessage = "Quota limit has been reached. (402)";
+        } else {
+          errorMessage = e.response?.data['message'] ??
+              "An unexpected DioException occurred.";
+        }
+      } else {
+        Logman.instance.error("ERROR SAVE ORDER $e, ---> $s");
+      }
+      emit(CartDetailActionFailure(errorMessage));
     }
   }
 
@@ -100,10 +117,24 @@ class CartDetailCubit extends Cubit<CartDetailState> {
         dto,
       );
       emit(CartDetailCompleteActionSuccess(res: res));
-    } catch (e, stackTrace) {
-      log("saveAndCompleteOrder err: ${e.toString()}",
-          name: "CartDetailCubit.saveAndCompleteOrder", stackTrace: stackTrace);
-      emit(CartDetailCompleteActionFailure(e.toString()));
+    } catch (e, s) {
+      String errorMessage = "An unexpected error occurred.";
+
+      if (e is DioException) {
+        if (e.error is DioExceptionModel) {
+          final dioExceptionModel = e.error as DioExceptionModel;
+          errorMessage =
+              "${dioExceptionModel.message} (${dioExceptionModel.statusCode}).";
+        } else if (e.response?.statusCode == 402) {
+          errorMessage = "Quota limit has been reached. (402)";
+        } else {
+          errorMessage = e.response?.data['message'] ??
+              "An unexpected DioException occurred.";
+        }
+      } else {
+        Logman.instance.error("ERROR SAVE ORDER $e, ---> $s");
+      }
+      emit(CartDetailCompleteActionFailure(errorMessage));
     }
   }
 }

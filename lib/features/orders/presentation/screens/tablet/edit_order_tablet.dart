@@ -123,9 +123,7 @@ class _OrderEditTabletContentState extends State<OrderEditTabletContent> {
         }
 
         if (state is CartDetailActionSuccess ||
-            state is CartDetailCompleteActionSuccess) {
-          context.read<CartDetailFilterCubit>().clearFilter();
-        }
+            state is CartDetailCompleteActionSuccess) {}
       },
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

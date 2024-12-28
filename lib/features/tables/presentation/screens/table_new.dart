@@ -1,3 +1,4 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -29,6 +30,8 @@ class TableNew extends StatefulWidget {
 }
 
 class _TableNewState extends State<TableNew> {
+  final AppDataProvider _appDataProvider = AppDataProvider();
+
   final dummyTableModel = TableModel(
     id: "1",
     no: "T-00",
@@ -70,10 +73,20 @@ class _TableNewState extends State<TableNew> {
     return MultiBlocListener(
       listeners: [
         BlocListener<TableMasterCubit, TableMasterState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             if (state is TableMasterActionSuccess) {
               Navigator.pop(context, true);
             } else if (state is TableMasterReachesLimit) {
+              final activePackage = await _appDataProvider.activePackage;
+
+              String limit = "5";
+
+              if (activePackage == "GROW") {
+                limit = "20";
+              }
+
+              if (!context.mounted) return;
+
               showModalBottomSheet(
                 context: context,
                 enableDrag: false,
@@ -86,13 +99,22 @@ class _TableNewState extends State<TableNew> {
                       hasGrabber: false,
                       child: ErrorDisplay(
                         imageSrc: TImages.limitQuota,
-                        title: "Meja maksimal, nih!",
+                        title: "Meja udah maksimal, nih!",
                         description:
-                            "Sudah 5 QR Meja. Upgrade untuk tambah meja QR!",
+                            "Sudah tersimpan $limit data meja. Upgrade untuk tambah meja tanpa batas!",
                         actionTitlePrimary: "Lihat Paket",
                         onActionPrimary: () {
                           Navigator.pop(context);
-                          Navigator.pushNamed(context, "/packages");
+                          Navigator.pop(context, true);
+                          if (activePackage != "LITE") {
+                            Navigator.pushNamed(
+                              context,
+                              "/account/active_package",
+                              arguments: {'packageName': activePackage},
+                            );
+                          } else {
+                            Navigator.pushNamed(context, "/packages");
+                          }
                         },
                         actionTitleSecondary: "Nanti Saja",
                         onActionSecondary: () {

@@ -1,3 +1,4 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -23,6 +24,7 @@ class NewProductScreen extends StatefulWidget {
 
 class _NewProductScreenState extends State<NewProductScreen>
     with SingleTickerProviderStateMixin {
+  final AppDataProvider _appDataProvider = AppDataProvider();
   final _productInformationFormKey = GlobalKey<FormBuilderState>();
   final _stockInformationFormKey = GlobalKey<FormBuilderState>();
 
@@ -99,10 +101,20 @@ class _NewProductScreenState extends State<NewProductScreen>
   @override
   Widget build(BuildContext context) {
     return BlocListener<ProductMasterCubit, ProductMasterState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is ProductMasterActionSuccess) {
           Navigator.pop(context, true);
         } else if (state is ProductMasterReachesLimit) {
+          final activePackage = await _appDataProvider.activePackage;
+
+          String limit = "10";
+
+          if (activePackage == "GROW") {
+            limit = "25";
+          }
+
+          if (!context.mounted) return;
+
           showModalBottomSheet(
             context: context,
             enableDrag: false,
@@ -115,13 +127,22 @@ class _NewProductScreenState extends State<NewProductScreen>
                   hasGrabber: false,
                   child: ErrorDisplay(
                     imageSrc: TImages.limitQuota,
-                    title: "Yah! produk full, nih",
+                    title: "Yah! produk udah full, nih",
                     description:
-                        "10 menu sudah ditambahkan. Upgrade paket untuk lebih banyak produk, yuk!",
+                        "Dengan paket $activePackage kamu hanya bisa menambahkan $limit menu. Upgrade paket untuk lebih banyak produk, yuk!",
                     actionTitlePrimary: "Lihat Paket",
                     onActionPrimary: () {
                       Navigator.pop(context);
-                      Navigator.pushNamed(context, "/packages");
+                      Navigator.pop(context, true);
+                      if (activePackage != "LITE") {
+                        Navigator.pushNamed(
+                          context,
+                          "/account/active_package",
+                          arguments: {'packageName': activePackage},
+                        );
+                      } else {
+                        Navigator.pushNamed(context, "/packages");
+                      }
                     },
                     actionTitleSecondary: "Nanti Saja",
                     onActionSecondary: () {

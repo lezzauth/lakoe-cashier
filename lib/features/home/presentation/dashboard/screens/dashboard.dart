@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/shimmer/shimmer_card_report.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_master_cubit.dart';
 import 'package:outlet_repository/outlet_repository.dart';
 import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
@@ -51,9 +52,10 @@ class _DashboardState extends State<Dashboard> {
   DateTime? lastBackPressed;
 
   Future<void> _onInit() async {
-    context.read<OwnerCubit>().init();
+    context.read<OwnerCubit>().getOwner();
     context.read<CashierCubit>().getOpenCashier();
     context.read<CashierReportCubit>().init();
+    context.read<PackageMasterCubit>().init();
   }
 
   @override

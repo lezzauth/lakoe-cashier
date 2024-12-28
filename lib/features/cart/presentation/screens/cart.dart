@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_cubit.dart';
@@ -20,6 +22,7 @@ import 'package:lakoe_pos/features/payment_method/payments/application/cubit/pay
 import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/select_payment_method.dart';
 import 'package:lakoe_pos/features/payment_method/payments/data/arguments/success_confirmation_payment_argument.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -41,6 +44,7 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  final AppDataProvider _appDataProvider = AppDataProvider();
   final ScrollController _scrollController = ScrollController();
   bool _isScrolled = false;
 
@@ -213,7 +217,7 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CartDetailCubit, CartDetailState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is CartDetailActionSuccess) {
           context.read<CartCubit>().reset();
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -237,6 +241,68 @@ class _CartState extends State<Cart> {
               ),
             );
           });
+        }
+
+        if (state is CartDetailActionFailure && state.error.contains("402") ||
+            state is CartDetailCompleteActionFailure &&
+                state.error.contains("402")) {
+          if (state is CartDetailCompleteActionFailure) {
+            Navigator.pop(context);
+          }
+
+          final activePackage = await _appDataProvider.activePackage;
+
+          String limit = "25";
+
+          if (activePackage == "GROW") {
+            limit = "50";
+          }
+
+          if (!context.mounted) return;
+
+          showModalBottomSheet(
+            context: context,
+            enableDrag: false,
+            isDismissible: false,
+            builder: (context) {
+              return PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (didPop, result) async {},
+                child: CustomBottomsheet(
+                  hasGrabber: false,
+                  child: ErrorDisplay(
+                    imageSrc: TImages.limitQuota,
+                    title: "Pesanan lagi ramai banget, ya?",
+                    description:
+                        "Sayangnya, paket kamu saat ini cuma bisa buat $limit pesanan dalam sehari. Yuk! upgrade paket biar penjualan tidak terganggu.",
+                    actionTitlePrimary: "Lihat Paket",
+                    onActionPrimary: () {
+                      context.read<CartCubit>().reset();
+
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (activePackage != "LITE") {
+                          Navigator.popAndPushNamed(
+                            context,
+                            "/account/active_package",
+                            arguments: {'packageName': activePackage},
+                          );
+                        } else {
+                          Navigator.popAndPushNamed(context, "/packages");
+                        }
+                      });
+                    },
+                    actionTitleSecondary: "Nanti Saja",
+                    onActionSecondary: () async {
+                      context.read<CartCubit>().reset();
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Navigator.pop(context);
+                      });
+                    },
+                  ),
+                ),
+              );
+            },
+          );
         }
       },
       child: Scaffold(

@@ -1,5 +1,6 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
@@ -58,10 +59,12 @@ class ExploreProductTabletContent extends StatefulWidget {
 
 class _ExploreProductTabletContentState
     extends State<ExploreProductTabletContent> {
-  bool isBottomSheetVisible = false;
+  final AppDataProvider _appDataProvider = AppDataProvider();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
+
+  bool isBottomSheetVisible = false;
 
   @override
   void initState() {
@@ -123,7 +126,7 @@ class _ExploreProductTabletContentState
           listener: (context, state) {},
         ),
         BlocListener<CartDetailCubit, CartDetailState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             if (state is CartDetailActionSuccess) {
               context.read<CartCubit>().reset();
               context.read<CashierOrderCubit>().findAll();
@@ -132,7 +135,68 @@ class _ExploreProductTabletContentState
             if (state is CartDetailActionSuccess ||
                 state is CartDetailCompleteActionSuccess) {
               context.read<CartCubit>().reset();
-              context.read<CartDetailFilterCubit>().clearFilter();
+            }
+
+            if (state is CartDetailActionFailure &&
+                    state.error.contains("402") ||
+                state is CartDetailCompleteActionFailure &&
+                    state.error.contains("402")) {
+              if (state is CartDetailCompleteActionFailure) {
+                Navigator.pop(context);
+              }
+
+              final activePackage = await _appDataProvider.activePackage;
+
+              String limit = "25";
+
+              if (activePackage == "GROW") {
+                limit = "50";
+              }
+
+              if (!context.mounted) return;
+              showModalBottomSheet(
+                context: context,
+                enableDrag: false,
+                isDismissible: false,
+                builder: (context) {
+                  return PopScope(
+                    canPop: false,
+                    onPopInvokedWithResult: (didPop, result) async {},
+                    child: CustomBottomsheet(
+                      hasGrabber: false,
+                      child: ErrorDisplay(
+                        imageSrc: TImages.limitQuota,
+                        title: "Pesanan lagi ramai banget, ya?",
+                        description:
+                            "Sayangnya, paket kamu saat ini cuma bisa buat $limit pesanan dalam sehari. Yuk! upgrade paket biar penjualan tidak terganggu.",
+                        actionTitlePrimary: "Lihat Paket",
+                        onActionPrimary: () {
+                          context.read<CartCubit>().reset();
+
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            if (activePackage != "LITE") {
+                              Navigator.popAndPushNamed(
+                                context,
+                                "/account/active_package",
+                                arguments: {'packageName': activePackage},
+                              );
+                            } else {
+                              Navigator.popAndPushNamed(context, "/packages");
+                            }
+                          });
+                        },
+                        actionTitleSecondary: "Nanti Saja",
+                        onActionSecondary: () {
+                          context.read<CartCubit>().reset();
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            Navigator.pop(context);
+                          });
+                        },
+                      ),
+                    ),
+                  );
+                },
+              );
             }
           },
         ),

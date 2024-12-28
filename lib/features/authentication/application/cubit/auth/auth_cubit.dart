@@ -83,6 +83,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       await _appDataProvider.setOutletId(outlets.first.id);
       await _appDataProvider.setOwnerId(profile.id);
+      await _appDataProvider.setActivePackage(profile.packageName);
 
       String avatarSvg = RandomAvatarString(profile.id, trBackground: true);
       await _appDataProvider.setAvatar(avatarSvg);

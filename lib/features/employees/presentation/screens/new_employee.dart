@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -27,6 +28,7 @@ class NewEmployeeScreen extends StatefulWidget {
 
 class _NewEmployeeScreenState extends State<NewEmployeeScreen>
     with SingleTickerProviderStateMixin {
+  final AppDataProvider _appDataProvider = AppDataProvider();
   final _employeeFormKey = GlobalKey<FormBuilderState>();
 
   TabController? _tabController;
@@ -78,7 +80,7 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<EmployeeMasterCubit, EmployeeMasterState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is EmployeeMasterActionSuccess) {
           Navigator.pop(context, true);
         } else if (state is EmployeeMasterActionError) {
@@ -89,6 +91,18 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
               duration: 2,
             );
           } else if (state.res.statusCode == 402) {
+            final activePackage = await _appDataProvider.activePackage;
+
+            String message =
+                "Paket kamu saat ini belum bisa tambah kasir baru. Upgrade, yuk!";
+
+            if (activePackage == "GROW") {
+              message =
+                  "Paket kamu saat ini hanya bisa menyimpan 5 kasir. Yuk! upgrade saat bisnismu bertumbuh.";
+            }
+
+            if (!context.mounted) return;
+
             showModalBottomSheet(
               context: context,
               enableDrag: false,
@@ -102,12 +116,20 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
                     child: ErrorDisplay(
                       imageSrc: TImages.limitQuota,
                       title: "Upgrade paket, yuk!",
-                      description:
-                          "Paket kamu saat ini belum bisa tambah karyawan baru. Upgrade, yuk!",
+                      description: message,
                       actionTitlePrimary: "Lihat Paket",
                       onActionPrimary: () {
                         Navigator.pop(context);
-                        Navigator.pushNamed(context, "/packages");
+                        Navigator.pop(context, true);
+                        if (activePackage != "LITE") {
+                          Navigator.pushNamed(
+                            context,
+                            "/account/active_package",
+                            arguments: {'packageName': activePackage},
+                          );
+                        } else {
+                          Navigator.pushNamed(context, "/packages");
+                        }
                       },
                       actionTitleSecondary: "Nanti Saja",
                       onActionSecondary: () {

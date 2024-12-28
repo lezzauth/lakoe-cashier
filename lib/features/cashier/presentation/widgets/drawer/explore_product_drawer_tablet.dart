@@ -134,12 +134,12 @@ class _ExploreProductDrawerTabletState
         }
       },
       child: Drawer(
-        width: 1000,
+        width: 900,
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         child: Row(
           children: [
             Container(
-              width: 500,
+              width: 450,
               decoration: const BoxDecoration(
                 border: Border(
                   right:
@@ -149,7 +149,7 @@ class _ExploreProductDrawerTabletState
               child: const CartContentTablet(),
             ),
             SizedBox(
-              width: 500,
+              width: 450,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [

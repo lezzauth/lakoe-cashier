@@ -387,8 +387,7 @@ class ProfileCard extends StatelessWidget {
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () {
-                    if (profile.packageName == "GROW" ||
-                        profile.packageName == "PRO") {
+                    if (profile.packageName != "LITE") {
                       Navigator.pushNamed(
                         context,
                         "/account/active_package",

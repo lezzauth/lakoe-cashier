@@ -1,3 +1,4 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:owner_repository/owner_repository.dart';
 
 class OwnerCubit extends Cubit<OwnerState> {
   final OwnerRepository _ownerRepository = OwnerRepositoryImpl();
+  final AppDataProvider _appDataProvider = AppDataProvider();
 
   OwnerCubit() : super(OwnerInitial());
 
@@ -20,6 +22,10 @@ class OwnerCubit extends Cubit<OwnerState> {
       emit(OwnerLoadInProgress());
 
       final res = await _ownerRepository.getProfile();
+
+      await _appDataProvider.setOwnerId(res.id);
+      await _appDataProvider.setActivePackage(res.packageName);
+
       emit(OwnerLoadSuccess(res));
     } catch (e) {
       emit(OwnerLoadFailure(e.toString()));

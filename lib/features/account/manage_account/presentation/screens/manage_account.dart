@@ -53,7 +53,7 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
                       bottom: 40,
                     ),
                     child: TextHeading1(
-                      "Kamu yakin ingin keluar ingin keluar dari akun?",
+                      "Kamu yakin ingin keluar dari akun ini?",
                     ),
                   ),
                   Container(

@@ -36,7 +36,7 @@ class _AccountPackageDetailScreenState
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
@@ -47,9 +47,7 @@ class _AccountPackageDetailScreenState
           packageName = packageNameArg;
         });
 
-        context
-            .read<PackageDetailCubit>()
-            .findOne(packageNameArg.toUpperCase());
+        context.read<PackageDetailCubit>().findOne(packageNameArg);
       }
     });
 
