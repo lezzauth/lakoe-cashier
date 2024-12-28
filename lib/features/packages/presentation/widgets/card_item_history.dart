@@ -15,7 +15,7 @@ class CardItemHistory extends StatelessWidget {
     switch (status) {
       case "PENDING":
         return "Menunggu Pembayaran";
-      case "SUCCEEDED":
+      case "SUCCESSED":
         return "Sukses";
       case "FAILED":
         return "Gagal";
@@ -28,7 +28,7 @@ class CardItemHistory extends StatelessWidget {
     switch (status) {
       case "PENDING":
         return TColors.warning;
-      case "SUCCEEDED":
+      case "SUCCESSED":
         return TColors.success;
       case "FAILED":
         return TColors.error;
@@ -41,7 +41,7 @@ class CardItemHistory extends StatelessWidget {
     switch (status) {
       case "PENDING":
         return TColors.neutralDarkDark;
-      case "SUCCEEDED":
+      case "SUCCESSED":
         return TColors.neutralLightLightest;
       case "FAILED":
         return TColors.neutralLightLightest;

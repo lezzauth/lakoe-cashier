@@ -10,11 +10,14 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
+import 'package:lakoe_pos/features/checkout/data/payment_method.dart';
+import 'package:lakoe_pos/features/checkout/data/payment_method_model.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_detail/package_detail_cubit.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_detail/package_detail_state.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
+import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:package_repository/package_repository.dart';
 
@@ -40,6 +43,7 @@ class DetailPurchase extends StatefulWidget {
 
 class _DetailPurchaseState extends State<DetailPurchase> {
   PackagePriceModel? selectedPackage;
+
   @override
   void initState() {
     super.initState();
@@ -123,8 +127,21 @@ class _DetailPurchaseState extends State<DetailPurchase> {
             listener: (context, state) {
           if (state is PackageDetailLoadSuccess) {
             setState(() {
-              selectedPackage =
-                  state.detail.firstWhere((e) => e.period == widget.arg.period);
+              selectedPackage = state.detail.firstWhere(
+                (e) => e.period == widget.arg.period,
+                orElse: () => PackagePriceModel(
+                  name: 'LITE',
+                  discount: 0,
+                  period: 1,
+                  save: 0,
+                  originPrice: 0,
+                  pricePerMonth: 0,
+                  savePerMonth: 0,
+                  price: 0,
+                  startPeriod: DateTime.now(),
+                  endPeriod: DateTime.now(),
+                ),
+              );
             });
           }
         }),
@@ -142,7 +159,7 @@ class _DetailPurchaseState extends State<DetailPurchase> {
           body: BlocBuilder<PurchaseCubit, PurchaseState>(
               builder: (context, state) {
             if (state is PurchaseDetailSuccess) {
-              final purchase = state.res.purchase;
+              final purchase = state.res.purchaseResult;
               final paymentRequest = state.res.paymentRequest;
 
               return Column(
@@ -215,7 +232,7 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                 SizedBox(width: 8),
                                 Flexible(
                                   child: TextBodyM(
-                                    "Lakoe ${purchase.packageName.substring(0, 1).toUpperCase()}${purchase.packageName.substring(1).toLowerCase()}",
+                                    "Lakoe ${TFormatter.capitalizeEachWord(purchase.packageName)}",
                                     color: TColors.neutralDarkMedium,
                                     fontWeight: FontWeight.w600,
                                     maxLines: 1,
@@ -263,9 +280,11 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                 SizedBox(width: 8),
                                 Flexible(
                                   child: TextBodyM(
-                                    TFormatter.formatToRupiah(
-                                        selectedPackage!.originPrice /
-                                            purchase.period),
+                                    selectedPackage != null
+                                        ? TFormatter.formatToRupiah(
+                                            selectedPackage!.originPrice /
+                                                purchase.period)
+                                        : '-',
                                     color: TColors.neutralDarkMedium,
                                     fontWeight: FontWeight.w600,
                                     maxLines: 1,
@@ -330,7 +349,7 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                 Flexible(
                                   child: TextBodyM(
                                     getNamePaymentMethod(
-                                        state.res.purchase.paymentMethod),
+                                        state.res.purchaseResult.paymentMethod),
                                     color: TColors.neutralDarkMedium,
                                     fontWeight: FontWeight.w600,
                                     maxLines: 1,
@@ -354,7 +373,7 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                 Flexible(
                                   child: TextBodyM(
                                     TFormatter.dateTime(
-                                      state.res.purchase.createdAt,
+                                      state.res.purchaseResult.createdAt,
                                       withTimeZone: false,
                                     ),
                                     color: TColors.neutralDarkMedium,
@@ -384,8 +403,10 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                 SizedBox(width: 8),
                                 Flexible(
                                   child: TextBodyM(
-                                    TFormatter.formatToRupiah(
-                                        selectedPackage!.originPrice),
+                                    selectedPackage != null
+                                        ? TFormatter.formatToRupiah(
+                                            selectedPackage!.originPrice)
+                                        : '-',
                                     color: TColors.neutralDarkMedium,
                                     fontWeight: FontWeight.w600,
                                     maxLines: 1,
@@ -396,7 +417,8 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                               ],
                             ),
                           ),
-                          if (selectedPackage!.save != 0)
+                          if (selectedPackage != null &&
+                              selectedPackage!.save != 0)
                             Container(
                               margin: EdgeInsets.symmetric(vertical: 4),
                               child: Row(
@@ -459,7 +481,53 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                   minimumSize: Size(double.infinity, 32),
                                   padding: EdgeInsets.all(12),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  final selectedPaymentName =
+                                      state.res.purchaseResult.paymentMethod;
+
+                                  PaymentMethodCheckout? selectedMethod;
+                                  PaymentCategory? selectedCategory;
+
+                                  for (final category in paymentMethod) {
+                                    try {
+                                      final method =
+                                          category.methods.firstWhere(
+                                        (method) =>
+                                            method.name == selectedPaymentName,
+                                      );
+
+                                      selectedMethod =
+                                          method as PaymentMethodCheckout?;
+                                      selectedCategory = category;
+                                      break;
+                                    } catch (e) {
+                                      Logman.instance.error(
+                                          "Error finding payment method: $e");
+                                    }
+                                  }
+
+                                  if (selectedMethod == null ||
+                                      selectedCategory == null) {
+                                    Logman.instance.error(
+                                        "Selected method or category not found");
+                                  }
+
+                                  // Navigasi ke layar konfirmasi pembayaran
+                                  Navigator.pushNamed(
+                                    context,
+                                    "/payment/confirmation",
+                                    arguments: {
+                                      'selectedMethod': selectedMethod,
+                                      'selectedCategory': selectedCategory,
+                                      'purchases': PurchaseDetail(
+                                        paymentRequest:
+                                            state.res.paymentRequest,
+                                        purchaseResult:
+                                            state.res.purchaseResult,
+                                      ),
+                                    },
+                                  );
+                                },
                                 child: TextActionL("Bayar & Selesaikan"),
                               ),
                             )

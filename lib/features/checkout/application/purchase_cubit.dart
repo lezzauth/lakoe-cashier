@@ -1,10 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owner_repository/owner_repository.dart';
-import 'package:package_repository/package_repository.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
 
 class PurchaseCubit extends Cubit<PurchaseState> {
-  final PackageRepository _repositoryPackage = PackageRepositoryImpl();
   final OwnerRepository _repositoryOwner = OwnerRepositoryImpl();
 
   PurchaseCubit() : super(PurchaseInitial());
@@ -39,7 +37,7 @@ class PurchaseCubit extends Cubit<PurchaseState> {
   }) async {
     try {
       emit(PurchaseActionInProgress());
-      final res = await _repositoryPackage.purchase.create(
+      final res = await _repositoryOwner.purchase.create(
         dto: dto,
         packageName: packageName,
       );

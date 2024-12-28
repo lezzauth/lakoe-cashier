@@ -8,8 +8,8 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 class PaymentBottomSheet extends StatefulWidget {
   final List<PaymentCategory> paymentCategories;
   final PaymentCategory? selectedCategory;
-  final PaymentMethod? selectedMethod;
-  final Function(PaymentCategory, PaymentMethod) onSelected;
+  final PaymentMethodCheckout? selectedMethod;
+  final Function(PaymentCategory, PaymentMethodCheckout) onSelected;
 
   const PaymentBottomSheet({
     super.key,
@@ -25,7 +25,7 @@ class PaymentBottomSheet extends StatefulWidget {
 
 class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
   PaymentCategory? selectedCategory;
-  PaymentMethod? selectedMethod;
+  PaymentMethodCheckout? selectedMethod;
 
   @override
   void initState() {
@@ -69,7 +69,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                       onChanged: (dynamic value) {
                         setState(() {
                           selectedCategory = category;
-                          selectedMethod = value as PaymentMethod?;
+                          selectedMethod = value as PaymentMethodCheckout?;
                         });
                         widget.onSelected(selectedCategory!, selectedMethod!);
                         Navigator.pop(context);

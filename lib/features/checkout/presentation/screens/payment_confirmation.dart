@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/tab/tab_container.dart';
 import 'package:lakoe_pos/common/widgets/ui/tab/tab_item.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
@@ -12,11 +14,14 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
+import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
 import 'package:lakoe_pos/features/checkout/data/payment_method_model.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
-import 'package:package_repository/package_repository.dart';
+import 'package:lakoe_pos/utils/helpers/helper.dart';
+import 'package:owner_repository/owner_repository.dart';
 
 class PaymentConfirmationScreen extends StatefulWidget {
   const PaymentConfirmationScreen({super.key});
@@ -35,15 +40,16 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
   late DateTime _targetTime;
   String _remainingTime = "00:00:00";
 
-  PaymentRequestModel? payment;
-  Purchase? purchase;
+  PaymentRequest? payment;
+  PurchaseModel? purchase;
 
-  PaymentMethod? selectedMethod;
+  PaymentMethodCheckout? selectedMethod;
   List<String> stepsList = [];
 
   @override
   void initState() {
     super.initState();
+    CustomToast.init(context);
     _tabController = TabController(length: 3, vsync: this);
     _startCountdown();
   }
@@ -101,6 +107,18 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
         });
       }
     });
+  }
+
+  Future<void> _onCopy({required String text}) async {
+    await THelper.copyToClipboard(text);
+
+    if (!mounted) return;
+    CustomToast.showWithContext(
+      context,
+      "Berhasil disalin",
+      icon: TIcons.copy,
+      duration: 1,
+    );
   }
 
   Widget _buildStepsText(String steps) {
@@ -207,121 +225,207 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
         });
         return Future.value(null);
       },
-      child: Scaffold(
-        backgroundColor: TColors.neutralLightLight,
-        appBar: CustomAppbar(
-          title: "Selesaikan Pembayaran",
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  decoration: BoxDecoration(
-                    color: TColors.neutralLightLightest,
-                    border: Border.all(
-                      color: TColors.neutralLightMedium,
-                      width: 1.0,
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<PurchaseCubit, PurchaseState>(
+              listener: (context, state) {
+            if (state is PurchaseDetailSuccess) {
+              String statusPayment = state.res.paymentRequest.status;
+              String packageName = state.res.purchaseResult.packageName;
+              if (statusPayment == "SUCCEEDED") {
+                Navigator.pushNamed(
+                  context,
+                  "/payment/success",
+                  arguments: {'packageName': packageName.toUpperCase()},
+                );
+              } else if (statusPayment == "PENDING") {
+                CustomToast.showWithContext(
+                  context,
+                  "Pembayaran belum diterima, nih!",
+                  position: "bottom",
+                  duration: 5,
+                );
+              } else if (statusPayment == "FAILED") {
+                Navigator.pushNamed(
+                  context,
+                  "/payment/failed",
+                  arguments: {'packageName': packageName.toUpperCase()},
+                );
+              } else {
+                CustomToast.showWithContext(
+                  context,
+                  "Terjadi masalah, nih!",
+                  position: "bottom",
+                  duration: 5,
+                  backgroundColor: TColors.error,
+                );
+              }
+            }
+          }),
+        ],
+        child: Scaffold(
+          backgroundColor: TColors.neutralLightLight,
+          appBar: CustomAppbar(
+            title: "Selesaikan Pembayaran",
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: TColors.neutralLightLightest,
+                      border: Border.all(
+                        color: TColors.neutralLightMedium,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextBodyL(
-                        "Bayar sebelum",
-                        color: TColors.neutralDarkDark,
-                      ),
-                      Wrap(
-                        spacing: 4.0,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          UiIcons(
-                            TIcons.hourGlass,
-                            size: 16,
-                            color: TColors.error,
-                          ),
-                          TextHeading2(
-                            _remainingTime,
-                            color: TColors.error,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: TColors.neutralLightLightest,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextBodyM(
-                            "No. Virtual Account",
-                            color: TColors.neutralDarkDark,
-                          ),
-                          SizedBox(height: 8),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.0),
-                              border: Border.all(
-                                width: 1,
-                                color: TColors.neutralLightMedium,
-                              ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextBodyL(
+                          "Bayar sebelum",
+                          color: TColors.neutralDarkDark,
+                        ),
+                        Wrap(
+                          spacing: 4.0,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            UiIcons(
+                              TIcons.hourGlass,
+                              size: 16,
+                              color: TColors.error,
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                      vertical: 4,
-                                    ),
-                                    color: TColors.neutralLightLight,
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          selectedMethod == null
-                                              ? ''
-                                              : selectedMethod!.logo,
-                                          width: 32,
-                                          height: 32,
-                                        ),
-                                        SizedBox(width: 12),
-                                        Expanded(
-                                          child: TextHeading4(
+                            TextHeading2(
+                              _remainingTime,
+                              color: TColors.error,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: TColors.neutralLightLightest,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextBodyM(
+                              "No. Virtual Account",
+                              color: TColors.neutralDarkDark,
+                            ),
+                            SizedBox(height: 8),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12.0),
+                                border: Border.all(
+                                  width: 1,
+                                  color: TColors.neutralLightMedium,
+                                ),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 4,
+                                      ),
+                                      color: TColors.neutralLightLight,
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
                                             selectedMethod == null
                                                 ? ''
-                                                : "Bank ${selectedMethod!.name}",
+                                                : selectedMethod!.logo,
+                                            width: 32,
+                                            height: 32,
+                                          ),
+                                          SizedBox(width: 12),
+                                          Expanded(
+                                            child: TextHeading4(
+                                              selectedMethod == null
+                                                  ? ''
+                                                  : "Bank ${selectedMethod!.name}",
+                                              color: TColors.neutralDarkDark,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 12,
+                                      ),
+                                      color: TColors.neutralLightLightest,
+                                      child: Row(
+                                        children: [
+                                          TextHeading2(
+                                            virtualAccount,
                                             color: TColors.neutralDarkDark,
                                           ),
-                                        ),
-                                      ],
+                                          SizedBox(width: 8),
+                                          UiIcons(
+                                            TIcons.copy,
+                                            size: 20,
+                                            color: TColors.primary,
+                                            onTap: () =>
+                                                _onCopy(text: virtualAccount),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                      vertical: 12,
-                                    ),
-                                    color: TColors.neutralLightLightest,
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextBodyM(
+                              "Total Tagihan",
+                              color: TColors.neutralDarkDark,
+                            ),
+                            SizedBox(height: 8),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12.0),
+                                border: Border.all(
+                                  width: 1,
+                                  color: TColors.neutralLightMedium,
+                                ),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
                                     child: Row(
                                       children: [
                                         TextHeading2(
-                                          virtualAccount,
+                                          TFormatter.formatToRupiah(amount),
                                           color: TColors.neutralDarkDark,
                                         ),
                                         SizedBox(width: 8),
@@ -329,6 +433,8 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                                           TIcons.copy,
                                           size: 20,
                                           color: TColors.primary,
+                                          onTap: () =>
+                                              _onCopy(text: amount.toString()),
                                         ),
                                       ],
                                     ),
@@ -336,130 +442,98 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                                 ],
                               ),
                             ),
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextBodyM(
-                            "Total Tagihan",
-                            color: TColors.neutralDarkDark,
-                          ),
-                          SizedBox(height: 8),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.0),
-                              border: Border.all(
-                                width: 1,
-                                color: TColors.neutralLightMedium,
-                              ),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 12,
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      TextHeading2(
-                                        TFormatter.formatToRupiah(amount),
-                                        color: TColors.neutralDarkDark,
-                                      ),
-                                      SizedBox(width: 8),
-                                      UiIcons(
-                                        TIcons.copy,
-                                        size: 20,
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        BlocBuilder<PurchaseCubit, PurchaseState>(
+                            builder: (context, state) {
+                          return SizedBox(
+                            width: double.infinity,
+                            child: OutlinedButton(
+                              onPressed: (state is PurchaseDetailInProgress)
+                                  ? null
+                                  : () {
+                                      context
+                                          .read<PurchaseCubit>()
+                                          .findOne(purchase!.id);
+                                    },
+                              child: (state is PurchaseDetailInProgress)
+                                  ? SizedBox(
+                                      height: 16,
+                                      width: 16,
+                                      child: CircularProgressIndicator(
                                         color: TColors.primary,
+                                        strokeWidth: 2,
                                       ),
-                                    ],
+                                    )
+                                  : TextActionL("Cek Status Pembayaran"),
+                            ),
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  TextButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        useSafeArea: true,
+                        isScrollControlled: true,
+                        builder: (context) {
+                          final screenHeight =
+                              MediaQuery.of(context).size.height;
+
+                          final customHeight = screenHeight * 0.32; // 50% - 10%
+
+                          return CustomBottomsheet(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 16,
+                                  ),
+                                  child: const TextHeading2(
+                                    "Cara bayar tagihan",
+                                  ),
+                                ),
+                                TabContainer(
+                                  controller: _tabController,
+                                  tabs: selectedMethod!.paymentMedia
+                                      .map((e) => TabItem(title: e.mediaName))
+                                      .toList(),
+                                ),
+                                SizedBox(
+                                  height: customHeight,
+                                  child: TabBarView(
+                                    controller: _tabController,
+                                    children: selectedMethod!.paymentMedia
+                                        .map(
+                                          (e) => _buildStepsText(e.steps),
+                                        )
+                                        .toList(),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(20),
+                                  child: OutlinedButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: TextActionL("Oke! Paham"),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              "/payment/success",
-                              arguments: {'packageName': 'PRO'},
-                            );
-                          },
-                          child: TextActionL("Cek Status Pembayaran"),
-                        ),
-                      ),
-                    ],
+                          );
+                        },
+                      );
+                    },
+                    child: TextActionL("Lihat Cara Bayar"),
                   ),
-                ),
-                SizedBox(height: 12),
-                TextButton(
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      useSafeArea: true,
-                      isScrollControlled: true,
-                      builder: (context) {
-                        final screenHeight = MediaQuery.of(context).size.height;
-
-                        final customHeight = screenHeight * 0.32; // 50% - 10%
-
-                        return CustomBottomsheet(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 16,
-                                ),
-                                child: const TextHeading2(
-                                  "Cara bayar tagihan",
-                                ),
-                              ),
-                              TabContainer(
-                                controller: _tabController,
-                                tabs: selectedMethod!.paymentMedia
-                                    .map((e) => TabItem(title: e.mediaName))
-                                    .toList(),
-                              ),
-                              SizedBox(
-                                height: customHeight,
-                                child: TabBarView(
-                                  controller: _tabController,
-                                  children: selectedMethod!.paymentMedia
-                                      .map(
-                                        (e) => _buildStepsText(e.steps),
-                                      )
-                                      .toList(),
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(20),
-                                child: OutlinedButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: TextActionL("Oke! Paham"),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  child: TextActionL("Lihat Cara Bayar"),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

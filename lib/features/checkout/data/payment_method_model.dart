@@ -11,19 +11,19 @@ class PaymentMedia with _$PaymentMedia {
 }
 
 @freezed
-class PaymentMethod with _$PaymentMethod {
-  const factory PaymentMethod({
+class PaymentMethodCheckout with _$PaymentMethodCheckout {
+  const factory PaymentMethodCheckout({
     required String name,
     required String logo,
     @Default(false) bool isSelected,
     @Default([]) List<PaymentMedia> paymentMedia,
-  }) = _PaymentMethod;
+  }) = _PaymentMethodCheckout;
 }
 
 @freezed
 class PaymentCategory with _$PaymentCategory {
   const factory PaymentCategory({
     required String categoryName,
-    required List<PaymentMethod> methods,
+    required List<PaymentMethodCheckout> methods,
   }) = _PaymentCategory;
 }

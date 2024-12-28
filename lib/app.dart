@@ -449,7 +449,7 @@ class _AppState extends State<App> {
 
             // Profile & Account
             "/account": (context) => const AccountMasterScreen(),
-            "/account/detail_package": (context) =>
+            "/account/active_package": (context) =>
                 const AccountPackageDetailScreen(),
             "/account/edit": (context) => const AccountEditScreen(),
             "/account/edit/name": (context) => const NameEditScreen(),

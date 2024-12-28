@@ -387,18 +387,16 @@ class ProfileCard extends StatelessWidget {
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () {
-                    if (profile.packageName == "GROW") {
+                    if (profile.packageName == "GROW" ||
+                        profile.packageName == "PRO") {
                       Navigator.pushNamed(
                         context,
-                        "/account/detail_package",
-                        arguments: {
-                          'packageName': profile.packageName,
-                        },
+                        "/account/active_package",
+                        arguments: {'packageName': profile.packageName},
                       );
                     } else {
                       Navigator.pushNamed(context, "/packages");
                     }
-                    // Navigator.pushNamed(context, "/packages");
                   },
                   child: Container(
                     decoration: BoxDecoration(

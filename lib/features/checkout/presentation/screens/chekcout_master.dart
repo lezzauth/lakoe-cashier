@@ -69,8 +69,8 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
       BuildContext context,
       List<PaymentCategory> paymentCategories,
       PaymentCategory? selectedCategory,
-      PaymentMethod? selectedMethod,
-      Function(PaymentCategory, PaymentMethod?) onSelected) {
+      PaymentMethodCheckout? selectedMethod,
+      Function(PaymentCategory, PaymentMethodCheckout?) onSelected) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -91,7 +91,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
   }
 
   PaymentCategory? selectedCategory;
-  PaymentMethod? selectedMethod;
+  PaymentMethodCheckout? selectedMethod;
 
   @override
   Widget build(BuildContext context) {
@@ -309,7 +309,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                   selectedCategory,
                                   selectedMethod,
                                   (PaymentCategory category,
-                                      PaymentMethod? method) {
+                                      PaymentMethodCheckout? method) {
                                     setState(() {
                                       selectedCategory = category;
                                       selectedMethod = method;

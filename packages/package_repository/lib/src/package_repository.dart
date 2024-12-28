@@ -1,12 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:package_repository/package_repository.dart';
-import 'package:package_repository/src/purchase_repository.dart';
 import 'package:token_provider/token_provider.dart';
 
 abstract class PackageRepository {
-  PurchaseRepository get purchase;
-
   Future<List<PackageModel>> findAll();
   Future<List<PackagePriceModel>> findOne(String name);
 }
@@ -15,9 +12,6 @@ class PackageRepositoryImpl implements PackageRepository {
   final String _baseURL = "/packages";
   final Dio _dio = DioProvider().dio;
   final TokenProvider _tokenProvider = TokenProvider();
-
-  @override
-  PurchaseRepository get purchase => PurchaseRepositoryImpl();
 
   Future<Options> _getOptions() async {
     final token = await _tokenProvider.getAuthToken();

@@ -8,8 +8,8 @@ part of 'purchase.dart';
 
 _$PurchaseDetailImpl _$$PurchaseDetailImplFromJson(Map<String, dynamic> json) =>
     _$PurchaseDetailImpl(
-      purchase:
-          PurchaseModel.fromJson(json['purchase'] as Map<String, dynamic>),
+      purchaseResult: PurchaseModel.fromJson(
+          json['purchaseResult'] as Map<String, dynamic>),
       paymentRequest: PaymentRequest.fromJson(
           json['paymentRequest'] as Map<String, dynamic>),
     );
@@ -17,7 +17,7 @@ _$PurchaseDetailImpl _$$PurchaseDetailImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$PurchaseDetailImplToJson(
         _$PurchaseDetailImpl instance) =>
     <String, dynamic>{
-      'purchase': instance.purchase,
+      'purchaseResult': instance.purchaseResult,
       'paymentRequest': instance.paymentRequest,
     };
 
@@ -36,10 +36,6 @@ _$PurchaseModelImpl _$$PurchaseModelImplFromJson(Map<String, dynamic> json) =>
       packageName: json['packageName'] as String,
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
-      paymentRequest: json['paymentRequest'] == null
-          ? null
-          : PaymentRequest.fromJson(
-              json['paymentRequest'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$PurchaseModelImplToJson(_$PurchaseModelImpl instance) =>
@@ -57,7 +53,6 @@ Map<String, dynamic> _$$PurchaseModelImplToJson(_$PurchaseModelImpl instance) =>
       'packageName': instance.packageName,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
-      'paymentRequest': instance.paymentRequest,
     };
 
 _$PaymentRequestImpl _$$PaymentRequestImplFromJson(Map<String, dynamic> json) =>
@@ -75,7 +70,7 @@ _$PaymentRequestImpl _$$PaymentRequestImplFromJson(Map<String, dynamic> json) =>
       captureMethod: json['captureMethod'] as String,
       status: json['status'] as String,
       actions: (json['actions'] as List<dynamic>)
-          .map((e) => Action.fromJson(e as Map<String, dynamic>))
+          .map((e) => ActionPayment.fromJson(e as Map<String, dynamic>))
           .toList(),
       items: (json['items'] as List<dynamic>?)
           ?.map((e) => Item.fromJson(e as Map<String, dynamic>))
@@ -183,7 +178,7 @@ _$VirtualAccountChannelPropertiesImpl
         _$VirtualAccountChannelPropertiesImpl(
           customerName: json['customerName'] as String,
           virtualAccountNumber: json['virtualAccountNumber'] as String,
-          expiresAt: json['expiresAt'] as String,
+          expiresAt: DateTime.parse(json['expiresAt'] as String),
         );
 
 Map<String, dynamic> _$$VirtualAccountChannelPropertiesImplToJson(
@@ -191,18 +186,19 @@ Map<String, dynamic> _$$VirtualAccountChannelPropertiesImplToJson(
     <String, dynamic>{
       'customerName': instance.customerName,
       'virtualAccountNumber': instance.virtualAccountNumber,
-      'expiresAt': instance.expiresAt,
+      'expiresAt': instance.expiresAt.toIso8601String(),
     };
 
-_$ActionImpl _$$ActionImplFromJson(Map<String, dynamic> json) => _$ActionImpl(
-      action: json['action'] as String,
-      urlType: json['urlType'] as String,
-      method: json['method'] as String,
+_$ActionPaymentImpl _$$ActionPaymentImplFromJson(Map<String, dynamic> json) =>
+    _$ActionPaymentImpl(
+      action: json['action'] as String?,
+      urlType: json['urlType'] as String?,
+      method: json['method'] as String?,
       url: json['url'] as String?,
       qrCode: json['qrCode'] as String?,
     );
 
-Map<String, dynamic> _$$ActionImplToJson(_$ActionImpl instance) =>
+Map<String, dynamic> _$$ActionPaymentImplToJson(_$ActionPaymentImpl instance) =>
     <String, dynamic>{
       'action': instance.action,
       'urlType': instance.urlType,

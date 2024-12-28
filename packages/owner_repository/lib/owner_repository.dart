@@ -10,3 +10,4 @@ export 'src/dto/owner.dart';
 export 'src/dto/bank.dart';
 export 'src/dto/tax.dart';
 export 'src/dto/charge.dart';
+export 'src/dto/purchase.dart';

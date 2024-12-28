@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:owner_repository/owner_repository.dart';
-import 'package:package_repository/package_repository.dart';
 
 sealed class PurchaseState extends Equatable {}
 
@@ -38,7 +37,7 @@ final class PurchaseActionInProgress extends PurchaseState {
 }
 
 final class PurchaseActionSuccess extends PurchaseState {
-  final PurchaseResponseModel res;
+  final PurchaseDetail res;
 
   PurchaseActionSuccess({required this.res});
 

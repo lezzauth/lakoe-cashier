@@ -5,16 +5,16 @@ List<PaymentCategory> paymentMethod = [
   PaymentCategory(
     categoryName: "E-WALLET",
     methods: [
-      PaymentMethod(name: "LinkAja", logo: TImages.linkaja),
-      PaymentMethod(name: "OVO", logo: TImages.ovo),
-      PaymentMethod(name: "ShopeePay", logo: TImages.shopeepay),
-      PaymentMethod(name: "Dana", logo: TImages.dana),
+      PaymentMethodCheckout(name: "LinkAja", logo: TImages.linkaja),
+      PaymentMethodCheckout(name: "OVO", logo: TImages.ovo),
+      PaymentMethodCheckout(name: "ShopeePay", logo: TImages.shopeepay),
+      PaymentMethodCheckout(name: "Dana", logo: TImages.dana),
     ],
   ),
   PaymentCategory(
     categoryName: "VIRTUAL_ACCOUNT",
     methods: [
-      PaymentMethod(
+      PaymentMethodCheckout(
         name: "BCA",
         logo: TImages.bca,
         paymentMedia: [
@@ -48,7 +48,7 @@ Tekan **Ya** jika sudah benar. Transaksi Anda telah selesai.
           ),
         ],
       ),
-      PaymentMethod(
+      PaymentMethodCheckout(
         name: "Mandiri",
         logo: TImages.mandiri,
         paymentMedia: [
@@ -81,7 +81,7 @@ Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
           ),
         ],
       ),
-      PaymentMethod(
+      PaymentMethodCheckout(
         name: "BRI",
         logo: TImages.bri,
         paymentMedia: [
@@ -114,7 +114,7 @@ Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
           ),
         ],
       ),
-      PaymentMethod(
+      PaymentMethodCheckout(
         name: "BNI",
         logo: TImages.bni,
         paymentMedia: [

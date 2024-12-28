@@ -94,6 +94,17 @@ class _AccountPackageDetailScreenState
 
   @override
   Widget build(BuildContext context) {
+    String heroAsset;
+    String logoAsset;
+
+    if (packageName == "GROW") {
+      heroAsset = TImages.growLevelHero;
+      logoAsset = TImages.lakoeXGrow;
+    } else {
+      heroAsset = TImages.proLevelHero;
+      logoAsset = TImages.lakoeXPro;
+    }
+
     return Scaffold(
       backgroundColor: TColors.neutralLightLight,
       extendBodyBehindAppBar: true,
@@ -123,7 +134,7 @@ class _AccountPackageDetailScreenState
                           width: MediaQuery.of(context).size.width,
                           height: 246,
                           child: SvgPicture.asset(
-                            TImages.growLevelHero,
+                            heroAsset,
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -140,7 +151,7 @@ class _AccountPackageDetailScreenState
                           Align(
                             alignment: Alignment.topCenter,
                             child: Image.asset(
-                              TImages.lakoeXGrow,
+                              logoAsset,
                               height: 40,
                             ),
                           ),
@@ -195,43 +206,53 @@ class _AccountPackageDetailScreenState
                             ),
                           ),
                           SizedBox(height: 20),
-                          TextHeading3(
-                            "Butuh level-up bisnis?",
-                            color: TColors.neutralDarkDark,
-                          ),
-                          SizedBox(height: 12),
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 12,
-                            ),
-                            clipBehavior: Clip.antiAlias,
-                            decoration: ShapeDecoration(
-                              gradient: RadialGradient(
-                                center: Alignment(1, -1),
-                                radius: 2,
-                                colors: [Color(0xFFFFC55A), Color(0xFF9305AF)],
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            child: Column(
+                          if (packageName == "GROW")
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset(
-                                  TImages.lakoeXPro,
-                                  height: 24,
+                                TextHeading3(
+                                  "Butuh level-up bisnis?",
+                                  color: TColors.neutralDarkDark,
                                 ),
-                                SizedBox(height: 8),
-                                TextBodyM(
-                                  "Dengan paket Lakoe Pro kamu bisa berjualan tanpa batas. Semua unlimited.",
-                                  color: TColors.neutralLightLightest,
+                                SizedBox(height: 12),
+                                Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 12,
+                                  ),
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: ShapeDecoration(
+                                    gradient: RadialGradient(
+                                      center: Alignment(1, -1),
+                                      radius: 2,
+                                      colors: [
+                                        Color(0xFFFFC55A),
+                                        Color(0xFF9305AF)
+                                      ],
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Image.asset(
+                                        TImages.lakoeXPro,
+                                        height: 24,
+                                      ),
+                                      SizedBox(height: 8),
+                                      TextBodyM(
+                                        "Dengan paket Lakoe Pro kamu bisa berjualan tanpa batas. Semua unlimited.",
+                                        color: TColors.neutralLightLightest,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
                         ],
                       ),
                     ),

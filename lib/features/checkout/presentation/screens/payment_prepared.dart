@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/ui/loading_screen.dart';
-import 'package:package_repository/package_repository.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
 import 'package:lakoe_pos/features/checkout/data/payment_method_model.dart';
@@ -18,7 +18,7 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
   Map<String, dynamic>? args;
 
   PaymentCategory? selectedCategory;
-  PaymentMethod? selectedMethod;
+  PaymentMethodCheckout? selectedMethod;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
 
       if (args != null) {
         final package = args!['package'];
-        selectedMethod = args!['selectedMethod'] as PaymentMethod?;
+        selectedMethod = args!['selectedMethod'] as PaymentMethodCheckout?;
         selectedCategory = args!['selectedCategory'] as PaymentCategory?;
 
         final baseUrl = "lakoe://package/payment";
@@ -61,14 +61,10 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
       listener: (context, state) {
         if (state is PurchaseActionInProgress) {
         } else if (state is PurchaseActionSuccess) {
-          final PurchaseResponseModel res = state.res;
+          final PurchaseDetail res = state.res;
 
           if (res.paymentRequest.paymentMethod.type == "EWALLET") {
-            PaymentActionModel selectedAction;
-
-            // This code block is responsible for selecting a payment action based on a priority of URL types.
-            // It attempts to find an action with a specific `urlType` in the following order of preference:
-            // "DEEPLINK", "MOBILE", "WEB". If none of these types are found, it checks for an action with a `qrCode`.
+            ActionPayment selectedAction;
 
             selectedAction = res.paymentRequest.actions.firstWhere(
               (action) => action.urlType == "DEEPLINK",
@@ -78,8 +74,7 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
                   (action) => action.urlType == "WEB",
                   orElse: () => res.paymentRequest.actions.firstWhere(
                     (action) => action.qrCode != null,
-                    // If no matching action is found, it returns a default PaymentActionModel with null values.
-                    orElse: () => PaymentActionModel(
+                    orElse: () => ActionPayment(
                       action: null,
                       urlType: null,
                       method: null,
@@ -123,9 +118,9 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
               arguments: {
                 'selectedMethod': selectedMethod,
                 'selectedCategory': selectedCategory,
-                'purchases': PurchaseResponseModel(
+                'purchases': PurchaseDetail(
                   paymentRequest: state.res.paymentRequest,
-                  purchase: state.res.purchase,
+                  purchaseResult: state.res.purchaseResult,
                 ),
               },
             );

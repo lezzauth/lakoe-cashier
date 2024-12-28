@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'package.g.dart';
-part 'package.freezed.dart';
+part 'purchase.g.dart';
+part 'purchase.freezed.dart';
 
 @freezed
 class DetailPackagegeDto with _$DetailPackagegeDto {

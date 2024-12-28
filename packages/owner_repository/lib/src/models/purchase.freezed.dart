@@ -20,7 +20,7 @@ PurchaseDetail _$PurchaseDetailFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PurchaseDetail {
-  PurchaseModel get purchase => throw _privateConstructorUsedError;
+  PurchaseModel get purchaseResult => throw _privateConstructorUsedError;
   PaymentRequest get paymentRequest => throw _privateConstructorUsedError;
 
   /// Serializes this PurchaseDetail to a JSON map.
@@ -39,9 +39,9 @@ abstract class $PurchaseDetailCopyWith<$Res> {
           PurchaseDetail value, $Res Function(PurchaseDetail) then) =
       _$PurchaseDetailCopyWithImpl<$Res, PurchaseDetail>;
   @useResult
-  $Res call({PurchaseModel purchase, PaymentRequest paymentRequest});
+  $Res call({PurchaseModel purchaseResult, PaymentRequest paymentRequest});
 
-  $PurchaseModelCopyWith<$Res> get purchase;
+  $PurchaseModelCopyWith<$Res> get purchaseResult;
   $PaymentRequestCopyWith<$Res> get paymentRequest;
 }
 
@@ -60,13 +60,13 @@ class _$PurchaseDetailCopyWithImpl<$Res, $Val extends PurchaseDetail>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? purchase = null,
+    Object? purchaseResult = null,
     Object? paymentRequest = null,
   }) {
     return _then(_value.copyWith(
-      purchase: null == purchase
-          ? _value.purchase
-          : purchase // ignore: cast_nullable_to_non_nullable
+      purchaseResult: null == purchaseResult
+          ? _value.purchaseResult
+          : purchaseResult // ignore: cast_nullable_to_non_nullable
               as PurchaseModel,
       paymentRequest: null == paymentRequest
           ? _value.paymentRequest
@@ -79,9 +79,9 @@ class _$PurchaseDetailCopyWithImpl<$Res, $Val extends PurchaseDetail>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $PurchaseModelCopyWith<$Res> get purchase {
-    return $PurchaseModelCopyWith<$Res>(_value.purchase, (value) {
-      return _then(_value.copyWith(purchase: value) as $Val);
+  $PurchaseModelCopyWith<$Res> get purchaseResult {
+    return $PurchaseModelCopyWith<$Res>(_value.purchaseResult, (value) {
+      return _then(_value.copyWith(purchaseResult: value) as $Val);
     });
   }
 
@@ -104,10 +104,10 @@ abstract class _$$PurchaseDetailImplCopyWith<$Res>
       __$$PurchaseDetailImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({PurchaseModel purchase, PaymentRequest paymentRequest});
+  $Res call({PurchaseModel purchaseResult, PaymentRequest paymentRequest});
 
   @override
-  $PurchaseModelCopyWith<$Res> get purchase;
+  $PurchaseModelCopyWith<$Res> get purchaseResult;
   @override
   $PaymentRequestCopyWith<$Res> get paymentRequest;
 }
@@ -125,13 +125,13 @@ class __$$PurchaseDetailImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? purchase = null,
+    Object? purchaseResult = null,
     Object? paymentRequest = null,
   }) {
     return _then(_$PurchaseDetailImpl(
-      purchase: null == purchase
-          ? _value.purchase
-          : purchase // ignore: cast_nullable_to_non_nullable
+      purchaseResult: null == purchaseResult
+          ? _value.purchaseResult
+          : purchaseResult // ignore: cast_nullable_to_non_nullable
               as PurchaseModel,
       paymentRequest: null == paymentRequest
           ? _value.paymentRequest
@@ -145,19 +145,19 @@ class __$$PurchaseDetailImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PurchaseDetailImpl implements _PurchaseDetail {
   const _$PurchaseDetailImpl(
-      {required this.purchase, required this.paymentRequest});
+      {required this.purchaseResult, required this.paymentRequest});
 
   factory _$PurchaseDetailImpl.fromJson(Map<String, dynamic> json) =>
       _$$PurchaseDetailImplFromJson(json);
 
   @override
-  final PurchaseModel purchase;
+  final PurchaseModel purchaseResult;
   @override
   final PaymentRequest paymentRequest;
 
   @override
   String toString() {
-    return 'PurchaseDetail(purchase: $purchase, paymentRequest: $paymentRequest)';
+    return 'PurchaseDetail(purchaseResult: $purchaseResult, paymentRequest: $paymentRequest)';
   }
 
   @override
@@ -165,15 +165,15 @@ class _$PurchaseDetailImpl implements _PurchaseDetail {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PurchaseDetailImpl &&
-            (identical(other.purchase, purchase) ||
-                other.purchase == purchase) &&
+            (identical(other.purchaseResult, purchaseResult) ||
+                other.purchaseResult == purchaseResult) &&
             (identical(other.paymentRequest, paymentRequest) ||
                 other.paymentRequest == paymentRequest));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, purchase, paymentRequest);
+  int get hashCode => Object.hash(runtimeType, purchaseResult, paymentRequest);
 
   /// Create a copy of PurchaseDetail
   /// with the given fields replaced by the non-null parameter values.
@@ -194,14 +194,14 @@ class _$PurchaseDetailImpl implements _PurchaseDetail {
 
 abstract class _PurchaseDetail implements PurchaseDetail {
   const factory _PurchaseDetail(
-      {required final PurchaseModel purchase,
+      {required final PurchaseModel purchaseResult,
       required final PaymentRequest paymentRequest}) = _$PurchaseDetailImpl;
 
   factory _PurchaseDetail.fromJson(Map<String, dynamic> json) =
       _$PurchaseDetailImpl.fromJson;
 
   @override
-  PurchaseModel get purchase;
+  PurchaseModel get purchaseResult;
   @override
   PaymentRequest get paymentRequest;
 
@@ -362,7 +362,6 @@ mixin _$PurchaseModel {
   String get packageName => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
-  PaymentRequest? get paymentRequest => throw _privateConstructorUsedError;
 
   /// Serializes this PurchaseModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -393,10 +392,7 @@ abstract class $PurchaseModelCopyWith<$Res> {
       String? externalId,
       String packageName,
       String createdAt,
-      String updatedAt,
-      PaymentRequest? paymentRequest});
-
-  $PaymentRequestCopyWith<$Res>? get paymentRequest;
+      String updatedAt});
 }
 
 /// @nodoc
@@ -427,7 +423,6 @@ class _$PurchaseModelCopyWithImpl<$Res, $Val extends PurchaseModel>
     Object? packageName = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? paymentRequest = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -482,25 +477,7 @@ class _$PurchaseModelCopyWithImpl<$Res, $Val extends PurchaseModel>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
-      paymentRequest: freezed == paymentRequest
-          ? _value.paymentRequest
-          : paymentRequest // ignore: cast_nullable_to_non_nullable
-              as PaymentRequest?,
     ) as $Val);
-  }
-
-  /// Create a copy of PurchaseModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $PaymentRequestCopyWith<$Res>? get paymentRequest {
-    if (_value.paymentRequest == null) {
-      return null;
-    }
-
-    return $PaymentRequestCopyWith<$Res>(_value.paymentRequest!, (value) {
-      return _then(_value.copyWith(paymentRequest: value) as $Val);
-    });
   }
 }
 
@@ -525,11 +502,7 @@ abstract class _$$PurchaseModelImplCopyWith<$Res>
       String? externalId,
       String packageName,
       String createdAt,
-      String updatedAt,
-      PaymentRequest? paymentRequest});
-
-  @override
-  $PaymentRequestCopyWith<$Res>? get paymentRequest;
+      String updatedAt});
 }
 
 /// @nodoc
@@ -558,7 +531,6 @@ class __$$PurchaseModelImplCopyWithImpl<$Res>
     Object? packageName = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? paymentRequest = freezed,
   }) {
     return _then(_$PurchaseModelImpl(
       id: null == id
@@ -613,10 +585,6 @@ class __$$PurchaseModelImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
-      paymentRequest: freezed == paymentRequest
-          ? _value.paymentRequest
-          : paymentRequest // ignore: cast_nullable_to_non_nullable
-              as PaymentRequest?,
     ));
   }
 }
@@ -637,8 +605,7 @@ class _$PurchaseModelImpl implements _PurchaseModel {
       this.externalId,
       required this.packageName,
       required this.createdAt,
-      required this.updatedAt,
-      this.paymentRequest});
+      required this.updatedAt});
 
   factory _$PurchaseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PurchaseModelImplFromJson(json);
@@ -669,12 +636,10 @@ class _$PurchaseModelImpl implements _PurchaseModel {
   final String createdAt;
   @override
   final String updatedAt;
-  @override
-  final PaymentRequest? paymentRequest;
 
   @override
   String toString() {
-    return 'PurchaseModel(id: $id, paymentMethod: $paymentMethod, status: $status, paidAmount: $paidAmount, amount: $amount, period: $period, startPeriod: $startPeriod, endPeriod: $endPeriod, ownerId: $ownerId, externalId: $externalId, packageName: $packageName, createdAt: $createdAt, updatedAt: $updatedAt, paymentRequest: $paymentRequest)';
+    return 'PurchaseModel(id: $id, paymentMethod: $paymentMethod, status: $status, paidAmount: $paidAmount, amount: $amount, period: $period, startPeriod: $startPeriod, endPeriod: $endPeriod, ownerId: $ownerId, externalId: $externalId, packageName: $packageName, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -702,9 +667,7 @@ class _$PurchaseModelImpl implements _PurchaseModel {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.paymentRequest, paymentRequest) ||
-                other.paymentRequest == paymentRequest));
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -723,8 +686,7 @@ class _$PurchaseModelImpl implements _PurchaseModel {
       externalId,
       packageName,
       createdAt,
-      updatedAt,
-      paymentRequest);
+      updatedAt);
 
   /// Create a copy of PurchaseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -756,8 +718,7 @@ abstract class _PurchaseModel implements PurchaseModel {
       final String? externalId,
       required final String packageName,
       required final String createdAt,
-      required final String updatedAt,
-      final PaymentRequest? paymentRequest}) = _$PurchaseModelImpl;
+      required final String updatedAt}) = _$PurchaseModelImpl;
 
   factory _PurchaseModel.fromJson(Map<String, dynamic> json) =
       _$PurchaseModelImpl.fromJson;
@@ -788,8 +749,6 @@ abstract class _PurchaseModel implements PurchaseModel {
   String get createdAt;
   @override
   String get updatedAt;
-  @override
-  PaymentRequest? get paymentRequest;
 
   /// Create a copy of PurchaseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -816,7 +775,7 @@ mixin _$PaymentRequest {
   PaymentMethod get paymentMethod => throw _privateConstructorUsedError;
   String get captureMethod => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
-  List<Action> get actions => throw _privateConstructorUsedError;
+  List<ActionPayment> get actions => throw _privateConstructorUsedError;
   List<Item>? get items => throw _privateConstructorUsedError;
 
   /// Serializes this PaymentRequest to a JSON map.
@@ -847,7 +806,7 @@ abstract class $PaymentRequestCopyWith<$Res> {
       PaymentMethod paymentMethod,
       String captureMethod,
       String status,
-      List<Action> actions,
+      List<ActionPayment> actions,
       List<Item>? items});
 
   $PaymentMethodCopyWith<$Res> get paymentMethod;
@@ -930,7 +889,7 @@ class _$PaymentRequestCopyWithImpl<$Res, $Val extends PaymentRequest>
       actions: null == actions
           ? _value.actions
           : actions // ignore: cast_nullable_to_non_nullable
-              as List<Action>,
+              as List<ActionPayment>,
       items: freezed == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
@@ -969,7 +928,7 @@ abstract class _$$PaymentRequestImplCopyWith<$Res>
       PaymentMethod paymentMethod,
       String captureMethod,
       String status,
-      List<Action> actions,
+      List<ActionPayment> actions,
       List<Item>? items});
 
   @override
@@ -1051,7 +1010,7 @@ class __$$PaymentRequestImplCopyWithImpl<$Res>
       actions: null == actions
           ? _value._actions
           : actions // ignore: cast_nullable_to_non_nullable
-              as List<Action>,
+              as List<ActionPayment>,
       items: freezed == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -1075,7 +1034,7 @@ class _$PaymentRequestImpl implements _PaymentRequest {
       required this.paymentMethod,
       required this.captureMethod,
       required this.status,
-      required final List<Action> actions,
+      required final List<ActionPayment> actions,
       final List<Item>? items})
       : _actions = actions,
         _items = items;
@@ -1105,9 +1064,9 @@ class _$PaymentRequestImpl implements _PaymentRequest {
   final String captureMethod;
   @override
   final String status;
-  final List<Action> _actions;
+  final List<ActionPayment> _actions;
   @override
-  List<Action> get actions {
+  List<ActionPayment> get actions {
     if (_actions is EqualUnmodifiableListView) return _actions;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_actions);
@@ -1201,7 +1160,7 @@ abstract class _PaymentRequest implements PaymentRequest {
       required final PaymentMethod paymentMethod,
       required final String captureMethod,
       required final String status,
-      required final List<Action> actions,
+      required final List<ActionPayment> actions,
       final List<Item>? items}) = _$PaymentRequestImpl;
 
   factory _PaymentRequest.fromJson(Map<String, dynamic> json) =
@@ -1230,7 +1189,7 @@ abstract class _PaymentRequest implements PaymentRequest {
   @override
   String get status;
   @override
-  List<Action> get actions;
+  List<ActionPayment> get actions;
   @override
   List<Item>? get items;
 
@@ -2227,7 +2186,7 @@ VirtualAccountChannelProperties _$VirtualAccountChannelPropertiesFromJson(
 mixin _$VirtualAccountChannelProperties {
   String get customerName => throw _privateConstructorUsedError;
   String get virtualAccountNumber => throw _privateConstructorUsedError;
-  String get expiresAt => throw _privateConstructorUsedError;
+  DateTime get expiresAt => throw _privateConstructorUsedError;
 
   /// Serializes this VirtualAccountChannelProperties to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -2248,7 +2207,7 @@ abstract class $VirtualAccountChannelPropertiesCopyWith<$Res> {
           VirtualAccountChannelProperties>;
   @useResult
   $Res call(
-      {String customerName, String virtualAccountNumber, String expiresAt});
+      {String customerName, String virtualAccountNumber, DateTime expiresAt});
 }
 
 /// @nodoc
@@ -2283,7 +2242,7 @@ class _$VirtualAccountChannelPropertiesCopyWithImpl<$Res,
       expiresAt: null == expiresAt
           ? _value.expiresAt
           : expiresAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime,
     ) as $Val);
   }
 }
@@ -2298,7 +2257,7 @@ abstract class _$$VirtualAccountChannelPropertiesImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String customerName, String virtualAccountNumber, String expiresAt});
+      {String customerName, String virtualAccountNumber, DateTime expiresAt});
 }
 
 /// @nodoc
@@ -2332,7 +2291,7 @@ class __$$VirtualAccountChannelPropertiesImplCopyWithImpl<$Res>
       expiresAt: null == expiresAt
           ? _value.expiresAt
           : expiresAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime,
     ));
   }
 }
@@ -2355,7 +2314,7 @@ class _$VirtualAccountChannelPropertiesImpl
   @override
   final String virtualAccountNumber;
   @override
-  final String expiresAt;
+  final DateTime expiresAt;
 
   @override
   String toString() {
@@ -2401,9 +2360,10 @@ class _$VirtualAccountChannelPropertiesImpl
 abstract class _VirtualAccountChannelProperties
     implements VirtualAccountChannelProperties {
   const factory _VirtualAccountChannelProperties(
-      {required final String customerName,
-      required final String virtualAccountNumber,
-      required final String expiresAt}) = _$VirtualAccountChannelPropertiesImpl;
+          {required final String customerName,
+          required final String virtualAccountNumber,
+          required final DateTime expiresAt}) =
+      _$VirtualAccountChannelPropertiesImpl;
 
   factory _VirtualAccountChannelProperties.fromJson(Map<String, dynamic> json) =
       _$VirtualAccountChannelPropertiesImpl.fromJson;
@@ -2413,7 +2373,7 @@ abstract class _VirtualAccountChannelProperties
   @override
   String get virtualAccountNumber;
   @override
-  String get expiresAt;
+  DateTime get expiresAt;
 
   /// Create a copy of VirtualAccountChannelProperties
   /// with the given fields replaced by the non-null parameter values.
@@ -2424,74 +2384,76 @@ abstract class _VirtualAccountChannelProperties
       get copyWith => throw _privateConstructorUsedError;
 }
 
-Action _$ActionFromJson(Map<String, dynamic> json) {
-  return _Action.fromJson(json);
+ActionPayment _$ActionPaymentFromJson(Map<String, dynamic> json) {
+  return _ActionPayment.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Action {
-  String get action => throw _privateConstructorUsedError;
-  String get urlType => throw _privateConstructorUsedError;
-  String get method => throw _privateConstructorUsedError;
+mixin _$ActionPayment {
+  String? get action => throw _privateConstructorUsedError;
+  String? get urlType => throw _privateConstructorUsedError;
+  String? get method => throw _privateConstructorUsedError;
   String? get url => throw _privateConstructorUsedError;
   String? get qrCode => throw _privateConstructorUsedError;
 
-  /// Serializes this Action to a JSON map.
+  /// Serializes this ActionPayment to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of Action
+  /// Create a copy of ActionPayment
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ActionCopyWith<Action> get copyWith => throw _privateConstructorUsedError;
+  $ActionPaymentCopyWith<ActionPayment> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ActionCopyWith<$Res> {
-  factory $ActionCopyWith(Action value, $Res Function(Action) then) =
-      _$ActionCopyWithImpl<$Res, Action>;
+abstract class $ActionPaymentCopyWith<$Res> {
+  factory $ActionPaymentCopyWith(
+          ActionPayment value, $Res Function(ActionPayment) then) =
+      _$ActionPaymentCopyWithImpl<$Res, ActionPayment>;
   @useResult
   $Res call(
-      {String action,
-      String urlType,
-      String method,
+      {String? action,
+      String? urlType,
+      String? method,
       String? url,
       String? qrCode});
 }
 
 /// @nodoc
-class _$ActionCopyWithImpl<$Res, $Val extends Action>
-    implements $ActionCopyWith<$Res> {
-  _$ActionCopyWithImpl(this._value, this._then);
+class _$ActionPaymentCopyWithImpl<$Res, $Val extends ActionPayment>
+    implements $ActionPaymentCopyWith<$Res> {
+  _$ActionPaymentCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Action
+  /// Create a copy of ActionPayment
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? action = null,
-    Object? urlType = null,
-    Object? method = null,
+    Object? action = freezed,
+    Object? urlType = freezed,
+    Object? method = freezed,
     Object? url = freezed,
     Object? qrCode = freezed,
   }) {
     return _then(_value.copyWith(
-      action: null == action
+      action: freezed == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
-              as String,
-      urlType: null == urlType
+              as String?,
+      urlType: freezed == urlType
           ? _value.urlType
           : urlType // ignore: cast_nullable_to_non_nullable
-              as String,
-      method: null == method
+              as String?,
+      method: freezed == method
           ? _value.method
           : method // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       url: freezed == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -2505,52 +2467,53 @@ class _$ActionCopyWithImpl<$Res, $Val extends Action>
 }
 
 /// @nodoc
-abstract class _$$ActionImplCopyWith<$Res> implements $ActionCopyWith<$Res> {
-  factory _$$ActionImplCopyWith(
-          _$ActionImpl value, $Res Function(_$ActionImpl) then) =
-      __$$ActionImplCopyWithImpl<$Res>;
+abstract class _$$ActionPaymentImplCopyWith<$Res>
+    implements $ActionPaymentCopyWith<$Res> {
+  factory _$$ActionPaymentImplCopyWith(
+          _$ActionPaymentImpl value, $Res Function(_$ActionPaymentImpl) then) =
+      __$$ActionPaymentImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String action,
-      String urlType,
-      String method,
+      {String? action,
+      String? urlType,
+      String? method,
       String? url,
       String? qrCode});
 }
 
 /// @nodoc
-class __$$ActionImplCopyWithImpl<$Res>
-    extends _$ActionCopyWithImpl<$Res, _$ActionImpl>
-    implements _$$ActionImplCopyWith<$Res> {
-  __$$ActionImplCopyWithImpl(
-      _$ActionImpl _value, $Res Function(_$ActionImpl) _then)
+class __$$ActionPaymentImplCopyWithImpl<$Res>
+    extends _$ActionPaymentCopyWithImpl<$Res, _$ActionPaymentImpl>
+    implements _$$ActionPaymentImplCopyWith<$Res> {
+  __$$ActionPaymentImplCopyWithImpl(
+      _$ActionPaymentImpl _value, $Res Function(_$ActionPaymentImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Action
+  /// Create a copy of ActionPayment
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? action = null,
-    Object? urlType = null,
-    Object? method = null,
+    Object? action = freezed,
+    Object? urlType = freezed,
+    Object? method = freezed,
     Object? url = freezed,
     Object? qrCode = freezed,
   }) {
-    return _then(_$ActionImpl(
-      action: null == action
+    return _then(_$ActionPaymentImpl(
+      action: freezed == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
-              as String,
-      urlType: null == urlType
+              as String?,
+      urlType: freezed == urlType
           ? _value.urlType
           : urlType // ignore: cast_nullable_to_non_nullable
-              as String,
-      method: null == method
+              as String?,
+      method: freezed == method
           ? _value.method
           : method // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       url: freezed == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -2565,23 +2528,23 @@ class __$$ActionImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ActionImpl implements _Action {
-  const _$ActionImpl(
+class _$ActionPaymentImpl implements _ActionPayment {
+  const _$ActionPaymentImpl(
       {required this.action,
       required this.urlType,
       required this.method,
       this.url,
       this.qrCode});
 
-  factory _$ActionImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ActionImplFromJson(json);
+  factory _$ActionPaymentImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ActionPaymentImplFromJson(json);
 
   @override
-  final String action;
+  final String? action;
   @override
-  final String urlType;
+  final String? urlType;
   @override
-  final String method;
+  final String? method;
   @override
   final String? url;
   @override
@@ -2589,14 +2552,14 @@ class _$ActionImpl implements _Action {
 
   @override
   String toString() {
-    return 'Action(action: $action, urlType: $urlType, method: $method, url: $url, qrCode: $qrCode)';
+    return 'ActionPayment(action: $action, urlType: $urlType, method: $method, url: $url, qrCode: $qrCode)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ActionImpl &&
+            other is _$ActionPaymentImpl &&
             (identical(other.action, action) || other.action == action) &&
             (identical(other.urlType, urlType) || other.urlType == urlType) &&
             (identical(other.method, method) || other.method == method) &&
@@ -2609,48 +2572,49 @@ class _$ActionImpl implements _Action {
   int get hashCode =>
       Object.hash(runtimeType, action, urlType, method, url, qrCode);
 
-  /// Create a copy of Action
+  /// Create a copy of ActionPayment
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ActionImplCopyWith<_$ActionImpl> get copyWith =>
-      __$$ActionImplCopyWithImpl<_$ActionImpl>(this, _$identity);
+  _$$ActionPaymentImplCopyWith<_$ActionPaymentImpl> get copyWith =>
+      __$$ActionPaymentImplCopyWithImpl<_$ActionPaymentImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ActionImplToJson(
+    return _$$ActionPaymentImplToJson(
       this,
     );
   }
 }
 
-abstract class _Action implements Action {
-  const factory _Action(
-      {required final String action,
-      required final String urlType,
-      required final String method,
+abstract class _ActionPayment implements ActionPayment {
+  const factory _ActionPayment(
+      {required final String? action,
+      required final String? urlType,
+      required final String? method,
       final String? url,
-      final String? qrCode}) = _$ActionImpl;
+      final String? qrCode}) = _$ActionPaymentImpl;
 
-  factory _Action.fromJson(Map<String, dynamic> json) = _$ActionImpl.fromJson;
+  factory _ActionPayment.fromJson(Map<String, dynamic> json) =
+      _$ActionPaymentImpl.fromJson;
 
   @override
-  String get action;
+  String? get action;
   @override
-  String get urlType;
+  String? get urlType;
   @override
-  String get method;
+  String? get method;
   @override
   String? get url;
   @override
   String? get qrCode;
 
-  /// Create a copy of Action
+  /// Create a copy of ActionPayment
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ActionImplCopyWith<_$ActionImpl> get copyWith =>
+  _$$ActionPaymentImplCopyWith<_$ActionPaymentImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

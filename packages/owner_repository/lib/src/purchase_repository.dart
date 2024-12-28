@@ -6,6 +6,10 @@ import 'package:token_provider/token_provider.dart';
 abstract class PurchaseRepository {
   Future<List<PurchaseModel>> findAll(FindAllPurchaseDto? dto);
   Future<PurchaseDetail> findOne(String id);
+  Future<PurchaseDetail> create({
+    required PurchaseDto dto,
+    required String? packageName,
+  });
 }
 
 class PurchaseRepositoryImpl implements PurchaseRepository {
@@ -18,6 +22,21 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
     if (token == null) return Options();
 
     return Options(headers: {"Authorization": "Bearer $token"});
+  }
+
+  @override
+  Future<PurchaseDetail> create({
+    required PurchaseDto dto,
+    required String? packageName,
+  }) async {
+    final Options options = await _getOptions();
+
+    final response = await _dio.post(
+      "/packages/$packageName/purchase",
+      data: dto.toJson(),
+      options: options,
+    );
+    return PurchaseDetail.fromJson(response.data);
   }
 
   @override

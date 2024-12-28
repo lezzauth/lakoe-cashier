@@ -8,6 +8,8 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:lakoe_pos/features/checkout/application/filters/filter_purchase_cubit.dart';
 import 'package:lakoe_pos/features/checkout/application/filters/filter_purchase_state.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
@@ -15,6 +17,8 @@ import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
 import 'package:lakoe_pos/features/packages/presentation/widgets/card_item_history.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
+import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
 
 class HistoryPurchasePackageScreen extends StatelessWidget {
@@ -40,13 +44,9 @@ class HistoryPurchasePackage extends StatefulWidget {
 
 class _HistoryPurchasePackageState extends State<HistoryPurchasePackage> {
   final List<LabelValue<String>> _statuses = [
-    const LabelValue(label: "Pending", value: "UNPAID"),
-    const LabelValue(label: "Berhasil", value: "PAID"),
+    const LabelValue(label: "Pending", value: "PENDING"),
+    const LabelValue(label: "Berhasil", value: "SUCCEEDED"),
     const LabelValue(label: "Gagal", value: "FAILED"),
-    const LabelValue(label: "Expired", value: "EXPIRED"),
-    // const LabelValue(label: "Pending", value: "PENDING"),
-    // const LabelValue(label: "Berhasil", value: "SUCCEEDED"),
-    // const LabelValue(label: "Gagal", value: "FAILED"),
   ];
 
   @override
@@ -222,81 +222,188 @@ class CardItemPackageActive extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          "/account/detail_package",
-          arguments: {
-            'packageName': "GROW",
+    return BlocBuilder<OwnerCubit, OwnerState>(builder: (context, state) {
+      Logman.instance.info('OwnerState is $state');
+
+      if (state is OwnerLoadSuccess) {
+        Logman.instance.info('Package is ${state.owner.packageName}');
+
+        OwnerProfileModel owner = state.owner;
+        return InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          onTap: () {
+            if (owner.packageName == "GROW" || owner.packageName == "PRO") {
+              Navigator.pushNamed(
+                context,
+                "/account/active_package",
+                arguments: {'packageName': owner.packageName},
+              );
+            } else {
+              Navigator.pushNamed(context, "/packages");
+            }
           },
-        );
-      },
-      child: Container(
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(
-          color: Color(0xFFE7F4E8),
-          border: Border.all(
-            color: TColors.neutralLightMedium,
-            width: 1.0,
-          ),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              right: 0,
-              child: SvgPicture.asset(
-                TImages.pakcageWaves,
-                colorFilter: ColorFilter.mode(
-                  Color(0xFF00712D),
-                  BlendMode.srcIn,
-                ),
+          child: Container(
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              color: owner.packageName == "GROW"
+                  ? TColors.successLight
+                  : owner.packageName == "PRO"
+                      ? Color(0xFFF4DEF8)
+                      : TColors.highlightLightest,
+              border: Border.all(
+                color: TColors.neutralLightMedium,
+                width: 1.0,
               ),
+              borderRadius: BorderRadius.circular(12),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(16, 12, 16, 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: SvgPicture.asset(
+                    TImages.pakcageWaves,
+                    colorFilter: ColorFilter.mode(
+                      owner.packageName == "GROW"
+                          ? Color(0xFF00712D)
+                          : owner.packageName == "PRO"
+                              ? Color(0xFF9306AF)
+                              : Color(0xFFFC4100),
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(16, 12, 16, 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TextHeading3(
-                        "Paket Grow",
-                        color: TColors.neutralDarkDark,
-                      ),
-                      SizedBox(height: 4),
-                      Row(
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextBodyM(
-                            "Aktif sampai:",
-                            color: TColors.neutralDarkLight,
+                          TextHeading3(
+                            "Paket ${TFormatter.capitalizeEachWord(owner.packageName)}",
+                            color: TColors.neutralDarkDark,
                           ),
-                          SizedBox(width: 4),
-                          TextBodyM(
-                            "16 Nov 2024",
-                            fontWeight: FontWeight.bold,
-                            color: TColors.neutralDarkLight,
-                          ),
+                          SizedBox(height: 4),
+                          (owner.packageName == "LITE")
+                              ? TextBodyM(
+                                  "Gratis selamanya!",
+                                  color: TColors.neutralDarkLight,
+                                )
+                              : Row(
+                                  children: [
+                                    TextBodyM(
+                                      "Aktif sampai:",
+                                      color: TColors.neutralDarkLight,
+                                    ),
+                                    SizedBox(width: 4),
+                                    TextBodyM(
+                                      "16 Nov 2024",
+                                      fontWeight: FontWeight.bold,
+                                      color: TColors.neutralDarkLight,
+                                    ),
+                                  ],
+                                ),
                         ],
+                      ),
+                      Image.asset(
+                        owner.packageName == "GROW"
+                            ? TImages.growLogoPackage
+                            : owner.packageName == "PRO"
+                                ? TImages.proLogoPackage
+                                : TImages.liteLogoPackage,
+                        height: 28,
                       ),
                     ],
                   ),
-                  Image.asset(
-                    TImages.growLogoPackage,
-                    height: 28,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+        );
+      } else {
+        return Container();
+      }
+
+      // return InkWell(
+      //   splashColor: Colors.transparent,
+      //   highlightColor: Colors.transparent,
+      //   onTap: () {
+      //     Navigator.pushNamed(
+      //       context,
+      //       "/account/active_package",
+      //       arguments: {
+      //         'packageName': "GROW",
+      //       },
+      //     );
+      //   },
+      //   child: Container(
+      //     clipBehavior: Clip.hardEdge,
+      //     decoration: BoxDecoration(
+      //       color: Color(0xFFE7F4E8),
+      //       border: Border.all(
+      //         color: TColors.neutralLightMedium,
+      //         width: 1.0,
+      //       ),
+      //       borderRadius: BorderRadius.circular(12),
+      //     ),
+      //     child: Stack(
+      //       children: [
+      //         Positioned(
+      //           top: 0,
+      //           right: 0,
+      //           child: SvgPicture.asset(
+      //             TImages.pakcageWaves,
+      //             colorFilter: ColorFilter.mode(
+      //               Color(0xFF00712D),
+      //               BlendMode.srcIn,
+      //             ),
+      //           ),
+      //         ),
+      //         Padding(
+      //           padding: EdgeInsets.fromLTRB(16, 12, 16, 12),
+      //           child: Row(
+      //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //             children: [
+      //               Column(
+      //                 mainAxisSize: MainAxisSize.min,
+      //                 crossAxisAlignment: CrossAxisAlignment.start,
+      //                 children: [
+      //                   TextHeading3(
+      //                     "Paket Grow",
+      //                     color: TColors.neutralDarkDark,
+      //                   ),
+      //                   SizedBox(height: 4),
+      //                   Row(
+      //                     children: [
+      //                       TextBodyM(
+      //                         "Aktif sampai:",
+      //                         color: TColors.neutralDarkLight,
+      //                       ),
+      //                       SizedBox(width: 4),
+      //                       TextBodyM(
+      //                         "16 Nov 2024",
+      //                         fontWeight: FontWeight.bold,
+      //                         color: TColors.neutralDarkLight,
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ],
+      //               ),
+      //               Image.asset(
+      //                 TImages.growLogoPackage,
+      //                 height: 28,
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // );
+    });
   }
 }

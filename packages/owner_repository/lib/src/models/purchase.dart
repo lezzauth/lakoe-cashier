@@ -6,7 +6,7 @@ part 'purchase.g.dart';
 @freezed
 class PurchaseDetail with _$PurchaseDetail {
   const factory PurchaseDetail({
-    required PurchaseModel purchase,
+    required PurchaseModel purchaseResult,
     required PaymentRequest paymentRequest,
   }) = _PurchaseDetail;
 
@@ -54,7 +54,6 @@ class PurchaseModel with _$PurchaseModel {
     required String packageName,
     required String createdAt,
     required String updatedAt,
-    PaymentRequest? paymentRequest,
   }) = _PurchaseModel;
 
   factory PurchaseModel.fromJson(Map<String, dynamic> json) =>
@@ -75,7 +74,7 @@ class PaymentRequest with _$PaymentRequest {
     required PaymentMethod paymentMethod,
     required String captureMethod,
     required String status,
-    required List<Action> actions,
+    required List<ActionPayment> actions,
     List<Item>? items,
   }) = _PaymentRequest;
 
@@ -142,7 +141,7 @@ class VirtualAccountChannelProperties with _$VirtualAccountChannelProperties {
   const factory VirtualAccountChannelProperties({
     required String customerName,
     required String virtualAccountNumber,
-    required String expiresAt,
+    required DateTime expiresAt,
   }) = _VirtualAccountChannelProperties;
 
   factory VirtualAccountChannelProperties.fromJson(Map<String, dynamic> json) =>
@@ -150,16 +149,17 @@ class VirtualAccountChannelProperties with _$VirtualAccountChannelProperties {
 }
 
 @freezed
-class Action with _$Action {
-  const factory Action({
-    required String action,
-    required String urlType,
-    required String method,
+class ActionPayment with _$ActionPayment {
+  const factory ActionPayment({
+    required String? action,
+    required String? urlType,
+    required String? method,
     String? url,
     String? qrCode,
-  }) = _Action;
+  }) = _ActionPayment;
 
-  factory Action.fromJson(Map<String, dynamic> json) => _$ActionFromJson(json);
+  factory ActionPayment.fromJson(Map<String, dynamic> json) =>
+      _$ActionPaymentFromJson(json);
 }
 
 @freezed
