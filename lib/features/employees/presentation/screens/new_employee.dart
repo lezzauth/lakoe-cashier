@@ -121,11 +121,14 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
                       onActionPrimary: () {
                         Navigator.pop(context);
                         Navigator.pop(context, true);
-                        if (activePackage != "LITE") {
+                        if (activePackage == "GROW") {
                           Navigator.pushNamed(
                             context,
-                            "/account/active_package",
-                            arguments: {'packageName': activePackage},
+                            "/packages/upgrade",
+                            arguments: {
+                              'currentPackage': "GROW",
+                              'upgradePakcage': "PRO",
+                            },
                           );
                         } else {
                           Navigator.pushNamed(context, "/packages");

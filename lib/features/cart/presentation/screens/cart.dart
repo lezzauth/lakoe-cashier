@@ -280,14 +280,17 @@ class _CartState extends State<Cart> {
                       context.read<CartCubit>().reset();
 
                       WidgetsBinding.instance.addPostFrameCallback((_) {
-                        if (activePackage != "LITE") {
-                          Navigator.popAndPushNamed(
+                        if (activePackage == "GROW") {
+                          Navigator.pushNamed(
                             context,
-                            "/account/active_package",
-                            arguments: {'packageName': activePackage},
+                            "/packages/upgrade",
+                            arguments: {
+                              'currentPackage': "GROW",
+                              'upgradePakcage': "PRO",
+                            },
                           );
                         } else {
-                          Navigator.popAndPushNamed(context, "/packages");
+                          Navigator.pushNamed(context, "/packages");
                         }
                       });
                     },
