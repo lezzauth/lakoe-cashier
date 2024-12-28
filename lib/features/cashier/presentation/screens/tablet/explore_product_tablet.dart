@@ -175,7 +175,7 @@ class _ExploreProductTabletContentState
 
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             if (activePackage == "GROW") {
-                              Navigator.pushNamed(
+                              Navigator.popAndPushNamed(
                                 context,
                                 "/packages/upgrade",
                                 arguments: {
@@ -184,7 +184,7 @@ class _ExploreProductTabletContentState
                                 },
                               );
                             } else {
-                              Navigator.pushNamed(context, "/packages");
+                              Navigator.popAndPushNamed(context, "/packages");
                             }
                           });
                         },

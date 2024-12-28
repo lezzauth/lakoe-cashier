@@ -281,7 +281,7 @@ class _CartState extends State<Cart> {
 
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         if (activePackage == "GROW") {
-                          Navigator.pushNamed(
+                          Navigator.popAndPushNamed(
                             context,
                             "/packages/upgrade",
                             arguments: {
@@ -290,7 +290,7 @@ class _CartState extends State<Cart> {
                             },
                           );
                         } else {
-                          Navigator.pushNamed(context, "/packages");
+                          Navigator.popAndPushNamed(context, "/packages");
                         }
                       });
                     },

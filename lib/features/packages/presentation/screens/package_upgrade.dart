@@ -108,9 +108,9 @@ class _PackageUpgradeScreenState extends State<PackageUpgradeScreen> {
       backgroundColor: TColors.neutralLightLight,
       extendBodyBehindAppBar: true,
       appBar: !isScrolled
-          ? CustomAppbarLight(title: "Upgrade Paket")
+          ? CustomAppbarLight(title: "Paket Aktif")
           : CustomAppbar(
-              title: "Upgrade Paket",
+              title: "Paket Aktif",
               backgroundColor: TColors.neutralLightLight,
             ),
       body: NotificationListener<ScrollNotification>(
