@@ -212,7 +212,7 @@ class _PackageDetailScreenState extends State<PackageDetailScreen>
                                       if (state is PackageMasterLoadSuccess) {
                                         final packages = state.packages;
 
-                                        PackageModel? litePackage =
+                                        PackageModel? currentPackage =
                                             packages.firstWhere((package) =>
                                                 package.name == 'LITE');
 
@@ -223,7 +223,7 @@ class _PackageDetailScreenState extends State<PackageDetailScreen>
                                         return PriceInfoSection(
                                           index: _selectedIndex,
                                           packageData: detail,
-                                          litePackage: litePackage,
+                                          currentPackage: currentPackage,
                                           upgradedPackage: upgradedPackage,
                                         );
                                       } else {

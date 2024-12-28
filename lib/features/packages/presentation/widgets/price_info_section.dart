@@ -13,13 +13,13 @@ class PriceInfoSection extends StatelessWidget {
     super.key,
     required this.index,
     required this.packageData,
-    required this.litePackage,
+    required this.currentPackage,
     required this.upgradedPackage,
   });
 
   final int index;
   final List<PackagePriceModel> packageData;
-  final PackageModel litePackage;
+  final PackageModel currentPackage;
   final PackageModel upgradedPackage;
 
   @override
@@ -98,7 +98,7 @@ class PriceInfoSection extends StatelessWidget {
         // Highlighted Table
         PackageComparisonTable(
           package: package,
-          litePackage: litePackage,
+          currentPackage: currentPackage,
           upgradedPackage: upgradedPackage,
         ),
       ],

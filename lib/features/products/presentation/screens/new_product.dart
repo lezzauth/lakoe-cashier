@@ -132,13 +132,17 @@ class _NewProductScreenState extends State<NewProductScreen>
                         "Dengan paket $activePackage kamu hanya bisa menambahkan $limit menu. Upgrade paket untuk lebih banyak produk, yuk!",
                     actionTitlePrimary: "Lihat Paket",
                     onActionPrimary: () {
-                      Navigator.pop(context);
+                      // TODO: implement
+                      // Navigator.pop(context);
                       Navigator.pop(context, true);
-                      if (activePackage != "LITE") {
+                      if (activePackage == "GROW") {
                         Navigator.pushNamed(
                           context,
-                          "/account/active_package",
-                          arguments: {'packageName': activePackage},
+                          "/packages/upgrade",
+                          arguments: {
+                            'currentPackage': "GROW",
+                            'upgradePakcage': "PRO",
+                          },
                         );
                       } else {
                         Navigator.pushNamed(context, "/packages");

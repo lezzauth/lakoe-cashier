@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/features/packages/presentation/widgets/table_comparison.dart';
 import 'package:package_repository/package_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/appbar/light_appbar.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:lakoe_pos/features/account/presentation/widgets/detail_package.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_detail/package_detail_cubit.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_detail/package_detail_state.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_master_cubit.dart';
@@ -16,21 +16,20 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:shimmer/shimmer.dart';
 
-class AccountPackageDetailScreen extends StatefulWidget {
-  const AccountPackageDetailScreen({super.key});
+class PackageUpgradeScreen extends StatefulWidget {
+  const PackageUpgradeScreen({super.key});
 
   @override
-  State<AccountPackageDetailScreen> createState() =>
-      _AccountPackageDetailScreenState();
+  State<PackageUpgradeScreen> createState() => _PackageUpgradeScreenState();
 }
 
-class _AccountPackageDetailScreenState
-    extends State<AccountPackageDetailScreen> {
+class _PackageUpgradeScreenState extends State<PackageUpgradeScreen> {
   final ScrollController scrollController = ScrollController();
   bool isScrolled = false;
   double opacity = 1.0;
   final double scrollThreshold = 100.0;
-  String packageName = "GROW";
+  String currentPackageName = "GROW";
+  String upgradePakcageName = "PRO";
 
   @override
   void initState() {
@@ -40,14 +39,16 @@ class _AccountPackageDetailScreenState
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-      if (args != null && args.containsKey('packageName')) {
-        String packageNameArg = args['packageName'] as String;
+      if (args != null && args.containsKey('currentPackage')) {
+        String currentPackageArg = args['currentPackage'] as String;
+        String upgradePakcageArg = args['upgradePakcage'] as String;
 
         setState(() {
-          packageName = packageNameArg;
+          currentPackageName = currentPackageArg;
+          upgradePakcageName = upgradePakcageArg;
         });
 
-        context.read<PackageDetailCubit>().findOne(packageNameArg);
+        context.read<PackageDetailCubit>().findOne(currentPackageArg);
       }
     });
 
@@ -95,7 +96,7 @@ class _AccountPackageDetailScreenState
     String heroAsset;
     String logoAsset;
 
-    if (packageName == "GROW") {
+    if (currentPackageName == "GROW") {
       heroAsset = TImages.growLevelHero;
       logoAsset = TImages.lakoeXGrow;
     } else {
@@ -107,9 +108,9 @@ class _AccountPackageDetailScreenState
       backgroundColor: TColors.neutralLightLight,
       extendBodyBehindAppBar: true,
       appBar: !isScrolled
-          ? CustomAppbarLight(title: "Paket Aktif")
+          ? CustomAppbarLight(title: "Upgrade Paket")
           : CustomAppbar(
-              title: "Paket Aktif",
+              title: "Upgrade Paket",
               backgroundColor: TColors.neutralLightLight,
             ),
       body: NotificationListener<ScrollNotification>(
@@ -169,18 +170,20 @@ class _AccountPackageDetailScreenState
                                     if (state is PackageMasterLoadSuccess) {
                                       final packages = state.packages;
 
-                                      PackageModel? litePackage =
+                                      PackageModel? currentPackage =
                                           packages.firstWhere((package) =>
-                                              package.name == 'LITE');
+                                              package.name ==
+                                              currentPackageName);
 
                                       PackageModel? upgradedPackage =
                                           packages.firstWhere((package) =>
-                                              package.name == packageName);
+                                              package.name ==
+                                              upgradePakcageName);
 
                                       return DetailPackage(
                                         index: 0,
                                         packageData: detail,
-                                        litePackage: litePackage,
+                                        currentPackage: currentPackage,
                                         upgradedPackage: upgradedPackage,
                                       );
                                     } else {
@@ -203,54 +206,6 @@ class _AccountPackageDetailScreenState
                               ],
                             ),
                           ),
-                          SizedBox(height: 20),
-                          if (packageName == "GROW")
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextHeading3(
-                                  "Butuh level-up bisnis?",
-                                  color: TColors.neutralDarkDark,
-                                ),
-                                SizedBox(height: 12),
-                                Container(
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 12,
-                                  ),
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: ShapeDecoration(
-                                    gradient: RadialGradient(
-                                      center: Alignment(1, -1),
-                                      radius: 2,
-                                      colors: [
-                                        Color(0xFFFFC55A),
-                                        Color(0xFF9305AF)
-                                      ],
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Image.asset(
-                                        TImages.lakoeXPro,
-                                        height: 24,
-                                      ),
-                                      SizedBox(height: 8),
-                                      TextBodyM(
-                                        "Dengan paket Lakoe Pro kamu bisa berjualan tanpa batas. Semua unlimited.",
-                                        color: TColors.neutralLightLightest,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
                         ],
                       ),
                     ),
@@ -266,6 +221,65 @@ class _AccountPackageDetailScreenState
           };
         }),
       ),
+    );
+  }
+}
+
+class DetailPackage extends StatelessWidget {
+  const DetailPackage({
+    super.key,
+    required this.index,
+    required this.packageData,
+    required this.currentPackage,
+    required this.upgradedPackage,
+  });
+
+  final int index;
+  final List<PackagePriceModel> packageData;
+  final PackageModel currentPackage;
+  final PackageModel upgradedPackage;
+
+  @override
+  Widget build(BuildContext context) {
+    final package = packageData[index];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 8),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextBodyM(
+                "Paket aktif hingga",
+                color: TColors.neutralDarkLight,
+              ),
+              SizedBox(height: 4),
+              Row(
+                children: [
+                  TextHeading3(
+                    "08 Feb 2025",
+                    color: TColors.neutralDarkDark,
+                  ),
+                  TextBodyM(
+                    " • 3 bulan 21 hari",
+                    color: TColors.neutralDarkLight,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 20),
+        // Highlighted Table
+        PackageComparisonTable(
+          package: package,
+          currentPackage: currentPackage,
+          upgradedPackage: upgradedPackage,
+        ),
+      ],
     );
   }
 }

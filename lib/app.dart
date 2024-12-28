@@ -12,6 +12,7 @@ import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/cre
 import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/otp_input.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
+import 'package:lakoe_pos/features/packages/presentation/screens/package_upgrade.dart';
 import 'package:lakoe_pos/features/packages/presentation/screens/purchase/detail_purchase.dart';
 import 'package:lakoe_pos/features/packages/presentation/screens/purchase/history_purchase_package.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
@@ -20,7 +21,7 @@ import 'package:logman/logman.dart';
 import 'package:lakoe_pos/application/cubit/bank_list_cubit.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/account_edit.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/account_master.dart';
-import 'package:lakoe_pos/features/account/presentation/screens/account_package_detail.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/account_package_active.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/email_edit.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/name_edit.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/phone_number_edit.dart';
@@ -449,8 +450,7 @@ class _AppState extends State<App> {
 
             // Profile & Account
             "/account": (context) => const AccountMasterScreen(),
-            "/account/active_package": (context) =>
-                const AccountPackageDetailScreen(),
+            "/account/active_package": (context) => const PackageActiveScreen(),
             "/account/edit": (context) => const AccountEditScreen(),
             "/account/edit/name": (context) => const NameEditScreen(),
             "/account/edit/verify_pin": (context) =>
@@ -482,6 +482,7 @@ class _AppState extends State<App> {
             // Package
             "/packages": (context) => const PackageMasterScreen(),
             "/packages/detail": (context) => const PackageDetailScreen(),
+            "/packages/upgrade": (context) => const PackageUpgradeScreen(),
             "/boost": (context) => const BoostDetailScreen(),
             "/packages/purchase/history": (context) =>
                 const HistoryPurchasePackageScreen(),

@@ -15,12 +15,12 @@ class PackageComparisonTable extends StatelessWidget {
   const PackageComparisonTable({
     super.key,
     required this.package,
-    required this.litePackage,
+    required this.currentPackage,
     required this.upgradedPackage,
   });
 
   final PackagePriceModel package;
-  final PackageModel litePackage;
+  final PackageModel currentPackage;
   final PackageModel upgradedPackage;
 
   @override
@@ -70,7 +70,11 @@ class PackageComparisonTable extends StatelessWidget {
                   ),
                   child: Center(
                     child: Image.asset(
-                      TImages.liteLogoLow,
+                      currentPackage.name == "LITE"
+                          ? TImages.liteLogoLow
+                          : currentPackage.name == "GROW"
+                              ? TImages.growLogoLow
+                              : TImages.proLogoLow,
                       height: 20,
                     ),
                   ),
@@ -105,9 +109,11 @@ class PackageComparisonTable extends StatelessWidget {
                   ),
                   child: Center(
                     child: Image.asset(
-                      package.name == "GROW"
-                          ? TImages.growLogoPackage
-                          : TImages.proLogoPackage,
+                      upgradedPackage.name == "LITE"
+                          ? TImages.liteLogoPackage
+                          : upgradedPackage.name == "GROW"
+                              ? TImages.growLogoPackage
+                              : TImages.proLogoPackage,
                       height: 20,
                       // height: 20,
                     ),
@@ -119,35 +125,35 @@ class PackageComparisonTable extends StatelessWidget {
               context,
               0,
               "Transaksi perhari",
-              litePackage.orders,
+              currentPackage.orders,
               upgradedPackage.orders,
             ),
             _buildTableRow(
               context,
               1,
               "Data menu/produk",
-              litePackage.products,
+              currentPackage.products,
               upgradedPackage.products,
             ),
             _buildTableRow(
               context,
               2,
               "Data Karyawan",
-              litePackage.employees,
+              currentPackage.employees,
               upgradedPackage.employees,
             ),
             _buildTableRow(
               context,
               3,
               "Data Pelanggan",
-              litePackage.customers,
+              currentPackage.customers,
               upgradedPackage.customers,
             ),
             _buildTableRow(
               context,
               4,
-              "QR Meja",
-              litePackage.tables,
+              "Data Meja",
+              currentPackage.tables,
               upgradedPackage.tables,
               isLast: true,
             ),
@@ -155,7 +161,7 @@ class PackageComparisonTable extends StatelessWidget {
             //   context,
             //   5,
             //   "Integrasi Perangkat",
-            //   litePackage.hardwareIntergation,
+            //   currentPackage.hardwareIntergation,
             //   upgradedPackage.hardwareIntergation,
             // ),
             // _buildTableRow(
@@ -177,24 +183,24 @@ class PackageComparisonTable extends StatelessWidget {
               "/checkout",
               arguments: {
                 'type': 'package',
-                'logo': package.name == "GROW"
+                'logo': upgradedPackage.name == "GROW"
                     ? TImages.growLogoPackage
                     : TImages.proLogoPackage,
-                'colorWave': package.name == "GROW"
+                'colorWave': upgradedPackage.name == "GROW"
                     ? Color(0xFF00712D)
                     : Color(0xFF9306AF),
-                'bgColor': package.name == "GROW"
+                'bgColor': upgradedPackage.name == "GROW"
                     ? TColors.successLight
                     : Color(0xFFF4DEF8),
-                'packageName': package.name,
-                'period': package.period,
-                'pricePerMonth': package.pricePerMonth,
-                'finalPrice': package.price,
+                'packageName': upgradedPackage.name,
+                'period': upgradedPackage.period,
+                'pricePerMonth': upgradedPackage.pricePerMonth,
+                'finalPrice': upgradedPackage.price,
               },
             ),
-            child: const TextActionL(
-              "Langganan Sekarang",
-            ),
+            child: TextActionL((upgradedPackage.name == "LITE")
+                ? "Langganan Sekarang"
+                : "Upgrade Sekarang"),
           ),
         ),
       ],
@@ -309,7 +315,7 @@ TableRow _buildTableRow(
                     color: TColors.neutralDarkDark,
                   )
                 : UiIcons(
-                    isLast == true ? TIcons.info : TIcons.infinity,
+                    TIcons.infinity,
                     size: 20,
                     color: TColors.neutralDarkDark,
                     onTap: () {
