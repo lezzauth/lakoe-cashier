@@ -67,6 +67,8 @@ class TImages {
       "assets/images/ilustration-success-grow.webp";
   static const String proSuccessUpgraded =
       "assets/images/ilustration-success-pro.webp";
+  static const String failedUpgraded =
+      "assets/images/ilustration-failed-upgrade.webp";
 
   // logo package level
   static const String liteLogoPackage = "assets/logos/package/lite-logo.png";

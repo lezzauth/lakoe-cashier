@@ -14,8 +14,8 @@ class CardItemHistory extends StatelessWidget {
   String getTagLabel(String status) {
     switch (status) {
       case "PENDING":
-        return "Menunggu Pembayaran";
-      case "SUCCESSED":
+        return "Pending";
+      case "SUCCEEDED":
         return "Sukses";
       case "FAILED":
         return "Gagal";
@@ -28,7 +28,7 @@ class CardItemHistory extends StatelessWidget {
     switch (status) {
       case "PENDING":
         return TColors.warning;
-      case "SUCCESSED":
+      case "SUCCEEDED":
         return TColors.success;
       case "FAILED":
         return TColors.error;
@@ -41,7 +41,7 @@ class CardItemHistory extends StatelessWidget {
     switch (status) {
       case "PENDING":
         return TColors.neutralDarkDark;
-      case "SUCCESSED":
+      case "SUCCEEDED":
         return TColors.neutralLightLightest;
       case "FAILED":
         return TColors.neutralLightLightest;

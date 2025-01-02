@@ -6,7 +6,7 @@ part 'purchase.g.dart';
 @freezed
 class PurchaseDetail with _$PurchaseDetail {
   const factory PurchaseDetail({
-    required PurchaseModel purchaseResult,
+    required PurchaseModel purchase,
     required PaymentRequest paymentRequest,
   }) = _PurchaseDetail;
 

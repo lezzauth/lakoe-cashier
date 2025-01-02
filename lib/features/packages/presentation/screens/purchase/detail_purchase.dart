@@ -71,14 +71,14 @@ class _DetailPurchaseState extends State<DetailPurchase> {
       case "LINKAJA":
         return "LinkAja";
       default:
-        return "$paymentMethod - Virtual Account";
+        return "$paymentMethod - VA";
     }
   }
 
   String getTagLabel(String status) {
     switch (status) {
       case "PENDING":
-        return "Menunggu Pembayaran";
+        return "Pending";
       case "SUCCEEDED":
         return "Sukses";
       case "FAILED":
@@ -159,7 +159,7 @@ class _DetailPurchaseState extends State<DetailPurchase> {
           body: BlocBuilder<PurchaseCubit, PurchaseState>(
               builder: (context, state) {
             if (state is PurchaseDetailSuccess) {
-              final purchase = state.res.purchaseResult;
+              final purchase = state.res.purchase;
               final paymentRequest = state.res.paymentRequest;
 
               return Column(
@@ -323,13 +323,12 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4.0),
                                     color: getTagBackgroundColor(
-                                        state.res.paymentRequest.status),
+                                        state.res.purchase.status),
                                   ),
                                   child: TextBodyS(
-                                    getTagLabel(
-                                        state.res.paymentRequest.status),
+                                    getTagLabel(state.res.purchase.status),
                                     color: getTagTextColor(
-                                        state.res.paymentRequest.status),
+                                        state.res.purchase.status),
                                     fontWeight: FontWeight.bold,
                                   ),
                                 )
@@ -349,7 +348,7 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                 Flexible(
                                   child: TextBodyM(
                                     getNamePaymentMethod(
-                                        state.res.purchaseResult.paymentMethod),
+                                        state.res.purchase.paymentMethod),
                                     color: TColors.neutralDarkMedium,
                                     fontWeight: FontWeight.w600,
                                     maxLines: 1,
@@ -373,7 +372,7 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                 Flexible(
                                   child: TextBodyM(
                                     TFormatter.dateTime(
-                                      state.res.purchaseResult.createdAt,
+                                      state.res.purchase.createdAt,
                                       withTimeZone: false,
                                     ),
                                     color: TColors.neutralDarkMedium,
@@ -483,7 +482,7 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                 ),
                                 onPressed: () {
                                   final selectedPaymentName =
-                                      state.res.purchaseResult.paymentMethod;
+                                      state.res.purchase.paymentMethod;
 
                                   PaymentMethodCheckout? selectedMethod;
                                   PaymentCategory? selectedCategory;
@@ -493,7 +492,8 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                       final method =
                                           category.methods.firstWhere(
                                         (method) =>
-                                            method.name == selectedPaymentName,
+                                            method.name.toUpperCase() ==
+                                            selectedPaymentName,
                                       );
 
                                       selectedMethod =
@@ -522,8 +522,7 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                       'purchases': PurchaseDetail(
                                         paymentRequest:
                                             state.res.paymentRequest,
-                                        purchaseResult:
-                                            state.res.purchaseResult,
+                                        purchase: state.res.purchase,
                                       ),
                                     },
                                   );

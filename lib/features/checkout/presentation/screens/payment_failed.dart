@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_1.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
@@ -15,9 +15,6 @@ class PaymentFailedScreen extends StatefulWidget {
 
 class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
   Map<String, dynamic>? args;
-  String packageName = "Grow";
-  String assetLogo = TImages.lakoeXGrow;
-  String assetIllustration = TImages.growSuccessUpgraded;
   Color bgColor = Color(0xFF00712D);
 
   @override
@@ -31,14 +28,8 @@ class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
 
         if (args != null) {
           if (args!['packageName'] == 'GROW') {
-            packageName = args!['packageName'];
-            assetLogo = TImages.lakoeXGrow;
-            assetIllustration = TImages.growSuccessUpgraded;
             bgColor = Color(0xFF00712D);
           } else if (args!['packageName'] == 'PRO') {
-            packageName = args!['packageName'];
-            assetLogo = TImages.lakoeXPro;
-            assetIllustration = TImages.proSuccessUpgraded;
             bgColor = Color(0xFF9305AF);
           }
           _updateNavigationBarColor();
@@ -56,7 +47,7 @@ class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
   void _updateNavigationBarColor() {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        systemNavigationBarColor: bgColor,
+        systemNavigationBarColor: Color(0xFF7E868B),
         systemNavigationBarIconBrightness: Brightness.light,
       ),
     );
@@ -102,7 +93,7 @@ class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
                 gradient: RadialGradient(
                   center: Alignment(0, -1),
                   radius: 2,
-                  colors: [Color(0xFFFFC55A), bgColor],
+                  colors: [Color(0xFFFFFFFF), Color(0xFF7E868B)],
                 ),
               ),
             ),
@@ -116,13 +107,9 @@ class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          SizedBox(height: 80),
                           Image.asset(
-                            assetLogo,
-                            height: 40,
-                          ),
-                          SizedBox(height: 40),
-                          Image.asset(
-                            assetIllustration,
+                            TImages.failedUpgraded,
                             height: 200,
                           ),
                           SizedBox(height: 40),
@@ -130,14 +117,15 @@ class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
                             padding: EdgeInsets.symmetric(horizontal: 50),
                             child: Column(
                               children: [
-                                TextHeading1(
-                                  "GAGAL! 🎉",
-                                  color: TColors.neutralLightLightest,
+                                TextHeading2(
+                                  "Yah! Gagal upgrade, nih!",
+                                  color: TColors.neutralDarkDark,
+                                  textAlign: TextAlign.center,
                                 ),
                                 SizedBox(height: 8),
-                                TextBodyL(
-                                  "Paket kamu telah berhasil di-upgrade ke Lakoe ${capitalizeFirstLetter(packageName)}.",
-                                  color: TColors.neutralLightLightest,
+                                TextBodyM(
+                                  "Tenang, jangan panik. Kamu bisa langsung mencobanya sekali lagi",
+                                  color: TColors.neutralDarkDark,
                                   textAlign: TextAlign.center,
                                 ),
                               ],

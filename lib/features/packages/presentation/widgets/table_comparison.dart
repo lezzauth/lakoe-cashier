@@ -183,22 +183,22 @@ class PackageComparisonTable extends StatelessWidget {
               "/checkout",
               arguments: {
                 'type': 'package',
-                'logo': upgradedPackage.name == "GROW"
+                'logo': package.name == "GROW"
                     ? TImages.growLogoPackage
                     : TImages.proLogoPackage,
-                'colorWave': upgradedPackage.name == "GROW"
+                'colorWave': package.name == "GROW"
                     ? Color(0xFF00712D)
                     : Color(0xFF9306AF),
-                'bgColor': upgradedPackage.name == "GROW"
+                'bgColor': package.name == "GROW"
                     ? TColors.successLight
                     : Color(0xFFF4DEF8),
-                'packageName': upgradedPackage.name,
-                'period': upgradedPackage.period,
-                'pricePerMonth': upgradedPackage.pricePerMonth,
-                'finalPrice': upgradedPackage.price,
+                'packageName': package.name,
+                'period': package.period,
+                'pricePerMonth': package.pricePerMonth,
+                'finalPrice': package.price,
               },
             ),
-            child: TextActionL((upgradedPackage.name == "LITE")
+            child: TextActionL((package.name == "LITE")
                 ? "Langganan Sekarang"
                 : "Upgrade Sekarang"),
           ),

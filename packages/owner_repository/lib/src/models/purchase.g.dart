@@ -8,8 +8,8 @@ part of 'purchase.dart';
 
 _$PurchaseDetailImpl _$$PurchaseDetailImplFromJson(Map<String, dynamic> json) =>
     _$PurchaseDetailImpl(
-      purchaseResult: PurchaseModel.fromJson(
-          json['purchaseResult'] as Map<String, dynamic>),
+      purchase:
+          PurchaseModel.fromJson(json['purchase'] as Map<String, dynamic>),
       paymentRequest: PaymentRequest.fromJson(
           json['paymentRequest'] as Map<String, dynamic>),
     );
@@ -17,7 +17,7 @@ _$PurchaseDetailImpl _$$PurchaseDetailImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$PurchaseDetailImplToJson(
         _$PurchaseDetailImpl instance) =>
     <String, dynamic>{
-      'purchaseResult': instance.purchaseResult,
+      'purchase': instance.purchase,
       'paymentRequest': instance.paymentRequest,
     };
 

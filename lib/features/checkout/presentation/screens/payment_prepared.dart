@@ -120,7 +120,7 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
                 'selectedCategory': selectedCategory,
                 'purchases': PurchaseDetail(
                   paymentRequest: state.res.paymentRequest,
-                  purchaseResult: state.res.purchaseResult,
+                  purchase: state.res.purchase,
                 ),
               },
             );

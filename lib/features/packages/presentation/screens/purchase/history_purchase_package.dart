@@ -18,7 +18,6 @@ import 'package:lakoe_pos/features/packages/presentation/widgets/card_item_histo
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
-import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
 
 class HistoryPurchasePackageScreen extends StatelessWidget {
@@ -135,7 +134,24 @@ class _HistoryPurchasePackageState extends State<HistoryPurchasePackage> {
                 }),
                 BlocBuilder<PurchaseCubit, PurchaseState>(
                     builder: (context, state) {
+                  final stateFilter = context.read<FilterPurchaseCubit>().state;
                   if (state is PurchaseLoadSuccess) {
+                    String title = stateFilter.status == "PENDING"
+                        ? "Tidak ada pembelian pending"
+                        : stateFilter.status == "SUCCEEDED"
+                            ? "Belum ada pembelian sukses"
+                            : stateFilter.status == "FAILED"
+                                ? "Tidak ada pembelian  gagal"
+                                : "Belum ada riwayat pembelian, nih!";
+
+                    String subtitle = stateFilter.status == "PENDING"
+                        ? "Saat ini kamu tidak memiliki tagihan pembelian paket yang belum dibayar."
+                        : stateFilter.status == "SUCCEEDED"
+                            ? "Kamu belum pernah berhasil atau menyelesaikan pembelian paket."
+                            : stateFilter.status == "FAILED"
+                                ? "Saat ini kamu tidak memiliki pembelian paket yang gagal."
+                                : "Yuk, Upgrade paket Lakoe bersama dengan bertumbuhnya bisnis kamu.";
+
                     if (state.purchases.isEmpty) {
                       return EmptyList(
                         image: SvgPicture.asset(
@@ -143,17 +159,20 @@ class _HistoryPurchasePackageState extends State<HistoryPurchasePackage> {
                           width: 140,
                           height: 101.45,
                         ),
-                        title: "Belum ada riwayat pembelian",
-                        subTitle:
-                            " Yuk, Upgrade paket Lakoe bersama dengan bertumbuhnya bisnis kamu.",
-                        action: TextButton(
-                          onPressed: () =>
-                              Navigator.pushNamed(context, "/packages"),
-                          child: TextActionL(
-                            "Explore Paket",
-                            color: TColors.primary,
-                          ),
-                        ),
+                        title: title,
+                        subTitle: subtitle,
+                        action: (stateFilter.status == "ALL" ||
+                                stateFilter.status == null ||
+                                stateFilter.status == "SUCCEEDED")
+                            ? TextButton(
+                                onPressed: () =>
+                                    Navigator.pushNamed(context, "/packages"),
+                                child: TextActionL(
+                                  "Explore Paket",
+                                  color: TColors.primary,
+                                ),
+                              )
+                            : null,
                       );
                     }
                     return Expanded(
@@ -223,11 +242,7 @@ class CardItemPackageActive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OwnerCubit, OwnerState>(builder: (context, state) {
-      Logman.instance.info('OwnerState is $state');
-
       if (state is OwnerLoadSuccess) {
-        Logman.instance.info('Package is ${state.owner.packageName}');
-
         OwnerProfileModel owner = state.owner;
         return InkWell(
           splashColor: Colors.transparent,
@@ -327,83 +342,6 @@ class CardItemPackageActive extends StatelessWidget {
       } else {
         return Container();
       }
-
-      // return InkWell(
-      //   splashColor: Colors.transparent,
-      //   highlightColor: Colors.transparent,
-      //   onTap: () {
-      //     Navigator.pushNamed(
-      //       context,
-      //       "/account/active_package",
-      //       arguments: {
-      //         'packageName': "GROW",
-      //       },
-      //     );
-      //   },
-      //   child: Container(
-      //     clipBehavior: Clip.hardEdge,
-      //     decoration: BoxDecoration(
-      //       color: Color(0xFFE7F4E8),
-      //       border: Border.all(
-      //         color: TColors.neutralLightMedium,
-      //         width: 1.0,
-      //       ),
-      //       borderRadius: BorderRadius.circular(12),
-      //     ),
-      //     child: Stack(
-      //       children: [
-      //         Positioned(
-      //           top: 0,
-      //           right: 0,
-      //           child: SvgPicture.asset(
-      //             TImages.pakcageWaves,
-      //             colorFilter: ColorFilter.mode(
-      //               Color(0xFF00712D),
-      //               BlendMode.srcIn,
-      //             ),
-      //           ),
-      //         ),
-      //         Padding(
-      //           padding: EdgeInsets.fromLTRB(16, 12, 16, 12),
-      //           child: Row(
-      //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //             children: [
-      //               Column(
-      //                 mainAxisSize: MainAxisSize.min,
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 children: [
-      //                   TextHeading3(
-      //                     "Paket Grow",
-      //                     color: TColors.neutralDarkDark,
-      //                   ),
-      //                   SizedBox(height: 4),
-      //                   Row(
-      //                     children: [
-      //                       TextBodyM(
-      //                         "Aktif sampai:",
-      //                         color: TColors.neutralDarkLight,
-      //                       ),
-      //                       SizedBox(width: 4),
-      //                       TextBodyM(
-      //                         "16 Nov 2024",
-      //                         fontWeight: FontWeight.bold,
-      //                         color: TColors.neutralDarkLight,
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 ],
-      //               ),
-      //               Image.asset(
-      //                 TImages.growLogoPackage,
-      //                 height: 28,
-      //               ),
-      //             ],
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // );
     });
   }
 }

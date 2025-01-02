@@ -36,7 +36,10 @@ class EmptyList extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    TextHeading2(title),
+                    TextHeading2(
+                      title,
+                      textAlign: TextAlign.center,
+                    ),
                     SizedBox(height: 4),
                     Container(
                       constraints: const BoxConstraints(

@@ -21,6 +21,7 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 import 'package:lakoe_pos/utils/helpers/helper.dart';
+import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
 
 class PaymentConfirmationScreen extends StatefulWidget {
@@ -36,6 +37,9 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
   TabController? _tabController;
   Map<String, dynamic>? args;
 
+  bool _checkStatusPayment = false;
+
+  Timer? _pollingTimer;
   late Timer _timer;
   late DateTime _targetTime;
   String _remainingTime = "00:00:00";
@@ -70,6 +74,8 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
           .virtualAccount!
           .channelProperties
           .expiresAt;
+
+      pollPurchaseStatus(args!['purchases'].purchase.id);
     }
   }
 
@@ -77,7 +83,37 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
   void dispose() {
     _tabController?.dispose();
     _timer.cancel();
+    stopPolling();
     super.dispose();
+  }
+
+  void pollPurchaseStatus(String purchaseId) {
+    _pollingTimer?.cancel();
+    _pollingTimer = Timer.periodic(Duration(seconds: 10), (timer) async {
+      context.read<PurchaseCubit>().findOne(purchaseId);
+
+      final state = context.read<PurchaseCubit>().state;
+
+      if (state is PurchaseDetailSuccess) {
+        final paymentStatus = state.res.paymentRequest.status;
+
+        if (paymentStatus == "SUCCEEDED" || paymentStatus == "FAILED") {
+          stopPolling();
+          Logman.instance
+              .info("Polling stopped. Payment status: $paymentStatus");
+        }
+      }
+
+      if (state is PurchaseDetailFailure) {
+        stopPolling();
+        Logman.instance.error("Polling failed: ${state.error}");
+      }
+    });
+  }
+
+  void stopPolling() {
+    _pollingTimer?.cancel();
+    Logman.instance.info("Polling has been stopped.");
   }
 
   void _startCountdown() {
@@ -231,33 +267,29 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
               listener: (context, state) {
             if (state is PurchaseDetailSuccess) {
               String statusPayment = state.res.paymentRequest.status;
-              String packageName = state.res.purchaseResult.packageName;
+              String packageName = state.res.purchase.packageName;
+
               if (statusPayment == "SUCCEEDED") {
                 Navigator.pushNamed(
                   context,
                   "/payment/success",
                   arguments: {'packageName': packageName.toUpperCase()},
                 );
-              } else if (statusPayment == "PENDING") {
+              } else if (statusPayment == "PENDING" && _checkStatusPayment) {
                 CustomToast.showWithContext(
                   context,
                   "Pembayaran belum diterima, nih!",
                   position: "bottom",
                   duration: 5,
                 );
+                setState(() {
+                  _checkStatusPayment = false;
+                });
               } else if (statusPayment == "FAILED") {
                 Navigator.pushNamed(
                   context,
                   "/payment/failed",
                   arguments: {'packageName': packageName.toUpperCase()},
-                );
-              } else {
-                CustomToast.showWithContext(
-                  context,
-                  "Terjadi masalah, nih!",
-                  position: "bottom",
-                  duration: 5,
-                  backgroundColor: TColors.error,
                 );
               }
             }
@@ -447,17 +479,22 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                         SizedBox(height: 20),
                         BlocBuilder<PurchaseCubit, PurchaseState>(
                             builder: (context, state) {
+                          bool isLoading = state is PurchaseDetailInProgress &&
+                              _checkStatusPayment;
                           return SizedBox(
                             width: double.infinity,
                             child: OutlinedButton(
-                              onPressed: (state is PurchaseDetailInProgress)
+                              onPressed: (isLoading)
                                   ? null
                                   : () {
+                                      setState(() {
+                                        _checkStatusPayment = true;
+                                      });
                                       context
                                           .read<PurchaseCubit>()
                                           .findOne(purchase!.id);
                                     },
-                              child: (state is PurchaseDetailInProgress)
+                              child: (isLoading)
                                   ? SizedBox(
                                       height: 16,
                                       width: 16,
@@ -484,7 +521,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                           final screenHeight =
                               MediaQuery.of(context).size.height;
 
-                          final customHeight = screenHeight * 0.32; // 50% - 10%
+                          final customHeight = screenHeight * 0.324;
 
                           return CustomBottomsheet(
                             child: Column(
