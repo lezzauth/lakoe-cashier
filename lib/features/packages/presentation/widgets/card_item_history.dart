@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
@@ -69,7 +70,7 @@ class CardItemHistory extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
               mainAxisSize: MainAxisSize.min,
@@ -80,8 +81,8 @@ class CardItemHistory extends StatelessWidget {
                   color: TColors.neutralDarkDark,
                   fontWeight: FontWeight.w700,
                 ),
-                SizedBox(height: 4),
-                TextBodyS(
+                SizedBox(height: 6),
+                TextBodyM(
                   TFormatter.dateTime(data.createdAt, withTime: false),
                   color: TColors.neutralDarkLight,
                 ),
