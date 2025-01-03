@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/chimmer_package.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_active/package_active_cubit.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_active/package_active_state.dart';
 import 'package:owner_repository/owner_repository.dart';
@@ -31,7 +34,7 @@ class _PackageActiveScreenState extends State<PackageActiveScreen> {
   bool isScrolled = false;
   double opacity = 1.0;
   final double scrollThreshold = 100.0;
-  String packageName = "GROW";
+  String packageName = "LITE";
   PackageActive? packageActive;
 
   @override
@@ -97,17 +100,36 @@ class _PackageActiveScreenState extends State<PackageActiveScreen> {
     super.dispose();
   }
 
+  Future<void> _onRefresh() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+      if (args != null && args.containsKey('packageName')) {
+        String packageNameArg = args['packageName'] as String;
+
+        setState(() {
+          packageName = packageNameArg;
+        });
+
+        context.read<PackageDetailCubit>().findOne(packageNameArg);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     String heroAsset;
-    String logoAsset;
+    String? logoAsset;
 
     if (packageName == "GROW") {
       heroAsset = TImages.growLevelHero;
       logoAsset = TImages.lakoeXGrow;
-    } else {
+    } else if (packageName == "PRO") {
       heroAsset = TImages.proLevelHero;
       logoAsset = TImages.lakoeXPro;
+    } else {
+      heroAsset = TImages.placeholderHero;
     }
 
     return MultiBlocListener(
@@ -165,18 +187,18 @@ class _PackageActiveScreenState extends State<PackageActiveScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Image.asset(
-                              logoAsset,
-                              height: 40,
+                          if (logoAsset != null)
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Image.asset(
+                                logoAsset,
+                                height: 40,
+                              ),
                             ),
-                          ),
                           SizedBox(height: 20),
                           Container(
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
-                              // color: Colors.red,
                               color: TColors.neutralLightLightest,
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -292,9 +314,19 @@ class _PackageActiveScreenState extends State<PackageActiveScreen> {
                 ],
               );
             } else if (state is PackageDetailLoadFailure) {
-              return Center(child: CircularProgressIndicator());
+              return EmptyList(
+                title: "Gagal memuat data, nih!",
+                subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
+                action: TextButton(
+                  onPressed: _onRefresh,
+                  child: TextActionL(
+                    "Coba Lagi",
+                    color: TColors.primary,
+                  ),
+                ),
+              );
             } else {
-              return Center(child: CircularProgressIndicator());
+              return const ShimmerPackage();
             }
           }),
         ),

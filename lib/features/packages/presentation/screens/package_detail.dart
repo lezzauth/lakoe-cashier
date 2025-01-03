@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/chimmer_package.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:package_repository/package_repository.dart';
@@ -95,9 +96,7 @@ class _PackageDetailScreenState extends State<PackageDetailScreen>
           packageName = packageNameArg;
         });
 
-        context
-            .read<PackageDetailCubit>()
-            .findOne(packageNameArg.toUpperCase());
+        context.read<PackageDetailCubit>().findOne(packageNameArg);
       }
     });
   }
@@ -155,120 +154,119 @@ class _PackageDetailScreenState extends State<PackageDetailScreen>
         },
         child: BlocBuilder<PackageDetailCubit, PackageDetailState>(
           builder: (context, state) {
-            return switch (state) {
-              PackageDetailLoadSuccess(:final detail) => Stack(
-                  children: [
-                    if (!isScrolled)
-                      Positioned(
-                        child: Opacity(
-                          opacity: opacity,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 246,
-                            child: SvgPicture.asset(
-                              heroAsset,
-                              fit: BoxFit.fill,
-                            ),
+            if (state is PackageDetailLoadSuccess) {
+              final detail = state.detail;
+              return Stack(
+                children: [
+                  if (!isScrolled)
+                    Positioned(
+                      child: Opacity(
+                        opacity: opacity,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 246,
+                          child: SvgPicture.asset(
+                            heroAsset,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
-                    SingleChildScrollView(
-                      controller: scrollController,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 120),
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Image.asset(
-                                logoAsset,
-                                height: 40,
-                              ),
+                    ),
+                  SingleChildScrollView(
+                    controller: scrollController,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 120),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Image.asset(
+                              logoAsset,
+                              height: 40,
                             ),
-                            SizedBox(height: 20),
-                            Container(
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                // color: Colors.red,
-                                color: TColors.neutralLightLightest,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                children: [
-                                  TabContainer(
-                                    hasPadding: true,
-                                    controller: _tabController,
-                                    tabs: detail.map((package) {
-                                      final title = package.period == 12
-                                          ? "1 Tahun"
-                                          : "${package.period} Bulan";
-                                      return TabItem(title: title);
-                                    }).toList(),
-                                  ),
-                                  BlocBuilder<PackageMasterCubit,
-                                      PackageMasterState>(
-                                    builder: (context, state) {
-                                      if (state is PackageMasterLoadSuccess) {
-                                        final packages = state.packages;
+                          ),
+                          SizedBox(height: 20),
+                          Container(
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              // color: Colors.red,
+                              color: TColors.neutralLightLightest,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Column(
+                              children: [
+                                TabContainer(
+                                  hasPadding: true,
+                                  controller: _tabController,
+                                  tabs: detail.map((package) {
+                                    final title = package.period == 12
+                                        ? "1 Tahun"
+                                        : "${package.period} Bulan";
+                                    return TabItem(title: title);
+                                  }).toList(),
+                                ),
+                                BlocBuilder<PackageMasterCubit,
+                                    PackageMasterState>(
+                                  builder: (context, state) {
+                                    if (state is PackageMasterLoadSuccess) {
+                                      final packages = state.packages;
 
-                                        PackageModel? currentPackage =
-                                            packages.firstWhere((package) =>
-                                                package.name == 'LITE');
+                                      PackageModel? currentPackage =
+                                          packages.firstWhere((package) =>
+                                              package.name == 'LITE');
 
-                                        PackageModel? upgradedPackage =
-                                            packages.firstWhere((package) =>
-                                                package.name == packageName);
+                                      PackageModel? upgradedPackage =
+                                          packages.firstWhere((package) =>
+                                              package.name == packageName);
 
-                                        return PriceInfoSection(
-                                          index: _selectedIndex,
-                                          packageData: detail,
-                                          currentPackage: currentPackage,
-                                          upgradedPackage: upgradedPackage,
-                                        );
-                                      } else {
-                                        return Shimmer.fromColors(
-                                          baseColor: const Color(0xFFE8E9F1),
-                                          highlightColor:
-                                              const Color(0xFFF8F9FE),
-                                          child: Container(
-                                            height: 100,
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                              color:
-                                                  TColors.neutralLightLightest,
-                                            ),
+                                      return PriceInfoSection(
+                                        index: _selectedIndex,
+                                        packageData: detail,
+                                        currentPackage: currentPackage,
+                                        upgradedPackage: upgradedPackage,
+                                      );
+                                    } else {
+                                      return Shimmer.fromColors(
+                                        baseColor: const Color(0xFFE8E9F1),
+                                        highlightColor: const Color(0xFFF8F9FE),
+                                        child: Container(
+                                          height: 100,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                            color: TColors.neutralLightLightest,
                                           ),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                ],
-                              ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              PackageDetailLoadFailure() => EmptyList(
-                  title: "Gagal memuat data, nih!",
-                  subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
-                  action: TextButton(
-                    onPressed: _onRefresh,
-                    child: TextActionL(
-                      "Coba Lagi",
-                      color: TColors.primary,
-                    ),
+                  ),
+                ],
+              );
+            } else if (state is PackageDetailLoadFailure) {
+              return EmptyList(
+                title: "Gagal memuat data, nih!",
+                subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
+                action: TextButton(
+                  onPressed: _onRefresh,
+                  child: TextActionL(
+                    "Coba Lagi",
+                    color: TColors.primary,
                   ),
                 ),
-              _ => Center(
-                  child: CircularProgressIndicator(),
-                ),
-            };
+              );
+            } else {
+              return const ShimmerPackage();
+            }
           },
         ),
       ),

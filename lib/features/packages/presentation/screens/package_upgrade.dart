@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/chimmer_package.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/tab/tab_container.dart';
 import 'package:lakoe_pos/common/widgets/ui/tab/tab_item.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_active/package_active_cubit.dart';
@@ -114,17 +117,38 @@ class _PackageUpgradeScreenState extends State<PackageUpgradeScreen>
     super.dispose();
   }
 
+  Future<void> _onRefresh() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+      if (args != null && args.containsKey('currentPackage')) {
+        String currentPackageArg = args['currentPackage'] as String;
+        String upgradePakcageArg = args['upgradePakcage'] as String;
+
+        setState(() {
+          currentPackageName = currentPackageArg;
+          upgradePakcageName = upgradePakcageArg;
+        });
+
+        context.read<PackageDetailCubit>().findOne(upgradePakcageArg);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     String heroAsset;
-    String logoAsset;
+    String? logoAsset;
 
     if (upgradePakcageName == "GROW") {
       heroAsset = TImages.growLevelHero;
       logoAsset = TImages.lakoeXGrow;
-    } else {
+    } else if (upgradePakcageName == "PRO") {
       heroAsset = TImages.proLevelHero;
       logoAsset = TImages.lakoeXPro;
+    } else {
+      heroAsset = TImages.placeholderHero;
     }
 
     return MultiBlocListener(
@@ -156,31 +180,33 @@ class _PackageUpgradeScreenState extends State<PackageUpgradeScreen>
           },
           child: BlocBuilder<PackageDetailCubit, PackageDetailState>(
               builder: (context, state) {
-            return switch (state) {
-              PackageDetailLoadSuccess(:final detail) => Stack(
-                  children: [
-                    if (!isScrolled)
-                      Positioned(
-                        child: Opacity(
-                          opacity: opacity,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 246,
-                            child: SvgPicture.asset(
-                              heroAsset,
-                              fit: BoxFit.fill,
-                            ),
+            if (state is PackageDetailLoadSuccess) {
+              final detail = state.detail;
+              return Stack(
+                children: [
+                  if (!isScrolled)
+                    Positioned(
+                      child: Opacity(
+                        opacity: opacity,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 246,
+                          child: SvgPicture.asset(
+                            heroAsset,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
-                    SingleChildScrollView(
-                      controller: scrollController,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 120),
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                    ),
+                  SingleChildScrollView(
+                    controller: scrollController,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 120),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (logoAsset != null)
                             Align(
                               alignment: Alignment.topCenter,
                               child: Image.asset(
@@ -188,83 +214,89 @@ class _PackageUpgradeScreenState extends State<PackageUpgradeScreen>
                                 height: 40,
                               ),
                             ),
-                            SizedBox(height: 20),
-                            Container(
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                // color: Colors.red,
-                                color: TColors.neutralLightLightest,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                children: [
-                                  TabContainer(
-                                    hasPadding: true,
-                                    controller: _tabController,
-                                    tabs: detail.map((package) {
-                                      final title = package.period == 12
-                                          ? "1 Tahun"
-                                          : "${package.period} Bulan";
-                                      return TabItem(title: title);
-                                    }).toList(),
-                                  ),
-                                  BlocBuilder<PackageMasterCubit,
-                                      PackageMasterState>(
-                                    builder: (context, state) {
-                                      if (state is PackageMasterLoadSuccess) {
-                                        final packages = state.packages;
-
-                                        PackageModel? currentPackage =
-                                            packages.firstWhere((package) =>
-                                                package.name ==
-                                                currentPackageName);
-
-                                        PackageModel? upgradedPackage =
-                                            packages.firstWhere((package) =>
-                                                package.name ==
-                                                upgradePakcageName);
-
-                                        return PriceInfoSection(
-                                          index: _selectedIndex,
-                                          packageData: detail,
-                                          currentPackage: currentPackage,
-                                          upgradedPackage: upgradedPackage,
-                                        );
-                                      } else {
-                                        return Shimmer.fromColors(
-                                          baseColor: const Color(0xFFE8E9F1),
-                                          highlightColor:
-                                              const Color(0xFFF8F9FE),
-                                          child: Container(
-                                            height: 100,
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                              color:
-                                                  TColors.neutralLightLightest,
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                ],
-                              ),
+                          SizedBox(height: 20),
+                          Container(
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              // color: Colors.red,
+                              color: TColors.neutralLightLightest,
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                          ],
-                        ),
+                            child: Column(
+                              children: [
+                                TabContainer(
+                                  hasPadding: true,
+                                  controller: _tabController,
+                                  tabs: detail.map((package) {
+                                    final title = package.period == 12
+                                        ? "1 Tahun"
+                                        : "${package.period} Bulan";
+                                    return TabItem(title: title);
+                                  }).toList(),
+                                ),
+                                BlocBuilder<PackageMasterCubit,
+                                    PackageMasterState>(
+                                  builder: (context, state) {
+                                    if (state is PackageMasterLoadSuccess) {
+                                      final packages = state.packages;
+
+                                      PackageModel? currentPackage =
+                                          packages.firstWhere((package) =>
+                                              package.name ==
+                                              currentPackageName);
+
+                                      PackageModel? upgradedPackage =
+                                          packages.firstWhere((package) =>
+                                              package.name ==
+                                              upgradePakcageName);
+
+                                      return PriceInfoSection(
+                                        index: _selectedIndex,
+                                        packageData: detail,
+                                        currentPackage: currentPackage,
+                                        upgradedPackage: upgradedPackage,
+                                      );
+                                    } else {
+                                      return Shimmer.fromColors(
+                                        baseColor: const Color(0xFFE8E9F1),
+                                        highlightColor: const Color(0xFFF8F9FE),
+                                        child: Container(
+                                          height: 100,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                            color: TColors.neutralLightLightest,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
+                ],
+              );
+            } else if (state is PackageDetailLoadFailure) {
+              return EmptyList(
+                title: "Gagal memuat data, nih!",
+                subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
+                action: TextButton(
+                  onPressed: _onRefresh,
+                  child: TextActionL(
+                    "Coba Lagi",
+                    color: TColors.primary,
+                  ),
                 ),
-              PackageDetailLoadFailure() => Center(
-                  child: CircularProgressIndicator(),
-                ),
-              _ => Center(
-                  child: CircularProgressIndicator(),
-                ),
-            };
+              );
+            } else {
+              return const ShimmerPackage();
+            }
           }),
         ),
       ),
