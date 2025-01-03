@@ -16,13 +16,13 @@ class PackageComparisonTable extends StatelessWidget {
   const PackageComparisonTable({
     super.key,
     required this.package,
+    required this.peviousPackage,
     required this.currentPackage,
-    required this.upgradedPackage,
   });
 
   final PackagePriceModel package;
+  final PackageModel peviousPackage;
   final PackageModel currentPackage;
-  final PackageModel upgradedPackage;
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +71,9 @@ class PackageComparisonTable extends StatelessWidget {
                   ),
                   child: Center(
                     child: Image.asset(
-                      currentPackage.name == "LITE"
+                      peviousPackage.name == "LITE"
                           ? TImages.liteLogoLow
-                          : currentPackage.name == "GROW"
+                          : peviousPackage.name == "GROW"
                               ? TImages.growLogoLow
                               : TImages.proLogoLow,
                       height: 20,
@@ -109,9 +109,9 @@ class PackageComparisonTable extends StatelessWidget {
                   ),
                   child: Center(
                     child: Image.asset(
-                      upgradedPackage.name == "LITE"
+                      currentPackage.name == "LITE"
                           ? TImages.liteLogoPackage
-                          : upgradedPackage.name == "GROW"
+                          : currentPackage.name == "GROW"
                               ? TImages.growLogoPackage
                               : TImages.proLogoPackage,
                       height: 20,
@@ -124,44 +124,44 @@ class PackageComparisonTable extends StatelessWidget {
               context,
               0,
               "Transaksi perhari",
+              peviousPackage.orders,
               currentPackage.orders,
-              upgradedPackage.orders,
             ),
             _buildTableRow(
               context,
               1,
               "Data menu/produk",
+              peviousPackage.products,
               currentPackage.products,
-              upgradedPackage.products,
             ),
             _buildTableRow(
               context,
               2,
               "Data Karyawan",
+              peviousPackage.employees,
               currentPackage.employees,
-              upgradedPackage.employees,
             ),
             _buildTableRow(
               context,
               3,
               "Data Pelanggan",
+              peviousPackage.customers,
               currentPackage.customers,
-              upgradedPackage.customers,
             ),
             _buildTableRow(
               context,
               4,
               "Data Meja",
+              peviousPackage.tables,
               currentPackage.tables,
-              upgradedPackage.tables,
               isLast: true,
             ),
             // _buildTableRow(
             //   context,
             //   5,
             //   "Integrasi Perangkat",
+            //   peviousPackage.hardwareIntergation,
             //   currentPackage.hardwareIntergation,
-            //   upgradedPackage.hardwareIntergation,
             // ),
             // _buildTableRow(
             //   context,

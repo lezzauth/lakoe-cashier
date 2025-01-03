@@ -5,6 +5,7 @@ import 'package:owner_repository/src/charge_repository.dart';
 import 'package:owner_repository/src/dto/owner.dart';
 import 'package:owner_repository/src/models/owner.dart';
 import 'package:owner_repository/src/owner_bank_repository.dart';
+import 'package:owner_repository/src/package_repository.dart';
 import 'package:owner_repository/src/purchase_repository.dart';
 import 'package:owner_repository/src/tax_repository.dart';
 import 'package:token_provider/token_provider.dart';
@@ -14,6 +15,7 @@ abstract class OwnerRepository {
   TaxRepository get tax;
   ChargeRepository get charge;
   PurchaseRepository get purchase;
+  PackageRepository get package;
   Future<List<OutletModel>> listOutlets();
   Future<OwnerProfileModel> getProfile();
   Future<UpdateOwnerModel> updateNameAccount(UpdateNameDto dto);
@@ -39,6 +41,9 @@ class OwnerRepositoryImpl implements OwnerRepository {
 
   @override
   PurchaseRepository get purchase => PurchaseRepositoryImpl();
+
+  @override
+  PackageRepository get package => PackageRepositoryImpl();
 
   Future<Options> _getOptions() async {
     final token = await _tokenProvider.getAuthToken();

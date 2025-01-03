@@ -5,6 +5,7 @@ export 'src/models/bank.dart';
 export 'src/models/tax.dart';
 export 'src/models/charge.dart';
 export 'src/models/purchase.dart';
+export 'src/models/package.dart';
 
 export 'src/dto/owner.dart';
 export 'src/dto/bank.dart';

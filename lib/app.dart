@@ -12,6 +12,7 @@ import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/cre
 import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/otp_input.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_active/package_active_cubit.dart';
 import 'package:lakoe_pos/features/packages/presentation/screens/package_upgrade.dart';
 import 'package:lakoe_pos/features/packages/presentation/screens/purchase/detail_purchase.dart';
 import 'package:lakoe_pos/features/packages/presentation/screens/purchase/history_purchase_package.dart';
@@ -288,6 +289,7 @@ class _AppState extends State<App> {
         // Package Plan
         BlocProvider(create: (context) => PackageMasterCubit()),
         BlocProvider(create: (context) => PackageDetailCubit()),
+        BlocProvider(create: (context) => PackageActiveCubit()),
         BlocProvider(create: (context) => PurchaseCubit()),
 
         //Payment Method

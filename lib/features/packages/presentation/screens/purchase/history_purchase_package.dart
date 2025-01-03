@@ -8,16 +8,17 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
-import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:lakoe_pos/features/checkout/application/filters/filter_purchase_cubit.dart';
 import 'package:lakoe_pos/features/checkout/application/filters/filter_purchase_state.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_active/package_active_cubit.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_active/package_active_state.dart';
 import 'package:lakoe_pos/features/packages/presentation/widgets/card_item_history.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
+import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
 
 class HistoryPurchasePackageScreen extends StatelessWidget {
@@ -52,6 +53,7 @@ class _HistoryPurchasePackageState extends State<HistoryPurchasePackage> {
   void initState() {
     super.initState();
     context.read<PurchaseCubit>().init();
+    context.read<PackageActiveCubit>().getActivePackage();
   }
 
   Future<void> _onRefresh() async {
@@ -241,19 +243,28 @@ class CardItemPackageActive extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OwnerCubit, OwnerState>(builder: (context, state) {
-      if (state is OwnerLoadSuccess) {
-        OwnerProfileModel owner = state.owner;
+    return BlocBuilder<PackageActiveCubit, PackageActiveState>(
+        builder: (context, state) {
+      Logman.instance.info("OOO $state");
+      if (state is GetActivePackageSuccess) {
+        PackageActive package = state.package;
         return InkWell(
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
-          onTap: () {
-            if (owner.packageName == "GROW" || owner.packageName == "PRO") {
-              Navigator.pushNamed(
+          onTap: () async {
+            if (package.name == "GROW" || package.name == "PRO") {
+              bool? result = await Navigator.pushNamed(
                 context,
                 "/account/active_package",
-                arguments: {'packageName': owner.packageName},
-              );
+                arguments: {'packageName': package.name},
+              ) as bool?;
+              if (!context.mounted) return;
+
+              // if (!result!) return;
+              Logman.instance.info("XXX $result");
+              if (result == true) {
+                context.read<PackageActiveCubit>().getActivePackage();
+              }
             } else {
               Navigator.pushNamed(context, "/packages");
             }
@@ -261,9 +272,9 @@ class CardItemPackageActive extends StatelessWidget {
           child: Container(
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
-              color: owner.packageName == "GROW"
+              color: package.name == "GROW"
                   ? TColors.successLight
-                  : owner.packageName == "PRO"
+                  : package.name == "PRO"
                       ? Color(0xFFF4DEF8)
                       : TColors.highlightLightest,
               border: Border.all(
@@ -280,9 +291,9 @@ class CardItemPackageActive extends StatelessWidget {
                   child: SvgPicture.asset(
                     TImages.pakcageWaves,
                     colorFilter: ColorFilter.mode(
-                      owner.packageName == "GROW"
+                      package.name == "GROW"
                           ? Color(0xFF00712D)
-                          : owner.packageName == "PRO"
+                          : package.name == "PRO"
                               ? Color(0xFF9306AF)
                               : Color(0xFFFC4100),
                       BlendMode.srcIn,
@@ -299,11 +310,11 @@ class CardItemPackageActive extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextHeading3(
-                            "Paket ${TFormatter.capitalizeEachWord(owner.packageName)}",
+                            "Paket ${TFormatter.capitalizeEachWord(package.name)}",
                             color: TColors.neutralDarkDark,
                           ),
                           SizedBox(height: 4),
-                          (owner.packageName == "LITE")
+                          (package.name == "LITE")
                               ? TextBodyM(
                                   "Gratis selamanya!",
                                   color: TColors.neutralDarkLight,
@@ -316,7 +327,7 @@ class CardItemPackageActive extends StatelessWidget {
                                     ),
                                     SizedBox(width: 4),
                                     TextBodyM(
-                                      "16 Nov 2024",
+                                      package.endPeriod!,
                                       fontWeight: FontWeight.bold,
                                       color: TColors.neutralDarkLight,
                                     ),
@@ -325,9 +336,9 @@ class CardItemPackageActive extends StatelessWidget {
                         ],
                       ),
                       Image.asset(
-                        owner.packageName == "GROW"
+                        package.name == "GROW"
                             ? TImages.growLogoPackage
-                            : owner.packageName == "PRO"
+                            : package.name == "PRO"
                                 ? TImages.proLogoPackage
                                 : TImages.liteLogoPackage,
                         height: 28,

@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_active/package_active_cubit.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_active/package_active_state.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:package_repository/package_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/appbar/light_appbar.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:lakoe_pos/features/account/presentation/widgets/detail_package.dart';
+import 'package:lakoe_pos/features/account/presentation/widgets/detail_active_package.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_detail/package_detail_cubit.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_detail/package_detail_state.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_master_cubit.dart';
@@ -29,27 +32,18 @@ class _PackageActiveScreenState extends State<PackageActiveScreen> {
   double opacity = 1.0;
   final double scrollThreshold = 100.0;
   String packageName = "GROW";
+  PackageActive? packageActive;
 
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final args =
-          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
-      if (args != null && args.containsKey('packageName')) {
-        String packageNameArg = args['packageName'] as String;
-
-        setState(() {
-          packageName = packageNameArg;
-        });
-
-        context.read<PackageDetailCubit>().findOne(packageNameArg);
-      }
-    });
-
+    _onInit();
     scrollController.addListener(_handleScroll);
+  }
+
+  void _onInit() async {
+    await context.read<PackageActiveCubit>().getActivePackage();
   }
 
   void _handleScroll() {
@@ -101,26 +95,40 @@ class _PackageActiveScreenState extends State<PackageActiveScreen> {
       logoAsset = TImages.lakoeXPro;
     }
 
-    return Scaffold(
-      backgroundColor: TColors.neutralLightLight,
-      extendBodyBehindAppBar: true,
-      appBar: !isScrolled
-          ? CustomAppbarLight(title: "Paket Aktif")
-          : CustomAppbar(
-              title: "Paket Aktif",
-              backgroundColor: TColors.neutralLightLight,
-            ),
-      body: NotificationListener<ScrollNotification>(
-        onNotification: (scrollNotification) {
-          if (scrollNotification is ScrollUpdateNotification) {
-            _handleScroll();
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PackageActiveCubit, PackageActiveState>(
+            listener: (context, state) {
+          if (state is GetActivePackageSuccess) {
+            context.read<PackageDetailCubit>().findOne(state.package.name);
+            setState(() {
+              packageActive = state.package;
+              packageName = state.package.name;
+            });
           }
-          return false;
-        },
-        child: BlocBuilder<PackageDetailCubit, PackageDetailState>(
-            builder: (context, state) {
-          return switch (state) {
-            PackageDetailLoadSuccess(:final detail) => Stack(
+        }),
+      ],
+      child: Scaffold(
+        backgroundColor: TColors.neutralLightLight,
+        extendBodyBehindAppBar: true,
+        appBar: !isScrolled
+            ? CustomAppbarLight(title: "Paket Aktif")
+            : CustomAppbar(
+                title: "Paket Aktif",
+                backgroundColor: TColors.neutralLightLight,
+              ),
+        body: NotificationListener<ScrollNotification>(
+          onNotification: (scrollNotification) {
+            if (scrollNotification is ScrollUpdateNotification) {
+              _handleScroll();
+            }
+            return false;
+          },
+          child: BlocBuilder<PackageDetailCubit, PackageDetailState>(
+              builder: (context, state) {
+            if (state is PackageDetailLoadSuccess) {
+              final detail = state.detail;
+              return Stack(
                 children: [
                   if (!isScrolled)
                     Positioned(
@@ -171,15 +179,16 @@ class _PackageActiveScreenState extends State<PackageActiveScreen> {
                                           packages.firstWhere((package) =>
                                               package.name == 'LITE');
 
-                                      PackageModel? upgradedPackage =
+                                      PackageModel? currentPackage =
                                           packages.firstWhere((package) =>
                                               package.name == packageName);
 
-                                      return DetailPackage(
+                                      return DetailActivePackage(
                                         index: 0,
+                                        packageActive: packageActive,
                                         packageData: detail,
-                                        currentPackage: litePackage,
-                                        upgradedPackage: upgradedPackage,
+                                        previousPackage: litePackage,
+                                        currentPackage: currentPackage,
                                       );
                                     } else {
                                       return Shimmer.fromColors(
@@ -202,7 +211,7 @@ class _PackageActiveScreenState extends State<PackageActiveScreen> {
                             ),
                           ),
                           SizedBox(height: 20),
-                          if (packageName == "GROW")
+                          if (packageName != "PRO")
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -254,15 +263,14 @@ class _PackageActiveScreenState extends State<PackageActiveScreen> {
                     ),
                   ),
                 ],
-              ),
-            PackageDetailLoadFailure() => Center(
-                child: CircularProgressIndicator(),
-              ),
-            _ => Center(
-                child: CircularProgressIndicator(),
-              ),
-          };
-        }),
+              );
+            } else if (state is PackageDetailLoadFailure) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          }),
+        ),
       ),
     );
   }
