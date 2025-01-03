@@ -44,6 +44,21 @@ class _PackageActiveScreenState extends State<PackageActiveScreen> {
 
   void _onInit() async {
     await context.read<PackageActiveCubit>().getActivePackage();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+      if (args != null && args.containsKey('packageName')) {
+        String packageNameArg = args['packageName'] as String;
+
+        setState(() {
+          packageName = packageNameArg;
+        });
+
+        context.read<PackageDetailCubit>().findOne(packageNameArg);
+      }
+    });
   }
 
   void _handleScroll() {
@@ -100,10 +115,8 @@ class _PackageActiveScreenState extends State<PackageActiveScreen> {
         BlocListener<PackageActiveCubit, PackageActiveState>(
             listener: (context, state) {
           if (state is GetActivePackageSuccess) {
-            context.read<PackageDetailCubit>().findOne(state.package.name);
             setState(() {
               packageActive = state.package;
-              packageName = state.package.name;
             });
           }
         }),
@@ -220,40 +233,54 @@ class _PackageActiveScreenState extends State<PackageActiveScreen> {
                                   color: TColors.neutralDarkDark,
                                 ),
                                 SizedBox(height: 12),
-                                Container(
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 12,
-                                  ),
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: ShapeDecoration(
-                                    gradient: RadialGradient(
-                                      center: Alignment(1, -1),
-                                      radius: 2,
-                                      colors: [
-                                        Color(0xFFFFC55A),
-                                        Color(0xFF9305AF)
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () {
+                                    Navigator.popAndPushNamed(
+                                      context,
+                                      "/packages/upgrade",
+                                      arguments: {
+                                        'currentPackage': "GROW",
+                                        'upgradePakcage': "PRO",
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 12,
+                                    ),
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: ShapeDecoration(
+                                      gradient: RadialGradient(
+                                        center: Alignment(1, -1),
+                                        radius: 2,
+                                        colors: [
+                                          Color(0xFFFFC55A),
+                                          Color(0xFF9305AF)
+                                        ],
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Image.asset(
+                                          TImages.lakoeXPro,
+                                          height: 24,
+                                        ),
+                                        SizedBox(height: 8),
+                                        TextBodyM(
+                                          "Dengan paket Lakoe Pro kamu bisa berjualan tanpa batas. Semua unlimited.",
+                                          color: TColors.neutralLightLightest,
+                                        ),
                                       ],
                                     ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Image.asset(
-                                        TImages.lakoeXPro,
-                                        height: 24,
-                                      ),
-                                      SizedBox(height: 8),
-                                      TextBodyM(
-                                        "Dengan paket Lakoe Pro kamu bisa berjualan tanpa batas. Semua unlimited.",
-                                        color: TColors.neutralLightLightest,
-                                      ),
-                                    ],
                                   ),
                                 ),
                               ],
