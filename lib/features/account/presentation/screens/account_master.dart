@@ -296,7 +296,11 @@ class ProfileCard extends StatelessWidget {
 
           return Container(
             decoration: BoxDecoration(
-              color: TColors.highlightLightest,
+              color: profile.packageName == "GROW"
+                  ? TColors.successLight
+                  : profile.packageName == "PRO"
+                      ? Color(0xFFF4DEF8)
+                      : TColors.highlightLightest,
               borderRadius: BorderRadius.circular(16.0),
             ),
             child: Column(
