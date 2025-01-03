@@ -12,7 +12,7 @@ List<PaymentCategory> paymentMethod = [
     ],
   ),
   PaymentCategory(
-    categoryName: "VIRTUAL_ACCOUNT",
+    categoryName: "VIRTUAL ACCOUNT",
     methods: [
       PaymentMethodCheckout(
         name: "BCA",

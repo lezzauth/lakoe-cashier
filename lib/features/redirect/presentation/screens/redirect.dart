@@ -60,13 +60,13 @@ class _RedirectScreenState extends State<RedirectScreen> {
   void initState() {
     super.initState();
     loadFlavor();
-    init();
     _deeplinkHandler.init(
       onDeeplinkReceived: _handleDeeplink,
       onError: () {
         Logman.instance.error("[Redirect] Failed to handle deeplink.");
       },
     );
+    authInitialize();
   }
 
   @override
@@ -89,17 +89,15 @@ class _RedirectScreenState extends State<RedirectScreen> {
     final package = uri.queryParameters['package'];
 
     if (path == "/payment" && status != null && package != null) {
-      _deeplinkHandler.dispose();
       navigated = true;
-
       if (status == "success") {
-        Navigator.pushNamed(
+        Navigator.popAndPushNamed(
           context,
           "/payment/success",
           arguments: {'packageName': package.toUpperCase()},
         );
       } else if (status == "failed") {
-        Navigator.pushNamed(
+        Navigator.popAndPushNamed(
           context,
           "/payment/failed",
           arguments: {'packageName': package.toUpperCase()},
@@ -113,7 +111,7 @@ class _RedirectScreenState extends State<RedirectScreen> {
     }
   }
 
-  void init() {
+  void authInitialize() {
     context.read<AuthCubit>().initialize();
 
     connectivitySubscription =
@@ -197,7 +195,7 @@ class _RedirectScreenState extends State<RedirectScreen> {
                       isBottomSheetVisible = false;
                       Navigator.pop(context);
                       await Future.delayed(Duration(seconds: 2));
-                      init();
+                      authInitialize();
                     },
                   ),
                 ),
@@ -213,7 +211,6 @@ class _RedirectScreenState extends State<RedirectScreen> {
           if (state is AuthReady) {
             final currentRoute = ModalRoute.of(context)?.settings.name;
 
-            // Hindari navigasi ulang jika navigasi sudah dilakukan oleh deeplink
             if (currentRoute == "/payment/success" ||
                 currentRoute == "/payment/failed") {
               Logman.instance.info(

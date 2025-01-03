@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:logman/logman.dart';
 import 'package:uni_links/uni_links.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DeeplinkHandler {
   StreamSubscription? _deeplinkSubscription;
@@ -10,17 +11,20 @@ class DeeplinkHandler {
     required Function(Uri uri) onDeeplinkReceived,
     required VoidCallback onError,
   }) async {
-    try {
-      final initialUri = await getInitialUri();
-      if (initialUri != null) {
-        Logman.instance
-            .info("[Deeplink] Initial deeplink detected: $initialUri");
-        onDeeplinkReceived(initialUri);
-        _disposeListener();
+    final hasBeenHandled = await DeeplinkPrefs.hasDeeplinkBeenHandled();
+    if (!hasBeenHandled) {
+      try {
+        final initialUri = await getInitialUri();
+        if (initialUri != null) {
+          Logman.instance
+              .info("[Deeplink] Initial deeplink detected: $initialUri");
+          await DeeplinkPrefs.markDeeplinkHandled();
+          onDeeplinkReceived(initialUri);
+        }
+      } catch (e) {
+        Logman.instance.error("[Deeplink] Error getting initial deeplink: $e");
+        onError();
       }
-    } catch (e) {
-      Logman.instance.error("[Deeplink] Error getting initial deeplink: $e");
-      onError();
     }
 
     _listenToDeeplink(onDeeplinkReceived, onError);
@@ -30,13 +34,13 @@ class DeeplinkHandler {
     Function(Uri uri) onDeeplinkReceived,
     VoidCallback onError,
   ) {
-    Logman.instance.info("[Deeplink] Listening to global deeplink...");
+    Logman.instance.info("[Deeplink] Listening for global deeplink...");
     _deeplinkSubscription = uriLinkStream.listen(
-      (uri) {
+      (uri) async {
         if (uri != null) {
           Logman.instance.info("[Deeplink] Received deeplink: $uri");
+          await DeeplinkPrefs.markDeeplinkHandled();
           onDeeplinkReceived(uri);
-          _disposeListener();
         }
       },
       onError: (err) {
@@ -46,13 +50,30 @@ class DeeplinkHandler {
     );
   }
 
-  void _disposeListener() {
+  void dispose() {
     _deeplinkSubscription?.cancel();
     _deeplinkSubscription = null;
     Logman.instance.info("[Deeplink] Listener disposed.");
   }
+}
 
-  void dispose() {
-    _disposeListener();
+class DeeplinkPrefs {
+  static const String _hasHandledDeeplinkKey = 'hasHandledDeeplink';
+
+  static Future<void> markDeeplinkHandled() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_hasHandledDeeplinkKey, true);
+  }
+
+  /// Mengecek apakah deeplink sudah pernah diproses
+  static Future<bool> hasDeeplinkBeenHandled() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_hasHandledDeeplinkKey) ?? false;
+  }
+
+  /// Reset status deeplink (misalnya setelah logout)
+  static Future<void> resetDeeplinkStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_hasHandledDeeplinkKey);
   }
 }

@@ -192,7 +192,6 @@ class _AppState extends State<App> {
     );
 
     if (path == "/payment" && status != null && package != null) {
-      _deeplinkHandler.dispose();
       if (status == "success") {
         navigatorKey.currentState?.pushNamed(
           "/payment/success",
