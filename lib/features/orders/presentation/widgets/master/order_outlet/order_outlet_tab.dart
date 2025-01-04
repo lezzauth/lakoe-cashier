@@ -16,7 +16,6 @@ import 'package:lakoe_pos/features/orders/presentation/screens/tablet/order_deta
 import 'package:lakoe_pos/features/orders/presentation/widgets/master/order_outlet/filter/order_outlet_filter.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
-import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
@@ -115,11 +114,7 @@ class _OrderOutletState extends State<OrderOutlet> {
 
   void _onOrderSelected(String? orderId) {
     final cubit = context.read<OrderDetailOpenedCubit>();
-
-    Logman.instance.info("Order selected: $orderId");
-
     bool selected = orderId == cubit.state.selectedId;
-    Logman.instance.info("SAMA: $selected");
 
     if (cubit.state.selectedId == null || !selected) {
       cubit.selectOrderId(orderId!);

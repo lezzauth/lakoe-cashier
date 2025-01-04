@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
@@ -58,8 +57,6 @@ class TBill {
 
     final profile = await CapabilityProfile.load();
     final generator = Generator(PaperSize.mm58, profile, spaceBetweenRows: 1);
-    final profileDevice = await CapabilityProfile.getAvailableProfiles();
-    Logman.instance.info('profileDevice: $profileDevice');
     bytes += generator.reset();
 
     // int newBillNumber =
@@ -239,7 +236,7 @@ class TBill {
         charges.where((e) => e.type == "CHARGE").toList();
 
     if (taxCharges().isNotEmpty) {
-      for (var tax in order.charges!) {
+      for (var tax in taxCharges()) {
         bytes += generator.row([
           PosColumn(
             text:
@@ -261,7 +258,7 @@ class TBill {
     }
 
     if (serviceFeeCharges().isNotEmpty) {
-      for (var charge in order.charges!) {
+      for (var charge in serviceFeeCharges()) {
         bytes += generator.row([
           PosColumn(
             text:
@@ -414,9 +411,9 @@ class TBill {
           isTestingMode: false,
         );
 
-        final result = await PrintBluetoothThermal.writeBytes(ticket);
-        log("print result: $result");
+        await PrintBluetoothThermal.writeBytes(ticket);
       } else {
+        if (!context.mounted) return;
         showModalBottomSheet(
           context: context,
           enableDrag: false,
