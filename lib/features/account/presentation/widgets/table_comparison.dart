@@ -36,9 +36,7 @@ class PackageComparisonTable extends StatelessWidget {
           },
           children: [
             TableRow(
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-              ),
+              decoration: BoxDecoration(color: Colors.transparent),
               children: [
                 Container(),
                 Container(
@@ -154,15 +152,15 @@ class PackageComparisonTable extends StatelessWidget {
               "Data Meja",
               peviousPackage.tables,
               currentPackage.tables,
+            ),
+            _buildTableRow(
+              context,
+              5,
+              "Logo di Struk",
+              (peviousPackage.name == "LITE") ? 00 : 123,
+              123,
               isLast: true,
             ),
-            // _buildTableRow(
-            //   context,
-            //   5,
-            //   "Integrasi Perangkat",
-            //   peviousPackage.hardwareIntergation,
-            //   currentPackage.hardwareIntergation,
-            // ),
             // _buildTableRow(
             //   context,
             //   6,
@@ -193,8 +191,8 @@ TableRow _buildTableRow(
   BuildContext context,
   int index,
   String label,
-  int? liteValue,
-  int? upgradedValue, {
+  int? peviousPackage,
+  int? currentPackage, {
   bool isLast = false,
 }) {
   Color backgroundColor = (index % 2 == 0)
@@ -250,10 +248,22 @@ TableRow _buildTableRow(
             horizontal: 12.0,
           ),
           child: Center(
-            child: TextHeading3(
-              liteValue.toString(),
-              color: TColors.neutralDarkLight,
-            ),
+            child: (peviousPackage == 00)
+                ? UiIcons(
+                    TIcons.close,
+                    size: 12,
+                    color: TColors.error,
+                  )
+                : (peviousPackage == 123)
+                    ? UiIcons(
+                        TIcons.check,
+                        size: 24,
+                        color: TColors.success,
+                      )
+                    : TextHeading3(
+                        peviousPackage.toString(),
+                        color: TColors.neutralDarkLight,
+                      ),
           ),
         ),
       ),
@@ -290,66 +300,80 @@ TableRow _buildTableRow(
             horizontal: 12.0,
           ),
           child: Center(
-            child: upgradedValue != null
+            child: currentPackage != null &&
+                    currentPackage != 0 &&
+                    currentPackage != 123
                 ? TextHeading3(
-                    upgradedValue.toString(),
+                    currentPackage.toString(),
                     color: TColors.neutralDarkDark,
                   )
-                : UiIcons(
-                    TIcons.infinity,
-                    size: 20,
-                    color: TColors.neutralDarkDark,
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        builder: (context) {
-                          return CustomBottomsheet(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 12,
-                              ),
-                              child: Column(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SvgPicture.asset(
-                                        TImages.infinity,
-                                        height: 32,
+                : (currentPackage == 00)
+                    ? UiIcons(
+                        TIcons.close,
+                        size: 12,
+                        color: TColors.error,
+                      )
+                    : (currentPackage == 123)
+                        ? UiIcons(
+                            TIcons.check,
+                            size: 24,
+                            color: TColors.success,
+                          )
+                        : UiIcons(
+                            TIcons.infinity,
+                            size: 20,
+                            color: TColors.neutralDarkDark,
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) {
+                                  return CustomBottomsheet(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 12,
                                       ),
-                                      SizedBox(height: 16),
-                                      TextHeading3(
-                                        label,
-                                        color: TColors.neutralDarkDark,
+                                      child: Column(
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              SvgPicture.asset(
+                                                TImages.infinity,
+                                                height: 32,
+                                              ),
+                                              SizedBox(height: 16),
+                                              TextHeading3(
+                                                label,
+                                                color: TColors.neutralDarkDark,
+                                              ),
+                                              SizedBox(height: 4),
+                                              TextBodyM(
+                                                "Dengan kamu membeli paket Lakoe Pro, kamu bisa menambah ${label.toLowerCase()} tanpa batas.",
+                                                color: TColors.neutralDarkDark,
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 24),
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: OutlinedButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: TextActionL("Oke! Paham"),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(height: 4),
-                                      TextBodyM(
-                                        "Dengan kamu membeli paket Lakoe Pro, kamu bisa menambah ${label.toLowerCase()} tanpa batas.",
-                                        color: TColors.neutralDarkDark,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 24),
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: OutlinedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: TextActionL("Oke! Paham"),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
           ),
         ),
       ),
