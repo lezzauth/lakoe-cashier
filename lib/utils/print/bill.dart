@@ -1,8 +1,10 @@
 import 'dart:developer';
 
-import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/services.dart';
+import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
@@ -76,6 +78,45 @@ class TBill {
         ),
       );
       bytes += generator.emptyLines(1);
+    }
+
+    if (profileOwner.packageName != "LITE") {
+      try {
+        final response =
+            await http.get(Uri.parse(profileOwner.outlets[0].logo));
+
+        if (response.statusCode == 200) {
+          final bytesImg = response.bodyBytes;
+          final image.Image? img = image.decodeImage(bytesImg);
+
+          if (img != null) {
+            final resizedImage = image.copyResize(img, width: 100);
+            final grayscaleImage = image.grayscale(resizedImage);
+            final blackWhiteImage = image.Image.from(grayscaleImage);
+
+            for (int y = 0; y < grayscaleImage.height; y++) {
+              for (int x = 0; x < grayscaleImage.width; x++) {
+                final pixel = grayscaleImage.getPixel(x, y);
+                final brightness = image.getLuminance(pixel).toInt();
+                final threshold = 128;
+                blackWhiteImage.setPixel(
+                    x,
+                    y,
+                    brightness > threshold
+                        ? image.ColorUint8.rgb(255, 255, 255)
+                        : image.ColorUint8.rgb(0, 0, 0));
+              }
+            }
+
+            final generator =
+                Generator(PaperSize.mm58, await CapabilityProfile.load());
+
+            bytes += generator.image(blackWhiteImage);
+          }
+        }
+      } catch (e) {
+        Logman.instance.info("Error: $e");
+      }
     }
 
     bytes += generator.text(
