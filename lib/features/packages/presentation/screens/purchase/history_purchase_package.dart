@@ -18,7 +18,6 @@ import 'package:lakoe_pos/features/packages/presentation/widgets/card_item_histo
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
-import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
 
 class HistoryPurchasePackageScreen extends StatelessWidget {
@@ -245,7 +244,6 @@ class CardItemPackageActive extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PackageActiveCubit, PackageActiveState>(
         builder: (context, state) {
-      Logman.instance.info("OOO $state");
       if (state is GetActivePackageSuccess) {
         PackageActive package = state.package;
         return InkWell(
@@ -260,8 +258,6 @@ class CardItemPackageActive extends StatelessWidget {
               ) as bool?;
               if (!context.mounted) return;
 
-              // if (!result!) return;
-              Logman.instance.info("XXX $result");
               if (result == true) {
                 context.read<PackageActiveCubit>().getActivePackage();
               }

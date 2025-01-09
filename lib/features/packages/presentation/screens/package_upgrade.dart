@@ -344,10 +344,16 @@ class DetailPackage extends StatelessWidget {
                           packageActive!.endPeriod.toString(),
                           color: TColors.neutralDarkDark,
                         ),
-                        TextBodyM(
-                          " • ${packageActive!.activePeriod.months} bulan ${packageActive!.activePeriod.days} hari",
-                          color: TColors.neutralDarkLight,
-                        ),
+                        if (packageActive!.activePeriod.months! > 0)
+                          TextBodyM(
+                            " • ${packageActive!.activePeriod.months} bulan ${packageActive!.activePeriod.days} hari",
+                            color: TColors.neutralDarkLight,
+                          )
+                        else
+                          TextBodyM(
+                            " • Sisa ${packageActive!.activePeriod.days} hari lagi",
+                            color: TColors.neutralDarkLight,
+                          ),
                       ],
                     )
                   : Row(

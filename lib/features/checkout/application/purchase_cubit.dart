@@ -1,4 +1,7 @@
+import 'package:dio/dio.dart';
+import 'package:dio_provider/dio_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
 
@@ -43,7 +46,15 @@ class PurchaseCubit extends Cubit<PurchaseState> {
       );
       emit(PurchaseActionSuccess(res: res));
     } catch (e) {
-      emit(PurchaseActionFailure(e.toString()));
+      if (e is DioException) {
+        final resError = e.error as DioExceptionModel;
+        String messageError = "${resError.message} (${resError.statusCode})";
+        emit(PurchaseActionFailure(messageError));
+        return;
+      } else {
+        Logman.instance.error(e.toString());
+        emit(PurchaseActionFailure(e.toString()));
+      }
     }
   }
 }

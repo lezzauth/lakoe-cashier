@@ -31,8 +31,13 @@ class TFormatter {
     }
   }
 
-  static String dateTime(String isoDate,
-      {bool withDay = false, bool withTime = true, bool withTimeZone = true}) {
+  static String dateTime(
+    String isoDate, {
+    bool withIsToday = true,
+    bool withDay = false,
+    bool withTime = true,
+    bool withTimeZone = true,
+  }) {
     DateTime dateTime = DateTime.parse(isoDate).toLocal();
     DateTime now = DateTime.now();
 
@@ -42,7 +47,7 @@ class TFormatter {
 
     String timeZone = getIndonesianTimeZone(dateTime);
 
-    if (isToday) {
+    if (isToday && withIsToday) {
       if (!withTime) {
         return "Hari ini";
       }

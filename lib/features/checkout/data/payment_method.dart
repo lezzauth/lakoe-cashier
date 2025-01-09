@@ -3,7 +3,7 @@ import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
 List<PaymentCategory> paymentMethod = [
   PaymentCategory(
-    categoryName: "E-WALLET",
+    categoryName: "E-Wallet",
     methods: [
       PaymentMethodCheckout(name: "LinkAja", logo: TImages.linkaja),
       PaymentMethodCheckout(name: "OVO", logo: TImages.ovo),
@@ -12,7 +12,7 @@ List<PaymentCategory> paymentMethod = [
     ],
   ),
   PaymentCategory(
-    categoryName: "VIRTUAL ACCOUNT",
+    categoryName: "Virtual Account",
     methods: [
       PaymentMethodCheckout(
         name: "BCA",

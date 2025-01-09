@@ -12,6 +12,7 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
 import 'package:lakoe_pos/features/checkout/data/payment_method.dart';
@@ -21,6 +22,7 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
+import 'package:package_repository/package_repository.dart';
 
 class ChekcoutMasterScreen extends StatefulWidget {
   const ChekcoutMasterScreen({super.key});
@@ -31,7 +33,7 @@ class ChekcoutMasterScreen extends StatefulWidget {
 
 class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
   Map<String, dynamic>? arg;
-  _PackageInfoCard? package;
+  _PackageInfoCard? selectedPackage;
   String? type;
 
   String capitalize(String text) {
@@ -51,7 +53,8 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
         if (arg != null) {
           type = arg?['type'];
 
-          package = _PackageInfoCard(
+          selectedPackage = _PackageInfoCard(
+            package: arg?['package'],
             logo: arg?['logo'] ?? TImages.growLogoPackage,
             colorWave: arg?['colorWave'] ?? Color(0xFF00712D),
             bgColor: arg?['bgColor'] ?? TColors.successLight,
@@ -115,7 +118,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            color: package!.bgColor,
+                            color: selectedPackage!.bgColor,
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           clipBehavior: Clip.hardEdge,
@@ -128,7 +131,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                   TImages.pakcageWaves,
                                   colorFilter: ColorFilter.mode(
                                     // Color(0xFF00712D),
-                                    package!.colorWave,
+                                    selectedPackage!.colorWave,
                                     BlendMode.srcIn,
                                   ),
                                 ),
@@ -142,7 +145,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Image.asset(
-                                      package!.logo,
+                                      selectedPackage!.logo,
                                       height: type == 'boost' ? 24 : 32,
                                     ),
                                     SizedBox(height: 16),
@@ -160,7 +163,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                             Expanded(
                                               flex: 2,
                                               child: TextHeading4(
-                                                "Lakoe ${capitalize(package!.name)}",
+                                                "Lakoe ${capitalize(selectedPackage!.name)}",
                                                 color: TColors.neutralDarkDark,
                                                 fontWeight: FontWeight.w700,
                                               ),
@@ -186,16 +189,18 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   TextHeading4(
-                                                    package!.period == 12
+                                                    selectedPackage!.period ==
+                                                            12
                                                         ? "1 Tahun"
-                                                        : "${package!.period} Bulan",
+                                                        : "${selectedPackage!.period} Bulan",
                                                     color:
                                                         TColors.neutralDarkDark,
                                                     fontWeight: FontWeight.w700,
                                                   ),
                                                   TextBodyS(
                                                     getFormattedDateRange(
-                                                        package!.period),
+                                                        selectedPackage!
+                                                            .period),
                                                     color: TColors
                                                         .neutralDarkLight,
                                                   ),
@@ -212,7 +217,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                             Expanded(
                                               flex: 1,
                                               child: TextBodyM(
-                                                "Harga Paket",
+                                                "Harga",
                                                 color: TColors.neutralDarkDark,
                                               ),
                                             ),
@@ -223,16 +228,10 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   TextHeading4(
-                                                    TFormatter.formatToRupiah(
-                                                        package!.totalPrice),
+                                                    "${TFormatter.formatToRupiah(selectedPackage!.package!.originPrice / selectedPackage!.period)}/bulan",
                                                     color:
                                                         TColors.neutralDarkDark,
                                                     fontWeight: FontWeight.w700,
-                                                  ),
-                                                  TextBodyS(
-                                                    "${TFormatter.formatToRupiah(package!.pricePerMonth)}/bulan",
-                                                    color: TColors
-                                                        .neutralDarkLight,
                                                   ),
                                                 ],
                                               ),
@@ -264,17 +263,83 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                               "Ringkasan Tagihan",
                               color: TColors.neutralDarkDark,
                             ),
-                            SizedBox(height: 12),
+                            SizedBox(height: 8),
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 4),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextBodyL(
+                                    "Subtotal",
+                                    color: TColors.neutralDarkDark,
+                                  ),
+                                  TextBodyL(
+                                    selectedPackage != null
+                                        ? TFormatter.formatToRupiah(
+                                            selectedPackage!
+                                                .package!.originPrice)
+                                        : '-',
+                                    color: TColors.neutralDarkDark,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            if (selectedPackage != null &&
+                                selectedPackage!.package!.save != 0)
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 4),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        TextBodyL(
+                                          "Diskon",
+                                          color: TColors.neutralDarkDark,
+                                        ),
+                                        SizedBox(width: 8),
+                                        if (selectedPackage!
+                                                .package!.discount !=
+                                            0)
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                              vertical: 4,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: TColors.errorLight,
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                            ),
+                                            child: TextHeading5(
+                                              "${selectedPackage!.package!.discount}%",
+                                              color: TColors.error,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                    TextBodyL(
+                                      "-${TFormatter.formatToRupiah(selectedPackage!.package!.save)}",
+                                      color: TColors.success,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 TextBodyL(
-                                  "Subtotal",
+                                  "Total",
                                   color: TColors.neutralDarkDark,
                                 ),
-                                TextHeading3(
+                                TextHeading2(
                                   TFormatter.formatToRupiah(
-                                      package!.totalPrice),
+                                      selectedPackage!.totalPrice),
                                   color: TColors.neutralDarkDark,
                                 ),
                               ],
@@ -443,25 +508,27 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                             color: TColors.neutralDarkLight,
                           ),
                           TextHeading2(
-                            TFormatter.formatToRupiah(package!.totalPrice),
+                            TFormatter.formatToRupiah(
+                                selectedPackage!.totalPrice),
                             color: TColors.neutralDarkDark,
                           ),
                         ],
                       ),
                       ElevatedButton(
-                        onPressed: selectedMethod == null || package == null
-                            ? null
-                            : () {
-                                Navigator.pushNamed(
-                                  context,
-                                  "/payment/prepared",
-                                  arguments: {
-                                    'package': package,
-                                    'selectedCategory': selectedCategory,
-                                    'selectedMethod': selectedMethod,
+                        onPressed:
+                            selectedMethod == null || selectedPackage == null
+                                ? null
+                                : () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      "/payment/prepared",
+                                      arguments: {
+                                        'package': selectedPackage,
+                                        'selectedCategory': selectedCategory,
+                                        'selectedMethod': selectedMethod,
+                                      },
+                                    );
                                   },
-                                );
-                              },
                         style: ButtonStyle(
                           minimumSize: WidgetStateProperty.all(
                             Size(160, 0),
@@ -490,6 +557,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
 }
 
 class _PackageInfoCard {
+  PackagePriceModel? package;
   final String logo;
   final Color colorWave;
   final Color bgColor;
@@ -499,6 +567,7 @@ class _PackageInfoCard {
   final int totalPrice;
 
   _PackageInfoCard({
+    required this.package,
     required this.logo,
     required this.colorWave,
     required this.bgColor,

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:logman/logman.dart';
+import 'package:lakoe_pos/common/widgets/form/custom_radio.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 import 'package:package_repository/package_repository.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
@@ -12,17 +16,100 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
-class PackageComparisonTable extends StatelessWidget {
+class PackageComparisonTable extends StatefulWidget {
   const PackageComparisonTable({
     super.key,
-    required this.package,
+    required this.packages,
     required this.peviousPackage,
     required this.currentPackage,
   });
 
-  final PackagePriceModel package;
+  final List<PackagePriceModel> packages;
   final PackageModel peviousPackage;
   final PackageModel currentPackage;
+
+  @override
+  State<PackageComparisonTable> createState() => _PackageComparisonTableState();
+}
+
+class _PackageComparisonTableState extends State<PackageComparisonTable> {
+  void _openModalBottomSheet(BuildContext context) {
+    String? selectedPeriod;
+    PackagePriceModel selectedPackage = widget.packages[2];
+
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return CustomBottomsheet(
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: 16),
+                      child: const TextHeading2(
+                        "Diperpanjang berapa lama?",
+                      ),
+                    ),
+                    ...widget.packages.map((data) {
+                      return CardListPeriod<String?>(
+                        package: data,
+                        value: data.period.toString(),
+                        groupValue: selectedPeriod ?? "6",
+                        onChanged: (value) {
+                          setState(() {
+                            selectedPeriod = value;
+                            selectedPackage = data;
+                          });
+                        },
+                      );
+                    }),
+                    SizedBox(height: 16),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            "/checkout",
+                            arguments: {
+                              'package': selectedPackage,
+                              'type': 'package',
+                              'logo': selectedPackage.name == "GROW"
+                                  ? TImages.growLogoPackage
+                                  : TImages.proLogoPackage,
+                              'colorWave': selectedPackage.name == "GROW"
+                                  ? Color(0xFF00712D)
+                                  : Color(0xFF9306AF),
+                              'bgColor': selectedPackage.name == "GROW"
+                                  ? TColors.successLight
+                                  : Color(0xFFF4DEF8),
+                              'packageName': selectedPackage.name,
+                              'period': selectedPackage.period,
+                              'pricePerMonth': selectedPackage.pricePerMonth,
+                              'finalPrice': selectedPackage.price,
+                            },
+                          );
+                        },
+                        child: TextActionL("Lanjutkan"),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +156,9 @@ class PackageComparisonTable extends StatelessWidget {
                   ),
                   child: Center(
                     child: Image.asset(
-                      peviousPackage.name == "LITE"
+                      widget.peviousPackage.name == "LITE"
                           ? TImages.liteLogoLow
-                          : peviousPackage.name == "GROW"
+                          : widget.peviousPackage.name == "GROW"
                               ? TImages.growLogoLow
                               : TImages.proLogoLow,
                       height: 20,
@@ -107,9 +194,9 @@ class PackageComparisonTable extends StatelessWidget {
                   ),
                   child: Center(
                     child: Image.asset(
-                      currentPackage.name == "LITE"
+                      widget.currentPackage.name == "LITE"
                           ? TImages.liteLogoPackage
-                          : currentPackage.name == "GROW"
+                          : widget.currentPackage.name == "GROW"
                               ? TImages.growLogoPackage
                               : TImages.proLogoPackage,
                       height: 20,
@@ -122,42 +209,42 @@ class PackageComparisonTable extends StatelessWidget {
               context,
               0,
               "Transaksi perhari",
-              peviousPackage.orders,
-              currentPackage.orders,
+              widget.peviousPackage.orders,
+              widget.currentPackage.orders,
             ),
             _buildTableRow(
               context,
               1,
               "Data menu/produk",
-              peviousPackage.products,
-              currentPackage.products,
+              widget.peviousPackage.products,
+              widget.currentPackage.products,
             ),
             _buildTableRow(
               context,
               2,
               "Data Karyawan",
-              peviousPackage.employees,
-              currentPackage.employees,
+              widget.peviousPackage.employees,
+              widget.currentPackage.employees,
             ),
             _buildTableRow(
               context,
               3,
               "Data Pelanggan",
-              peviousPackage.customers,
-              currentPackage.customers,
+              widget.peviousPackage.customers,
+              widget.currentPackage.customers,
             ),
             _buildTableRow(
               context,
               4,
               "Data Meja",
-              peviousPackage.tables,
-              currentPackage.tables,
+              widget.peviousPackage.tables,
+              widget.currentPackage.tables,
             ),
             _buildTableRow(
               context,
               5,
-              "Logo di Struk",
-              (peviousPackage.name == "LITE") ? 00 : 123,
+              "Logo di struk",
+              (widget.peviousPackage.name == "LITE") ? 00 : 123,
               123,
               isLast: true,
             ),
@@ -176,9 +263,7 @@ class PackageComparisonTable extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: 46,
           child: OutlinedButton(
-            onPressed: () {
-              Logman.instance.info("Extending the active package");
-            },
+            onPressed: () => _openModalBottomSheet(context),
             child: TextActionL("Perpanjang"),
           ),
         ),
@@ -200,7 +285,14 @@ TableRow _buildTableRow(
       : TColors.neutralLightLight;
 
   return TableRow(
-    decoration: BoxDecoration(color: backgroundColor),
+    decoration: BoxDecoration(
+      color: backgroundColor,
+      borderRadius: isLast
+          ? BorderRadius.only(
+              bottomLeft: Radius.circular(12.0),
+            )
+          : null,
+    ),
     children: [
       TableCell(
         verticalAlignment: TableCellVerticalAlignment.intrinsicHeight,
@@ -379,4 +471,88 @@ TableRow _buildTableRow(
       ),
     ],
   );
+}
+
+class CardListPeriod<T> extends StatelessWidget {
+  final T value;
+  final T groupValue;
+  final ValueChanged<T?> onChanged;
+  final PackagePriceModel package;
+
+  const CardListPeriod({
+    super.key,
+    required this.value,
+    required this.groupValue,
+    required this.onChanged,
+    required this.package,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final title = package.period == 12 ? "1 Tahun" : "${package.period} Bulan";
+    return GestureDetector(
+      onTap: () => onChanged(value),
+      child: Container(
+        padding: EdgeInsets.all(16.0),
+        margin: EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          color: TColors.neutralLightLightest,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+            color: TColors.neutralLightDark,
+            width: 1.0,
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                CustomRadio(
+                  value: value,
+                  groupValue: groupValue,
+                  onChanged: onChanged,
+                ),
+                SizedBox(width: 12),
+                TextHeading3(
+                  title,
+                  color: TColors.neutralDarkDark,
+                ),
+                SizedBox(width: 8),
+                if (package.discount != 0)
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: TColors.errorLight,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: TextHeading5(
+                      "${package.discount}%",
+                      color: TColors.error,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+              ],
+            ),
+            Row(
+              children: [
+                TextHeading3(
+                  TFormatter.formatToRupiah(package.pricePerMonth),
+                  color: TColors.neutralDarkDark,
+                  fontWeight: FontWeight.w700,
+                ),
+                TextBodyS(
+                  "/bulan",
+                  color: TColors.neutralDarkLightest,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

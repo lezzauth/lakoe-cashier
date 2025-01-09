@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:package_repository/package_repository.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
@@ -22,6 +23,140 @@ class PackageComparisonTable extends StatelessWidget {
   final PackagePriceModel package;
   final PackageModel currentPackage;
   final PackageModel upgradedPackage;
+
+  void _handleCheckout(BuildContext context) {
+    Navigator.pushNamed(
+      context,
+      "/checkout",
+      arguments: {
+        'package': package,
+        'type': 'package',
+        'logo': package.name == "GROW"
+            ? TImages.growLogoPackage
+            : TImages.proLogoPackage,
+        'colorWave':
+            package.name == "GROW" ? Color(0xFF00712D) : Color(0xFF9306AF),
+        'bgColor':
+            package.name == "GROW" ? TColors.successLight : Color(0xFFF4DEF8),
+        'packageName': package.name,
+        'period': package.period,
+        'pricePerMonth': package.pricePerMonth,
+        'finalPrice': package.price,
+      },
+    );
+  }
+
+  void _handleUpgrade(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return CustomBottomsheet(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 12,
+            ),
+            child: Column(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset(
+                      TImages.infinity,
+                      height: 32,
+                    ),
+                    SizedBox(height: 16),
+                    TextHeading2(
+                      "Baca dulu, yuk!",
+                      color: TColors.neutralDarkDark,
+                    ),
+                    SizedBox(height: 4),
+                    Text.rich(
+                      TextSpan(
+                        text: "Dengan melakukan upgrade ke paket ",
+                        style: TextStyle(
+                          color: TColors.neutralDarkDark,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: "Pro",
+                            style: TextStyle(
+                              color: TColors.neutralDarkDark,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          TextSpan(
+                            text: ", sisa masa aktif paket ",
+                            style: TextStyle(
+                              color: TColors.neutralDarkDark,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "Grow",
+                            style: TextStyle(
+                              color: TColors.neutralDarkDark,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          TextSpan(
+                            text: " kamu yang tersisa akan ",
+                            style: TextStyle(
+                              color: TColors.neutralDarkDark,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "dihanguskan",
+                            style: TextStyle(
+                              color: TColors.neutralDarkDark,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          TextSpan(
+                            text: " dan tidak dapat dikembalikan.",
+                            style: TextStyle(
+                              color: TColors.neutralDarkDark,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    TextBodyM(
+                      "Apakah kamu yakin ingin lanjutkan upgrade?",
+                      color: TColors.neutralDarkDark,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: TextActionL("Batalkan"),
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _handleCheckout(context);
+                        },
+                        child: TextActionL("Oke! Lanjutkan"),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,8 +294,8 @@ class PackageComparisonTable extends StatelessWidget {
             _buildTableRow(
               context,
               5,
-              "Logo di Struk",
-              (upgradedPackage.name == "LITE") ? 00 : 123,
+              "Logo di struk",
+              (currentPackage.name == "LITE") ? 00 : 123,
               123,
               isLast: true,
             ),
@@ -178,26 +313,11 @@ class PackageComparisonTable extends StatelessWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width,
           child: ElevatedButton(
-            onPressed: () => Navigator.pushNamed(
-              context,
-              "/checkout",
-              arguments: {
-                'type': 'package',
-                'logo': package.name == "GROW"
-                    ? TImages.growLogoPackage
-                    : TImages.proLogoPackage,
-                'colorWave': package.name == "GROW"
-                    ? Color(0xFF00712D)
-                    : Color(0xFF9306AF),
-                'bgColor': package.name == "GROW"
-                    ? TColors.successLight
-                    : Color(0xFFF4DEF8),
-                'packageName': package.name,
-                'period': package.period,
-                'pricePerMonth': package.pricePerMonth,
-                'finalPrice': package.price,
-              },
-            ),
+            onPressed: () {
+              (package.name == "LITE")
+                  ? _handleCheckout(context)
+                  : _handleUpgrade(context);
+            },
             child: TextActionL((package.name == "LITE")
                 ? "Langganan Sekarang"
                 : "Upgrade Sekarang"),
@@ -221,7 +341,14 @@ TableRow _buildTableRow(
       : TColors.neutralLightLight;
 
   return TableRow(
-    decoration: BoxDecoration(color: backgroundColor),
+    decoration: BoxDecoration(
+      color: backgroundColor,
+      borderRadius: isLast
+          ? BorderRadius.only(
+              bottomLeft: Radius.circular(12.0),
+            )
+          : null,
+    ),
     children: [
       TableCell(
         verticalAlignment: TableCellVerticalAlignment.intrinsicHeight,

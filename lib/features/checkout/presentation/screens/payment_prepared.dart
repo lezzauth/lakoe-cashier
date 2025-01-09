@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/loading_screen.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
@@ -60,6 +62,21 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
     return BlocListener<PurchaseCubit, PurchaseState>(
       listener: (context, state) {
         if (state is PurchaseActionInProgress) {
+        } else if (state is PurchaseActionFailure) {
+          if (state.error.contains("400")) {
+            CustomToast.show(
+              "Opps, terjadi kesalahan. Coba lagi nanti.",
+              duration: 10,
+              position: "bottom",
+              backgroundColor: TColors.error,
+            );
+            Future.delayed(const Duration(seconds: 4), () {
+              if (!context.mounted) return;
+              Navigator.pop(context);
+            });
+          } else {
+            CustomToast.show(state.error, duration: 10);
+          }
         } else if (state is PurchaseActionSuccess) {
           final PurchaseDetail res = state.res;
 

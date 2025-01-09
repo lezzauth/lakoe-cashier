@@ -373,6 +373,7 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                   child: TextBodyM(
                                     TFormatter.dateTime(
                                       state.res.purchase.createdAt,
+                                      withIsToday: false,
                                       withTimeZone: false,
                                     ),
                                     color: TColors.neutralDarkMedium,
@@ -431,9 +432,9 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                   SizedBox(width: 8),
                                   Flexible(
                                     child: TextBodyM(
-                                      "- ${TFormatter.formatToRupiah(selectedPackage!.save)}",
-                                      color: TColors.neutralDarkMedium,
-                                      fontWeight: FontWeight.w600,
+                                      "-${TFormatter.formatToRupiah(selectedPackage!.save)}",
+                                      color: TColors.success,
+                                      fontWeight: FontWeight.w700,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.end,
