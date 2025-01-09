@@ -17,8 +17,7 @@ class _TermsConditionScreenState extends State<TermsConditionScreen> {
         title: "Syarat & Ketentuan",
       ),
       body: InAppWebViewScreen(
-        url:
-            "https://cumbersome-ravioli-912.notion.site/Syarat-dan-Ketentuan-Penggunaan-Platform-Lakoe-907dfcec5484487cb784724025142c40",
+        url: "https://www.lakoe.id/terms-and-conditions",
       ),
     );
   }
