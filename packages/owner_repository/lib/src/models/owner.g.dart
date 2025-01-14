@@ -108,3 +108,37 @@ Map<String, dynamic> _$$RequestOTPResImplToJson(_$RequestOTPResImpl instance) =>
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };
+
+_$DeleteAccountResImpl _$$DeleteAccountResImplFromJson(
+        Map<String, dynamic> json) =>
+    _$DeleteAccountResImpl(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      phoneNumber: json['phoneNumber'] as String,
+      email: json['email'] as String?,
+      balance: json['balance'] as String,
+      emailVerified: json['emailVerified'] as bool,
+      phoneVerified: json['phoneVerified'] as bool,
+      packageName: json['packageName'] as String,
+      packageExpiretAt: json['packageExpiretAt'] as String?,
+      isDeleted: json['isDeleted'] as bool,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
+    );
+
+Map<String, dynamic> _$$DeleteAccountResImplToJson(
+        _$DeleteAccountResImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'phoneNumber': instance.phoneNumber,
+      'email': instance.email,
+      'balance': instance.balance,
+      'emailVerified': instance.emailVerified,
+      'phoneVerified': instance.phoneVerified,
+      'packageName': instance.packageName,
+      'packageExpiretAt': instance.packageExpiretAt,
+      'isDeleted': instance.isDeleted,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+    };

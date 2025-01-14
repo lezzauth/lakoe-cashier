@@ -23,6 +23,7 @@ abstract class OwnerRepository {
   Future<UpdateOwnerModel> updatePINAccount(UpdatePinDto dto);
   Future<RequestOTPRes> requestOTP(RequestOTPDto dto);
   Future<UpdateOwnerModel> updatePhoneNumber(UpdatePhoneNumberDto dto);
+  Future<DeleteAccountRes> deleteAccount(DeleteAccountDto dto);
 }
 
 class OwnerRepositoryImpl implements OwnerRepository {
@@ -141,5 +142,18 @@ class OwnerRepositoryImpl implements OwnerRepository {
     return response.data!
         .map((element) => OutletModel.fromJson(element))
         .toList();
+  }
+
+  @override
+  Future<DeleteAccountRes> deleteAccount(DeleteAccountDto dto) async {
+    final Options options = await _getOptions();
+
+    final res = await _dio.delete(
+      "$_baseURL/profile",
+      data: dto.toJson(),
+      options: options,
+    );
+
+    return DeleteAccountRes.fromJson(res.data);
   }
 }

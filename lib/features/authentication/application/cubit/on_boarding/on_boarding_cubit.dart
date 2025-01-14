@@ -18,10 +18,12 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
     } catch (e) {
       if (e is DioException) {
         final resError = e.error as DioExceptionModel;
+
         if (resError.statusCode == 429) {
           emit(OnBoardingActionFailure("Too many requests (429)"));
         } else {
-          emit(OnBoardingActionFailure(e.message ?? "An error occurred."));
+          emit(OnBoardingActionFailure(
+              resError.message ?? "An error occurred."));
         }
       } else {
         emit(OnBoardingActionFailure("Unexpected error occurred: $e"));

@@ -2,30 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
-import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/features/account/manage_account/application/delete_account_cubit.dart';
+import 'package:lakoe_pos/features/account/manage_account/application/delete_account_state.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
-import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/sizes.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:pinput/pinput.dart';
+import 'package:token_provider/token_provider.dart';
 
-class NewOtpInputScreen extends StatefulWidget {
-  const NewOtpInputScreen({super.key});
+class OtpInputDeleteAccountScreen extends StatefulWidget {
+  const OtpInputDeleteAccountScreen({super.key});
 
   @override
-  State<NewOtpInputScreen> createState() => _NewOtpInputScreenState();
+  State<OtpInputDeleteAccountScreen> createState() => _NewOtpInputScreenState();
 }
 
-class _NewOtpInputScreenState extends State<NewOtpInputScreen>
+class _NewOtpInputScreenState extends State<OtpInputDeleteAccountScreen>
     with SingleTickerProviderStateMixin {
+  final TokenProvider _tokenProvider = TokenProvider();
   final OwnerRepository _ownerRepository = OwnerRepositoryImpl();
   final TextEditingController _otpController = TextEditingController();
   late AnimationController _animationController;
@@ -34,8 +37,6 @@ class _NewOtpInputScreenState extends State<NewOtpInputScreen>
   String messageError = "Kode OTP Salah. Cek lagi.";
   bool isRepeat = false;
   DateTime countdownDate = DateTime.now();
-
-  late String token;
   RequestOTPRes? data;
 
   @override
@@ -70,15 +71,12 @@ class _NewOtpInputScreenState extends State<NewOtpInputScreen>
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final RequestOTPRes? args =
+        ModalRoute.of(context)?.settings.arguments as RequestOTPRes?;
 
     if (args != null) {
-      final RequestOTPRes otpData = args['otpData'];
-
       setState(() {
-        data = otpData;
-        token = args['token'];
+        data = args;
       });
     } else {
       Navigator.pop(context);
@@ -95,6 +93,70 @@ class _NewOtpInputScreenState extends State<NewOtpInputScreen>
       isRepeat = false;
       countdownDate = DateTime.now();
     });
+  }
+
+  void _showDeletionSuccessBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (context) {
+        return CustomBottomsheet(
+          hasGrabber: false,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 12,
+            ),
+            child: Column(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    UiIcons(
+                      TIcons.shieldKeyhole,
+                      size: 40,
+                      fit: BoxFit.contain,
+                      color: TColors.primary,
+                    ),
+                    SizedBox(height: 16),
+                    TextHeading3(
+                      "Akunmu sedang dalam proses penghapusan",
+                      color: TColors.neutralDarkDark,
+                    ),
+                    SizedBox(height: 4),
+                    TextBodyM(
+                      "Kamu tidak bisa lagi menggunakannya. Jika ingin membatalkan proses ini, silakan hubungi tim Support Lakoe atau gunakan nomor lain untuk melanjutkan login.",
+                      color: TColors.neutralDarkDark,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await _tokenProvider.clearAll();
+
+                      if (!context.mounted) return;
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        "/",
+                        (route) => false,
+                      );
+                      setState(() {
+                        messageError = "";
+                      });
+                    },
+                    child: TextActionL("Oke, Paham"),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -117,61 +179,22 @@ class _NewOtpInputScreenState extends State<NewOtpInputScreen>
       border: Border.all(color: TColors.primary, width: 1.5),
     );
 
-    return BlocConsumer<OwnerCubit, OwnerState>(
+    return BlocConsumer<DeleteAccountCubit, DeleteAccountState>(
         listener: (context, state) async {
-      if (state is OwnerActionSuccess) {
-        CustomToast.showWithContext(
-          context,
-          "Nomor WA berhasil diubah",
-          duration: 1,
-          backgroundColor: TColors.success,
-        );
-        await Future.delayed(Duration(seconds: 1));
-
-        if (!context.mounted) return;
-        Navigator.pop(context, true);
-        Navigator.pop(context, true);
-      } else if (state is OwnerActionFailure) {
-        if (state.error.contains("expired")) {
-          showModalBottomSheet(
-            context: context,
-            enableDrag: false,
-            isDismissible: false,
-            builder: (context) {
-              return PopScope(
-                canPop: false,
-                onPopInvokedWithResult: (didPop, result) async {},
-                child: CustomBottomsheet(
-                  hasGrabber: false,
-                  child: ErrorDisplay(
-                    imageSrc: TImages.generalIllustration,
-                    title: "Ups, Terjadi sedikit masalah!",
-                    description:
-                        "Kamu perlu mengulangi prosesnya dengan mamasukan ulang PIN kamu.",
-                    actionTitlePrimary: "Masukan Ulang PIN",
-                    onActionPrimary: () {
-                      Navigator.pop(context, true);
-                      Navigator.pop(context, true);
-                      Navigator.pop(context, true);
-                    },
-                  ),
-                ),
-              );
-            },
-          );
+      if (state is DeleteAccountLoadSuccess) {
+        _showDeletionSuccessBottomSheet();
+      } else if (state is DeleteAccountLoadFailure) {
+        if (state.error.contains("400")) {
+          setState(() {
+            messageError = "Kode OTP Salah. Cek lagi.";
+          });
         } else {
-          CustomToast.showWithContext(
-            context,
-            "Nomor WA gagal diubah",
-            duration: 1,
-            backgroundColor: TColors.error,
-          );
-          await Future.delayed(Duration(seconds: 1));
-
-          if (!context.mounted) return;
-          Navigator.pop(context, true);
-          Navigator.pop(context, true);
+          setState(() {
+            messageError = state.error;
+          });
         }
+
+        _animationController.forward();
       }
     }, builder: (context, state) {
       return Scaffold(
@@ -210,36 +233,41 @@ class _NewOtpInputScreenState extends State<NewOtpInputScreen>
                         ],
                       ),
                     ),
-                    AnimatedBuilder(
-                      animation: _animationController,
-                      builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(_animation.value, 0),
-                          child: Pinput(
-                            defaultPinTheme: defaultPinTheme,
-                            focusedPinTheme: focusedPinTheme,
-                            length: 4,
-                            autofocus: true,
-                            obscureText: true,
-                            controller: _otpController,
-                            onCompleted: (value) {
-                              _otpController.clear();
+                    BlocBuilder<ReasonsCubit, ReasonsState>(
+                        builder: (context, state) {
+                      return AnimatedBuilder(
+                        animation: _animationController,
+                        builder: (context, child) {
+                          return Transform.translate(
+                            offset: Offset(_animation.value, 0),
+                            child: Pinput(
+                              defaultPinTheme: defaultPinTheme,
+                              focusedPinTheme: focusedPinTheme,
+                              length: 4,
+                              autofocus: true,
+                              obscureText: true,
+                              controller: _otpController,
+                              onCompleted: (value) {
+                                context
+                                    .read<DeleteAccountCubit>()
+                                    .deleteAccount(
+                                      DeleteAccountDto(
+                                        phoneNumber: data!.target,
+                                        otp: value,
+                                        reasons: state.reasons,
+                                      ),
+                                    );
 
-                              context.read<OwnerCubit>().updatePhoneNumber(
-                                    UpdatePhoneNumberDto(
-                                      token: token,
-                                      phoneNumber: data!.target,
-                                      otp: value,
-                                    ),
-                                  );
-                            },
-                          ),
-                        );
-                      },
-                    ),
+                                _otpController.clear();
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    }),
                     Padding(
                       padding: EdgeInsets.only(top: 12),
-                      child: (state is OwnerActionFailure)
+                      child: (state is DeleteAccountLoadFailure)
                           ? Container(
                               margin: const EdgeInsets.only(top: 12),
                               child: Text(

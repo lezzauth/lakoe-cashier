@@ -70,3 +70,24 @@ class RequestOTPRes with _$RequestOTPRes {
   factory RequestOTPRes.fromJson(Map<String, Object?> json) =>
       _$RequestOTPResFromJson(json);
 }
+
+@freezed
+class DeleteAccountRes with _$DeleteAccountRes {
+  const factory DeleteAccountRes({
+    required String id,
+    required String name,
+    required String phoneNumber,
+    String? email,
+    required String balance,
+    required bool emailVerified,
+    required bool phoneVerified,
+    required String packageName,
+    String? packageExpiretAt,
+    required bool isDeleted,
+    required String createdAt,
+    required String updatedAt,
+  }) = _DeleteAccountRes;
+
+  factory DeleteAccountRes.fromJson(Map<String, Object?> json) =>
+      _$DeleteAccountResFromJson(json);
+}

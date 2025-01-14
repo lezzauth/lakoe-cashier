@@ -66,3 +66,20 @@ Map<String, dynamic> _$$RequestOTPDtoImplToJson(_$RequestOTPDtoImpl instance) =>
     <String, dynamic>{
       'phoneNumber': instance.phoneNumber,
     };
+
+_$DeleteAccountDtoImpl _$$DeleteAccountDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$DeleteAccountDtoImpl(
+      phoneNumber: json['phoneNumber'] as String,
+      otp: json['otp'] as String,
+      reasons:
+          (json['reasons'] as List<dynamic>).map((e) => e as String).toList(),
+    );
+
+Map<String, dynamic> _$$DeleteAccountDtoImplToJson(
+        _$DeleteAccountDtoImpl instance) =>
+    <String, dynamic>{
+      'phoneNumber': instance.phoneNumber,
+      'otp': instance.otp,
+      'reasons': instance.reasons,
+    };

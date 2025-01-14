@@ -838,3 +838,199 @@ abstract class _RequestOTPDto implements RequestOTPDto {
   _$$RequestOTPDtoImplCopyWith<_$RequestOTPDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+DeleteAccountDto _$DeleteAccountDtoFromJson(Map<String, dynamic> json) {
+  return _DeleteAccountDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DeleteAccountDto {
+  String get phoneNumber => throw _privateConstructorUsedError;
+  String get otp => throw _privateConstructorUsedError;
+  List<String> get reasons => throw _privateConstructorUsedError;
+
+  /// Serializes this DeleteAccountDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of DeleteAccountDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $DeleteAccountDtoCopyWith<DeleteAccountDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DeleteAccountDtoCopyWith<$Res> {
+  factory $DeleteAccountDtoCopyWith(
+          DeleteAccountDto value, $Res Function(DeleteAccountDto) then) =
+      _$DeleteAccountDtoCopyWithImpl<$Res, DeleteAccountDto>;
+  @useResult
+  $Res call({String phoneNumber, String otp, List<String> reasons});
+}
+
+/// @nodoc
+class _$DeleteAccountDtoCopyWithImpl<$Res, $Val extends DeleteAccountDto>
+    implements $DeleteAccountDtoCopyWith<$Res> {
+  _$DeleteAccountDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of DeleteAccountDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? phoneNumber = null,
+    Object? otp = null,
+    Object? reasons = null,
+  }) {
+    return _then(_value.copyWith(
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      otp: null == otp
+          ? _value.otp
+          : otp // ignore: cast_nullable_to_non_nullable
+              as String,
+      reasons: null == reasons
+          ? _value.reasons
+          : reasons // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$DeleteAccountDtoImplCopyWith<$Res>
+    implements $DeleteAccountDtoCopyWith<$Res> {
+  factory _$$DeleteAccountDtoImplCopyWith(_$DeleteAccountDtoImpl value,
+          $Res Function(_$DeleteAccountDtoImpl) then) =
+      __$$DeleteAccountDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String phoneNumber, String otp, List<String> reasons});
+}
+
+/// @nodoc
+class __$$DeleteAccountDtoImplCopyWithImpl<$Res>
+    extends _$DeleteAccountDtoCopyWithImpl<$Res, _$DeleteAccountDtoImpl>
+    implements _$$DeleteAccountDtoImplCopyWith<$Res> {
+  __$$DeleteAccountDtoImplCopyWithImpl(_$DeleteAccountDtoImpl _value,
+      $Res Function(_$DeleteAccountDtoImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of DeleteAccountDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? phoneNumber = null,
+    Object? otp = null,
+    Object? reasons = null,
+  }) {
+    return _then(_$DeleteAccountDtoImpl(
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      otp: null == otp
+          ? _value.otp
+          : otp // ignore: cast_nullable_to_non_nullable
+              as String,
+      reasons: null == reasons
+          ? _value._reasons
+          : reasons // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$DeleteAccountDtoImpl implements _DeleteAccountDto {
+  const _$DeleteAccountDtoImpl(
+      {required this.phoneNumber,
+      required this.otp,
+      required final List<String> reasons})
+      : _reasons = reasons;
+
+  factory _$DeleteAccountDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DeleteAccountDtoImplFromJson(json);
+
+  @override
+  final String phoneNumber;
+  @override
+  final String otp;
+  final List<String> _reasons;
+  @override
+  List<String> get reasons {
+    if (_reasons is EqualUnmodifiableListView) return _reasons;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_reasons);
+  }
+
+  @override
+  String toString() {
+    return 'DeleteAccountDto(phoneNumber: $phoneNumber, otp: $otp, reasons: $reasons)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DeleteAccountDtoImpl &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.otp, otp) || other.otp == otp) &&
+            const DeepCollectionEquality().equals(other._reasons, _reasons));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, phoneNumber, otp,
+      const DeepCollectionEquality().hash(_reasons));
+
+  /// Create a copy of DeleteAccountDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DeleteAccountDtoImplCopyWith<_$DeleteAccountDtoImpl> get copyWith =>
+      __$$DeleteAccountDtoImplCopyWithImpl<_$DeleteAccountDtoImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$DeleteAccountDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _DeleteAccountDto implements DeleteAccountDto {
+  const factory _DeleteAccountDto(
+      {required final String phoneNumber,
+      required final String otp,
+      required final List<String> reasons}) = _$DeleteAccountDtoImpl;
+
+  factory _DeleteAccountDto.fromJson(Map<String, dynamic> json) =
+      _$DeleteAccountDtoImpl.fromJson;
+
+  @override
+  String get phoneNumber;
+  @override
+  String get otp;
+  @override
+  List<String> get reasons;
+
+  /// Create a copy of DeleteAccountDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DeleteAccountDtoImplCopyWith<_$DeleteAccountDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

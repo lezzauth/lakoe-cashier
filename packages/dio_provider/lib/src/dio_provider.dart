@@ -81,7 +81,11 @@ class DioProvider {
           switch (e.response!.statusCode) {
             case 401:
               return handler.reject(
-                _createDioException(e, "jwt expired", "Token has expired"),
+                _createDioException(
+                  e,
+                  e.response!.data['message'],
+                  e.response!.statusMessage ?? "Unauthorized",
+                ),
               );
             case 402:
               return handler.reject(

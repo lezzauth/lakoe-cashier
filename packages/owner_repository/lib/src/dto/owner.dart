@@ -56,3 +56,15 @@ class RequestOTPDto with _$RequestOTPDto {
   factory RequestOTPDto.fromJson(Map<String, Object?> json) =>
       _$RequestOTPDtoFromJson(json);
 }
+
+@freezed
+class DeleteAccountDto with _$DeleteAccountDto {
+  const factory DeleteAccountDto({
+    required String phoneNumber,
+    required String otp,
+    required List<String> reasons,
+  }) = _DeleteAccountDto;
+
+  factory DeleteAccountDto.fromJson(Map<String, Object?> json) =>
+      _$DeleteAccountDtoFromJson(json);
+}

@@ -6,6 +6,7 @@ class UiIcons extends StatelessWidget {
   final double size;
   final Function()? onTap;
   final Color color;
+  final BoxFit fit;
 
   const UiIcons(
     this.assetName, {
@@ -13,6 +14,7 @@ class UiIcons extends StatelessWidget {
     this.size = 24,
     this.onTap,
     this.color = Colors.black,
+    this.fit = BoxFit.scaleDown,
   });
 
   @override
@@ -24,7 +26,7 @@ class UiIcons extends StatelessWidget {
         assetName,
         height: size,
         width: size,
-        fit: BoxFit.scaleDown,
+        fit: fit,
         colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
       ),
     );

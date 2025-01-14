@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
+import 'package:lakoe_pos/features/account/manage_account/application/delete_account_cubit.dart';
+import 'package:lakoe_pos/features/account/manage_account/presentation/screens/otp_input.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/edit_acccount_pin.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/otp_input.dart';
 import 'package:lakoe_pos/features/checkout/presentation/screens/payment_failed.dart';
@@ -293,6 +295,10 @@ class _AppState extends State<App> {
 
         //Payment Method
         BlocProvider(create: (context) => PaymentMethodCubit()),
+
+        //Delete Account
+        BlocProvider(create: (context) => ReasonsCubit()),
+        BlocProvider(create: (context) => DeleteAccountCubit()),
       ],
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -479,6 +485,8 @@ class _AppState extends State<App> {
             "/delete_account": (context) => const DeleteAccountScreen(),
             "/delete_account/reason": (context) =>
                 const DeleteAccountReasonScreen(),
+            "/otp-input-delete-account": (context) =>
+                OtpInputDeleteAccountScreen(),
 
             // Package
             "/packages": (context) => const PackageMasterScreen(),

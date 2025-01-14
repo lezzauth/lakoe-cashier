@@ -163,17 +163,20 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
             child: Column(
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/delete_account/reason");
-                  },
+                  onPressed: (isAgreed)
+                      ? () {
+                          Navigator.pushNamed(
+                              context, "/delete_account/reason");
+                        }
+                      : null,
                   style: ElevatedButton.styleFrom(
                     foregroundColor: TColors.neutralLightLightest,
                     backgroundColor: TColors.error,
-                    minimumSize: const Size(double.infinity, 48),
+                    minimumSize: const Size(double.infinity, 40),
                   ),
                   child: const TextActionL("Lanjut"),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 6),
                 OutlinedButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -181,7 +184,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                   style: OutlinedButton.styleFrom(
                     foregroundColor: TColors.error,
                     side: const BorderSide(color: TColors.error),
-                    minimumSize: const Size(double.infinity, 48),
+                    minimumSize: const Size(double.infinity, 40),
                   ),
                   child: const TextActionL("Batal"),
                 ),
