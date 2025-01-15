@@ -32,7 +32,16 @@ class ChekcoutMasterScreen extends StatefulWidget {
 
 class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
   Map<String, dynamic>? arg;
-  _PackageInfoCard? selectedPackage;
+  _PackageInfoCard selectedPackage = _PackageInfoCard(
+    package: null,
+    logo: TImages.growLogoPackage,
+    colorWave: Color(0xFF00712D),
+    bgColor: TColors.successLight,
+    name: 'Unknown Package',
+    period: 3,
+    pricePerMonth: 0,
+    totalPrice: 0,
+  );
   String? type;
 
   String capitalize(String text) {
@@ -117,7 +126,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            color: selectedPackage!.bgColor,
+                            color: selectedPackage.bgColor,
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           clipBehavior: Clip.hardEdge,
@@ -129,8 +138,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                 child: SvgPicture.asset(
                                   TImages.pakcageWaves,
                                   colorFilter: ColorFilter.mode(
-                                    // Color(0xFF00712D),
-                                    selectedPackage!.colorWave,
+                                    selectedPackage.colorWave,
                                     BlendMode.srcIn,
                                   ),
                                 ),
@@ -144,7 +152,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Image.asset(
-                                      selectedPackage!.logo,
+                                      selectedPackage.logo,
                                       height: type == 'boost' ? 24 : 32,
                                     ),
                                     SizedBox(height: 16),
@@ -162,7 +170,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                             Expanded(
                                               flex: 2,
                                               child: TextHeading4(
-                                                "Lakoe ${capitalize(selectedPackage!.name)}",
+                                                "Lakoe ${capitalize(selectedPackage.name)}",
                                                 color: TColors.neutralDarkDark,
                                                 fontWeight: FontWeight.w700,
                                               ),
@@ -188,18 +196,16 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   TextHeading4(
-                                                    selectedPackage!.period ==
-                                                            12
+                                                    selectedPackage.period == 12
                                                         ? "1 Tahun"
-                                                        : "${selectedPackage!.period} Bulan",
+                                                        : "${selectedPackage.period} Bulan",
                                                     color:
                                                         TColors.neutralDarkDark,
                                                     fontWeight: FontWeight.w700,
                                                   ),
                                                   TextBodyS(
                                                     getFormattedDateRange(
-                                                        selectedPackage!
-                                                            .period),
+                                                        selectedPackage.period),
                                                     color: TColors
                                                         .neutralDarkLight,
                                                   ),
@@ -227,7 +233,10 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   TextHeading4(
-                                                    "${TFormatter.formatToRupiah(selectedPackage!.package!.originPrice / selectedPackage!.period)}/bulan",
+                                                    (selectedPackage.package !=
+                                                            null)
+                                                        ? "${TFormatter.formatToRupiah(selectedPackage.package!.originPrice / selectedPackage.period)}/bulan"
+                                                        : '-',
                                                     color:
                                                         TColors.neutralDarkDark,
                                                     fontWeight: FontWeight.w700,
@@ -274,9 +283,9 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                     color: TColors.neutralDarkDark,
                                   ),
                                   TextBodyM(
-                                    selectedPackage != null
+                                    selectedPackage.package != null
                                         ? TFormatter.formatToRupiah(
-                                            selectedPackage!
+                                            selectedPackage
                                                 .package!.originPrice)
                                         : '-',
                                     color: TColors.neutralDarkDark,
@@ -285,8 +294,8 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                 ],
                               ),
                             ),
-                            if (selectedPackage != null &&
-                                selectedPackage!.package!.save != 0)
+                            if (selectedPackage.package != null &&
+                                selectedPackage.package!.save != 0)
                               Container(
                                 margin: EdgeInsets.symmetric(vertical: 4),
                                 child: Row(
@@ -300,8 +309,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                           color: TColors.neutralDarkDark,
                                         ),
                                         SizedBox(width: 8),
-                                        if (selectedPackage!
-                                                .package!.discount !=
+                                        if (selectedPackage.package!.discount !=
                                             0)
                                           Container(
                                             padding: const EdgeInsets.symmetric(
@@ -314,7 +322,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                                   BorderRadius.circular(4),
                                             ),
                                             child: TextHeading5(
-                                              "${selectedPackage!.package!.discount}%",
+                                              "${selectedPackage.package!.discount}%",
                                               color: TColors.error,
                                               fontWeight: FontWeight.w700,
                                             ),
@@ -322,7 +330,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                       ],
                                     ),
                                     TextBodyM(
-                                      "-${TFormatter.formatToRupiah(selectedPackage!.package!.save)}",
+                                      "-${TFormatter.formatToRupiah(selectedPackage.package!.save)}",
                                       color: TColors.success,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -338,7 +346,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                 ),
                                 TextHeading3(
                                   TFormatter.formatToRupiah(
-                                      selectedPackage!.totalPrice),
+                                      selectedPackage.totalPrice),
                                   color: TColors.neutralDarkDark,
                                 ),
                               ],
@@ -508,26 +516,26 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                           ),
                           TextHeading2(
                             TFormatter.formatToRupiah(
-                                selectedPackage!.totalPrice),
+                                selectedPackage.totalPrice),
                             color: TColors.neutralDarkDark,
                           ),
                         ],
                       ),
                       ElevatedButton(
-                        onPressed:
-                            selectedMethod == null || selectedPackage == null
-                                ? null
-                                : () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      "/payment/prepared",
-                                      arguments: {
-                                        'package': selectedPackage,
-                                        'selectedCategory': selectedCategory,
-                                        'selectedMethod': selectedMethod,
-                                      },
-                                    );
+                        onPressed: selectedMethod == null ||
+                                selectedPackage.package == null
+                            ? null
+                            : () {
+                                Navigator.pushNamed(
+                                  context,
+                                  "/payment/prepared",
+                                  arguments: {
+                                    'package': selectedPackage,
+                                    'selectedCategory': selectedCategory,
+                                    'selectedMethod': selectedMethod,
                                   },
+                                );
+                              },
                         style: ButtonStyle(
                           minimumSize: WidgetStateProperty.all(
                             Size(160, 0),

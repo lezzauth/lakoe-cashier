@@ -522,8 +522,8 @@ class CardListPeriod<T> extends StatelessWidget {
                 if (package.discount != 0)
                   Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
+                      horizontal: 6,
+                      vertical: 2,
                     ),
                     decoration: BoxDecoration(
                       color: TColors.errorLight,
