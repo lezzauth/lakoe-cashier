@@ -62,16 +62,16 @@ class PackageComparisonTable extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SvgPicture.asset(
-                      TImages.infinity,
-                      height: 32,
+                    Image.asset(
+                      TImages.growToPro,
+                      height: 52,
                     ),
                     SizedBox(height: 16),
                     TextHeading2(
                       "Baca dulu, yuk!",
                       color: TColors.neutralDarkDark,
                     ),
-                    SizedBox(height: 4),
+                    SizedBox(height: 8),
                     Text.rich(
                       TextSpan(
                         text: "Dengan melakukan upgrade ke paket ",
@@ -100,7 +100,7 @@ class PackageComparisonTable extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text: " kamu yang tersisa akan ",
+                            text: " kamu yang tersisa (jika ada) akan ",
                             style: TextStyle(
                               color: TColors.neutralDarkDark,
                             ),
@@ -121,9 +121,9 @@ class PackageComparisonTable extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 4),
+                    SizedBox(height: 12),
                     TextBodyM(
-                      "Apakah kamu yakin ingin lanjutkan upgrade?",
+                      "Apakah kamu yakin ingin upgrade?",
                       color: TColors.neutralDarkDark,
                     ),
                   ],
@@ -314,11 +314,11 @@ class PackageComparisonTable extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: ElevatedButton(
             onPressed: () {
-              (package.name == "LITE")
-                  ? _handleCheckout(context)
-                  : _handleUpgrade(context);
+              (upgradedPackage.name == "PRO" && currentPackage.name == "GROW")
+                  ? _handleUpgrade(context)
+                  : _handleCheckout(context);
             },
-            child: TextActionL((package.name == "LITE")
+            child: TextActionL((currentPackage.name == "LITE")
                 ? "Langganan Sekarang"
                 : "Upgrade Sekarang"),
           ),

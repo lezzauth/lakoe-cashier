@@ -105,28 +105,30 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
 
             if (selectedAction.url != null) {
               THelper.openUrl(selectedAction.url!);
-            } else if (selectedAction.qrCode != null) {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text("QR Code Ditemukan"),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("QR Code: ${selectedAction.qrCode}"),
-                      ],
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text("OK"),
-                      ),
-                    ],
-                  );
-                },
-              );
             }
+
+            // else if (selectedAction.qrCode != null) {
+            //   showDialog(
+            //     context: context,
+            //     builder: (context) {
+            //       return AlertDialog(
+            //         title: Text("QR Code Ditemukan"),
+            //         content: Column(
+            //           mainAxisSize: MainAxisSize.min,
+            //           children: [
+            //             Text("QR Code: ${selectedAction.qrCode}"),
+            //           ],
+            //         ),
+            //         actions: [
+            //           TextButton(
+            //             onPressed: () => Navigator.pop(context),
+            //             child: Text("OK"),
+            //           ),
+            //         ],
+            //       );
+            //     },
+            //   );
+            // }
           } else if (res.paymentRequest.paymentMethod.type ==
               "VIRTUAL_ACCOUNT") {
             Navigator.pushNamed(

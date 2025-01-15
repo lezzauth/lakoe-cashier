@@ -7,12 +7,9 @@ import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/tab/tab_container.dart';
 import 'package:lakoe_pos/common/widgets/ui/tab/tab_item.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_active/package_active_cubit.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_active/package_active_state.dart';
 import 'package:lakoe_pos/features/packages/presentation/widgets/price_info_section.dart';
-import 'package:lakoe_pos/features/packages/presentation/widgets/table_comparison.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:package_repository/package_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
@@ -300,103 +297,6 @@ class _PackageUpgradeScreenState extends State<PackageUpgradeScreen>
           }),
         ),
       ),
-    );
-  }
-}
-
-class DetailPackage extends StatelessWidget {
-  const DetailPackage({
-    super.key,
-    required this.index,
-    required this.packageActive,
-    required this.packageData,
-    required this.currentPackage,
-    required this.upgradedPackage,
-  });
-
-  final int index;
-  final PackageActive? packageActive;
-  final List<PackagePriceModel> packageData;
-  final PackageModel currentPackage;
-  final PackageModel upgradedPackage;
-
-  @override
-  Widget build(BuildContext context) {
-    final package = packageData[index];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 8),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextBodyM(
-                "Paket aktif hingga",
-                color: TColors.neutralDarkLight,
-              ),
-              SizedBox(height: 4),
-              (packageActive != null)
-                  ? Row(
-                      children: [
-                        TextHeading3(
-                          packageActive!.endPeriod.toString(),
-                          color: TColors.neutralDarkDark,
-                        ),
-                        if (packageActive!.activePeriod.months! > 0)
-                          TextBodyM(
-                            " • ${packageActive!.activePeriod.months} bulan ${packageActive!.activePeriod.days} hari",
-                            color: TColors.neutralDarkLight,
-                          )
-                        else
-                          TextBodyM(
-                            " • Sisa ${packageActive!.activePeriod.days} hari lagi",
-                            color: TColors.neutralDarkLight,
-                          ),
-                      ],
-                    )
-                  : Row(
-                      children: [
-                        Shimmer.fromColors(
-                          baseColor: const Color(0xFFE8E9F1),
-                          highlightColor: const Color(0xFFF8F9FE),
-                          child: Container(
-                            height: 16,
-                            width: 100,
-                            decoration: BoxDecoration(
-                              color: TColors.neutralLightLightest,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                          ),
-                        ),
-                        TextBodyM(" • ", color: TColors.neutralDarkLight),
-                        Shimmer.fromColors(
-                          baseColor: const Color(0xFFE8E9F1),
-                          highlightColor: const Color(0xFFF8F9FE),
-                          child: Container(
-                            height: 12,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              color: TColors.neutralLightLightest,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-            ],
-          ),
-        ),
-
-        const SizedBox(height: 20),
-        // Highlighted Table
-        PackageComparisonTable(
-          package: package,
-          currentPackage: currentPackage,
-          upgradedPackage: upgradedPackage,
-        ),
-      ],
     );
   }
 }

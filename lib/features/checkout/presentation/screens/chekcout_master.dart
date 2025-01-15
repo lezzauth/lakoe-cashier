@@ -6,7 +6,6 @@ import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
@@ -270,11 +269,11 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  TextBodyL(
+                                  TextBodyM(
                                     "Subtotal",
                                     color: TColors.neutralDarkDark,
                                   ),
-                                  TextBodyL(
+                                  TextBodyM(
                                     selectedPackage != null
                                         ? TFormatter.formatToRupiah(
                                             selectedPackage!
@@ -296,7 +295,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                   children: [
                                     Row(
                                       children: [
-                                        TextBodyL(
+                                        TextBodyM(
                                           "Diskon",
                                           color: TColors.neutralDarkDark,
                                         ),
@@ -306,8 +305,8 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                             0)
                                           Container(
                                             padding: const EdgeInsets.symmetric(
-                                              horizontal: 8,
-                                              vertical: 4,
+                                              horizontal: 6,
+                                              vertical: 2,
                                             ),
                                             decoration: BoxDecoration(
                                               color: TColors.errorLight,
@@ -322,7 +321,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                                           ),
                                       ],
                                     ),
-                                    TextBodyL(
+                                    TextBodyM(
                                       "-${TFormatter.formatToRupiah(selectedPackage!.package!.save)}",
                                       color: TColors.success,
                                       fontWeight: FontWeight.w600,
@@ -333,11 +332,11 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                TextBodyL(
+                                TextBodyM(
                                   "Total",
                                   color: TColors.neutralDarkDark,
                                 ),
-                                TextHeading2(
+                                TextHeading3(
                                   TFormatter.formatToRupiah(
                                       selectedPackage!.totalPrice),
                                   color: TColors.neutralDarkDark,
