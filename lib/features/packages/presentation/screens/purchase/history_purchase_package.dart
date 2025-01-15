@@ -19,6 +19,7 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 import 'package:owner_repository/owner_repository.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HistoryPurchasePackageScreen extends StatelessWidget {
   const HistoryPurchasePackageScreen({super.key});
@@ -347,7 +348,17 @@ class CardItemPackageActive extends StatelessWidget {
           ),
         );
       } else {
-        return Container();
+        return Shimmer.fromColors(
+          baseColor: const Color(0xFFE8E9F1),
+          highlightColor: const Color(0xFFF8F9FE),
+          child: Container(
+            decoration: BoxDecoration(
+              color: TColors.highlightLightest,
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            height: 76,
+          ),
+        );
       }
     });
   }
