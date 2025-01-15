@@ -27,11 +27,11 @@ class CustomToast {
     String? icon,
     String position = 'top',
     Color backgroundColor = TColors.neutralDarkDark,
-    int duration = 5,
+    int duration = 4,
   }) {
     Fluttertoast.showToast(
       msg: message,
-      toastLength: duration <= 5 ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG,
+      toastLength: duration <= 4 ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG,
       gravity: _getToastGravity(position),
       backgroundColor: backgroundColor,
       textColor: TColors.neutralLightLightest,

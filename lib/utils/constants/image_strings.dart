@@ -28,9 +28,10 @@ class TImages {
   static const String defaultLogo = "assets/images/default-logo.png";
   static const String checkeredBg = "assets/images/checkered_background.webp";
   static const String badRequest = "assets/images/502-illustration.webp";
+  static const String limitQuota = "assets/images/limit-quota.webp";
   static const String noConnection =
       "assets/images/no-connection-ilustration.webp";
-  static const String limitQuota = "assets/images/limit-quota.webp";
+  static const String updateAvailable = "assets/images/update-available.webp";
   static const String noPrintIllustration =
       "assets/images/no-print-ilustration.webp";
   static const String noPrintIllustrationSvg =
