@@ -274,6 +274,19 @@ class OrderSummary extends StatelessWidget {
                         ],
                       ),
                     ),
+                  if (isPaid &&
+                      paymentInfo != null &&
+                      paymentInfo![0].approvalCode != null)
+                    Container(
+                      margin: EdgeInsets.only(top: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextBodyM("Approval Code"),
+                          TextBodyM(paymentInfo![0].approvalCode!),
+                        ],
+                      ),
+                    ),
                   if (isPaid && paymentInfo != null)
                     Column(
                       mainAxisSize: MainAxisSize.min,

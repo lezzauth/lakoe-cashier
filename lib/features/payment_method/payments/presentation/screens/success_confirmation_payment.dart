@@ -315,6 +315,28 @@ class _SuccessConfirmationPaymentContentState
                                             ],
                                           ),
                                           SizedBox(height: 8),
+                                          if (arguments.payment.transaction
+                                                  .approvalCode !=
+                                              null)
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(bottom: 8),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  TextReceipt("Approval Code"),
+                                                  TextReceipt(
+                                                    arguments
+                                                        .payment
+                                                        .transaction
+                                                        .approvalCode!,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
                                           Separator(
                                             color: TColors.neutralLightDark,
                                             height: 1,
