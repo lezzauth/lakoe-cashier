@@ -33,7 +33,7 @@ class PackageComparisonTable extends StatefulWidget {
 }
 
 class _PackageComparisonTableState extends State<PackageComparisonTable> {
-  void _openModalBottomSheet(BuildContext context) {
+  void _openBottomsheetExtendPackage(BuildContext context) {
     String? selectedPeriod;
     PackagePriceModel selectedPackage = widget.packages[2];
 
@@ -263,7 +263,7 @@ class _PackageComparisonTableState extends State<PackageComparisonTable> {
           width: MediaQuery.of(context).size.width,
           height: 46,
           child: OutlinedButton(
-            onPressed: () => _openModalBottomSheet(context),
+            onPressed: () => _openBottomsheetExtendPackage(context),
             child: TextActionL("Perpanjang"),
           ),
         ),
@@ -283,6 +283,56 @@ TableRow _buildTableRow(
   Color backgroundColor = (index % 2 == 0)
       ? TColors.neutralLightLightest
       : TColors.neutralLightLight;
+
+  void openBottomsheetInfoInfinity(BuildContext context, String label) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return CustomBottomsheet(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 12,
+            ),
+            child: Column(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset(
+                      TImages.infinity,
+                      height: 32,
+                    ),
+                    SizedBox(height: 16),
+                    TextHeading3(
+                      label,
+                      color: TColors.neutralDarkDark,
+                    ),
+                    SizedBox(height: 4),
+                    TextBodyM(
+                      "Dengan kamu membeli paket Lakoe Pro, kamu bisa menambah ${label.toLowerCase()} tanpa batas.",
+                      color: TColors.neutralDarkDark,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: TextActionL("Oke! Paham"),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   return TableRow(
     decoration: BoxDecoration(
@@ -361,111 +411,71 @@ TableRow _buildTableRow(
       ),
       TableCell(
         verticalAlignment: TableCellVerticalAlignment.intrinsicHeight,
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              left: BorderSide(
-                color: TColors.highlightDarkest,
-                width: 2.0,
-              ),
-              right: BorderSide(
-                color: TColors.highlightDarkest,
-                width: 2.0,
-              ),
-              bottom: isLast
-                  ? BorderSide(
-                      color: TColors.highlightDarkest,
-                      width: 2.0,
-                    )
-                  : BorderSide.none,
-            ),
-            borderRadius: isLast
-                ? BorderRadius.only(
-                    bottomLeft: Radius.circular(12.0),
-                    bottomRight: Radius.circular(12.0),
-                  )
-                : null,
-          ),
-          margin: EdgeInsets.only(left: 8),
-          padding: const EdgeInsets.symmetric(
-            vertical: 8.0,
-            horizontal: 12.0,
-          ),
-          child: Center(
-            child: currentPackage != null &&
-                    currentPackage != 0 &&
-                    currentPackage != 123
-                ? TextHeading3(
-                    currentPackage.toString(),
-                    color: TColors.neutralDarkDark,
-                  )
-                : (currentPackage == 00)
-                    ? UiIcons(
-                        TIcons.close,
-                        size: 12,
-                        color: TColors.error,
+        child: GestureDetector(
+          onTap: () {
+            if (currentPackage == null) {
+              openBottomsheetInfoInfinity(context, label);
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                  color: TColors.highlightDarkest,
+                  width: 2.0,
+                ),
+                right: BorderSide(
+                  color: TColors.highlightDarkest,
+                  width: 2.0,
+                ),
+                bottom: isLast
+                    ? BorderSide(
+                        color: TColors.highlightDarkest,
+                        width: 2.0,
                       )
-                    : (currentPackage == 123)
-                        ? UiIcons(
-                            TIcons.check,
-                            size: 24,
-                            color: TColors.success,
-                          )
-                        : UiIcons(
-                            TIcons.infinity,
-                            size: 20,
-                            color: TColors.neutralDarkDark,
-                            onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) {
-                                  return CustomBottomsheet(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 20,
-                                        vertical: 12,
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SvgPicture.asset(
-                                                TImages.infinity,
-                                                height: 32,
-                                              ),
-                                              SizedBox(height: 16),
-                                              TextHeading3(
-                                                label,
-                                                color: TColors.neutralDarkDark,
-                                              ),
-                                              SizedBox(height: 4),
-                                              TextBodyM(
-                                                "Dengan kamu membeli paket Lakoe Pro, kamu bisa menambah ${label.toLowerCase()} tanpa batas.",
-                                                color: TColors.neutralDarkDark,
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(height: 24),
-                                          SizedBox(
-                                            width: double.infinity,
-                                            child: OutlinedButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: TextActionL("Oke! Paham"),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
+                    : BorderSide.none,
+              ),
+              borderRadius: isLast
+                  ? BorderRadius.only(
+                      bottomLeft: Radius.circular(12.0),
+                      bottomRight: Radius.circular(12.0),
+                    )
+                  : null,
+            ),
+            margin: EdgeInsets.only(left: 8),
+            padding: const EdgeInsets.symmetric(
+              vertical: 8.0,
+              horizontal: 12.0,
+            ),
+            child: Center(
+              child: currentPackage != null &&
+                      currentPackage != 00 &&
+                      currentPackage != 123
+                  ? TextHeading3(
+                      currentPackage.toString(),
+                      color: TColors.neutralDarkDark,
+                    )
+                  : (currentPackage == 00)
+                      ? UiIcons(
+                          TIcons.close,
+                          size: 12,
+                          color: TColors.error,
+                        )
+                      : (currentPackage == 123)
+                          ? UiIcons(
+                              TIcons.check,
+                              size: 24,
+                              color: TColors.success,
+                            )
+                          : UiIcons(
+                              TIcons.infinity,
+                              size: 20,
+                              color: TColors.neutralDarkDark,
+                              onTap: () {
+                                openBottomsheetInfoInfinity(context, label);
+                              },
+                            ),
+            ),
           ),
         ),
       ),
