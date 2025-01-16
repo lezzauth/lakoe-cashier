@@ -101,57 +101,61 @@ class _NewOtpInputScreenState extends State<OtpInputDeleteAccountScreen>
       enableDrag: false,
       isDismissible: false,
       builder: (context) {
-        return CustomBottomsheet(
-          hasGrabber: false,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 12,
-            ),
-            child: Column(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    UiIcons(
-                      TIcons.shieldKeyhole,
-                      size: 40,
-                      fit: BoxFit.contain,
-                      color: TColors.primary,
-                    ),
-                    SizedBox(height: 16),
-                    TextHeading3(
-                      "Akunmu sedang dalam proses penghapusan",
-                      color: TColors.neutralDarkDark,
-                    ),
-                    SizedBox(height: 4),
-                    TextBodyM(
-                      "Kamu tidak bisa lagi menggunakannya. Jika ingin membatalkan proses ini, silakan hubungi tim Support Lakoe atau gunakan nomor lain untuk melanjutkan login.",
-                      color: TColors.neutralDarkDark,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await _tokenProvider.clearAll();
-
-                      if (!context.mounted) return;
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        "/",
-                        (route) => false,
-                      );
-                      setState(() {
-                        messageError = "";
-                      });
-                    },
-                    child: TextActionL("Oke, Paham"),
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {},
+          child: CustomBottomsheet(
+            hasGrabber: false,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 12,
+              ),
+              child: Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      UiIcons(
+                        TIcons.shieldKeyhole,
+                        size: 40,
+                        fit: BoxFit.contain,
+                        color: TColors.primary,
+                      ),
+                      SizedBox(height: 16),
+                      TextHeading3(
+                        "Akunmu sedang dalam proses penghapusan",
+                        color: TColors.neutralDarkDark,
+                      ),
+                      SizedBox(height: 4),
+                      TextBodyM(
+                        "Kamu tidak bisa lagi menggunakannya. Jika ingin membatalkan proses ini, silakan hubungi tim Support Lakoe atau gunakan nomor lain untuk melanjutkan login.",
+                        color: TColors.neutralDarkDark,
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                  SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await _tokenProvider.clearAll();
+
+                        if (!context.mounted) return;
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          "/",
+                          (route) => false,
+                        );
+                        setState(() {
+                          messageError = "";
+                        });
+                      },
+                      child: TextActionL("Oke, Paham"),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
