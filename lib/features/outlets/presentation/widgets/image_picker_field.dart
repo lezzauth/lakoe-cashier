@@ -147,8 +147,8 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
       if (bytes != null && !_isLoading) {
         return ColorFiltered(
           colorFilter: ColorFilter.mode(
-            // Colors.white,
-            Colors.transparent,
+            Colors.white,
+            // Colors.transparent,
             BlendMode.srcATop,
           ),
           child: Image.memory(
@@ -161,8 +161,8 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
       } else {
         return ColorFiltered(
           colorFilter: ColorFilter.mode(
-            // Colors.white,
-            Colors.transparent,
+            Colors.white,
+            // Colors.transparent,
             BlendMode.srcATop,
           ),
           child: Image.file(
@@ -188,8 +188,8 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
     if (_selectedFile?.url != null) {
       return ColorFiltered(
         colorFilter: ColorFilter.mode(
-          // Colors.white,
-          Colors.transparent,
+          Colors.white,
+          // Colors.transparent,
           BlendMode.srcATop,
         ),
         child: Image.network(

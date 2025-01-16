@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
+import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:package_repository/package_repository.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
@@ -147,7 +148,7 @@ class _RemainingPeriodWidgetState extends State<RemainingPeriodWidget> {
     DateTime tempDate = now;
 
     // Menghitung bulan secara real
-    while (tempDate.day == endPeriod.day && tempDate.isBefore(endPeriod)) {
+    while (tempDate.isBefore(endPeriod)) {
       final nextMonth =
           DateTime(tempDate.year, tempDate.month + 1, tempDate.day);
       if (nextMonth.isAfter(endPeriod)) break;
@@ -157,6 +158,8 @@ class _RemainingPeriodWidgetState extends State<RemainingPeriodWidget> {
 
     // Menghitung sisa hari secara real setelah bulan penuh
     days = endPeriod.difference(tempDate).inDays;
+
+    Logman.instance.info("Bulan: $months, Hari: $days");
 
     if (months > 0 && days > 0) {
       return "$months bulan $days hari";

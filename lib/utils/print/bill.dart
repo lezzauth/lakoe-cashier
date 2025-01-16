@@ -90,27 +90,36 @@ class TBill {
           final image.Image? img = image.decodeImage(bytesImg);
 
           if (img != null) {
+            // Resize image
             final resizedImage = image.copyResize(img, width: 100);
-            final grayscaleImage = image.grayscale(resizedImage);
-            final blackWhiteImage = image.Image.from(grayscaleImage);
 
-            for (int y = 0; y < grayscaleImage.height; y++) {
-              for (int x = 0; x < grayscaleImage.width; x++) {
-                final pixel = grayscaleImage.getPixel(x, y);
-                final brightness = image.getLuminance(pixel).toInt();
-                final threshold = 128;
+            // Create a new image to store the final black-and-white version
+            final blackWhiteImage = image.Image.from(resizedImage);
+
+            for (int y = 0; y < resizedImage.height; y++) {
+              for (int x = 0; x < resizedImage.width; x++) {
+                // Access the pixel at (x, y)
+                final pixel = resizedImage.getPixel(x, y);
+                final alpha = pixel.a; // Extract alpha channel
+
+                // Skip transparent pixels
+                if (alpha == 0) {
+                  blackWhiteImage.setPixel(
+                      x,
+                      y,
+                      image.ColorUint8.rgb(
+                          255, 255, 255)); // Transparent background
+                  continue;
+                }
+
+                // Force all non-transparent pixels to black
                 blackWhiteImage.setPixel(
-                    x,
-                    y,
-                    brightness > threshold
-                        ? image.ColorUint8.rgb(255, 255, 255)
-                        : image.ColorUint8.rgb(0, 0, 0));
+                    x, y, image.ColorUint8.rgb(0, 0, 0)); // Black
               }
             }
 
             final generator =
                 Generator(PaperSize.mm58, await CapabilityProfile.load());
-
             bytes += generator.image(blackWhiteImage);
           }
         }

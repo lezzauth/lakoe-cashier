@@ -563,18 +563,25 @@ class OutletCard extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 22,
                       backgroundColor: Color(colorBrand),
-                      child: Image.network(
-                        outletLogo!,
-                        width: 32,
-                        height: 32,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Image.asset(
-                            TImages.lakoeLetterPrimary,
-                            width: 24,
-                            height: 24,
-                          );
-                        },
+                      child: ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                          Colors.white,
+                          // Colors.transparent,
+                          BlendMode.srcATop,
+                        ),
+                        child: Image.network(
+                          outletLogo!,
+                          width: 32,
+                          height: 32,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              TImages.lakoeLetterPrimary,
+                              width: 24,
+                              height: 24,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
