@@ -89,7 +89,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
         builder: (context) {
           return CustomBottomsheet(
             child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.7,
+              // height: MediaQuery.of(context).size.height * 0.7,
               child: PaymentBottomSheet(
                 paymentCategories: paymentCategories,
                 selectedCategory: selectedCategory,
@@ -377,7 +377,7 @@ class _ChekcoutMasterScreenState extends State<ChekcoutMasterScreen> {
                               onTap: () {
                                 showPaymentMethodBottomSheet(
                                   context,
-                                  paymentMethod,
+                                  paymentMethodPurchasePackage,
                                   selectedCategory,
                                   selectedMethod,
                                   (PaymentCategory category,

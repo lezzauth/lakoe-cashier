@@ -488,7 +488,8 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                                   PaymentMethodCheckout? selectedMethod;
                                   PaymentCategory? selectedCategory;
 
-                                  for (final category in paymentMethod) {
+                                  for (final category
+                                      in paymentMethodPurchasePackage) {
                                     try {
                                       final method =
                                           category.methods.firstWhere(
