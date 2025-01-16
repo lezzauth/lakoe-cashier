@@ -128,6 +128,7 @@ class BillView extends StatelessWidget {
                   paymentMethod: paymentDetails['paymentMethod'],
                   totalPrice: order.transactions![0].amount,
                   moneyReceived: paymentDetails['paidAmount'].toString(),
+                  approvalCode: order.transactions![0].approvalCode,
                   changeMoney: paymentDetails['change'].toString(),
                   charges: order.charges!
                       .map((e) => OrderSummaryChargeModel(

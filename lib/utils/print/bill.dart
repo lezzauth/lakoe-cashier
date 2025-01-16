@@ -367,6 +367,24 @@ class TBill {
         ),
       ),
     ]);
+    if (payment.approvalCode != null) {
+      bytes += generator.row([
+        PosColumn(
+          text: "Approval Code",
+          width: 6,
+          styles: const PosStyles(
+            align: PosAlign.left,
+          ),
+        ),
+        PosColumn(
+          text: payment.approvalCode ?? "-",
+          width: 6,
+          styles: const PosStyles(
+            align: PosAlign.right,
+          ),
+        ),
+      ]);
+    }
     bytes += generator.hr();
     bytes += generator.row([
       PosColumn(

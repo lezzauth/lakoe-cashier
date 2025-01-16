@@ -10,6 +10,7 @@ class BillSectionCharges extends StatelessWidget {
   final String totalPrice;
   final String paymentMethod;
   final String moneyReceived;
+  final String? approvalCode;
   final String changeMoney;
 
   const BillSectionCharges({
@@ -18,6 +19,7 @@ class BillSectionCharges extends StatelessWidget {
     required this.totalPrice,
     required this.paymentMethod,
     required this.moneyReceived,
+    required this.approvalCode,
     required this.changeMoney,
   });
 
@@ -66,6 +68,11 @@ class BillSectionCharges extends StatelessWidget {
           label: paymentMethod,
           price: TFormatter.formatToRupiah(double.parse(moneyReceived)),
         ),
+        if (approvalCode != null)
+          BillListPrice(
+            label: "Approval Code",
+            price: approvalCode ?? "-",
+          ),
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 4),
           child: Separator(

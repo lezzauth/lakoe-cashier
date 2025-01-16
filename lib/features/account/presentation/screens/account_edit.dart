@@ -45,7 +45,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
           _ItemAccountEditModel(
             icon: TIcons.letterOutline,
             field: "Email",
-            value: state.owner.email ?? "-",
+            value: state.owner.email?.toLowerCase() ?? "-",
             routeName: "/account/edit/email",
           ),
           _ItemAccountEditModel(
@@ -132,6 +132,7 @@ class ItemAccountEdit extends StatelessWidget {
               }) as bool?;
 
               if (!result!) return;
+              if (!context.mounted) return;
               context.read<OwnerCubit>().getOwner();
             } else {
               bool? result = await Navigator.pushNamed(
@@ -142,6 +143,7 @@ class ItemAccountEdit extends StatelessWidget {
                   }) as bool?;
 
               if (!result!) return;
+              if (!context.mounted) return;
               context.read<OwnerCubit>().getOwner();
             }
           },
