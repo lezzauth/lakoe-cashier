@@ -146,7 +146,21 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
           }
         }
       },
-      child: LoadingScreen(),
+      child: PopScope(
+        onPopInvokedWithResult: (popDisposition, popResult) async {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                "/home",
+                (route) => false,
+              );
+            }
+          });
+          return Future.value(null);
+        },
+        child: LoadingScreen(),
+      ),
     );
   }
 }

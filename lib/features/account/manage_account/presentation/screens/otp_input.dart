@@ -228,11 +228,23 @@ class _NewOtpInputScreenState extends State<OtpInputDeleteAccountScreen>
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 12),
-                          TextBodyM(
-                            TFormatter.censoredPhoneNumber(data!.target),
-                            color: TColors.neutralDarkMedium,
-                            fontWeight: FontWeight.bold,
-                            textAlign: TextAlign.center,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              UiIcons(
+                                TIcons.whatsapp,
+                                size: 16,
+                                color: Color(0xFF25D366),
+                                fit: BoxFit.contain,
+                              ),
+                              SizedBox(width: 8),
+                              TextBodyM(
+                                TFormatter.censoredPhoneNumber(data!.target),
+                                color: TColors.neutralDarkMedium,
+                                fontWeight: FontWeight.bold,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
                         ],
                       ),

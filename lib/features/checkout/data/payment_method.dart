@@ -2,15 +2,15 @@ import 'package:lakoe_pos/features/checkout/data/payment_method_model.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
 List<PaymentCategory> paymentMethodPurchasePackage = [
-  // PaymentCategory(
-  //   categoryName: "E-Wallet",
-  //   methods: [
-  //     PaymentMethodCheckout(name: "LinkAja", logo: TImages.linkaja),
-  //     PaymentMethodCheckout(name: "OVO", logo: TImages.ovo),
-  //     PaymentMethodCheckout(name: "ShopeePay", logo: TImages.shopeepay),
-  //     PaymentMethodCheckout(name: "Dana", logo: TImages.dana),
-  //   ],
-  // ),
+  PaymentCategory(
+    categoryName: "E-Wallet",
+    methods: [
+      PaymentMethodCheckout(name: "LinkAja", logo: TImages.linkaja),
+      // PaymentMethodCheckout(name: "OVO", logo: TImages.ovo),
+      PaymentMethodCheckout(name: "ShopeePay", logo: TImages.shopeepay),
+      PaymentMethodCheckout(name: "Dana", logo: TImages.dana),
+    ],
+  ),
   PaymentCategory(
     categoryName: "Virtual Account",
     methods: [

@@ -39,6 +39,7 @@ class _PackageComparisonTableState extends State<PackageComparisonTable> {
 
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (context) {
         return CustomBottomsheet(
           child: StatefulBuilder(

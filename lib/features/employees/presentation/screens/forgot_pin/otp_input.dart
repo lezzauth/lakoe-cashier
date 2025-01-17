@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/loading_screen.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
@@ -14,6 +15,7 @@ import 'package:lakoe_pos/features/employees/application/cubit/forgot_pin/forgot
 import 'package:lakoe_pos/features/employees/application/cubit/forgot_pin/forgot_pin_state.dart';
 import 'package:lakoe_pos/features/employees/data/arguments/forgot_pin_dto.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/sizes.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 import 'package:pinput/pinput.dart';
@@ -198,11 +200,23 @@ class _InputOtpState extends State<InputOtp>
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 12),
-                              TextBodyM(
-                                TFormatter.censoredPhoneNumber(phoneNumber),
-                                color: TColors.neutralDarkMedium,
-                                fontWeight: FontWeight.bold,
-                                textAlign: TextAlign.center,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  UiIcons(
+                                    TIcons.whatsapp,
+                                    size: 16,
+                                    color: Color(0xFF25D366),
+                                    fit: BoxFit.contain,
+                                  ),
+                                  SizedBox(width: 8),
+                                  TextBodyM(
+                                    TFormatter.censoredPhoneNumber(phoneNumber),
+                                    color: TColors.neutralDarkMedium,
+                                    fontWeight: FontWeight.bold,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
                               ),
                             ],
                           ),
