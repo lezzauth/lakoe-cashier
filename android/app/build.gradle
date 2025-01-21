@@ -28,7 +28,7 @@ if (flutterVersionCode == null) {
 
 def flutterVersionName = localProperties.getProperty("flutter.versionName")
 if (flutterVersionName == null) {
-    flutterVersionName = "1.0"
+    flutterVersionName = "1.0.0"
 }
 
 android {
@@ -54,7 +54,7 @@ android {
     productFlavors {
         dev {
             dimension "version"
-            applicationId "com.lakoe.app"
+            applicationId "com.lakoe.app.dev"
             versionNameSuffix "-dev"
             resValue "string", "app_name", "Lakoe Dev"
         }
