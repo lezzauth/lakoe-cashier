@@ -61,7 +61,7 @@ class TableMasterCubit extends Cubit<TableMasterState> {
     } catch (e) {
       if (e is DioException) {
         final limit = e.error as DioExceptionModel;
-        emit(TableMasterReachesLimit(limit));
+        emit(ErrorIssuePackage(limit));
         return;
       }
       emit(TableMasterActionFailure(e.toString()));

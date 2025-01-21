@@ -89,8 +89,11 @@ class DioProvider {
               );
             case 402:
               return handler.reject(
-                _createDioException(e, "Insufficient quota of item",
-                    "Quota limit has been reached"),
+                _createDioException(
+                  e,
+                  e.response!.data['message'],
+                  e.response!.statusMessage ?? "Issue package",
+                ),
               );
             case 404:
               return handler.reject(

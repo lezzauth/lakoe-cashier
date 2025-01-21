@@ -58,7 +58,7 @@ class CustomerMasterCubit extends Cubit<CustomerMasterState> {
     } catch (e) {
       if (e is DioException) {
         final limit = e.error as DioExceptionModel;
-        emit(CustomerReachesLimit(limit));
+        emit(ErrorIssuePackage(limit));
         return;
       }
       emit(CustomerMasterActionFailure(e.toString()));

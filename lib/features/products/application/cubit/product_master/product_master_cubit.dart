@@ -53,8 +53,8 @@ class ProductMasterCubit extends Cubit<ProductMasterState> {
       emit(ProductMasterActionSuccess());
     } catch (e) {
       if (e is DioException) {
-        final limit = e.error as DioExceptionModel;
-        emit(ProductMasterReachesLimit(limit));
+        final error = e.error as DioExceptionModel;
+        emit(ErrorIssuePackage(error));
         return;
       }
       ProductMasterActionFailure(e.toString());

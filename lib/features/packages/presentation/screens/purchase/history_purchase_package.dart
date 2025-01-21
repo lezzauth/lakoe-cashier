@@ -8,6 +8,8 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:lakoe_pos/features/checkout/application/filters/filter_purchase_cubit.dart';
 import 'package:lakoe_pos/features/checkout/application/filters/filter_purchase_state.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
@@ -243,19 +245,18 @@ class CardItemPackageActive extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PackageActiveCubit, PackageActiveState>(
-        builder: (context, state) {
-      if (state is GetActivePackageSuccess) {
-        PackageActive package = state.package;
+    return BlocBuilder<OwnerCubit, OwnerState>(builder: (context, state) {
+      if (state is OwnerLoadSuccess) {
+        final profile = state.owner;
         return InkWell(
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           onTap: () async {
-            if (package.name == "GROW" || package.name == "PRO") {
+            if (profile.packageName == "GROW" || profile.packageName == "PRO") {
               bool? result = await Navigator.pushNamed(
                 context,
                 "/account/active_package",
-                arguments: {'packageName': package.name},
+                arguments: {'packageName': profile.packageName},
               ) as bool?;
               if (!context.mounted) return;
 
@@ -269,9 +270,9 @@ class CardItemPackageActive extends StatelessWidget {
           child: Container(
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
-              color: package.name == "GROW"
+              color: profile.packageName == "GROW"
                   ? TColors.successLight
-                  : package.name == "PRO"
+                  : profile.packageName == "PRO"
                       ? Color(0xFFF4DEF8)
                       : TColors.highlightLightest,
               border: Border.all(
@@ -288,9 +289,9 @@ class CardItemPackageActive extends StatelessWidget {
                   child: SvgPicture.asset(
                     TImages.pakcageWaves,
                     colorFilter: ColorFilter.mode(
-                      package.name == "GROW"
+                      profile.packageName == "GROW"
                           ? Color(0xFF00712D)
-                          : package.name == "PRO"
+                          : profile.packageName == "PRO"
                               ? Color(0xFF9306AF)
                               : Color(0xFFFC4100),
                       BlendMode.srcIn,
@@ -307,35 +308,66 @@ class CardItemPackageActive extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextHeading3(
-                            "Paket ${TFormatter.capitalizeEachWord(package.name)}",
+                            "Paket ${TFormatter.capitalizeEachWord(profile.packageName)}",
                             color: TColors.neutralDarkDark,
                           ),
                           SizedBox(height: 4),
-                          (package.name == "LITE")
+                          (profile.packageName == "LITE")
                               ? TextBodyM(
                                   "Gratis selamanya!",
                                   color: TColors.neutralDarkLight,
                                 )
-                              : Row(
-                                  children: [
-                                    TextBodyM(
-                                      "Aktif sampai:",
-                                      color: TColors.neutralDarkLight,
-                                    ),
-                                    SizedBox(width: 4),
-                                    TextBodyM(
-                                      package.endPeriod!,
-                                      fontWeight: FontWeight.bold,
-                                      color: TColors.neutralDarkLight,
-                                    ),
-                                  ],
-                                ),
+                              : BlocBuilder<PackageActiveCubit,
+                                      PackageActiveState>(
+                                  builder: (context, state) {
+                                  if (state is GetActivePackageSuccess) {
+                                    PackageActive packageActive = state.package;
+                                    return Row(
+                                      children: [
+                                        (packageActive.endPeriod != null)
+                                            ? Container(
+                                                margin:
+                                                    EdgeInsets.only(right: 4),
+                                                child: TextBodyM(
+                                                  "Aktif sampai:",
+                                                  color:
+                                                      TColors.neutralDarkLight,
+                                                ),
+                                              )
+                                            : SizedBox.shrink(),
+                                        TextBodyM(
+                                          packageActive.endPeriod ??
+                                              "Masa aktif sudah habis",
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              (packageActive.endPeriod != null)
+                                                  ? TColors.neutralDarkLight
+                                                  : TColors.error,
+                                        ),
+                                      ],
+                                    );
+                                  } else {
+                                    return Shimmer.fromColors(
+                                      baseColor: const Color(0xFFE8E9F1),
+                                      highlightColor: const Color(0xFFF8F9FE),
+                                      child: Container(
+                                        height: 16,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          color: TColors.neutralLightLightest,
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }),
                         ],
                       ),
                       Image.asset(
-                        package.name == "GROW"
+                        profile.packageName == "GROW"
                             ? TImages.growLogoPackage
-                            : package.name == "PRO"
+                            : profile.packageName == "PRO"
                                 ? TImages.proLogoPackage
                                 : TImages.liteLogoPackage,
                         height: 28,

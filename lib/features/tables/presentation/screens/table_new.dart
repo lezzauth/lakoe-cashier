@@ -76,7 +76,7 @@ class _TableNewState extends State<TableNew> {
           listener: (context, state) async {
             if (state is TableMasterActionSuccess) {
               Navigator.pop(context, true);
-            } else if (state is TableMasterReachesLimit) {
+            } else if (state is ErrorIssuePackage) {
               final activePackage = await _appDataProvider.activePackage;
 
               String limit = "5";
@@ -86,6 +86,18 @@ class _TableNewState extends State<TableNew> {
               }
 
               if (!context.mounted) return;
+
+              bool isExpired = state.res.message!.contains("expired");
+
+              String title = "Meja udah maksimal, nih!";
+              String description =
+                  "Sudah tersimpan $limit data meja. Upgrade untuk tambah meja tanpa batas!";
+
+              if (isExpired) {
+                title = "Yah! masa aktif paket habis";
+                description =
+                    "Paket $activePackage kamu sudah tidak aktif lagi. Yuk perpanjang atau upgrade paket untuk terus menikmati fitur Lakoe.";
+              }
 
               showModalBottomSheet(
                 context: context,
@@ -99,14 +111,19 @@ class _TableNewState extends State<TableNew> {
                       hasGrabber: false,
                       child: ErrorDisplay(
                         imageSrc: TImages.limitQuota,
-                        title: "Meja udah maksimal, nih!",
-                        description:
-                            "Sudah tersimpan $limit data meja. Upgrade untuk tambah meja tanpa batas!",
+                        title: title,
+                        description: description,
                         actionTitlePrimary: "Lihat Paket",
                         onActionPrimary: () {
                           Navigator.pop(context);
                           Navigator.pop(context, true);
-                          if (activePackage == "GROW") {
+                          if (isExpired && activePackage != "LITE") {
+                            Navigator.pushNamed(
+                              context,
+                              "/account/active_package",
+                              arguments: {'packageName': activePackage},
+                            );
+                          } else if (activePackage == "GROW") {
                             Navigator.pushNamed(
                               context,
                               "/packages/upgrade",

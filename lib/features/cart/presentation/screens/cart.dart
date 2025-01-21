@@ -260,6 +260,21 @@ class _CartState extends State<Cart> {
 
           if (!context.mounted) return;
 
+          bool isExpired = state is CartDetailActionFailure &&
+                  state.error.contains("expired") ||
+              state is CartDetailCompleteActionFailure &&
+                  state.error.contains("expired");
+
+          String title = "Pesanan lagi ramai banget, ya?";
+          String description =
+              "Sayangnya, paket kamu saat ini cuma bisa buat $limit pesanan dalam sehari. Yuk! upgrade paket biar penjualan tidak terganggu.";
+
+          if (isExpired) {
+            title = "Yah! masa aktif paket habis";
+            description =
+                "Paket $activePackage kamu sudah tidak aktif lagi. Yuk perpanjang atau upgrade paket untuk terus menikmati fitur Lakoe.";
+          }
+
           showModalBottomSheet(
             context: context,
             enableDrag: false,
@@ -272,15 +287,20 @@ class _CartState extends State<Cart> {
                   hasGrabber: false,
                   child: ErrorDisplay(
                     imageSrc: TImages.limitQuota,
-                    title: "Pesanan lagi ramai banget, ya?",
-                    description:
-                        "Sayangnya, paket kamu saat ini cuma bisa buat $limit pesanan dalam sehari. Yuk! upgrade paket biar penjualan tidak terganggu.",
+                    title: title,
+                    description: description,
                     actionTitlePrimary: "Lihat Paket",
                     onActionPrimary: () {
                       context.read<CartCubit>().reset();
 
                       WidgetsBinding.instance.addPostFrameCallback((_) {
-                        if (activePackage == "GROW") {
+                        if (isExpired && activePackage != "LITE") {
+                          Navigator.pushNamed(
+                            context,
+                            "/account/active_package",
+                            arguments: {'packageName': activePackage},
+                          );
+                        } else if (activePackage == "GROW") {
                           Navigator.popAndPushNamed(
                             context,
                             "/packages/upgrade",

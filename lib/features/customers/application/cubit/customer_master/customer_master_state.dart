@@ -64,10 +64,10 @@ final class CustomerMasterActionFailure extends CustomerMasterState {
   List<Object?> get props => [error];
 }
 
-final class CustomerReachesLimit extends CustomerMasterState {
+final class ErrorIssuePackage extends CustomerMasterState {
   final DioExceptionModel res;
 
-  CustomerReachesLimit(this.res);
+  ErrorIssuePackage(this.res);
 
   @override
   List<Object?> get props => [res];

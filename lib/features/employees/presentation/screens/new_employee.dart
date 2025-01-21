@@ -93,12 +93,21 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
           } else if (state.res.statusCode == 402) {
             final activePackage = await _appDataProvider.activePackage;
 
-            String message =
+            bool isExpired = state.res.message!.contains("expired");
+
+            String title = "Upgrade paket, yuk!";
+            String description =
                 "Paket kamu saat ini belum bisa tambah kasir baru. Upgrade, yuk!";
 
             if (activePackage == "GROW") {
-              message =
+              description =
                   "Paket kamu saat ini hanya bisa menyimpan 5 kasir. Yuk! upgrade saat bisnismu bertumbuh.";
+            }
+
+            if (isExpired) {
+              title = "Yah! masa aktif paket habis";
+              description =
+                  "Paket $activePackage kamu sudah tidak aktif lagi. Yuk perpanjang atau upgrade paket untuk terus menikmati fitur Lakoe.";
             }
 
             if (!context.mounted) return;
@@ -115,13 +124,19 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen>
                     hasGrabber: false,
                     child: ErrorDisplay(
                       imageSrc: TImages.limitQuota,
-                      title: "Upgrade paket, yuk!",
-                      description: message,
+                      title: title,
+                      description: description,
                       actionTitlePrimary: "Lihat Paket",
                       onActionPrimary: () {
                         Navigator.pop(context);
                         Navigator.pop(context, true);
-                        if (activePackage == "GROW") {
+                        if (isExpired && activePackage != "LITE") {
+                          Navigator.pushNamed(
+                            context,
+                            "/account/active_package",
+                            arguments: {'packageName': activePackage},
+                          );
+                        } else if (activePackage == "GROW") {
                           Navigator.pushNamed(
                             context,
                             "/packages/upgrade",

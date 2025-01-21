@@ -42,20 +42,25 @@ class DetailActivePackage extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               (packageActive != null)
-                  ? Row(
-                      children: [
-                        TextHeading3(
-                          TFormatter.dateTime(
-                            packageActive!.purchase!.endPeriod.toString(),
-                            withTime: false,
-                          ),
-                          color: TColors.neutralDarkDark,
-                        ),
-                        RemainingPeriodWidget(
-                          endPeriod: packageActive!.purchase!.endPeriod,
-                        ),
-                      ],
-                    )
+                  ? (packageActive?.purchase != null)
+                      ? Row(
+                          children: [
+                            TextHeading3(
+                              TFormatter.dateTime(
+                                packageActive!.purchase!.endPeriod.toString(),
+                                withTime: false,
+                              ),
+                              color: TColors.neutralDarkDark,
+                            ),
+                            RemainingPeriodWidget(
+                              endPeriod: packageActive!.purchase!.endPeriod,
+                            ),
+                          ],
+                        )
+                      : TextHeading3(
+                          "Paket kamu sudah habis",
+                          color: TColors.error,
+                        )
                   : Row(
                       children: [
                         Shimmer.fromColors(
@@ -193,6 +198,7 @@ class _RemainingPeriodWidgetState extends State<RemainingPeriodWidget> {
       return TextBodyM(
         " • ${_formatRemainingTime(remainingTime)}",
         color: TColors.error,
+        fontWeight: FontWeight.bold,
       );
     }
   }

@@ -215,6 +215,7 @@ class _DetailPurchaseState extends State<DetailPurchase> {
         child: Scaffold(
           backgroundColor: TColors.neutralLightLight,
           appBar: CustomAppbar(
+            title: "Detail Pembelian",
             handleBackButton: () => Navigator.pop(context, true),
           ),
           body: BlocBuilder<PurchaseCubit, PurchaseState>(
