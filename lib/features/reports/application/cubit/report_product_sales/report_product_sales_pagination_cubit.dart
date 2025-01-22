@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/reports/application/cubit/report_product_sales/report_product_sales_pagination_state.dart';
+import 'package:lakoe_pos/features/reports/application/cubit/report_product_sales/report_product_sales_pagination_state.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ReportProductSalesPaginationCubit
@@ -22,9 +22,10 @@ class ReportProductSalesPaginationCubit
         productId,
         ListOrderByProductDto(
           cursor: dto?.cursor,
+          status: dto?.status,
+          template: dto?.template,
           from: dto?.from,
           to: dto?.to,
-          template: dto?.template,
         ),
       );
 
@@ -37,9 +38,10 @@ class ReportProductSalesPaginationCubit
             productId: productId,
             dto: ListOrderByProductDto(
               cursor: response.nextCursor,
+              status: currentState.dto?.status,
+              template: currentState.dto?.template,
               from: currentState.dto?.from,
               to: currentState.dto?.to,
-              template: currentState.dto?.template,
             ),
           ),
         );
@@ -49,9 +51,10 @@ class ReportProductSalesPaginationCubit
           productId: productId,
           dto: ListOrderByProductDto(
             cursor: response.nextCursor,
+            status: dto?.status,
+            template: dto?.template,
             from: dto?.from,
             to: dto?.to,
-            template: dto?.template,
           ),
         ));
       }

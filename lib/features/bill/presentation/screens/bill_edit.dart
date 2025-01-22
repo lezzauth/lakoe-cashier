@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
-import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_state.dart';
-import 'package:point_of_sales_cashier/features/bill/data/arguments/template_order_model.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/bill_view.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/form_label.dart';
+import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_state.dart';
+import 'package:lakoe_pos/features/bill/data/arguments/template_order_model.dart';
+import 'package:lakoe_pos/features/bill/presentation/widgets/bill_view.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class BillEditScreen extends StatefulWidget {
   const BillEditScreen({super.key});
@@ -185,10 +185,8 @@ class _BillEditScreenState extends State<BillEditScreen> {
                               },
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 16),
+                              padding: EdgeInsets.symmetric(vertical: 12),
                               child: SizedBox(
-                                height: 48,
                                 width: double.infinity,
                                 child: ElevatedButton(
                                   onPressed: _onSubmitted,

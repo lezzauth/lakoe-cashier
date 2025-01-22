@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_large.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_small.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/bill/text_large.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/bill/text_small.dart';
 
 class BillListPrice extends StatelessWidget {
   final String label;

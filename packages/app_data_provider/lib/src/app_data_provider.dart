@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum AppDataKeys {
   outletId,
   ownerId,
+  activePackage,
   footNote,
   isAutoPrint,
   avatarSvg,
@@ -23,6 +24,10 @@ class AppDataProvider {
 
   Future<void> setOwnerId(String value) async {
     return await _storage.setString(AppDataKeys.ownerId.name, value);
+  }
+
+  Future<void> setActivePackage(String value) async {
+    return await _storage.setString(AppDataKeys.activePackage.name, value);
   }
 
   Future<void> setFootNote(String value) async {
@@ -52,6 +57,8 @@ class AppDataProvider {
   Future<void> setValues(AppDataModel values) async {
     await _storage.setString(AppDataKeys.outletId.name, values.outletId);
     await _storage.setString(AppDataKeys.ownerId.name, values.ownerId);
+    await _storage.setString(
+        AppDataKeys.activePackage.name, values.activePackage);
     await _storage.setString(AppDataKeys.footNote.name, values.footNote);
     await _storage.setBool(AppDataKeys.isAutoPrint.name, values.isAutoPrint);
     await _storage.setString(AppDataKeys.avatarSvg.name, values.avatarSvg);
@@ -66,6 +73,10 @@ class AppDataProvider {
 
   Future<String> get ownerId async {
     return await _storage.getString(AppDataKeys.ownerId.name) ?? "";
+  }
+
+  Future<String> get activePackage async {
+    return await _storage.getString(AppDataKeys.activePackage.name) ?? "";
   }
 
   Future<String> get footNote async {
@@ -95,6 +106,8 @@ class AppDataProvider {
   Future<AppDataModel> get values async {
     final outletId = await _storage.getString(AppDataKeys.outletId.name) ?? "";
     final ownerId = await _storage.getString(AppDataKeys.ownerId.name) ?? "";
+    final activePackage =
+        await _storage.getString(AppDataKeys.activePackage.name) ?? "";
     final footNote = await _storage.getString(AppDataKeys.footNote.name) ?? "";
     final isAutoPrint =
         await _storage.getBool(AppDataKeys.isAutoPrint.name) ?? false;
@@ -110,6 +123,7 @@ class AppDataProvider {
       footNote: footNote,
       isAutoPrint: isAutoPrint,
       outletId: outletId,
+      activePackage: activePackage,
       ownerId: ownerId,
       avatarSvg: avatarSvg,
       colorBrand: colorBrand,

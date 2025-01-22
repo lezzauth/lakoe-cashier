@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_filter_state.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/presentation/widgets/bank_account_list.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_filter_cubit.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_filter_state.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
+import 'package:lakoe_pos/features/bank_accounts/presentation/widgets/bank_account_list.dart';
+import 'package:lakoe_pos/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class BankAccountMasterScreen extends StatelessWidget {
   const BankAccountMasterScreen({super.key});
@@ -29,8 +29,6 @@ class BankAccountMaster extends StatefulWidget {
 }
 
 class _BankAccountMasterState extends State<BankAccountMaster> {
-  final TextEditingController _searchController = TextEditingController();
-
   Future<void> _onRefresh() async {
     context.read<BankAccountMasterCubit>().findAll();
   }
@@ -64,6 +62,12 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
           ),
           BlocListener<BankAccountMasterCubit, BankAccountMasterState>(
             listener: (context, state) {
+              if (state is BankAccountMasterLoadSuccess) {
+                if (state.bankAccounts.length == 1) {
+                  context.read<OnboardingTransactionCubit>().init();
+                }
+              }
+
               if (state is BankAccountMasterActionSuccess) {
                 _onRefresh();
               }
@@ -71,24 +75,14 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
           )
         ],
         child: Scaffold(
-          appBar: CustomAppbar(
-            search: SearchField(
-              hintText: "Cari nomor rekening disini...",
-              controller: _searchController,
-              onChanged: (value) {
-                context
-                    .read<BankAccountMasterFilterCubit>()
-                    .setFilter(search: value);
-              },
-            ),
-          ),
+          appBar: CustomAppbar(title: "Daftar Rekening Bank"),
           body: Padding(
-            padding: const EdgeInsets.only(top: 20.0),
+            padding: EdgeInsets.only(top: 20.0),
             child: Scrollbar(
               child: RefreshIndicator(
                 onRefresh: _onRefresh,
                 backgroundColor: TColors.neutralLightLightest,
-                child: const BankAccountList(),
+                child: BankAccountList(),
               ),
             ),
           ),
@@ -105,7 +99,7 @@ class _BankAccountMasterState extends State<BankAccountMaster> {
                           ),
                           onPressed: _onGoToCreateScreen,
                           elevation: 0,
-                          child: const Icon(
+                          child: Icon(
                             Icons.add,
                             size: 24,
                           ),

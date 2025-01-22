@@ -1,21 +1,22 @@
 import 'dart:developer';
 
-import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:owner_repository/owner_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
-import 'package:point_of_sales_cashier/features/bill/data/arguments/template_order_model.dart';
-import 'package:point_of_sales_cashier/features/orders/data/models.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/features/bill/data/arguments/template_order_model.dart';
+import 'package:lakoe_pos/features/orders/data/models.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/constants/payment_method_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 import 'package:image/image.dart' as image;
-import 'package:point_of_sales_cashier/utils/helpers/bluetooth_permission.dart';
+import 'package:lakoe_pos/utils/helpers/bluetooth_permission.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
 class TBill {
@@ -58,8 +59,6 @@ class TBill {
 
     final profile = await CapabilityProfile.load();
     final generator = Generator(PaperSize.mm58, profile, spaceBetweenRows: 1);
-    final profileDevice = await CapabilityProfile.getAvailableProfiles();
-    Logman.instance.info('profileDevice: $profileDevice');
     bytes += generator.reset();
 
     // int newBillNumber =
@@ -79,6 +78,54 @@ class TBill {
         ),
       );
       bytes += generator.emptyLines(1);
+    }
+
+    if (profileOwner.packageName != "LITE") {
+      try {
+        final response =
+            await http.get(Uri.parse(profileOwner.outlets[0].logo));
+
+        if (response.statusCode == 200) {
+          final bytesImg = response.bodyBytes;
+          final image.Image? img = image.decodeImage(bytesImg);
+
+          if (img != null) {
+            // Resize image
+            final resizedImage = image.copyResize(img, width: 100);
+
+            // Create a new image to store the final black-and-white version
+            final blackWhiteImage = image.Image.from(resizedImage);
+
+            for (int y = 0; y < resizedImage.height; y++) {
+              for (int x = 0; x < resizedImage.width; x++) {
+                // Access the pixel at (x, y)
+                final pixel = resizedImage.getPixel(x, y);
+                final alpha = pixel.a; // Extract alpha channel
+
+                // Skip transparent pixels
+                if (alpha == 0) {
+                  blackWhiteImage.setPixel(
+                      x,
+                      y,
+                      image.ColorUint8.rgb(
+                          255, 255, 255)); // Transparent background
+                  continue;
+                }
+
+                // Force all non-transparent pixels to black
+                blackWhiteImage.setPixel(
+                    x, y, image.ColorUint8.rgb(0, 0, 0)); // Black
+              }
+            }
+
+            final generator =
+                Generator(PaperSize.mm58, await CapabilityProfile.load());
+            bytes += generator.image(blackWhiteImage);
+          }
+        }
+      } catch (e) {
+        Logman.instance.info("Error: $e");
+      }
     }
 
     bytes += generator.text(
@@ -239,7 +286,7 @@ class TBill {
         charges.where((e) => e.type == "CHARGE").toList();
 
     if (taxCharges().isNotEmpty) {
-      for (var tax in order.charges!) {
+      for (var tax in taxCharges()) {
         bytes += generator.row([
           PosColumn(
             text:
@@ -261,7 +308,7 @@ class TBill {
     }
 
     if (serviceFeeCharges().isNotEmpty) {
-      for (var charge in order.charges!) {
+      for (var charge in serviceFeeCharges()) {
         bytes += generator.row([
           PosColumn(
             text:
@@ -329,6 +376,24 @@ class TBill {
         ),
       ),
     ]);
+    if (payment.approvalCode != null) {
+      bytes += generator.row([
+        PosColumn(
+          text: "Approval Code",
+          width: 6,
+          styles: const PosStyles(
+            align: PosAlign.left,
+          ),
+        ),
+        PosColumn(
+          text: payment.approvalCode ?? "-",
+          width: 6,
+          styles: const PosStyles(
+            align: PosAlign.right,
+          ),
+        ),
+      ]);
+    }
     bytes += generator.hr();
     bytes += generator.row([
       PosColumn(
@@ -414,30 +479,34 @@ class TBill {
           isTestingMode: false,
         );
 
-        final result = await PrintBluetoothThermal.writeBytes(ticket);
-        log("print result: $result");
+        await PrintBluetoothThermal.writeBytes(ticket);
       } else {
+        if (!context.mounted) return;
         showModalBottomSheet(
           context: context,
           enableDrag: false,
           isDismissible: false,
           builder: (context) {
-            return CustomBottomsheet(
-              hasGrabber: false,
-              child: ErrorDisplay(
-                imageSrc: TImages.noPrintIllustration,
-                title: "Belum ada print yang connect, nih!",
-                description:
-                    "Yuk! Sambungkan dulu print kamu di halaman Setting.",
-                actionTitlePrimary: "Atur Print",
-                onActionPrimary: () async {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, "/print");
-                },
-                actionTitleSecondary: "Nanti Saja",
-                onActionSecondary: () {
-                  Navigator.pop(context);
-                },
+            return PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) async {},
+              child: CustomBottomsheet(
+                hasGrabber: false,
+                child: ErrorDisplay(
+                  imageSrc: TImages.noPrintIllustration,
+                  title: "Belum ada print yang connect, nih!",
+                  description:
+                      "Yuk! Sambungkan dulu print kamu di halaman Setting.",
+                  actionTitlePrimary: "Atur Print",
+                  onActionPrimary: () async {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, "/print");
+                  },
+                  actionTitleSecondary: "Nanti Saja",
+                  onActionSecondary: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ),
             );
           },

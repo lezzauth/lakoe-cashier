@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/features/orders/common/widgets/summary/order_summary.dart';
-import 'package:point_of_sales_cashier/features/orders/data/models.dart';
+import 'package:lakoe_pos/features/orders/common/widgets/summary/order_summary.dart';
+import 'package:lakoe_pos/features/orders/data/models.dart';
 
 class CartSummary extends StatelessWidget {
   const CartSummary({

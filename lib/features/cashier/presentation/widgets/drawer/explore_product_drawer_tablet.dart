@@ -1,17 +1,19 @@
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_state.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_state.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/content/cart_content_tablet.dart';
-import 'package:point_of_sales_cashier/features/payments/application/cubit/payment/payment_state.dart';
-import 'package:point_of_sales_cashier/features/payments/common/widgets/select_payment_method/select_payment_method_tablet.dart';
-import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_state.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_state.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
+import 'package:lakoe_pos/features/cart/presentation/widgets/content/cart_content_tablet.dart';
+import 'package:lakoe_pos/features/payment_method/payments/application/cubit/payment/payment_state.dart';
+import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select_payment_method/select_payment_method_tablet.dart';
+import 'package:lakoe_pos/features/payment_method/payments/data/arguments/success_confirmation_payment_argument.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class ExploreProductDrawerTablet extends StatefulWidget {
   const ExploreProductDrawerTablet({super.key});
@@ -31,9 +33,10 @@ class _ExploreProductDrawerTabletState
     await context.read<CartDetailCubit>().saveAndCompleteOrder(
           carts: cartState.carts,
           dto: CompleteCashOrderDto(
+            paymentMethod: "CASH",
             paidAmount: data.paidAmount,
             change: data.change,
-            paymentMethod: "CASH",
+            customerId: filterState.customer?.id,
           ),
           type: filterState.type,
           customerId: filterState.customer?.id,
@@ -103,6 +106,18 @@ class _ExploreProductDrawerTabletState
         );
   }
 
+  Future<void> _onRefresh() async {
+    if (!mounted) return;
+    CartState cartState = context.read<CartCubit>().state;
+    CartDetailFilterState filterState =
+        context.read<CartDetailFilterCubit>().state;
+
+    await context.read<CartDetailCubit>().previewOrderPrice(
+          type: filterState.type,
+          carts: cartState.carts,
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<CartDetailCubit, CartDetailState>(
@@ -111,17 +126,20 @@ class _ExploreProductDrawerTabletState
           Navigator.popAndPushNamed(
             context,
             "/payments/success_confirmation",
-            arguments: SuccessConfirmationPaymentArgument(payment: state.res),
+            arguments: SuccessConfirmationPaymentArgument(
+              payment: state.res,
+              isCashier: true,
+            ),
           );
         }
       },
       child: Drawer(
-        width: 1000,
+        width: 900,
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         child: Row(
           children: [
             Container(
-              width: 500,
+              width: 450,
               decoration: const BoxDecoration(
                 border: Border(
                   right:
@@ -131,7 +149,7 @@ class _ExploreProductDrawerTabletState
               child: const CartContentTablet(),
             ),
             SizedBox(
-              width: 500,
+              width: 450,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -146,9 +164,19 @@ class _ExploreProductDrawerTabletState
                             onPaymentDebitCredit: _onDebitCreditPaid,
                             onPaymentQRCode: _onQRCodePaid,
                           ),
-                        CartDetailLoadFailure() =>
-                          const Center(child: CircularProgressIndicator()),
-                        _ => const Center(child: CircularProgressIndicator()),
+                        CartDetailLoadFailure() => EmptyList(
+                            title: "Gagal memuat data, nih!",
+                            subTitle:
+                                "Ada sedikit gangguan. Coba coba lagi, ya",
+                            action: TextButton(
+                              onPressed: _onRefresh,
+                              child: TextActionL(
+                                "Coba Lagi",
+                                color: TColors.primary,
+                              ),
+                            ),
+                          ),
+                        _ => Center(child: CircularProgressIndicator()),
                       },
                     ),
                   ),

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owner_repository/owner_repository.dart';
-import 'package:point_of_sales_cashier/features/charges/application/cubit/charge_master/charge_master_state.dart';
-import 'package:point_of_sales_cashier/features/charges/data/models.dart';
+import 'package:lakoe_pos/features/charges/application/cubit/charge_master/charge_master_state.dart';
+import 'package:lakoe_pos/features/charges/data/models.dart';
 
 class ChargeMasterCubit extends Cubit<ChargeMasterState> {
   final OwnerRepository _ownerRepository = OwnerRepositoryImpl();

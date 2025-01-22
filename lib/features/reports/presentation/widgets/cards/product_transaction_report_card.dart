@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class ProductTransactionReportCard extends StatelessWidget {
   const ProductTransactionReportCard({
@@ -60,7 +60,7 @@ class ProductTransactionReportCard extends StatelessWidget {
               color: TColors.neutralLightLight,
             ),
             child: const UiIcons(
-              TIcons.cardTransfer,
+              TIcons.box2,
               size: 20,
               color: TColors.primary,
             ),
@@ -72,7 +72,7 @@ class ProductTransactionReportCard extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(bottom: 4),
                   child: const TextBodyS(
-                    "Total Transaksi",
+                    "Jumlah Transaksi",
                     color: TColors.neutralDarkLightest,
                   ),
                 ),

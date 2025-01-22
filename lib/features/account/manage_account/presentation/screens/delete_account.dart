@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/custom_checkbox.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/custom_checkbox.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class DeleteAccountScreen extends StatefulWidget {
   const DeleteAccountScreen({super.key});
@@ -163,17 +163,20 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
             child: Column(
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/delete_account/reason");
-                  },
+                  onPressed: (isAgreed)
+                      ? () {
+                          Navigator.pushNamed(
+                              context, "/delete_account/reason");
+                        }
+                      : null,
                   style: ElevatedButton.styleFrom(
                     foregroundColor: TColors.neutralLightLightest,
                     backgroundColor: TColors.error,
-                    minimumSize: const Size(double.infinity, 48),
+                    minimumSize: const Size(double.infinity, 40),
                   ),
                   child: const TextActionL("Lanjut"),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 6),
                 OutlinedButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -181,7 +184,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                   style: OutlinedButton.styleFrom(
                     foregroundColor: TColors.error,
                     side: const BorderSide(color: TColors.error),
-                    minimumSize: const Size(double.infinity, 48),
+                    minimumSize: const Size(double.infinity, 40),
                   ),
                   child: const TextActionL("Batal"),
                 ),

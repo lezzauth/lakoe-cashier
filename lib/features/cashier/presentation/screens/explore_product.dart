@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/screens/tablet/explore_product.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/screens/mobile/explore_product.dart';
+import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/category/cashier_category_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/order/cashier_order_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
+import 'package:lakoe_pos/features/cashier/presentation/screens/tablet/explore_product_tablet.dart';
+import 'package:lakoe_pos/features/cashier/presentation/screens/mobile/explore_product_mobile.dart';
+import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 
 class ExploreProductScreen extends StatefulWidget {
   const ExploreProductScreen({super.key});
@@ -21,8 +22,10 @@ class ExploreProductScreen extends StatefulWidget {
 class _ExploreProductScreenState extends State<ExploreProductScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CashierProductFilterCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CashierProductFilterCubit()),
+      ],
       child: const ExploreProduct(),
     );
   }
@@ -44,6 +47,7 @@ class _ExploreProductState extends State<ExploreProduct> {
     context.read<CashierOrderCubit>().init();
     context.read<CashierProductCubit>().init();
     context.read<CashierCategoryCubit>().init();
+    context.read<PaymentMethodCubit>().findAll();
   }
 
   @override
@@ -65,7 +69,7 @@ class _ExploreProductState extends State<ExploreProduct> {
           context.read<CartCubit>().reset();
           Navigator.pushNamedAndRemoveUntil(
             context,
-            "/cashier",
+            "/home",
             (route) => false,
           );
         }
@@ -81,7 +85,7 @@ class _ExploreProductState extends State<ExploreProduct> {
             },
           ),
         ],
-        child: const ResponsiveLayout(
+        child: ResponsiveLayout(
           mobile: ExploreProductMobile(),
           tablet: ExploreProductTablet(),
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/charges/application/cubit/charge_form/charge_form_state.dart';
-import 'package:point_of_sales_cashier/features/charges/presentation/widgets/form/field/other_charge_field.dart';
+import 'package:lakoe_pos/features/charges/application/cubit/charge_form/charge_form_state.dart';
+import 'package:lakoe_pos/features/charges/presentation/widgets/form/field/other_charge_field.dart';
 
 class ChargeFormCubit extends Cubit<ChargeFormState> {
   ChargeFormCubit()

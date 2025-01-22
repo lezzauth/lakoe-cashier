@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/custom_radio.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/form/custom_radio.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class BankRadioTile<T> extends StatelessWidget {
   final T value;
@@ -34,7 +34,7 @@ class BankRadioTile<T> extends StatelessWidget {
             groupValue: groupValue,
             onChanged: onChanged,
           ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
         ),
         const Divider(
           color: TColors.neutralLightMedium,

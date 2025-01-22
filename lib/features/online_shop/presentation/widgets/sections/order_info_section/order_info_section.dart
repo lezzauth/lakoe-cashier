@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop_repository/online_shop_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
-import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/utils/helpers/helper.dart';
 
 class OrderInfoSection extends StatefulWidget {
   const OrderInfoSection({super.key, required this.order});
@@ -40,7 +40,7 @@ class _OrderInfoSectionState extends State<OrderInfoSection> {
       child: Column(
         children: [
           _SectionItem(
-            trailingText: "${TFormatter.orderDate(
+            trailingText: "${TFormatter.dateTime(
               widget.order.createdAt.toIso8601String(),
             )} WIB",
             icon: TIcons.calendar2,

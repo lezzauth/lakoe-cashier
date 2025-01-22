@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_state.dart';
+import 'package:lakoe_pos/features/tables/application/cubit/table_master_location/table_master_location_state.dart';
 import 'package:table_location_repository/table_location_repository.dart';
 
 class TableMasterLocationCubit extends Cubit<TableMasterLocationState> {

@@ -53,11 +53,20 @@ final class ProductMasterActionFailure extends ProductMasterState {
   List<Object?> get props => [error];
 }
 
-final class ProductMasterReachesLimit extends ProductMasterState {
+final class ErrorIssuePackage extends ProductMasterState {
   final DioExceptionModel res;
 
-  ProductMasterReachesLimit(this.res);
+  ErrorIssuePackage(this.res);
 
   @override
   List<Object?> get props => [res];
+}
+
+final class ConnectionIssue extends ProductMasterState {
+  final String message;
+
+  ConnectionIssue(this.message);
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
 }

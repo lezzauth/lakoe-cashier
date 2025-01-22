@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/bank_select/bank_select.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/popup_confirmation.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
+import 'package:lakoe_pos/application/cubit/bank_list_cubit.dart';
+import 'package:lakoe_pos/common/widgets/form/bank_select/bank_select.dart';
+import 'package:lakoe_pos/common/widgets/form/form_label.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/popup_confirmation.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
 import 'package:public_repository/public_repository.dart';
 
 class BankAccountForm extends StatefulWidget {
@@ -25,7 +25,6 @@ class BankAccountForm extends StatefulWidget {
   final Function(
     dynamic value,
     BankListModel? bank,
-    String previousAccountNumber,
   ) onSubmitted;
   final Future Function()? onDeleted;
   final bool isLoading;
@@ -39,8 +38,10 @@ class _BankAccountFormState extends State<BankAccountForm> {
   final _formKey = GlobalKey<FormBuilderState>();
   bool _isFormValid = false;
 
-  Future<void> _onSubmit() async {
+  void _onSubmit() async {
     if (!mounted) return;
+
+    FocusScope.of(context).unfocus();
 
     bool isFormValid = _formKey.currentState?.saveAndValidate() ?? false;
     if (!isFormValid) {
@@ -50,9 +51,8 @@ class _BankAccountFormState extends State<BankAccountForm> {
     dynamic value = _formKey.currentState?.value;
 
     final bank = await context.read<BankListCubit>().findOne(value["name"]);
-    String previousAccountNumber = widget.initialValue["accountNumber"];
 
-    widget.onSubmitted(value, bank, previousAccountNumber);
+    widget.onSubmitted(value, bank);
   }
 
   void _showPopupConfirmation(BuildContext context) {
@@ -213,11 +213,11 @@ class _BankAccountFormState extends State<BankAccountForm> {
           ),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: ElevatedButton(
-              onPressed: _isFormValid ? _onSubmit : null,
+              onPressed: _isFormValid || !widget.isLoading ? _onSubmit : null,
               child: widget.isLoading
-                  ? const SizedBox(
+                  ? SizedBox(
                       height: 16,
                       width: 16,
                       child: CircularProgressIndicator(
@@ -225,9 +225,7 @@ class _BankAccountFormState extends State<BankAccountForm> {
                         strokeWidth: 2,
                       ),
                     )
-                  : const TextActionL(
-                      "Simpan",
-                    ),
+                  : TextActionL("Simpan"),
             ),
           )
         ],

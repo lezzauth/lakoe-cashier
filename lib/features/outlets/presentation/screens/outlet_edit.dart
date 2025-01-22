@@ -5,22 +5,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:outlet_repository/outlet_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/form_label.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/custom_toast.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/outlets/application/outlet_cubit.dart';
-import 'package:point_of_sales_cashier/features/outlets/application/outlet_state.dart';
-import 'package:point_of_sales_cashier/features/outlets/presentation/widgets/image_picker_field.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/error_text_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/form_label.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/features/outlets/application/outlet_cubit.dart';
+import 'package:lakoe_pos/features/outlets/application/outlet_state.dart';
+import 'package:lakoe_pos/features/outlets/presentation/widgets/image_picker_field.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class OutletEditScreen extends StatefulWidget {
@@ -231,9 +231,10 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                               name: "outletAddress",
                               initialValue: arg!.address,
                               decoration: const InputDecoration(
-                                hintText: "Cari alamat usaha",
+                                hintText:
+                                    "Masukan alamat dengan format [Kecamatan], [Kabupaten], [Provinsi]\nContoh: Banjarsari, Solo, Jawa Tengah",
                               ),
-                              maxLines: 2,
+                              maxLines: 3,
                               validator: FormBuilderValidators.required(
                                   errorText: ErrorTextStrings.required(
                                       name: "Alamat")),
@@ -364,7 +365,8 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                                                     color: Color(selectedColor),
                                                     columnSpacing: 12,
                                                     padding: EdgeInsets.all(20),
-                                                    wheelDiameter: screenWidth,
+                                                    wheelDiameter: 320,
+                                                    // wheelDiameter: screenWidth,
                                                     wheelWidth: 12,
                                                     wheelHasBorder: true,
                                                     onColorChanged:
@@ -385,20 +387,13 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                                                     },
                                                   ),
                                                   Container(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            20),
-                                                    child: SizedBox(
-                                                      height: 48,
-                                                      child: OutlinedButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child:
-                                                            const TextActionL(
-                                                                "Pilih Warna"),
-                                                      ),
+                                                    padding: EdgeInsets.all(20),
+                                                    child: OutlinedButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: TextActionL(
+                                                          "Pilih Warna"),
                                                     ),
                                                   ),
                                                 ],

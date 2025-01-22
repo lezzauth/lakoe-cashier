@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/webview/in_app_webiew.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/webview/in_app_webiew.dart';
 
 class TermsConditionScreen extends StatefulWidget {
   const TermsConditionScreen({super.key});
@@ -17,8 +17,7 @@ class _TermsConditionScreenState extends State<TermsConditionScreen> {
         title: "Syarat & Ketentuan",
       ),
       body: InAppWebViewScreen(
-        url:
-            "https://cumbersome-ravioli-912.notion.site/Syarat-dan-Ketentuan-Penggunaan-Platform-Lakoe-907dfcec5484487cb784724025142c40",
+        url: "https://www.lakoe.id/terms-and-conditions",
       ),
     );
   }

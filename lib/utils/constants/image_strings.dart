@@ -19,6 +19,7 @@ class TImages {
   static const String stampPaid = "assets/images/stamp-paid.svg";
   static const String stampCancel = "assets/images/stamp-cancel.svg";
   static const String infinity = "assets/images/infinity.svg";
+  static const String growToPro = "assets/images/grow-to-pro.webp";
   static const String catBox = "assets/images/cat-box.svg";
   static const String qrisLogo = "assets/images/qris-logo.svg";
   static const String liteLogo = "assets/images/lite-logo.png";
@@ -28,9 +29,10 @@ class TImages {
   static const String defaultLogo = "assets/images/default-logo.png";
   static const String checkeredBg = "assets/images/checkered_background.webp";
   static const String badRequest = "assets/images/502-illustration.webp";
+  static const String limitQuota = "assets/images/limit-quota.webp";
   static const String noConnection =
       "assets/images/no-connection-ilustration.webp";
-  static const String limitQuota = "assets/images/limit-quota.webp";
+  static const String updateAvailable = "assets/images/update-available.webp";
   static const String noPrintIllustration =
       "assets/images/no-print-ilustration.webp";
   static const String noPrintIllustrationSvg =
@@ -67,16 +69,18 @@ class TImages {
       "assets/images/ilustration-success-grow.webp";
   static const String proSuccessUpgraded =
       "assets/images/ilustration-success-pro.webp";
+  static const String failedUpgraded =
+      "assets/images/ilustration-failed-upgrade.webp";
 
   // logo package level
-  static const String liteLogoPackage =
-      "assets/logos/package/lite-logo-level.png";
-  static const String growLogoPackage =
-      "assets/logos/package/grow-logo-level.png";
-  static const String proLogoPackage =
-      "assets/logos/package/pro-logo-level.png";
+  static const String liteLogoPackage = "assets/logos/package/lite-logo.png";
+  static const String growLogoPackage = "assets/logos/package/grow-logo.png";
+  static const String proLogoPackage = "assets/logos/package/pro-logo.png";
   static const String liteLogoLow =
-      "assets/logos/package/lite-logo-level-low.png";
+      "assets/logos/package/lite-logo-neutral.png";
+  static const String growLogoLow =
+      "assets/logos/package/grow-logo-neutral.png";
+  static const String proLogoLow = "assets/logos/package/pro-logo-neutral.png";
   static const String liteIcon = "assets/logos/package/icon-lite.png";
   static const String growIcon = "assets/logos/package/icon-grow.png";
   static const String proIcon = "assets/logos/package/icon-pro.png";

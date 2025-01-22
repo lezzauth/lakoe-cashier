@@ -2,141 +2,215 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
+import 'package:lakoe_pos/features/account/manage_account/application/delete_account_cubit.dart';
+import 'package:lakoe_pos/features/account/manage_account/presentation/screens/otp_input.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/form/edit_acccount_pin.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/form/otp_input.dart';
+import 'package:lakoe_pos/features/checkout/presentation/screens/payment_failed.dart';
+import 'package:lakoe_pos/features/customers/presentation/screens/edit_customer.dart';
+import 'package:lakoe_pos/features/employees/data/arguments/forgot_pin_dto.dart';
+import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/create_new_pin.dart';
+import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/otp_input.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/orders/orders_cubit.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_active/package_active_cubit.dart';
+import 'package:lakoe_pos/features/packages/presentation/screens/package_upgrade.dart';
+import 'package:lakoe_pos/features/packages/presentation/screens/purchase/detail_purchase.dart';
+import 'package:lakoe_pos/features/packages/presentation/screens/purchase/history_purchase_package.dart';
+import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
+import 'package:lakoe_pos/utils/helpers/deeplink_handler.dart';
 import 'package:logman/logman.dart';
-import 'package:point_of_sales_cashier/application/cubit/bank_list_cubit.dart';
-import 'package:point_of_sales_cashier/features/account/presentation/screens/account_edit.dart';
-import 'package:point_of_sales_cashier/features/account/presentation/screens/account_master.dart';
-import 'package:point_of_sales_cashier/features/account/presentation/screens/form/email_edit.dart';
-import 'package:point_of_sales_cashier/features/account/presentation/screens/form/name_edit.dart';
-import 'package:point_of_sales_cashier/features/account/presentation/screens/form/phone_number_edit.dart';
-import 'package:point_of_sales_cashier/features/account/presentation/screens/form/pin_edit.dart';
-import 'package:point_of_sales_cashier/features/ai_chatbot/application/cubit/whatsapp/whatsapp_session_cubit.dart';
-import 'package:point_of_sales_cashier/features/ai_chatbot/presentation/screens/ai_chatbot_master.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/data/arguments/completing_data_argument.dart';
-import 'package:point_of_sales_cashier/features/authentication/data/arguments/otp_input_argument.dart';
-import 'package:point_of_sales_cashier/features/authentication/presentation/completing_data/screens/completing_data.dart';
-import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/on_boarding.dart';
-import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/privacy_policy.dart';
-import 'package:point_of_sales_cashier/features/authentication/presentation/on_boarding/screens/terms_condition.dart';
-import 'package:point_of_sales_cashier/features/authentication/presentation/otp_input/screens/otp_input.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/data/arguments/bank_account_detail_argument.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_detail.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_master.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/presentation/screens/bank_account_new.dart';
-import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_edit.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_master.dart';
-import 'package:point_of_sales_cashier/features/checkout/application/purchase_cubit.dart';
-import 'package:point_of_sales_cashier/features/checkout/presentation/screens/chekcout_master.dart';
-import 'package:point_of_sales_cashier/features/checkout/presentation/screens/payment_confirmation.dart';
-import 'package:point_of_sales_cashier/features/checkout/presentation/screens/payment_prepared.dart';
-import 'package:point_of_sales_cashier/features/checkout/presentation/screens/payment_success.dart';
-import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_detail_argument.dart';
-import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
-import 'package:point_of_sales_cashier/features/employees/presentation/screens/employee_edit.dart';
-import 'package:point_of_sales_cashier/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
-import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/onboarding_transaction.dart';
-import 'package:point_of_sales_cashier/features/online_shop/application/cubit/shop_order_master_cubit/shop_order_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_ai_sop_new_argument.dart';
-import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_detail_argument.dart';
-import 'package:point_of_sales_cashier/features/online_shop/data/arguments/online_shop_order_track_argument.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_description.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_faq.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_glossary.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_language_style.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_sop.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_sop_new.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_cs_master.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_master.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_detail.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_master.dart';
-import 'package:point_of_sales_cashier/features/online_shop/presentation/screens/online_shop_order_track.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/screens/preview_proof_transfer.dart';
-import 'package:point_of_sales_cashier/features/outlets/application/outlet_cubit.dart';
-import 'package:point_of_sales_cashier/features/outlets/presentation/screens/outlet_edit.dart';
-import 'package:point_of_sales_cashier/features/packages/application/cubit/package_detail/package_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/packages/application/cubit/package_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/packages/boost/presentation/screens/boost_detail.dart';
-import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_detail.dart';
-import 'package:point_of_sales_cashier/features/packages/presentation/screens/package_master.dart';
-import 'package:point_of_sales_cashier/features/payments/data/arguments/success_confirmation_payment_argument.dart';
-import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/print/presentation/screens/print_master.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/customer/cart_customer_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/screens/cart.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_cubit.dart';
-import 'package:point_of_sales_cashier/features/categories/application/cubit/category_master/category_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_edit.dart';
-import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_master.dart';
-import 'package:point_of_sales_cashier/features/categories/presentation/screens/category_new.dart';
-import 'package:point_of_sales_cashier/features/charges/application/cubit/charge_master/charge_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/charges/presentation/screens/charge_master.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_detail/customer_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/customers/presentation/screens/customer_detail.dart';
-import 'package:point_of_sales_cashier/features/customers/presentation/screens/master_customer.dart';
-import 'package:point_of_sales_cashier/features/customers/presentation/screens/new_customer.dart';
-import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/employees/presentation/screens/detail_employee.dart';
-import 'package:point_of_sales_cashier/features/employees/presentation/screens/master_employee.dart';
-import 'package:point_of_sales_cashier/features/employees/presentation/screens/new_employee.dart';
-import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/open_cashier_pin.dart';
-import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/dashboard.dart';
-import 'package:point_of_sales_cashier/features/home/presentation/dashboard/screens/transaction_date.dart';
-import 'package:point_of_sales_cashier/features/account/manage_account/presentation/screens/delete_account.dart';
-import 'package:point_of_sales_cashier/features/account/manage_account/presentation/screens/delete_account_reason.dart';
-import 'package:point_of_sales_cashier/features/account/manage_account/presentation/screens/manage_account.dart';
-import 'package:point_of_sales_cashier/features/notifications/presentation/screens/notification_master.dart';
-import 'package:point_of_sales_cashier/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/orders/application/cubit/order_master/order_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/orders/data/arguments/order_edit_argument.dart';
-import 'package:point_of_sales_cashier/features/orders/data/arguments/order_detail_argument.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_edit.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_detail.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/screens/order_master.dart';
-import 'package:point_of_sales_cashier/features/payment_method/presentation/screens/payment_method_master.dart';
-import 'package:point_of_sales_cashier/features/payments/data/arguments/bank_transfer_payment_argument.dart';
-import 'package:point_of_sales_cashier/features/payments/presentation/screens/bank_transfer_payment.dart';
-import 'package:point_of_sales_cashier/features/payments/presentation/screens/qris_payment.dart';
-import 'package:point_of_sales_cashier/features/payments/presentation/screens/success_confirmation_payment.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/screens/explore_product.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/screens/product_edit.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/screens/product_master.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/screens/new_product.dart';
-import 'package:point_of_sales_cashier/features/redirect/presentation/screens/redirect.dart';
-import 'package:point_of_sales_cashier/features/reports/application/cubit/report_master/report_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/reports/data/arguments.dart';
-import 'package:point_of_sales_cashier/features/reports/presentation/screens/report_best_seller.dart';
-import 'package:point_of_sales_cashier/features/reports/presentation/screens/report_product_sales.dart';
-import 'package:point_of_sales_cashier/features/reports/presentation/screens/report_master.dart';
-import 'package:point_of_sales_cashier/features/settings/presentation/screens/settings.dart';
-import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
-import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_edit.dart';
-import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_master.dart';
-import 'package:point_of_sales_cashier/features/tables/presentation/screens/table_new.dart';
-import 'package:point_of_sales_cashier/features/tables/presentation/widgets/pages/brand_edit.dart';
-import 'package:point_of_sales_cashier/features/taxes/application/cubit/tax_master/tax_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/taxes/presentation/screens/tax_master.dart';
-import 'package:point_of_sales_cashier/main_dev.dart';
-import 'package:point_of_sales_cashier/utils/helpers/navigator_observer.dart';
-import 'package:point_of_sales_cashier/utils/theme/theme.dart';
+import 'package:lakoe_pos/application/cubit/bank_list_cubit.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/account_edit.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/account_master.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/account_package_active.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/form/email_edit.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/form/name_edit.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/form/phone_number_edit.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/form/pin_edit.dart';
+import 'package:lakoe_pos/features/ai_chatbot/application/cubit/whatsapp/whatsapp_session_cubit.dart';
+import 'package:lakoe_pos/features/ai_chatbot/presentation/screens/ai_chatbot_master.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:lakoe_pos/features/authentication/data/arguments/completing_data_argument.dart';
+import 'package:lakoe_pos/features/authentication/data/arguments/otp_input_argument.dart';
+import 'package:lakoe_pos/features/authentication/presentation/completing_data/screens/completing_data.dart';
+import 'package:lakoe_pos/features/authentication/presentation/on_boarding/screens/on_boarding.dart';
+import 'package:lakoe_pos/features/authentication/presentation/on_boarding/screens/privacy_policy.dart';
+import 'package:lakoe_pos/features/authentication/presentation/on_boarding/screens/terms_condition.dart';
+import 'package:lakoe_pos/features/authentication/presentation/otp_input/screens/otp_input.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
+import 'package:lakoe_pos/features/bank_accounts/data/arguments/bank_account_detail_argument.dart';
+import 'package:lakoe_pos/features/bank_accounts/presentation/screens/bank_account_detail.dart';
+import 'package:lakoe_pos/features/bank_accounts/presentation/screens/bank_account_master.dart';
+import 'package:lakoe_pos/features/bank_accounts/presentation/screens/bank_account_new.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
+import 'package:lakoe_pos/features/bill/presentation/screens/bill_edit.dart';
+import 'package:lakoe_pos/features/bill/presentation/screens/bill_master.dart';
+import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
+import 'package:lakoe_pos/features/checkout/presentation/screens/chekcout_master.dart';
+import 'package:lakoe_pos/features/checkout/presentation/screens/payment_confirmation.dart';
+import 'package:lakoe_pos/features/checkout/presentation/screens/payment_prepared.dart';
+import 'package:lakoe_pos/features/checkout/presentation/screens/payment_success.dart';
+import 'package:lakoe_pos/features/employees/data/arguments/employee_detail_argument.dart';
+import 'package:lakoe_pos/features/employees/data/arguments/employee_edit_argument.dart';
+import 'package:lakoe_pos/features/employees/presentation/screens/employee_edit.dart';
+import 'package:lakoe_pos/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
+import 'package:lakoe_pos/features/home/presentation/dashboard/screens/onboarding_transaction.dart';
+import 'package:lakoe_pos/features/online_shop/application/cubit/shop_order_master_cubit/shop_order_master_cubit.dart';
+import 'package:lakoe_pos/features/online_shop/data/arguments/online_shop_ai_sop_new_argument.dart';
+import 'package:lakoe_pos/features/online_shop/data/arguments/online_shop_order_detail_argument.dart';
+import 'package:lakoe_pos/features/online_shop/data/arguments/online_shop_order_track_argument.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/screens/online_shop_ai_config.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_description.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_faq.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_glossary.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_language_style.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_sop.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/screens/online_shop_ai_config/online_shop_ai_sop_new.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/screens/online_shop_cs_master.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/screens/online_shop_master.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/screens/online_shop_order_detail.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/screens/online_shop_order_master.dart';
+import 'package:lakoe_pos/features/online_shop/presentation/screens/online_shop_order_track.dart';
+import 'package:lakoe_pos/features/orders/presentation/screens/preview_proof_transfer.dart';
+import 'package:lakoe_pos/features/outlets/application/outlet_cubit.dart';
+import 'package:lakoe_pos/features/outlets/presentation/screens/outlet_edit.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_detail/package_detail_cubit.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_master_cubit.dart';
+import 'package:lakoe_pos/features/packages/boost/presentation/screens/boost_detail.dart';
+import 'package:lakoe_pos/features/packages/presentation/screens/package_detail.dart';
+import 'package:lakoe_pos/features/packages/presentation/screens/package_master.dart';
+import 'package:lakoe_pos/features/payment_method/payments/data/arguments/success_confirmation_payment_argument.dart';
+import 'package:lakoe_pos/features/print/application/cubit/print_master/print_master_cubit.dart';
+import 'package:lakoe_pos/features/print/presentation/screens/print_master.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/customer/cart_customer_cubit.dart';
+import 'package:lakoe_pos/features/cart/presentation/screens/cart.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/category/cashier_category_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/order/cashier_order_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_cubit.dart';
+import 'package:lakoe_pos/features/categories/application/cubit/category_master/category_master_cubit.dart';
+import 'package:lakoe_pos/features/categories/presentation/screens/category_edit.dart';
+import 'package:lakoe_pos/features/categories/presentation/screens/category_master.dart';
+import 'package:lakoe_pos/features/categories/presentation/screens/category_new.dart';
+import 'package:lakoe_pos/features/charges/application/cubit/charge_master/charge_master_cubit.dart';
+import 'package:lakoe_pos/features/charges/presentation/screens/charge_master.dart';
+import 'package:lakoe_pos/features/customers/application/cubit/customer_detail/customer_detail_cubit.dart';
+import 'package:lakoe_pos/features/customers/application/cubit/customer_master/customer_master_cubit.dart';
+import 'package:lakoe_pos/features/customers/presentation/screens/customer_detail.dart';
+import 'package:lakoe_pos/features/customers/presentation/screens/master_customer.dart';
+import 'package:lakoe_pos/features/customers/presentation/screens/new_customer.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
+import 'package:lakoe_pos/features/employees/presentation/screens/detail_employee.dart';
+import 'package:lakoe_pos/features/employees/presentation/screens/master_employee.dart';
+import 'package:lakoe_pos/features/employees/presentation/screens/new_employee.dart';
+import 'package:lakoe_pos/features/home/presentation/dashboard/screens/open_cashier_pin.dart';
+import 'package:lakoe_pos/features/home/presentation/dashboard/screens/dashboard.dart';
+import 'package:lakoe_pos/features/home/presentation/dashboard/screens/transaction_date.dart';
+import 'package:lakoe_pos/features/account/manage_account/presentation/screens/delete_account.dart';
+import 'package:lakoe_pos/features/account/manage_account/presentation/screens/delete_account_reason.dart';
+import 'package:lakoe_pos/features/account/manage_account/presentation/screens/manage_account.dart';
+import 'package:lakoe_pos/features/notifications/presentation/screens/notification_master.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
+import 'package:lakoe_pos/features/orders/data/arguments/order_edit_argument.dart';
+import 'package:lakoe_pos/features/orders/data/arguments/order_detail_argument.dart';
+import 'package:lakoe_pos/features/orders/presentation/screens/order_edit.dart';
+import 'package:lakoe_pos/features/orders/presentation/screens/order_detail.dart';
+import 'package:lakoe_pos/features/orders/presentation/screens/order_master.dart';
+import 'package:lakoe_pos/features/payment_method/presentation/screens/payment_method_master.dart';
+import 'package:lakoe_pos/features/payment_method/payments/data/arguments/bank_transfer_payment_argument.dart';
+import 'package:lakoe_pos/features/payment_method/payments/presentation/screens/bank_transfer_payment.dart';
+import 'package:lakoe_pos/features/payment_method/payments/presentation/screens/qris_payment.dart';
+import 'package:lakoe_pos/features/payment_method/payments/presentation/screens/success_confirmation_payment.dart';
+import 'package:lakoe_pos/features/products/application/cubit/category/product_master_category_cubit.dart';
+import 'package:lakoe_pos/features/cashier/presentation/screens/explore_product.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_cubit.dart';
+import 'package:lakoe_pos/features/products/presentation/screens/product_edit.dart';
+import 'package:lakoe_pos/features/products/presentation/screens/product_master.dart';
+import 'package:lakoe_pos/features/products/presentation/screens/new_product.dart';
+import 'package:lakoe_pos/features/redirect/presentation/screens/redirect.dart';
+import 'package:lakoe_pos/features/reports/application/cubit/report_master/report_master_cubit.dart';
+import 'package:lakoe_pos/features/reports/data/arguments.dart';
+import 'package:lakoe_pos/features/reports/presentation/screens/report_best_seller.dart';
+import 'package:lakoe_pos/features/reports/presentation/screens/report_product_sales.dart';
+import 'package:lakoe_pos/features/reports/presentation/screens/report_master.dart';
+import 'package:lakoe_pos/features/settings/presentation/screens/settings.dart';
+import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_cubit.dart';
+import 'package:lakoe_pos/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
+import 'package:lakoe_pos/features/tables/presentation/screens/table_edit.dart';
+import 'package:lakoe_pos/features/tables/presentation/screens/table_master.dart';
+import 'package:lakoe_pos/features/tables/presentation/screens/table_new.dart';
+import 'package:lakoe_pos/features/tables/presentation/widgets/pages/brand_edit.dart';
+import 'package:lakoe_pos/features/taxes/application/cubit/tax_master/tax_master_cubit.dart';
+import 'package:lakoe_pos/features/taxes/presentation/screens/tax_master.dart';
+import 'package:lakoe_pos/utils/helpers/navigator_observer.dart';
+import 'package:lakoe_pos/utils/theme/theme.dart';
+import 'package:owner_repository/owner_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-class App extends StatelessWidget {
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+class App extends StatefulWidget {
   final String flavor;
 
   const App({super.key, required this.flavor});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  final DeeplinkHandler _deeplinkHandler = DeeplinkHandler();
+
+  @override
+  void initState() {
+    super.initState();
+    _deeplinkHandler.init(
+      onDeeplinkReceived: _handleGlobalDeeplink,
+      onError: () {
+        Logman.instance.error("[App] Failed to handle deeplink.");
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _deeplinkHandler.dispose();
+    super.dispose();
+  }
+
+  void _handleGlobalDeeplink(Uri uri) {
+    Logman.instance.info("[App] Handling deeplink: $uri");
+
+    final path = uri.path;
+    final status = uri.queryParameters['status'];
+    final package = uri.queryParameters['package'];
+
+    Logman.instance.info(
+      "[App] Log: Path: $path, Status: $status, Package: $package",
+    );
+
+    if (path == "/payment" && status != null && package != null) {
+      if (status == "success") {
+        navigatorKey.currentState?.pushNamed(
+          "/payment/success",
+          arguments: {'packageName': package.toUpperCase()},
+        );
+      } else if (status == "failed") {
+        navigatorKey.currentState?.pushNamed(
+          "/payment/failed",
+          arguments: {'packageName': package.toUpperCase()},
+        );
+      } else {
+        Logman.instance.error("[App] Invalid status: $status");
+      }
+    } else {
+      Logman.instance.error("[App] Invalid deeplink: $uri");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,9 +221,14 @@ class App extends StatelessWidget {
         // Category Master
         BlocProvider(create: (context) => CategoryMasterCubit()),
 
+        // Owner
+        BlocProvider(create: (context) => OwnerCubit()),
+
         // Order Master
-        BlocProvider(create: (context) => OrderMasterCubit()),
+        BlocProvider(create: (context) => OrderCashierCubit()),
+        BlocProvider(create: (context) => OrdersCubit()),
         BlocProvider(create: (context) => OrderDetailCubit()),
+        BlocProvider(create: (context) => OrderDetailOpenedCubit()),
 
         // Customer Master
         BlocProvider(create: (context) => CustomerMasterCubit()),
@@ -206,18 +285,25 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => WhatsappSessionCubit()),
 
         // Online Shop
-        BlocProvider(create: (context) => ShopOrderMasterCubit()),
+        BlocProvider(create: (context) => ShopOrderCashierCubit()),
 
         // Package Plan
         BlocProvider(create: (context) => PackageMasterCubit()),
         BlocProvider(create: (context) => PackageDetailCubit()),
+        BlocProvider(create: (context) => PackageActiveCubit()),
         BlocProvider(create: (context) => PurchaseCubit()),
-        BlocProvider(create: (context) => PurchaseCubit()),
+
+        //Payment Method
+        BlocProvider(create: (context) => PaymentMethodCubit()),
+
+        //Delete Account
+        BlocProvider(create: (context) => ReasonsCubit()),
+        BlocProvider(create: (context) => DeleteAccountCubit()),
       ],
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: MaterialApp(
-          title: "Point of Sales",
+          title: "Lakoe POS",
           theme: TAppTheme.lightTheme,
           darkTheme: TAppTheme.darkTheme,
           themeMode: ThemeMode.light,
@@ -236,10 +322,8 @@ class App extends StatelessWidget {
           supportedLocales: const [Locale("id"), Locale('en')],
           builder: (context, child) {
             return ResponsiveBreakpoints.builder(
-              // child: child!,
               child: Builder(
                 builder: (context) {
-                  // Mengatur orientasi berdasarkan breakpoint
                   if (ResponsiveBreakpoints.of(context).smallerThan(TABLET)) {
                     SystemChrome.setPreferredOrientations([
                       DeviceOrientation.portraitUp,
@@ -271,14 +355,11 @@ class App extends StatelessWidget {
                   arguments: ModalRoute.of(context)!.settings.arguments
                       as CompletingDataArgument,
                 ),
-            "/cashier": (context) => const DashboardScreen(),
-            "/cashier/open-cashier-pin": (context) =>
-                const OpenCashierPinScreen(),
-            "/cashier/transaction-date": (context) =>
-                const TransactionDateScreen(),
-            "/cashier/explore-products": (context) =>
-                const ExploreProductScreen(),
-            "/cashier/onboarding-transaction": (context) =>
+            "/home": (context) => const DashboardScreen(),
+            "/open-cashier-pin": (context) => const OpenCashierPinScreen(),
+            "/transaction-date": (context) => const TransactionDateScreen(),
+            "/cashier": (context) => const ExploreProductScreen(),
+            "/cashier/onboarding": (context) =>
                 const OnboardingTransactionScreen(),
             "/cart": (context) => const CartScreen(),
             // products
@@ -294,6 +375,7 @@ class App extends StatelessWidget {
             // customers
             "/customers": (context) => const MasterCustomerScreen(),
             "/customers/new": (context) => const NewCustomerScreen(),
+            "/customers/edit": (context) => const EditCustomerScreen(),
             "/customers/detail": (context) => const CustomerDetailScreen(),
 
             // orders
@@ -350,6 +432,14 @@ class App extends StatelessWidget {
                   arguments: ModalRoute.of(context)!.settings.arguments
                       as EmployeeEditArgument,
                 ),
+            "/employee/forgot/input_otp": (context) => InputOtpScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as ForgotPinArguments,
+                ),
+            "/employee/forgot/create_pin": (context) => CreateNewPinScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as ForgotPinArguments,
+                ),
 
             // bank accounts
             "/bank_accounts": (context) => const BankAccountMasterScreen(),
@@ -367,12 +457,16 @@ class App extends StatelessWidget {
 
             // Profile & Account
             "/account": (context) => const AccountMasterScreen(),
+            "/account/active_package": (context) => const PackageActiveScreen(),
             "/account/edit": (context) => const AccountEditScreen(),
             "/account/edit/name": (context) => const NameEditScreen(),
+            "/account/edit/verify_pin": (context) =>
+                const EditAcccountPinScreen(),
             "/account/edit/phone_number": (context) =>
                 const PhoneNumberEditScreen(),
             "/account/edit/email": (context) => const EmailEditScreen(),
             "/account/edit/pin": (context) => const PinEditScreen(),
+            "/account/edit/input_otp": (context) => const NewOtpInputScreen(),
 
             // reports
             "/reports": (context) => const ReportMasterScreen(),
@@ -391,18 +485,28 @@ class App extends StatelessWidget {
             "/delete_account": (context) => const DeleteAccountScreen(),
             "/delete_account/reason": (context) =>
                 const DeleteAccountReasonScreen(),
+            "/otp-input-delete-account": (context) =>
+                OtpInputDeleteAccountScreen(),
 
             // Package
             "/packages": (context) => const PackageMasterScreen(),
-            "/packages/grow": (context) => const PackageDetailScreen(),
+            "/packages/detail": (context) => const PackageDetailScreen(),
+            "/packages/upgrade": (context) => const PackageUpgradeScreen(),
             "/boost": (context) => const BoostDetailScreen(),
+            "/packages/purchase/history": (context) =>
+                const HistoryPurchasePackageScreen(),
+            "/packages/purchase/detail": (context) => DetailPurchaseScreen(
+                  arg: ModalRoute.of(context)!.settings.arguments
+                      as PurchaseModel,
+                ),
 
             // Checkout
             "/checkout": (context) => const ChekcoutMasterScreen(),
+            "/payment/prepared": (context) => const PaymentPreparedScreen(),
             "/payment/confirmation": (context) =>
                 const PaymentConfirmationScreen(),
-            "/payment/prepared": (context) => const PaymentPreparedScreen(),
             "/payment/success": (context) => const PaymentSuccessScreen(),
+            "/payment/failed": (context) => const PaymentFailedScreen(),
 
             //Webview
             "/terms_conditions": (context) => const TermsConditionScreen(),

@@ -2,18 +2,21 @@ import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/customer/cart_customer_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/customer/cart_customer_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/customer/cart_customer_filter_state.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/customer/cart_customer_state.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/customer/cart_customer_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/customer/cart_customer_filter_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/customer/cart_customer_filter_state.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/customer/cart_customer_state.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class CartCustomerList extends StatelessWidget {
   const CartCustomerList({super.key, this.value});
@@ -41,6 +44,7 @@ class CartCustomerListContent extends StatefulWidget {
 
 class _CartCustomerListContentState extends State<CartCustomerListContent> {
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
 
   Future<void> _onInit() async {
     await context.read<CartCustomerCubit>().init();
@@ -50,6 +54,23 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
   void initState() {
     super.initState();
     _onInit();
+  }
+
+  Future<void> onRefresh() async {
+    CartCustomerFilterState filterState =
+        context.read<CartCustomerFilterCubit>().state;
+
+    context
+        .read<CartCustomerCubit>()
+        .findAll(FindAllCustomerDto(search: filterState.search));
+  }
+
+  void _handleChangeKeyword() {
+    _searchFocusNode.requestFocus();
+    _searchController.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: _searchController.text.length,
+    );
   }
 
   @override
@@ -69,6 +90,7 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                 child: SearchField(
                   hintText: "Cari pelanggan...",
                   controller: _searchController,
+                  focusNode: _searchFocusNode,
                   debounceTime: 500,
                   onChanged: (value) {
                     context
@@ -79,60 +101,106 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
               ),
               Expanded(
                 child: BlocBuilder<CartCustomerCubit, CartCustomerState>(
-                    builder: (context, state) => switch (state) {
-                          CartCustomerLoadSuccess(:final customers) =>
-                            ListView.builder(
-                              itemCount: customers.length,
-                              itemBuilder: (context, index) {
-                                CustomerModel customer =
-                                    customers.elementAt(index);
-                                bool selected =
-                                    customer.id == (widget.value?.id ?? "-");
+                  builder: (context, state) {
+                    if (state is CartCustomerLoadSuccess) {
+                      final customers = state.customers;
 
-                                return Container(
-                                  decoration: const BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                    width: 1,
-                                    color: TColors.neutralLightMedium,
-                                  ))),
-                                  child: ListTile(
-                                    leading: SvgPicture.asset(
-                                      TImages.contactAvatar,
-                                      height: 40,
-                                      width: 40,
-                                    ),
-                                    title: TextHeading4(customer.name),
-                                    subtitle: TextBodyS(
-                                      PhoneNumberFormatter.formatForDisplay(
-                                          customer.phoneNumber),
-                                      color: TColors.neutralDarkLight,
-                                    ),
-                                    onTap: () {
-                                      Navigator.pop(context,
-                                          customer.id == "-" ? null : customer);
-                                    },
-                                    trailing: selected
-                                        ? const UiIcons(
-                                            TIcons.check,
-                                            color: TColors.primary,
-                                          )
-                                        : const UiIcons(
-                                            TIcons.arrowRight,
-                                            size: 12,
-                                            color: TColors.neutralDarkLightest,
-                                          ),
-                                  ),
+                      if (customers.isEmpty) {
+                        return EmptyList(
+                          title: "Pencarian tidak ditemukan",
+                          subTitle: "Coba cari dengan nama pelanggan yang lain",
+                          action: TextButton(
+                            onPressed: _handleChangeKeyword,
+                            child: TextActionL(
+                              "Ubah Pencarian",
+                              color: TColors.primary,
+                            ),
+                          ),
+                        );
+                      }
+
+                      return ListView.builder(
+                        itemCount: customers.length,
+                        itemBuilder: (context, index) {
+                          CustomerModel customer = customers.elementAt(index);
+                          bool selected =
+                              customer.id == (widget.value?.id ?? "-");
+
+                          return Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  width: 1,
+                                  color: TColors.neutralLightMedium,
+                                ),
+                              ),
+                            ),
+                            child: ListTile(
+                              leading: SvgPicture.asset(
+                                TImages.contactAvatar,
+                                height: 40,
+                                width: 40,
+                              ),
+                              title: TextHeading4(customer.name),
+                              subtitle: TextBodyS(
+                                (customer.phoneNumber == '-')
+                                    ? customer.phoneNumber
+                                    : PhoneNumberFormatter.formatForDisplay(
+                                        customer.phoneNumber,
+                                      ),
+                                color: TColors.neutralDarkLight,
+                              ),
+                              onTap: () {
+                                Navigator.pop(
+                                  context,
+                                  customer.id == "-"
+                                      ? CustomerModel(
+                                          id: "-",
+                                          name: "Tamu",
+                                          email: "",
+                                          phoneNumber: "-",
+                                          address: "",
+                                        )
+                                      : customer,
                                 );
                               },
+                              trailing: selected
+                                  ? const UiIcons(
+                                      TIcons.check,
+                                      color: TColors.primary,
+                                    )
+                                  : const UiIcons(
+                                      TIcons.arrowRight,
+                                      size: 12,
+                                      color: TColors.neutralDarkLightest,
+                                    ),
                             ),
-                          CartCustomerLoadFailure() => const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          _ => const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                        }),
+                          );
+                        },
+                      );
+                    } else if (state is CartCustomerLoadFailure) {
+                      return EmptyList(
+                        title: "Gagal memuat data, nih!",
+                        subTitle: "Ada sedikit gangguan. Coba coba lagi, ya",
+                        action: TextButton(
+                          onPressed: onRefresh,
+                          child: TextActionL(
+                            "Coba Lagi",
+                            color: TColors.primary,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return ListShimmer(
+                        crossAlignment: "center",
+                        circleAvatar: true,
+                        sizeAvatar: 40.0,
+                        heightTitle: 16.0,
+                        heightSubtitle: 12.0,
+                      );
+                    }
+                  },
+                ),
               )
             ],
           ),

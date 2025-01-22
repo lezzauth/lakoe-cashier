@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/webview/in_app_webiew.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/webview/in_app_webiew.dart';
 
 class PrivacyPolicyScreen extends StatefulWidget {
   const PrivacyPolicyScreen({super.key});
@@ -17,8 +17,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
         title: "Kebijakan Privasi",
       ),
       body: InAppWebViewScreen(
-        url:
-            "https://cumbersome-ravioli-912.notion.site/Kebijakan-Privasi-dan-Perlindungan-Data-Pribadi-9086d742c60b4097b4242c47eeb13d61",
+        url: "https://www.lakoe.id/privacy-policy",
       ),
     );
   }

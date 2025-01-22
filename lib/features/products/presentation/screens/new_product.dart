@@ -1,20 +1,18 @@
+import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_state.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/product_information_form.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/stock_information_form.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_cubit.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_state.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/image_picker_field.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/forms/product_information_form.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:product_repository/product_repository.dart';
 
 class NewProductScreen extends StatefulWidget {
@@ -26,6 +24,7 @@ class NewProductScreen extends StatefulWidget {
 
 class _NewProductScreenState extends State<NewProductScreen>
     with SingleTickerProviderStateMixin {
+  final AppDataProvider _appDataProvider = AppDataProvider();
   final _productInformationFormKey = GlobalKey<FormBuilderState>();
   final _stockInformationFormKey = GlobalKey<FormBuilderState>();
 
@@ -89,10 +88,12 @@ class _NewProductScreenState extends State<NewProductScreen>
             description: productInformationValue["description"],
             modal: productInformationValue["modal"],
             categoryId: productInformationValue["categoryId"],
-            unit: productInformationValue["unit"],
+            unit: "Pcs",
+            // unit: productInformationValue["unit"],
             sku: sku,
             stock: stock != null ? int.parse(stock) : null,
-            availability: stockInformationValue?["availability"] ?? "AVAILABLE",
+            availability:
+                productInformationValue?["availability"] ?? "AVAILABLE",
           ),
         );
   }
@@ -100,32 +101,74 @@ class _NewProductScreenState extends State<NewProductScreen>
   @override
   Widget build(BuildContext context) {
     return BlocListener<ProductMasterCubit, ProductMasterState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is ProductMasterActionSuccess) {
           Navigator.pop(context, true);
-        } else if (state is ProductMasterReachesLimit) {
+        } else if (state is ErrorIssuePackage) {
+          final activePackage = await _appDataProvider.activePackage;
+
+          String limit = "10";
+
+          if (activePackage == "GROW") {
+            limit = "25";
+          }
+
+          if (!context.mounted) return;
+          bool isExpired = state.res.message!.contains("expired");
+
+          String title = "Yah! produk udah full, nih";
+          String description =
+              "Dengan paket $activePackage kamu hanya bisa menambahkan $limit menu. Upgrade paket untuk lebih banyak produk, yuk!";
+
+          if (isExpired) {
+            title = "Yah! masa aktif paket habis";
+            description =
+                "Paket $activePackage kamu sudah tidak aktif lagi. Yuk perpanjang atau upgrade paket untuk terus menikmati fitur Lakoe.";
+          }
+
           showModalBottomSheet(
             context: context,
             enableDrag: false,
             isDismissible: false,
             builder: (context) {
-              return CustomBottomsheet(
-                hasGrabber: false,
-                child: ErrorDisplay(
-                  imageSrc: TImages.limitQuota,
-                  title: "Yah! produk full, nih",
-                  description:
-                      "10 menu sudah ditambahkan. Upgrade paket untuk lebih banyak produk, yuk!",
-                  actionTitlePrimary: "Lihat Paket",
-                  onActionPrimary: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, "/packages");
-                  },
-                  actionTitleSecondary: "Nanti Saja",
-                  onActionSecondary: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context, true);
-                  },
+              return PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (didPop, result) async {},
+                child: CustomBottomsheet(
+                  hasGrabber: false,
+                  child: ErrorDisplay(
+                    imageSrc: TImages.limitQuota,
+                    title: title,
+                    description: description,
+                    actionTitlePrimary: "Lihat Paket",
+                    onActionPrimary: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context, true);
+                      if (isExpired && activePackage != "LITE") {
+                        Navigator.pushNamed(
+                          context,
+                          "/account/active_package",
+                          arguments: {'packageName': activePackage},
+                        );
+                      } else if (activePackage == "GROW") {
+                        Navigator.pushNamed(
+                          context,
+                          "/packages/upgrade",
+                          arguments: {
+                            'currentPackage': "GROW",
+                            'upgradePakcage': "PRO",
+                          },
+                        );
+                      } else {
+                        Navigator.pushNamed(context, "/packages");
+                      }
+                    },
+                    actionTitleSecondary: "Nanti Saja",
+                    onActionSecondary: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context, true);
+                    },
+                  ),
                 ),
               );
             },
@@ -136,10 +179,12 @@ class _NewProductScreenState extends State<NewProductScreen>
         builder: (context, state) {
           bool isFormValid = state is! ProductMasterActionInProgress;
           return ErrorWrapper(
+            connectionIssue: state is ConnectionIssue,
             actionError: state is ProductMasterActionFailure,
             child: Scaffold(
               appBar: CustomAppbar(
                 title: "Produk Baru",
+                handleBackButton: () => Navigator.pop(context, true),
                 actions: [
                   TextButton(
                     onPressed: isFormValid ? onSubmit : null,
@@ -155,32 +200,38 @@ class _NewProductScreenState extends State<NewProductScreen>
                           ),
                   )
                 ],
-                bottom: TabContainer(
-                  controller: _tabController,
-                  tabs: const [
-                    TabItem(
-                      title: "Info Produk",
-                    ),
-                    TabItem(title: "Info Stok"),
-                  ],
-                ),
+                // bottom: TabContainer(
+                //   controller: _tabController,
+                //   tabs: const [
+                //     TabItem(
+                //       title: "Info Produk",
+                //     ),
+                //     TabItem(title: "Info Stok"),
+                //   ],
+                // ),
               ),
-              body: TabBarView(
-                controller: _tabController,
-                children: [
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: ProductInformationForm(
-                      formKey: _productInformationFormKey,
-                    ),
-                  ),
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: StockInformationForm(
-                      formKey: _stockInformationFormKey,
-                    ),
-                  ),
-                ],
+              // body: TabBarView(
+              //   controller: _tabController,
+              //   children: [
+              //     SingleChildScrollView(
+              //       padding: const EdgeInsets.only(top: 16.0),
+              //       child: ProductInformationForm(
+              //         formKey: _productInformationFormKey,
+              //       ),
+              //     ),
+              //     SingleChildScrollView(
+              //       padding: const EdgeInsets.only(top: 16.0),
+              //       child: StockInformationForm(
+              //         formKey: _stockInformationFormKey,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              body: SingleChildScrollView(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: ProductInformationForm(
+                  formKey: _productInformationFormKey,
+                ),
               ),
             ),
           );

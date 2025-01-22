@@ -14,7 +14,7 @@ final class BankVerifyActionInProgress extends BankVerifyState {
 }
 
 final class BankVerifyActionSuccess extends BankVerifyState {
-  final BankAccountModel account;
+  final GetBankAccountResponse account;
 
   BankVerifyActionSuccess({required this.account});
 
@@ -23,10 +23,11 @@ final class BankVerifyActionSuccess extends BankVerifyState {
 }
 
 final class BankVerifyActionFailure extends BankVerifyState {
-  final String error;
+  final String status;
+  final String message;
 
-  BankVerifyActionFailure(this.error);
+  BankVerifyActionFailure({required this.status, required this.message});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [status, message];
 }

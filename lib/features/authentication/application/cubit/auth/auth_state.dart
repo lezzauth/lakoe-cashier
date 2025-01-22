@@ -1,3 +1,4 @@
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:dio_provider/dio_provider.dart';
 import 'package:owner_repository/owner_repository.dart';
 
@@ -23,14 +24,32 @@ final class TokenExpired extends AuthState {
   TokenExpired(this.res, {this.isTokenRefreshed = false});
 }
 
-final class UncompletedProfile extends AuthState {
+final class ErrorInitialize extends AuthState {
   final String message;
 
-  UncompletedProfile({required this.message});
+  ErrorInitialize({required this.message});
 }
 
 final class NotFound extends AuthState {
   final DioExceptionModel res;
 
   NotFound(this.res);
+}
+
+final class ConnectionIssue extends AuthState {
+  final String message;
+
+  ConnectionIssue({required this.message});
+}
+
+final class GenerateTokenInProgress extends AuthState {}
+
+final class GenerateTokenSuccess extends AuthState {
+  final GenerateTokenRes res;
+  GenerateTokenSuccess(this.res);
+}
+
+final class GenerateTokenFailure extends AuthState {
+  final String error;
+  GenerateTokenFailure(this.error);
 }

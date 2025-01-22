@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:package_repository/package_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
-import 'package:point_of_sales_cashier/features/checkout/application/purchase_cubit.dart';
-import 'package:point_of_sales_cashier/features/checkout/application/purchase_state.dart';
-import 'package:point_of_sales_cashier/features/checkout/data/payment_method_model.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/common/widgets/ui/loading_screen.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:owner_repository/owner_repository.dart';
+import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
+import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
+import 'package:lakoe_pos/features/checkout/data/payment_method_model.dart';
+import 'package:lakoe_pos/utils/helpers/helper.dart';
 
 class PaymentPreparedScreen extends StatefulWidget {
   const PaymentPreparedScreen({super.key});
@@ -19,7 +20,7 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
   Map<String, dynamic>? args;
 
   PaymentCategory? selectedCategory;
-  PaymentMethod? selectedMethod;
+  PaymentMethodCheckout? selectedMethod;
 
   @override
   void initState() {
@@ -30,17 +31,26 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
       if (args != null) {
-        final package = args?['package'];
-        selectedCategory = args?['selectedCategory'];
-        selectedMethod = args?['selectedMethod'];
+        final package = args!['package'];
+        selectedMethod = args!['selectedMethod'] as PaymentMethodCheckout?;
+        selectedCategory = args!['selectedCategory'] as PaymentCategory?;
 
-        if (selectedMethod != null && selectedCategory != null) {
+        final baseUrl = "lakoe://package/payment";
+
+        if (selectedMethod != null) {
+          final successReturnUrl =
+              "$baseUrl?status=success&package=${package.name}";
+          final failedReturnUrl =
+              "$baseUrl?status=failed&package=${package.name}";
+
           context.read<PurchaseCubit>().create(
                 dto: PurchaseDto(
-                  period: package!.period,
+                  period: package.period,
                   paymentMethod: selectedMethod!.name.toUpperCase(),
+                  successReturnUrl: successReturnUrl,
+                  failedReturnUrl: failedReturnUrl,
                 ),
-                packageName: package!.name,
+                packageName: package.name,
               );
         }
       }
@@ -52,21 +62,36 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
     return BlocListener<PurchaseCubit, PurchaseState>(
       listener: (context, state) {
         if (state is PurchaseActionInProgress) {
+        } else if (state is PurchaseActionFailure) {
+          if (state.error.contains("400")) {
+            CustomToast.show(
+              "Opps, terjadi kesalahan. Coba lagi nanti.",
+              duration: 10,
+              position: "bottom",
+              backgroundColor: TColors.error,
+            );
+            Future.delayed(const Duration(seconds: 4), () {
+              if (!context.mounted) return;
+              Navigator.pop(context);
+            });
+          } else {
+            CustomToast.show(state.error, duration: 10);
+          }
         } else if (state is PurchaseActionSuccess) {
-          final PurchaseResponseModel response = state.response;
+          final PurchaseDetail res = state.res;
 
-          if (response.paymentRequest.paymentMethod.type == "EWALLET") {
-            PaymentActionModel selectedAction;
+          if (res.paymentRequest.paymentMethod.type == "EWALLET") {
+            ActionPayment selectedAction;
 
-            selectedAction = response.paymentRequest.actions.firstWhere(
+            selectedAction = res.paymentRequest.actions.firstWhere(
               (action) => action.urlType == "DEEPLINK",
-              orElse: () => response.paymentRequest.actions.firstWhere(
+              orElse: () => res.paymentRequest.actions.firstWhere(
                 (action) => action.urlType == "MOBILE",
-                orElse: () => response.paymentRequest.actions.firstWhere(
+                orElse: () => res.paymentRequest.actions.firstWhere(
                   (action) => action.urlType == "WEB",
-                  orElse: () => response.paymentRequest.actions.firstWhere(
+                  orElse: () => res.paymentRequest.actions.firstWhere(
                     (action) => action.qrCode != null,
-                    orElse: () => PaymentActionModel(
+                    orElse: () => ActionPayment(
                       action: null,
                       urlType: null,
                       method: null,
@@ -80,71 +105,61 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
 
             if (selectedAction.url != null) {
               THelper.openUrl(selectedAction.url!);
-            } else if (selectedAction.qrCode != null) {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text("QR Code Ditemukan"),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("QR Code: ${selectedAction.qrCode}"),
-                      ],
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text("OK"),
-                      ),
-                    ],
-                  );
-                },
-              );
             }
-          } else if (response.paymentRequest.paymentMethod.type ==
+
+            // else if (selectedAction.qrCode != null) {
+            //   showDialog(
+            //     context: context,
+            //     builder: (context) {
+            //       return AlertDialog(
+            //         title: Text("QR Code Ditemukan"),
+            //         content: Column(
+            //           mainAxisSize: MainAxisSize.min,
+            //           children: [
+            //             Text("QR Code: ${selectedAction.qrCode}"),
+            //           ],
+            //         ),
+            //         actions: [
+            //           TextButton(
+            //             onPressed: () => Navigator.pop(context),
+            //             child: Text("OK"),
+            //           ),
+            //         ],
+            //       );
+            //     },
+            //   );
+            // }
+          } else if (res.paymentRequest.paymentMethod.type ==
               "VIRTUAL_ACCOUNT") {
             Navigator.pushNamed(
               context,
               "/payment/confirmation",
               arguments: {
-                'selectedCategory': selectedCategory,
                 'selectedMethod': selectedMethod,
+                'selectedCategory': selectedCategory,
+                'purchases': PurchaseDetail(
+                  paymentRequest: state.res.paymentRequest,
+                  purchase: state.res.purchase,
+                ),
               },
             );
           }
         }
       },
-      child: Scaffold(
-        body: Container(
-          color: TColors.neutralLightLightest,
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 200),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 60,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100.0),
-                      child: LinearProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(TColors.primary),
-                        backgroundColor: TColors.neutralLightMedium,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  TextBodyL(
-                    "Tunggu sebantar, ya!",
-                    color: TColors.neutralDarkLight,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+      child: PopScope(
+        onPopInvokedWithResult: (popDisposition, popResult) async {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                "/home",
+                (route) => false,
+              );
+            }
+          });
+          return Future.value(null);
+        },
+        child: LoadingScreen(),
       ),
     );
   }

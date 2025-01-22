@@ -3,16 +3,17 @@ import 'dart:io';
 import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/employees/application/cubit/employee_master/employee_master_state.dart';
-import 'package:point_of_sales_cashier/features/employees/data/arguments/employee_edit_argument.dart';
-import 'package:point_of_sales_cashier/features/employees/presentation/widgets/forms/employee_form.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_cubit.dart';
+import 'package:lakoe_pos/features/employees/application/cubit/employee_master/employee_master_state.dart';
+import 'package:lakoe_pos/features/employees/data/arguments/employee_edit_argument.dart';
+import 'package:lakoe_pos/features/employees/presentation/widgets/forms/employee_form.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/image_picker_field.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class EmployeeEditScreen extends StatefulWidget {
   const EmployeeEditScreen({super.key, required this.arguments});
@@ -28,6 +29,28 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
   final _employeeFormKey = GlobalKey<FormBuilderState>();
 
   TabController? _tabController;
+
+  String formatterPhoneNumber(String value) {
+    if (value.startsWith('+628')) {
+      value = value.replaceFirst('+628', '08');
+    } else if (value.startsWith('628')) {
+      value = value.replaceFirst('628', '08');
+    }
+
+    value = value.replaceAll(RegExp(r'[^0-9]'), '');
+
+    if (value.length > 10) {
+      value =
+          '${value.substring(0, 4)}-${value.substring(4, 8)}-${value.substring(8, 12)}';
+    } else if (value.length > 7) {
+      value =
+          '${value.substring(0, 4)}-${value.substring(4, 8)}-${value.substring(8)}';
+    } else if (value.length > 3) {
+      value = '${value.substring(0, 4)}-${value.substring(4)}';
+    }
+
+    return value;
+  }
 
   Future<void> _onSubmitted() async {
     bool isFormValid =
@@ -47,13 +70,16 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
 
     File? profilePictureFile = profilePicture?.file;
 
+    String phoneNumber =
+        PhoneNumberFormatter.formatForRequest(value["phoneNumber"]);
+
     await context.read<EmployeeMasterCubit>().update(
           widget.arguments.employee.id,
           profilePicture: profilePictureFile,
           dto: UpdateEmployeeDto(
             name: value["name"],
             // pin: value["pin"],
-            phoneNumber: value["phoneNumber"],
+            phoneNumber: phoneNumber,
             role: widget.arguments.employee.role,
             email: email,
           ),
@@ -75,6 +101,7 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
   @override
   Widget build(BuildContext context) {
     final employee = widget.arguments.employee;
+    final formattedValue = formatterPhoneNumber(employee.phoneNumber);
 
     return BlocConsumer<EmployeeMasterCubit, EmployeeMasterState>(
       listener: (context, state) {
@@ -86,6 +113,7 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
         bool isLoading = state is EmployeeMasterActionInProgress;
 
         return ErrorWrapper(
+          connectionIssue: state is ConnectionIssue,
           actionError: state is EmployeeMasterActionFailure,
           child: Scaffold(
             appBar: CustomAppbar(
@@ -123,7 +151,7 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen>
                       ? null
                       : ImagePickerValue(url: employee.profilePicture!),
                   "name": employee.name,
-                  "phoneNumber": employee.phoneNumber,
+                  "phoneNumber": formattedValue,
                   "email": employee.email,
                 },
               ),

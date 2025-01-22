@@ -210,9 +210,10 @@ ListOrderByProductDto _$ListOrderByProductDtoFromJson(
 /// @nodoc
 mixin _$ListOrderByProductDto {
   String? get cursor => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
+  String? get template => throw _privateConstructorUsedError;
   String? get from => throw _privateConstructorUsedError;
   String? get to => throw _privateConstructorUsedError;
-  String? get template => throw _privateConstructorUsedError;
 
   /// Serializes this ListOrderByProductDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -230,7 +231,12 @@ abstract class $ListOrderByProductDtoCopyWith<$Res> {
           $Res Function(ListOrderByProductDto) then) =
       _$ListOrderByProductDtoCopyWithImpl<$Res, ListOrderByProductDto>;
   @useResult
-  $Res call({String? cursor, String? from, String? to, String? template});
+  $Res call(
+      {String? cursor,
+      String? status,
+      String? template,
+      String? from,
+      String? to});
 }
 
 /// @nodoc
@@ -250,14 +256,23 @@ class _$ListOrderByProductDtoCopyWithImpl<$Res,
   @override
   $Res call({
     Object? cursor = freezed,
+    Object? status = freezed,
+    Object? template = freezed,
     Object? from = freezed,
     Object? to = freezed,
-    Object? template = freezed,
   }) {
     return _then(_value.copyWith(
       cursor: freezed == cursor
           ? _value.cursor
           : cursor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      template: freezed == template
+          ? _value.template
+          : template // ignore: cast_nullable_to_non_nullable
               as String?,
       from: freezed == from
           ? _value.from
@@ -266,10 +281,6 @@ class _$ListOrderByProductDtoCopyWithImpl<$Res,
       to: freezed == to
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
-              as String?,
-      template: freezed == template
-          ? _value.template
-          : template // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -284,7 +295,12 @@ abstract class _$$ListOrderByProductDtoImplCopyWith<$Res>
       __$$ListOrderByProductDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? cursor, String? from, String? to, String? template});
+  $Res call(
+      {String? cursor,
+      String? status,
+      String? template,
+      String? from,
+      String? to});
 }
 
 /// @nodoc
@@ -302,14 +318,23 @@ class __$$ListOrderByProductDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? cursor = freezed,
+    Object? status = freezed,
+    Object? template = freezed,
     Object? from = freezed,
     Object? to = freezed,
-    Object? template = freezed,
   }) {
     return _then(_$ListOrderByProductDtoImpl(
       cursor: freezed == cursor
           ? _value.cursor
           : cursor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      template: freezed == template
+          ? _value.template
+          : template // ignore: cast_nullable_to_non_nullable
               as String?,
       from: freezed == from
           ? _value.from
@@ -319,10 +344,6 @@ class __$$ListOrderByProductDtoImplCopyWithImpl<$Res>
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
               as String?,
-      template: freezed == template
-          ? _value.template
-          : template // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -331,7 +352,7 @@ class __$$ListOrderByProductDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ListOrderByProductDtoImpl implements _ListOrderByProductDto {
   const _$ListOrderByProductDtoImpl(
-      {this.cursor, this.from, this.to, this.template});
+      {this.cursor, this.status, this.template, this.from, this.to});
 
   factory _$ListOrderByProductDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ListOrderByProductDtoImplFromJson(json);
@@ -339,15 +360,17 @@ class _$ListOrderByProductDtoImpl implements _ListOrderByProductDto {
   @override
   final String? cursor;
   @override
+  final String? status;
+  @override
+  final String? template;
+  @override
   final String? from;
   @override
   final String? to;
-  @override
-  final String? template;
 
   @override
   String toString() {
-    return 'ListOrderByProductDto(cursor: $cursor, from: $from, to: $to, template: $template)';
+    return 'ListOrderByProductDto(cursor: $cursor, status: $status, template: $template, from: $from, to: $to)';
   }
 
   @override
@@ -356,15 +379,17 @@ class _$ListOrderByProductDtoImpl implements _ListOrderByProductDto {
         (other.runtimeType == runtimeType &&
             other is _$ListOrderByProductDtoImpl &&
             (identical(other.cursor, cursor) || other.cursor == cursor) &&
-            (identical(other.from, from) || other.from == from) &&
-            (identical(other.to, to) || other.to == to) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.template, template) ||
-                other.template == template));
+                other.template == template) &&
+            (identical(other.from, from) || other.from == from) &&
+            (identical(other.to, to) || other.to == to));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, cursor, from, to, template);
+  int get hashCode =>
+      Object.hash(runtimeType, cursor, status, template, from, to);
 
   /// Create a copy of ListOrderByProductDto
   /// with the given fields replaced by the non-null parameter values.
@@ -386,9 +411,10 @@ class _$ListOrderByProductDtoImpl implements _ListOrderByProductDto {
 abstract class _ListOrderByProductDto implements ListOrderByProductDto {
   const factory _ListOrderByProductDto(
       {final String? cursor,
+      final String? status,
+      final String? template,
       final String? from,
-      final String? to,
-      final String? template}) = _$ListOrderByProductDtoImpl;
+      final String? to}) = _$ListOrderByProductDtoImpl;
 
   factory _ListOrderByProductDto.fromJson(Map<String, dynamic> json) =
       _$ListOrderByProductDtoImpl.fromJson;
@@ -396,11 +422,13 @@ abstract class _ListOrderByProductDto implements ListOrderByProductDto {
   @override
   String? get cursor;
   @override
+  String? get status;
+  @override
+  String? get template;
+  @override
   String? get from;
   @override
   String? get to;
-  @override
-  String? get template;
 
   /// Create a copy of ListOrderByProductDto
   /// with the given fields replaced by the non-null parameter values.

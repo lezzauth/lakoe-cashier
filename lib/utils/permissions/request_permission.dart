@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:point_of_sales_cashier/common/widgets/access_permission/location_denied_permission.dart';
-import 'package:point_of_sales_cashier/common/widgets/access_permission/location_permission.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/access_permission/location_denied_permission.dart';
+import 'package:lakoe_pos/common/widgets/access_permission/location_permission.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 
 abstract class RequestPermission {
   Permission get permission;

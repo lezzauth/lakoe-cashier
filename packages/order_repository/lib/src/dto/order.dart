@@ -11,6 +11,9 @@ class FindAllOrderDto with _$FindAllOrderDto {
     String? status,
     String? search,
     String? sort,
+    String? template,
+    String? from,
+    String? to,
   }) = _FindAllOrderDto;
 }
 
@@ -21,6 +24,9 @@ extension CopyWithExtension on FindAllOrderDto {
     String? status,
     String? search,
     String? sort,
+    String? template,
+    String? from,
+    String? to,
   }) {
     return FindAllOrderDto(
       type: type ?? this.type,
@@ -28,6 +34,9 @@ extension CopyWithExtension on FindAllOrderDto {
       status: status ?? this.status,
       search: search ?? this.search,
       sort: sort ?? this.sort,
+      template: template ?? this.template,
+      from: from ?? this.from,
+      to: to ?? this.to,
     );
   }
 }
@@ -40,6 +49,9 @@ extension QueryStringExtension on FindAllOrderDto {
       "status": status,
       "search": search,
       "sort": sort,
+      "template": template,
+      "from": from,
+      "to": to,
     };
 
     queryParams.removeWhere((key, value) => value == null);

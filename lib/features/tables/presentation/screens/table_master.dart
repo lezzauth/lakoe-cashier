@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logman/logman.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_filter_state.dart';
-import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master/table_master_state.dart';
-import 'package:point_of_sales_cashier/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
-import 'package:point_of_sales_cashier/features/tables/presentation/widgets/filter/table_location_filter.dart';
-import 'package:point_of_sales_cashier/features/tables/presentation/widgets/pages/table_detail_page.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:responsive_framework/responsive_framework.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
+import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_cubit.dart';
+import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_filter_cubit.dart';
+import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_filter_state.dart';
+import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_state.dart';
+import 'package:lakoe_pos/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
+import 'package:lakoe_pos/features/tables/common/widgets/table_item.dart';
+import 'package:lakoe_pos/features/tables/presentation/widgets/filter/table_location_filter.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:table_repository/table_repository.dart';
 
 class TableMasterScreen extends StatelessWidget {
@@ -40,6 +39,8 @@ class TableMaster extends StatefulWidget {
 }
 
 class _TableMasterState extends State<TableMaster> {
+  bool tableIsEmpty = false;
+
   Future<void> _onRefresh() async {
     if (!mounted) return;
 
@@ -47,44 +48,19 @@ class _TableMasterState extends State<TableMaster> {
     await context.read<TableMasterCubit>().init();
   }
 
-  Future<void> _onGoToDetail(TableModel table) async {
-    Logman.instance.info(
-        "ResponsiveBreakpoints is ${ResponsiveBreakpoints.of(context).smallerThan(TABLET)}");
-    if (ResponsiveBreakpoints.of(context).smallerThan(TABLET)) {
-      bool? editedProduct = await showModalBottomSheet<bool?>(
-        context: context,
-        isScrollControlled: true,
-        useSafeArea: true,
-        useRootNavigator: true,
-        builder: (context) {
-          return CustomBottomsheet(
-            child: Expanded(
-              child: TableDetailPage(
-                table: table,
-                tableNo: table.no,
-              ),
-            ),
-          );
-        },
-      );
-
-      if (editedProduct != true) return;
-      _onRefresh();
-    } else {
-      bool? editedProduct = await Navigator.pushNamed(
-        context,
-        "/tables/edit",
-        arguments: table,
-      ) as bool?;
-      if (editedProduct != true) return;
-      _onRefresh();
-    }
+  Future<void> _onGoToEditTable(TableModel table) async {
+    bool? editedProduct = await Navigator.pushNamed(
+      context,
+      "/tables/edit",
+      arguments: table,
+    ) as bool?;
+    if (editedProduct != true) return;
+    _onRefresh();
   }
 
   Future<void> _onGoToCreateScreen() async {
-    TableModel? newTable =
-        await Navigator.pushNamed(context, "/tables/new") as TableModel?;
-    if (newTable == null) return;
+    bool? newTable = await Navigator.pushNamed(context, "/tables/new") as bool?;
+    if (newTable != true) return;
     _onRefresh();
   }
 
@@ -110,7 +86,7 @@ class _TableMasterState extends State<TableMaster> {
       ],
       child: Scaffold(
         appBar: CustomAppbar(
-          title: "Meja & QR Order",
+          title: "Manajemen Meja",
           actions: [
             const SizedBox(width: 5),
             IconButton(
@@ -122,109 +98,88 @@ class _TableMasterState extends State<TableMaster> {
               ),
             )
           ],
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(48),
-            child: BlocBuilder<TableMasterFilterCubit, TableMasterFilterState>(
-                builder: (context, state) {
-              return SizedBox(
-                width: double.infinity,
-                child: TableLocationFilter(
-                  value: state.outletRoomId,
-                  onChanged: (value) {
-                    context
-                        .read<TableMasterFilterCubit>()
-                        .setFilter(outletRoomId: value);
-                  },
-                ),
-              );
-            }),
-          ),
+          bottom: (!tableIsEmpty)
+              ? PreferredSize(
+                  preferredSize: const Size.fromHeight(48),
+                  child: BlocBuilder<TableMasterFilterCubit,
+                      TableMasterFilterState>(builder: (context, state) {
+                    return SizedBox(
+                      width: double.infinity,
+                      child: TableLocationFilter(
+                        value: state.outletRoomId,
+                        onChanged: (value) {
+                          context
+                              .read<TableMasterFilterCubit>()
+                              .setFilter(outletRoomId: value);
+                        },
+                      ),
+                    );
+                  }),
+                )
+              : null,
         ),
         body: Scrollbar(
           child: RefreshIndicator(
             backgroundColor: TColors.neutralLightLightest,
             onRefresh: _onRefresh,
             child: BlocBuilder<TableMasterCubit, TableMasterState>(
-              builder: (context, state) => ErrorWrapper(
-                fetchError: state is TableMasterLoadFailure,
-                onRefresh: _onRefresh,
-                child: switch (state) {
-                  TableMasterLoadSuccess(:final tables) => ListView.builder(
-                      itemCount: tables.length,
-                      itemBuilder: (context, index) {
-                        TableModel table = tables.elementAt(index);
+              builder: (context, state) {
+                return ErrorWrapper(
+                  connectionIssue: state is ConnectionIssue,
+                  fetchError: state is TableMasterLoadFailure,
+                  onRefresh: _onRefresh,
+                  child: () {
+                    if (state is TableMasterLoadSuccess) {
+                      final tables = state.tables
+                          .where((table) => table.id != "-")
+                          .toList();
 
-                        bool isFreeTable = table.id == "-";
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        setState(() {
+                          tableIsEmpty = tables.isEmpty;
+                        });
+                      });
 
-                        String title = table.no;
-                        String subtitle =
-                            "${table.capacity} Orang • ${table.outletRoom!.name}";
-
-                        if (isFreeTable) {
-                          title = "Bebas";
-                          subtitle = "-";
-                        }
-
-                        return Column(
-                          children: [
-                            ListTile(
-                              onTap: isFreeTable
-                                  ? null
-                                  : () {
-                                      _onGoToDetail(table);
-                                    },
-                              splashColor: TColors.highlightLightest,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              leading: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40),
-                                  color: TColors.highlightLightest,
-                                ),
-                                child: const Center(
-                                  child: UiIcons(
-                                    TIcons.tableRestaurant,
-                                    color: TColors.primary,
-                                    size: 20,
-                                  ),
-                                ),
-                              ),
-                              title: TextHeading4(
-                                title,
-                                color: TColors.neutralDarkDarkest,
-                              ),
-                              subtitle: TextBodyS(
-                                subtitle,
-                                color: TColors.neutralDarkLight,
-                              ),
-                              trailing: isFreeTable
-                                  ? null
-                                  : const UiIcons(
-                                      TIcons.arrowRight,
-                                      color: TColors.neutralDarkLightest,
-                                      size: 12,
-                                    ),
+                      if (tables.isEmpty) {
+                        return EmptyList(
+                          image: SvgPicture.asset(TImages.catBox, width: 200),
+                          title: "Belum ada meja",
+                          subTitle: "Yuk, simpan meja yang kamu punya.",
+                          action: TextButton(
+                            onPressed: _onGoToCreateScreen,
+                            child: TextActionL(
+                              "Buat Baru",
+                              color: TColors.primary,
                             ),
-                            const Divider(
-                              color: TColors.neutralLightMedium,
-                              indent: 16.0,
-                              height: 1,
-                            ),
-                          ],
+                          ),
                         );
-                      },
-                    ),
-                  _ => ListShimmer(
-                      crossAlignment: "center",
-                      circleAvatar: true,
-                      sizeAvatar: 40.0,
-                      heightTitle: 16.0,
-                      heightSubtitle: 12.0,
-                    ),
-                },
-              ),
+                      }
+
+                      return ListView.builder(
+                        itemCount: tables.length,
+                        itemBuilder: (context, index) {
+                          TableModel table = tables[index];
+
+                          return TableItem(
+                            table: table,
+                            onTap: () {
+                              _onGoToEditTable(table);
+                            },
+                          );
+                        },
+                      );
+                    } else {
+                      return const ListShimmer(
+                        crossAlignment: "center",
+                        circleAvatar: true,
+                        sizeAvatar: 40.0,
+                        heightTitle: 16.0,
+                        heightSubtitle: 12.0,
+                      );
+                    }
+                  }(),
+                );
+              },
             ),
           ),
         ),

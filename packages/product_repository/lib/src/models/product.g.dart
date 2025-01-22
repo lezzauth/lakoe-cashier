@@ -23,6 +23,7 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
       availability: json['availability'] as String,
       profit: json['profit'] as String,
       favoriteCustomerId: json['favoriteCustomerId'] as String?,
+      sold: (json['sold'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
@@ -41,6 +42,7 @@ Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
       'availability': instance.availability,
       'profit': instance.profit,
       'favoriteCustomerId': instance.favoriteCustomerId,
+      'sold': instance.sold,
     };
 
 _$ProductOrderModelImpl _$$ProductOrderModelImplFromJson(
@@ -49,6 +51,8 @@ _$ProductOrderModelImpl _$$ProductOrderModelImplFromJson(
       orderId: json['orderId'] as String,
       customerName: json['customerName'] as String,
       createdAt: json['createdAt'] as String,
+      status: json['status'] as String,
+      paymentStatus: json['paymentStatus'] as String,
       paymentMethod: json['paymentMethod'] as String?,
       itemTotal: (json['itemTotal'] as num).toInt(),
       price: json['price'] as String,
@@ -60,6 +64,8 @@ Map<String, dynamic> _$$ProductOrderModelImplToJson(
       'orderId': instance.orderId,
       'customerName': instance.customerName,
       'createdAt': instance.createdAt,
+      'status': instance.status,
+      'paymentStatus': instance.paymentStatus,
       'paymentMethod': instance.paymentMethod,
       'itemTotal': instance.itemTotal,
       'price': instance.price,

@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:order_repository/order_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/bill/text_small.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
-import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_state.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/screens/bill_master.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/section/section_heading.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/section/section_list_item.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/section/section_charges.dart';
-import 'package:point_of_sales_cashier/features/orders/data/models.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/payment_method_strings.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/ui/separator/separator.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/bill/text_small.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_state.dart';
+import 'package:lakoe_pos/features/bill/presentation/screens/bill_master.dart';
+import 'package:lakoe_pos/features/bill/presentation/widgets/section/section_heading.dart';
+import 'package:lakoe_pos/features/bill/presentation/widgets/section/section_list_item.dart';
+import 'package:lakoe_pos/features/bill/presentation/widgets/section/section_charges.dart';
+import 'package:lakoe_pos/features/orders/data/models.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/constants/payment_method_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class BillView extends StatelessWidget {
   final bool isEdit;
@@ -128,6 +128,7 @@ class BillView extends StatelessWidget {
                   paymentMethod: paymentDetails['paymentMethod'],
                   totalPrice: order.transactions![0].amount,
                   moneyReceived: paymentDetails['paidAmount'].toString(),
+                  approvalCode: order.transactions![0].approvalCode,
                   changeMoney: paymentDetails['change'].toString(),
                   charges: order.charges!
                       .map((e) => OrderSummaryChargeModel(

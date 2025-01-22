@@ -35,3 +35,33 @@ Map<String, dynamic> _$$EmployeeModelImplToJson(_$EmployeeModelImpl instance) =>
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };
+
+_$RequestOtpResImpl _$$RequestOtpResImplFromJson(Map<String, dynamic> json) =>
+    _$RequestOtpResImpl(
+      id: json['id'] as String,
+      target: json['target'] as String,
+      type: json['type'] as String,
+      action: json['action'] as String,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
+    );
+
+Map<String, dynamic> _$$RequestOtpResImplToJson(_$RequestOtpResImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'target': instance.target,
+      'type': instance.type,
+      'action': instance.action,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+    };
+
+_$VerifyOtpResImpl _$$VerifyOtpResImplFromJson(Map<String, dynamic> json) =>
+    _$VerifyOtpResImpl(
+      token: json['token'] as String,
+    );
+
+Map<String, dynamic> _$$VerifyOtpResImplToJson(_$VerifyOtpResImpl instance) =>
+    <String, dynamic>{
+      'token': instance.token,
+    };

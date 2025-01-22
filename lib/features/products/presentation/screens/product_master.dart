@@ -3,22 +3,29 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/common/widgets/shimmer/list_shimmer.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/common/widgets/wrapper/error_wrapper.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_cubit.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/category/product_master_category_state.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_filter_state.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_state.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/filter/product_category_filter.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/product_card_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
+import 'package:lakoe_pos/features/home/application/cubit/onboarding_transaction/onboarding_transaction_cubit.dart';
+import 'package:lakoe_pos/features/products/application/cubit/category/product_master_category_cubit.dart';
+import 'package:lakoe_pos/features/products/application/cubit/category/product_master_category_state.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_cubit.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_filter_cubit.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_filter_state.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_state.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/filter/product_category_filter.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/product/base_product_card.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/product/base_product_item.dart';
+import 'package:lakoe_pos/features/reports/data/arguments.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:outlet_repository/outlet_repository.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ProductMasterScreen extends StatelessWidget {
@@ -41,6 +48,9 @@ class ProductMaster extends StatefulWidget {
 }
 
 class _ProductMasterState extends State<ProductMaster> {
+  final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+
   Future<void> onRefresh() async {
     if (!mounted) return;
 
@@ -56,11 +66,20 @@ class _ProductMasterState extends State<ProductMaster> {
         );
   }
 
-  Future<void> _onGoToEditScreen(ProductModel product) async {
-    bool? updateProduct =
-        await Navigator.pushNamed(context, "/products/edit", arguments: product)
-            as bool?;
-
+  Future<void> _onGoToReportScreen(ProductModel product, int index) async {
+    bool? updateProduct = await Navigator.pushNamed(
+      context,
+      "/reports/best_seller/detail",
+      arguments: ReportProductSalesArguments(
+        rank: 0,
+        product: OutletReportBestSalesProductModel(
+          id: product.id,
+          name: product.name,
+          images: product.images,
+          soldCount: product.sold,
+        ),
+      ),
+    ) as bool?;
     if (updateProduct != true) return;
     onRefresh();
   }
@@ -71,6 +90,14 @@ class _ProductMasterState extends State<ProductMaster> {
 
     if (newProduct != true) return;
     onRefresh();
+  }
+
+  void _handleChangeKeyword() {
+    _searchFocusNode.requestFocus();
+    _searchController.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: _searchController.text.length,
+    );
   }
 
   Widget _buildProductList(List<ProductModel> products) {
@@ -92,67 +119,101 @@ class _ProductMasterState extends State<ProductMaster> {
       return EmptyList(
         title: "Pencarian tidak ditemukan",
         subTitle: "Coba cari dengan nama produk yang lain.",
+        action: TextButton(
+          onPressed: _handleChangeKeyword,
+          child: TextActionL(
+            "Ubah Pencarian",
+            color: TColors.primary,
+          ),
+        ),
       );
     }
 
-    return ListView.builder(
-      itemCount: products.length,
-      itemBuilder: (context, index) {
-        ProductModel product = products[index];
-        String? image = product.images.elementAtOrNull(0);
-        bool isNotAvailable = product.availability != "AVAILABLE";
+    return ResponsiveLayout(
+      mobile: ListView.builder(
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          ProductModel product = products[index];
+          String? imageUrl = product.images.elementAtOrNull(0);
+          bool isNotAvailable = product.availability != "AVAILABLE";
 
-        return InkWell(
-          onTap: () {
-            _onGoToEditScreen(product);
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 12,
-              horizontal: 16,
-            ),
-            decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: TColors.neutralLightMedium,
-                  width: 1,
+          return InkWell(
+            onTap: () {
+              _onGoToReportScreen(product, index);
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 16,
+              ),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: TColors.neutralLightMedium,
+                    width: 1,
+                  ),
                 ),
               ),
+              child: BaseProductItem(
+                name: product.name,
+                price: double.parse(product.price).round(),
+                imageUrl: imageUrl,
+                description: product.description ?? "",
+                notes: product.description ?? "",
+                tag: isNotAvailable
+                    ? Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: TColors.neutralLightMedium,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: TextHeading5(
+                          "Tidak Tersedia",
+                          color: TColors.neutralDarkDark,
+                        ),
+                      )
+                    : null,
+              ),
             ),
-            child: BaseProductItem(
-              name: product.name,
-              price: int.parse(product.price),
-              image: image != null
-                  ? Image.network(
-                      image,
-                      height: 44,
-                      width: 44,
-                      fit: BoxFit.cover,
-                    )
-                  : SvgPicture.asset(
-                      TImages.productAvatar,
-                      height: 44,
-                      width: 44,
-                    ),
-              notes: product.description ?? "",
-              tag: isNotAvailable
-                  ? Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: TColors.neutralLightMedium,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: const TextHeading5(
-                        "Tidak Tersedia",
-                        color: TColors.neutralDarkDark,
-                      ),
-                    )
-                  : null,
-            ),
+          );
+        },
+      ),
+      tablet: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 12,
+          horizontal: 16,
+        ),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 180,
+            mainAxisExtent: 232,
+            childAspectRatio: 180 / 232,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
           ),
-        );
-      },
+          itemCount: products.length,
+          itemBuilder: (context, index) {
+            ProductModel product = products[index];
+            String? imageUrl = product.images.elementAtOrNull(0);
+            bool isNotAvailable = product.availability != "AVAILABLE";
+
+            return InkWell(
+              onTap: () {
+                _onGoToReportScreen(product, index);
+              },
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              child: BaseProductCard(
+                name: product.name,
+                price: double.parse(product.price).round(),
+                isNotAvailable: isNotAvailable,
+                imageUrl: imageUrl,
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 
@@ -178,11 +239,23 @@ class _ProductMasterState extends State<ProductMaster> {
                 );
           },
         ),
+        BlocListener<ProductMasterCubit, ProductMasterState>(
+          listener: (context, state) {
+            if (state is ProductMasterLoadSuccess) {
+              if (state.products.length == 1) {
+                context.read<OnboardingTransactionCubit>().init();
+              }
+            }
+          },
+        )
       ],
       child: Scaffold(
         appBar: CustomAppbar(
           search: SearchField(
             hintText: "Cari produk disini...",
+            controller: _searchController,
+            focusNode: _searchFocusNode,
+            debounceTime: 500,
             onChanged: (value) {
               context.read<ProductMasterFilterCubit>().setFilter(name: value);
             },
@@ -226,16 +299,25 @@ class _ProductMasterState extends State<ProductMaster> {
                 Expanded(
                   child: BlocBuilder<ProductMasterCubit, ProductMasterState>(
                     builder: (context, state) => ErrorWrapper(
+                      connectionIssue: state is ConnectionIssue,
                       fetchError: state is ProductMasterLoadFailure,
                       onRefresh: onRefresh,
                       child: switch (state) {
                         ProductMasterLoadSuccess(:final products) =>
                           _buildProductList(products),
-                        _ => ListShimmer(
-                            crossAlignment: "center",
-                            sizeAvatar: 44.0,
-                            heightTitle: 16.0,
-                            heightSubtitle: 12.0,
+                        _ => ResponsiveLayout(
+                            mobile: ListShimmer(
+                              crossAlignment: "center",
+                              sizeAvatar: 44.0,
+                              heightTitle: 16.0,
+                              heightSubtitle: 12.0,
+                            ),
+                            tablet: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 12,
+                                  horizontal: 16,
+                                ),
+                                child: ProductCardShimmer()),
                           ),
                       },
                     ),
@@ -256,7 +338,7 @@ class _ProductMasterState extends State<ProductMaster> {
               _onGoToCreateScreen();
             },
             elevation: 0,
-            child: const Icon(
+            child: Icon(
               Icons.add,
               size: 24,
             ),

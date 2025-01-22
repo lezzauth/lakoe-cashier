@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_shop_repository/online_shop_repository.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/sizes.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class OrderStatusDescription extends StatelessWidget {
   const OrderStatusDescription({
@@ -26,7 +26,7 @@ class OrderStatusDescription extends StatelessWidget {
             ),
             children: [
               TextSpan(
-                text: "${TFormatter.orderDate(
+                text: "${TFormatter.dateTime(
                   order.createdAt.add(Duration(days: 1)).toIso8601String(),
                 )} WIB",
                 style: GoogleFonts.inter(

@@ -14,44 +14,44 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-DetailPakcageDto _$DetailPakcageDtoFromJson(Map<String, dynamic> json) {
-  return _DetailPakcageDto.fromJson(json);
+DetailPackagegeDto _$DetailPackagegeDtoFromJson(Map<String, dynamic> json) {
+  return _DetailPackagegeDto.fromJson(json);
 }
 
 /// @nodoc
-mixin _$DetailPakcageDto {
+mixin _$DetailPackagegeDto {
   String get name => throw _privateConstructorUsedError;
 
-  /// Serializes this DetailPakcageDto to a JSON map.
+  /// Serializes this DetailPackagegeDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of DetailPakcageDto
+  /// Create a copy of DetailPackagegeDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $DetailPakcageDtoCopyWith<DetailPakcageDto> get copyWith =>
+  $DetailPackagegeDtoCopyWith<DetailPackagegeDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DetailPakcageDtoCopyWith<$Res> {
-  factory $DetailPakcageDtoCopyWith(
-          DetailPakcageDto value, $Res Function(DetailPakcageDto) then) =
-      _$DetailPakcageDtoCopyWithImpl<$Res, DetailPakcageDto>;
+abstract class $DetailPackagegeDtoCopyWith<$Res> {
+  factory $DetailPackagegeDtoCopyWith(
+          DetailPackagegeDto value, $Res Function(DetailPackagegeDto) then) =
+      _$DetailPackagegeDtoCopyWithImpl<$Res, DetailPackagegeDto>;
   @useResult
   $Res call({String name});
 }
 
 /// @nodoc
-class _$DetailPakcageDtoCopyWithImpl<$Res, $Val extends DetailPakcageDto>
-    implements $DetailPakcageDtoCopyWith<$Res> {
-  _$DetailPakcageDtoCopyWithImpl(this._value, this._then);
+class _$DetailPackagegeDtoCopyWithImpl<$Res, $Val extends DetailPackagegeDto>
+    implements $DetailPackagegeDtoCopyWith<$Res> {
+  _$DetailPackagegeDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of DetailPakcageDto
+  /// Create a copy of DetailPackagegeDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -68,32 +68,32 @@ class _$DetailPakcageDtoCopyWithImpl<$Res, $Val extends DetailPakcageDto>
 }
 
 /// @nodoc
-abstract class _$$DetailPakcageDtoImplCopyWith<$Res>
-    implements $DetailPakcageDtoCopyWith<$Res> {
-  factory _$$DetailPakcageDtoImplCopyWith(_$DetailPakcageDtoImpl value,
-          $Res Function(_$DetailPakcageDtoImpl) then) =
-      __$$DetailPakcageDtoImplCopyWithImpl<$Res>;
+abstract class _$$DetailPackagegeDtoImplCopyWith<$Res>
+    implements $DetailPackagegeDtoCopyWith<$Res> {
+  factory _$$DetailPackagegeDtoImplCopyWith(_$DetailPackagegeDtoImpl value,
+          $Res Function(_$DetailPackagegeDtoImpl) then) =
+      __$$DetailPackagegeDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name});
 }
 
 /// @nodoc
-class __$$DetailPakcageDtoImplCopyWithImpl<$Res>
-    extends _$DetailPakcageDtoCopyWithImpl<$Res, _$DetailPakcageDtoImpl>
-    implements _$$DetailPakcageDtoImplCopyWith<$Res> {
-  __$$DetailPakcageDtoImplCopyWithImpl(_$DetailPakcageDtoImpl _value,
-      $Res Function(_$DetailPakcageDtoImpl) _then)
+class __$$DetailPackagegeDtoImplCopyWithImpl<$Res>
+    extends _$DetailPackagegeDtoCopyWithImpl<$Res, _$DetailPackagegeDtoImpl>
+    implements _$$DetailPackagegeDtoImplCopyWith<$Res> {
+  __$$DetailPackagegeDtoImplCopyWithImpl(_$DetailPackagegeDtoImpl _value,
+      $Res Function(_$DetailPackagegeDtoImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of DetailPakcageDto
+  /// Create a copy of DetailPackagegeDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = null,
   }) {
-    return _then(_$DetailPakcageDtoImpl(
+    return _then(_$DetailPackagegeDtoImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -104,25 +104,25 @@ class __$$DetailPakcageDtoImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$DetailPakcageDtoImpl implements _DetailPakcageDto {
-  const _$DetailPakcageDtoImpl({required this.name});
+class _$DetailPackagegeDtoImpl implements _DetailPackagegeDto {
+  const _$DetailPackagegeDtoImpl({required this.name});
 
-  factory _$DetailPakcageDtoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DetailPakcageDtoImplFromJson(json);
+  factory _$DetailPackagegeDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DetailPackagegeDtoImplFromJson(json);
 
   @override
   final String name;
 
   @override
   String toString() {
-    return 'DetailPakcageDto(name: $name)';
+    return 'DetailPackagegeDto(name: $name)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DetailPakcageDtoImpl &&
+            other is _$DetailPackagegeDtoImpl &&
             (identical(other.name, name) || other.name == name));
   }
 
@@ -130,38 +130,38 @@ class _$DetailPakcageDtoImpl implements _DetailPakcageDto {
   @override
   int get hashCode => Object.hash(runtimeType, name);
 
-  /// Create a copy of DetailPakcageDto
+  /// Create a copy of DetailPackagegeDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$DetailPakcageDtoImplCopyWith<_$DetailPakcageDtoImpl> get copyWith =>
-      __$$DetailPakcageDtoImplCopyWithImpl<_$DetailPakcageDtoImpl>(
+  _$$DetailPackagegeDtoImplCopyWith<_$DetailPackagegeDtoImpl> get copyWith =>
+      __$$DetailPackagegeDtoImplCopyWithImpl<_$DetailPackagegeDtoImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$DetailPakcageDtoImplToJson(
+    return _$$DetailPackagegeDtoImplToJson(
       this,
     );
   }
 }
 
-abstract class _DetailPakcageDto implements DetailPakcageDto {
-  const factory _DetailPakcageDto({required final String name}) =
-      _$DetailPakcageDtoImpl;
+abstract class _DetailPackagegeDto implements DetailPackagegeDto {
+  const factory _DetailPackagegeDto({required final String name}) =
+      _$DetailPackagegeDtoImpl;
 
-  factory _DetailPakcageDto.fromJson(Map<String, dynamic> json) =
-      _$DetailPakcageDtoImpl.fromJson;
+  factory _DetailPackagegeDto.fromJson(Map<String, dynamic> json) =
+      _$DetailPackagegeDtoImpl.fromJson;
 
   @override
   String get name;
 
-  /// Create a copy of DetailPakcageDto
+  /// Create a copy of DetailPackagegeDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DetailPakcageDtoImplCopyWith<_$DetailPakcageDtoImpl> get copyWith =>
+  _$$DetailPackagegeDtoImplCopyWith<_$DetailPackagegeDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -173,6 +173,8 @@ PurchaseDto _$PurchaseDtoFromJson(Map<String, dynamic> json) {
 mixin _$PurchaseDto {
   int get period => throw _privateConstructorUsedError;
   String get paymentMethod => throw _privateConstructorUsedError;
+  String? get successReturnUrl => throw _privateConstructorUsedError;
+  String? get failedReturnUrl => throw _privateConstructorUsedError;
 
   /// Serializes this PurchaseDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -190,7 +192,11 @@ abstract class $PurchaseDtoCopyWith<$Res> {
           PurchaseDto value, $Res Function(PurchaseDto) then) =
       _$PurchaseDtoCopyWithImpl<$Res, PurchaseDto>;
   @useResult
-  $Res call({int period, String paymentMethod});
+  $Res call(
+      {int period,
+      String paymentMethod,
+      String? successReturnUrl,
+      String? failedReturnUrl});
 }
 
 /// @nodoc
@@ -210,6 +216,8 @@ class _$PurchaseDtoCopyWithImpl<$Res, $Val extends PurchaseDto>
   $Res call({
     Object? period = null,
     Object? paymentMethod = null,
+    Object? successReturnUrl = freezed,
+    Object? failedReturnUrl = freezed,
   }) {
     return _then(_value.copyWith(
       period: null == period
@@ -220,6 +228,14 @@ class _$PurchaseDtoCopyWithImpl<$Res, $Val extends PurchaseDto>
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
               as String,
+      successReturnUrl: freezed == successReturnUrl
+          ? _value.successReturnUrl
+          : successReturnUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      failedReturnUrl: freezed == failedReturnUrl
+          ? _value.failedReturnUrl
+          : failedReturnUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -232,7 +248,11 @@ abstract class _$$PurchaseDtoImplCopyWith<$Res>
       __$$PurchaseDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int period, String paymentMethod});
+  $Res call(
+      {int period,
+      String paymentMethod,
+      String? successReturnUrl,
+      String? failedReturnUrl});
 }
 
 /// @nodoc
@@ -250,6 +270,8 @@ class __$$PurchaseDtoImplCopyWithImpl<$Res>
   $Res call({
     Object? period = null,
     Object? paymentMethod = null,
+    Object? successReturnUrl = freezed,
+    Object? failedReturnUrl = freezed,
   }) {
     return _then(_$PurchaseDtoImpl(
       period: null == period
@@ -260,6 +282,14 @@ class __$$PurchaseDtoImplCopyWithImpl<$Res>
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
               as String,
+      successReturnUrl: freezed == successReturnUrl
+          ? _value.successReturnUrl
+          : successReturnUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      failedReturnUrl: freezed == failedReturnUrl
+          ? _value.failedReturnUrl
+          : failedReturnUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -267,7 +297,11 @@ class __$$PurchaseDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PurchaseDtoImpl implements _PurchaseDto {
-  const _$PurchaseDtoImpl({required this.period, required this.paymentMethod});
+  const _$PurchaseDtoImpl(
+      {required this.period,
+      required this.paymentMethod,
+      this.successReturnUrl,
+      this.failedReturnUrl});
 
   factory _$PurchaseDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$PurchaseDtoImplFromJson(json);
@@ -276,10 +310,14 @@ class _$PurchaseDtoImpl implements _PurchaseDto {
   final int period;
   @override
   final String paymentMethod;
+  @override
+  final String? successReturnUrl;
+  @override
+  final String? failedReturnUrl;
 
   @override
   String toString() {
-    return 'PurchaseDto(period: $period, paymentMethod: $paymentMethod)';
+    return 'PurchaseDto(period: $period, paymentMethod: $paymentMethod, successReturnUrl: $successReturnUrl, failedReturnUrl: $failedReturnUrl)';
   }
 
   @override
@@ -289,12 +327,17 @@ class _$PurchaseDtoImpl implements _PurchaseDto {
             other is _$PurchaseDtoImpl &&
             (identical(other.period, period) || other.period == period) &&
             (identical(other.paymentMethod, paymentMethod) ||
-                other.paymentMethod == paymentMethod));
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.successReturnUrl, successReturnUrl) ||
+                other.successReturnUrl == successReturnUrl) &&
+            (identical(other.failedReturnUrl, failedReturnUrl) ||
+                other.failedReturnUrl == failedReturnUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, period, paymentMethod);
+  int get hashCode => Object.hash(
+      runtimeType, period, paymentMethod, successReturnUrl, failedReturnUrl);
 
   /// Create a copy of PurchaseDto
   /// with the given fields replaced by the non-null parameter values.
@@ -315,7 +358,9 @@ class _$PurchaseDtoImpl implements _PurchaseDto {
 abstract class _PurchaseDto implements PurchaseDto {
   const factory _PurchaseDto(
       {required final int period,
-      required final String paymentMethod}) = _$PurchaseDtoImpl;
+      required final String paymentMethod,
+      final String? successReturnUrl,
+      final String? failedReturnUrl}) = _$PurchaseDtoImpl;
 
   factory _PurchaseDto.fromJson(Map<String, dynamic> json) =
       _$PurchaseDtoImpl.fromJson;
@@ -324,6 +369,10 @@ abstract class _PurchaseDto implements PurchaseDto {
   int get period;
   @override
   String get paymentMethod;
+  @override
+  String? get successReturnUrl;
+  @override
+  String? get failedReturnUrl;
 
   /// Create a copy of PurchaseDto
   /// with the given fields replaced by the non-null parameter values.

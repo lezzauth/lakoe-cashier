@@ -1,26 +1,37 @@
+import 'dart:async';
+
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:android_intent_plus/flag.dart';
 import 'package:app_data_provider/app_data_provider.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/list_item_card.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/section_card.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_1.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/light_appbar.dart';
-import 'package:point_of_sales_cashier/features/account/presentation/widgets/shimmer/account_shimmer.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
-import 'package:point_of_sales_cashier/features/outlets/application/outlet_cubit.dart';
-import 'package:point_of_sales_cashier/features/outlets/application/outlet_state.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/common/widgets/ui/list_item_card.dart';
+import 'package:lakoe_pos/common/widgets/ui/section_card.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_1.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/common/widgets/appbar/light_appbar.dart';
+import 'package:lakoe_pos/features/account/presentation/widgets/shimmer/account_shimmer.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:lakoe_pos/features/outlets/application/outlet_cubit.dart';
+import 'package:lakoe_pos/features/outlets/application/outlet_state.dart';
+import 'package:lakoe_pos/features/packages/application/cubit/package_master_cubit.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -32,16 +43,52 @@ class AccountMasterScreen extends StatefulWidget {
 }
 
 class _AccountMasterScreenState extends State<AccountMasterScreen> {
+  bool isBottomSheetVisible = false;
+
+  late final StreamSubscription<List<ConnectivityResult>>
+      connectivitySubscription;
+
   @override
   void initState() {
     super.initState();
-    context.read<AuthCubit>().initialize();
+
     _onInit();
     _updateAppVersion();
   }
 
+  @override
+  void dispose() {
+    connectivitySubscription.cancel();
+    super.dispose();
+  }
+
   void _onInit() {
+    context.read<AuthCubit>().initialize();
+    context.read<OwnerCubit>().init();
     context.read<OutletCubit>().init();
+    context.read<PackageMasterCubit>().init();
+
+    connectivitySubscription =
+        Connectivity().onConnectivityChanged.listen((result) {
+      if (result != ConnectivityResult.none) {
+        if (!mounted) return;
+
+        if (isBottomSheetVisible) {
+          Navigator.pop(context);
+          isBottomSheetVisible = false;
+
+          CustomToast.show(
+            "Internet terhubung kembali",
+            backgroundColor: TColors.success,
+          );
+        }
+
+        context.read<AuthCubit>().initialize();
+        context.read<OwnerCubit>().init();
+        context.read<OutletCubit>().init();
+        context.read<PackageMasterCubit>().init();
+      }
+    });
   }
 
   Future<String> getAppVersion() async {
@@ -70,7 +117,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
   List<_OtherItem> otherSettingItems = [
     _OtherItem(
       title: "Paket & Riwayat",
-      routeName: "/",
+      routeName: "/packages/purchase/history",
       iconSrc: TIcons.billAlt,
       isNewItem: false,
     ),
@@ -101,6 +148,14 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
     ),
   ];
 
+  Future<void> openSettings() async {
+    final intent = AndroidIntent(
+      action: 'android.settings.SETTINGS',
+      flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+    );
+    await intent.launch();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,73 +164,120 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       appBar: const CustomAppbarLight(
         title: "Profil & Akun",
       ),
-      body: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) {
-          if (state is AuthReady) {
-            final profile = state.profile;
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthCubit, AuthState>(
+            listener: (context, state) async {
+              if (state is ConnectionIssue && !isBottomSheetVisible) {
+                isBottomSheetVisible = true;
+                if (!mounted) return;
 
+                showModalBottomSheet(
+                  context: context,
+                  enableDrag: false,
+                  isDismissible: false,
+                  builder: (context) {
+                    return PopScope(
+                      canPop: false,
+                      onPopInvokedWithResult: (didPop, result) async {},
+                      child: CustomBottomsheet(
+                        hasGrabber: false,
+                        child: ErrorDisplay(
+                          imageSrc: TImages.noConnection,
+                          title: "Koneksi internet aman ngga?",
+                          description:
+                              "Coba cek WiFi atau kuota internet kamu dulu terus bisa dicoba lagi, ya!",
+                          actionTitlePrimary: "Pengaturan",
+                          onActionPrimary: () {
+                            isBottomSheetVisible = false;
+                            Navigator.pop(context);
+                            openSettings();
+                          },
+                          actionTitleSecondary: "Coba Lagi",
+                          onActionSecondary: () async {
+                            isBottomSheetVisible = false;
+                            Navigator.pop(context);
+                            await Future.delayed(Duration(seconds: 2));
+                            _onInit();
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ).whenComplete(() => isBottomSheetVisible = false);
+                return;
+              }
+            },
+          ),
+        ],
+        child: BlocBuilder<OwnerCubit, OwnerState>(
+          builder: (context, state) {
+            if (state is OwnerLoadSuccess) {
+              final profile = state.owner;
+
+              return Stack(
+                children: [
+                  Positioned(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: SvgPicture.asset(
+                        profile.packageName == "GROW"
+                            ? TImages.growLevelHero
+                            : profile.packageName == "PRO"
+                                ? TImages.proLevelHero
+                                : TImages.liteLevelHero,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 120),
+                          ProfileCard(),
+                          // const SizedBox(height: 12),
+                          // const BalanceCard(),
+                          const SizedBox(height: 12),
+                          OutletCard(),
+                          const SizedBox(height: 12),
+                          OtherCard(
+                            children: otherSettingItems
+                                .map(
+                                  (item) => ListItemCard(
+                                    iconSrc: item.iconSrc,
+                                    title: item.title,
+                                    routeName: item.routeName,
+                                    isNewItem: item.isNewItem!,
+                                    textTrailing: item.textTrailing,
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
             return Stack(
               children: [
                 Positioned(
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: SvgPicture.asset(
-                      profile.packageName == "GROW"
-                          ? TImages.growLevelHero
-                          : profile.packageName == "PRO"
-                              ? TImages.proLevelHero
-                              : TImages.liteLevelHero,
+                      TImages.placeholderHero,
                       fit: BoxFit.fill,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 120),
-                        ProfileCard(),
-                        // const SizedBox(height: 12),
-                        // const BalanceCard(),
-                        const SizedBox(height: 12),
-                        OutletCard(),
-                        const SizedBox(height: 12),
-                        OtherCard(
-                          children: otherSettingItems
-                              .map(
-                                (item) => ListItemCard(
-                                  iconSrc: item.iconSrc,
-                                  title: item.title,
-                                  routeName: item.routeName,
-                                  isNewItem: item.isNewItem!,
-                                  textTrailing: item.textTrailing,
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                AccountShimmer(),
               ],
             );
-          }
-          return Stack(
-            children: [
-              Positioned(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: SvgPicture.asset(
-                    TImages.placeholderHero,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-              AccountShimmer(),
-            ],
-          );
-        },
+          },
+        ),
       ),
     );
   }
@@ -186,15 +288,19 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
+    return BlocBuilder<OwnerCubit, OwnerState>(
       builder: (context, state) {
-        if (state is AuthReady) {
-          final profile = state.profile;
+        if (state is OwnerLoadSuccess) {
+          final profile = state.owner;
           final AppDataProvider appDataProvider = AppDataProvider();
 
           return Container(
             decoration: BoxDecoration(
-              color: TColors.highlightLightest,
+              color: profile.packageName == "GROW"
+                  ? TColors.successLight
+                  : profile.packageName == "PRO"
+                      ? Color(0xFFF4DEF8)
+                      : TColors.highlightLightest,
               borderRadius: BorderRadius.circular(16.0),
             ),
             child: Column(
@@ -265,7 +371,6 @@ class ProfileCard extends StatelessWidget {
                               ),
                               const SizedBox(height: 2.0),
                               TextBodyS(
-                                // profile.phoneNumber.replaceFirst('+', ''),
                                 PhoneNumberFormatter.formatForDisplay(
                                     profile.phoneNumber),
                                 color: TColors.neutralDarkLight,
@@ -285,7 +390,17 @@ class ProfileCard extends StatelessWidget {
                 InkWell(
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
-                  onTap: () => Navigator.pushNamed(context, "/packages"),
+                  onTap: () {
+                    if (profile.packageName != "LITE") {
+                      Navigator.pushNamed(
+                        context,
+                        "/account/active_package",
+                        arguments: {'packageName': profile.packageName},
+                      );
+                    } else {
+                      Navigator.pushNamed(context, "/packages");
+                    }
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.only(
@@ -305,6 +420,7 @@ class ProfileCard extends StatelessWidget {
                         const TextBodyM(
                           "Paket aktif kamu saat ini",
                           color: TColors.neutralDarkDarkest,
+                          fontWeight: FontWeight.w500,
                         ),
                         const SizedBox(width: 8.0),
                         Image.asset(
@@ -447,18 +563,25 @@ class OutletCard extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 22,
                       backgroundColor: Color(colorBrand),
-                      child: Image.network(
-                        outletLogo!,
-                        width: 32,
-                        height: 32,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Image.asset(
-                            TImages.lakoeLetterPrimary,
-                            width: 24,
-                            height: 24,
-                          );
-                        },
+                      child: ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                          Colors.white,
+                          // Colors.transparent,
+                          BlendMode.srcATop,
+                        ),
+                        child: Image.network(
+                          outletLogo!,
+                          width: 32,
+                          height: 32,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              TImages.lakoeLetterPrimary,
+                              width: 24,
+                              height: 24,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),

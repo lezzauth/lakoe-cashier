@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/tiles/custom_radio_tile.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/checkout/data/payment_method_model.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/tiles/custom_radio_tile.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/features/checkout/data/payment_method_model.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class PaymentBottomSheet extends StatefulWidget {
   final List<PaymentCategory> paymentCategories;
   final PaymentCategory? selectedCategory;
-  final PaymentMethod? selectedMethod;
-  final Function(PaymentCategory, PaymentMethod) onSelected;
+  final PaymentMethodCheckout? selectedMethod;
+  final Function(PaymentCategory, PaymentMethodCheckout) onSelected;
 
   const PaymentBottomSheet({
     super.key,
@@ -25,7 +25,7 @@ class PaymentBottomSheet extends StatefulWidget {
 
 class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
   PaymentCategory? selectedCategory;
-  PaymentMethod? selectedMethod;
+  PaymentMethodCheckout? selectedMethod;
 
   @override
   void initState() {
@@ -53,6 +53,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: TextHeading3(
@@ -69,7 +70,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                       onChanged: (dynamic value) {
                         setState(() {
                           selectedCategory = category;
-                          selectedMethod = value as PaymentMethod?;
+                          selectedMethod = value as PaymentMethodCheckout?;
                         });
                         widget.onSelected(selectedCategory!, selectedMethod!);
                         Navigator.pop(context);
@@ -80,6 +81,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
               );
             },
           ),
+          SizedBox(height: 24),
         ],
       ),
     );

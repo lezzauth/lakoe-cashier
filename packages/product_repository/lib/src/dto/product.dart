@@ -32,18 +32,43 @@ extension QueryStringExtension on FindAllProductDto {
 class ListOrderByProductDto with _$ListOrderByProductDto {
   const factory ListOrderByProductDto({
     String? cursor,
+    String? status,
+    String? template,
     String? from,
     String? to,
-    String? template,
   }) = _ListOrderByProductDto;
 
   factory ListOrderByProductDto.fromJson(Map<String, Object?> json) =>
       _$ListOrderByProductDtoFromJson(json);
 }
 
+extension CopyWithExtension on ListOrderByProductDto {
+  ListOrderByProductDto copyWith({
+    String? cursor,
+    String? status,
+    String? template,
+    String? from,
+    String? to,
+  }) {
+    return ListOrderByProductDto(
+      cursor: cursor ?? this.cursor,
+      status: status ?? this.status,
+      template: template ?? this.template,
+      from: from ?? this.from,
+      to: to ?? this.to,
+    );
+  }
+}
+
 extension ListOrderByProductDtoQueryStringExtension on ListOrderByProductDto {
   String toQueryString() {
-    final Map<String, dynamic> queryParams = toJson();
+    final Map<String, dynamic> queryParams = {
+      "cursor": cursor,
+      "status": status,
+      "template": template,
+      "from": from,
+      "to": to,
+    };
 
     queryParams.removeWhere((key, value) => value == null);
 

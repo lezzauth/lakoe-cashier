@@ -1,13 +1,12 @@
 import 'package:category_repository/category_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
-import 'package:point_of_sales_cashier/common/widgets/shimmer/chips_shimmer.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:responsive_framework/responsive_framework.dart';
+import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
+import 'package:lakoe_pos/common/widgets/shimmer/chips_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class ProductCategoryFilter extends StatefulWidget {
   final int? value;
@@ -70,19 +69,38 @@ class _ProductCategoryFilterState extends State<ProductCategoryFilter> {
               widget.onChanged!(null);
             },
           ),
-          ...widget.categories.map(
-            (category) {
-              bool selected = widget.value == category.id;
-              return FilterChip(
-                label: category.name,
-                selected: selected,
-                onSelected: (value) {
-                  if (widget.onChanged == null) return;
-                  widget.onChanged!(category.id);
-                },
-              );
-            },
-          )
+          ...[
+            ...widget.categories
+                .where((category) => category.name == "Umum")
+                .map(
+              (category) {
+                bool selected = widget.value == category.id;
+                return FilterChip(
+                  label: category.name,
+                  selected: selected,
+                  onSelected: (value) {
+                    if (widget.onChanged == null) return;
+                    widget.onChanged!(category.id);
+                  },
+                );
+              },
+            ),
+            ...widget.categories
+                .where((category) => category.name != "Umum")
+                .map(
+              (category) {
+                bool selected = widget.value == category.id;
+                return FilterChip(
+                  label: category.name,
+                  selected: selected,
+                  onSelected: (value) {
+                    if (widget.onChanged == null) return;
+                    widget.onChanged!(category.id);
+                  },
+                );
+              },
+            ),
+          ],
         ],
       ),
     );
@@ -103,31 +121,24 @@ class FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isMobile = ResponsiveBreakpoints.of(context).smallerThan(TABLET);
-
-    return SizedBox(
-      height: 52,
-      child: ChoiceChip(
-        label: ResponsiveLayout(
-          mobile: !selected
-              ? TextBodyM(label)
-              : TextHeading4(
-                  label,
-                  color: TColors.primary,
-                ),
-          tablet: !selected
-              ? TextBodyL(label)
-              : TextHeading3(
-                  label,
-                  color: TColors.primary,
-                ),
-        ),
-        selected: selected,
-        onSelected: onSelected,
-        padding: isMobile
-            ? null
-            : const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+    return ChoiceChip(
+      label: ResponsiveLayout(
+        mobile: !selected
+            ? TextBodyM(label)
+            : TextHeading4(
+                label,
+                color: TColors.primary,
+              ),
+        tablet: !selected
+            ? TextBodyL(label)
+            : TextHeading3(
+                label,
+                color: TColors.primary,
+                fontWeight: FontWeight.w600,
+              ),
       ),
+      selected: selected,
+      onSelected: onSelected,
     );
   }
 }

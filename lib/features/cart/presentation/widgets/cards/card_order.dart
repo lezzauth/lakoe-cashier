@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_xs.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_xs.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 
 class CardOrder extends StatelessWidget {
   const CardOrder({
     super.key,
     this.icon,
+    this.trailingIcon,
     this.subTitle = "",
     this.title = "",
     this.onTap,
@@ -17,6 +18,7 @@ class CardOrder extends StatelessWidget {
   });
 
   final Widget? icon;
+  final Widget? trailingIcon;
   final String title;
   final String subTitle;
   final Function()? onTap;
@@ -35,10 +37,8 @@ class CardOrder extends StatelessWidget {
             border: Border.all(color: TColors.neutralLightMedium, width: 1),
             color: TColors.neutralLightLightest,
           ),
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Row(
-            // mainAxisSize: MainAxisSize.max,
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: Row(
@@ -52,7 +52,7 @@ class CardOrder extends StatelessWidget {
                         color: TColors.highlightLightest,
                         borderRadius: BorderRadius.circular(32.0),
                       ),
-                      margin: const EdgeInsets.only(right: 8.0),
+                      margin: EdgeInsets.only(right: 8.0),
                       child: Center(
                         child: icon,
                       ),
@@ -72,6 +72,7 @@ class CardOrder extends StatelessWidget {
                         ],
                       ),
                     ),
+                    trailingIcon ?? SizedBox.shrink(),
                   ],
                 ),
               ),

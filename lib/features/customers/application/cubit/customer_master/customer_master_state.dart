@@ -21,7 +21,7 @@ final class CustomerMasterLoadSuccess extends CustomerMasterState {
     this.customers = const [
       CustomerModel(
         id: "-",
-        name: "Umum",
+        name: "Tamu",
         email: "",
         phoneNumber: "-",
         address: "",
@@ -64,11 +64,43 @@ final class CustomerMasterActionFailure extends CustomerMasterState {
   List<Object?> get props => [error];
 }
 
-final class CustomerReachesLimit extends CustomerMasterState {
+final class ErrorIssuePackage extends CustomerMasterState {
   final DioExceptionModel res;
 
-  CustomerReachesLimit(this.res);
+  ErrorIssuePackage(this.res);
 
   @override
   List<Object?> get props => [res];
+}
+
+final class CustomerActionInProgress extends CustomerMasterState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class CustomerActionSuccess extends CustomerMasterState {
+  final CustomerModel res;
+
+  CustomerActionSuccess(this.res);
+
+  @override
+  List<Object?> get props => [];
+}
+
+final class CustomerActionFailure extends CustomerMasterState {
+  final String error;
+
+  CustomerActionFailure(this.error);
+
+  @override
+  List<Object?> get props => [];
+}
+
+final class ConnectionIssue extends CustomerMasterState {
+  final String message;
+
+  ConnectionIssue(this.message);
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
 }

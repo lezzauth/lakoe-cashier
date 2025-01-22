@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class PopupConfirmation extends StatefulWidget {
   const PopupConfirmation({
@@ -52,33 +52,34 @@ class _ChangesConfirmationState extends State<PopupConfirmation> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: MediaQuery.of(context).viewInsets,
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            TextHeading2(
-              widget.title,
-            ),
-            const SizedBox(height: 8),
-            TextBodyM(
-              widget.message,
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 48,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {},
+      child: Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              TextHeading2(
+                widget.title,
+              ),
+              const SizedBox(height: 8),
+              TextBodyM(
+                widget.message,
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
                     child: OutlinedButton(
                       onPressed: widget.secondaryAction,
                       child: widget.isSecondaryActionLoading
@@ -95,11 +96,8 @@ class _ChangesConfirmationState extends State<PopupConfirmation> {
                             ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: SizedBox(
-                    height: 48,
+                  const SizedBox(width: 16),
+                  Expanded(
                     child: ElevatedButton(
                       onPressed: widget.primaryAction,
                       child: widget.isPrimaryActionLoading
@@ -116,10 +114,10 @@ class _ChangesConfirmationState extends State<PopupConfirmation> {
                             ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

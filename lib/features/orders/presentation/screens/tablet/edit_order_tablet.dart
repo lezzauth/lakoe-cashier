@@ -3,28 +3,28 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_repository/order_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/search_field.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_state.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_state.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/content/cart_content_tablet.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/footer/cart_footer.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/category/cashier_category_state.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/order/cashier_order_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/drawer/explore_product_drawer_tablet.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/product_grid.dart';
-import 'package:point_of_sales_cashier/features/orders/application/cubit/order_add_item/order_add_item_cubit.dart';
-import 'package:point_of_sales_cashier/features/orders/data/arguments/order_edit_argument.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/filter/product_category_filter.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/search_field.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_state.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_state.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
+import 'package:lakoe_pos/features/cart/presentation/widgets/content/cart_content_tablet.dart';
+import 'package:lakoe_pos/features/cart/presentation/widgets/footer/cart_footer.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/category/cashier_category_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/category/cashier_category_state.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/order/cashier_order_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/product/cashier_product_filter_state.dart';
+import 'package:lakoe_pos/features/cashier/presentation/widgets/drawer/explore_product_drawer_tablet.dart';
+import 'package:lakoe_pos/features/cashier/presentation/widgets/cashier_product_grid.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_add_item/order_add_item_cubit.dart';
+import 'package:lakoe_pos/features/orders/data/arguments/order_edit_argument.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/filter/product_category_filter.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class OrderEditTablet extends StatelessWidget {
   const OrderEditTablet({super.key, required this.arguments});
@@ -54,6 +54,7 @@ class OrderEditTabletContent extends StatefulWidget {
 class _OrderEditTabletContentState extends State<OrderEditTabletContent> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -122,9 +123,7 @@ class _OrderEditTabletContentState extends State<OrderEditTabletContent> {
         }
 
         if (state is CartDetailActionSuccess ||
-            state is CartDetailCompleteActionSuccess) {
-          context.read<CartDetailFilterCubit>().clearFilter();
-        }
+            state is CartDetailCompleteActionSuccess) {}
       },
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -142,6 +141,7 @@ class _OrderEditTabletContentState extends State<OrderEditTabletContent> {
                     search: SearchField(
                       hintText: "Cari menu disini...",
                       controller: _searchController,
+                      focusNode: _searchFocusNode,
                       debounceTime: 500,
                       onChanged: (value) {
                         context
@@ -197,7 +197,10 @@ class _OrderEditTabletContentState extends State<OrderEditTabletContent> {
                               ),
                             ),
                           ),
-                          ProductGrid()
+                          CashierProductGrid(
+                            searchController: _searchController,
+                            searchFocusNode: _searchFocusNode,
+                          )
                         ],
                       ),
                     ),

@@ -6,15 +6,18 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/utils/helpers/app_update_helper.dart';
+import 'package:lakoe_pos/utils/helpers/deeplink_handler.dart';
 import 'package:logman/logman.dart';
-import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_state.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:token_provider/token_provider.dart';
 
 class RedirectScreen extends StatefulWidget {
@@ -25,15 +28,19 @@ class RedirectScreen extends StatefulWidget {
 }
 
 class _RedirectScreenState extends State<RedirectScreen> {
+  bool navigated = false;
   bool isBottomSheetVisible = false;
-  late final StreamSubscription<List<ConnectivityResult>>
-      _connectivitySubscription;
 
-  Future<void> _loadFlavor() async {
+  final DeeplinkHandler _deeplinkHandler = DeeplinkHandler();
+
+  late final StreamSubscription<List<ConnectivityResult>>
+      connectivitySubscription;
+
+  Future<void> loadFlavor() async {
     final AppDataProvider appDataProvider = AppDataProvider();
     final flavor = await appDataProvider.flavor;
 
-    if (flavor == "Development") {
+    if (flavor == "dev") {
       Logman.instance.info('App started!');
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -53,35 +60,87 @@ class _RedirectScreenState extends State<RedirectScreen> {
   @override
   void initState() {
     super.initState();
-    _loadFlavor();
+    loadFlavor();
+    _deeplinkHandler.init(
+      onDeeplinkReceived: _handleDeeplink,
+      onError: () {
+        Logman.instance.error("[Redirect] Failed to handle deeplink.");
+      },
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      AppUpdateHelper.checkForUpdate(context: context);
+    });
+    authInitialize();
+  }
+
+  @override
+  void dispose() {
+    connectivitySubscription.cancel();
+    _deeplinkHandler.dispose();
+    super.dispose();
+  }
+
+  void _handleDeeplink(Uri uri) {
+    if (navigated) {
+      Logman.instance.info(
+          "[Redirect] Deeplink navigation already performed, skipping...");
+      return;
+    }
+
+    Logman.instance.info("[Redirect] Handling deeplink: $uri");
+    final path = uri.path;
+    final status = uri.queryParameters['status'];
+    final package = uri.queryParameters['package'];
+
+    if (path == "/payment" && status != null && package != null) {
+      navigated = true;
+      if (status == "success") {
+        Navigator.popAndPushNamed(
+          context,
+          "/payment/success",
+          arguments: {'packageName': package.toUpperCase()},
+        );
+      } else if (status == "failed") {
+        Navigator.popAndPushNamed(
+          context,
+          "/payment/failed",
+          arguments: {'packageName': package.toUpperCase()},
+        );
+      } else {
+        Logman.instance.error("[Redirect] Invalid status value: $status");
+      }
+    } else {
+      Logman.instance
+          .error("[Redirect] Invalid path or missing parameters in deeplink.");
+    }
+  }
+
+  void authInitialize() {
     context.read<AuthCubit>().initialize();
 
-    _connectivitySubscription =
+    connectivitySubscription =
         Connectivity().onConnectivityChanged.listen((result) {
       if (result != ConnectivityResult.none) {
         if (!mounted) return;
+        if (isBottomSheetVisible) {
+          Navigator.pop(context);
+          isBottomSheetVisible = false;
+
+          CustomToast.show(
+            "Internet terhubung kembali",
+            backgroundColor: TColors.success,
+          );
+        }
+
         context.read<AuthCubit>().initialize();
       }
     });
   }
 
-  @override
-  void dispose() {
-    _connectivitySubscription.cancel();
-    super.dispose();
-  }
-
-  Future<void> openWifiSettings() async {
+  Future<void> openSettings() async {
     final intent = AndroidIntent(
-      action: 'android.settings.WIFI_SETTINGS',
-      flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
-    );
-    await intent.launch();
-  }
-
-  Future<void> openMobileDataSettings() async {
-    final intent = AndroidIntent(
-      action: 'android.settings.DATA_ROAMING_SETTINGS',
+      action: 'android.settings.SETTINGS',
       flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
     );
     await intent.launch();
@@ -97,57 +156,94 @@ class _RedirectScreenState extends State<RedirectScreen> {
         final TokenProvider tokenProvider = TokenProvider();
         final token = await tokenProvider.getAuthToken();
 
-        if (!mounted) return;
+        if (state is AuthLoadInProgress) {
+          Logman.instance
+              .info('AuthState is in progress, waiting for result...');
+          return;
+        }
 
-        if (token == null || token.isEmpty) {
+        if (!navigated && (token == null || token.isEmpty)) {
+          Logman.instance.info("[Redirect] Token is Empty");
+          navigated = true;
           Navigator.popAndPushNamed(context, "/on-boarding");
           return;
         }
 
-        if (state is AuthNotReady && !isBottomSheetVisible) {
+        if (state is ConnectionIssue && !isBottomSheetVisible) {
           isBottomSheetVisible = true;
+
           if (!mounted) return;
 
-          showModalBottomSheet(
+          await showModalBottomSheet(
             context: context,
             enableDrag: false,
             isDismissible: false,
             builder: (context) {
-              return CustomBottomsheet(
-                hasGrabber: false,
-                child: ErrorDisplay(
-                  imageSrc: TImages.noConnection,
-                  title: "Yah, internetnya mati…",
-                  description:
-                      "Coba cek WiFi atau kuota internet kamu dan nanti coba lagi ya.",
-                  actionTitlePrimary: "Pengaturan",
-                  onActionPrimary: () {
-                    openWifiSettings();
-                    Navigator.pop(context);
-                    isBottomSheetVisible = false;
-                  },
-                  actionTitleSecondary: "Coba Lagi",
-                  onActionSecondary: () {
-                    context.read<AuthCubit>().initialize();
-                    Navigator.pop(context);
-                    isBottomSheetVisible = false;
-                  },
+              return PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (didPop, result) async {},
+                child: CustomBottomsheet(
+                  hasGrabber: false,
+                  child: ErrorDisplay(
+                    imageSrc: TImages.noConnection,
+                    title: "Koneksi internet aman ngga?",
+                    description:
+                        "Coba cek WiFi atau kuota internet kamu dulu terus bisa dicoba lagi, ya!",
+                    actionTitlePrimary: "Pengaturan",
+                    onActionPrimary: () {
+                      isBottomSheetVisible = false;
+                      Navigator.pop(context);
+                      openSettings();
+                    },
+                    actionTitleSecondary: "Coba Lagi",
+                    onActionSecondary: () async {
+                      isBottomSheetVisible = false;
+                      Navigator.pop(context);
+                      await Future.delayed(Duration(seconds: 2));
+                      authInitialize();
+                    },
+                  ),
                 ),
               );
             },
-          );
+          ).whenComplete(() {
+            isBottomSheetVisible = false;
+          });
           return;
         }
 
-        if (state is AuthReady) {
-          Navigator.popAndPushNamed(context, "/cashier");
-        } else if (state is UncompletedProfile ||
-            (state is TokenExpired &&
-                state.res.statusCode == 401 &&
-                !state.isTokenRefreshed) ||
-            (state is NotFound && state.res.statusCode == 404)) {
-          await tokenProvider.clearAll();
-          Navigator.popAndPushNamed(context, "/on-boarding");
+        if (!navigated) {
+          if (state is AuthReady) {
+            final currentRoute = ModalRoute.of(context)?.settings.name;
+
+            if (currentRoute == "/payment/success" ||
+                currentRoute == "/payment/failed") {
+              Logman.instance.info(
+                  "[Redirect] Skipping navigation, deeplink already handled.");
+              return;
+            }
+
+            // Navigasi ke cashier jika tidak ada deeplink
+            if (currentRoute != "/home") {
+              Logman.instance.info("[Redirect] Navigating to /cashier");
+              navigated = true;
+              Navigator.popAndPushNamed(context, "/home");
+            } else {
+              Logman.instance.info(
+                  "[Redirect] Already on /cashier, no navigation needed.");
+            }
+          } else if ((state is AuthNotReady) ||
+              (state is TokenExpired &&
+                  state.res.statusCode == 401 &&
+                  !state.isTokenRefreshed) ||
+              (state is NotFound && state.res.statusCode == 404)) {
+            Logman.instance.info("[Redirect] Navigating to /on-boarding");
+            navigated = true;
+            Navigator.popAndPushNamed(context, "/on-boarding");
+          }
+        } else {
+          Logman.instance
+              .info("[Redirect] Navigation already performed, skipping...");
         }
       },
       child: BlocListener<CashierCubit, CashierState>(

@@ -2,23 +2,21 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:order_repository/order_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/counter.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_state.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
-import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/summary/preview_order_price.dart';
-import 'package:point_of_sales_cashier/features/orders/data/arguments/order_edit_argument.dart';
-import 'package:point_of_sales_cashier/features/orders/presentation/widgets/ui/customer_table_card.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/common/widgets/form/counter.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_state.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
+import 'package:lakoe_pos/features/cart/data/models/cart_model.dart';
+import 'package:lakoe_pos/features/cart/presentation/widgets/summary/preview_order_price.dart';
+import 'package:lakoe_pos/features/orders/data/arguments/order_edit_argument.dart';
+import 'package:lakoe_pos/features/orders/presentation/widgets/ui/customer_table_card.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/product/action/product_note_action.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/product/base_product_item.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:product_repository/product_repository.dart';
 
 class CartContentEdit extends StatefulWidget {
@@ -108,6 +106,7 @@ class _CartContentEditState extends State<CartContentEdit> {
                         child: Container(
                           margin: const EdgeInsets.only(bottom: 16),
                           child: CustomerAndTableInformation(
+                            order: order,
                             customer: order.customer,
                             table: order.table,
                           ),
@@ -139,18 +138,7 @@ class _CartContentEditState extends State<CartContentEdit> {
                                 child: BaseProductItem(
                                   name: cart.product.name,
                                   price: int.parse(cart.product.price),
-                                  image: image != null
-                                      ? Image.network(
-                                          image,
-                                          height: 44,
-                                          width: 44,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : SvgPicture.asset(
-                                          TImages.productAvatar,
-                                          height: 44,
-                                          width: 44,
-                                        ),
+                                  imageUrl: image,
                                   counter: Counter(
                                     value: cart.quantity,
                                     onChanged: (quantity) {

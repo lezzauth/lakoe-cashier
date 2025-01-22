@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:point_of_sales_cashier/features/charges/data/models.dart';
-import 'package:point_of_sales_cashier/features/charges/presentation/widgets/form/field/other_charge_field.dart';
+import 'package:lakoe_pos/features/charges/data/models.dart';
+import 'package:lakoe_pos/features/charges/presentation/widgets/form/field/other_charge_field.dart';
 
 class ChargeFormState extends Equatable {
   final List<OtherChargeField> charges;

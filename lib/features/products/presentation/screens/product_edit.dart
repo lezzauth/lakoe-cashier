@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/popup_confirmation.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_container.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/tab/tab_item.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/form/product_form_cubit.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/form/product_form_state.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_master/product_master_state.dart';
-import 'package:point_of_sales_cashier/features/products/application/cubit/product_state.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/field/image_picker_field.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/product_information_form.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/forms/stock_information_form.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/popup_confirmation.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/form/product_form_cubit.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/form/product_form_state.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_cubit.dart';
+import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_state.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/image_picker_field.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/forms/product_information_form.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ProductEditScreen extends StatelessWidget {
@@ -108,10 +105,10 @@ class _ProductEditState extends State<ProductEdit>
             description: productInformationValue["description"],
             modal: productInformationValue["modal"],
             categoryId: productInformationValue["categoryId"],
-            unit: productInformationValue["unit"],
+            unit: "Pcs",
             sku: sku,
             stock: stock != null ? int.parse(stock) : null,
-            availability: stockInformationValue?["availability"],
+            availability: productInformationValue?["availability"],
           ),
         );
   }
@@ -156,6 +153,11 @@ class _ProductEditState extends State<ProductEdit>
       listener: (context, state) {
         if (state is ProductMasterActionSuccess) {
           Navigator.pop(context, true);
+        } else if (state is ProductMasterActionFailure) {
+          CustomToast.show(
+            "Gagal menyimpan data produk",
+            backgroundColor: TColors.error,
+          );
         }
       },
       child: BlocBuilder<ProductMasterCubit, ProductMasterState>(
@@ -179,7 +181,7 @@ class _ProductEditState extends State<ProductEdit>
                     actions: [
                       TextButton(
                         onPressed: () => onSubmit(arguments.id),
-                        child: state is ProductActionInProgress
+                        child: state is ProductMasterActionInProgress
                             ? const SizedBox(
                                 height: 16,
                                 width: 16,
@@ -191,48 +193,66 @@ class _ProductEditState extends State<ProductEdit>
                               ),
                       )
                     ],
-                    bottom: TabContainer(
-                      controller: _tabController,
-                      tabs: [
-                        TabItem(
-                          title: "Info Produk",
-                        ),
-                        TabItem(title: "Info Stok"),
-                      ],
-                    ),
+                    // bottom: TabContainer(
+                    //   controller: _tabController,
+                    //   tabs: [
+                    //     TabItem(
+                    //       title: "Info Produk",
+                    //     ),
+                    //     TabItem(title: "Info Stok"),
+                    //   ],
+                    // ),
                   ),
-                  body: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      SingleChildScrollView(
-                        padding: const EdgeInsets.only(top: 16.0),
-                        child: ProductInformationForm(
-                          formKey: _productInformationFormKey,
-                          initialValue: {
-                            "name": arguments.name,
-                            "price": arguments.price,
-                            "description": arguments.description,
-                            "modal": arguments.modal,
-                            "categoryId": arguments.categoryId,
-                            "unit": arguments.unit,
-                            "images": arguments.images.isEmpty
-                                ? ImagePickerValue()
-                                : ImagePickerValue(url: arguments.images[0]),
-                          },
-                        ),
-                      ),
-                      SingleChildScrollView(
-                        padding: const EdgeInsets.only(top: 16.0),
-                        child: StockInformationForm(
-                          formKey: _stockInformationFormKey,
-                          initialValue: {
-                            "sku": arguments.sku,
-                            "stock": arguments.stock?.toString(),
-                            "availability": arguments.availability,
-                          },
-                        ),
-                      ),
-                    ],
+                  // body: TabBarView(
+                  //   controller: _tabController,
+                  //   children: [
+                  //     SingleChildScrollView(
+                  //       padding: const EdgeInsets.only(top: 16.0),
+                  //       child: ProductInformationForm(
+                  //         formKey: _productInformationFormKey,
+                  //         initialValue: {
+                  //           "name": arguments.name,
+                  //           "price": arguments.price,
+                  //           "description": arguments.description,
+                  //           "modal": arguments.modal,
+                  //           "categoryId": arguments.categoryId,
+                  //           "unit": arguments.unit,
+                  //           "images": arguments.images.isEmpty
+                  //               ? ImagePickerValue()
+                  //               : ImagePickerValue(url: arguments.images[0]),
+                  //         },
+                  //       ),
+                  //     ),
+                  //     SingleChildScrollView(
+                  //       padding: const EdgeInsets.only(top: 16.0),
+                  //       child: StockInformationForm(
+                  //         formKey: _stockInformationFormKey,
+                  //         initialValue: {
+                  //           "sku": arguments.sku,
+                  //           "stock": arguments.stock?.toString(),
+                  //           "availability": arguments.availability,
+                  //         },
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  body: SingleChildScrollView(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: ProductInformationForm(
+                      formKey: _productInformationFormKey,
+                      initialValue: {
+                        "name": arguments.name,
+                        "price": arguments.price,
+                        "description": arguments.description,
+                        "modal": arguments.modal,
+                        "categoryId": arguments.categoryId,
+                        "unit": arguments.unit,
+                        "images": arguments.images.isEmpty
+                            ? ImagePickerValue()
+                            : ImagePickerValue(url: arguments.images[0]),
+                        "availability": arguments.availability,
+                      },
+                    ),
                   ),
                 ),
               ),

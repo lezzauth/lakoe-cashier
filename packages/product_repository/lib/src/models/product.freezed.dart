@@ -34,6 +34,7 @@ mixin _$ProductModel {
   String get availability => throw _privateConstructorUsedError;
   String get profit => throw _privateConstructorUsedError;
   String? get favoriteCustomerId => throw _privateConstructorUsedError;
+  int get sold => throw _privateConstructorUsedError;
 
   /// Serializes this ProductModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -65,7 +66,8 @@ abstract class $ProductModelCopyWith<$Res> {
       String outletId,
       String availability,
       String profit,
-      String? favoriteCustomerId});
+      String? favoriteCustomerId,
+      int sold});
 }
 
 /// @nodoc
@@ -97,6 +99,7 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
     Object? availability = null,
     Object? profit = null,
     Object? favoriteCustomerId = freezed,
+    Object? sold = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -155,6 +158,10 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.favoriteCustomerId
           : favoriteCustomerId // ignore: cast_nullable_to_non_nullable
               as String?,
+      sold: null == sold
+          ? _value.sold
+          : sold // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -181,7 +188,8 @@ abstract class _$$ProductModelImplCopyWith<$Res>
       String outletId,
       String availability,
       String profit,
-      String? favoriteCustomerId});
+      String? favoriteCustomerId,
+      int sold});
 }
 
 /// @nodoc
@@ -211,6 +219,7 @@ class __$$ProductModelImplCopyWithImpl<$Res>
     Object? availability = null,
     Object? profit = null,
     Object? favoriteCustomerId = freezed,
+    Object? sold = null,
   }) {
     return _then(_$ProductModelImpl(
       id: null == id
@@ -269,6 +278,10 @@ class __$$ProductModelImplCopyWithImpl<$Res>
           ? _value.favoriteCustomerId
           : favoriteCustomerId // ignore: cast_nullable_to_non_nullable
               as String?,
+      sold: null == sold
+          ? _value.sold
+          : sold // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -290,7 +303,8 @@ class _$ProductModelImpl implements _ProductModel {
       required this.outletId,
       required this.availability,
       required this.profit,
-      this.favoriteCustomerId})
+      this.favoriteCustomerId,
+      required this.sold})
       : _images = images;
 
   factory _$ProductModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -330,10 +344,12 @@ class _$ProductModelImpl implements _ProductModel {
   final String profit;
   @override
   final String? favoriteCustomerId;
+  @override
+  final int sold;
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, name: $name, sku: $sku, price: $price, modal: $modal, description: $description, unit: $unit, categoryId: $categoryId, stock: $stock, images: $images, outletId: $outletId, availability: $availability, profit: $profit, favoriteCustomerId: $favoriteCustomerId)';
+    return 'ProductModel(id: $id, name: $name, sku: $sku, price: $price, modal: $modal, description: $description, unit: $unit, categoryId: $categoryId, stock: $stock, images: $images, outletId: $outletId, availability: $availability, profit: $profit, favoriteCustomerId: $favoriteCustomerId, sold: $sold)';
   }
 
   @override
@@ -359,7 +375,8 @@ class _$ProductModelImpl implements _ProductModel {
                 other.availability == availability) &&
             (identical(other.profit, profit) || other.profit == profit) &&
             (identical(other.favoriteCustomerId, favoriteCustomerId) ||
-                other.favoriteCustomerId == favoriteCustomerId));
+                other.favoriteCustomerId == favoriteCustomerId) &&
+            (identical(other.sold, sold) || other.sold == sold));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -379,7 +396,8 @@ class _$ProductModelImpl implements _ProductModel {
       outletId,
       availability,
       profit,
-      favoriteCustomerId);
+      favoriteCustomerId,
+      sold);
 
   /// Create a copy of ProductModel
   /// with the given fields replaced by the non-null parameter values.
@@ -412,7 +430,8 @@ abstract class _ProductModel implements ProductModel {
       required final String outletId,
       required final String availability,
       required final String profit,
-      final String? favoriteCustomerId}) = _$ProductModelImpl;
+      final String? favoriteCustomerId,
+      required final int sold}) = _$ProductModelImpl;
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
       _$ProductModelImpl.fromJson;
@@ -445,6 +464,8 @@ abstract class _ProductModel implements ProductModel {
   String get profit;
   @override
   String? get favoriteCustomerId;
+  @override
+  int get sold;
 
   /// Create a copy of ProductModel
   /// with the given fields replaced by the non-null parameter values.
@@ -463,6 +484,8 @@ mixin _$ProductOrderModel {
   String get orderId => throw _privateConstructorUsedError;
   String get customerName => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  String get paymentStatus => throw _privateConstructorUsedError;
   String? get paymentMethod => throw _privateConstructorUsedError;
   int get itemTotal => throw _privateConstructorUsedError;
   String get price => throw _privateConstructorUsedError;
@@ -487,6 +510,8 @@ abstract class $ProductOrderModelCopyWith<$Res> {
       {String orderId,
       String customerName,
       String createdAt,
+      String status,
+      String paymentStatus,
       String? paymentMethod,
       int itemTotal,
       String price});
@@ -510,6 +535,8 @@ class _$ProductOrderModelCopyWithImpl<$Res, $Val extends ProductOrderModel>
     Object? orderId = null,
     Object? customerName = null,
     Object? createdAt = null,
+    Object? status = null,
+    Object? paymentStatus = null,
     Object? paymentMethod = freezed,
     Object? itemTotal = null,
     Object? price = null,
@@ -526,6 +553,14 @@ class _$ProductOrderModelCopyWithImpl<$Res, $Val extends ProductOrderModel>
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
               as String,
       paymentMethod: freezed == paymentMethod
           ? _value.paymentMethod
@@ -555,6 +590,8 @@ abstract class _$$ProductOrderModelImplCopyWith<$Res>
       {String orderId,
       String customerName,
       String createdAt,
+      String status,
+      String paymentStatus,
       String? paymentMethod,
       int itemTotal,
       String price});
@@ -576,6 +613,8 @@ class __$$ProductOrderModelImplCopyWithImpl<$Res>
     Object? orderId = null,
     Object? customerName = null,
     Object? createdAt = null,
+    Object? status = null,
+    Object? paymentStatus = null,
     Object? paymentMethod = freezed,
     Object? itemTotal = null,
     Object? price = null,
@@ -592,6 +631,14 @@ class __$$ProductOrderModelImplCopyWithImpl<$Res>
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
               as String,
       paymentMethod: freezed == paymentMethod
           ? _value.paymentMethod
@@ -616,6 +663,8 @@ class _$ProductOrderModelImpl implements _ProductOrderModel {
       {required this.orderId,
       required this.customerName,
       required this.createdAt,
+      required this.status,
+      required this.paymentStatus,
       this.paymentMethod,
       required this.itemTotal,
       required this.price});
@@ -630,6 +679,10 @@ class _$ProductOrderModelImpl implements _ProductOrderModel {
   @override
   final String createdAt;
   @override
+  final String status;
+  @override
+  final String paymentStatus;
+  @override
   final String? paymentMethod;
   @override
   final int itemTotal;
@@ -638,7 +691,7 @@ class _$ProductOrderModelImpl implements _ProductOrderModel {
 
   @override
   String toString() {
-    return 'ProductOrderModel(orderId: $orderId, customerName: $customerName, createdAt: $createdAt, paymentMethod: $paymentMethod, itemTotal: $itemTotal, price: $price)';
+    return 'ProductOrderModel(orderId: $orderId, customerName: $customerName, createdAt: $createdAt, status: $status, paymentStatus: $paymentStatus, paymentMethod: $paymentMethod, itemTotal: $itemTotal, price: $price)';
   }
 
   @override
@@ -651,6 +704,9 @@ class _$ProductOrderModelImpl implements _ProductOrderModel {
                 other.customerName == customerName) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.paymentStatus, paymentStatus) ||
+                other.paymentStatus == paymentStatus) &&
             (identical(other.paymentMethod, paymentMethod) ||
                 other.paymentMethod == paymentMethod) &&
             (identical(other.itemTotal, itemTotal) ||
@@ -661,7 +717,7 @@ class _$ProductOrderModelImpl implements _ProductOrderModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, orderId, customerName, createdAt,
-      paymentMethod, itemTotal, price);
+      status, paymentStatus, paymentMethod, itemTotal, price);
 
   /// Create a copy of ProductOrderModel
   /// with the given fields replaced by the non-null parameter values.
@@ -685,6 +741,8 @@ abstract class _ProductOrderModel implements ProductOrderModel {
       {required final String orderId,
       required final String customerName,
       required final String createdAt,
+      required final String status,
+      required final String paymentStatus,
       final String? paymentMethod,
       required final int itemTotal,
       required final String price}) = _$ProductOrderModelImpl;
@@ -698,6 +756,10 @@ abstract class _ProductOrderModel implements ProductOrderModel {
   String get customerName;
   @override
   String get createdAt;
+  @override
+  String get status;
+  @override
+  String get paymentStatus;
   @override
   String? get paymentMethod;
   @override

@@ -32,7 +32,7 @@ class CompleteCashOrderDto extends CompleteOrderDto
     required double paidAmount,
     required double change,
     String? customerId,
-    String? redeemCoinAmount,
+    @Default(0) double redeemCoinAmount,
   }) = _CompleteCashOrderDto;
 
   factory CompleteCashOrderDto.fromJson(Map<String, Object?> json) =>
@@ -128,7 +128,6 @@ class CloseCashierDto with _$CloseCashierDto {
       _$CloseCashierDtoFromJson(json);
 }
 
-// Preview Order Price
 @freezed
 class FindAllOrderCashierDto with _$FindAllOrderCashierDto {
   const factory FindAllOrderCashierDto({
@@ -137,6 +136,9 @@ class FindAllOrderCashierDto with _$FindAllOrderCashierDto {
     String? status,
     String? search,
     String? sort,
+    String? template,
+    String? from,
+    String? to,
   }) = _FindAllOrderCashierDto;
 }
 
@@ -147,6 +149,9 @@ extension CopyWithExtension on FindAllOrderCashierDto {
     String? status,
     String? search,
     String? sort,
+    String? template,
+    String? from,
+    String? to,
   }) {
     return FindAllOrderCashierDto(
       type: type ?? this.type,
@@ -154,6 +159,9 @@ extension CopyWithExtension on FindAllOrderCashierDto {
       status: status ?? this.status,
       search: search ?? this.search,
       sort: sort ?? this.sort,
+      template: template ?? this.template,
+      from: from ?? this.from,
+      to: to ?? this.to,
     );
   }
 }
@@ -166,6 +174,9 @@ extension QueryStringExtension on FindAllOrderCashierDto {
       "status": status,
       "search": search,
       "sort": sort,
+      "template": template,
+      "from": from,
+      "to": to,
     };
 
     queryParams.removeWhere((key, value) => value == null);

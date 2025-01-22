@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/features/tables/presentation/widgets/tabs/table_new_qr_order_tab.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/device/device_uility.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/features/tables/presentation/widgets/tabs/table_qr_order_tab.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/device/device_uility.dart';
 
 class DownloadQrOrderContent extends StatefulWidget {
   const DownloadQrOrderContent({super.key});
@@ -72,12 +72,9 @@ class _DownloadQrOrderContentState extends State<DownloadQrOrderContent> {
               child: Row(
                 children: [
                   Expanded(
-                    child: SizedBox(
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: TextActionL("Lanjutkan"),
-                      ),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: TextActionL("Lanjutkan"),
                     ),
                   ),
                 ],

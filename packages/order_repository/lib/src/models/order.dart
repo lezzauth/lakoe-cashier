@@ -8,11 +8,15 @@ class OrderItemRes with _$OrderItemRes {
   const factory OrderItemRes({
     required String id,
     required int no,
-    required String price,
-    required String paymentStatus,
-    required String customerType,
     required String type,
+    required String price,
     required String source,
+    required String customerType,
+    required String paymentStatus,
+    required String status,
+    String? closedAt,
+    required String createdAt,
+    required String updatedAt,
     OrderItemCustomer? customer,
     OrderItemTable? table,
   }) = _OrderItemRes;

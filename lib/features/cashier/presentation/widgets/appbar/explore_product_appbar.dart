@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/appbar/close_cashier_button.dart';
-import 'package:point_of_sales_cashier/features/cashier/presentation/widgets/appbar/lock_cashier_button.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_state.dart';
+import 'package:lakoe_pos/features/cashier/presentation/widgets/appbar/close_cashier_button.dart';
+import 'package:lakoe_pos/features/cashier/presentation/widgets/appbar/lock_cashier_button.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ExploreProductAppbar extends StatelessWidget
@@ -41,16 +40,19 @@ class ExploreProductAppbar extends StatelessWidget
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const TextBodyS("Kasir:",
-                              color: TColors.neutralDarkLight),
+                          TextBodyS(
+                            "Kasir",
+                            color: TColors.neutralDarkLight,
+                          ),
                           ResponsiveLayout(
                             mobile: TextHeading4(
                               operator.name,
                               color: TColors.neutralDarkDarkest,
                             ),
-                            tablet: TextHeading2(
+                            tablet: TextHeading4(
                               operator.name,
                               color: TColors.neutralDarkDarkest,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ],

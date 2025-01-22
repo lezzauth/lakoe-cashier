@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class CustomToast {
   static final CustomToast _instance = CustomToast._internal();
@@ -27,11 +27,11 @@ class CustomToast {
     String? icon,
     String position = 'top',
     Color backgroundColor = TColors.neutralDarkDark,
-    int duration = 5,
+    int duration = 4,
   }) {
     Fluttertoast.showToast(
       msg: message,
-      toastLength: duration != 5 ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG,
+      toastLength: duration <= 4 ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG,
       gravity: _getToastGravity(position),
       backgroundColor: backgroundColor,
       textColor: TColors.neutralLightLightest,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/data/models.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/date_range_picker.dart';
-import 'package:point_of_sales_cashier/common/widgets/tiles/custom_radio_tile.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/features/orders/common/widgets/filters/order_date_filter.dart';
+import 'package:lakoe_pos/common/data/models.dart';
+import 'package:lakoe_pos/common/widgets/form/date_range_picker.dart';
+import 'package:lakoe_pos/common/widgets/tiles/custom_radio_tile.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/features/orders/common/widgets/filters/order_date_filter.dart';
 
 class OrderDateFilterContent extends StatefulWidget {
   const OrderDateFilterContent({
@@ -33,9 +33,7 @@ class _OrderDateFilterContentState extends State<OrderDateFilterContent> {
   ];
 
   void _onSubmit() {
-    // if (widget.onSubmit == null) return;
     Navigator.pop(context, OrderDateFilterValue(template: _groupValue));
-    // widget.onSubmit!(template: _groupValue == "ALL" ? null : _groupValue);
   }
 
   @override
@@ -58,6 +56,7 @@ class _OrderDateFilterContentState extends State<OrderDateFilterContent> {
           ),
           ..._templates.map((template) {
             return CustomRadioTile(
+              title: template.label,
               value: template.value,
               groupValue: _groupValue,
               onChanged: (value) {
@@ -65,7 +64,6 @@ class _OrderDateFilterContentState extends State<OrderDateFilterContent> {
                   _groupValue = value!;
                 });
               },
-              title: template.label,
             );
           }),
           if (_groupValue == "CUSTOM")
@@ -78,15 +76,18 @@ class _OrderDateFilterContentState extends State<OrderDateFilterContent> {
                   ? DateTime.now()
                   : DateTime.parse(widget.to!).toLocal(),
               onSubmit: ({from, to}) {
-                // if (widget.onSubmit == null) return;
-                // widget.onSubmit!(from: from, to: to, template: "CUSTOM");
+                final customFrom =
+                    DateTime(from!.year, from.month, from.day, 00, 00, 00, 000);
+                final customTo =
+                    DateTime(to!.year, to.month, to.day, 23, 59, 59, 999);
                 Navigator.pop(
-                    context,
-                    OrderDateFilterValue(
-                      template: "CUSTOM",
-                      from: from,
-                      to: to,
-                    ));
+                  context,
+                  OrderDateFilterValue(
+                    template: "CUSTOM",
+                    from: customFrom,
+                    to: customTo,
+                  ),
+                );
               },
             ),
           if (_groupValue != "CUSTOM")
@@ -95,12 +96,9 @@ class _OrderDateFilterContentState extends State<OrderDateFilterContent> {
               child: Row(
                 children: [
                   Expanded(
-                    child: SizedBox(
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: _onSubmit,
-                        child: const TextActionL("Pasang"),
-                      ),
+                    child: ElevatedButton(
+                      onPressed: _onSubmit,
+                      child: const TextActionL("Pasang"),
                     ),
                   ),
                 ],

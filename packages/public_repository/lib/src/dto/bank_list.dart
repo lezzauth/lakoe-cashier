@@ -6,8 +6,8 @@ part 'bank_list.freezed.dart';
 @freezed
 class GetBankAccountDto with _$GetBankAccountDto {
   const factory GetBankAccountDto({
-    required String bankCode,
-    required String accountNumber,
+    required String noRekening,
+    required String kodeBank,
   }) = _GetBankAccountDto;
 
   factory GetBankAccountDto.fromJson(Map<String, Object?> json) =>

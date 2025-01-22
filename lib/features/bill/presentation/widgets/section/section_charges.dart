@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/separator/separator.dart';
-import 'package:point_of_sales_cashier/features/bill/presentation/widgets/list_price.dart';
-import 'package:point_of_sales_cashier/features/orders/data/models.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/ui/separator/separator.dart';
+import 'package:lakoe_pos/features/bill/presentation/widgets/list_price.dart';
+import 'package:lakoe_pos/features/orders/data/models.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class BillSectionCharges extends StatelessWidget {
   final List<OrderSummaryChargeModel> charges;
   final String totalPrice;
   final String paymentMethod;
   final String moneyReceived;
+  final String? approvalCode;
   final String changeMoney;
 
   const BillSectionCharges({
@@ -18,6 +19,7 @@ class BillSectionCharges extends StatelessWidget {
     required this.totalPrice,
     required this.paymentMethod,
     required this.moneyReceived,
+    required this.approvalCode,
     required this.changeMoney,
   });
 
@@ -66,6 +68,11 @@ class BillSectionCharges extends StatelessWidget {
           label: paymentMethod,
           price: TFormatter.formatToRupiah(double.parse(moneyReceived)),
         ),
+        if (approvalCode != null)
+          BillListPrice(
+            label: "Approval Code",
+            price: approvalCode ?? "-",
+          ),
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 4),
           child: Separator(

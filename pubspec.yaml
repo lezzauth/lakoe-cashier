@@ -1,4 +1,4 @@
-name: point_of_sales_cashier
+name: lakoe_pos
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -59,6 +59,8 @@ dependencies:
     path: packages/online_shop_repository
   package_repository:
     path: packages/package_repository
+  payment_repository:
+    path: packages/payment_repository
 
   token_provider:
     path: packages/token_provider
@@ -95,7 +97,7 @@ dependencies:
   dio: ^5.6.0
   flutter_timer_countdown: ^1.0.7
   equatable: ^2.0.5
-  file_picker: ^8.1.2
+  file_picker: ^8.1.7
   collection: ^1.18.0
   mask_text_input_formatter: ^2.9.0
   flutter_contacts: ^1.1.9+2
@@ -127,6 +129,12 @@ dependencies:
   fluttertoast: ^8.2.8
   logman: ^0.0.21
   package_info_plus: ^8.1.0
+  firebase_core: ^3.8.0
+  flutter_launcher_icons: ^0.14.2
+  shared_preferences: ^2.3.2
+  http: ^1.2.2
+  flutter_email_sender: ^6.0.3
+  in_app_update: ^4.2.3
 
 dev_dependencies:
   flutter_test:
@@ -165,6 +173,7 @@ flutter:
     - assets/logos/
     - assets/logos/package/
     - assets/flags/
+    - assets/launcher_icon/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

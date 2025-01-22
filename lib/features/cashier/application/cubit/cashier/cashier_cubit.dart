@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_state.dart';
+import 'package:logman/logman.dart';
 import 'package:token_provider/token_provider.dart';
 
 class CashierCubit extends Cubit<CashierState> {
@@ -13,8 +12,8 @@ class CashierCubit extends Cubit<CashierState> {
   CashierCubit() : super(CashierInitial());
 
   Future<void> openCashier(OpenCashierDto dto) async {
-    emit(CashierOpenInProgress());
     try {
+      emit(CashierOpenInProgress());
       final res = await _cashierRepository.openCashier(dto);
       _tokenProvider.setCashierToken(res.token);
 
@@ -28,38 +27,36 @@ class CashierCubit extends Cubit<CashierState> {
   }
 
   Future<void> closeCashier(CloseCashierDto dto) async {
-    emit(CashierCloseInProgress());
     try {
+      emit(CashierCloseInProgress());
       await _cashierRepository.closeCashier(dto);
       emit(CashierClosed());
+
+      await _tokenProvider.clearCashierToken();
     } catch (e) {
       emit(CashierCloseFailure(message: e.toString()));
     }
   }
 
   Future<void> getOpenCashier() async {
-    emit(CashierOpenInProgress());
     try {
+      emit(GetCashierInProgress());
       final response = await _cashierRepository.getOpenCashier();
       if (response == null) {
         emit(CashierClosed());
         return;
       }
 
-      emit(CashierOpened(operator: response.operator));
-    } catch (e, stackTrace) {
-      log(
-        "CashierCubit.getOpenCashier",
-        error: e,
-        stackTrace: stackTrace,
-      );
-      emit(CashierOpenFailure(message: e.toString()));
+      emit(CashierAlreadyOpen(operator: response.operator));
+    } catch (e) {
+      Logman.instance.error("CashierCubit.getOpenCashier $e");
+      emit(GetCashierFailure(message: e.toString()));
     }
   }
 
-  Future<void> generatetoken(RegenerateCashierTokenDto dto) async {
-    emit(CashierOpenInProgress());
+  Future<void> generateToken(RegenerateCashierTokenDto dto) async {
     try {
+      emit(CashierOpenInProgress());
       final response = await _cashierRepository.regenerateToken(dto);
       _tokenProvider.setCashierToken(response.token);
 

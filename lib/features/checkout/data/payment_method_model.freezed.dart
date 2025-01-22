@@ -162,24 +162,24 @@ abstract class _PaymentMedia implements PaymentMedia {
 }
 
 /// @nodoc
-mixin _$PaymentMethod {
+mixin _$PaymentMethodCheckout {
   String get name => throw _privateConstructorUsedError;
   String get logo => throw _privateConstructorUsedError;
   bool get isSelected => throw _privateConstructorUsedError;
   List<PaymentMedia> get paymentMedia => throw _privateConstructorUsedError;
 
-  /// Create a copy of PaymentMethod
+  /// Create a copy of PaymentMethodCheckout
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PaymentMethodCopyWith<PaymentMethod> get copyWith =>
+  $PaymentMethodCheckoutCopyWith<PaymentMethodCheckout> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PaymentMethodCopyWith<$Res> {
-  factory $PaymentMethodCopyWith(
-          PaymentMethod value, $Res Function(PaymentMethod) then) =
-      _$PaymentMethodCopyWithImpl<$Res, PaymentMethod>;
+abstract class $PaymentMethodCheckoutCopyWith<$Res> {
+  factory $PaymentMethodCheckoutCopyWith(PaymentMethodCheckout value,
+          $Res Function(PaymentMethodCheckout) then) =
+      _$PaymentMethodCheckoutCopyWithImpl<$Res, PaymentMethodCheckout>;
   @useResult
   $Res call(
       {String name,
@@ -189,16 +189,17 @@ abstract class $PaymentMethodCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PaymentMethodCopyWithImpl<$Res, $Val extends PaymentMethod>
-    implements $PaymentMethodCopyWith<$Res> {
-  _$PaymentMethodCopyWithImpl(this._value, this._then);
+class _$PaymentMethodCheckoutCopyWithImpl<$Res,
+        $Val extends PaymentMethodCheckout>
+    implements $PaymentMethodCheckoutCopyWith<$Res> {
+  _$PaymentMethodCheckoutCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of PaymentMethod
+  /// Create a copy of PaymentMethodCheckout
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -230,11 +231,12 @@ class _$PaymentMethodCopyWithImpl<$Res, $Val extends PaymentMethod>
 }
 
 /// @nodoc
-abstract class _$$PaymentMethodImplCopyWith<$Res>
-    implements $PaymentMethodCopyWith<$Res> {
-  factory _$$PaymentMethodImplCopyWith(
-          _$PaymentMethodImpl value, $Res Function(_$PaymentMethodImpl) then) =
-      __$$PaymentMethodImplCopyWithImpl<$Res>;
+abstract class _$$PaymentMethodCheckoutImplCopyWith<$Res>
+    implements $PaymentMethodCheckoutCopyWith<$Res> {
+  factory _$$PaymentMethodCheckoutImplCopyWith(
+          _$PaymentMethodCheckoutImpl value,
+          $Res Function(_$PaymentMethodCheckoutImpl) then) =
+      __$$PaymentMethodCheckoutImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -245,14 +247,15 @@ abstract class _$$PaymentMethodImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$PaymentMethodImplCopyWithImpl<$Res>
-    extends _$PaymentMethodCopyWithImpl<$Res, _$PaymentMethodImpl>
-    implements _$$PaymentMethodImplCopyWith<$Res> {
-  __$$PaymentMethodImplCopyWithImpl(
-      _$PaymentMethodImpl _value, $Res Function(_$PaymentMethodImpl) _then)
+class __$$PaymentMethodCheckoutImplCopyWithImpl<$Res>
+    extends _$PaymentMethodCheckoutCopyWithImpl<$Res,
+        _$PaymentMethodCheckoutImpl>
+    implements _$$PaymentMethodCheckoutImplCopyWith<$Res> {
+  __$$PaymentMethodCheckoutImplCopyWithImpl(_$PaymentMethodCheckoutImpl _value,
+      $Res Function(_$PaymentMethodCheckoutImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of PaymentMethod
+  /// Create a copy of PaymentMethodCheckout
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -262,7 +265,7 @@ class __$$PaymentMethodImplCopyWithImpl<$Res>
     Object? isSelected = null,
     Object? paymentMedia = null,
   }) {
-    return _then(_$PaymentMethodImpl(
+    return _then(_$PaymentMethodCheckoutImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -285,8 +288,8 @@ class __$$PaymentMethodImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PaymentMethodImpl implements _PaymentMethod {
-  const _$PaymentMethodImpl(
+class _$PaymentMethodCheckoutImpl implements _PaymentMethodCheckout {
+  const _$PaymentMethodCheckoutImpl(
       {required this.name,
       required this.logo,
       this.isSelected = false,
@@ -311,14 +314,14 @@ class _$PaymentMethodImpl implements _PaymentMethod {
 
   @override
   String toString() {
-    return 'PaymentMethod(name: $name, logo: $logo, isSelected: $isSelected, paymentMedia: $paymentMedia)';
+    return 'PaymentMethodCheckout(name: $name, logo: $logo, isSelected: $isSelected, paymentMedia: $paymentMedia)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PaymentMethodImpl &&
+            other is _$PaymentMethodCheckoutImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.logo, logo) || other.logo == logo) &&
             (identical(other.isSelected, isSelected) ||
@@ -331,21 +334,22 @@ class _$PaymentMethodImpl implements _PaymentMethod {
   int get hashCode => Object.hash(runtimeType, name, logo, isSelected,
       const DeepCollectionEquality().hash(_paymentMedia));
 
-  /// Create a copy of PaymentMethod
+  /// Create a copy of PaymentMethodCheckout
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PaymentMethodImplCopyWith<_$PaymentMethodImpl> get copyWith =>
-      __$$PaymentMethodImplCopyWithImpl<_$PaymentMethodImpl>(this, _$identity);
+  _$$PaymentMethodCheckoutImplCopyWith<_$PaymentMethodCheckoutImpl>
+      get copyWith => __$$PaymentMethodCheckoutImplCopyWithImpl<
+          _$PaymentMethodCheckoutImpl>(this, _$identity);
 }
 
-abstract class _PaymentMethod implements PaymentMethod {
-  const factory _PaymentMethod(
+abstract class _PaymentMethodCheckout implements PaymentMethodCheckout {
+  const factory _PaymentMethodCheckout(
       {required final String name,
       required final String logo,
       final bool isSelected,
-      final List<PaymentMedia> paymentMedia}) = _$PaymentMethodImpl;
+      final List<PaymentMedia> paymentMedia}) = _$PaymentMethodCheckoutImpl;
 
   @override
   String get name;
@@ -356,18 +360,18 @@ abstract class _PaymentMethod implements PaymentMethod {
   @override
   List<PaymentMedia> get paymentMedia;
 
-  /// Create a copy of PaymentMethod
+  /// Create a copy of PaymentMethodCheckout
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PaymentMethodImplCopyWith<_$PaymentMethodImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$PaymentMethodCheckoutImplCopyWith<_$PaymentMethodCheckoutImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$PaymentCategory {
   String get categoryName => throw _privateConstructorUsedError;
-  List<PaymentMethod> get methods => throw _privateConstructorUsedError;
+  List<PaymentMethodCheckout> get methods => throw _privateConstructorUsedError;
 
   /// Create a copy of PaymentCategory
   /// with the given fields replaced by the non-null parameter values.
@@ -382,7 +386,7 @@ abstract class $PaymentCategoryCopyWith<$Res> {
           PaymentCategory value, $Res Function(PaymentCategory) then) =
       _$PaymentCategoryCopyWithImpl<$Res, PaymentCategory>;
   @useResult
-  $Res call({String categoryName, List<PaymentMethod> methods});
+  $Res call({String categoryName, List<PaymentMethodCheckout> methods});
 }
 
 /// @nodoc
@@ -411,7 +415,7 @@ class _$PaymentCategoryCopyWithImpl<$Res, $Val extends PaymentCategory>
       methods: null == methods
           ? _value.methods
           : methods // ignore: cast_nullable_to_non_nullable
-              as List<PaymentMethod>,
+              as List<PaymentMethodCheckout>,
     ) as $Val);
   }
 }
@@ -424,7 +428,7 @@ abstract class _$$PaymentCategoryImplCopyWith<$Res>
       __$$PaymentCategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String categoryName, List<PaymentMethod> methods});
+  $Res call({String categoryName, List<PaymentMethodCheckout> methods});
 }
 
 /// @nodoc
@@ -451,7 +455,7 @@ class __$$PaymentCategoryImplCopyWithImpl<$Res>
       methods: null == methods
           ? _value._methods
           : methods // ignore: cast_nullable_to_non_nullable
-              as List<PaymentMethod>,
+              as List<PaymentMethodCheckout>,
     ));
   }
 }
@@ -460,14 +464,15 @@ class __$$PaymentCategoryImplCopyWithImpl<$Res>
 
 class _$PaymentCategoryImpl implements _PaymentCategory {
   const _$PaymentCategoryImpl(
-      {required this.categoryName, required final List<PaymentMethod> methods})
+      {required this.categoryName,
+      required final List<PaymentMethodCheckout> methods})
       : _methods = methods;
 
   @override
   final String categoryName;
-  final List<PaymentMethod> _methods;
+  final List<PaymentMethodCheckout> _methods;
   @override
-  List<PaymentMethod> get methods {
+  List<PaymentMethodCheckout> get methods {
     if (_methods is EqualUnmodifiableListView) return _methods;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_methods);
@@ -504,13 +509,14 @@ class _$PaymentCategoryImpl implements _PaymentCategory {
 
 abstract class _PaymentCategory implements PaymentCategory {
   const factory _PaymentCategory(
-      {required final String categoryName,
-      required final List<PaymentMethod> methods}) = _$PaymentCategoryImpl;
+          {required final String categoryName,
+          required final List<PaymentMethodCheckout> methods}) =
+      _$PaymentCategoryImpl;
 
   @override
   String get categoryName;
   @override
-  List<PaymentMethod> get methods;
+  List<PaymentMethodCheckout> get methods;
 
   /// Create a copy of PaymentCategory
   /// with the given fields replaced by the non-null parameter values.

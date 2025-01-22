@@ -20,8 +20,8 @@ class BankListModel with _$BankListModel {
 @freezed
 class GetBankAccountResponse with _$GetBankAccountResponse {
   const factory GetBankAccountResponse({
-    required bool status,
-    required String msg,
+    required String status,
+    required String message,
     required BankAccountModel data,
   }) = _GetBankAccountResponse;
 
@@ -32,10 +32,10 @@ class GetBankAccountResponse with _$GetBankAccountResponse {
 @freezed
 class BankAccountModel with _$BankAccountModel {
   const factory BankAccountModel({
-    @JsonKey(name: "bankcode") required String bankCode,
-    @JsonKey(name: "bankname") required String bankName,
-    @JsonKey(name: "accountnumber") required String accountNumber,
-    @JsonKey(name: "accountname") required String accountName,
+    @JsonKey(name: "kodeBank") required String bankCode,
+    @JsonKey(name: "namaBank") required String bankName,
+    @JsonKey(name: "noRekening") required String accountNumber,
+    @JsonKey(name: "nama") required String accountName,
   }) = _BankAccountModel;
 
   factory BankAccountModel.fromJson(Map<String, Object?> json) =>

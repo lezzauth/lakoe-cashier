@@ -70,3 +70,35 @@ extension QueryStringExtension on FindAllEmployeeDto {
         .join('&');
   }
 }
+
+@freezed
+class RequestOtpDto with _$RequestOtpDto {
+  const factory RequestOtpDto({
+    required String phoneNumber,
+  }) = _RequestOtpDto;
+
+  factory RequestOtpDto.fromJson(Map<String, Object?> json) =>
+      _$RequestOtpDtoFromJson(json);
+}
+
+@freezed
+class VerifyOtpDto with _$VerifyOtpDto {
+  const factory VerifyOtpDto({
+    required String phoneNumber,
+    required String code,
+  }) = _VerifyOtpDto;
+
+  factory VerifyOtpDto.fromJson(Map<String, Object?> json) =>
+      _$VerifyOtpDtoFromJson(json);
+}
+
+@freezed
+class UpdatePinDto with _$UpdatePinDto {
+  const factory UpdatePinDto({
+    required String pin,
+    required String token,
+  }) = _UpdatePinDto;
+
+  factory UpdatePinDto.fromJson(Map<String, Object?> json) =>
+      _$UpdatePinDtoFromJson(json);
+}

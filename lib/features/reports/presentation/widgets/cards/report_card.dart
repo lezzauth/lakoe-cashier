@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 
 class ReportCard extends StatelessWidget {
   const ReportCard({
@@ -55,11 +57,24 @@ class ReportCard extends StatelessWidget {
                 Expanded(
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 4),
-                    child: TextBodyS(
-                      label,
-                      color: TColors.neutralDarkLightest,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextBodyS(
+                          label,
+                          color: TColors.neutralDarkLightest,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(
+                          width: 24,
+                          child: UiIcons(
+                            TIcons.info,
+                            color: TColors.neutralDarkLightest,
+                            size: 14,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 )

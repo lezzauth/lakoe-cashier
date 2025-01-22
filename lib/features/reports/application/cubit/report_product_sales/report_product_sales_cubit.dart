@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:point_of_sales_cashier/features/reports/application/cubit/report_product_sales/report_product_sales_state.dart';
+import 'package:lakoe_pos/features/reports/application/cubit/report_product_sales/report_product_sales_state.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ReportProductSalesCubit extends Cubit<ReportProductSalesState> {

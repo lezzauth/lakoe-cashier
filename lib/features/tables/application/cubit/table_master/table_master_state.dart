@@ -55,11 +55,20 @@ final class TableMasterActionFailure extends TableMasterState {
   List<Object?> get props => [error];
 }
 
-final class TableMasterReachesLimit extends TableMasterState {
+final class ErrorIssuePackage extends TableMasterState {
   final DioExceptionModel res;
 
-  TableMasterReachesLimit(this.res);
+  ErrorIssuePackage(this.res);
 
   @override
   List<Object?> get props => [res];
+}
+
+final class ConnectionIssue extends TableMasterState {
+  final String message;
+
+  ConnectionIssue(this.message);
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
 }

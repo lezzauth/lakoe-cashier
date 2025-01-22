@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class AccessPermission extends StatelessWidget {
   const AccessPermission({
@@ -60,12 +60,9 @@ class AccessPermission extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: SizedBox(
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: onRequest,
-                      child: TextActionL(actionTitle ?? "Berikan Izin"),
-                    ),
+                  child: ElevatedButton(
+                    onPressed: onRequest,
+                    child: TextActionL(actionTitle ?? "Berikan Izin"),
                   ),
                 ),
               ],

@@ -10,11 +10,15 @@ _$OrderItemResImpl _$$OrderItemResImplFromJson(Map<String, dynamic> json) =>
     _$OrderItemResImpl(
       id: json['id'] as String,
       no: (json['no'] as num).toInt(),
-      price: json['price'] as String,
-      paymentStatus: json['paymentStatus'] as String,
-      customerType: json['customerType'] as String,
       type: json['type'] as String,
+      price: json['price'] as String,
       source: json['source'] as String,
+      customerType: json['customerType'] as String,
+      paymentStatus: json['paymentStatus'] as String,
+      status: json['status'] as String,
+      closedAt: json['closedAt'] as String?,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
       customer: json['customer'] == null
           ? null
           : OrderItemCustomer.fromJson(
@@ -28,11 +32,15 @@ Map<String, dynamic> _$$OrderItemResImplToJson(_$OrderItemResImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'no': instance.no,
-      'price': instance.price,
-      'paymentStatus': instance.paymentStatus,
-      'customerType': instance.customerType,
       'type': instance.type,
+      'price': instance.price,
       'source': instance.source,
+      'customerType': instance.customerType,
+      'paymentStatus': instance.paymentStatus,
+      'status': instance.status,
+      'closedAt': instance.closedAt,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
       'customer': instance.customer,
       'table': instance.table,
     };

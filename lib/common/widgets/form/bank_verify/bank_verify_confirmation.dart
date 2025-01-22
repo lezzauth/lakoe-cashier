@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/data/models.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_2.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/data/models.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class BankVerifyConfirmation extends StatefulWidget {
   const BankVerifyConfirmation({
@@ -113,40 +113,28 @@ class _BankVerifyConfirmationState extends State<BankVerifyConfirmation> {
           child: Row(
             children: [
               Expanded(
-                child: SizedBox(
-                  height: 48,
-                  child: OutlinedButton(
-                    onPressed: () async {
-                      Navigator.pop(context);
-                    },
-                    child: const TextActionL(
-                      "Perbaiki",
-                      color: TColors.primary,
-                    ),
-                  ),
+                child: OutlinedButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                  child: TextActionL("Perbaiki"),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: SizedBox(
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(
-                        context,
-                        BankVerifyArgument(
-                          bankName: widget.bankName,
-                          accountNumber: widget.accountNumber,
-                          accountName: widget.accountName,
-                          name: widget.name,
-                        ),
-                      );
-                    },
-                    child: const TextActionL(
-                      "Simpan",
-                      color: TColors.neutralLightLightest,
-                    ),
-                  ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(
+                      context,
+                      BankVerifyArgument(
+                        bankName: widget.bankName,
+                        accountNumber: widget.accountNumber,
+                        accountName: widget.accountName,
+                        name: widget.name,
+                      ),
+                    );
+                  },
+                  child: TextActionL("Simpan"),
                 ),
               ),
             ],

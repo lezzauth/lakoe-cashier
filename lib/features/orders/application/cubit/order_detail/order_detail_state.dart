@@ -2,6 +2,15 @@ import 'package:cashier_repository/cashier_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:order_repository/order_repository.dart';
 
+class OrderDetailOpenedState extends Equatable {
+  final String? selectedId;
+
+  const OrderDetailOpenedState(this.selectedId);
+
+  @override
+  List<Object?> get props => [selectedId];
+}
+
 sealed class OrderDetailState extends Equatable {}
 
 final class OrderDetailInitial extends OrderDetailState {
@@ -38,7 +47,7 @@ final class OrderDetailActionInProgress extends OrderDetailState {
 }
 
 final class OrderDetailActionSuccess extends OrderDetailState {
-  final CompleteOrderResponse? completeResponse;
+  final CompleteOrderRes? completeResponse;
   final CancelOrderResponse? cancelResponse;
 
   OrderDetailActionSuccess({

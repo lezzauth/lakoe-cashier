@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
-import 'package:point_of_sales_cashier/utils/helpers/helper.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/constants/sizes.dart';
+import 'package:lakoe_pos/utils/helpers/helper.dart';
 
 class DateStepperFilter extends StatefulWidget {
   const DateStepperFilter({
@@ -34,7 +34,7 @@ class DateStepperFilter extends StatefulWidget {
 }
 
 class _DateStepperFilterState extends State<DateStepperFilter> {
-  DateTime now = DateTime.now().toUtc();
+  DateTime now = DateTime.now();
 
   String _getFormattedDateBasedOnFilter() {
     DateTime now = DateTime.now();

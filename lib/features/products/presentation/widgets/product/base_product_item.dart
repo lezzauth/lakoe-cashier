@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class BaseProductItem extends StatelessWidget {
   final String notes;
   final String name;
-  final Widget image;
+  final String? imageUrl;
   final int qty;
   final int price;
+  final String description;
   final Widget? noteAction;
   final Widget? counter;
   final Widget? tag;
@@ -18,9 +22,10 @@ class BaseProductItem extends StatelessWidget {
     super.key,
     this.notes = "",
     this.name = "",
-    required this.image,
+    this.imageUrl,
     this.qty = 0,
     this.price = 0,
+    this.description = "",
     this.noteAction,
     this.counter,
     this.tag,
@@ -38,7 +43,29 @@ class BaseProductItem extends StatelessWidget {
               Radius.circular(12),
             ),
           ),
-          child: image,
+          child: Image.network(
+            imageUrl ?? '',
+            height: 60,
+            width: 60,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return SvgPicture.asset(
+                TImages.productAvatar,
+                height: 60,
+                width: 60,
+                fit: BoxFit.cover,
+              );
+            },
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return SvgPicture.asset(
+                TImages.productAvatar,
+                height: 60,
+                width: 60,
+                fit: BoxFit.cover,
+              );
+            },
+          ),
         ),
         const SizedBox(width: 12.0),
         Expanded(
@@ -61,15 +88,11 @@ class BaseProductItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 2.0),
-                        (qty != 0)
-                            ? TextBodyM(
-                                "$qty x ${TFormatter.formatToRupiah(price)}",
-                                color: TColors.neutralDarkLight,
-                              )
-                            : TextBodyM(
-                                TFormatter.formatToRupiah(price),
-                                color: TColors.neutralDarkLight,
-                              ),
+                        TextBodyM(
+                          "${(qty != 0) ? "$qty x " : ""}${TFormatter.formatToRupiah(price)}",
+                          color: TColors.neutralDarkLight,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ],
                     ),
                   ),
@@ -78,16 +101,14 @@ class BaseProductItem extends StatelessWidget {
                   if (tag != null) tag!,
                 ],
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      color: TColors.error,
-                    ),
-                  ),
-                ],
-              ),
               if (noteAction != null) noteAction!,
+              if (description.isNotEmpty && noteAction == null)
+                TextBodyS(
+                  description,
+                  color: TColors.neutralDarkLight,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
             ],
           ),
         ),

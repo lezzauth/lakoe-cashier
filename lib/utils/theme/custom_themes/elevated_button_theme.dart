@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/sizes.dart';
 
 class TElevatedButtonTheme {
   TElevatedButtonTheme._();
@@ -12,8 +12,8 @@ class TElevatedButtonTheme {
       backgroundColor: TColors.primary,
       disabledForegroundColor: TColors.neutralLightLightest,
       disabledBackgroundColor: TColors.neutralLightDarkest,
-      padding: const EdgeInsets.all(TSizes.buttonVerticalPadding),
-      textStyle: const TextStyle(
+      padding: EdgeInsets.all(TSizes.buttonVerticalPadding),
+      textStyle: TextStyle(
         fontSize: TSizes.fontSizeActionL,
         color: TColors.neutralLightLightest,
         fontWeight: FontWeight.w600,

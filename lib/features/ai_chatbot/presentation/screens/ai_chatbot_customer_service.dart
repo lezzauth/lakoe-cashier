@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 
 class AIChatbotCustomerServiceScreen extends StatefulWidget {
   const AIChatbotCustomerServiceScreen({super.key});

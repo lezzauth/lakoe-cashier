@@ -1,6 +1,7 @@
 class AppDataModel {
   final String outletId;
   final String ownerId;
+  final String activePackage;
   final bool isAutoPrint;
   final String footNote;
   final String avatarSvg;
@@ -11,6 +12,7 @@ class AppDataModel {
   AppDataModel({
     required this.outletId,
     required this.ownerId,
+    required this.activePackage,
     required this.isAutoPrint,
     required this.footNote,
     required this.avatarSvg,

@@ -3,26 +3,24 @@ import 'dart:async';
 import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:point_of_sales_cashier/common/data/models.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/counter.dart';
-import 'package:point_of_sales_cashier/common/widgets/responsive/responsive_layout.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_cubit.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_detail_filter_state.dart';
-import 'package:point_of_sales_cashier/features/cart/application/cubit/cart_state.dart';
-import 'package:point_of_sales_cashier/features/cart/data/models/cart_model.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/customer_and_table_select.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/order_type_chip.dart';
-import 'package:point_of_sales_cashier/features/cart/presentation/widgets/summary/preview_order_price.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/action/product_note_action.dart';
-import 'package:point_of_sales_cashier/features/products/presentation/widgets/product/base_product_item.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/common/data/models.dart';
+import 'package:lakoe_pos/common/widgets/form/counter.dart';
+import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_cubit.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_state.dart';
+import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
+import 'package:lakoe_pos/features/cart/data/models/cart_model.dart';
+import 'package:lakoe_pos/features/cart/presentation/widgets/customer_and_table_select.dart';
+import 'package:lakoe_pos/features/cart/presentation/widgets/order_type_chip.dart';
+import 'package:lakoe_pos/features/cart/presentation/widgets/summary/preview_order_price.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/product/action/product_note_action.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/product/base_product_item.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:product_repository/product_repository.dart';
 import 'package:table_repository/table_repository.dart';
 
@@ -162,7 +160,7 @@ class _CartContentState extends State<CartContent> {
                                       return OrderTypeChip(
                                         label: orderType.label,
                                         icon: orderType.value == "DINEIN"
-                                            ? TIcons.tableRestaurant
+                                            ? TIcons.servingDome
                                             : TIcons.bag,
                                         selected: selected,
                                         onSelected: (value) {
@@ -220,18 +218,7 @@ class _CartContentState extends State<CartContent> {
                                 child: BaseProductItem(
                                   name: cart.product.name,
                                   price: int.parse(cart.product.price),
-                                  image: image != null
-                                      ? Image.network(
-                                          image,
-                                          height: 44,
-                                          width: 44,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : SvgPicture.asset(
-                                          TImages.productAvatar,
-                                          height: 44,
-                                          width: 44,
-                                        ),
+                                  imageUrl: image,
                                   counter: Counter(
                                     value: cart.quantity,
                                     onChanged: (quantity) {

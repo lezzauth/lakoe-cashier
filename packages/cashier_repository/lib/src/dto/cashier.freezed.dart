@@ -267,7 +267,7 @@ mixin _$CompleteCashOrderDto {
   double get paidAmount => throw _privateConstructorUsedError;
   double get change => throw _privateConstructorUsedError;
   String? get customerId => throw _privateConstructorUsedError;
-  String? get redeemCoinAmount => throw _privateConstructorUsedError;
+  double get redeemCoinAmount => throw _privateConstructorUsedError;
 
   /// Serializes this CompleteCashOrderDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -290,7 +290,7 @@ abstract class $CompleteCashOrderDtoCopyWith<$Res> {
       double paidAmount,
       double change,
       String? customerId,
-      String? redeemCoinAmount});
+      double redeemCoinAmount});
 }
 
 /// @nodoc
@@ -313,7 +313,7 @@ class _$CompleteCashOrderDtoCopyWithImpl<$Res,
     Object? paidAmount = null,
     Object? change = null,
     Object? customerId = freezed,
-    Object? redeemCoinAmount = freezed,
+    Object? redeemCoinAmount = null,
   }) {
     return _then(_value.copyWith(
       paymentMethod: null == paymentMethod
@@ -332,10 +332,10 @@ class _$CompleteCashOrderDtoCopyWithImpl<$Res,
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
-      redeemCoinAmount: freezed == redeemCoinAmount
+      redeemCoinAmount: null == redeemCoinAmount
           ? _value.redeemCoinAmount
           : redeemCoinAmount // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double,
     ) as $Val);
   }
 }
@@ -353,7 +353,7 @@ abstract class _$$CompleteCashOrderDtoImplCopyWith<$Res>
       double paidAmount,
       double change,
       String? customerId,
-      String? redeemCoinAmount});
+      double redeemCoinAmount});
 }
 
 /// @nodoc
@@ -373,7 +373,7 @@ class __$$CompleteCashOrderDtoImplCopyWithImpl<$Res>
     Object? paidAmount = null,
     Object? change = null,
     Object? customerId = freezed,
-    Object? redeemCoinAmount = freezed,
+    Object? redeemCoinAmount = null,
   }) {
     return _then(_$CompleteCashOrderDtoImpl(
       paymentMethod: null == paymentMethod
@@ -392,10 +392,10 @@ class __$$CompleteCashOrderDtoImplCopyWithImpl<$Res>
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
-      redeemCoinAmount: freezed == redeemCoinAmount
+      redeemCoinAmount: null == redeemCoinAmount
           ? _value.redeemCoinAmount
           : redeemCoinAmount // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as double,
     ));
   }
 }
@@ -408,7 +408,7 @@ class _$CompleteCashOrderDtoImpl implements _CompleteCashOrderDto {
       required this.paidAmount,
       required this.change,
       this.customerId,
-      this.redeemCoinAmount});
+      this.redeemCoinAmount = 0});
 
   factory _$CompleteCashOrderDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CompleteCashOrderDtoImplFromJson(json);
@@ -422,7 +422,8 @@ class _$CompleteCashOrderDtoImpl implements _CompleteCashOrderDto {
   @override
   final String? customerId;
   @override
-  final String? redeemCoinAmount;
+  @JsonKey()
+  final double redeemCoinAmount;
 
   @override
   String toString() {
@@ -474,7 +475,7 @@ abstract class _CompleteCashOrderDto implements CompleteCashOrderDto {
       required final double paidAmount,
       required final double change,
       final String? customerId,
-      final String? redeemCoinAmount}) = _$CompleteCashOrderDtoImpl;
+      final double redeemCoinAmount}) = _$CompleteCashOrderDtoImpl;
 
   factory _CompleteCashOrderDto.fromJson(Map<String, dynamic> json) =
       _$CompleteCashOrderDtoImpl.fromJson;
@@ -488,7 +489,7 @@ abstract class _CompleteCashOrderDto implements CompleteCashOrderDto {
   @override
   String? get customerId;
   @override
-  String? get redeemCoinAmount;
+  double get redeemCoinAmount;
 
   /// Create a copy of CompleteCashOrderDto
   /// with the given fields replaced by the non-null parameter values.
@@ -1932,6 +1933,9 @@ mixin _$FindAllOrderCashierDto {
   String? get status => throw _privateConstructorUsedError;
   String? get search => throw _privateConstructorUsedError;
   String? get sort => throw _privateConstructorUsedError;
+  String? get template => throw _privateConstructorUsedError;
+  String? get from => throw _privateConstructorUsedError;
+  String? get to => throw _privateConstructorUsedError;
 
   /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
@@ -1951,7 +1955,10 @@ abstract class $FindAllOrderCashierDtoCopyWith<$Res> {
       String? source,
       String? status,
       String? search,
-      String? sort});
+      String? sort,
+      String? template,
+      String? from,
+      String? to});
 }
 
 /// @nodoc
@@ -1975,6 +1982,9 @@ class _$FindAllOrderCashierDtoCopyWithImpl<$Res,
     Object? status = freezed,
     Object? search = freezed,
     Object? sort = freezed,
+    Object? template = freezed,
+    Object? from = freezed,
+    Object? to = freezed,
   }) {
     return _then(_value.copyWith(
       type: freezed == type
@@ -1997,6 +2007,18 @@ class _$FindAllOrderCashierDtoCopyWithImpl<$Res,
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
               as String?,
+      template: freezed == template
+          ? _value.template
+          : template // ignore: cast_nullable_to_non_nullable
+              as String?,
+      from: freezed == from
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
+              as String?,
+      to: freezed == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -2015,7 +2037,10 @@ abstract class _$$FindAllOrderCashierDtoImplCopyWith<$Res>
       String? source,
       String? status,
       String? search,
-      String? sort});
+      String? sort,
+      String? template,
+      String? from,
+      String? to});
 }
 
 /// @nodoc
@@ -2038,6 +2063,9 @@ class __$$FindAllOrderCashierDtoImplCopyWithImpl<$Res>
     Object? status = freezed,
     Object? search = freezed,
     Object? sort = freezed,
+    Object? template = freezed,
+    Object? from = freezed,
+    Object? to = freezed,
   }) {
     return _then(_$FindAllOrderCashierDtoImpl(
       type: freezed == type
@@ -2060,6 +2088,18 @@ class __$$FindAllOrderCashierDtoImplCopyWithImpl<$Res>
           ? _value.sort
           : sort // ignore: cast_nullable_to_non_nullable
               as String?,
+      template: freezed == template
+          ? _value.template
+          : template // ignore: cast_nullable_to_non_nullable
+              as String?,
+      from: freezed == from
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
+              as String?,
+      to: freezed == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -2068,7 +2108,14 @@ class __$$FindAllOrderCashierDtoImplCopyWithImpl<$Res>
 
 class _$FindAllOrderCashierDtoImpl implements _FindAllOrderCashierDto {
   const _$FindAllOrderCashierDtoImpl(
-      {this.type, this.source, this.status, this.search, this.sort});
+      {this.type,
+      this.source,
+      this.status,
+      this.search,
+      this.sort,
+      this.template,
+      this.from,
+      this.to});
 
   @override
   final String? type;
@@ -2080,10 +2127,16 @@ class _$FindAllOrderCashierDtoImpl implements _FindAllOrderCashierDto {
   final String? search;
   @override
   final String? sort;
+  @override
+  final String? template;
+  @override
+  final String? from;
+  @override
+  final String? to;
 
   @override
   String toString() {
-    return 'FindAllOrderCashierDto(type: $type, source: $source, status: $status, search: $search, sort: $sort)';
+    return 'FindAllOrderCashierDto(type: $type, source: $source, status: $status, search: $search, sort: $sort, template: $template, from: $from, to: $to)';
   }
 
   @override
@@ -2095,12 +2148,16 @@ class _$FindAllOrderCashierDtoImpl implements _FindAllOrderCashierDto {
             (identical(other.source, source) || other.source == source) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.search, search) || other.search == search) &&
-            (identical(other.sort, sort) || other.sort == sort));
+            (identical(other.sort, sort) || other.sort == sort) &&
+            (identical(other.template, template) ||
+                other.template == template) &&
+            (identical(other.from, from) || other.from == from) &&
+            (identical(other.to, to) || other.to == to));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, type, source, status, search, sort);
+  int get hashCode => Object.hash(
+      runtimeType, type, source, status, search, sort, template, from, to);
 
   /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.
@@ -2118,7 +2175,10 @@ abstract class _FindAllOrderCashierDto implements FindAllOrderCashierDto {
       final String? source,
       final String? status,
       final String? search,
-      final String? sort}) = _$FindAllOrderCashierDtoImpl;
+      final String? sort,
+      final String? template,
+      final String? from,
+      final String? to}) = _$FindAllOrderCashierDtoImpl;
 
   @override
   String? get type;
@@ -2130,6 +2190,12 @@ abstract class _FindAllOrderCashierDto implements FindAllOrderCashierDto {
   String? get search;
   @override
   String? get sort;
+  @override
+  String? get template;
+  @override
+  String? get from;
+  @override
+  String? get to;
 
   /// Create a copy of FindAllOrderCashierDto
   /// with the given fields replaced by the non-null parameter values.

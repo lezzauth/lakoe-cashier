@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:owner_repository/owner_repository.dart';
-import 'package:point_of_sales_cashier/common/data/models.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/bank_verify/bank_verify.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
-import 'package:point_of_sales_cashier/features/bank_accounts/presentation/widgets/forms/bank_account_form.dart';
+import 'package:lakoe_pos/common/data/models.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/form/bank_verify/bank_verify.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_cubit.dart';
+import 'package:lakoe_pos/features/bank_accounts/application/cubit/bank_account_master/bank_account_master_state.dart';
+import 'package:lakoe_pos/features/bank_accounts/presentation/widgets/forms/bank_account_form.dart';
 import 'package:public_repository/public_repository.dart';
 
 class BankAccountNewScreen extends StatefulWidget {
@@ -20,7 +21,6 @@ class _BankAccountNewScreenState extends State<BankAccountNewScreen> {
   Future<void> _onSubmitted(
     dynamic value,
     BankListModel? bank,
-    String previousAccountNumber,
   ) async {
     if (!context.mounted) return;
 
@@ -29,11 +29,15 @@ class _BankAccountNewScreenState extends State<BankAccountNewScreen> {
       isDismissible: false,
       enableDrag: false,
       builder: (context) {
-        return BankVerify(
-          bankCode: bank!.bankCode,
-          accountNumber: value["accountNumber"],
-          bankName: bank.bankName,
-          name: bank.name,
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {},
+          child: BankVerify(
+            bankCode: bank!.bankCode,
+            accountNumber: value["accountNumber"],
+            bankName: bank.bankName,
+            name: bank.name,
+          ),
         );
       },
     );
@@ -56,6 +60,13 @@ class _BankAccountNewScreenState extends State<BankAccountNewScreen> {
       listener: (context, state) {
         if (state is BankAccountMasterActionSuccess) {
           Navigator.pop(context, true);
+        } else if (state is BankAccountMasterActionFailure) {
+          if (state.error.contains("number already")) {
+            CustomToast.show(
+              "Rekening bank ini sudah tersimpan.",
+              position: 'bottom',
+            );
+          }
         }
       },
       builder: (context, state) => Scaffold(

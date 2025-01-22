@@ -2,15 +2,17 @@ import 'package:cashier_repository/cashier_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/dotted_pin.dart';
-import 'package:point_of_sales_cashier/common/widgets/form/number_pad.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_3.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_cubit.dart';
-import 'package:point_of_sales_cashier/features/cashier/application/cubit/cashier/cashier_state.dart';
-import 'package:point_of_sales_cashier/features/home/data/arguments/open_cashier_pin_argument.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
+import 'package:lakoe_pos/common/widgets/form/dotted_pin.dart';
+import 'package:lakoe_pos/common/widgets/form/number_pad.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_cubit.dart';
+import 'package:lakoe_pos/features/cashier/application/cubit/cashier/cashier_state.dart';
+import 'package:lakoe_pos/features/home/data/arguments/open_cashier_pin_argument.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/constants/sizes.dart';
 
 class OpenCashierPinScreen extends StatefulWidget {
   const OpenCashierPinScreen({super.key});
@@ -55,7 +57,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
   }
 
   onOpenCashierReInitial(String value) {
-    context.read<CashierCubit>().generatetoken(
+    context.read<CashierCubit>().generateToken(
           RegenerateCashierTokenDto(pin: value),
         );
   }
@@ -87,7 +89,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
         } else if (state is CashierOpened) {
           Navigator.pushNamedAndRemoveUntil(
             context,
-            "/cashier/explore-products",
+            "/cashier",
             (route) => false,
           );
         }
@@ -101,7 +103,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              "/cashier",
+              "/home",
               (route) => false,
             );
           });
@@ -119,17 +121,23 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(bottom: 40, top: 56),
+                          margin: EdgeInsets.only(bottom: 40, top: 56),
                           child: Column(
                             children: [
+                              UiIcons(
+                                TIcons.lock,
+                                size: 32,
+                                color: TColors.neutralLightDarkest,
+                              ),
+                              SizedBox(height: 20),
                               Container(
-                                margin: const EdgeInsets.only(bottom: 8.0),
-                                child: const TextHeading3(
-                                  "Masukan PIN kamu",
+                                margin: EdgeInsets.only(bottom: 8.0),
+                                child: TextHeading2(
+                                  "Masukan PIN Kasir",
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              const TextBodyS(
+                              TextBodyM(
                                 "Masukin PIN kasir yang sedang bertugas",
                                 color: TColors.neutralDarkMedium,
                                 textAlign: TextAlign.center,
@@ -138,7 +146,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
                           ),
                         ),
                         if (checkPIN && !isPinWrong)
-                          const SizedBox(
+                          SizedBox(
                             height: 20,
                             width: 20,
                             child: CircularProgressIndicator(

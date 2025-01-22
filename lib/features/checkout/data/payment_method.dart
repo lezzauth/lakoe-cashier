@@ -1,151 +1,155 @@
-import 'package:point_of_sales_cashier/features/checkout/data/payment_method_model.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/features/checkout/data/payment_method_model.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
 
-List<PaymentCategory> paymentMethod = [
+List<PaymentCategory> paymentMethodPurchasePackage = [
   PaymentCategory(
     categoryName: "E-Wallet",
     methods: [
-      PaymentMethod(name: "LinkAja", logo: TImages.linkaja),
-      PaymentMethod(name: "OVO", logo: TImages.ovo),
-      PaymentMethod(name: "ShopeePay", logo: TImages.shopeepay),
-      PaymentMethod(name: "Dana", logo: TImages.dana),
+      PaymentMethodCheckout(name: "LinkAja", logo: TImages.linkaja),
+      // PaymentMethodCheckout(name: "OVO", logo: TImages.ovo),
+      PaymentMethodCheckout(name: "ShopeePay", logo: TImages.shopeepay),
+      PaymentMethodCheckout(name: "Dana", logo: TImages.dana),
     ],
   ),
   PaymentCategory(
-    categoryName: "Bank Transfer",
+    categoryName: "Virtual Account",
     methods: [
-      PaymentMethod(
+      PaymentMethodCheckout(
         name: "BCA",
         logo: TImages.bca,
         paymentMedia: [
           PaymentMedia(
             mediaName: "BCA Mobile",
             steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
+Buka aplikasi **BCA Mobile** dan login.
 Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
 Masukkan nomor **Virtual Account** dan tekan **Send**.
 Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
 """,
           ),
           PaymentMedia(
-            mediaName: "myBCA",
+            mediaName: "KlikBCA",
             steps: """
-Buka aplikasi **myBCA**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+Akses situs **KlikBCA** dan login.
+Pilih menu **Transfer Dana**, kemudian pilih **Transfer ke BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan lanjutkan sesuai instruksi.
+Konfirmasi detail transaksi dan selesaikan proses transfer.
 """,
           ),
           PaymentMedia(
-            mediaName: "ATM",
+            mediaName: "ATM BCA",
             steps: """
-Buka aplikasi **ATM**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+Masukkan **Kartu ATM BCA** dan **PIN**.
+Pilih menu **Transaksi Lainnya**, kemudian pilih **Transfer**.
+Pilih **ke Rekening BCA Virtual Account**.
+Masukkan nomor **Virtual Account** dan tekan **Benar**.
+Konfirmasi detail transaksi dan tekan **Ya** untuk menyelesaikan.
 """,
           ),
         ],
       ),
-      PaymentMethod(
+      PaymentMethodCheckout(
         name: "Mandiri",
         logo: TImages.mandiri,
         paymentMedia: [
           PaymentMedia(
-            mediaName: "Livin",
+            mediaName: "Livin' by Mandiri",
             steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
+Buka aplikasi **Livin' by Mandiri** dan login.
+Pilih menu **Pembayaran**, kemudian pilih **Multi Payment**.
+Pilih **Penyedia Jasa** yang sesuai.
+Masukkan nomor **Virtual Account** dan jumlah pembayaran.
 Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
 """,
           ),
           PaymentMedia(
-            mediaName: "Mandiri",
+            mediaName: "Mandiri Internet Banking",
             steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+Akses situs **Mandiri Internet Banking** dan login.
+Pilih menu **Pembayaran**, kemudian pilih **Multi Payment**.
+Masukkan nomor **Virtual Account** dan lanjutkan sesuai instruksi.
+Konfirmasi detail transaksi dan selesaikan proses pembayaran.
 """,
           ),
           PaymentMedia(
-            mediaName: "ATM",
+            mediaName: "ATM Mandiri",
             steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+Masukkan **Kartu ATM Mandiri** dan **PIN**.
+Pilih menu **Bayar/Beli**, kemudian pilih **Multi Payment**.
+Masukkan kode perusahaan jika diminta, lalu nomor **Virtual Account**.
+Masukkan jumlah pembayaran.
+Konfirmasi detail transaksi dan tekan **Ya** untuk menyelesaikan.
 """,
           ),
         ],
       ),
-      PaymentMethod(
+      PaymentMethodCheckout(
         name: "BRI",
         logo: TImages.bri,
         paymentMedia: [
           PaymentMedia(
             mediaName: "BRImo",
             steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
+Buka aplikasi **BRImo** dan login.
+Pilih menu **Pembayaran**, kemudian pilih **BRIVA**.
+Masukkan nomor **BRIVA** (Virtual Account) dan jumlah pembayaran.
 Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
 """,
           ),
           PaymentMedia(
-            mediaName: "BRI",
+            mediaName: "Internet Banking BRI",
             steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+Akses situs **Internet Banking BRI** dan login.
+Pilih menu **Pembayaran**, kemudian pilih **BRIVA**.
+Masukkan nomor **BRIVA** dan jumlah pembayaran.
+Konfirmasi detail transaksi dan lanjutkan sesuai instruksi.
 """,
           ),
           PaymentMedia(
-            mediaName: "ATM",
+            mediaName: "ATM BRI",
             steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+Masukkan **Kartu ATM BRI** dan **PIN**.
+Pilih menu **Transaksi Lain**, kemudian pilih **Pembayaran**.
+Pilih **Lainnya**, lalu pilih **BRIVA**.
+Masukkan nomor **BRIVA** dan konfirmasi detail transaksi.
+Tekan **Ya** untuk menyelesaikan.
 """,
           ),
         ],
       ),
-      PaymentMethod(
+      PaymentMethodCheckout(
         name: "BNI",
         logo: TImages.bni,
         paymentMedia: [
           PaymentMedia(
-            mediaName: "BNI",
+            mediaName: "BNI Mobile Banking",
             steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+Buka aplikasi **BNI Mobile Banking** dan login.
+Pilih menu **Transfer**, kemudian pilih **Virtual Account Billing**.
+Masukkan nomor **Virtual Account** dan jumlah pembayaran.
+Konfirmasi detail transaksi dan masukkan **Password Transaksi** untuk menyelesaikan.
 """,
           ),
           PaymentMedia(
-            mediaName: "BNI Mobile",
+            mediaName: "Internet Banking BNI",
             steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+Akses situs **Internet Banking BNI** dan login.
+Pilih menu **Transfer**, kemudian pilih **Virtual Account Billing**.
+Masukkan nomor **Virtual Account** dan lanjutkan sesuai instruksi.
+Konfirmasi detail transaksi dan selesaikan proses pembayaran.
 """,
           ),
           PaymentMedia(
-            mediaName: "ATM",
+            mediaName: "ATM BNI",
             steps: """
-Buka aplikasi **BCA Mobile**, lalu login.
-Pilih menu **m-Transfer**, kemudian pilih **BCA Virtual Account**.
-Masukkan nomor **Virtual Account** dan tekan **Send**.
-Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
+Masukkan **Kartu ATM BNI** dan **PIN**.
+Pilih menu **Transfer**, kemudian pilih **Virtual Account Billing**.
+Masukkan nomor **Virtual Account** dan jumlah pembayaran.
+Konfirmasi detail transaksi dan tekan **Ya** untuk menyelesaikan.
 """,
           ),
         ],
       ),
     ],
-  ),
+  )
 ];

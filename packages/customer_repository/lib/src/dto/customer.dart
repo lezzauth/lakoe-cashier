@@ -28,15 +28,15 @@ extension QueryStringExtension on FindAllCustomerDto {
 }
 
 @freezed
-class CreateCustomerDto with _$CreateCustomerDto {
-  const factory CreateCustomerDto({
+class CustomerDto with _$CustomerDto {
+  const factory CustomerDto({
     required String name,
     required String phoneNumber,
     String? outletId,
     String? email,
     String? address,
-  }) = _CreateCustomerDto;
+  }) = _CustomerDto;
 
-  factory CreateCustomerDto.fromJson(Map<String, Object?> json) =>
-      _$CreateCustomerDtoFromJson(json);
+  factory CustomerDto.fromJson(Map<String, Object?> json) =>
+      _$CustomerDtoFromJson(json);
 }

@@ -4,13 +4,13 @@ part 'package.g.dart';
 part 'package.freezed.dart';
 
 @freezed
-class DetailPakcageDto with _$DetailPakcageDto {
-  const factory DetailPakcageDto({
+class DetailPackagegeDto with _$DetailPackagegeDto {
+  const factory DetailPackagegeDto({
     required String name,
-  }) = _DetailPakcageDto;
+  }) = _DetailPackagegeDto;
 
-  factory DetailPakcageDto.fromJson(Map<String, dynamic> json) =>
-      _$DetailPakcageDtoFromJson(json);
+  factory DetailPackagegeDto.fromJson(Map<String, dynamic> json) =>
+      _$DetailPackagegeDtoFromJson(json);
 }
 
 @freezed
@@ -18,6 +18,8 @@ class PurchaseDto with _$PurchaseDto {
   const factory PurchaseDto({
     required int period,
     required String paymentMethod,
+    String? successReturnUrl,
+    String? failedReturnUrl,
   }) = _PurchaseDto;
 
   factory PurchaseDto.fromJson(Map<String, dynamic> json) =>

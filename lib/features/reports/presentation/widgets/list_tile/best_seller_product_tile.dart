@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class BestSellerProductTile extends StatelessWidget {
   const BestSellerProductTile({
     super.key,
-    required this.imageSrc,
+    required this.imageUrl,
     required this.sold,
     required this.name,
     required this.rank,
     this.onTap,
   });
 
-  final String? imageSrc;
+  final String? imageUrl;
   final int sold;
   final String name;
   final int rank;
@@ -68,18 +68,29 @@ class BestSellerProductTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         clipBehavior: Clip.antiAlias,
-        child: imageSrc != null
-            ? Image.network(
-                imageSrc!,
-                height: 44,
-                width: 44,
-                fit: BoxFit.cover,
-              )
-            : SvgPicture.asset(
-                TImages.productAvatar,
-                height: 44,
-                width: 44,
-              ),
+        child: Image.network(
+          imageUrl ?? '',
+          height: 44,
+          width: 44,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return SvgPicture.asset(
+              TImages.productAvatar,
+              height: 44,
+              width: 44,
+              fit: BoxFit.cover,
+            );
+          },
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return SvgPicture.asset(
+              TImages.productAvatar,
+              height: 44,
+              width: 44,
+              fit: BoxFit.cover,
+            );
+          },
+        ),
       ),
       title: TextHeading4(
         name,

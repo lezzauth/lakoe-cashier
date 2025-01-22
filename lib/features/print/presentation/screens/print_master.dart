@@ -1,33 +1,33 @@
 import 'dart:async';
 import 'package:app_data_provider/app_data_provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/error_display/error_display.dart';
-import 'package:point_of_sales_cashier/common/widgets/icon/ui_icons.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/empty/empty_list.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_l.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_action_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_s.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_5.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_cubit.dart';
-import 'package:point_of_sales_cashier/features/authentication/application/cubit/auth/auth_state.dart';
-import 'package:point_of_sales_cashier/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_cubit.dart';
-import 'package:point_of_sales_cashier/features/print/application/cubit/print_master/print_master_state.dart';
-import 'package:point_of_sales_cashier/features/print/common/helpers/animated_dots_text.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/image_strings.dart';
-import 'package:point_of_sales_cashier/utils/constants/sizes.dart';
-import 'package:point_of_sales_cashier/utils/print/bill.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_cubit.dart';
+import 'package:lakoe_pos/features/authentication/application/cubit/auth/auth_state.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
+import 'package:lakoe_pos/features/print/application/cubit/print_master/print_master_cubit.dart';
+import 'package:lakoe_pos/features/print/application/cubit/print_master/print_master_state.dart';
+import 'package:lakoe_pos/features/print/common/helpers/animated_dots_text.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/constants/sizes.dart';
+import 'package:lakoe_pos/utils/print/bill.dart';
 
 class PrintMasterScreen extends StatefulWidget {
   const PrintMasterScreen({super.key});
@@ -80,22 +80,26 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
       enableDrag: false,
       isDismissible: false,
       builder: (context) {
-        return CustomBottomsheet(
-          hasGrabber: false,
-          child: ErrorDisplay(
-            imageSrc: TImages.bluetoothPermission,
-            title: "Izin akses bluetooth HP kamu, ya",
-            description:
-                "Dengan ini, kamu akan bisa menggunakan fitur aplikasi yang membutuhkan bluetooth.",
-            actionTitlePrimary: "Aktifkan Bluetooth",
-            onActionPrimary: () async {
-              Navigator.pop(context);
-              bool? isEnabled =
-                  await FlutterBluetoothSerial.instance.requestEnable();
-              if (isEnabled == true) {
-                _onRefresh();
-              }
-            },
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {},
+          child: CustomBottomsheet(
+            hasGrabber: false,
+            child: ErrorDisplay(
+              imageSrc: TImages.bluetoothPermission,
+              title: "Izin akses bluetooth HP kamu, ya",
+              description:
+                  "Dengan ini, kamu akan bisa menggunakan fitur aplikasi yang membutuhkan bluetooth.",
+              actionTitlePrimary: "Aktifkan Bluetooth",
+              onActionPrimary: () async {
+                Navigator.pop(context);
+                bool? isEnabled =
+                    await FlutterBluetoothSerial.instance.requestEnable();
+                if (isEnabled == true) {
+                  _onRefresh();
+                }
+              },
+            ),
           ),
         );
       },
@@ -435,11 +439,11 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                                 phoneNumber: '',
                                 packageName: '',
                                 outlets: [],
+                                createdAt: '',
+                                updatedAt: '',
                               );
-                              if (kDebugMode) {
-                                print(
-                                    'AuthState is not ready, using default profile.');
-                              }
+                              Logman.instance.info(
+                                  "AuthState is not ready, using default profile.");
                             }
 
                             TBill.testPrint(context, profile, footNote);
@@ -596,39 +600,33 @@ class BillAction extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: onTestPrint,
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 8,
-                children: [
-                  UiIcons(
-                    TIcons.printer,
-                    size: 20,
-                    color: TColors.neutralLightLightest,
-                    onTap: () {},
-                  ),
-                  const TextActionL(
-                    "Tes Print",
-                    color: TColors.neutralLightLightest,
-                  ),
-                ],
-              ),
+          child: ElevatedButton(
+            onPressed: onTestPrint,
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 8,
+              children: [
+                UiIcons(
+                  TIcons.printer,
+                  size: 16,
+                  color: TColors.neutralLightLightest,
+                  onTap: () {},
+                ),
+                const TextActionL(
+                  "Tes Print",
+                  color: TColors.neutralLightLightest,
+                ),
+              ],
             ),
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: SizedBox(
-            height: 48,
-            child: OutlinedButton(
-              onPressed: onShowBill,
-              child: const TextActionL(
-                "Contoh Struk",
-                color: TColors.primary,
-              ),
+          child: OutlinedButton(
+            onPressed: onShowBill,
+            child: const TextActionL(
+              "Contoh Struk",
+              color: TColors.primary,
             ),
           ),
         ),

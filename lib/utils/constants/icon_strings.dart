@@ -16,13 +16,16 @@ class TIcons {
   static const String homeLock = "assets/icons/home-lock.svg";
   static const String warning = "assets/icons/warning.svg";
   static const String check = "assets/icons/check.svg";
+  static const String checkBold = "assets/icons/check-bold.svg";
   static const String bag = "assets/icons/bag.svg";
+  static const String servingDome = "assets/icons/serving-dome.svg";
   static const String hamburgerMenu = "assets/icons/hamburger-menu.svg";
   static const String cashier = "assets/icons/cashier.svg";
   static const String lock = "assets/icons/lock.svg";
   static const String calendar = "assets/icons/calendar.svg";
   static const String copy = "assets/icons/copy.svg";
   static const String filter = "assets/icons/filter.svg";
+  static const String filterBold = "assets/icons/filter-bold.svg";
   static const String camera = "assets/icons/camera.svg";
   static const String download = "assets/icons/download.svg";
   static const String map = "assets/icons/map.svg";
@@ -62,7 +65,7 @@ class TIcons {
 
   static const String card = "assets/icons/card.svg";
   static const String history = "assets/icons/history.svg";
-  static const String filters = "assets/icons/filters.svg";
+  static const String filterColor = "assets/icons/filter-color.svg";
   static const String handMoney = "assets/icons/hand-money.svg";
   static const String linkSquare = "assets/icons/link-square.svg";
   static const String pieChart = "assets/icons/pie-chart.svg";
@@ -72,7 +75,10 @@ class TIcons {
   static const String eye = "assets/icons/eye.svg";
   static const String eyeClose = "assets/icons/eye-close.svg";
   static const String wallet = "assets/icons/wallet.svg";
+  static const String hashtag = "assets/icons/hashtag.svg";
+  static const String hashtagBold = "assets/icons/hashtag-bold.svg";
   static const String timer = "assets/icons/timer.svg";
+  static const String hourGlass = "assets/icons/hour-glass.svg";
   static const String document = "assets/icons/document.svg";
   static const String star = "assets/icons/star.svg";
   static const String shieldKeyhole = "assets/icons/shield-keyhole.svg";

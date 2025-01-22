@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/appbar/custom_appbar.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/list_item_card.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/section_card.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/ui/list_item_card.dart';
+import 'package:lakoe_pos/common/widgets/ui/section_card.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
+import 'package:lakoe_pos/features/outlets/application/outlet_cubit.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -19,6 +22,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<OwnerCubit>().init();
+    context.read<OutletCubit>().init();
+
     _scrollController.addListener(() {
       if (_scrollController.offset > 0 && !_isScrolled) {
         setState(() {
@@ -91,7 +97,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       iconSrc: TIcons.box,
     ),
     _SettingItem(
-      title: "Meja & QR Order",
+      title: "Manajemen Meja",
       routeName: "/tables",
       iconSrc: TIcons.tableRestaurant,
     ),

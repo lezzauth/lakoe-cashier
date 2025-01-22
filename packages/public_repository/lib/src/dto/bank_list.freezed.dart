@@ -20,11 +20,15 @@ GetBankAccountDto _$GetBankAccountDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$GetBankAccountDto {
-  String get bankCode => throw _privateConstructorUsedError;
-  String get accountNumber => throw _privateConstructorUsedError;
+  String get noRekening => throw _privateConstructorUsedError;
+  String get kodeBank => throw _privateConstructorUsedError;
 
+  /// Serializes this GetBankAccountDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetBankAccountDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetBankAccountDtoCopyWith<GetBankAccountDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -35,7 +39,7 @@ abstract class $GetBankAccountDtoCopyWith<$Res> {
           GetBankAccountDto value, $Res Function(GetBankAccountDto) then) =
       _$GetBankAccountDtoCopyWithImpl<$Res, GetBankAccountDto>;
   @useResult
-  $Res call({String bankCode, String accountNumber});
+  $Res call({String noRekening, String kodeBank});
 }
 
 /// @nodoc
@@ -48,20 +52,22 @@ class _$GetBankAccountDtoCopyWithImpl<$Res, $Val extends GetBankAccountDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetBankAccountDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? bankCode = null,
-    Object? accountNumber = null,
+    Object? noRekening = null,
+    Object? kodeBank = null,
   }) {
     return _then(_value.copyWith(
-      bankCode: null == bankCode
-          ? _value.bankCode
-          : bankCode // ignore: cast_nullable_to_non_nullable
+      noRekening: null == noRekening
+          ? _value.noRekening
+          : noRekening // ignore: cast_nullable_to_non_nullable
               as String,
-      accountNumber: null == accountNumber
-          ? _value.accountNumber
-          : accountNumber // ignore: cast_nullable_to_non_nullable
+      kodeBank: null == kodeBank
+          ? _value.kodeBank
+          : kodeBank // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -75,7 +81,7 @@ abstract class _$$GetBankAccountDtoImplCopyWith<$Res>
       __$$GetBankAccountDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String bankCode, String accountNumber});
+  $Res call({String noRekening, String kodeBank});
 }
 
 /// @nodoc
@@ -86,20 +92,22 @@ class __$$GetBankAccountDtoImplCopyWithImpl<$Res>
       $Res Function(_$GetBankAccountDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetBankAccountDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? bankCode = null,
-    Object? accountNumber = null,
+    Object? noRekening = null,
+    Object? kodeBank = null,
   }) {
     return _then(_$GetBankAccountDtoImpl(
-      bankCode: null == bankCode
-          ? _value.bankCode
-          : bankCode // ignore: cast_nullable_to_non_nullable
+      noRekening: null == noRekening
+          ? _value.noRekening
+          : noRekening // ignore: cast_nullable_to_non_nullable
               as String,
-      accountNumber: null == accountNumber
-          ? _value.accountNumber
-          : accountNumber // ignore: cast_nullable_to_non_nullable
+      kodeBank: null == kodeBank
+          ? _value.kodeBank
+          : kodeBank // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -109,19 +117,19 @@ class __$$GetBankAccountDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$GetBankAccountDtoImpl implements _GetBankAccountDto {
   const _$GetBankAccountDtoImpl(
-      {required this.bankCode, required this.accountNumber});
+      {required this.noRekening, required this.kodeBank});
 
   factory _$GetBankAccountDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$GetBankAccountDtoImplFromJson(json);
 
   @override
-  final String bankCode;
+  final String noRekening;
   @override
-  final String accountNumber;
+  final String kodeBank;
 
   @override
   String toString() {
-    return 'GetBankAccountDto(bankCode: $bankCode, accountNumber: $accountNumber)';
+    return 'GetBankAccountDto(noRekening: $noRekening, kodeBank: $kodeBank)';
   }
 
   @override
@@ -129,17 +137,19 @@ class _$GetBankAccountDtoImpl implements _GetBankAccountDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetBankAccountDtoImpl &&
-            (identical(other.bankCode, bankCode) ||
-                other.bankCode == bankCode) &&
-            (identical(other.accountNumber, accountNumber) ||
-                other.accountNumber == accountNumber));
+            (identical(other.noRekening, noRekening) ||
+                other.noRekening == noRekening) &&
+            (identical(other.kodeBank, kodeBank) ||
+                other.kodeBank == kodeBank));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, bankCode, accountNumber);
+  int get hashCode => Object.hash(runtimeType, noRekening, kodeBank);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetBankAccountDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetBankAccountDtoImplCopyWith<_$GetBankAccountDtoImpl> get copyWith =>
@@ -156,18 +166,21 @@ class _$GetBankAccountDtoImpl implements _GetBankAccountDto {
 
 abstract class _GetBankAccountDto implements GetBankAccountDto {
   const factory _GetBankAccountDto(
-      {required final String bankCode,
-      required final String accountNumber}) = _$GetBankAccountDtoImpl;
+      {required final String noRekening,
+      required final String kodeBank}) = _$GetBankAccountDtoImpl;
 
   factory _GetBankAccountDto.fromJson(Map<String, dynamic> json) =
       _$GetBankAccountDtoImpl.fromJson;
 
   @override
-  String get bankCode;
+  String get noRekening;
   @override
-  String get accountNumber;
+  String get kodeBank;
+
+  /// Create a copy of GetBankAccountDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetBankAccountDtoImplCopyWith<_$GetBankAccountDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

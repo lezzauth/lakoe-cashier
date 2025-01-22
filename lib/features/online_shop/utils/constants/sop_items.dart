@@ -1,4 +1,4 @@
-import 'package:point_of_sales_cashier/utils/constants/icon_strings.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 
 class SOPItems {
   SOPItems._();

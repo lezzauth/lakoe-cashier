@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_body_m.dart';
-import 'package:point_of_sales_cashier/common/widgets/ui/typography/text_heading_4.dart';
-import 'package:point_of_sales_cashier/utils/constants/colors.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/utils/constants/colors.dart';
 
 class PaymentSectionItem extends StatelessWidget {
   final String title;
   final String subTitle;
   final bool isActive;
   final bool lastItem;
+  final ValueChanged<bool>? onToggleActive;
 
   const PaymentSectionItem({
     super.key,
@@ -15,6 +16,7 @@ class PaymentSectionItem extends StatelessWidget {
     required this.subTitle,
     this.isActive = false,
     this.lastItem = false,
+    required this.onToggleActive,
   });
 
   @override
@@ -55,10 +57,7 @@ class PaymentSectionItem extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            Switch(
-              value: isActive,
-              onChanged: (value) {},
-            )
+            Switch(value: isActive, onChanged: onToggleActive)
           ],
         ),
       ),
