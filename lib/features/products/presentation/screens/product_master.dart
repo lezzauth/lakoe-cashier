@@ -134,7 +134,7 @@ class _ProductMasterState extends State<ProductMaster> {
         itemCount: products.length,
         itemBuilder: (context, index) {
           ProductModel product = products[index];
-          String? image = product.images.elementAtOrNull(0);
+          String? imageUrl = product.images.elementAtOrNull(0);
           bool isNotAvailable = product.availability != "AVAILABLE";
 
           return InkWell(
@@ -157,7 +157,7 @@ class _ProductMasterState extends State<ProductMaster> {
               child: BaseProductItem(
                 name: product.name,
                 price: double.parse(product.price).round(),
-                imageUrl: image,
+                imageUrl: imageUrl,
                 description: product.description ?? "",
                 notes: product.description ?? "",
                 tag: isNotAvailable
@@ -195,7 +195,7 @@ class _ProductMasterState extends State<ProductMaster> {
           itemCount: products.length,
           itemBuilder: (context, index) {
             ProductModel product = products[index];
-            String? _imageUrl = product.images.elementAtOrNull(0);
+            String? imageUrl = product.images.elementAtOrNull(0);
             bool isNotAvailable = product.availability != "AVAILABLE";
 
             return InkWell(
@@ -206,9 +206,9 @@ class _ProductMasterState extends State<ProductMaster> {
               highlightColor: Colors.transparent,
               child: BaseProductCard(
                 name: product.name,
-                price: int.parse(product.price),
+                price: double.parse(product.price).round(),
                 isNotAvailable: isNotAvailable,
-                imageUrl: _imageUrl,
+                imageUrl: imageUrl,
               ),
             );
           },

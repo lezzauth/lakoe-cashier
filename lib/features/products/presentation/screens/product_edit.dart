@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/popup_confirmation.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/products/application/cubit/product_master/form/product_form_cubit.dart';
 import 'package:lakoe_pos/features/products/application/cubit/product_master/form/product_form_state.dart';
@@ -152,6 +153,11 @@ class _ProductEditState extends State<ProductEdit>
       listener: (context, state) {
         if (state is ProductMasterActionSuccess) {
           Navigator.pop(context, true);
+        } else if (state is ProductMasterActionFailure) {
+          CustomToast.show(
+            "Gagal menyimpan data produk",
+            backgroundColor: TColors.error,
+          );
         }
       },
       child: BlocBuilder<ProductMasterCubit, ProductMasterState>(
