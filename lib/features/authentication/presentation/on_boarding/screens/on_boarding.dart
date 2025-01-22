@@ -149,10 +149,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     );
                   });
             } else {
-              CustomToast.show(
-                state.error,
-                position: "bottom",
-              );
+              Logman.instance.error(state.error);
             }
           }
 
