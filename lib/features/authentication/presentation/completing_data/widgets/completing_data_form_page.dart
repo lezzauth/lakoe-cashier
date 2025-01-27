@@ -87,8 +87,7 @@ class _CompletingDataFormPageState extends State<CompletingDataFormPage> {
               ),
               const BusinessInformationForm(),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 24),
                 child: ElevatedButton(
                   onPressed: state.isFormValid ? _onSubmit : null,
                   child: Text(
