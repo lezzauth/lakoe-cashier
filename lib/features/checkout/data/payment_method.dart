@@ -57,7 +57,7 @@ Konfirmasi detail transaksi dan tekan **Ya** untuk menyelesaikan.
             steps: """
 Buka aplikasi **Livin' by Mandiri** dan login.
 Pilih menu **Pembayaran**, kemudian pilih **Multi Payment**.
-Pilih **Penyedia Jasa** yang sesuai.
+Pilih penyedia jasa **Xendit**.
 Masukkan nomor **Virtual Account** dan jumlah pembayaran.
 Konfirmasi detail transaksi dan masukkan **PIN** untuk menyelesaikan.
 """,
