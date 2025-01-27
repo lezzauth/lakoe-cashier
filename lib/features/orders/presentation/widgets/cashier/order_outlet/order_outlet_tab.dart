@@ -319,7 +319,11 @@ class _OrderCashierOutletState extends State<OrderCashierOutlet> {
           height: 40,
           child: ElevatedButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                "/cashier",
+                (route) => false,
+              );
             },
             style: const ButtonStyle(
               padding: WidgetStatePropertyAll(

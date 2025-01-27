@@ -14,11 +14,28 @@ class PhotosPermission extends StatelessWidget {
       imageSrc: TImages.storagePermission,
       title: "Izin untuk bisa akses galeri & penyimpanan HP kamu",
       onRequest: () async {
-        await Permission.photos.request();
+        // Request izin photos untuk Android 13+
+        final photosStatus = await Permission.photos.request();
 
-        if (await Permission.photos.isGranted) {
+        // Request izin storage untuk Android <13
+        final storageStatus = await Permission.storage.request();
+
+        // Periksa apakah kedua izin diberikan
+        if (photosStatus.isGranted || storageStatus.isGranted) {
           if (!context.mounted) return;
-          Navigator.pop(context);
+          Navigator.pop(
+              context, true); // Kembalikan nilai true jika izin diberikan
+        } else if (photosStatus.isPermanentlyDenied ||
+            storageStatus.isPermanentlyDenied) {
+          if (!context.mounted) return;
+          // Tampilkan dialog agar pengguna membuka pengaturan aplikasi
+          Navigator.pop(context, false);
+          await openAppSettings();
+        } else {
+          // Jika izin ditolak sementara
+          if (!context.mounted) return;
+          Navigator.pop(
+              context, false); // Kembalikan nilai false jika izin ditolak
         }
       },
     );

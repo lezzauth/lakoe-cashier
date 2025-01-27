@@ -34,6 +34,7 @@ import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountMasterScreen extends StatefulWidget {
   const AccountMasterScreen({super.key});
@@ -123,7 +124,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
     ),
     _OtherItem(
       title: "Kasih Rating",
-      routeName: "/",
+      routeName: "",
       iconSrc: TIcons.star,
       textTrailing: "",
       isNewItem: false,
@@ -154,6 +155,15 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
     );
     await intent.launch();
+  }
+
+  Future<void> _launchPlayStore(String url) async {
+    final Uri parsedUrl = Uri.parse(url);
+    if (await canLaunchUrl(parsedUrl)) {
+      await launchUrl(parsedUrl, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -251,6 +261,13 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
                                     routeName: item.routeName,
                                     isNewItem: item.isNewItem!,
                                     textTrailing: item.textTrailing,
+                                    onTap: () {
+                                      if (item.title.contains("Rating")) {
+                                        _launchPlayStore(
+                                          "https://play.google.com/store/apps/details?id=com.lakoe.app",
+                                        );
+                                      }
+                                    },
                                   ),
                                 )
                                 .toList(),

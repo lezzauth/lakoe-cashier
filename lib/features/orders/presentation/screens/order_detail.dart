@@ -329,7 +329,11 @@ class _OrderDetailState extends State<OrderDetail> {
                 await context.read<OrderCashierCubit>().init();
 
                 if (!context.mounted) return;
-                Navigator.pop(context, true);
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  "/cashier",
+                  (route) => false,
+                );
               }
             } catch (e) {
               Logman.instance.error("Error: $e");

@@ -54,21 +54,21 @@ class _OwnerInformationFormState extends State<OwnerInformationForm> {
               ),
             ],
           ),
-          SizedBox(height: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FormLabel(
-                "Email",
-              ),
-              FormBuilderTextField(
-                name: "email",
-                decoration: InputDecoration(
-                  hintText: "Contoh: warmindo@gmail.com",
-                ),
-              ),
-            ],
-          ),
+          // SizedBox(height: 16),
+          // Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     FormLabel(
+          //       "Email",
+          //     ),
+          //     FormBuilderTextField(
+          //       name: "email",
+          //       decoration: InputDecoration(
+          //         hintText: "Contoh: warmindo@gmail.com",
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

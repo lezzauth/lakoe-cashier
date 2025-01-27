@@ -38,7 +38,7 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
               FormBuilderTextField(
                 name: "outletName",
                 decoration: const InputDecoration(
-                  hintText: "Contoh: Warung Madura",
+                  hintText: "Contoh: Lakoe Coffee",
                 ),
                 validator: FormBuilderValidators.required(
                     errorText: ErrorTextStrings.required(name: "Nama Usaha")),
@@ -108,9 +108,9 @@ class _BusinessInformationFormState extends State<BusinessInformationForm> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 16,
-          ),
+          // const SizedBox(
+          //   height: 16,
+          // ),
           // Column(
           //   crossAxisAlignment: CrossAxisAlignment.start,
           //   children: [
