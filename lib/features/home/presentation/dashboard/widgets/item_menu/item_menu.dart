@@ -19,37 +19,66 @@ class ItemMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, routeName);
-      },
-      child: Column(
-        children: [
-          Container(
-            height: 60.75,
-            width: 60.75,
-            margin: const EdgeInsets.only(bottom: 8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(60.75),
-              color: color,
-            ),
-            child: Center(
-              child: SvgPicture.asset(
-                icon,
-                height: 24,
-                width: 24,
-              ),
-            ),
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, routeName);
+        },
+        child: Container(
+          padding: EdgeInsets.fromLTRB(16, 16, 16, 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: color,
           ),
-          Text(
-            label,
-            style: GoogleFonts.inter(
-              color: TColors.neutralDarkMedium,
-              fontWeight: FontWeight.w600,
-              fontSize: TSizes.fontSizeHeading5,
-            ),
-          )
-        ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SvgPicture.asset(
+                icon,
+                height: 28,
+                width: 28,
+              ),
+              SizedBox(height: 8),
+              Text(
+                label,
+                style: GoogleFonts.inter(
+                  color: TColors.neutralDarkMedium,
+                  fontWeight: FontWeight.w600,
+                  fontSize: TSizes.fontSizeHeading4,
+                ),
+              )
+            ],
+          ),
+        ),
+
+        // Column(
+        //   children: [
+        //     Container(
+        //       height: 60.75,
+        //       width: 60.75,
+        //       margin: const EdgeInsets.only(bottom: 8.0),
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(60.75),
+        //         color: color,
+        //       ),
+        //       child: Center(
+        //         child: SvgPicture.asset(
+        //           icon,
+        //           height: 24,
+        //           width: 24,
+        //         ),
+        //       ),
+        //     ),
+        //     Text(
+        //       label,
+        //       style: GoogleFonts.inter(
+        //         color: TColors.neutralDarkMedium,
+        //         fontWeight: FontWeight.w600,
+        //         fontSize: TSizes.fontSizeHeading5,
+        //       ),
+        //     )
+        //   ],
+        // ),
       ),
     );
   }

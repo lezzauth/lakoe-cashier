@@ -9,10 +9,8 @@ class ItemMenuContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-      margin: const EdgeInsets.symmetric(vertical: 12.0),
+      margin: const EdgeInsets.symmetric(vertical: 20.0),
       child: const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ItemMenu(
             icon: TIcons.dashboardProduct,
@@ -20,22 +18,18 @@ class ItemMenuContainer extends StatelessWidget {
             color: TColors.warningLight,
             routeName: "/products",
           ),
-          ItemMenu(
-            icon: TIcons.dashboardCustomer,
-            label: "Pelanggan",
-            color: TColors.infoLight,
-            routeName: "/customers",
-          ),
+          SizedBox(width: 20),
           ItemMenu(
             icon: TIcons.dashboardReport,
             label: "Laporan",
             color: TColors.errorLight,
             routeName: "/reports",
           ),
+          SizedBox(width: 20),
           ItemMenu(
             icon: TIcons.dashboardSettings,
             label: "Setting",
-            color: TColors.highlightLightest,
+            color: TColors.infoLight,
             routeName: "/settings",
           ),
         ],

@@ -144,6 +144,7 @@ class _DashboardState extends State<Dashboard> {
                     ResponsiveLayout(
                       mobile: Container(
                         padding: EdgeInsets.symmetric(horizontal: 24),
+                        margin: EdgeInsets.only(bottom: 8),
                         child: ItemMenuContainer(),
                       ),
                       tablet: SizedBox.shrink(),
