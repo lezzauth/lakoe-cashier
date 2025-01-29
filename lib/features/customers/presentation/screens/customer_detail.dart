@@ -165,9 +165,13 @@ class _CustomerDetailState extends State<CustomerDetail> {
                                         TextHeading4(data.customer.name),
                                         SizedBox(height: 4),
                                         TextBodyS(
-                                          PhoneNumberFormatter.formatForDisplay(
-                                            data.customer.phoneNumber,
-                                          ),
+                                          data.customer.phoneNumber.isEmpty ||
+                                                  data.customer.phoneNumber ==
+                                                      '-'
+                                              ? '-'
+                                              : PhoneNumberFormatter
+                                                  .formatForDisplay(data
+                                                      .customer.phoneNumber),
                                           color: TColors.neutralDarkLight,
                                         ),
                                       ],

@@ -26,7 +26,7 @@ class SectionCard extends StatelessWidget {
         color: TColors.neutralLightLightest,
         borderRadius: BorderRadius.circular(12.0),
       ),
-      padding: EdgeInsets.symmetric(vertical: title.isNotEmpty ? 8 : 0),
+      padding: EdgeInsets.symmetric(vertical: title.isNotEmpty ? 8 : 12),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -34,7 +34,9 @@ class CustomerContactItem extends StatelessWidget {
           ),
           title: TextHeading4(customer.name),
           subtitle: TextBodyS(
-            customer.phoneNumber.isEmpty || isGuest
+            customer.phoneNumber.isEmpty ||
+                    customer.phoneNumber == '-' ||
+                    isGuest
                 ? '-'
                 : PhoneNumberFormatter.formatForDisplay(customer.phoneNumber),
             color: TColors.neutralDarkLight,

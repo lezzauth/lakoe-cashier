@@ -101,14 +101,14 @@ class ListItemCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8,
-                        vertical: 6,
+                        vertical: 4,
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24),
                         color: TColors.successDark,
                       ),
                       child: const TextCaptionM(
-                        "BARU",
+                        "Baru",
                         color: TColors.neutralLightLightest,
                       ),
                     ),

@@ -44,7 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.dispose();
   }
 
-  List<_SettingItem> productServiceSettingItems = [
+  List<_SettingItem> cardGroupTransaction = [
     // _SettingItem(
     //   title: "Kategori",
     //   routeName: "/categories",
@@ -60,8 +60,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     //   routeName: "/",
     //   iconSrc: TIcons.userId,
     // ),
-  ];
-  List<_SettingItem> paymentReceiptSettingItems = [
+
+    _SettingItem(
+      title: "Riwayat Pesanan",
+      routeName: "/orders",
+      iconSrc: TIcons.bill,
+    ),
     _SettingItem(
       title: "Metode Pembayaran",
       routeName: "/payment_method",
@@ -72,6 +76,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       routeName: "/bank_accounts",
       iconSrc: TIcons.card,
     ),
+  ];
+  List<_SettingItem> cardGroupTax = [
     _SettingItem(
       title: "Pajak",
       routeName: "/taxes",
@@ -83,28 +89,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
       iconSrc: TIcons.handMoney,
     ),
   ];
-  List<_SettingItem> employeeSettingItems = [];
-  List<_SettingItem> otherSettingItems = [
+  List<_SettingItem> cardGroupOther = [
     // _SettingItem(
     //   title: "Kelola Toko Online",
     //   routeName: "/online_shop",
     //   iconSrc: TIcons.shop,
     //   isNewItem: true,
     // ),
+
     _SettingItem(
-      title: "Kategori",
-      routeName: "/categories",
-      iconSrc: TIcons.box,
+      title: "Print & Struk (Bill)",
+      routeName: "/print",
+      iconSrc: TIcons.printer,
+      isNewItem: true,
     ),
     _SettingItem(
-      title: "Manajemen Meja",
+      title: "Data Pelanggan",
+      routeName: "/customers",
+      iconSrc: TIcons.profile,
+    ),
+    _SettingItem(
+      title: "Data Meja",
       routeName: "/tables",
       iconSrc: TIcons.tableRestaurant,
     ),
     _SettingItem(
-      title: "Print & Struk (Bill)",
-      routeName: "/print",
-      iconSrc: TIcons.bill,
+      title: "Kategori Produk",
+      routeName: "/categories",
+      iconSrc: TIcons.box,
     ),
     // _SettingItem(
     //   title: "Singkronisasi Data",
@@ -139,21 +151,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             //   margin: const EdgeInsets.only(bottom: 12),
             //   child: const LoyaltyProgramBanner(),
             // ),
-            // Container(
-            //   margin: const EdgeInsets.only(bottom: 12),
-            //   child: SectionCard(
-            //     title: "Produk & Service",
-            //     children: productServiceSettingItems
-            //         .map(
-            //           (item) => ListItemCard(
-            //             iconSrc: item.iconSrc,
-            //             title: item.title,
-            //             routeName: item.routeName,
-            //           ),
-            //         )
-            //         .toList(),
-            //   ),
-            // ),
+
             Container(
               margin: const EdgeInsets.only(bottom: 12),
               child: InkWell(
@@ -172,31 +170,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             Container(
               margin: const EdgeInsets.only(bottom: 12),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    "/orders",
-                    arguments: {
-                      "previousScreen": "Settings",
-                    },
-                  );
-                },
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
-                splashColor: TColors.neutralLightLight,
-                highlightColor: TColors.neutralLightLight,
-                child: SectionCard(
-                  iconSrc: TIcons.bill,
-                  title: "Riwayat Pesanan",
-                  children: null,
-                ),
+              child: SectionCard(
+                // title: "Produk & Service",
+                children: cardGroupTransaction
+                    .map(
+                      (item) => ListItemCard(
+                        iconSrc: item.iconSrc,
+                        title: item.title,
+                        routeName: item.routeName,
+                      ),
+                    )
+                    .toList(),
               ),
             ),
+            // Container(
+            //   margin: const EdgeInsets.only(bottom: 12),
+            //   child: InkWell(
+            //     onTap: () {
+            //       Navigator.pushNamed(
+            //         context,
+            //         "/orders",
+            //         arguments: {
+            //           "previousScreen": "Settings",
+            //         },
+            //       );
+            //     },
+            //     borderRadius: const BorderRadius.all(Radius.circular(12)),
+            //     splashColor: TColors.neutralLightLight,
+            //     highlightColor: TColors.neutralLightLight,
+            //     child: SectionCard(
+            //       iconSrc: TIcons.bill,
+            //       title: "Riwayat Pesanan",
+            //       children: null,
+            //     ),
+            //   ),
+            // ),
             Container(
               margin: const EdgeInsets.only(bottom: 12),
               child: SectionCard(
-                title: "Pembayaran & Struk",
-                children: paymentReceiptSettingItems
+                // title: "Pembayaran & Struk",
+                children: cardGroupTax
                     .map(
                       (item) => ListItemCard(
                         iconSrc: item.iconSrc,
@@ -211,14 +224,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Container(
               margin: const EdgeInsets.only(bottom: 12),
               child: SectionCard(
-                title: "Lainnya",
-                children: otherSettingItems
+                // title: "Lainnya",
+                children: cardGroupOther
                     .map(
                       (item) => ListItemCard(
                         iconSrc: item.iconSrc,
                         title: item.title,
                         routeName: item.routeName,
-                        isNewItem: item.isNewItem,
+                        isNewItem: item.isNewItem ?? false,
                       ),
                     )
                     .toList(),
@@ -235,11 +248,12 @@ class _SettingItem {
   final String title;
   final String routeName;
   final String iconSrc;
-  final bool isNewItem = false;
+  final bool? isNewItem;
 
   _SettingItem({
     required this.title,
     required this.routeName,
     required this.iconSrc,
+    this.isNewItem = false,
   });
 }
