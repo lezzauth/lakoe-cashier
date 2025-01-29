@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
@@ -84,12 +85,24 @@ class _SuccessConfirmationPaymentContentState
 
   void _onInit() {
     context.read<OrderDetailCubit>().findOne(widget.arguments.payment.order.id);
+    onFirstOrderCompleted();
   }
 
   @override
   void initState() {
     super.initState();
     _onInit();
+  }
+
+  Future<void> onFirstOrderCompleted() async {
+    final AppDataProvider appData = AppDataProvider();
+    bool hasOrderedBefore = await appData.hasMadeFirstOrder;
+
+    if (!hasOrderedBefore) {
+      await appData.setFirstOrderCompleted(true);
+      Logman.instance
+          .info("✅ First order successful! User is now eligible for review.");
+    }
   }
 
   void _handleReceipt(

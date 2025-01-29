@@ -13,6 +13,8 @@ enum AppDataKeys {
   flavor,
   billNumber,
   billNumberForOrder,
+  hasMadeFirstOrder,
+  hasSeenReviewPrompt,
 }
 
 class AppDataProvider {
@@ -54,6 +56,16 @@ class AppDataProvider {
     await _storage.setString(AppDataKeys.flavor.name, value);
   }
 
+  /// Menandai bahwa pengguna sudah layak menerima review setelah order pertama
+  Future<void> setFirstOrderCompleted(bool value) async {
+    await _storage.setBool(AppDataKeys.hasMadeFirstOrder.name, value);
+  }
+
+  /// Menandai bahwa pengguna sudah melihat prompt review (agar tidak muncul lagi)
+  Future<void> setReviewPromptSeen(bool value) async {
+    await _storage.setBool(AppDataKeys.hasSeenReviewPrompt.name, value);
+  }
+
   Future<void> setValues(AppDataModel values) async {
     await _storage.setString(AppDataKeys.outletId.name, values.outletId);
     await _storage.setString(AppDataKeys.ownerId.name, values.ownerId);
@@ -65,6 +77,10 @@ class AppDataProvider {
     await _storage.setString(AppDataKeys.colorBrand.name, values.colorBrand);
     await _storage.setString(AppDataKeys.logoBrand.name, values.logoBrand);
     await _storage.setString(AppDataKeys.flavor.name, values.flavor);
+    await _storage.setBool(
+        AppDataKeys.hasMadeFirstOrder.name, values.hasMadeFirstOrder);
+    await _storage.setBool(
+        AppDataKeys.hasSeenReviewPrompt.name, values.hasSeenReviewPrompt);
   }
 
   Future<String> get outletId async {
@@ -103,6 +119,17 @@ class AppDataProvider {
     return await _storage.getString(AppDataKeys.flavor.name);
   }
 
+  /// Mengecek apakah pengguna sudah layak untuk menerima review
+  Future<bool> get hasMadeFirstOrder async {
+    return await _storage.getBool(AppDataKeys.hasMadeFirstOrder.name) ?? false;
+  }
+
+  /// Mengecek apakah pengguna sudah pernah melihat prompt review
+  Future<bool> get hasSeenReviewPrompt async {
+    return await _storage.getBool(AppDataKeys.hasSeenReviewPrompt.name) ??
+        false;
+  }
+
   Future<AppDataModel> get values async {
     final outletId = await _storage.getString(AppDataKeys.outletId.name) ?? "";
     final ownerId = await _storage.getString(AppDataKeys.ownerId.name) ?? "";
@@ -118,17 +145,22 @@ class AppDataProvider {
     final logoBrand =
         await _storage.getString(AppDataKeys.logoBrand.name) ?? "";
     final flavor = await _storage.getString(AppDataKeys.flavor.name) ?? "";
+    final hasMadeFirstOrder =
+        await _storage.getBool(AppDataKeys.hasMadeFirstOrder.name) ?? false;
+    final hasSeenReviewPrompt =
+        await _storage.getBool(AppDataKeys.hasSeenReviewPrompt.name) ?? false;
 
     return AppDataModel(
-      footNote: footNote,
-      isAutoPrint: isAutoPrint,
-      outletId: outletId,
-      activePackage: activePackage,
-      ownerId: ownerId,
-      avatarSvg: avatarSvg,
-      colorBrand: colorBrand,
-      logoBrand: logoBrand,
-      flavor: flavor,
-    );
+        footNote: footNote,
+        isAutoPrint: isAutoPrint,
+        outletId: outletId,
+        activePackage: activePackage,
+        ownerId: ownerId,
+        avatarSvg: avatarSvg,
+        colorBrand: colorBrand,
+        logoBrand: logoBrand,
+        flavor: flavor,
+        hasMadeFirstOrder: hasMadeFirstOrder,
+        hasSeenReviewPrompt: hasSeenReviewPrompt);
   }
 }
