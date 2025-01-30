@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "276134011857",
-    "project_id": "lakoe-7a23b",
-    "storage_bucket": "lakoe-7a23b.firebasestorage.app"
+    "project_number": "422934089200",
+    "project_id": "lakoe-app---firebase",
+    "storage_bucket": "lakoe-app---firebase.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:276134011857:android:ab442467dede35d097f6f0",
+        "mobilesdk_app_id": "1:422934089200:android:01e636453b61264a0e6135",
         "android_client_info": {
           "package_name": "com.lakoe.app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCLUSZM6RkQptaZQfjMed1lXImbwCshE1g"
+          "current_key": "AIzaSyDcVXZuY2kZEpBFugDsMtZESneca3KuHuU"
         }
       ],
       "services": {
@@ -26,7 +26,7 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:276134011857:android:95a53aeb3144e4c597f6f0",
+        "mobilesdk_app_id": "1:422934089200:android:310bb5538ae30fe80e6135",
         "android_client_info": {
           "package_name": "com.lakoe.app.dev"
         }
@@ -34,7 +34,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCLUSZM6RkQptaZQfjMed1lXImbwCshE1g"
+          "current_key": "AIzaSyDcVXZuY2kZEpBFugDsMtZESneca3KuHuU"
         }
       ],
       "services": {
