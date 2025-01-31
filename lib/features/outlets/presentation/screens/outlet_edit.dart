@@ -35,9 +35,14 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
   OutletModel? arg;
 
   final List<String> businessTypes = [
-    "Kuliner",
-    "Toko Online",
-    "Retail",
+    "Cafe / Coffee Shop",
+    "Warung Makan",
+    "Restoran",
+    "Food Court / Stand",
+    "Toko Kue & Roti",
+    "Minuman & Jajanan",
+    "Cloud Kitchen",
+    "Katering",
     "Lainnya"
   ];
 

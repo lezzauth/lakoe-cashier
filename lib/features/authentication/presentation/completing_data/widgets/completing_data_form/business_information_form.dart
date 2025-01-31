@@ -17,9 +17,14 @@ class BusinessInformationForm extends StatefulWidget {
 
 class _BusinessInformationFormState extends State<BusinessInformationForm> {
   final List<String> businessTypes = [
-    "Kuliner",
-    "Toko Online",
-    "Retail",
+    "Cafe / Coffee Shop",
+    "Warung Makan",
+    "Restoran",
+    "Food Court / Stand",
+    "Toko Kue & Roti",
+    "Minuman & Jajanan",
+    "Cloud Kitchen",
+    "Katering",
     "Lainnya"
   ];
 
