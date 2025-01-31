@@ -86,17 +86,17 @@ class _TableMasterState extends State<TableMaster> {
       ],
       child: Scaffold(
         appBar: CustomAppbar(
-          title: "Manajemen Meja",
+          title: "Data Meja",
           actions: [
-            const SizedBox(width: 5),
-            IconButton(
-              onPressed: () {},
-              icon: const UiIcons(
-                TIcons.download,
-                size: 20,
-                color: TColors.primary,
-              ),
-            )
+            // const SizedBox(width: 5),
+            // IconButton(
+            //   onPressed: () {},
+            //   icon: const UiIcons(
+            //     TIcons.download,
+            //     size: 20,
+            //     color: TColors.primary,
+            //   ),
+            // )
           ],
           bottom: (!tableIsEmpty)
               ? PreferredSize(
