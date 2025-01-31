@@ -27,10 +27,10 @@ class ItemMenuContainer extends StatelessWidget {
           ),
           SizedBox(width: 20),
           ItemMenu(
-            icon: TIcons.dashboardSettings,
-            label: "Setting",
+            icon: TIcons.dashboardOthers,
+            label: "Lainnya",
             color: TColors.infoLight,
-            routeName: "/settings",
+            routeName: "/others",
           ),
         ],
       ),

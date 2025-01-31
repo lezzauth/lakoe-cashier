@@ -8,14 +8,14 @@ import 'package:lakoe_pos/features/outlets/application/outlet_cubit.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 
-class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+class OthersScreen extends StatefulWidget {
+  const OthersScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  State<OthersScreen> createState() => _OthersScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _OthersScreenState extends State<OthersScreen> {
   final ScrollController _scrollController = ScrollController();
   bool _isScrolled = false;
 
@@ -134,7 +134,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppbar(
-        title: "Pengaturan",
+        title: "Menu Lainnya",
         backgroundColor: TColors.neutralLightLightest,
         isScrolled: _isScrolled,
         actions: const [],

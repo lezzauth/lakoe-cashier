@@ -14,7 +14,7 @@ class CustomNavigatorObserver extends NavigatorObserver {
   }
 
   void _updateStatusBar(Route<dynamic>? route) {
-    if (route?.settings.name == "/settings") {
+    if (route?.settings.name == "/others") {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.dark.copyWith(
           statusBarColor: TColors.neutralLightLightest,

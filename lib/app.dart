@@ -137,7 +137,7 @@ import 'package:lakoe_pos/features/reports/data/arguments.dart';
 import 'package:lakoe_pos/features/reports/presentation/screens/report_best_seller.dart';
 import 'package:lakoe_pos/features/reports/presentation/screens/report_product_sales.dart';
 import 'package:lakoe_pos/features/reports/presentation/screens/report_master.dart';
-import 'package:lakoe_pos/features/settings/presentation/screens/settings.dart';
+import 'package:lakoe_pos/features/others/presentation/screens/others.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_cubit.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
 import 'package:lakoe_pos/features/tables/presentation/screens/table_edit.dart';
@@ -409,7 +409,7 @@ class _AppState extends State<App> {
             "/tables/edit/brand": (context) => const BrandEditScreen(),
 
             // settings
-            "/settings": (context) => const SettingsScreen(),
+            "/others": (context) => const OthersScreen(),
 
             // payment method
             "/payment_method": (context) => const PaymentMethodMasterScreen(),
