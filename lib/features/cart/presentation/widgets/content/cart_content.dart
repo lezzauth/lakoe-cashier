@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/data/models.dart';
 import 'package:lakoe_pos/common/widgets/form/counter.dart';
+import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
@@ -229,55 +230,58 @@ class _CartContentState extends State<CartContent> {
                         },
                       ),
                       SliverToBoxAdapter(
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 16.0,
-                              horizontal: 20.0,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 1,
-                                color: TColors.neutralLightMedium,
-                              ),
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            child: Row(children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    TextHeading3(
-                                      "Mau tambah pesanan?",
-                                      color: TColors.neutralDarkDarkest,
-                                    ),
-                                    TextBodyS(
-                                      "Kamu masih bisa tambah pesanan ini.",
-                                      color: TColors.neutralDarkLight,
-                                    ),
-                                  ],
+                        child: ResponsiveLayout(
+                            mobile: Padding(
+                              padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 16.0,
+                                  horizontal: 20.0,
                                 ),
-                              ),
-                              Container(
-                                height: 36,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     width: 1,
-                                    color: TColors.primary,
+                                    color: TColors.neutralLightMedium,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(16.0),
                                 ),
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: TextActionL("Tambah"),
-                                ),
+                                child: Row(children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextHeading3(
+                                          "Mau tambah pesanan?",
+                                          color: TColors.neutralDarkDarkest,
+                                        ),
+                                        TextBodyS(
+                                          "Kamu masih bisa tambah pesanan ini.",
+                                          color: TColors.neutralDarkLight,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 36,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 1,
+                                        color: TColors.primary,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: TextActionL("Tambah"),
+                                    ),
+                                  ),
+                                ]),
                               ),
-                            ]),
-                          ),
-                        ),
+                            ),
+                            tablet: SizedBox.shrink()),
                       ),
                       SliverToBoxAdapter(
                         child: Container(
