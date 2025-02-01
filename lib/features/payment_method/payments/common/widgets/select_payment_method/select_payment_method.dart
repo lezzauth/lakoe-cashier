@@ -83,7 +83,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           UiIcons(
-                            TIcons.dashboardSettings,
+                            TIcons.settings,
                             color: TColors.primary,
                             size: 14,
                           ),

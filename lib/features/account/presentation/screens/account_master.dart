@@ -100,7 +100,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
   Future<void> _updateAppVersion() async {
     final appVersion = await getAppVersion();
     setState(() {
-      otherSettingItems = otherSettingItems.map((item) {
+      otherSectionItems = otherSectionItems.map((item) {
         if (item.title == "Kasih Rating") {
           return _OtherItem(
             title: item.title,
@@ -115,7 +115,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
     });
   }
 
-  List<_OtherItem> otherSettingItems = [
+  List<_OtherItem> accountSectionItems = [
     _OtherItem(
       title: "Paket & Riwayat",
       routeName: "/packages/purchase/history",
@@ -123,12 +123,20 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       isNewItem: false,
     ),
     _OtherItem(
-      title: "Kasih Rating",
+      title: "Lakoe Lite",
       routeName: "",
-      iconSrc: TIcons.star,
-      textTrailing: "",
+      iconSrc: TIcons.lakoeLite,
       isNewItem: false,
     ),
+    _OtherItem(
+      title: "Atur Akun",
+      routeName: "/manage_account",
+      iconSrc: TIcons.linkSquare,
+      isNewItem: false,
+    ),
+  ];
+
+  List<_OtherItem> otherSectionItems = [
     _OtherItem(
       title: "Syarat & Ketentuan",
       routeName: "/terms_conditions",
@@ -142,9 +150,17 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       isNewItem: false,
     ),
     _OtherItem(
-      title: "Atur Akun",
-      routeName: "/manage_account",
-      iconSrc: TIcons.linkSquare,
+      title: "Kritik & Saran",
+      routeName: "",
+      iconSrc: TIcons.documentAdd,
+      textTrailing: "",
+      isNewItem: false,
+    ),
+    _OtherItem(
+      title: "Kasih Rating",
+      routeName: "",
+      iconSrc: TIcons.star,
+      textTrailing: "",
       isNewItem: false,
     ),
   ];
@@ -253,7 +269,34 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
                           OutletCard(),
                           const SizedBox(height: 12),
                           OtherCard(
-                            children: otherSettingItems
+                            childrenSectionAccount: accountSectionItems
+                                .map(
+                                  (item) => ListItemCard(
+                                    iconSrc: item.iconSrc,
+                                    title: item.title,
+                                    routeName: item.routeName,
+                                    isNewItem: item.isNewItem!,
+                                    textTrailing: item.textTrailing,
+                                    onTap: () {
+                                      if (item.title.contains("Lakoe")) {
+                                        if (profile.packageName != "LITE") {
+                                          Navigator.pushNamed(
+                                            context,
+                                            "/account/active_package",
+                                            arguments: {
+                                              'packageName': profile.packageName
+                                            },
+                                          );
+                                        } else {
+                                          Navigator.pushNamed(
+                                              context, "/packages");
+                                        }
+                                      }
+                                    },
+                                  ),
+                                )
+                                .toList(),
+                            childrenSectionOther: otherSectionItems
                                 .map(
                                   (item) => ListItemCard(
                                     iconSrc: item.iconSrc,
@@ -265,6 +308,12 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
                                       if (item.title.contains("Rating")) {
                                         _launchPlayStore(
                                           "https://play.google.com/store/apps/details?id=com.lakoe.app",
+                                        );
+                                      } else if (item.title.contains("Saran")) {
+                                        Navigator.pushNamed(
+                                          context,
+                                          "/user-feedback",
+                                          arguments: profile,
                                         );
                                       }
                                     },
@@ -396,10 +445,11 @@ class ProfileCard extends StatelessWidget {
                           ),
                         ),
                         const UiIcons(
-                          TIcons.arrowRight,
-                          size: 20,
-                          color: TColors.primary,
+                          TIcons.settings,
+                          size: 24,
+                          color: TColors.neutralDarkDark,
                         ),
+                        SizedBox(width: 4),
                       ],
                     ),
                   ),
@@ -578,7 +628,7 @@ class OutletCard extends StatelessWidget {
                       // ),
                     ),
                     child: CircleAvatar(
-                      radius: 22,
+                      radius: 20,
                       backgroundColor: Color(colorBrand),
                       child: ColorFiltered(
                         colorFilter: ColorFilter.mode(
@@ -588,8 +638,8 @@ class OutletCard extends StatelessWidget {
                         ),
                         child: Image.network(
                           outletLogo!,
-                          width: 32,
-                          height: 32,
+                          width: 24,
+                          height: 24,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return Image.asset(
@@ -656,16 +706,28 @@ class OutletCard extends StatelessWidget {
 }
 
 class OtherCard extends StatelessWidget {
-  final List<Widget> children;
-  const OtherCard({super.key, required this.children});
+  final List<Widget> childrenSectionAccount;
+  final List<Widget> childrenSectionOther;
+  const OtherCard({
+    super.key,
+    required this.childrenSectionAccount,
+    required this.childrenSectionOther,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
-      child: SectionCard(
-        title: "Lainnya",
-        children: children,
+      child: Column(
+        children: [
+          SectionCard(
+            children: childrenSectionAccount,
+          ),
+          SizedBox(height: 12),
+          SectionCard(
+            children: childrenSectionOther,
+          ),
+        ],
       ),
     );
   }

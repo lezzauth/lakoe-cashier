@@ -5,11 +5,11 @@ class TIcons {
   static const String dashboardProduct = "assets/icons/product.svg";
   static const String dashboardQROrder = "assets/icons/qr-order.svg";
   static const String dashboardReport = "assets/icons/report.svg";
-  static const String dashboardSettings = "assets/icons/others.svg";
   static const String dashboardOthers = "assets/icons/other-grid.svg";
 
   static const String bell = "assets/icons/bell.svg";
   static const String data = "assets/icons/data.svg";
+  static const String settings = "assets/icons/settings.svg";
   static const String homeOutline = "assets/icons/home-outline.svg";
   static const String peopleOutline = "assets/icons/people-outline.svg";
   static const String shop = "assets/icons/shop.svg";
@@ -107,4 +107,8 @@ class TIcons {
   static const String profileCircle = "assets/icons/profile-circle.svg";
   static const String truckFast = "assets/icons/truck-fast.svg";
   static const String wallet2 = "assets/icons/wallet-2.svg";
+  static const String documentAdd = "assets/icons/document-add.svg";
+  static const String lakoeLite = "assets/icons/lakoe-lite.svg";
+  static const String lakoeGrow = "assets/icons/lakoe-grow.svg";
+  static const String lakoePro = "assets/icons/lakoe-pro.svg";
 }

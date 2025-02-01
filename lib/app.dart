@@ -7,6 +7,7 @@ import 'package:lakoe_pos/features/account/manage_account/application/delete_acc
 import 'package:lakoe_pos/features/account/manage_account/presentation/screens/otp_input.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/edit_acccount_pin.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/otp_input.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/form/user_feedback.dart';
 import 'package:lakoe_pos/features/checkout/presentation/screens/payment_failed.dart';
 import 'package:lakoe_pos/features/customers/presentation/screens/edit_customer.dart';
 import 'package:lakoe_pos/features/employees/data/arguments/forgot_pin_dto.dart';
@@ -487,6 +488,10 @@ class _AppState extends State<App> {
                 const DeleteAccountReasonScreen(),
             "/otp-input-delete-account": (context) =>
                 OtpInputDeleteAccountScreen(),
+            "/user-feedback": (context) => UserFeedbackScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as OwnerProfileModel,
+                ),
 
             // Package
             "/packages": (context) => const PackageMasterScreen(),
