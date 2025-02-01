@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/shimmer/shimmer_card_report.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_master_cubit.dart';
+import 'package:lakoe_pos/utils/helpers/app_update_helper.dart';
 import 'package:lakoe_pos/utils/helpers/request_review.dart';
 import 'package:logman/logman.dart';
 import 'package:outlet_repository/outlet_repository.dart';
@@ -61,6 +62,10 @@ class _DashboardState extends State<Dashboard> {
     context.read<PackageMasterCubit>().init();
 
     _checkAndRequestReview();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      AppUpdateHelper.checkForUpdate(context: context);
+    });
   }
 
   @override
