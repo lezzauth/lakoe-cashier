@@ -6,6 +6,7 @@ import 'package:lakoe_pos/common/widgets/bottomsheets/info_bagde_status.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/general_information.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/order/cashier_order_cubit.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
@@ -613,6 +614,74 @@ class _OrderDetailState extends State<OrderDetail> {
                                 ),
                                 SliverToBoxAdapter(
                                   child: Padding(
+                                    padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 16.0,
+                                        horizontal: 20.0,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 1,
+                                          color: TColors.neutralLightMedium,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
+                                      ),
+                                      child: Row(children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              TextHeading3(
+                                                "Ada yang mau diubah?",
+                                                color:
+                                                    TColors.neutralDarkDarkest,
+                                              ),
+                                              TextBodyS(
+                                                "Kamu masih bisa ubah pesanan ini.",
+                                                color: TColors.neutralDarkLight,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 36,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              width: 1,
+                                              color: TColors.primary,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          child: TextButton(
+                                            onPressed: () async {
+                                              if (order.status == "OPEN" &&
+                                                  _isCashier) {
+                                                await Navigator.pushNamed(
+                                                  context,
+                                                  "/orders/add-item",
+                                                  arguments: OrderEditArgument(
+                                                      order: order),
+                                                );
+
+                                                _onRefresh();
+                                              } else {
+                                                showCashierAccessBottomSheet(
+                                                    context, "mengubah");
+                                              }
+                                            },
+                                            child: TextActionL("Ubah"),
+                                          ),
+                                        ),
+                                      ]),
+                                    ),
+                                  ),
+                                ),
+                                SliverToBoxAdapter(
+                                  child: Padding(
                                     padding: EdgeInsets.all(16.0),
                                     child: Column(
                                       crossAxisAlignment:
@@ -667,28 +736,40 @@ class _OrderDetailState extends State<OrderDetail> {
                               ),
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(
-                                    16, 8, 16, widget.isTabletView ? 8 : 20),
+                                  16,
+                                  8,
+                                  16,
+                                  widget.isTabletView ? 8 : 20,
+                                ),
                                 child: OrderOutletAction(
                                     isPaid: order.status == "COMPLETED",
                                     isCancel: order.status == "CANCELLED",
                                     isClosed: order.status == "CLOSED",
                                     type: order.type,
-                                    onEditOrder: () async {
-                                      if (order.status == "OPEN" &&
-                                          _isCashier) {
-                                        await Navigator.pushNamed(
-                                          context,
-                                          "/orders/add-item",
-                                          arguments:
-                                              OrderEditArgument(order: order),
-                                        );
+                                    onPrintBill: () {
+                                      final billMasterState =
+                                          context.read<BillMasterCubit>().state;
+                                      String footNote =
+                                          billMasterState.footNote;
 
-                                        _onRefresh();
+                                      final authState =
+                                          context.read<AuthCubit>().state;
+
+                                      OwnerProfileModel profile;
+                                      if (authState is AuthReady) {
+                                        profile = authState.profile;
                                       } else {
-                                        showCashierAccessBottomSheet(
-                                            context, "mengubah");
+                                        profile =
+                                            TemplateOrderModel().ownerProfile;
+
+                                        Logman.instance.error(
+                                            'AuthState is not ready, using default profile.');
                                       }
+
+                                      TBill.printReceipt(
+                                          context, profile, order, footNote);
                                     },
+                                    onEditOrder: () {},
                                     onComplete: () {
                                       if (order.status == "CLOSED") {
                                         _onCompleteOrder(
@@ -795,6 +876,7 @@ class OrderOutletAction extends StatelessWidget {
   final bool isCancel;
   final bool isClosed;
 
+  final Function() onPrintBill;
   final Function() onEditOrder;
   final Function() onComplete;
   final Function() onShare;
@@ -806,6 +888,7 @@ class OrderOutletAction extends StatelessWidget {
     required this.isPaid,
     required this.isCancel,
     required this.isClosed,
+    required this.onPrintBill,
     required this.onEditOrder,
     required this.onComplete,
     required this.onShare,
@@ -832,6 +915,7 @@ class OrderOutletAction extends StatelessWidget {
     }
 
     return OrderOutetOnProgressAction(
+      onPrintBill: onPrintBill,
       onEditOrder: onEditOrder,
       onComplete: onComplete,
     );
@@ -839,11 +923,13 @@ class OrderOutletAction extends StatelessWidget {
 }
 
 class OrderOutetOnProgressAction extends StatelessWidget {
+  final Function() onPrintBill;
   final Function() onEditOrder;
   final Function() onComplete;
 
   const OrderOutetOnProgressAction({
     super.key,
+    required this.onPrintBill,
     required this.onEditOrder,
     required this.onComplete,
   });
@@ -853,8 +939,8 @@ class OrderOutetOnProgressAction extends StatelessWidget {
     return Row(
       children: [
         OutlinedButton(
-          onPressed: onEditOrder,
-          child: TextActionL("Ubah Pesanan"),
+          onPressed: onPrintBill,
+          child: TextActionL("Print Struk "),
         ),
         SizedBox(width: 12),
         Expanded(
@@ -924,7 +1010,7 @@ class OrderOutletPaidAction extends StatelessWidget {
                   color: TColors.highlightLightest,
                 ),
                 SizedBox(width: 8),
-                TextActionL("Cetak"),
+                TextActionL("Print Struk"),
               ],
             ),
           ),

@@ -1,5 +1,4 @@
 import 'package:app_data_provider/app_data_provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -126,9 +125,7 @@ class _SuccessConfirmationPaymentContentState
       profile = authState.profile;
     } else {
       profile = TemplateOrderModel().ownerProfile;
-      if (kDebugMode) {
-        print('AuthState is not ready, using default profile.');
-      }
+      Logman.instance.error('AuthState is not ready, using default profile.');
     }
 
     action(context, profile, order, footNote, _scrollController);
@@ -462,7 +459,7 @@ class _SuccessConfirmationPaymentContentState
                                           child: OutlinedButton(
                                             onPressed: () =>
                                                 _onPrintReceipt(context, order),
-                                            child: TextActionL("Cetak Struk"),
+                                            child: TextActionL("Print Struk"),
                                           ),
                                         ),
                                       ],

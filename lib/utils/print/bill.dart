@@ -181,7 +181,7 @@ class TBill {
           styles: const PosStyles(align: PosAlign.left)),
       PosColumn(
           text: TFormatter.formatBillNumber(
-            order.closedAt!,
+            order.closedAt ?? order.createdAt,
             profileOwner.outlets[0].name,
           ),
           width: 7,
@@ -355,76 +355,98 @@ class TBill {
       ),
     ]);
 
-    Transactions payment = order.transactions![0];
+    if (order.transactions!.isNotEmpty) {
+      Transactions payment = order.transactions![0];
 
-    bytes += generator.row([
-      PosColumn(
-        text: TPaymentMethodName.getName(
-          payment.paymentMethod,
-          payment.paidFrom,
-        ),
-        width: 6,
-        styles: const PosStyles(
-          align: PosAlign.left,
-        ),
-      ),
-      PosColumn(
-        text: TFormatter.formatToRupiah(double.parse(payment.paidAmount)),
-        width: 6,
-        styles: const PosStyles(
-          align: PosAlign.right,
-        ),
-      ),
-    ]);
-    if (payment.approvalCode != null) {
       bytes += generator.row([
         PosColumn(
-          text: "Approval Code",
+          text: TPaymentMethodName.getName(
+            payment.paymentMethod,
+            payment.paidFrom,
+          ),
           width: 6,
           styles: const PosStyles(
             align: PosAlign.left,
           ),
         ),
         PosColumn(
-          text: payment.approvalCode ?? "-",
+          text: TFormatter.formatToRupiah(double.parse(payment.paidAmount)),
           width: 6,
           styles: const PosStyles(
             align: PosAlign.right,
           ),
         ),
       ]);
-    }
-    bytes += generator.hr();
-    bytes += generator.row([
-      PosColumn(
-        text: "Change",
-        width: 6,
-        styles: const PosStyles(align: PosAlign.left, bold: true),
-      ),
-      PosColumn(
-        text: TFormatter.formatToRupiah(double.parse(payment.change)),
-        width: 6,
-        styles: const PosStyles(
-          align: PosAlign.right,
-          bold: true,
-        ),
-      ),
-    ]);
-    bytes += generator.hr();
-    bytes +=
-        generator.text("Close Bill: ${TFormatter.billDate(payment.createdAt)}",
+      if (payment.approvalCode != null) {
+        bytes += generator.row([
+          PosColumn(
+            text: "Approval Code",
+            width: 6,
             styles: const PosStyles(
-              align: PosAlign.center,
-              bold: true,
-            ));
-    bytes += generator.hr();
+              align: PosAlign.left,
+            ),
+          ),
+          PosColumn(
+            text: payment.approvalCode ?? "-",
+            width: 6,
+            styles: const PosStyles(
+              align: PosAlign.right,
+            ),
+          ),
+        ]);
+      }
+      bytes += generator.hr();
+      bytes += generator.row([
+        PosColumn(
+          text: "Change",
+          width: 6,
+          styles: const PosStyles(align: PosAlign.left, bold: true),
+        ),
+        PosColumn(
+          text: TFormatter.formatToRupiah(double.parse(payment.change)),
+          width: 6,
+          styles: const PosStyles(
+            align: PosAlign.right,
+            bold: true,
+          ),
+        ),
+      ]);
+      bytes += generator.hr();
+      bytes += generator.text(
+          "Close Bill: ${TFormatter.billDate(order.closedAt ?? DateTime.now().toString())}",
+          styles: const PosStyles(
+            align: PosAlign.center,
+            bold: true,
+          ));
+      bytes += generator.hr();
+    }
 
-    bytes += generator.text(
-      footNote,
-      styles: const PosStyles(
-        align: PosAlign.center,
-      ),
-    );
+    if (order.closedAt == null) {
+      bytes += generator.hr();
+      bytes += generator.text("Open Bill",
+          styles: const PosStyles(
+            align: PosAlign.center,
+            bold: true,
+          ));
+      bytes += generator.hr();
+    }
+
+    if (order.transactions!.isNotEmpty) {
+      bytes += generator.text(
+        footNote,
+        styles: const PosStyles(
+          align: PosAlign.center,
+        ),
+      );
+    } else {
+      bytes += generator.text(
+        "Silakan cek kembali pesanan kamu sebelum membayar.",
+        styles: const PosStyles(
+          align: PosAlign.center,
+        ),
+      );
+    }
+
     bytes += generator.emptyLines(1);
     bytes += generator.text(
       "Supported by",
