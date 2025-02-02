@@ -20,6 +20,7 @@ class TImages {
   static const String stampCancel = "assets/images/stamp-cancel.svg";
   static const String infinity = "assets/images/infinity.svg";
   static const String growToPro = "assets/images/grow-to-pro.webp";
+  static const String feedbackSuccess = "assets/images/feedback-success.svg";
   static const String catBox = "assets/images/cat-box.svg";
   static const String qrisLogo = "assets/images/qris-logo.svg";
   static const String liteLogo = "assets/images/lite-logo.png";

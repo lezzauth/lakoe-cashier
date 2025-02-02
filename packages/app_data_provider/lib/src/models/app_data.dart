@@ -8,6 +8,8 @@ class AppDataModel {
   final String colorBrand;
   final String logoBrand;
   final String flavor;
+  final bool hasMadeFirstOrder;
+  final bool hasSeenReviewPrompt;
 
   AppDataModel({
     required this.outletId,
@@ -19,5 +21,7 @@ class AppDataModel {
     required this.colorBrand,
     required this.logoBrand,
     required this.flavor,
+    required this.hasMadeFirstOrder,
+    required this.hasSeenReviewPrompt,
   });
 }

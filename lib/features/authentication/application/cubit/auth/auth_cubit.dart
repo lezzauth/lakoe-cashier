@@ -195,7 +195,7 @@ class AuthCubit extends Cubit<AuthState> {
             "Catch Edit Account ${e.response?.statusCode}: ${e.response?.data}");
       } else {
         errorMessage =
-            "Tidak dapat terhubung ke server. Periksa koneksi internet Anda.";
+            "Tidak dapat terhubung ke server. Periksa koneksi internet kamu.";
         Logman.instance.error("Catch Edit Account ${e.message}");
       }
 

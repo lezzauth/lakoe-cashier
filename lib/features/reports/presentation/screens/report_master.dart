@@ -230,10 +230,11 @@ class _ReportMasterState extends State<ReportMaster> {
                                         useSafeArea: true,
                                         builder: (context) {
                                           return DetailAmount(
-                                            label: "Total Keuntungan (Bersih)",
+                                            label:
+                                                "Total Keuntungan (Penjualan)",
                                             amount: report.totalProfit,
                                             description:
-                                                "Keuntungan bersih adalah selisih antara harga jual dan harga modal produk. Rumusnya: Harga Jual - Harga Modal.",
+                                                "Keuntungan penjualan adalah selisih antara harga jual dan harga modal produk. Rumusnya: Harga Jual - Harga Modal.",
                                           );
                                         },
                                       );

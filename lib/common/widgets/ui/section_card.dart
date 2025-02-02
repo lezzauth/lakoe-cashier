@@ -9,6 +9,7 @@ class SectionCard extends StatelessWidget {
   final String description;
   final String? iconSrc;
   final List<Widget>? children;
+  final Color? bgColor;
 
   const SectionCard({
     super.key,
@@ -16,6 +17,7 @@ class SectionCard extends StatelessWidget {
     this.description = "",
     this.iconSrc,
     this.children,
+    this.bgColor = TColors.neutralLightLightest,
   });
 
   @override
@@ -23,10 +25,10 @@ class SectionCard extends StatelessWidget {
     return Container(
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: TColors.neutralLightLightest,
+        color: bgColor,
         borderRadius: BorderRadius.circular(12.0),
       ),
-      padding: EdgeInsets.symmetric(vertical: title.isNotEmpty ? 8 : 0),
+      padding: EdgeInsets.symmetric(vertical: title.isNotEmpty ? 8 : 12),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,

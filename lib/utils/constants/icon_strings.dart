@@ -3,12 +3,12 @@ class TIcons {
 
   static const String dashboardCustomer = "assets/icons/contact.svg";
   static const String dashboardProduct = "assets/icons/product.svg";
-  static const String dashboardQROrder = "assets/icons/qr-order.svg";
   static const String dashboardReport = "assets/icons/report.svg";
-  static const String dashboardSettings = "assets/icons/settings.svg";
+  static const String dashboardOthers = "assets/icons/other-grid.svg";
 
   static const String bell = "assets/icons/bell.svg";
   static const String data = "assets/icons/data.svg";
+  static const String settings = "assets/icons/settings.svg";
   static const String homeOutline = "assets/icons/home-outline.svg";
   static const String peopleOutline = "assets/icons/people-outline.svg";
   static const String shop = "assets/icons/shop.svg";
@@ -62,11 +62,13 @@ class TIcons {
   static const String scanner = "assets/icons/scanner.svg";
   static const String cardIn = "assets/icons/card-in.svg";
   static const String billCross = "assets/icons/bill-cross.svg";
+  static const String qrcode = "assets/icons/qr-code.svg";
 
   static const String card = "assets/icons/card.svg";
   static const String history = "assets/icons/history.svg";
   static const String filterColor = "assets/icons/filter-color.svg";
   static const String handMoney = "assets/icons/hand-money.svg";
+  static const String tag = "assets/icons/tag.svg";
   static const String linkSquare = "assets/icons/link-square.svg";
   static const String pieChart = "assets/icons/pie-chart.svg";
   static const String printer = "assets/icons/printer.svg";
@@ -106,4 +108,8 @@ class TIcons {
   static const String profileCircle = "assets/icons/profile-circle.svg";
   static const String truckFast = "assets/icons/truck-fast.svg";
   static const String wallet2 = "assets/icons/wallet-2.svg";
+  static const String documentAdd = "assets/icons/document-add.svg";
+  static const String lakoeLite = "assets/icons/lakoe-lite.svg";
+  static const String lakoeGrow = "assets/icons/lakoe-grow.svg";
+  static const String lakoePro = "assets/icons/lakoe-pro.svg";
 }

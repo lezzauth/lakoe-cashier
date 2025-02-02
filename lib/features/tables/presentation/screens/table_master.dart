@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
-import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
@@ -15,7 +14,6 @@ import 'package:lakoe_pos/features/tables/application/cubit/table_master_locatio
 import 'package:lakoe_pos/features/tables/common/widgets/table_item.dart';
 import 'package:lakoe_pos/features/tables/presentation/widgets/filter/table_location_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
-import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:table_repository/table_repository.dart';
 
@@ -86,17 +84,17 @@ class _TableMasterState extends State<TableMaster> {
       ],
       child: Scaffold(
         appBar: CustomAppbar(
-          title: "Manajemen Meja",
+          title: "Data Meja",
           actions: [
-            const SizedBox(width: 5),
-            IconButton(
-              onPressed: () {},
-              icon: const UiIcons(
-                TIcons.download,
-                size: 20,
-                color: TColors.primary,
-              ),
-            )
+            // const SizedBox(width: 5),
+            // IconButton(
+            //   onPressed: () {},
+            //   icon: const UiIcons(
+            //     TIcons.download,
+            //     size: 20,
+            //     color: TColors.primary,
+            //   ),
+            // )
           ],
           bottom: (!tableIsEmpty)
               ? PreferredSize(

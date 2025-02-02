@@ -6,7 +6,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lakoe_pos/utils/helpers/app_update_helper.dart';
 import 'package:lakoe_pos/utils/helpers/deeplink_handler.dart';
 import 'package:logman/logman.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
@@ -68,9 +67,6 @@ class _RedirectScreenState extends State<RedirectScreen> {
       },
     );
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      AppUpdateHelper.checkForUpdate(context: context);
-    });
     authInitialize();
   }
 

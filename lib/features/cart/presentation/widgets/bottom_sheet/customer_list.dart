@@ -143,8 +143,9 @@ class _CartCustomerListContentState extends State<CartCustomerListContent> {
                               ),
                               title: TextHeading4(customer.name),
                               subtitle: TextBodyS(
-                                (customer.phoneNumber == '-')
-                                    ? customer.phoneNumber
+                                (customer.phoneNumber == '-' ||
+                                        customer.phoneNumber.isEmpty)
+                                    ? "-"
                                     : PhoneNumberFormatter.formatForDisplay(
                                         customer.phoneNumber,
                                       ),

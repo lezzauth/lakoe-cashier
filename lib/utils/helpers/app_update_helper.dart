@@ -27,9 +27,12 @@ class AppUpdateHelper {
   }
 
   static void _showUpdateDialog(
-      BuildContext context, AppUpdateInfo updateInfo) {
+    BuildContext context,
+    AppUpdateInfo updateInfo,
+  ) {
     showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (context) {
           return CustomBottomsheet(
             child: Padding(
@@ -37,60 +40,63 @@ class AppUpdateHelper {
                 horizontal: 20,
                 vertical: 12,
               ),
-              child: Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        TImages.updateAvailable,
-                        width: double.infinity,
-                        height: 190,
-                      ),
-                      SizedBox(height: 40),
-                      TextHeading2(
-                        "Update Lakoe, yuk!",
-                        color: TColors.neutralDarkDark,
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 4),
-                      TextBodyL(
-                        "Ada versi terbaru dari Lakoe yang bisa kamu update sekarang juga!",
-                        color: TColors.neutralDarkDark,
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 20),
-                    ],
-                  ),
-                  SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: TertiaryButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: TextActionL("Nanti Saja"),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          TImages.updateAvailable,
+                          width: double.infinity,
+                          height: 190,
                         ),
-                      ),
-                      SizedBox(width: 12),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            if (updateInfo.immediateUpdateAllowed) {
-                              performImmediateUpdate(context);
-                            } else {
-                              performFlexibleUpdate(context);
-                            }
-                          },
-                          child: TextActionL("Oke, Update"),
+                        SizedBox(height: 40),
+                        TextHeading2(
+                          "Update Lakoe, yuk!",
+                          color: TColors.neutralDarkDark,
+                          textAlign: TextAlign.center,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        SizedBox(height: 4),
+                        TextBodyL(
+                          "Ada versi terbaru dari Lakoe yang bisa kamu update sekarang juga!",
+                          color: TColors.neutralDarkDark,
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ),
+                    SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: TertiaryButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: TextActionL("Nanti Saja"),
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              if (updateInfo.immediateUpdateAllowed) {
+                                performImmediateUpdate(context);
+                              } else {
+                                performFlexibleUpdate(context);
+                              }
+                            },
+                            child: TextActionL("Oke, Update"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           );

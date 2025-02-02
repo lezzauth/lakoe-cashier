@@ -178,7 +178,7 @@ class _TaxFormState extends State<TaxForm> {
                                 children: [
                                   const FormLabel(
                                     "Tarif PB1",
-                                    sub: "(maksimal 10%)",
+                                    sub: "(Maksimal 10%)",
                                   ),
                                   FormBuilderTextField(
                                     name: "value",

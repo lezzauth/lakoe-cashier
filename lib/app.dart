@@ -7,6 +7,7 @@ import 'package:lakoe_pos/features/account/manage_account/application/delete_acc
 import 'package:lakoe_pos/features/account/manage_account/presentation/screens/otp_input.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/edit_acccount_pin.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/otp_input.dart';
+import 'package:lakoe_pos/features/account/presentation/screens/form/user_feedback.dart';
 import 'package:lakoe_pos/features/checkout/presentation/screens/payment_failed.dart';
 import 'package:lakoe_pos/features/customers/presentation/screens/edit_customer.dart';
 import 'package:lakoe_pos/features/employees/data/arguments/forgot_pin_dto.dart';
@@ -137,7 +138,7 @@ import 'package:lakoe_pos/features/reports/data/arguments.dart';
 import 'package:lakoe_pos/features/reports/presentation/screens/report_best_seller.dart';
 import 'package:lakoe_pos/features/reports/presentation/screens/report_product_sales.dart';
 import 'package:lakoe_pos/features/reports/presentation/screens/report_master.dart';
-import 'package:lakoe_pos/features/settings/presentation/screens/settings.dart';
+import 'package:lakoe_pos/features/others/presentation/screens/others.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master/table_master_cubit.dart';
 import 'package:lakoe_pos/features/tables/application/cubit/table_master_location/table_master_location_cubit.dart';
 import 'package:lakoe_pos/features/tables/presentation/screens/table_edit.dart';
@@ -409,7 +410,7 @@ class _AppState extends State<App> {
             "/tables/edit/brand": (context) => const BrandEditScreen(),
 
             // settings
-            "/settings": (context) => const SettingsScreen(),
+            "/others": (context) => const OthersScreen(),
 
             // payment method
             "/payment_method": (context) => const PaymentMethodMasterScreen(),
@@ -487,6 +488,10 @@ class _AppState extends State<App> {
                 const DeleteAccountReasonScreen(),
             "/otp-input-delete-account": (context) =>
                 OtpInputDeleteAccountScreen(),
+            "/user-feedback": (context) => UserFeedbackScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as OwnerProfileModel,
+                ),
 
             // Package
             "/packages": (context) => const PackageMasterScreen(),
