@@ -101,7 +101,7 @@ class _FinalBalanceFormState extends State<FinalBalanceForm> {
                 Container(
                   margin: EdgeInsets.only(bottom: 28.0),
                   child: TextBodyS(
-                    "Masukkan jumlah uang tunai yang ada di laci kasir setelah Anda menyelesaikan shift. Ini akan membantu kami memastikan bahwa semua transaksi telah dicatat dengan benar.",
+                    "Masukkan jumlah uang tunai yang ada di laci kasir setelah kamu menyelesaikan shift. Ini akan membantu kami memastikan bahwa semua transaksi telah dicatat dengan benar.",
                     color: TColors.neutralDarkLightest,
                   ),
                 ),

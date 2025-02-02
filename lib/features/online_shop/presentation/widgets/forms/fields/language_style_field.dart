@@ -23,7 +23,7 @@ List<LanguageStyleItem> items = [
   ),
   LanguageStyleItem(
     title: "Profesional",
-    description: 'Contoh: "Selamat siang, bagaimana saya bisa membantu Anda?"',
+    description: 'Contoh: "Selamat siang, bagaimana saya bisa membantu kamu?"',
     value: "professional",
   ),
   LanguageStyleItem(

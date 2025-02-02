@@ -68,7 +68,7 @@ class RequestReview {
                     ),
                     SizedBox(height: 4),
                     TextBodyM(
-                      "Kalau ada waktu luang, yuk berikan ulasan di Play Store. Ulasan dari Anda sangat membantu kami untuk terus mengembangkan aplikasi ini.",
+                      "Kalau ada waktu luang, yuk berikan ulasan di Play Store. Ulasan dari kamu sangat membantu kami untuk terus mengembangkan aplikasi ini.",
                       color: TColors.neutralDarkDark,
                     ),
                   ],

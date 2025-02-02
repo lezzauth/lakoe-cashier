@@ -69,7 +69,7 @@ class _AddCustomerServiceState extends State<AddCustomerService> {
                 no: 1,
                 text: RichText(
                   text: TextSpan(
-                    text: "Buka WhatsApp di telepon Anda",
+                    text: "Buka WhatsApp di telepon kamu",
                     style: GoogleFonts.inter(
                       color: TColors.neutralDarkLight,
                       fontSize: TSizes.fontSizeBodyS,
@@ -177,7 +177,7 @@ class _AddCustomerServiceState extends State<AddCustomerService> {
                         ),
                       ),
                       TextSpan(
-                        text: " lalu masukkan kode ini di telepon Anda",
+                        text: " lalu masukkan kode ini di telepon kamu",
                         style: GoogleFonts.inter(
                           color: TColors.neutralDarkLight,
                           fontSize: TSizes.fontSizeBodyS,

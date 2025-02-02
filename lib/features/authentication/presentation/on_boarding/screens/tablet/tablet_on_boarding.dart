@@ -105,7 +105,7 @@ class _TabletOnBoardingState extends State<TabletOnBoarding> {
               ItemPageView(
                 withLogo: true,
                 description:
-                    "Solusi POS Terbaik untuk Bisnis F&B. Kelola bisnis Anda dengan lebih mudah, efisien, dan menguntungkan.",
+                    "Solusi POS Terbaik untuk Bisnis F&B. Kelola bisnis kamu dengan lebih mudah, efisien, dan menguntungkan.",
                 asset: TImages.onboarding1,
                 isTextInputActive: _isTextInputActive,
               ),
