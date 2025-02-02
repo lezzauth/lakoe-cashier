@@ -55,6 +55,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
 
     _onInit();
     _updateAppVersion();
+    _getActivePackage();
   }
 
   @override
@@ -115,6 +116,42 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
     });
   }
 
+  Future<void> _getActivePackage() async {
+    final ownerCubit = context.read<OwnerCubit>();
+
+    await ownerCubit.getOwner();
+
+    final state = ownerCubit.state;
+
+    if (state is OwnerLoadSuccess) {
+      final owner = state.owner;
+      String iconPackage = owner.packageName;
+
+      if (owner.packageName == 'GROW') {
+        iconPackage = TIcons.lakoeGrow;
+      } else if (owner.packageName == 'PRO') {
+        iconPackage = TIcons.lakoePro;
+      } else {
+        iconPackage = TIcons.lakoeLite;
+      }
+
+      setState(() {
+        accountSectionItems = accountSectionItems.map((item) {
+          if (item.title.contains("Paket Aktif")) {
+            return _OtherItem(
+              title:
+                  "Lakoe ${TFormatter.capitalizeEachWord(owner.packageName)}",
+              routeName: "",
+              iconSrc: iconPackage,
+              isNewItem: item.isNewItem,
+            );
+          }
+          return item;
+        }).toList();
+      });
+    } else if (state is OwnerLoadFailure) {}
+  }
+
   List<_OtherItem> accountSectionItems = [
     _OtherItem(
       title: "Paket & Riwayat",
@@ -123,7 +160,7 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       isNewItem: false,
     ),
     _OtherItem(
-      title: "Lakoe Lite",
+      title: "Paket Aktif",
       routeName: "",
       iconSrc: TIcons.lakoeLite,
       isNewItem: false,
