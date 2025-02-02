@@ -69,7 +69,7 @@ class _OthersScreenState extends State<OthersScreen> {
     _SettingItem(
       title: "Metode Pembayaran",
       routeName: "/payment_method",
-      iconSrc: TIcons.dashboardQROrder,
+      iconSrc: TIcons.qrcode,
     ),
     _SettingItem(
       title: "Rekening Bank",
@@ -86,7 +86,7 @@ class _OthersScreenState extends State<OthersScreen> {
     _SettingItem(
       title: "Biaya Lainnya",
       routeName: "/charges",
-      iconSrc: TIcons.handMoney,
+      iconSrc: TIcons.tag,
     ),
   ];
   List<_SettingItem> cardGroupOther = [

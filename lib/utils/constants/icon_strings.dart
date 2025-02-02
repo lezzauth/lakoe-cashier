@@ -3,7 +3,6 @@ class TIcons {
 
   static const String dashboardCustomer = "assets/icons/contact.svg";
   static const String dashboardProduct = "assets/icons/product.svg";
-  static const String dashboardQROrder = "assets/icons/qr-order.svg";
   static const String dashboardReport = "assets/icons/report.svg";
   static const String dashboardOthers = "assets/icons/other-grid.svg";
 
@@ -63,11 +62,13 @@ class TIcons {
   static const String scanner = "assets/icons/scanner.svg";
   static const String cardIn = "assets/icons/card-in.svg";
   static const String billCross = "assets/icons/bill-cross.svg";
+  static const String qrcode = "assets/icons/qr-code.svg";
 
   static const String card = "assets/icons/card.svg";
   static const String history = "assets/icons/history.svg";
   static const String filterColor = "assets/icons/filter-color.svg";
   static const String handMoney = "assets/icons/hand-money.svg";
+  static const String tag = "assets/icons/tag.svg";
   static const String linkSquare = "assets/icons/link-square.svg";
   static const String pieChart = "assets/icons/pie-chart.svg";
   static const String printer = "assets/icons/printer.svg";
