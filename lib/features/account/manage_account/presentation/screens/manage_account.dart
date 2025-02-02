@@ -131,6 +131,7 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
               ),
               const SizedBox(height: 12),
               SectionCard(
+                bgColor: TColors.errorLight,
                 children: [
                   Container(
                     color: TColors.errorLight,
