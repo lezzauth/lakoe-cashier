@@ -19,6 +19,8 @@ class TImages {
   static const String stampPaid = "assets/images/stamp-paid.svg";
   static const String stampCancel = "assets/images/stamp-cancel.svg";
   static const String infinity = "assets/images/infinity.svg";
+  static const String vote = "assets/images/vote.svg";
+  static const String voteCount = "assets/images/vote-count.svg";
   static const String growToPro = "assets/images/grow-to-pro.webp";
   static const String feedbackSuccess = "assets/images/feedback-success.svg";
   static const String catBox = "assets/images/cat-box.svg";

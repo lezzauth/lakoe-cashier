@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/shimmer/list_shimmer.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/empty/empty_list.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
@@ -98,7 +99,15 @@ class _CashierProductListState extends State<CashierProductList> {
                       qty: cart?.quantity ?? 0,
                       notes: cart?.notes ?? "",
                       onTap: () {
-                        _onAddToCart(product);
+                        if (product.availability != "AVAILABLE" ||
+                            product.stock == 0) {
+                          CustomToast.show(
+                            "Produk tidak tersedia/stok habis.",
+                            position: "bottom",
+                          );
+                        } else {
+                          _onAddToCart(product);
+                        }
                       },
                       onCounterChanged: (quantity) {
                         _onCartQuantityChanged(product, quantity);
