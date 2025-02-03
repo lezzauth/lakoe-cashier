@@ -19,7 +19,6 @@ class CashierProductCubit extends Cubit<CashierProductState> {
     try {
       emit(CashierProductLoadInProgress());
       final products = await _productRepository.findAll(FindAllProductDto(
-        availability: "AVAILABLE",
         name: name,
         categoryId: categoryId,
       ));

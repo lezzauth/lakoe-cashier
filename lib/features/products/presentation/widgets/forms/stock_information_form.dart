@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:lakoe_pos/common/data/models.dart';
+import 'package:lakoe_pos/common/widgets/bottomsheets/vote_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/form/custom_checkbox.dart';
 import 'package:lakoe_pos/common/widgets/form/form_label.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/features/products/application/cubit/product_master/form/product_form_cubit.dart';
@@ -26,7 +30,8 @@ class StockInformationForm extends StatefulWidget {
 
 class _StockInformationFormState extends State<StockInformationForm>
     with AutomaticKeepAliveClientMixin<StockInformationForm> {
-  bool isUseStock = false;
+  bool isRecipeBasedInventory = false;
+  bool isResetStock = false;
 
   final List<LabelValue> _availability = [
     const LabelValue(label: "Tersedia", value: "AVAILABLE"),
@@ -35,6 +40,21 @@ class _StockInformationFormState extends State<StockInformationForm>
 
   @override
   bool get wantKeepAlive => true;
+
+  void openBottomsheetVote(BuildContext context) {
+    VoteBottomSheetHelper.showVoteBottomSheet(
+      context: context,
+      featureName: "RecipeBasedInventory",
+      onVoteSuccess: () {
+        CustomToast.show(
+          "Vote berhasil dikirimkan.",
+          position: "bottom",
+          backgroundColor: TColors.success,
+        );
+        setState(() {});
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,61 +82,47 @@ class _StockInformationFormState extends State<StockInformationForm>
           children: [
             Container(
               margin: const EdgeInsets.only(bottom: 16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const FormLabel("Kode Produk / SKU"),
-                  FormBuilderTextField(
-                    name: "sku",
-                    decoration:
-                        const InputDecoration(hintText: "Buat kode produk"),
+              child: Container(
+                padding: const EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                  color: TColors.neutralLightLight,
+                  borderRadius: BorderRadius.circular(12.0),
+                  border: Border.all(
+                    width: 1,
+                    color: TColors.neutralLightMedium,
                   ),
-                ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const TextHeading4(
+                      "Stok berdasarkan bahan baku",
+                      color: TColors.neutralDarkDarkest,
+                    ),
+                    SizedBox(
+                      height: 28,
+                      child: FormBuilderField(
+                        name: "isRecipeBasedInventory",
+                        initialValue: false,
+                        builder: (FormFieldState<bool> field) {
+                          return Switch(
+                            value: field.value ?? false,
+                            onChanged: (value) {
+                              // setState(() {
+                              //   isRecipeBasedInventory = value;
+                              // });
+                              // field.didChange(value);
+                              openBottomsheetVote(context);
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            // Container(
-            //   margin: const EdgeInsets.only(bottom: 16.0),
-            //   child: Container(
-            //     padding: const EdgeInsets.all(12.0),
-            //     decoration: BoxDecoration(
-            //       color: TColors.neutralLightLight,
-            //       borderRadius: BorderRadius.circular(12.0),
-            //       border: Border.all(
-            //         width: 1,
-            //         color: TColors.neutralLightMedium,
-            //       ),
-            //     ),
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       children: [
-            //         const TextHeading4(
-            //           "Stok berdasarkan bahan baku",
-            //           color: TColors.neutralDarkDarkest,
-            //         ),
-            //         SizedBox(
-            //           height: 28,
-            //           child: FormBuilderField(
-            //             name: "isUseStock",
-            //             initialValue: false,
-            //             builder: (FormFieldState<bool> field) {
-            //               return Switch(
-            //                 value: field.value ?? false,
-            //                 onChanged: (value) {
-            //                   setState(() {
-            //                     isUseStock = value;
-            //                   });
-            //                   field.didChange(value);
-            //                 },
-            //               );
-            //             },
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            if (!isUseStock)
+            if (!isRecipeBasedInventory)
               Container(
                 margin: const EdgeInsets.only(bottom: 16.0),
                 child: Column(
@@ -134,6 +140,26 @@ class _StockInformationFormState extends State<StockInformationForm>
                   ],
                 ),
               ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 24.0),
+              child: Row(
+                children: [
+                  CustomCheckbox(
+                    value: isResetStock,
+                    onChanged: (bool value) {
+                      setState(() {
+                        isResetStock = value;
+                      });
+                    },
+                  ),
+                  SizedBox(width: 12),
+                  TextBodyL(
+                    "Reset stok perhari secara otomatis",
+                    color: TColors.neutralDarkDark,
+                  ),
+                ],
+              ),
+            ),
             Container(
               margin: const EdgeInsets.only(bottom: 16.0),
               child: Row(

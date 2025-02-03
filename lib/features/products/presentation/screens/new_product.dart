@@ -5,12 +5,15 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/tab/tab_container.dart';
+import 'package:lakoe_pos/common/widgets/ui/tab/tab_item.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/wrapper/error_wrapper.dart';
 import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_cubit.dart';
 import 'package:lakoe_pos/features/products/application/cubit/product_master/product_master_state.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/forms/product_information_form.dart';
+import 'package:lakoe_pos/features/products/presentation/widgets/forms/stock_information_form.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:product_repository/product_repository.dart';
@@ -92,8 +95,7 @@ class _NewProductScreenState extends State<NewProductScreen>
             // unit: productInformationValue["unit"],
             sku: sku,
             stock: stock != null ? int.parse(stock) : null,
-            availability:
-                productInformationValue?["availability"] ?? "AVAILABLE",
+            availability: stockInformationValue?["availability"] ?? "AVAILABLE",
           ),
         );
   }
@@ -200,38 +202,32 @@ class _NewProductScreenState extends State<NewProductScreen>
                           ),
                   )
                 ],
-                // bottom: TabContainer(
-                //   controller: _tabController,
-                //   tabs: const [
-                //     TabItem(
-                //       title: "Info Produk",
-                //     ),
-                //     TabItem(title: "Info Stok"),
-                //   ],
-                // ),
-              ),
-              // body: TabBarView(
-              //   controller: _tabController,
-              //   children: [
-              //     SingleChildScrollView(
-              //       padding: const EdgeInsets.only(top: 16.0),
-              //       child: ProductInformationForm(
-              //         formKey: _productInformationFormKey,
-              //       ),
-              //     ),
-              //     SingleChildScrollView(
-              //       padding: const EdgeInsets.only(top: 16.0),
-              //       child: StockInformationForm(
-              //         formKey: _stockInformationFormKey,
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              body: SingleChildScrollView(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: ProductInformationForm(
-                  formKey: _productInformationFormKey,
+                bottom: TabContainer(
+                  controller: _tabController,
+                  tabs: const [
+                    TabItem(
+                      title: "Info Produk",
+                    ),
+                    TabItem(title: "Info Stok"),
+                  ],
                 ),
+              ),
+              body: TabBarView(
+                controller: _tabController,
+                children: [
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: ProductInformationForm(
+                      formKey: _productInformationFormKey,
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: StockInformationForm(
+                      formKey: _stockInformationFormKey,
+                    ),
+                  ),
+                ],
               ),
             ),
           );
