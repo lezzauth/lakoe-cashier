@@ -11,6 +11,8 @@ import 'package:lakoe_pos/features/account/presentation/screens/form/user_feedba
 import 'package:lakoe_pos/features/checkout/presentation/screens/payment_failed.dart';
 import 'package:lakoe_pos/features/customers/presentation/screens/edit_customer.dart';
 import 'package:lakoe_pos/features/employees/data/arguments/forgot_pin_dto.dart';
+import 'package:lakoe_pos/features/employees/presentation/reports/shifts/screens/shift_report_detail.dart';
+import 'package:lakoe_pos/features/employees/presentation/reports/shifts/screens/shift_report_master.dart';
 import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/create_new_pin.dart';
 import 'package:lakoe_pos/features/employees/presentation/screens/forgot_pin/otp_input.dart';
 import 'package:lakoe_pos/features/orders/application/cubit/orders/cashier/order_cashier_cubit.dart';
@@ -441,6 +443,9 @@ class _AppState extends State<App> {
                   arguments: ModalRoute.of(context)!.settings.arguments
                       as ForgotPinArguments,
                 ),
+
+            "/shift-report": (context) => const ShiftReportScreen(),
+            "/shift-report/detail": (context) => ShiftReportDetailScreen(),
 
             // bank accounts
             "/bank_accounts": (context) => const BankAccountMasterScreen(),

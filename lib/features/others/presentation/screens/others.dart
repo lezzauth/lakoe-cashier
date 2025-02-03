@@ -44,23 +44,21 @@ class _OthersScreenState extends State<OthersScreen> {
     super.dispose();
   }
 
-  List<_SettingItem> cardGroupTransaction = [
-    // _SettingItem(
-    //   title: "Kategori",
-    //   routeName: "/categories",
-    //   iconSrc: TIcons.box,
-    // ),
-    // _SettingItem(
-    //   title: "Satuan Produk",
-    //   routeName: "/products",
-    //   iconSrc: TIcons.filters,
-    // ),
-    // _SettingItem(
-    //   title: "Supplier",
-    //   routeName: "/",
-    //   iconSrc: TIcons.userId,
-    // ),
+  List<_SettingItem> cardGroupEmployee = [
+    _SettingItem(
+      title: "Daftar Kasir",
+      routeName: "/employee",
+      iconSrc: TIcons.profile,
+    ),
+    _SettingItem(
+      title: "Laporan Shift",
+      routeName: "/shift-report",
+      iconSrc: TIcons.squareTransfer,
+      isNewItem: true,
+    ),
+  ];
 
+  List<_SettingItem> cardGroupTransaction = [
     _SettingItem(
       title: "Riwayat Pesanan",
       routeName: "/orders",
@@ -77,7 +75,8 @@ class _OthersScreenState extends State<OthersScreen> {
       iconSrc: TIcons.card,
     ),
   ];
-  List<_SettingItem> cardGroupTax = [
+
+  List<_SettingItem> cardGroupCost = [
     _SettingItem(
       title: "Pajak",
       routeName: "/taxes",
@@ -89,19 +88,12 @@ class _OthersScreenState extends State<OthersScreen> {
       iconSrc: TIcons.tag,
     ),
   ];
-  List<_SettingItem> cardGroupOther = [
-    // _SettingItem(
-    //   title: "Kelola Toko Online",
-    //   routeName: "/online_shop",
-    //   iconSrc: TIcons.shop,
-    //   isNewItem: true,
-    // ),
 
+  List<_SettingItem> cardGroupOther = [
     _SettingItem(
       title: "Print & Struk (Bill)",
       routeName: "/print",
       iconSrc: TIcons.printer,
-      isNewItem: true,
     ),
     _SettingItem(
       title: "Data Pelanggan",
@@ -119,6 +111,12 @@ class _OthersScreenState extends State<OthersScreen> {
       iconSrc: TIcons.box,
     ),
     // _SettingItem(
+    //   title: "Kelola Toko Online",
+    //   routeName: "/online_shop",
+    //   iconSrc: TIcons.shop,
+    //   isNewItem: true,
+    // ),
+    // _SettingItem(
     //   title: "Singkronisasi Data",
     //   routeName: "/",
     //   iconSrc: TIcons.smartphoneUpdate,
@@ -127,6 +125,21 @@ class _OthersScreenState extends State<OthersScreen> {
     //   title: "Sambungkan Aplikasi",
     //   routeName: "/",
     //   iconSrc: TIcons.linkSquare,
+    // ),
+    // _SettingItem(
+    //   title: "Kategori",
+    //   routeName: "/categories",
+    //   iconSrc: TIcons.box,
+    // ),
+    // _SettingItem(
+    //   title: "Satuan Produk",
+    //   routeName: "/products",
+    //   iconSrc: TIcons.filters,
+    // ),
+    // _SettingItem(
+    //   title: "Supplier",
+    //   routeName: "/",
+    //   iconSrc: TIcons.userId,
     // ),
   ];
 
@@ -151,27 +164,24 @@ class _OthersScreenState extends State<OthersScreen> {
             //   margin: const EdgeInsets.only(bottom: 12),
             //   child: const LoyaltyProgramBanner(),
             // ),
-
             Container(
               margin: const EdgeInsets.only(bottom: 12),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, "/employee");
-                },
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
-                splashColor: TColors.neutralLightLight,
-                highlightColor: TColors.neutralLightLight,
-                child: SectionCard(
-                  title: "Daftar Kasir",
-                  description: "Kelola data kasir yang ditugaskan",
-                  children: null,
-                ),
+              child: SectionCard(
+                children: cardGroupEmployee
+                    .map(
+                      (item) => ListItemCard(
+                        iconSrc: item.iconSrc,
+                        title: item.title,
+                        routeName: item.routeName,
+                        isNewItem: item.isNewItem ?? false,
+                      ),
+                    )
+                    .toList(),
               ),
             ),
             Container(
               margin: const EdgeInsets.only(bottom: 12),
               child: SectionCard(
-                // title: "Produk & Service",
                 children: cardGroupTransaction
                     .map(
                       (item) => ListItemCard(
@@ -183,33 +193,10 @@ class _OthersScreenState extends State<OthersScreen> {
                     .toList(),
               ),
             ),
-            // Container(
-            //   margin: const EdgeInsets.only(bottom: 12),
-            //   child: InkWell(
-            //     onTap: () {
-            //       Navigator.pushNamed(
-            //         context,
-            //         "/orders",
-            //         arguments: {
-            //           "previousScreen": "Settings",
-            //         },
-            //       );
-            //     },
-            //     borderRadius: const BorderRadius.all(Radius.circular(12)),
-            //     splashColor: TColors.neutralLightLight,
-            //     highlightColor: TColors.neutralLightLight,
-            //     child: SectionCard(
-            //       iconSrc: TIcons.bill,
-            //       title: "Riwayat Pesanan",
-            //       children: null,
-            //     ),
-            //   ),
-            // ),
             Container(
               margin: const EdgeInsets.only(bottom: 12),
               child: SectionCard(
-                // title: "Pembayaran & Struk",
-                children: cardGroupTax
+                children: cardGroupCost
                     .map(
                       (item) => ListItemCard(
                         iconSrc: item.iconSrc,
@@ -224,7 +211,6 @@ class _OthersScreenState extends State<OthersScreen> {
             Container(
               margin: const EdgeInsets.only(bottom: 12),
               child: SectionCard(
-                // title: "Lainnya",
                 children: cardGroupOther
                     .map(
                       (item) => ListItemCard(

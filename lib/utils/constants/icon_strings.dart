@@ -69,6 +69,7 @@ class TIcons {
   static const String filterColor = "assets/icons/filter-color.svg";
   static const String handMoney = "assets/icons/hand-money.svg";
   static const String tag = "assets/icons/tag.svg";
+  static const String squareTransfer = "assets/icons/square-transfer.svg";
   static const String linkSquare = "assets/icons/link-square.svg";
   static const String pieChart = "assets/icons/pie-chart.svg";
   static const String printer = "assets/icons/printer.svg";
