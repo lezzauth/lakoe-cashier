@@ -20,16 +20,20 @@ class ExploreProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool selected = qty > 0;
-    String? _imageUrl = product.images.elementAtOrNull(0);
+    String? imageUrl = product.images.elementAtOrNull(0);
+    bool isNotAvailable = product.availability != "AVAILABLE";
 
     return InkWell(
       onTap: onTap,
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       child: BaseProductCard(
-        imageUrl: _imageUrl,
+        isCashierView: true,
+        imageUrl: imageUrl,
         name: product.name,
         price: int.parse(product.price),
+        isNotAvailable: isNotAvailable,
+        stock: product.stock,
         selected: selected,
         counter: selected
             ? FittedBox(

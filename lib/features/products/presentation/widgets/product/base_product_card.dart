@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
+import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/constants/sizes.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class BaseProductCard extends StatelessWidget {
@@ -14,8 +18,10 @@ class BaseProductCard extends StatelessWidget {
   final bool selected;
   final Widget? counter;
   final bool isNotAvailable;
+  final int? stock;
+  final bool isCashierView;
 
-  const BaseProductCard({
+  BaseProductCard({
     super.key,
     this.name = "",
     this.imageUrl,
@@ -23,7 +29,11 @@ class BaseProductCard extends StatelessWidget {
     this.selected = false,
     this.counter,
     this.isNotAvailable = false,
+    this.stock,
+    this.isCashierView = false,
   });
+
+  final GlobalKey<TooltipState> _tooltipKey = GlobalKey<TooltipState>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +44,10 @@ class BaseProductCard extends StatelessWidget {
             selected ? TColors.highlightLightest : TColors.neutralLightLightest,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-            width: 1,
-            color: selected
-                ? TColors.highlightMedium
-                : TColors.neutralLightMedium),
+          width: 1,
+          color:
+              selected ? TColors.highlightMedium : TColors.neutralLightMedium,
+        ),
       ),
       child: Column(
         children: [
@@ -74,7 +84,7 @@ class BaseProductCard extends StatelessWidget {
                   },
                 ),
               ),
-              if (isNotAvailable)
+              if (isNotAvailable || stock == 0)
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(
@@ -88,10 +98,32 @@ class BaseProductCard extends StatelessWidget {
               if (isNotAvailable)
                 Positioned.fill(
                   child: Center(
-                    child: TextBodyL(
-                      "Tidak Tersedia",
-                      color: TColors.neutralLightLightest,
-                      fontWeight: FontWeight.bold,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: TColors.neutralLightMedium,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: TextHeading5(
+                        "Tidak Tersedia",
+                        color: TColors.neutralDarkDark,
+                      ),
+                    ),
+                  ),
+                ),
+              if (stock == 0)
+                Positioned.fill(
+                  child: Center(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: TColors.errorLight,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: TextHeading5(
+                        "Stok Habis",
+                        color: TColors.errorDark,
+                      ),
                     ),
                   ),
                 ),
@@ -99,8 +131,8 @@ class BaseProductCard extends StatelessWidget {
             ],
           ),
           Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -118,13 +150,83 @@ class BaseProductCard extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 4),
-                    child: TextBodyM(
-                      TFormatter.formatToRupiah(price),
-                      color: TColors.neutralDarkLight,
-                      fontWeight: FontWeight.w500,
+                    margin: EdgeInsets.only(top: 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextBodyM(
+                          TFormatter.formatToRupiah(price),
+                          color: TColors.neutralDarkLight,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        if (stock != null && isCashierView)
+                          if (stock! >= 1 && stock! <= 10)
+                            Tooltip(
+                              key: _tooltipKey,
+                              message: "Stok Menipis",
+                              decoration: BoxDecoration(
+                                color: TColors.neutralDarkDark,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              textStyle: GoogleFonts.inter(
+                                color: TColors.neutralLightLightest,
+                                fontSize: TSizes.fontSizeBodyS,
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 0,
+                              ),
+                              verticalOffset: 12,
+                              child: UiIcons(
+                                TIcons.warning,
+                                size: 16,
+                                color: TColors.warningDark,
+                                onTap: () {
+                                  _tooltipKey.currentState
+                                      ?.ensureTooltipVisible();
+                                },
+                              ),
+                            )
+                      ],
                     ),
                   ),
+                  if (!isCashierView)
+                    Container(
+                      margin: EdgeInsets.only(top: 4),
+                      child: Row(
+                        children: [
+                          UiIcons(
+                            TIcons.box,
+                            size: 12,
+                            color: TColors.neutralDarkLight,
+                          ),
+                          SizedBox(width: 4),
+                          RichText(
+                            text: TextSpan(
+                              style: GoogleFonts.inter(
+                                fontSize: TSizes.fontSizeBodyS,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: "Stok ",
+                                  style: TextStyle(
+                                      color: TColors.neutralDarkLight),
+                                ),
+                                TextSpan(
+                                  text: stock != null ? stock.toString() : "-",
+                                  style: TextStyle(
+                                    color: TColors.neutralDarkDark,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
                 ],
               ),
             ),

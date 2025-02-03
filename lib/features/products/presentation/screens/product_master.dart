@@ -159,7 +159,7 @@ class _ProductMasterState extends State<ProductMaster> {
                 price: double.parse(product.price).round(),
                 imageUrl: imageUrl,
                 description: product.description ?? "",
-                notes: product.description ?? "",
+                stock: product.stock,
                 tag: isNotAvailable
                     ? Container(
                         padding:
@@ -187,8 +187,8 @@ class _ProductMasterState extends State<ProductMaster> {
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 180,
-            mainAxisExtent: 232,
-            childAspectRatio: 180 / 232,
+            mainAxisExtent: 250,
+            childAspectRatio: 180 / 250,
             crossAxisSpacing: 16,
             mainAxisSpacing: 16,
           ),
@@ -208,6 +208,7 @@ class _ProductMasterState extends State<ProductMaster> {
                 name: product.name,
                 price: double.parse(product.price).round(),
                 isNotAvailable: isNotAvailable,
+                stock: product.stock,
                 imageUrl: imageUrl,
               ),
             );
