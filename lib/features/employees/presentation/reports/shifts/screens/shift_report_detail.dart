@@ -115,7 +115,7 @@ class ShiftReportDetailScreen extends StatelessWidget {
                   transactionLabels[e.key] ?? e.key,
                   TFormatter.formatToRupiah(e.value),
                   indent: 16,
-                  color: TColors.neutralDarkLight,
+                  isMainRow: false,
                 ),
               )
               .toList(),
@@ -132,7 +132,7 @@ class ShiftReportDetailScreen extends StatelessWidget {
           _buildRow(
             "Biaya Tak Terduga",
             TFormatter.formatToRupiah(shift.financialSummary.untrackedExpense),
-            color: TColors.highlightDark,
+            isClickable: true,
             isBold: true,
             onTap: () {},
           ),
@@ -159,9 +159,10 @@ class ShiftReportDetailScreen extends StatelessWidget {
   Widget _buildRow(
     String label,
     String value, {
-    Color color = TColors.neutralDarkDark,
     double indent = 0.0,
     bool isBold = false,
+    bool isMainRow = true,
+    bool isClickable = false,
     VoidCallback? onTap,
   }) =>
       GestureDetector(
@@ -173,10 +174,16 @@ class ShiftReportDetailScreen extends StatelessWidget {
             children: [
               TextBodyM(
                 label,
-                color: color,
+                color: isMainRow && !isClickable
+                    ? TColors.neutralDarkDark
+                    : isClickable
+                        ? TColors.primary
+                        : TColors.neutralDarkLight,
                 fontWeight: isBold ? FontWeight.w700 : FontWeight.w400,
               ),
-              TextHeading4(value, color: TColors.neutralDarkDark),
+              isMainRow
+                  ? TextHeading4(value, color: TColors.neutralDarkDark)
+                  : TextBodyM(value, color: TColors.neutralDarkDark),
             ],
           ),
         ),
