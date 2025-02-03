@@ -50,12 +50,12 @@ class _OthersScreenState extends State<OthersScreen> {
       routeName: "/employee",
       iconSrc: TIcons.profile,
     ),
-    _SettingItem(
-      title: "Laporan Shift",
-      routeName: "/shift-report",
-      iconSrc: TIcons.squareTransfer,
-      isNewItem: true,
-    ),
+    // _SettingItem(
+    //   title: "Laporan Shift",
+    //   routeName: "/shift-report",
+    //   iconSrc: TIcons.squareTransfer,
+    //   isNewItem: true,
+    // ),
   ];
 
   List<_SettingItem> cardGroupTransaction = [
