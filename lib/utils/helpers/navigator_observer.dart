@@ -83,6 +83,13 @@ class CustomNavigatorObserver extends NavigatorObserver {
           statusBarColor: Colors.transparent,
         ),
       );
+    } else if (route?.settings.name == "/shift-report/detail") {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.dark.copyWith(
+          statusBarColor: TColors.neutralLightLight,
+          systemNavigationBarColor: TColors.neutralLightLight,
+        ),
+      );
     } else {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.dark.copyWith(
