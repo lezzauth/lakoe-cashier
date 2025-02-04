@@ -8,7 +8,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
 import 'package:lakoe_pos/common/widgets/ui/separator/separator.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+// import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
@@ -35,6 +35,7 @@ class CashPaymentForm extends StatefulWidget {
 
 class _CashPaymentFormState extends State<CashPaymentForm> {
   double _paidAmount = 0;
+  double? exactCash;
 
   List<int> _getPreset() {
     if (widget.amount <= 5000) {
@@ -68,22 +69,23 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
   }
 
   double _getChange() {
-    double change = _getPaidAmount() - widget.amount;
-    if (change <= 0) return 0;
+    double paidAmount = _getPaidAmount();
+    double change = paidAmount - widget.amount;
 
-    return change;
+    if (change <= 0) return 0;
+    return double.parse(change.toStringAsFixed(2));
   }
 
-  bool _showTextAmount = false;
-  double _textAmountOpacity = 0.0;
-  double _selectedPreset = 0;
+  // bool _showTextAmount = false;
+  // double _textAmountOpacity = 0.0;
+  // double _selectedPreset = 0;
   Timer? _debounce;
 
   void _onPresetSelected(double amount) {
     setState(() {
-      _showTextAmount = true;
-      _selectedPreset = amount;
-      _textAmountOpacity = 1.0;
+      // _showTextAmount = true;
+      // _selectedPreset = amount;
+      // _textAmountOpacity = 1.0;
       _paidAmount += amount;
     });
 
@@ -95,9 +97,9 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(seconds: 1), () {
       if (!mounted) return;
-      setState(() {
-        _textAmountOpacity = 0.0; // Fade out the text
-      });
+      // setState(() {
+      //   _textAmountOpacity = 0.0; // Fade out the text
+      // });
     });
   }
 
@@ -114,7 +116,7 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                margin: const EdgeInsets.only(bottom: 12),
+                margin: const EdgeInsets.only(bottom: 4),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -141,6 +143,9 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
                         suffixIcon: _paidAmount > 0
                             ? IconButton(
                                 onPressed: () {
+                                  setState(() {
+                                    exactCash = null;
+                                  });
                                   widget.formKey.currentState!
                                       .fields["paidAmount"]
                                       ?.reset();
@@ -169,44 +174,59 @@ class _CashPaymentFormState extends State<CashPaymentForm> {
                         return _paidAmountFormatter.getUnformattedValue();
                       },
                     ),
-                    if (_showTextAmount)
-                      AnimatedOpacity(
-                        opacity: _textAmountOpacity,
-                        duration: const Duration(milliseconds: 200),
-                        onEnd: () {
-                          setState(() {
-                            _showTextAmount = false;
-                          });
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.only(top: 4),
-                          child: TextBodyS(
-                            "Uang sebanyak ${TFormatter.formatToRupiah(_selectedPreset)} telah ditambahkan.",
-                            color: TColors.neutralDarkLightest,
-                          ),
-                        ),
-                      )
+                    // if (_showTextAmount)
+                    //   AnimatedOpacity(
+                    //     opacity: _textAmountOpacity,
+                    //     duration: const Duration(milliseconds: 200),
+                    //     onEnd: () {
+                    //       setState(() {
+                    //         _showTextAmount = false;
+                    //       });
+                    //     },
+                    //     child: Container(
+                    //       margin: const EdgeInsets.only(top: 4),
+                    //       child: TextBodyS(
+                    //         "Uang sebanyak ${TFormatter.formatToRupiah(_selectedPreset)} telah ditambahkan.",
+                    //         color: TColors.neutralDarkLightest,
+                    //       ),
+                    //     ),
+                    //   )
                   ],
                 ),
               ),
               Wrap(
                 direction: Axis.horizontal,
-                spacing: 8,
-                runSpacing: 8,
-                children: _getPreset().map((preset) {
-                  return SizedBox(
-                    height: 32,
-                    child: InputChip(
+                spacing: 12,
+                runSpacing: 0,
+                children: [
+                  // Tambahkan InputChip default untuk uang pas
+                  InputChip(
+                    label: TextBodyM(
+                      "Uang Pas (${TFormatter.formatToRupiah(widget.amount)})",
+                    ),
+                    selected: exactCash == widget.amount,
+                    onPressed: () {
+                      setState(() {
+                        exactCash = widget.amount;
+                      });
+                      _onPresetSelected(widget.amount);
+                    },
+                  ),
+                  // Tambahkan preset lain
+                  ..._getPreset().map((preset) {
+                    return InputChip(
                       label: TextBodyM(
                         "+ ${TFormatter.formatToRupiah(preset)}",
                       ),
                       selected: false,
-                      onPressed: () {
-                        _onPresetSelected(preset.toDouble());
-                      },
-                    ),
-                  );
-                }).toList(),
+                      onPressed: exactCash == widget.amount
+                          ? null
+                          : () {
+                              _onPresetSelected(preset.toDouble());
+                            },
+                    );
+                  }).toList(),
+                ],
               ),
             ],
           ),
