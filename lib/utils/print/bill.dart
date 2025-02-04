@@ -468,6 +468,7 @@ class TBill {
           height: PosTextSize.size3,
         ),
       );
+      bytes += generator.emptyLines(2);
     }
 
     // bytes += generator.cut(mode: PosCutMode.partial);
