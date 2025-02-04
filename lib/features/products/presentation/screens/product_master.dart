@@ -187,8 +187,10 @@ class _ProductMasterState extends State<ProductMaster> {
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 180,
-            mainAxisExtent: 250,
-            childAspectRatio: 180 / 250,
+            // mainAxisExtent: 250,
+            // childAspectRatio: 180 / 250,
+            mainAxisExtent: 232,
+            childAspectRatio: 180 / 232,
             crossAxisSpacing: 16,
             mainAxisSpacing: 16,
           ),

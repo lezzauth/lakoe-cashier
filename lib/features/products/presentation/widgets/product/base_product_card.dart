@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+// import 'package:google_fonts/google_fonts.dart';
+// import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_5.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
-import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+// import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
-import 'package:lakoe_pos/utils/constants/sizes.dart';
+// import 'package:lakoe_pos/utils/constants/sizes.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class BaseProductCard extends StatelessWidget {
@@ -33,7 +33,7 @@ class BaseProductCard extends StatelessWidget {
     this.isCashierView = false,
   });
 
-  final GlobalKey<TooltipState> _tooltipKey = GlobalKey<TooltipState>();
+  // final GlobalKey<TooltipState> _tooltipKey = GlobalKey<TooltipState>();
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +84,8 @@ class BaseProductCard extends StatelessWidget {
                   },
                 ),
               ),
-              if (isNotAvailable || stock == 0)
+              // if (isNotAvailable || stock == 0)
+              if (isNotAvailable)
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(
@@ -111,22 +112,22 @@ class BaseProductCard extends StatelessWidget {
                     ),
                   ),
                 ),
-              if (stock == 0)
-                Positioned.fill(
-                  child: Center(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: TColors.errorLight,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: TextHeading5(
-                        "Stok Habis",
-                        color: TColors.errorDark,
-                      ),
-                    ),
-                  ),
-                ),
+              // if (stock == 0)
+              //   Positioned.fill(
+              //     child: Center(
+              //       child: Container(
+              //         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              //         decoration: BoxDecoration(
+              //           color: TColors.errorLight,
+              //           borderRadius: BorderRadius.circular(4),
+              //         ),
+              //         child: TextHeading5(
+              //           "Stok Habis",
+              //           color: TColors.errorDark,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
               if (counter != null) counter!,
             ],
           ),
@@ -159,74 +160,74 @@ class BaseProductCard extends StatelessWidget {
                           color: TColors.neutralDarkLight,
                           fontWeight: FontWeight.w500,
                         ),
-                        if (stock != null && isCashierView)
-                          if (stock! >= 1 && stock! <= 10)
-                            Tooltip(
-                              key: _tooltipKey,
-                              message: "Stok Menipis",
-                              decoration: BoxDecoration(
-                                color: TColors.neutralDarkDark,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              textStyle: GoogleFonts.inter(
-                                color: TColors.neutralLightLightest,
-                                fontSize: TSizes.fontSizeBodyS,
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 0,
-                              ),
-                              verticalOffset: 12,
-                              child: UiIcons(
-                                TIcons.warning,
-                                size: 16,
-                                color: TColors.warningDark,
-                                onTap: () {
-                                  _tooltipKey.currentState
-                                      ?.ensureTooltipVisible();
-                                },
-                              ),
-                            )
+                        // if (stock != null && isCashierView)
+                        //   if (stock! >= 1 && stock! <= 10)
+                        //     Tooltip(
+                        //       key: _tooltipKey,
+                        //       message: "Stok Menipis",
+                        //       decoration: BoxDecoration(
+                        //         color: TColors.neutralDarkDark,
+                        //         borderRadius: BorderRadius.circular(8),
+                        //       ),
+                        //       textStyle: GoogleFonts.inter(
+                        //         color: TColors.neutralLightLightest,
+                        //         fontSize: TSizes.fontSizeBodyS,
+                        //       ),
+                        //       padding: EdgeInsets.symmetric(
+                        //         horizontal: 12,
+                        //         vertical: 0,
+                        //       ),
+                        //       verticalOffset: 12,
+                        //       child: UiIcons(
+                        //         TIcons.warning,
+                        //         size: 16,
+                        //         color: TColors.warningDark,
+                        //         onTap: () {
+                        //           _tooltipKey.currentState
+                        //               ?.ensureTooltipVisible();
+                        //         },
+                        //       ),
+                        //     )
                       ],
                     ),
                   ),
-                  if (!isCashierView)
-                    Container(
-                      margin: EdgeInsets.only(top: 4),
-                      child: Row(
-                        children: [
-                          UiIcons(
-                            TIcons.box,
-                            size: 12,
-                            color: TColors.neutralDarkLight,
-                          ),
-                          SizedBox(width: 4),
-                          RichText(
-                            text: TextSpan(
-                              style: GoogleFonts.inter(
-                                fontSize: TSizes.fontSizeBodyS,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: "Stok ",
-                                  style: TextStyle(
-                                      color: TColors.neutralDarkLight),
-                                ),
-                                TextSpan(
-                                  text: stock != null ? stock.toString() : "-",
-                                  style: TextStyle(
-                                    color: TColors.neutralDarkDark,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    ),
+                  // if (!isCashierView)
+                  //   Container(
+                  //     margin: EdgeInsets.only(top: 4),
+                  //     child: Row(
+                  //       children: [
+                  //         UiIcons(
+                  //           TIcons.box,
+                  //           size: 12,
+                  //           color: TColors.neutralDarkLight,
+                  //         ),
+                  //         SizedBox(width: 4),
+                  //         RichText(
+                  //           text: TextSpan(
+                  //             style: GoogleFonts.inter(
+                  //               fontSize: TSizes.fontSizeBodyS,
+                  //             ),
+                  //             children: [
+                  //               TextSpan(
+                  //                 text: "Stok ",
+                  //                 style: TextStyle(
+                  //                     color: TColors.neutralDarkLight),
+                  //               ),
+                  //               TextSpan(
+                  //                 text: stock != null ? stock.toString() : "-",
+                  //                 style: TextStyle(
+                  //                   color: TColors.neutralDarkDark,
+                  //                   fontWeight: FontWeight.bold,
+                  //                 ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //           maxLines: 1,
+                  //           overflow: TextOverflow.ellipsis,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
                 ],
               ),
             ),

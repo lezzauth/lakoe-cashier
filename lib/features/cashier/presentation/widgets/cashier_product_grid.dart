@@ -96,8 +96,8 @@ class _ProductGridState extends State<CashierProductGrid> {
                           product: product,
                           qty: cart?.quantity ?? 0,
                           onTap: () {
-                            if (product.availability != "AVAILABLE" ||
-                                product.stock == 0) {
+                            // if (product.availability != "AVAILABLE" || product.stock == 0) {
+                            if (product.availability != "AVAILABLE") {
                               CustomToast.show(
                                 "Produk tidak tersedia/stok habis.",
                                 position: "bottom",

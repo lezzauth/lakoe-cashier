@@ -99,8 +99,8 @@ class _CashierProductListState extends State<CashierProductList> {
                       qty: cart?.quantity ?? 0,
                       notes: cart?.notes ?? "",
                       onTap: () {
-                        if (product.availability != "AVAILABLE" ||
-                            product.stock == 0) {
+                        // if (product.availability != "AVAILABLE" || product.stock == 0) {
+                        if (product.availability != "AVAILABLE") {
                           CustomToast.show(
                             "Produk tidak tersedia/stok habis.",
                             position: "bottom",
