@@ -612,74 +612,78 @@ class _OrderDetailState extends State<OrderDetail> {
                                     );
                                   },
                                 ),
-                                SliverToBoxAdapter(
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: 16.0,
-                                        horizontal: 20.0,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          width: 1,
-                                          color: TColors.neutralLightMedium,
+                                if (order.status == "OPEN")
+                                  SliverToBoxAdapter(
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(16, 16, 16, 0),
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 16.0,
+                                          horizontal: 20.0,
                                         ),
-                                        borderRadius:
-                                            BorderRadius.circular(16.0),
-                                      ),
-                                      child: Row(children: [
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              TextHeading3(
-                                                "Ada yang mau diubah?",
-                                                color:
-                                                    TColors.neutralDarkDarkest,
-                                              ),
-                                              TextBodyS(
-                                                "Kamu masih bisa ubah pesanan ini.",
-                                                color: TColors.neutralDarkLight,
-                                              ),
-                                            ],
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            width: 1,
+                                            color: TColors.neutralLightMedium,
                                           ),
+                                          borderRadius:
+                                              BorderRadius.circular(16.0),
                                         ),
-                                        Container(
-                                          height: 36,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              width: 1,
-                                              color: TColors.primary,
+                                        child: Row(children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                TextHeading3(
+                                                  "Ada yang mau diubah?",
+                                                  color: TColors
+                                                      .neutralDarkDarkest,
+                                                ),
+                                                TextBodyS(
+                                                  "Kamu masih bisa ubah pesanan ini.",
+                                                  color:
+                                                      TColors.neutralDarkLight,
+                                                ),
+                                              ],
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
                                           ),
-                                          child: TextButton(
-                                            onPressed: () async {
-                                              if (order.status == "OPEN" &&
-                                                  _isCashier) {
-                                                await Navigator.pushNamed(
-                                                  context,
-                                                  "/orders/add-item",
-                                                  arguments: OrderEditArgument(
-                                                      order: order),
-                                                );
+                                          Container(
+                                            height: 36,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                width: 1,
+                                                color: TColors.primary,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            child: TextButton(
+                                              onPressed: () async {
+                                                if (order.status == "OPEN" &&
+                                                    _isCashier) {
+                                                  await Navigator.pushNamed(
+                                                    context,
+                                                    "/orders/add-item",
+                                                    arguments:
+                                                        OrderEditArgument(
+                                                            order: order),
+                                                  );
 
-                                                _onRefresh();
-                                              } else {
-                                                showCashierAccessBottomSheet(
-                                                    context, "mengubah");
-                                              }
-                                            },
-                                            child: TextActionL("Ubah"),
+                                                  _onRefresh();
+                                                } else {
+                                                  showCashierAccessBottomSheet(
+                                                      context, "mengubah");
+                                                }
+                                              },
+                                              child: TextActionL("Ubah"),
+                                            ),
                                           ),
-                                        ),
-                                      ]),
+                                        ]),
+                                      ),
                                     ),
                                   ),
-                                ),
                                 SliverToBoxAdapter(
                                   child: Padding(
                                     padding: EdgeInsets.all(16.0),
