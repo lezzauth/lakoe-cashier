@@ -9,12 +9,12 @@ class BillMasterCubit extends Cubit<BillMasterState> {
       'Terimakasih\nDitunggu kembali kedatangannya';
 
   BillMasterCubit()
-      : super(BillMasterState(footNote: defaultFootNote, langCode: 'id'));
+      : super(BillMasterState(footNote: defaultFootNote, langCode: 'en'));
 
   Future<void> init() async {
     final footNote = await _appDataProvider.footNote;
     final prefs = await SharedPreferences.getInstance();
-    final langCode = prefs.getString('bill_language') ?? 'id';
+    final langCode = prefs.getString('bill_language') ?? 'en';
 
     emit(state.copyWith(
         footNote: footNote.isEmpty ? defaultFootNote : footNote,
