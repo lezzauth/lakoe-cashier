@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
+// import 'package:google_fonts/google_fonts.dart';
+// import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
-import 'package:lakoe_pos/utils/constants/icon_strings.dart';
+// import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
-import 'package:lakoe_pos/utils/constants/sizes.dart';
+// import 'package:lakoe_pos/utils/constants/sizes.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 
 class BaseProductItem extends StatelessWidget {
@@ -112,53 +112,53 @@ class BaseProductItem extends StatelessWidget {
                 margin: EdgeInsets.only(top: 2.0),
                 child: Column(
                   children: [
-                    if (stock != null)
-                      Row(
-                        children: [
-                          UiIcons(
-                            TIcons.box,
-                            size: 12,
-                            color: TColors.neutralDarkLight,
-                          ),
-                          SizedBox(width: 4),
-                          RichText(
-                            text: TextSpan(
-                              style: GoogleFonts.inter(
-                                fontSize: TSizes.fontSizeBodyS,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: "Stok ",
-                                  style: TextStyle(
-                                      color: TColors.neutralDarkLight),
-                                ),
-                                TextSpan(
-                                  text: stock != null ? stock.toString() : "-",
-                                  style: TextStyle(
-                                    color: TColors.neutralDarkDark,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
+                    // if (stock != null)
+                    //   Row(
+                    //     children: [
+                    //       UiIcons(
+                    //         TIcons.box,
+                    //         size: 12,
+                    //         color: TColors.neutralDarkLight,
+                    //       ),
+                    //       SizedBox(width: 4),
+                    //       RichText(
+                    //         text: TextSpan(
+                    //           style: GoogleFonts.inter(
+                    //             fontSize: TSizes.fontSizeBodyS,
+                    //           ),
+                    //           children: [
+                    //             TextSpan(
+                    //               text: "Stok ",
+                    //               style: TextStyle(
+                    //                   color: TColors.neutralDarkLight),
+                    //             ),
+                    //             TextSpan(
+                    //               text: stock != null ? stock.toString() : "-",
+                    //               style: TextStyle(
+                    //                 color: TColors.neutralDarkDark,
+                    //                 fontWeight: FontWeight.bold,
+                    //               ),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //         maxLines: 1,
+                    //         overflow: TextOverflow.ellipsis,
+                    //       ),
+                    //     ],
+                    //   ),
                     if (description.isNotEmpty && noteAction == null)
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            margin: EdgeInsets.only(top: 3),
-                            child: UiIcons(
-                              TIcons.document2,
-                              size: 12,
-                              color: TColors.neutralDarkLight,
-                            ),
-                          ),
-                          SizedBox(width: 4),
+                          // Container(
+                          //   margin: EdgeInsets.only(top: 3),
+                          //   child: UiIcons(
+                          //     TIcons.document2,
+                          //     size: 12,
+                          //     color: TColors.neutralDarkLight,
+                          //   ),
+                          // ),
+                          // SizedBox(width: 4),
                           Expanded(
                             child: TextBodyS(
                               description,

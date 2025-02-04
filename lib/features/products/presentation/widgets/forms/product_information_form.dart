@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:lakoe_pos/common/data/models.dart';
 import 'package:lakoe_pos/common/widgets/form/form_label.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/features/products/application/cubit/product_master/form/product_form_cubit.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/category_field.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/image_picker_field.dart';
@@ -44,6 +47,11 @@ class _ProductInformationFormState extends State<ProductInformationForm>
     symbol: "Rp",
     decimalDigits: 0,
   );
+
+  final List<LabelValue> _availability = [
+    const LabelValue(label: "Tersedia", value: "AVAILABLE"),
+    const LabelValue(label: "Tidak Tersedia", value: "UNAVAILABLE"),
+  ];
 
   // final List<Map<String, String>> _units = [
   //   {"id": "serving", "name": "Porsi"},
@@ -294,6 +302,54 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                           ),
                         ],
                       ))
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const FormLabel("Status Produk"),
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 8),
+                              child: FormBuilderField<String>(
+                                name: "availability",
+                                initialValue:
+                                    widget.initialValue["availability"] ??
+                                        "AVAILABLE",
+                                builder: (field) {
+                                  return Wrap(
+                                    direction: Axis.horizontal,
+                                    spacing: 8,
+                                    children: [
+                                      ..._availability.map((item) {
+                                        bool selected =
+                                            item.value == field.value;
+                                        return InputChip(
+                                          label: !selected
+                                              ? TextBodyM(item.label)
+                                              : TextHeading4(
+                                                  item.label,
+                                                  color: TColors.primary,
+                                                ),
+                                          selected: selected,
+                                          onPressed: () {
+                                            field.didChange(item.value);
+                                          },
+                                        );
+                                      }),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
