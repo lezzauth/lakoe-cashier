@@ -64,6 +64,7 @@ class TBill {
 
     final profile = await CapabilityProfile.load();
     final generator = Generator(PaperSize.mm58, profile, spaceBetweenRows: 1);
+
     bytes += generator.reset();
 
     if (isTestingMode) {
@@ -457,10 +458,7 @@ class TBill {
     final img = image.decodeImage(bytesImg);
     bytes += generator.image(img!);
 
-    bytes += generator.emptyLines(2);
-
     if (isTestingMode) {
-      bytes += generator.emptyLines(1);
       bytes += generator.text(
         "[Testing Mode]",
         styles: const PosStyles(
@@ -468,8 +466,9 @@ class TBill {
           height: PosTextSize.size3,
         ),
       );
-      bytes += generator.emptyLines(2);
     }
+
+    bytes += generator.emptyLines(2);
 
     // bytes += generator.cut(mode: PosCutMode.partial);
     return bytes;
