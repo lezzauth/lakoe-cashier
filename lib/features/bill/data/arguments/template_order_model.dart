@@ -27,7 +27,7 @@ class TemplateOrderModel {
             OrderCharge(
               id: "d753d65d-f0da-40b7-89ae-e6f60b225be2",
               orderId: "883794cb-1f36-49f9-a8cb-cb71453d8e14",
-              name: "Pajak 10%",
+              name: "PB1",
               type: "TAX",
               amount: "2000",
               isPercentage: true,

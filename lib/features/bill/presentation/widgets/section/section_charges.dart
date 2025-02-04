@@ -95,12 +95,6 @@ class BillSectionCharges extends StatelessWidget {
                 height: 0.5,
                 dashWidth: 4.0,
               ),
-              SizedBox(height: 2),
-              Separator(
-                color: TColors.neutralDarkDarkest,
-                height: 0.5,
-                dashWidth: 4.0,
-              ),
             ],
           ),
         ),

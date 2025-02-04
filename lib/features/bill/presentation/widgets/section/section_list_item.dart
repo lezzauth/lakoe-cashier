@@ -25,21 +25,21 @@ class _BillSectionListItemState extends State<BillSectionListItem> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const BillListItem(
-          isHeadList: true,
-          itemName: "Item",
-          qty: "Qty",
-          price: "Harga",
-          note: '',
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 4),
-          child: Separator(
-            color: TColors.neutralDarkDarkest,
-            height: 0.5,
-            dashWidth: 4.0,
-          ),
-        ),
+        // const BillListItem(
+        //   isHeadList: true,
+        //   itemName: "Item",
+        //   qty: "Qty",
+        //   price: "Harga",
+        //   note: '',
+        // ),
+        // const Padding(
+        //   padding: EdgeInsets.symmetric(vertical: 4),
+        //   child: Separator(
+        //     color: TColors.neutralDarkDarkest,
+        //     height: 0.5,
+        //     dashWidth: 4.0,
+        //   ),
+        // ),
         ...widget.items.map(
           (item) => BillListItem(
             itemName: item.product.name,
