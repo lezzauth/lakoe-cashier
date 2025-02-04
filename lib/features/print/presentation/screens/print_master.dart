@@ -158,14 +158,13 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(bottom: 8),
+                                margin: const EdgeInsets.only(bottom: 4),
                                 child: const TextHeading4(
                                   "Print Otomatis",
                                   color: TColors.neutralDarkDarkest,
@@ -178,26 +177,29 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                             ],
                           ),
                         ),
-                        FutureBuilder<bool?>(
-                          future: _appDataProvider.isAutoPrint,
-                          builder: (context, snapshot) {
-                            return FormBuilderField<bool>(
-                              name: "isServiceChargeActive",
-                              builder: (FormFieldState<bool> field) {
-                                return FittedBox(
-                                  fit: BoxFit.cover,
-                                  child: Switch(
-                                    value: field.value ?? snapshot.data!,
-                                    onChanged: (value) async {
-                                      field.didChange(value);
-                                      await _appDataProvider
-                                          .setIsBillAutoPrint(value);
-                                    },
-                                  ),
-                                );
-                              },
-                            );
-                          },
+                        SizedBox(
+                          height: 40,
+                          child: FutureBuilder<bool?>(
+                            future: _appDataProvider.isAutoPrint,
+                            builder: (context, snapshot) {
+                              return FormBuilderField<bool>(
+                                name: "isServiceChargeActive",
+                                builder: (FormFieldState<bool> field) {
+                                  return FittedBox(
+                                    fit: BoxFit.cover,
+                                    child: Switch(
+                                      value: field.value ?? snapshot.data!,
+                                      onChanged: (value) async {
+                                        field.didChange(value);
+                                        await _appDataProvider
+                                            .setIsBillAutoPrint(value);
+                                      },
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),

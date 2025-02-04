@@ -6,10 +6,13 @@ import 'package:lakoe_pos/common/widgets/ui/typography/bill/text_small.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
 import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_state.dart';
 import 'package:lakoe_pos/features/bill/data/arguments/template_order_model.dart';
 import 'package:lakoe_pos/features/bill/presentation/widgets/bill_view.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/utils/print/bill_localization.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BillMasterScreen extends StatelessWidget {
   const BillMasterScreen({super.key});
@@ -28,17 +31,24 @@ class BillMaster extends StatefulWidget {
 }
 
 class _BillMasterState extends State<BillMaster> {
-  // late TemplateOrderModel templateOrder;
+  String langCode = 'id';
+
+  @override
+  void initState() {
+    super.initState();
+    _onInit();
+    _loadLanguagePreference();
+  }
 
   void _onInit() {
     context.read<BillMasterCubit>().init();
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    _onInit();
+  Future<void> _loadLanguagePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      langCode = prefs.getString('bill_language') ?? 'id';
+    });
   }
 
   @override
@@ -56,6 +66,16 @@ class _BillMasterState extends State<BillMaster> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                BlocBuilder<BillMasterCubit, BillMasterState>(
+                  builder: (context, state) {
+                    return LanguageSwitchContainer(
+                      isIdLanguage: state.langCode == 'id',
+                      onLanguageChanged: (langCode) {
+                        context.read<BillMasterCubit>().setLanguage(langCode);
+                      },
+                    );
+                  },
+                ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -75,7 +95,7 @@ class _BillMasterState extends State<BillMaster> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 60),
+                const SizedBox(height: 80),
               ],
             ),
           ),
@@ -113,79 +133,91 @@ class SectionBillInformation extends StatelessWidget {
     required this.orderDate,
   });
 
+  Future<String> getLanguagePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('bill_language') ?? 'id';
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return FutureBuilder<String>(
+      future: getLanguagePreference(),
+      builder: (context, snapshot) {
+        String langCode = snapshot.data ?? 'id';
+
+        return Column(
           children: [
-            const Expanded(
-              child: TextSmall(
-                "Cashier:",
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: TextSmall(
+                    "${BillLocalization.getText('cashier', langCode)}:",
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: TextSmall(
+                    cashierName,
+                    isBold: true,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: TextSmall(
-                cashierName,
-                isBold: true,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.right,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: TextSmall(
+                    "${BillLocalization.getText('receiptNumber', langCode)}:",
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: TextSmall(
+                    noBill,
+                    isBold: true,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: TextSmall(
+                    "${BillLocalization.getText('date', langCode)}:",
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: TextSmall(
+                    orderDate,
+                    textAlign: TextAlign.right,
+                    isBold: true,
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
+                  ),
+                ),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 8, bottom: 8),
+              child: Separator(
+                color: TColors.neutralDarkDarkest,
+                height: 0.5,
+                dashWidth: 4.0,
               ),
             ),
           ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Expanded(
-              child: TextSmall(
-                "Receipt No:",
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: TextSmall(
-                noBill,
-                isBold: true,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.right,
-              ),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Expanded(
-              child: TextSmall(
-                "Order Date:",
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: TextSmall(
-                orderDate,
-                textAlign: TextAlign.right,
-                isBold: true,
-                maxLines: 1,
-                overflow: TextOverflow.clip,
-              ),
-            ),
-          ],
-        ),
-        const Padding(
-          padding: EdgeInsets.only(top: 8, bottom: 8),
-          child: Separator(
-            color: TColors.neutralDarkDarkest,
-            height: 0.5,
-            dashWidth: 4.0,
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 }

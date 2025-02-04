@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/utils/print/bill_localization.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:lakoe_pos/common/widgets/ui/separator/separator.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/bill/text_small.dart';
@@ -65,6 +66,7 @@ class BillView extends StatelessWidget {
 
     return BlocBuilder<BillMasterCubit, BillMasterState>(
         builder: (context, state) {
+      final String langCode = state.langCode;
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Center(
@@ -144,7 +146,7 @@ class BillView extends StatelessWidget {
                 order.closedAt!.isNotEmpty
                     ? SizedBox(
                         child: TextSmall(
-                          "Close Bill: ${TFormatter.billDate(order.closedAt!)}",
+                          "${BillLocalization.getText('closeBill', langCode)}: ${TFormatter.billDate(order.closedAt!)}",
                           isBold: true,
                         ),
                       )
@@ -162,10 +164,10 @@ class BillView extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 52),
-                const SizedBox(
+                SizedBox(
                   width: double.infinity,
                   child: TextSmall(
-                    "Supported by",
+                    BillLocalization.getText('supportBy', langCode),
                     textAlign: TextAlign.center,
                   ),
                 ),

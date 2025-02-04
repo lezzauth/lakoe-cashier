@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/services.dart';
+import 'package:lakoe_pos/utils/print/bill_localization.dart';
 import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:owner_repository/owner_repository.dart';
@@ -18,6 +19,7 @@ import 'package:lakoe_pos/utils/formatters/formatter.dart';
 import 'package:image/image.dart' as image;
 import 'package:lakoe_pos/utils/helpers/bluetooth_permission.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TBill {
   TBill._();
@@ -56,6 +58,9 @@ class TBill {
   }) async {
     List<int> bytes = [];
     int maxLength = 32;
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String langCode = prefs.getString('bill_language') ?? 'id';
 
     final profile = await CapabilityProfile.load();
     final generator = Generator(PaperSize.mm58, profile, spaceBetweenRows: 1);
@@ -158,7 +163,7 @@ class TBill {
 
     bytes += generator.row([
       PosColumn(
-          text: "Cashier:",
+          text: "${BillLocalization.getText('cashier', langCode)}:",
           width: 4,
           styles: const PosStyles(align: PosAlign.left)),
       PosColumn(
@@ -168,7 +173,7 @@ class TBill {
     ]);
     bytes += generator.row([
       PosColumn(
-          text: "Receipt No:",
+          text: "${BillLocalization.getText('receiptNumber', langCode)}:",
           width: 5,
           styles: const PosStyles(align: PosAlign.left)),
       PosColumn(
@@ -181,7 +186,7 @@ class TBill {
     ]);
     bytes += generator.row([
       PosColumn(
-          text: "Order Date:",
+          text: "${BillLocalization.getText('date', langCode)}:",
           width: 5,
           styles: const PosStyles(align: PosAlign.left)),
       PosColumn(
@@ -247,7 +252,7 @@ class TBill {
 
     bytes += generator.row([
       PosColumn(
-        text: "Subtotal",
+        text: BillLocalization.getText('subtotal', langCode),
         width: 6,
         styles: const PosStyles(
           align: PosAlign.left,
@@ -305,7 +310,7 @@ class TBill {
         bytes += generator.row([
           PosColumn(
             text:
-                "S-Charges ${charge.isPercentage ? '(${charge.percentageValue}%)' : ''}",
+                "${BillLocalization.getText('serviceCharge', langCode)} ${charge.isPercentage ? '(${charge.percentageValue}%)' : ''}",
             width: 7,
             styles: const PosStyles(
               align: PosAlign.left,
@@ -325,7 +330,7 @@ class TBill {
     bytes += generator.hr();
     bytes += generator.row([
       PosColumn(
-        text: "Total",
+        text: BillLocalization.getText('total', langCode),
         width: 6,
         styles: const PosStyles(
           align: PosAlign.left,
@@ -373,7 +378,7 @@ class TBill {
       if (payment.approvalCode != null) {
         bytes += generator.row([
           PosColumn(
-            text: "Approval Code",
+            text: BillLocalization.getText('approvalCode', langCode),
             width: 6,
             styles: const PosStyles(
               align: PosAlign.left,
@@ -391,7 +396,7 @@ class TBill {
       bytes += generator.hr();
       bytes += generator.row([
         PosColumn(
-          text: "Change",
+          text: BillLocalization.getText('change', langCode),
           width: 6,
           styles: const PosStyles(align: PosAlign.left, bold: true),
         ),
@@ -406,7 +411,7 @@ class TBill {
       ]);
       bytes += generator.hr();
       bytes += generator.text(
-          "Close Bill: ${TFormatter.billDate(order.closedAt ?? DateTime.now().toString())}",
+          "${BillLocalization.getText('closeBill', langCode)}: ${TFormatter.billDate(order.closedAt ?? DateTime.now().toString())}",
           styles: const PosStyles(
             align: PosAlign.center,
             bold: true,
@@ -416,7 +421,7 @@ class TBill {
 
     if (order.closedAt == null) {
       bytes += generator.hr();
-      bytes += generator.text("Open Bill",
+      bytes += generator.text(BillLocalization.getText('openBill', langCode),
           styles: const PosStyles(
             align: PosAlign.center,
             bold: true,
@@ -442,7 +447,7 @@ class TBill {
 
     bytes += generator.emptyLines(1);
     bytes += generator.text(
-      "Supported by",
+      BillLocalization.getText('supportBy', langCode),
       styles: const PosStyles(
         align: PosAlign.center,
       ),
