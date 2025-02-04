@@ -61,14 +61,6 @@ class TBill {
     final generator = Generator(PaperSize.mm58, profile, spaceBetweenRows: 1);
     bytes += generator.reset();
 
-    // int newBillNumber =
-    //     await AppDataProvider().incrementBillNumberOnPrint(order.id);
-
-    // String formattedBillNumber = TFormatter.formatBillNumber(
-    //   isTestingMode ? 1 : newBillNumber,
-    //   profileOwner.outlets[0].name,
-    // );
-
     if (isTestingMode) {
       bytes += generator.text(
         "[Testing Mode]",
@@ -199,25 +191,27 @@ class TBill {
       ),
     ]);
 
-    bytes += generator.hr();
+    // bytes += generator.hr();
 
-    bytes += generator.row([
-      PosColumn(
-        text: "Item",
-        width: 5,
-        styles: const PosStyles(align: PosAlign.left, bold: true),
-      ),
-      PosColumn(
-          text: "Qty",
-          width: 2,
-          styles: const PosStyles(align: PosAlign.right, bold: true)),
-      PosColumn(
-        text: "Harga",
-        width: 5,
-        styles: const PosStyles(align: PosAlign.right, bold: true),
-      ),
-    ]);
-    bytes += generator.hr();
+    // bytes += generator.row([
+    //   PosColumn(
+    //     text: "Item",
+    //     width: 5,
+    //     styles: const PosStyles(align: PosAlign.left, bold: true),
+    //   ),
+    //   PosColumn(
+    //       text: "Qty",
+    //       width: 2,
+    //       styles: const PosStyles(align: PosAlign.right, bold: true)),
+    //   PosColumn(
+    //     text: "Harga",
+    //     width: 5,
+    //     styles: const PosStyles(align: PosAlign.right, bold: true),
+    //   ),
+    // ]);
+
+    bytes += generator.emptyLines(0);
+    bytes += generator.hr(linesAfter: 1);
 
     // Item loop start
     for (var item in order.items) {
@@ -244,8 +238,7 @@ class TBill {
           ),
         ),
       ]);
-      if (item.notes != null ||
-          (item.notes != null && item.notes!.isNotEmpty)) {
+      if (item.notes!.isNotEmpty) {
         bytes += generator.text("  ${item.notes}");
       }
     }
@@ -291,14 +284,14 @@ class TBill {
           PosColumn(
             text:
                 "${tax.name} ${tax.isPercentage ? '(${tax.percentageValue}%)' : ''}",
-            width: 6,
+            width: 7,
             styles: const PosStyles(
               align: PosAlign.left,
             ),
           ),
           PosColumn(
             text: TFormatter.formatToRupiah(double.parse(tax.amount)),
-            width: 6,
+            width: 5,
             styles: const PosStyles(
               align: PosAlign.right,
             ),
@@ -312,15 +305,15 @@ class TBill {
         bytes += generator.row([
           PosColumn(
             text:
-                "${charge.name}  ${charge.isPercentage ? '(${charge.percentageValue}%)' : ''}",
-            width: 6,
+                "S-Charges ${charge.isPercentage ? '(${charge.percentageValue}%)' : ''}",
+            width: 7,
             styles: const PosStyles(
               align: PosAlign.left,
             ),
           ),
           PosColumn(
             text: TFormatter.formatToRupiah(double.parse(charge.amount)),
-            width: 6,
+            width: 5,
             styles: const PosStyles(
               align: PosAlign.right,
             ),
@@ -459,7 +452,7 @@ class TBill {
     final img = image.decodeImage(bytesImg);
     bytes += generator.image(img!);
 
-    bytes += generator.emptyLines(0);
+    bytes += generator.emptyLines(2);
 
     if (isTestingMode) {
       bytes += generator.emptyLines(1);
@@ -472,7 +465,7 @@ class TBill {
       );
     }
 
-    bytes += generator.cut(mode: PosCutMode.full);
+    // bytes += generator.cut(mode: PosCutMode.partial);
     return bytes;
   }
 
