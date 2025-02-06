@@ -145,7 +145,7 @@ class _TaxFormState extends State<TaxForm> {
                                             ),
                                           ),
                                           const TextBodyS(
-                                            "Pajak yang dikenakan jika usaha Anda menyediakan makanan/minuman untuk dinikmati di tempat.",
+                                            "Pajak yang dikenakan jika usaha kamu menyediakan makanan/minuman untuk dinikmati di tempat.",
                                             color: TColors.neutralDarkLight,
                                           ),
                                         ],
