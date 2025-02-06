@@ -70,12 +70,27 @@ class TFormatter {
         : formattedDate;
   }
 
-  static String billDate(String dateStr) {
-    DateTime dateTime = DateTime.parse(dateStr);
+  static String billDate(
+    String dateStr, {
+    String mode = "both",
+    bool showTimezone = false,
+  }) {
+    DateTime dateTime = DateTime.parse(dateStr).toLocal();
+    String timezone = getIndonesianTimeZone(dateTime);
 
-    String formattedDate = DateFormat('dd/MM/yyyy, HH:mm').format(dateTime);
+    String formattedDate;
+    switch (mode) {
+      case "date":
+        formattedDate = DateFormat('dd/MM/yyyy').format(dateTime);
+        break;
+      case "time":
+        formattedDate = DateFormat('HH:mm').format(dateTime);
+        break;
+      default:
+        formattedDate = DateFormat('dd/MM/yyyy, HH:mm').format(dateTime);
+    }
 
-    return formattedDate;
+    return showTimezone ? "$formattedDate $timezone" : formattedDate;
   }
 
   static String censoredText(String text) {

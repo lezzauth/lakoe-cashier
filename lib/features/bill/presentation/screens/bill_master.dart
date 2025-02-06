@@ -31,7 +31,7 @@ class BillMaster extends StatefulWidget {
 }
 
 class _BillMasterState extends State<BillMaster> {
-  String langCode = 'id';
+  String langCode = 'en';
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _BillMasterState extends State<BillMaster> {
   Future<void> _loadLanguagePreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      langCode = prefs.getString('bill_language') ?? 'id';
+      langCode = prefs.getString('receipt_language') ?? 'en';
     });
   }
 
@@ -69,9 +69,11 @@ class _BillMasterState extends State<BillMaster> {
                 BlocBuilder<BillMasterCubit, BillMasterState>(
                   builder: (context, state) {
                     return LanguageSwitchContainer(
-                      isIdLanguage: state.langCode == 'id',
+                      isIdLanguage: state.receiptLanguage == 'id',
                       onLanguageChanged: (langCode) {
-                        context.read<BillMasterCubit>().setLanguage(langCode);
+                        context
+                            .read<BillMasterCubit>()
+                            .setReceiptLanguage(langCode);
                       },
                     );
                   },
@@ -135,7 +137,7 @@ class SectionBillInformation extends StatelessWidget {
 
   Future<String> getLanguagePreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('bill_language') ?? 'id';
+    return prefs.getString('receipt_language') ?? 'en';
   }
 
   @override
@@ -143,7 +145,7 @@ class SectionBillInformation extends StatelessWidget {
     return FutureBuilder<String>(
       future: getLanguagePreference(),
       builder: (context, snapshot) {
-        String langCode = snapshot.data ?? 'id';
+        String langCode = snapshot.data ?? 'en';
 
         return Column(
           children: [

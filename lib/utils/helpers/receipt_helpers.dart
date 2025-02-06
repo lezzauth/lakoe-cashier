@@ -100,8 +100,8 @@ class ReceiptHelper {
               );
               Navigator.pop(context);
             },
-            printAction: () {
-              TBill.printReceipt(context, profile, order, footNote);
+            printReceiptAction: () {
+              TBill.receiptOrderPrint(context, profile, order, footNote);
             });
       },
     );

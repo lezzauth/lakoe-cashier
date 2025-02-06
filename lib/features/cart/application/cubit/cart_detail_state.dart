@@ -37,8 +37,11 @@ final class CartDetailActionInProgress extends CartDetailState {
 }
 
 final class CartDetailActionSuccess extends CartDetailState {
+  final SaveOrderResponse res;
+
+  CartDetailActionSuccess({required this.res});
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [res];
 }
 
 final class CartDetailActionFailure extends CartDetailState {

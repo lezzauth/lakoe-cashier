@@ -25,6 +25,7 @@ import 'package:lakoe_pos/utils/constants/sizes.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 import 'package:lakoe_pos/utils/helpers/receipt_helpers.dart';
 import 'package:lakoe_pos/utils/print/bill.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SuccessConfirmationPaymentScreen extends StatefulWidget {
@@ -114,9 +115,11 @@ class _SuccessConfirmationPaymentContentState
       String,
       ScrollController,
     ) action,
-  ) {
+  ) async {
     final billMasterState = context.read<BillMasterCubit>().state;
     String footNote = billMasterState.footNote;
+
+    if (!context.mounted) return;
 
     final authState = context.read<AuthCubit>().state;
 
@@ -152,7 +155,7 @@ class _SuccessConfirmationPaymentContentState
       context,
       order,
       (context, profile, order, footNote, scrollController) {
-        TBill.printReceipt(
+        TBill.receiptOrderPrint(
           context,
           profile,
           order,
@@ -165,7 +168,6 @@ class _SuccessConfirmationPaymentContentState
   @override
   Widget build(BuildContext context) {
     final arguments = widget.arguments;
-    final AppDataProvider appDataProvider = AppDataProvider();
     return MultiBlocListener(
       listeners: [
         BlocListener<OrderDetailCubit, OrderDetailState>(
@@ -174,22 +176,28 @@ class _SuccessConfirmationPaymentContentState
       ],
       child: BlocBuilder<OrderDetailCubit, OrderDetailState>(
         builder: (context, state) => switch (state) {
-          OrderDetailLoadSuccess(:final order) => FutureBuilder<bool>(
-              future: appDataProvider.isAutoPrint,
+          OrderDetailLoadSuccess(:final order) => FutureBuilder<List<bool>>(
+              future: SharedPreferences.getInstance().then((prefs) => [
+                    prefs.getBool('print_order_ticket') ?? false,
+                    prefs.getBool('auto_print_receipt') ?? false,
+                  ]),
               builder: (context, snapshot) {
-                bool isAutoPrint = snapshot.data ?? false;
-
-                if (isAutoPrint && !_doPrinting) {
+                if (!_doPrinting && (snapshot.data?[1] ?? false)) {
                   _doPrinting = true;
-                  _handleReceipt(
-                    context,
-                    order,
-                    (context, profile, order, footNote, scrollController) {
-                      TBill.printReceipt(
+
+                  Future.delayed(
+                    (snapshot.data?[0] ?? false)
+                        ? Duration(seconds: 5)
+                        : Duration.zero,
+                    () {
+                      if (!context.mounted) return;
+                      _handleReceipt(
                         context,
-                        profile,
                         order,
-                        footNote,
+                        (context, profile, order, footNote, scrollController) {
+                          TBill.receiptOrderPrint(
+                              context, profile, order, footNote);
+                        },
                       );
                     },
                   );

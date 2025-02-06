@@ -8,6 +8,7 @@ import 'package:lakoe_pos/features/account/manage_account/presentation/screens/o
 import 'package:lakoe_pos/features/account/presentation/screens/form/edit_acccount_pin.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/otp_input.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/user_feedback.dart';
+import 'package:lakoe_pos/features/bill/presentation/screens/bill_settings.dart';
 import 'package:lakoe_pos/features/checkout/presentation/screens/payment_failed.dart';
 import 'package:lakoe_pos/features/customers/presentation/screens/edit_customer.dart';
 import 'package:lakoe_pos/features/employees/data/arguments/forgot_pin_dto.dart';
@@ -420,6 +421,7 @@ class _AppState extends State<App> {
             // bill
             "/bill": (context) => const BillMasterScreen(),
             "/bill/edit": (context) => const BillEditScreen(),
+            "/bill/settings": (context) => const BillSettingsScreen(),
 
             // print
             "/print": (context) => const PrintMasterScreen(),

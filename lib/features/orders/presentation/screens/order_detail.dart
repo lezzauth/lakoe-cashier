@@ -54,6 +54,7 @@ import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
 import 'package:lakoe_pos/utils/helpers/receipt_helpers.dart';
 import 'package:lakoe_pos/utils/print/bill.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderDetailScreen extends StatelessWidget {
   const OrderDetailScreen({
@@ -269,9 +270,11 @@ class _OrderDetailState extends State<OrderDetail> {
       String,
       ScrollController,
     ) action,
-  ) {
+  ) async {
     final billMasterState = context.read<BillMasterCubit>().state;
     String footNote = billMasterState.footNote;
+
+    if (!context.mounted) return;
 
     final authState = context.read<AuthCubit>().state;
 
@@ -750,11 +753,19 @@ class _OrderDetailState extends State<OrderDetail> {
                                     isCancel: order.status == "CANCELLED",
                                     isClosed: order.status == "CLOSED",
                                     type: order.type,
-                                    onPrintBill: () {
+                                    onPrintBill: () async {
                                       final billMasterState =
                                           context.read<BillMasterCubit>().state;
-                                      String footNote =
+                                      String defaultFootNote =
                                           billMasterState.footNote;
+
+                                      final prefs =
+                                          await SharedPreferences.getInstance();
+                                      final footNote =
+                                          prefs.getString('foot_note') ??
+                                              defaultFootNote;
+
+                                      if (!context.mounted) return;
 
                                       final authState =
                                           context.read<AuthCubit>().state;
@@ -770,7 +781,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                             'AuthState is not ready, using default profile.');
                                       }
 
-                                      TBill.printReceipt(
+                                      TBill.receiptOrderPrint(
                                           context, profile, order, footNote);
                                     },
                                     onEditOrder: () {},
@@ -797,7 +808,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                         order,
                                         (context, profile, order, footNote,
                                             scrollController) {
-                                          TBill.printReceipt(
+                                          TBill.receiptOrderPrint(
                                             context,
                                             profile,
                                             order,

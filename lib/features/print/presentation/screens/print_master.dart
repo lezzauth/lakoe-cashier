@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
@@ -37,8 +36,6 @@ class PrintMasterScreen extends StatefulWidget {
 }
 
 class _PrintMasterScreenState extends State<PrintMasterScreen> {
-  final AppDataProvider _appDataProvider = AppDataProvider();
-
   @override
   void initState() {
     super.initState();
@@ -141,65 +138,38 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
 
             return Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, "/bill/settings");
+                  },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 16,
-                    ),
+                    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: EdgeInsets.all(16.0),
                     decoration: BoxDecoration(
-                      color: TColors.neutralLightLightest,
-                      borderRadius: BorderRadius.circular(12.0),
                       border: Border.all(
-                        width: 1,
                         color: TColors.neutralLightMedium,
                       ),
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        UiIcons(
+                          TIcons.settings,
+                          size: 24,
+                          color: TColors.neutralDarkDark,
+                        ),
+                        SizedBox(width: 12),
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(bottom: 4),
-                                child: const TextHeading4(
-                                  "Print Otomatis",
-                                  color: TColors.neutralDarkDarkest,
-                                ),
-                              ),
-                              const TextBodyS(
-                                "Setiap kali transaksi selesai (lunas) secara otomatis akan melakukan print struk.",
-                                color: TColors.neutralDarkLight,
-                              ),
-                            ],
+                          child: TextHeading3(
+                            "Pengaturan",
+                            color: TColors.neutralDarkDark,
                           ),
                         ),
-                        SizedBox(
-                          height: 40,
-                          child: FutureBuilder<bool?>(
-                            future: _appDataProvider.isAutoPrint,
-                            builder: (context, snapshot) {
-                              return FormBuilderField<bool>(
-                                name: "isServiceChargeActive",
-                                builder: (FormFieldState<bool> field) {
-                                  return FittedBox(
-                                    fit: BoxFit.cover,
-                                    child: Switch(
-                                      value: field.value ?? snapshot.data!,
-                                      onChanged: (value) async {
-                                        field.didChange(value);
-                                        await _appDataProvider
-                                            .setIsBillAutoPrint(value);
-                                      },
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
+                        SizedBox(width: 12),
+                        UiIcons(
+                          TIcons.arrowRight,
+                          size: 16,
+                          color: TColors.neutralDarkLightest,
                         ),
                       ],
                     ),
@@ -422,12 +392,12 @@ class _PrintMasterScreenState extends State<PrintMasterScreen> {
                   child: BillAction(
                     onTestPrint: connectedDevices.isEmpty
                         ? null
-                        : () {
+                        : () async {
                             final billMasterState =
                                 context.read<BillMasterCubit>().state;
+                            String footNote = billMasterState.footNote;
 
-                            String footNote = "";
-                            footNote = billMasterState.footNote;
+                            if (!context.mounted) return;
 
                             final authState = context.read<AuthCubit>().state;
 
@@ -530,12 +500,13 @@ class BluetoothDeviceTile extends StatelessWidget {
         ListTile(
           onTap: !isConnecting ? onConnectPressed : null,
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          leading: const CircleAvatar(
+          leading: CircleAvatar(
             radius: 20,
-            backgroundColor: TColors.highlightLightest,
+            backgroundColor:
+                isConnected ? TColors.successLight : TColors.highlightLightest,
             child: UiIcons(
               TIcons.bluetooth,
-              color: TColors.primary,
+              color: isConnected ? TColors.success : TColors.primary,
             ),
           ),
           title: TextHeading4(device.name ?? "Unnamed Device"),

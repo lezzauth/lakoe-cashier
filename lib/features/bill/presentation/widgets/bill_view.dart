@@ -66,7 +66,7 @@ class BillView extends StatelessWidget {
 
     return BlocBuilder<BillMasterCubit, BillMasterState>(
         builder: (context, state) {
-      final String langCode = state.langCode;
+      final String langCode = state.receiptLanguage;
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Center(

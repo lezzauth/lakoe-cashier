@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_state.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_cubit.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_cubit.dart';
@@ -15,6 +17,8 @@ import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_state.dart
 import 'package:lakoe_pos/features/cart/application/cubit/cart_state.dart';
 import 'package:lakoe_pos/features/cart/presentation/widgets/content/cart_content.dart';
 import 'package:lakoe_pos/features/cart/presentation/widgets/footer/cart_footer.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_cubit.dart';
+import 'package:lakoe_pos/features/orders/application/cubit/order_detail/order_detail_state.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_state.dart';
 import 'package:lakoe_pos/features/payment_method/common/widgets/payment_method_not_available.dart';
@@ -23,6 +27,7 @@ import 'package:lakoe_pos/features/payment_method/payments/common/widgets/select
 import 'package:lakoe_pos/features/payment_method/payments/data/arguments/success_confirmation_payment_argument.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/print/bill.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -81,9 +86,6 @@ class _CartState extends State<Cart> {
           customerId: filterState.customer?.id,
           tableId: filterState.table?.id,
         );
-
-    // if (!mounted) return;
-    // Navigator.pop(context);
   }
 
   Future<void> _onCashPaid(PaymentCash data) async {
@@ -216,118 +218,137 @@ class _CartState extends State<Cart> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CartDetailCubit, CartDetailState>(
-      listener: (context, state) async {
-        if (state is CartDetailActionSuccess) {
-          context.read<CartCubit>().reset();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              "/cashier",
-              (route) => false,
-            );
-          });
-        }
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<CartDetailCubit, CartDetailState>(
+          listener: (context, state) async {
+            if (state is CartDetailActionSuccess) {
+              context.read<CartCubit>().reset();
+              context.read<OrderDetailCubit>().findOne(state.res.id);
 
-        if (state is CartDetailCompleteActionSuccess) {
-          context.read<CartCubit>().reset();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.popAndPushNamed(
-              context,
-              "/payments/success_confirmation",
-              arguments: SuccessConfirmationPaymentArgument(
-                payment: state.res,
-                isCashier: true,
-              ),
-            );
-          });
-        }
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  "/cashier",
+                  (route) => false,
+                );
+              });
+            }
 
-        if (state is CartDetailActionFailure && state.error.contains("402") ||
-            state is CartDetailCompleteActionFailure &&
-                state.error.contains("402")) {
-          if (state is CartDetailCompleteActionFailure) {
-            Navigator.pop(context);
-          }
+            if (state is CartDetailCompleteActionSuccess) {
+              context.read<CartCubit>().reset();
+              context.read<OrderDetailCubit>().findOne(state.res.order.id);
 
-          final activePackage = await _appDataProvider.activePackage;
-
-          String limit = "25";
-
-          if (activePackage == "GROW") {
-            limit = "50";
-          }
-
-          if (!context.mounted) return;
-
-          bool isExpired = state is CartDetailActionFailure &&
-                  state.error.contains("expired") ||
-              state is CartDetailCompleteActionFailure &&
-                  state.error.contains("expired");
-
-          String title = "Pesanan lagi ramai banget, ya?";
-          String description =
-              "Sayangnya, paket kamu saat ini cuma bisa buat $limit pesanan dalam sehari. Yuk! upgrade paket biar penjualan tidak terganggu.";
-
-          if (isExpired) {
-            title = "Yah! masa aktif paket habis";
-            description =
-                "Paket $activePackage kamu sudah tidak aktif lagi. Yuk perpanjang atau upgrade paket untuk terus menikmati fitur Lakoe.";
-          }
-
-          showModalBottomSheet(
-            context: context,
-            enableDrag: false,
-            isDismissible: false,
-            builder: (context) {
-              return PopScope(
-                canPop: false,
-                onPopInvokedWithResult: (didPop, result) async {},
-                child: CustomBottomsheet(
-                  hasGrabber: false,
-                  child: ErrorDisplay(
-                    imageSrc: TImages.limitQuota,
-                    title: title,
-                    description: description,
-                    actionTitlePrimary: "Lihat Paket",
-                    onActionPrimary: () {
-                      context.read<CartCubit>().reset();
-
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        if (isExpired && activePackage != "LITE") {
-                          Navigator.pushNamed(
-                            context,
-                            "/account/active_package",
-                            arguments: {'packageName': activePackage},
-                          );
-                        } else if (activePackage == "GROW") {
-                          Navigator.popAndPushNamed(
-                            context,
-                            "/packages/upgrade",
-                            arguments: {
-                              'currentPackage': "GROW",
-                              'upgradePakcage': "PRO",
-                            },
-                          );
-                        } else {
-                          Navigator.popAndPushNamed(context, "/packages");
-                        }
-                      });
-                    },
-                    actionTitleSecondary: "Nanti Saja",
-                    onActionSecondary: () async {
-                      context.read<CartCubit>().reset();
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        Navigator.pop(context);
-                      });
-                    },
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.popAndPushNamed(
+                  context,
+                  "/payments/success_confirmation",
+                  arguments: SuccessConfirmationPaymentArgument(
+                    payment: state.res,
+                    isCashier: true,
                   ),
-                ),
+                );
+              });
+            }
+            if (state is CartDetailActionFailure &&
+                    state.error.contains("402") ||
+                state is CartDetailCompleteActionFailure &&
+                    state.error.contains("402")) {
+              if (state is CartDetailCompleteActionFailure) {
+                Navigator.pop(context);
+              }
+
+              final activePackage = await _appDataProvider.activePackage;
+
+              String limit = "25";
+
+              if (activePackage == "GROW") {
+                limit = "50";
+              }
+
+              if (!context.mounted) return;
+
+              bool isExpired = state is CartDetailActionFailure &&
+                      state.error.contains("expired") ||
+                  state is CartDetailCompleteActionFailure &&
+                      state.error.contains("expired");
+
+              String title = "Pesanan lagi ramai banget, ya?";
+              String description =
+                  "Sayangnya, paket kamu saat ini cuma bisa buat $limit pesanan dalam sehari. Yuk! upgrade paket biar penjualan tidak terganggu.";
+
+              if (isExpired) {
+                title = "Yah! masa aktif paket habis";
+                description =
+                    "Paket $activePackage kamu sudah tidak aktif lagi. Yuk perpanjang atau upgrade paket untuk terus menikmati fitur Lakoe.";
+              }
+
+              showModalBottomSheet(
+                context: context,
+                enableDrag: false,
+                isDismissible: false,
+                builder: (context) {
+                  return PopScope(
+                    canPop: false,
+                    onPopInvokedWithResult: (didPop, result) async {},
+                    child: CustomBottomsheet(
+                      hasGrabber: false,
+                      child: ErrorDisplay(
+                        imageSrc: TImages.limitQuota,
+                        title: title,
+                        description: description,
+                        actionTitlePrimary: "Lihat Paket",
+                        onActionPrimary: () {
+                          context.read<CartCubit>().reset();
+
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            if (isExpired && activePackage != "LITE") {
+                              Navigator.pushNamed(
+                                context,
+                                "/account/active_package",
+                                arguments: {'packageName': activePackage},
+                              );
+                            } else if (activePackage == "GROW") {
+                              Navigator.popAndPushNamed(
+                                context,
+                                "/packages/upgrade",
+                                arguments: {
+                                  'currentPackage': "GROW",
+                                  'upgradePakcage': "PRO",
+                                },
+                              );
+                            } else {
+                              Navigator.popAndPushNamed(context, "/packages");
+                            }
+                          });
+                        },
+                        actionTitleSecondary: "Nanti Saja",
+                        onActionSecondary: () async {
+                          context.read<CartCubit>().reset();
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            Navigator.pop(context);
+                          });
+                        },
+                      ),
+                    ),
+                  );
+                },
               );
-            },
-          );
-        }
-      },
+            }
+          },
+        ),
+        BlocListener<OrderDetailCubit, OrderDetailState>(
+          listener: (context, state) {
+            if (state is OrderDetailLoadSuccess) {
+              BillMasterState billState = context.read<BillMasterCubit>().state;
+
+              if (billState.printOrderTicket) {
+                TBill.tickerOrderPrint(context, state.order);
+              }
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),

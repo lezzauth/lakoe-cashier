@@ -50,7 +50,7 @@ class TBill {
     return wrappedText;
   }
 
-  static Future<List<int>> printAction({
+  static Future<List<int>> printReceiptAction({
     required OwnerProfileModel profileOwner,
     required OrderModel order,
     required String footNote,
@@ -60,7 +60,7 @@ class TBill {
     int maxLength = 32;
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String langCode = prefs.getString('bill_language') ?? 'id';
+    final String langCode = prefs.getString('receipt_language') ?? 'id';
 
     final profile = await CapabilityProfile.load();
     final generator = Generator(PaperSize.mm58, profile, spaceBetweenRows: 1);
@@ -154,7 +154,9 @@ class TBill {
       ),
       PosColumn(
         text: order.type == "DINEIN"
-            ? "Dine-In ${order.table?.no ?? ""}"
+            ? (order.table != null)
+                ? "Dine-In ${order.table?.no}"
+                : "Dine-In"
             : "Take Away",
         width: 6,
         styles: const PosStyles(align: PosAlign.right, bold: true),
@@ -437,6 +439,8 @@ class TBill {
           align: PosAlign.center,
         ),
       );
+    } else if (footNote == "ticketOrder") {
+      bytes += generator.emptyLines(0);
     } else {
       bytes += generator.text(
         "Silakan cek kembali pesanan kamu sebelum membayar.",
@@ -474,7 +478,57 @@ class TBill {
     return bytes;
   }
 
-  static Future<void> printReceipt(
+  static Future<List<int>> printOrderTicketAction({
+    required OrderModel order,
+  }) async {
+    List<int> bytes = [];
+
+    final profile = await CapabilityProfile.load();
+    final generator = Generator(PaperSize.mm58, profile, spaceBetweenRows: 1);
+
+    DateTime createdDate = DateTime.parse(order.createdAt).toLocal();
+
+    String month = createdDate.month.toString().padLeft(2, '0');
+    String day = createdDate.day.toString().padLeft(2, '0');
+    String second = createdDate.second.toString().padLeft(2, '0');
+
+    bytes += generator.reset();
+
+    bytes += generator.emptyLines(3);
+
+    bytes += generator.text(
+      "Order Ticket #$month$day$second-${order.no}",
+      styles: const PosStyles(
+        bold: true,
+      ),
+    );
+    bytes += generator.hr();
+    bytes += generator.emptyLines(1);
+    for (var item in order.items) {
+      bytes += generator.text("${item.quantity}x  ${item.product.name}");
+      if (item.notes!.isNotEmpty) {
+        bytes += generator.text("Note: ${item.notes}");
+      }
+      bytes += generator.emptyLines(1);
+    }
+    bytes += generator.hr();
+    bytes += generator.text(
+      order.type == "DINEIN" ? "Table: ${order.table?.no ?? "-"}" : "Take Away",
+    );
+    bytes += generator.text(
+      "Time Order: ${TFormatter.billDate(
+        order.createdAt,
+        mode: "time",
+        showTimezone: true,
+      )}",
+    );
+
+    bytes += generator.emptyLines(3);
+
+    return bytes;
+  }
+
+  static Future<void> receiptOrderPrint(
     BuildContext context,
     OwnerProfileModel profile,
     OrderModel order,
@@ -492,12 +546,66 @@ class TBill {
       bool connectionStatus = await PrintBluetoothThermal.connectionStatus;
 
       if (connectionStatus) {
-        List<int> ticket = await printAction(
+        List<int> ticket = await printReceiptAction(
           profileOwner: profile,
           order: order,
           footNote: footNote,
           isTestingMode: false,
         );
+
+        await PrintBluetoothThermal.writeBytes(ticket);
+      } else {
+        if (!context.mounted) return;
+        showModalBottomSheet(
+          context: context,
+          enableDrag: false,
+          isDismissible: false,
+          builder: (context) {
+            return PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) async {},
+              child: CustomBottomsheet(
+                hasGrabber: false,
+                child: ErrorDisplay(
+                  imageSrc: TImages.noPrintIllustration,
+                  title: "Belum ada print yang connect, nih!",
+                  description:
+                      "Yuk! Sambungkan dulu print kamu di halaman Setting.",
+                  actionTitlePrimary: "Atur Print",
+                  onActionPrimary: () async {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, "/print");
+                  },
+                  actionTitleSecondary: "Nanti Saja",
+                  onActionSecondary: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            );
+          },
+        );
+      }
+    }
+  }
+
+  static Future<void> tickerOrderPrint(
+    BuildContext context,
+    OrderModel order,
+  ) async {
+    var permissions = await TBluetoothPermission.checkPermissions();
+    bool isPermissionsAllowed = ![
+      permissions.bluetoothConnect,
+      permissions.bluetoothScan,
+      permissions.nearbyDevices
+    ].contains(true);
+
+    if (!isPermissionsAllowed) {
+    } else {
+      bool connectionStatus = await PrintBluetoothThermal.connectionStatus;
+
+      if (connectionStatus) {
+        List<int> ticket = await printOrderTicketAction(order: order);
 
         await PrintBluetoothThermal.writeBytes(ticket);
       } else {
@@ -544,7 +652,7 @@ class TBill {
     if (connectionStatus) {
       TemplateOrderModel templateOrder = TemplateOrderModel();
 
-      List<int> ticket = await printAction(
+      List<int> ticket = await printReceiptAction(
         profileOwner: profile,
         order: templateOrder.order,
         footNote: footNote,

@@ -16,14 +16,14 @@ class DetailReceiptBottomSheet extends StatelessWidget {
     required this.data,
     required this.saveAction,
     required this.shareAction,
-    required this.printAction,
+    required this.printReceiptAction,
   });
   final ScrollController controller;
   final GlobalKey widgetKey;
   final OrderModel data;
   final Function() saveAction;
   final Function() shareAction;
-  final Function() printAction;
+  final Function() printReceiptAction;
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +103,7 @@ class DetailReceiptBottomSheet extends StatelessWidget {
                   SizedBox(width: 12),
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: printAction,
+                      onPressed: printReceiptAction,
                       style: OutlinedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 8.0),
                       ),

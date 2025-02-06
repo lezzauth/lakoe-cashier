@@ -70,13 +70,13 @@ class CartDetailCubit extends Cubit<CartDetailState> {
   }) async {
     try {
       emit(CartDetailActionInProgress());
-      await _cashierRepository.saveOrder(_cartsToSaveOrderDto(
+      final res = await _cashierRepository.saveOrder(_cartsToSaveOrderDto(
         carts: carts,
         type: type,
         customerId: customerId,
         tableId: tableId,
       ));
-      emit(CartDetailActionSuccess());
+      emit(CartDetailActionSuccess(res: res));
     } catch (e, s) {
       String errorMessage = "An unexpected error occurred.";
 

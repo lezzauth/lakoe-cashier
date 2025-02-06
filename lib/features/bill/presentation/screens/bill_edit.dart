@@ -28,8 +28,8 @@ class _BillEditScreenState extends State<BillEditScreen> {
     if (!isFormValid) {
       return;
     }
-
-    await context.read<BillMasterCubit>().onSave();
+    String footNote = _formKey.currentState?.value["footNote"] ?? "";
+    await context.read<BillMasterCubit>().setFootNote(footNote);
 
     if (!mounted) return;
     Navigator.pop(context, true);

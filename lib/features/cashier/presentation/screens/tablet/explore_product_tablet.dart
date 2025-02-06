@@ -7,6 +7,8 @@ import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
 import 'package:lakoe_pos/common/widgets/form/search_field.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_state.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_cubit.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_detail_filter_cubit.dart';
@@ -36,6 +38,7 @@ import 'package:lakoe_pos/features/payment_method/common/widgets/payment_method_
 import 'package:lakoe_pos/features/products/presentation/widgets/filter/product_category_filter.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/print/bill.dart';
 
 class ExploreProductTablet extends StatelessWidget {
   const ExploreProductTablet({super.key});
@@ -130,11 +133,12 @@ class _ExploreProductTabletContentState
             if (state is CartDetailActionSuccess) {
               context.read<CartCubit>().reset();
               context.read<CashierOrderCubit>().findAll();
+              context.read<OrderDetailCubit>().findOne(state.res.id);
             }
 
-            if (state is CartDetailActionSuccess ||
-                state is CartDetailCompleteActionSuccess) {
+            if (state is CartDetailCompleteActionSuccess) {
               context.read<CartCubit>().reset();
+              context.read<OrderDetailCubit>().findOne(state.res.order.id);
             }
 
             if (state is CartDetailActionFailure &&
@@ -266,7 +270,22 @@ class _ExploreProductTabletContentState
               return;
             }
           },
-        )
+        ),
+        BlocListener<OrderDetailCubit, OrderDetailState>(
+          listener: (context, state) {
+            if (state is OrderDetailLoadSuccess) {
+              OrderDetailOpenedState openDetail =
+                  context.read<OrderDetailOpenedCubit>().state;
+              BillMasterState billState = context.read<BillMasterCubit>().state;
+
+              bool openDetailOder = openDetail.selectedId != null;
+
+              if (billState.printOrderTicket && !openDetailOder) {
+                TBill.tickerOrderPrint(context, state.order);
+              }
+            }
+          },
+        ),
       ],
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

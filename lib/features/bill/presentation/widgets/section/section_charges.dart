@@ -37,7 +37,7 @@ class BillSectionCharges extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BillMasterCubit, BillMasterState>(
         builder: (context, state) {
-      final String langCode = state.langCode;
+      final String langCode = state.receiptLanguage;
       return Column(
         children: [
           if (_taxCharges().isNotEmpty)

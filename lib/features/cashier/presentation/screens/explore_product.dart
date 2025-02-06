@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/responsive/responsive_layout.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
 import 'package:lakoe_pos/features/cart/application/cubit/cart_cubit.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/category/cashier_category_cubit.dart';
 import 'package:lakoe_pos/features/cashier/application/cubit/order/cashier_order_cubit.dart';
@@ -48,6 +49,7 @@ class _ExploreProductState extends State<ExploreProduct> {
     context.read<CashierProductCubit>().init();
     context.read<CashierCategoryCubit>().init();
     context.read<PaymentMethodCubit>().findAll();
+    context.read<BillMasterCubit>().init();
   }
 
   @override

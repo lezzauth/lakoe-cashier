@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
+import 'package:lakoe_pos/features/bill/application/cubit/bill_master/bill_master_cubit.dart';
 import 'package:lakoe_pos/features/home/presentation/dashboard/widgets/shimmer/shimmer_card_report.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_master_cubit.dart';
 import 'package:lakoe_pos/utils/helpers/app_update_helper.dart';
@@ -60,6 +61,7 @@ class _DashboardState extends State<Dashboard> {
     context.read<CashierCubit>().getOpenCashier();
     context.read<CashierReportCubit>().init();
     context.read<PackageMasterCubit>().init();
+    context.read<BillMasterCubit>().init();
 
     _checkAndRequestReview();
 
