@@ -1,4 +1,3 @@
-
 # Lakoe POS
 
 A Flutter project with multiple flavors for development and production.
@@ -102,6 +101,22 @@ This command will generate APKs for different architectures in `build/app/output
 Only upload these APKs to the Play Store, as they are optimized for specific device architectures.
 
 **Note**: For additional optimization, you may want to enable ProGuard in your `build.gradle` file to minimize and obfuscate the code. Ensure that you test thoroughly, as ProGuard can impact performance if misconfigured.
+
+## Building AAB (Android App Bundle)
+
+To generate an AAB file for uploading to the Google Play Store, use the following command:
+
+```bash
+flutter build appbundle --flavor prod -t lib/main.dart --release
+```
+
+This will generate an AAB file in `build/app/outputs/bundle/` (e.g., `app-prod-release.aab`).
+
+### Why Use AAB?
+- Google Play optimizes the distribution of your app by delivering only the required resources for a user's device.
+- AAB format helps reduce APK size and supports Play Feature Delivery.
+
+Ensure you have your signing configuration set up in `android/app/build.gradle` before building the AAB.
 
 ## Additional Resources
 
