@@ -15,7 +15,7 @@ class BillLocalization {
         'subtotal': 'Subtotal',
         'discount': 'Discount',
         'tax': 'Tax',
-        'serviceCharge': 'S-Charges',
+        'serviceCharge': 'Services',
         'total': 'Total',
         'paymentMethod': 'Payment Method',
         'change': 'Change',
