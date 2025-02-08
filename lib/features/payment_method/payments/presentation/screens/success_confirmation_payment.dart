@@ -2,6 +2,7 @@ import 'package:app_data_provider/app_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:customer_repository/customer_repository.dart';
 import 'package:logman/logman.dart';
 import 'package:order_repository/order_repository.dart';
 import 'package:owner_repository/owner_repository.dart';
@@ -82,6 +83,7 @@ class _SuccessConfirmationPaymentContentState
   final ScrollController _scrollController = ScrollController();
   bool _doPrinting = false;
   bool _isNavigating = false;
+  CustomerModel? customer;
 
   void _onInit() {
     context.read<OrderDetailCubit>().findOne(widget.arguments.payment.order.id);
@@ -143,6 +145,7 @@ class _SuccessConfirmationPaymentContentState
           context,
           profile: profile,
           order: order,
+          customer: customer,
           footNote: footNote,
           scrollController: scrollController,
         );
@@ -171,7 +174,20 @@ class _SuccessConfirmationPaymentContentState
     return MultiBlocListener(
       listeners: [
         BlocListener<OrderDetailCubit, OrderDetailState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state is OrderDetailLoadSuccess) {
+              if (state.order.customer == null) return;
+              setState(() {
+                customer = CustomerModel(
+                  id: state.order.customer!.id,
+                  name: state.order.customer!.name,
+                  phoneNumber: state.order.customer!.phoneNumber,
+                  email: state.order.customer!.email,
+                  address: state.order.customer!.address,
+                );
+              });
+            }
+          },
         ),
       ],
       child: BlocBuilder<OrderDetailCubit, OrderDetailState>(

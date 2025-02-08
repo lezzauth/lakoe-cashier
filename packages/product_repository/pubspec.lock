@@ -1080,7 +1080,7 @@ packages:
       path: "../.."
       relative: true
     source: path
-    version: "1.2.1+9"
+    version: "1.4.1+11"
   leak_tracker:
     dependency: transitive
     description:

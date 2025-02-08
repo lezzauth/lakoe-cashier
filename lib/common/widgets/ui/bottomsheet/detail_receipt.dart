@@ -78,57 +78,37 @@ class DetailReceiptBottomSheet extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: saveAction,
-                      style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          UiIcons(
-                            TIcons.download,
-                            size: 20,
-                            color: TColors.primary,
-                          ),
-                          SizedBox(width: 8),
-                          const TextActionL(
-                            "Unduh",
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: printReceiptAction,
-                      style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          UiIcons(
-                            TIcons.printer,
-                            size: 16,
-                            color: TColors.primary,
-                          ),
-                          SizedBox(width: 8),
-                          const TextActionL(
-                            "Print",
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 12),
+                  // SizedBox(width: 12),
+                  // Expanded(
+                  //   child: OutlinedButton(
+                  //     onPressed: printReceiptAction,
+                  //     style: OutlinedButton.styleFrom(
+                  //       padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  //     ),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         UiIcons(
+                  //           TIcons.printer,
+                  //           size: 16,
+                  //           color: TColors.primary,
+                  //         ),
+                  //         SizedBox(width: 8),
+                  //         const TextActionL(
+                  //           "Print",
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   Expanded(
                     child: OutlinedButton(
                       onPressed: shareAction,
                       style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 12,
+                        ),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -141,6 +121,32 @@ class DetailReceiptBottomSheet extends StatelessWidget {
                           SizedBox(width: 8),
                           const TextActionL(
                             "Bagikan",
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: saveAction,
+                      style: OutlinedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 12,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          UiIcons(
+                            TIcons.download,
+                            size: 20,
+                            color: TColors.primary,
+                          ),
+                          SizedBox(width: 8),
+                          const TextActionL(
+                            "Unduh",
                           ),
                         ],
                       ),

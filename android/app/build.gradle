@@ -49,6 +49,10 @@ android {
         versionName = flutterVersionName
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     flavorDimensions "version"
 
     productFlavors {

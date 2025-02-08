@@ -2097,11 +2097,9 @@ OrderCustomer _$OrderCustomerFromJson(Map<String, dynamic> json) {
 mixin _$OrderCustomer {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String? get email => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
-  String get createdAt => throw _privateConstructorUsedError;
-  String get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this OrderCustomer to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -2122,11 +2120,9 @@ abstract class $OrderCustomerCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      String? email,
       String phoneNumber,
-      String? address,
-      String createdAt,
-      String updatedAt});
+      String? email,
+      String? address});
 }
 
 /// @nodoc
@@ -2146,11 +2142,9 @@ class _$OrderCustomerCopyWithImpl<$Res, $Val extends OrderCustomer>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? email = freezed,
     Object? phoneNumber = null,
+    Object? email = freezed,
     Object? address = freezed,
-    Object? createdAt = null,
-    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -2161,26 +2155,18 @@ class _$OrderCustomerCopyWithImpl<$Res, $Val extends OrderCustomer>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -2196,11 +2182,9 @@ abstract class _$$OrderCustomerImplCopyWith<$Res>
   $Res call(
       {String id,
       String name,
-      String? email,
       String phoneNumber,
-      String? address,
-      String createdAt,
-      String updatedAt});
+      String? email,
+      String? address});
 }
 
 /// @nodoc
@@ -2218,11 +2202,9 @@ class __$$OrderCustomerImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? email = freezed,
     Object? phoneNumber = null,
+    Object? email = freezed,
     Object? address = freezed,
-    Object? createdAt = null,
-    Object? updatedAt = null,
   }) {
     return _then(_$OrderCustomerImpl(
       id: null == id
@@ -2233,26 +2215,18 @@ class __$$OrderCustomerImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -2263,11 +2237,9 @@ class _$OrderCustomerImpl implements _OrderCustomer {
   const _$OrderCustomerImpl(
       {required this.id,
       required this.name,
-      this.email,
       required this.phoneNumber,
-      this.address,
-      required this.createdAt,
-      required this.updatedAt});
+      this.email,
+      this.address});
 
   factory _$OrderCustomerImpl.fromJson(Map<String, dynamic> json) =>
       _$$OrderCustomerImplFromJson(json);
@@ -2277,19 +2249,15 @@ class _$OrderCustomerImpl implements _OrderCustomer {
   @override
   final String name;
   @override
-  final String? email;
-  @override
   final String phoneNumber;
   @override
+  final String? email;
+  @override
   final String? address;
-  @override
-  final String createdAt;
-  @override
-  final String updatedAt;
 
   @override
   String toString() {
-    return 'OrderCustomer(id: $id, name: $name, email: $email, phoneNumber: $phoneNumber, address: $address, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'OrderCustomer(id: $id, name: $name, phoneNumber: $phoneNumber, email: $email, address: $address)';
   }
 
   @override
@@ -2299,20 +2267,16 @@ class _$OrderCustomerImpl implements _OrderCustomer {
             other is _$OrderCustomerImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
-            (identical(other.address, address) || other.address == address) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.address, address) || other.address == address));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, name, email, phoneNumber, address, createdAt, updatedAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, phoneNumber, email, address);
 
   /// Create a copy of OrderCustomer
   /// with the given fields replaced by the non-null parameter values.
@@ -2334,11 +2298,9 @@ abstract class _OrderCustomer implements OrderCustomer {
   const factory _OrderCustomer(
       {required final String id,
       required final String name,
-      final String? email,
       required final String phoneNumber,
-      final String? address,
-      required final String createdAt,
-      required final String updatedAt}) = _$OrderCustomerImpl;
+      final String? email,
+      final String? address}) = _$OrderCustomerImpl;
 
   factory _OrderCustomer.fromJson(Map<String, dynamic> json) =
       _$OrderCustomerImpl.fromJson;
@@ -2348,15 +2310,11 @@ abstract class _OrderCustomer implements OrderCustomer {
   @override
   String get name;
   @override
-  String? get email;
-  @override
   String get phoneNumber;
   @override
+  String? get email;
+  @override
   String? get address;
-  @override
-  String get createdAt;
-  @override
-  String get updatedAt;
 
   /// Create a copy of OrderCustomer
   /// with the given fields replaced by the non-null parameter values.

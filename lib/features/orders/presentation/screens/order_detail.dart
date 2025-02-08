@@ -1,5 +1,6 @@
 import 'package:cashier_repository/cashier_repository.dart';
 import 'package:collection/collection.dart';
+import 'package:customer_repository/customer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/bottomsheets/info_bagde_status.dart';
@@ -95,6 +96,8 @@ class _OrderDetailState extends State<OrderDetail> {
   bool _isCashier = false;
   bool _orderUpdated = false;
   bool _isNavigating = false;
+
+  CustomerModel? customer;
 
   ScrollController scrollController = ScrollController();
   Future<void> _onRefresh() async {
@@ -438,6 +441,19 @@ class _OrderDetailState extends State<OrderDetail> {
                   } else {
                     if (!widget.isTabletView) Navigator.pop(context, true);
                   }
+                }
+
+                if (state is OrderDetailLoadSuccess) {
+                  if (state.order.customer == null) return;
+                  setState(() {
+                    customer = CustomerModel(
+                      id: state.order.customer!.id,
+                      name: state.order.customer!.name,
+                      phoneNumber: state.order.customer!.phoneNumber,
+                      email: state.order.customer!.email,
+                      address: state.order.customer!.address,
+                    );
+                  });
                 }
               },
             ),
@@ -827,6 +843,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                             context,
                                             profile: profile,
                                             order: order,
+                                            customer: customer,
                                             footNote: footNote,
                                             scrollController: scrollController,
                                           );

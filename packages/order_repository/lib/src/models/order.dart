@@ -123,11 +123,9 @@ class OrderCustomer with _$OrderCustomer {
   const factory OrderCustomer({
     required String id,
     required String name,
-    String? email,
     required String phoneNumber,
+    String? email,
     String? address,
-    required String createdAt,
-    required String updatedAt,
   }) = _OrderCustomer;
 
   factory OrderCustomer.fromJson(Map<String, Object?> json) =>

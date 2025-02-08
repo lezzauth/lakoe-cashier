@@ -34,16 +34,13 @@ class BillListItem extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 4),
-            Expanded(
-              flex: 1,
-              child: TextSmall(
-                isHeadList == true ? qty : "x$qty",
-                isBold: isHeadList,
-              ),
+            TextSmall(
+              isHeadList == true ? qty : "x$qty",
+              isBold: isHeadList,
             ),
             const SizedBox(width: 4),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: TextSmall(
                 isHeadList == true
                     ? price

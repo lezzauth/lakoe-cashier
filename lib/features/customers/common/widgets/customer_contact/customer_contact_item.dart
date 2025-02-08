@@ -14,10 +14,12 @@ class CustomerContactItem extends StatelessWidget {
     super.key,
     required this.customer,
     this.onTap,
+    this.withDivider = true,
   });
 
   final CustomerModel customer;
   final Function()? onTap;
+  final bool withDivider;
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +51,12 @@ class CustomerContactItem extends StatelessWidget {
                   color: TColors.neutralDarkLightest,
                 ),
         ),
-        const Divider(
-          color: TColors.neutralLightMedium,
-          indent: 16.0,
-          height: 1,
-        ),
+        if (withDivider)
+          Divider(
+            color: TColors.neutralLightMedium,
+            indent: 16.0,
+            height: 1,
+          ),
       ],
     );
   }

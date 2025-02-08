@@ -182,22 +182,18 @@ _$OrderCustomerImpl _$$OrderCustomerImplFromJson(Map<String, dynamic> json) =>
     _$OrderCustomerImpl(
       id: json['id'] as String,
       name: json['name'] as String,
-      email: json['email'] as String?,
       phoneNumber: json['phoneNumber'] as String,
+      email: json['email'] as String?,
       address: json['address'] as String?,
-      createdAt: json['createdAt'] as String,
-      updatedAt: json['updatedAt'] as String,
     );
 
 Map<String, dynamic> _$$OrderCustomerImplToJson(_$OrderCustomerImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'email': instance.email,
       'phoneNumber': instance.phoneNumber,
+      'email': instance.email,
       'address': instance.address,
-      'createdAt': instance.createdAt,
-      'updatedAt': instance.updatedAt,
     };
 
 _$OrderTableImpl _$$OrderTableImplFromJson(Map<String, dynamic> json) =>
