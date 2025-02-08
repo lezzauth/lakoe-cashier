@@ -172,7 +172,8 @@ class OutletReportTotalSaleModel with _$OutletReportTotalSaleModel {
   factory OutletReportTotalSaleModel.fromJson(Map<String, Object?> json) =>
       _$OutletReportTotalSaleModelFromJson(json);
 
-  int get diffComputed => diff ?? (int.parse(current) - int.parse(past));
+  int get diffComputed =>
+      diff ?? (double.parse(current).toInt() - double.parse(past).toInt());
 }
 
 @freezed

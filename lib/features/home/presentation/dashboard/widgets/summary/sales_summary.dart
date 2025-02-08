@@ -154,10 +154,14 @@ class SalesSummary extends StatelessWidget {
                             children: [
                               StatsBadge(
                                 type: getType(),
-                                value: (int.parse(totalSales.past) == 0 &&
-                                        int.parse(totalSales.current) > 0)
-                                    ? "100%"
-                                    : "${totalSales.diffComputed.abs()}%",
+                                value:
+                                    ((double.parse(totalSales.past).toInt() ==
+                                                0) &&
+                                            (double.parse(totalSales.current)
+                                                    .toInt() >
+                                                0))
+                                        ? "100%"
+                                        : "${totalSales.diffComputed.abs()}%",
                               ),
                               Text(
                                 "vs ${getComparisonText(state)}",
