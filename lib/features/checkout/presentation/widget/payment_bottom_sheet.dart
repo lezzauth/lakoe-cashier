@@ -55,7 +55,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                 children: [
                   SizedBox(height: 8),
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: EdgeInsets.fromLTRB(20, 16, 20, 4),
                     child: TextHeading3(
                       category.categoryName,
                       color: TColors.neutralDarkDark,

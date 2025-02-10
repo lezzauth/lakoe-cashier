@@ -135,6 +135,7 @@ class TImages {
   static const String bca = "assets/images/payment-method/bca.webp";
   static const String bni = "assets/images/payment-method/bni.webp";
   static const String bri = "assets/images/payment-method/bri.webp";
+  static const String bsi = "assets/images/payment-method/bsi.webp";
   static const String mandiri = "assets/images/payment-method/mandiri.webp";
   static const String dana = "assets/images/payment-method/dana.webp";
   static const String linkaja = "assets/images/payment-method/linkaja.webp";

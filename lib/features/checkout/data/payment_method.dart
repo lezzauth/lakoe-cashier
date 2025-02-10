@@ -7,7 +7,7 @@ List<PaymentCategory> paymentMethodPurchasePackage = [
     methods: [
       PaymentMethodCheckout(name: "LinkAja", logo: TImages.linkaja),
       // PaymentMethodCheckout(name: "OVO", logo: TImages.ovo),
-      PaymentMethodCheckout(name: "ShopeePay", logo: TImages.shopeepay),
+      // PaymentMethodCheckout(name: "ShopeePay", logo: TImages.shopeepay),
       PaymentMethodCheckout(name: "Dana", logo: TImages.dana),
     ],
   ),
@@ -150,6 +150,44 @@ Konfirmasi detail transaksi dan tekan **Ya** untuk menyelesaikan.
           ),
         ],
       ),
+//       PaymentMethodCheckout(
+//         name: "BSI",
+//         logo: TImages.bsi,
+//         paymentMedia: [
+//           PaymentMedia(
+//             mediaName: "BYOND",
+//             steps: """
+// Buka aplikasi **BYOND by BSI** dan login.
+// Pilih **Menu Utama** → **Bayar & Beli**.
+// Pilih **Virtual Account**.
+// Pilih rekening sumber dana.
+// Masukkan nomor VA dan verifikasi nominal tagihan.
+// Konfirmasi dengan **PIN BYOND**.
+// """,
+//           ),
+//           PaymentMedia(
+//             mediaName: "BSI Net",
+//             steps: """
+// Login ke **BSI Net Banking**.
+// Pilih **Pembayaran** → **Virtual Account Billing**.
+// Pilih rekening debet.
+// Masukkan nomor VA dan nominal tagihan.
+// Konfirmasi dengan **OTP/PIN**.
+// """,
+//           ),
+//           PaymentMedia(
+//             mediaName: "ATM BSI",
+//             steps: """
+// Masukkan kartu ATM BSI dan PIN.
+// Pilih **Menu Lainnya** → **Transfer** → **Virtual Account Billing**.
+// Pilih rekening sumber dana.
+// Masukkan nomor VA.
+// Periksa nominal tagihan yang muncul di layar.
+// Konfirmasi transaksi.
+// """,
+//           ),
+//         ],
+//       ),
     ],
   )
 ];
