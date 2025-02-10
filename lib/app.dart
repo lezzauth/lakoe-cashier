@@ -9,7 +9,9 @@ import 'package:lakoe_pos/features/account/presentation/screens/form/edit_acccou
 import 'package:lakoe_pos/features/account/presentation/screens/form/otp_input.dart';
 import 'package:lakoe_pos/features/account/presentation/screens/form/user_feedback.dart';
 import 'package:lakoe_pos/features/bill/presentation/screens/bill_settings.dart';
+import 'package:lakoe_pos/features/checkout/data/arguments/purchase_argument.dart';
 import 'package:lakoe_pos/features/checkout/presentation/screens/payment_failed.dart';
+import 'package:lakoe_pos/features/checkout/presentation/screens/waiting_payment/main_waiting_payment.dart';
 import 'package:lakoe_pos/features/customers/presentation/screens/edit_customer.dart';
 import 'package:lakoe_pos/features/employees/data/arguments/forgot_pin_dto.dart';
 import 'package:lakoe_pos/features/employees/presentation/reports/shifts/screens/shift_report_detail.dart';
@@ -53,7 +55,6 @@ import 'package:lakoe_pos/features/bill/presentation/screens/bill_edit.dart';
 import 'package:lakoe_pos/features/bill/presentation/screens/bill_master.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
 import 'package:lakoe_pos/features/checkout/presentation/screens/chekcout_master.dart';
-import 'package:lakoe_pos/features/checkout/presentation/screens/payment_confirmation.dart';
 import 'package:lakoe_pos/features/checkout/presentation/screens/payment_prepared.dart';
 import 'package:lakoe_pos/features/checkout/presentation/screens/payment_success.dart';
 import 'package:lakoe_pos/features/employees/data/arguments/employee_detail_argument.dart';
@@ -515,8 +516,10 @@ class _AppState extends State<App> {
             // Checkout
             "/checkout": (context) => const ChekcoutMasterScreen(),
             "/payment/prepared": (context) => const PaymentPreparedScreen(),
-            "/payment/confirmation": (context) =>
-                const PaymentConfirmationScreen(),
+            "/payment/waiting": (context) => PaymentWaitingScreen(
+                  arguments: ModalRoute.of(context)!.settings.arguments
+                      as PurchaseArgument,
+                ),
             "/payment/success": (context) => const PaymentSuccessScreen(),
             "/payment/failed": (context) => const PaymentFailedScreen(),
 

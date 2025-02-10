@@ -10,6 +10,7 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_1.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_state.dart';
+import 'package:lakoe_pos/features/checkout/data/arguments/purchase_argument.dart';
 import 'package:lakoe_pos/features/checkout/data/payment_method.dart';
 import 'package:lakoe_pos/features/checkout/data/payment_method_model.dart';
 import 'package:lakoe_pos/features/packages/application/cubit/package_detail/package_detail_cubit.dart';
@@ -115,8 +116,11 @@ class _DetailPurchaseState extends State<DetailPurchase> {
     }
   }
 
-  Future<void> _handlePayment(PaymentRequest paymentRequest,
-      PurchaseModel purchase, String paymentName) async {
+  Future<void> _handlePayment(
+    PaymentRequest paymentRequest,
+    PurchaseModel purchase,
+    String paymentName,
+  ) async {
     if (paymentRequest.paymentMethod.type == "EWALLET") {
       ActionPayment selectedAction;
       selectedAction = paymentRequest.actions.firstWhere(
@@ -140,39 +144,49 @@ class _DetailPurchaseState extends State<DetailPurchase> {
       );
       if (selectedAction.url != null) {
         await THelper.openUrl(selectedAction.url!);
+        _gotoWaitingPayment(paymentRequest, purchase, paymentName);
       }
     } else if (paymentRequest.paymentMethod.type == "VIRTUAL_ACCOUNT") {
-      PaymentMethodCheckout? selectedMethod;
-      PaymentCategory? selectedCategory;
-      for (final category in paymentMethodPurchasePackage) {
-        try {
-          final method = category.methods.firstWhere(
-            (method) => method.name.toUpperCase() == paymentName,
-          );
-          selectedMethod = method as PaymentMethodCheckout?;
-          selectedCategory = category;
-          break;
-        } catch (e) {
-          Logman.instance.error("Error finding payment method: $e");
-        }
-      }
-      if (selectedMethod == null || selectedCategory == null) {
-        Logman.instance.error("Selected method or category not found");
-      }
-      // Navigasi ke layar konfirmasi pembayaran
-      Navigator.pushNamed(
-        context,
-        "/payment/confirmation",
-        arguments: {
-          'selectedMethod': selectedMethod,
-          'selectedCategory': selectedCategory,
-          'purchases': PurchaseDetail(
-            paymentRequest: paymentRequest,
-            purchase: purchase,
-          ),
-        },
-      );
+      _gotoWaitingPayment(paymentRequest, purchase, paymentName);
     }
+  }
+
+  Future<void> _gotoWaitingPayment(
+    PaymentRequest paymentRequest,
+    PurchaseModel purchase,
+    String paymentName,
+  ) async {
+    PaymentMethodCheckout? selectedMethod;
+    PaymentCategory? selectedCategory;
+    for (final category in paymentMethodPurchasePackage) {
+      try {
+        final method = category.methods.firstWhere(
+          (method) => method.name.toUpperCase() == paymentName,
+        );
+
+        selectedMethod = method as PaymentMethodCheckout?;
+        selectedCategory = category;
+        break;
+      } catch (e) {
+        Logman.instance.error("Error finding payment method: $e");
+      }
+    }
+    if (selectedMethod == null || selectedCategory == null) {
+      Logman.instance.error("Selected method or category not found");
+    }
+    Navigator.pushNamed(
+      context,
+      "/payment/waiting",
+      arguments: PurchaseArgument(
+        previousScreen: "detail_purchase",
+        selectedMethod: selectedMethod!,
+        selectedCategory: selectedCategory!,
+        purchases: PurchaseDetail(
+          paymentRequest: paymentRequest,
+          purchase: purchase,
+        ),
+      ),
+    );
   }
 
   @override
@@ -243,21 +257,22 @@ class _DetailPurchaseState extends State<DetailPurchase> {
                               child: Column(
                                 children: [
                                   CircleAvatar(
-                                      radius: 32,
-                                      backgroundColor: isGrow
-                                          ? TColors.successLight
+                                    radius: 32,
+                                    backgroundColor: isGrow
+                                        ? TColors.successLight
+                                        : isPro
+                                            ? Color(0xFFF4DEF8)
+                                            : TColors.highlightLightest,
+                                    child: Image.asset(
+                                      isGrow
+                                          ? TImages.growIcon
                                           : isPro
-                                              ? Color(0xFFF4DEF8)
-                                              : TColors.highlightLightest,
-                                      child: Image.asset(
-                                        isGrow
-                                            ? TImages.growIcon
-                                            : isPro
-                                                ? TImages.proIcon
-                                                : TImages.liteIcon,
-                                        height: 40,
-                                        width: 40,
-                                      )),
+                                              ? TImages.proIcon
+                                              : TImages.liteIcon,
+                                      height: 40,
+                                      width: 40,
+                                    ),
+                                  ),
                                   SizedBox(height: 12),
                                   TextHeading1(
                                     TFormatter.formatToRupiah(

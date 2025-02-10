@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/loading_screen.dart';
+import 'package:lakoe_pos/features/checkout/data/arguments/purchase_argument.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:owner_repository/owner_repository.dart';
 import 'package:lakoe_pos/features/checkout/application/purchase_cubit.dart';
@@ -60,7 +61,7 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<PurchaseCubit, PurchaseState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is PurchaseActionInProgress) {
         } else if (state is PurchaseActionFailure) {
           if (state.error.contains("400")) {
@@ -104,44 +105,35 @@ class _PaymentPreparedScreenState extends State<PaymentPreparedScreen> {
             );
 
             if (selectedAction.url != null) {
-              THelper.openUrl(selectedAction.url!);
-            }
+              await THelper.openUrl(selectedAction.url!);
 
-            // else if (selectedAction.qrCode != null) {
-            //   showDialog(
-            //     context: context,
-            //     builder: (context) {
-            //       return AlertDialog(
-            //         title: Text("QR Code Ditemukan"),
-            //         content: Column(
-            //           mainAxisSize: MainAxisSize.min,
-            //           children: [
-            //             Text("QR Code: ${selectedAction.qrCode}"),
-            //           ],
-            //         ),
-            //         actions: [
-            //           TextButton(
-            //             onPressed: () => Navigator.pop(context),
-            //             child: Text("OK"),
-            //           ),
-            //         ],
-            //       );
-            //     },
-            //   );
-            // }
+              if (!context.mounted) return;
+              Navigator.pushNamed(
+                context,
+                "/payment/waiting",
+                arguments: PurchaseArgument(
+                  selectedMethod: selectedMethod!,
+                  selectedCategory: selectedCategory!,
+                  purchases: PurchaseDetail(
+                    paymentRequest: state.res.paymentRequest,
+                    purchase: state.res.purchase,
+                  ),
+                ),
+              );
+            }
           } else if (res.paymentRequest.paymentMethod.type ==
               "VIRTUAL_ACCOUNT") {
             Navigator.pushNamed(
               context,
-              "/payment/confirmation",
-              arguments: {
-                'selectedMethod': selectedMethod,
-                'selectedCategory': selectedCategory,
-                'purchases': PurchaseDetail(
+              "/payment/waiting",
+              arguments: PurchaseArgument(
+                selectedMethod: selectedMethod!,
+                selectedCategory: selectedCategory!,
+                purchases: PurchaseDetail(
                   paymentRequest: state.res.paymentRequest,
                   purchase: state.res.purchase,
                 ),
-              },
+              ),
             );
           }
         }

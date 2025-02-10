@@ -70,7 +70,7 @@ class CustomNavigatorObserver extends NavigatorObserver {
           systemNavigationBarColor: Colors.black,
         ),
       );
-    } else if (route?.settings.name == "/payment/confirmation") {
+    } else if (route?.settings.name == "/payment/waiting") {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.dark.copyWith(
           statusBarColor: Colors.transparent,
