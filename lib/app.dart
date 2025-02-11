@@ -25,6 +25,7 @@ import 'package:lakoe_pos/features/packages/presentation/screens/package_upgrade
 import 'package:lakoe_pos/features/packages/presentation/screens/purchase/detail_purchase.dart';
 import 'package:lakoe_pos/features/packages/presentation/screens/purchase/history_purchase_package.dart';
 import 'package:lakoe_pos/features/payment_method/application/payment_method_cubit.dart';
+import 'package:lakoe_pos/features/reports/application/cubit/report_master/report_master_filter_cubit.dart';
 import 'package:lakoe_pos/utils/helpers/deeplink_handler.dart';
 import 'package:logman/logman.dart';
 import 'package:lakoe_pos/application/cubit/bank_list_cubit.dart';
@@ -273,6 +274,7 @@ class _AppState extends State<App> {
 
         // Report Master
         BlocProvider(create: (context) => ReportMasterCubit()),
+        BlocProvider(create: (context) => ReportMasterFilterCubit()),
 
         // Outlet
         BlocProvider(create: (context) => OutletCubit()),

@@ -34,10 +34,7 @@ class ReportMasterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ReportMasterFilterCubit(),
-      child: const ReportMaster(),
-    );
+    return const ReportMaster();
   }
 }
 
