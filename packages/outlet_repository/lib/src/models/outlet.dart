@@ -234,7 +234,8 @@ class OutletReportModel with _$OutletReportModel {
       _$OutletReportModelFromJson(json);
 
   int get totalSalesDiffComputed =>
-      totalSalesDiff ?? (int.parse(totalSales) - int.parse(totalPastSales));
+      totalSalesDiff ??
+      (double.parse(totalSales).toInt() - double.parse(totalPastSales).toInt());
 }
 
 @freezed
