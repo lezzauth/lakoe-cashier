@@ -21,7 +21,6 @@ import 'package:lakoe_pos/features/cart/presentation/widgets/summary/preview_ord
 import 'package:lakoe_pos/features/products/presentation/widgets/product/action/product_note_action.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/product/base_product_item.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
-import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:product_repository/product_repository.dart';
 import 'package:table_repository/table_repository.dart';
 
@@ -40,6 +39,8 @@ class _CartContentState extends State<CartContent> {
   final List<LabelValue> _orderType = [
     const LabelValue(label: "Dine In", value: "DINEIN"),
     const LabelValue(label: "Dibungkus", value: "TAKEAWAY"),
+    // const LabelValue(label: "GoFood", value: "GOFOOD"),
+    // const LabelValue(label: "GrabFood", value: "GRABFOOD"),
   ];
 
   void _onCartQuantityChanged(ProductModel product, int quantity) =>
@@ -154,15 +155,13 @@ class _CartContentState extends State<CartContent> {
                                   child: Wrap(
                                     direction: Axis.horizontal,
                                     spacing: 8,
+                                    runSpacing: -4,
                                     children: _orderType.map((orderType) {
                                       bool selected =
                                           filter.type == orderType.value;
 
                                       return OrderTypeChip(
-                                        label: orderType.label,
-                                        icon: orderType.value == "DINEIN"
-                                            ? TIcons.servingDome
-                                            : TIcons.bag,
+                                        type: orderType,
                                         selected: selected,
                                         onSelected: (value) {
                                           _onOrderTypeChanged(orderType.value);
