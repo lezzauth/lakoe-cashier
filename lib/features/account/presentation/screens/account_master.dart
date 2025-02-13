@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:lakoe_pos/utils/helpers/app_info_helper.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
@@ -94,8 +94,8 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
   }
 
   Future<String> getAppVersion() async {
-    final packageInfo = await PackageInfo.fromPlatform();
-    return "Versi ${packageInfo.version}";
+    String version = await AppInfoHelper.getAppVersion();
+    return "Versi $version";
   }
 
   Future<void> _updateAppVersion() async {

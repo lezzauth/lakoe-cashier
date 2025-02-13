@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/bottomsheets/success_feedback_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/form/form_label.dart';
-import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
-import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
-import 'package:lakoe_pos/utils/constants/image_strings.dart';
+import 'package:lakoe_pos/utils/constants/feedback_constants.dart';
+import 'package:lakoe_pos/utils/helpers/app_info_helper.dart';
+import 'package:lakoe_pos/utils/helpers/google_form_helper.dart';
 import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
-import 'package:http/http.dart' as http;
-import 'package:package_info_plus/package_info_plus.dart';
 
 class UserFeedbackScreen extends StatelessWidget {
   final OwnerProfileModel arguments;
@@ -44,33 +41,22 @@ class _UserFeedbackState extends State<UserFeedback> {
 
   bool _isSubmitting = false;
 
-  final Map<String, String> categoryFeedback = {
-    "Bug/Error": "Bug/Error",
-    "Masalah Penggunaan": "Usage Issues",
-    "Saran Fitur Baru": "Request Feature",
-    "Performa Aplikasi": "Performance",
-    "Desain & Tampilan": "User Experience",
-    "Lainnya": "Other"
-  };
-
-  final Map<String, String> hasReviewedOption = {
-    "Belum, nih.": "NO",
-    "Sudah, dong!": "YES",
-  };
-
   List<String> selectedCategories = [];
   String? hasReviewed;
   String? appVersion;
 
-  final String googleFormUrl =
-      "https://docs.google.com/forms/d/e/1FAIpQLSdhokOn133kQoxEojThSoVKRaonzQCXZFkGIdeMyLeZxaJp7Q/formResponse";
+  final Map<String, String> categoryFeedback =
+      FeedbackConstants.categoryFeedback;
+  final Map<String, String> hasReviewedOption =
+      FeedbackConstants.hasReviewedOption;
 
-  final String entryUserName = "entry.421927269";
-  final String entryUserPhone = "entry.1876757369";
-  final String entryAppVersion = "entry.663759347";
-  final String entryMessage = "entry.787265980";
-  final String entryCategories = "entry.1168889554";
-  final String entryReviewed = "entry.587950110";
+  final String googleFormUrl = FeedbackConstants.googleFormUrl;
+  final String entryUserName = FeedbackConstants.entryUserName;
+  final String entryUserPhone = FeedbackConstants.entryUserPhone;
+  final String entryAppVersion = FeedbackConstants.entryAppVersion;
+  final String entryMessage = FeedbackConstants.entryMessage;
+  final String entryCategories = FeedbackConstants.entryCategories;
+  final String entryReviewed = FeedbackConstants.entryReviewed;
 
   @override
   void initState() {
@@ -83,11 +69,11 @@ class _UserFeedbackState extends State<UserFeedback> {
   }
 
   Future<String> getAppVersion() async {
-    final packageInfo = await PackageInfo.fromPlatform();
-    return "v${packageInfo.version}";
+    String version = await AppInfoHelper.getAppVersion();
+    return "v$version";
   }
 
-  void _onSubmit() {
+  void _onSubmit() async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       setState(() {
         _isSubmitting = true;
@@ -106,46 +92,14 @@ class _UserFeedbackState extends State<UserFeedback> {
         "hasReviewed": formData["hasReviewed"],
       };
 
-      _sendFeedbackToGoogleForm(feedbackData);
-    } else {
-      Logman.instance.error("Form tidak valid!");
-    }
-  }
-
-  Future<void> _sendFeedbackToGoogleForm(
-      Map<String, dynamic> feedbackData) async {
-    try {
-      Map<String, String> requestBody = {
-        entryUserName: feedbackData["userName"] ?? "",
-        entryUserPhone: feedbackData["phoneNumber"] ?? "",
-        entryAppVersion: feedbackData["appVersion"] ?? "N/A",
-        entryMessage: feedbackData["messageFeedback"] ?? "",
-        entryReviewed: feedbackData["hasReviewed"] ?? "",
-      };
-
-      List<String> categoryParams = [];
-      for (var category in selectedCategories) {
-        categoryParams.add(
-            "${Uri.encodeComponent(entryCategories)}=${Uri.encodeComponent(category)}");
-      }
-
-      String requestBodyString = Uri(queryParameters: requestBody).query;
-      if (categoryParams.isNotEmpty) {
-        requestBodyString += "&${categoryParams.join("&")}";
-      }
-
-      final response = await http.post(
-        Uri.parse(googleFormUrl),
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: requestBodyString,
+      bool success = await GoogleFormHelper.sendFeedbackToGoogleForm(
+        feedbackData: feedbackData,
+        selectedCategories: selectedCategories,
       );
 
-      Logman.instance.info("statusCode: ${response.statusCode}");
-
-      if (response.statusCode == 200 || response.statusCode == 302) {
-        openBottomsheetSuccessSubmit();
+      if (success) {
+        if (!mounted) return;
+        SuccessFeedbackBottomsheet.show(context);
 
         setState(() {
           _isSubmitting = false;
@@ -154,71 +108,13 @@ class _UserFeedbackState extends State<UserFeedback> {
 
         _formKey.currentState?.reset();
       } else {
-        throw Exception("Gagal mengirim feedback: ${response.statusCode}");
+        setState(() {
+          _isSubmitting = false;
+        });
       }
-    } catch (e) {
-      Logman.instance.error("Error while sending feedback: $e");
-
-      CustomToast.show(
-        "Gagal mengirim feedback, coba lagi!",
-        position: "bottom",
-      );
-
-      setState(() {
-        _isSubmitting = false;
-      });
+    } else {
+      Logman.instance.error("Form tidak valid!");
     }
-  }
-
-  void openBottomsheetSuccessSubmit() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return CustomBottomsheet(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 12,
-            ),
-            child: Column(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SvgPicture.asset(
-                      TImages.feedbackSuccess,
-                      height: 72,
-                    ),
-                    SizedBox(height: 16),
-                    TextHeading3(
-                      "Terimakasih atas masukannya",
-                      color: TColors.neutralDarkDark,
-                    ),
-                    SizedBox(height: 4),
-                    TextBodyM(
-                      "Masukan kamu udah kita terima dan akan kita pelajari. Yuk, tetap pakai Lakoe POS dan bantu kami jadi lebih baik!",
-                      color: TColors.neutralDarkDark,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    },
-                    child: TextActionL("Oke, Sip!"),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 
   @override

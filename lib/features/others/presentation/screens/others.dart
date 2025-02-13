@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
+import 'package:lakoe_pos/common/widgets/bottomsheets/vote_bottomsheet.dart';
+import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/list_item_card.dart';
 import 'package:lakoe_pos/common/widgets/ui/section_card.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
@@ -76,6 +78,19 @@ class _OthersScreenState extends State<OthersScreen> {
     ),
   ];
 
+  List<_SettingItem> cardGroupCustomer = [
+    _SettingItem(
+      title: "Data Pelanggan",
+      routeName: "/customers",
+      iconSrc: TIcons.profile,
+    ),
+    _SettingItem(
+      title: "Program Loyalitas",
+      routeName: "",
+      iconSrc: TIcons.coinLakoe,
+    ),
+  ];
+
   List<_SettingItem> cardGroupCost = [
     _SettingItem(
       title: "Pajak",
@@ -91,14 +106,10 @@ class _OthersScreenState extends State<OthersScreen> {
 
   List<_SettingItem> cardGroupOther = [
     _SettingItem(
-      title: "Print & Struk (Bill)",
+      title: "Print & Struk",
       routeName: "/print",
       iconSrc: TIcons.printer,
-    ),
-    _SettingItem(
-      title: "Data Pelanggan",
-      routeName: "/customers",
-      iconSrc: TIcons.profile,
+      isNewItem: true,
     ),
     _SettingItem(
       title: "Data Meja",
@@ -142,6 +153,22 @@ class _OthersScreenState extends State<OthersScreen> {
     //   iconSrc: TIcons.userId,
     // ),
   ];
+
+  void openBottomsheetVote(BuildContext context) {
+    VoteBottomSheetHelper.show(
+      context: context,
+      featureName: "CustomerLoyalty",
+      featureDesc: "loyalitas pelanggan untuk meningkatkan repeat order",
+      onVoteSuccess: () {
+        CustomToast.show(
+          "Vote berhasil dikirimkan.",
+          position: "bottom",
+          backgroundColor: TColors.success,
+        );
+        setState(() {});
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -188,6 +215,25 @@ class _OthersScreenState extends State<OthersScreen> {
                         iconSrc: item.iconSrc,
                         title: item.title,
                         routeName: item.routeName,
+                        isNewItem: item.isNewItem ?? false,
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              child: SectionCard(
+                children: cardGroupCustomer
+                    .map(
+                      (item) => ListItemCard(
+                        iconSrc: item.iconSrc,
+                        title: item.title,
+                        routeName: item.routeName,
+                        isNewItem: item.isNewItem ?? false,
+                        onTap: () {
+                          openBottomsheetVote(context);
+                        },
                       ),
                     )
                     .toList(),
@@ -202,6 +248,7 @@ class _OthersScreenState extends State<OthersScreen> {
                         iconSrc: item.iconSrc,
                         title: item.title,
                         routeName: item.routeName,
+                        isNewItem: item.isNewItem ?? false,
                       ),
                     )
                     .toList(),

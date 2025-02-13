@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lakoe_pos/common/widgets/bottomsheets/suggest_feature_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/form/custom_checkbox.dart';
 import 'package:lakoe_pos/common/widgets/ui/bottomsheet/custom_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
-import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
@@ -17,8 +18,7 @@ import 'package:lakoe_pos/utils/helpers/vote_helper.dart';
 import 'package:owner_repository/owner_repository.dart';
 
 class VoteBottomSheetHelper {
-  /// Fungsi untuk menampilkan BottomSheet Vote Feature
-  static void showVoteBottomSheet({
+  static void show({
     required BuildContext context,
     required String featureName,
     required String featureDesc,
@@ -48,7 +48,7 @@ class VoteBottomSheetHelper {
                       height: 72,
                     ),
                     SizedBox(height: 16),
-                    TextHeading3(
+                    TextHeading2(
                       "Kamu butuh fitur ini?",
                       color: TColors.neutralDarkDark,
                     ),
@@ -190,6 +190,8 @@ class VoteBottomSheetHelper {
                                           if (success) {
                                             onVoteSuccess();
                                             Navigator.pop(context);
+                                            SuggestFeatureBottomsheet.show(
+                                                context, owner!);
                                           } else {
                                             Navigator.pop(context);
                                           }
