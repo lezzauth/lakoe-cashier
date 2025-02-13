@@ -45,6 +45,7 @@ class _StockInformationFormState extends State<StockInformationForm>
     VoteBottomSheetHelper.showVoteBottomSheet(
       context: context,
       featureName: "RecipeBasedInventory",
+      featureDesc: "stok berdasarkan bahan baku",
       onVoteSuccess: () {
         CustomToast.show(
           "Vote berhasil dikirimkan.",

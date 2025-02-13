@@ -21,14 +21,11 @@ class VoteBottomSheetHelper {
   static void showVoteBottomSheet({
     required BuildContext context,
     required String featureName,
+    required String featureDesc,
     required Function() onVoteSuccess,
   }) {
     bool willingToPay = false;
     context.read<OwnerCubit>().getOwner();
-
-    if (featureName.contains("RecipeBasedInventory")) {
-      featureName = "Stok Berdasarkan Bahan Baku";
-    }
 
     showModalBottomSheet(
       context: context,
@@ -57,7 +54,7 @@ class VoteBottomSheetHelper {
                     ),
                     SizedBox(height: 4),
                     TextBodyM(
-                      "Kami berencana menambahkan fitur $featureName. Kalau menurutmu ini penting, kasih vote supaya kami tahu!",
+                      "Kami berencana menambahkan fitur $featureDesc. Kalau menurutmu ini penting, kasih vote supaya kami tahu!",
                       color: TColors.neutralDarkDark,
                     ),
                     SizedBox(height: 16),
@@ -101,7 +98,8 @@ class VoteBottomSheetHelper {
                     SizedBox(height: 16),
                     FutureBuilder<int>(
                       future: VoteHelper.fetchYesVotesCount(
-                          featureName: featureName),
+                        featureName: featureName,
+                      ),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -113,7 +111,7 @@ class VoteBottomSheetHelper {
                               ),
                               SizedBox(width: 4),
                               AnimatedLoadingText(
-                                "Vote masuk: ",
+                                "Vote YES: ",
                                 style: TextStyle(
                                   fontSize: TSizes.fontSizeBodyM,
                                   color: TColors.neutralDarkDark,

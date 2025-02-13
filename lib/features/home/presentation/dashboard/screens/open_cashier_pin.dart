@@ -138,7 +138,7 @@ class _OpenCashierPinScreenState extends State<OpenCashierPinScreen> {
                                 ),
                               ),
                               TextBodyM(
-                                "Masukin PIN kasir yang sedang bertugas",
+                                "Masukan PIN kasir yang sedang bertugas",
                                 color: TColors.neutralDarkMedium,
                                 textAlign: TextAlign.center,
                               )
