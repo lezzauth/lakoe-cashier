@@ -25,15 +25,19 @@ import 'package:lakoe_pos/common/widgets/bottomsheets/suggest_feature_bottomshee
 class VoteBottomSheetHelper {
   static void show({
     required BuildContext context,
+    String title = "Seberapa kamu butuh fitur ini?",
     required String featureName,
     required String featureDesc,
   }) {
-    context.read<OwnerCubit>().getOwner();
+    if (featureName != "MultiOutlet") {
+      context.read<OwnerCubit>().getOwner();
+    }
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       builder: (context) => _VoteBottomSheetContent(
+        title: title,
         featureName: featureName,
         featureDesc: featureDesc,
       ),
@@ -42,10 +46,12 @@ class VoteBottomSheetHelper {
 }
 
 class _VoteBottomSheetContent extends StatefulWidget {
+  final String title;
   final String featureName;
   final String featureDesc;
 
   const _VoteBottomSheetContent({
+    required this.title,
     required this.featureName,
     required this.featureDesc,
   });
@@ -111,7 +117,7 @@ class _VoteBottomSheetContentState extends State<_VoteBottomSheetContent> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(),
+            _buildHeader(widget.title),
             const SizedBox(height: 4),
             _buildDescription(),
             const SizedBox(height: 16),
@@ -128,13 +134,13 @@ class _VoteBottomSheetContentState extends State<_VoteBottomSheetContent> {
     );
   }
 
-  Widget _buildHeader() => Column(
+  Widget _buildHeader(String title) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SvgPicture.asset(TImages.vote, height: 72),
           const SizedBox(height: 16),
           TextHeading2(
-            "Seberapa kamu butuh fitur ini?",
+            title,
             color: TColors.neutralDarkDark,
           ),
         ],
@@ -146,7 +152,7 @@ class _VoteBottomSheetContentState extends State<_VoteBottomSheetContent> {
           color: TColors.neutralDarkDark,
         ),
         TextSpan(
-          text: "Kami berencana menambahkan fitur ",
+          text: "Kami ingin menambahkan fitur ",
           children: [
             TextSpan(
               text: widget.featureDesc,
@@ -358,7 +364,7 @@ class _ContactConsentCheckbox extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Expanded(child: TextHeading4("Bersedia untuk dihubungi?")),
+            Expanded(child: TextHeading4("Bersedia untuk kita dihubungi?")),
             const SizedBox(width: 20),
             CustomCheckbox(value: value, onChanged: onChanged),
           ],

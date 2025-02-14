@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
+import 'package:lakoe_pos/features/outlets/presentation/widgets/list_outlet_bottomsheet.dart';
 import 'package:lakoe_pos/utils/helpers/app_info_helper.dart';
 import 'package:lakoe_pos/common/widgets/error_display/error_display.dart';
 import 'package:lakoe_pos/common/widgets/icon/ui_icons.dart';
@@ -32,6 +33,7 @@ import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/icon_strings.dart';
 import 'package:lakoe_pos/utils/constants/image_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
+import 'package:outlet_repository/outlet_repository.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -48,6 +50,8 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
 
   late final StreamSubscription<List<ConnectivityResult>>
       connectivitySubscription;
+
+  OutletModel? outlet;
 
   @override
   void initState() {
@@ -154,10 +158,10 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
 
   List<_OtherItem> accountSectionItems = [
     _OtherItem(
-      title: "Paket & Riwayat",
-      routeName: "/packages/purchase/history",
-      iconSrc: TIcons.billAlt,
-      isNewItem: false,
+      title: "Profil Bisnis",
+      routeName: "",
+      iconSrc: TIcons.store,
+      isNewItem: true,
     ),
     _OtherItem(
       title: "Paket Aktif",
@@ -166,9 +170,9 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       isNewItem: false,
     ),
     _OtherItem(
-      title: "Atur Akun",
-      routeName: "/manage_account",
-      iconSrc: TIcons.linkSquare,
+      title: "Paket & Riwayat",
+      routeName: "/packages/purchase/history",
+      iconSrc: TIcons.billAlt,
       isNewItem: false,
     ),
   ];
@@ -198,6 +202,12 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
       routeName: "",
       iconSrc: TIcons.star,
       textTrailing: "",
+      isNewItem: false,
+    ),
+    _OtherItem(
+      title: "Atur Akun",
+      routeName: "/manage_account",
+      iconSrc: TIcons.linkSquare,
       isNewItem: false,
     ),
   ];
@@ -300,37 +310,62 @@ class _AccountMasterScreenState extends State<AccountMasterScreen> {
                         children: [
                           const SizedBox(height: 120),
                           ProfileCard(),
-                          // const SizedBox(height: 12),
-                          // const BalanceCard(),
                           const SizedBox(height: 12),
                           OutletCard(),
                           const SizedBox(height: 12),
                           OtherCard(
                             childrenSectionAccount: accountSectionItems
                                 .map(
-                                  (item) => ListItemCard(
-                                    iconSrc: item.iconSrc,
-                                    title: item.title,
-                                    routeName: item.routeName,
-                                    isNewItem: item.isNewItem!,
-                                    textTrailing: item.textTrailing,
-                                    onTap: () {
-                                      if (item.title.contains("Lakoe")) {
-                                        if (profile.packageName != "LITE") {
-                                          Navigator.pushNamed(
-                                            context,
-                                            "/account/active_package",
-                                            arguments: {
-                                              'packageName': profile.packageName
-                                            },
-                                          );
-                                        } else {
-                                          Navigator.pushNamed(
-                                              context, "/packages");
-                                        }
-                                      }
-                                    },
-                                  ),
+                                  (item) =>
+                                      BlocBuilder<OutletCubit, OutletState>(
+                                          builder: (context, state) {
+                                    if (state is OutletLoadSuccess) {
+                                      return ListItemCard(
+                                        iconSrc: item.iconSrc,
+                                        title: item.title,
+                                        routeName: item.routeName,
+                                        isNewItem: item.isNewItem!,
+                                        textTrailing: item.textTrailing,
+                                        onTap: () {
+                                          if (item.title.contains("Lakoe")) {
+                                            if (profile.packageName != "LITE") {
+                                              Navigator.pushNamed(
+                                                context,
+                                                "/account/active_package",
+                                                arguments: {
+                                                  'packageName':
+                                                      profile.packageName
+                                                },
+                                              );
+                                            } else {
+                                              Navigator.pushNamed(
+                                                  context, "/packages");
+                                            }
+                                          } else if (item.title
+                                              .contains("Profil Bisnis")) {
+                                            Navigator.pushNamed(
+                                              context,
+                                              "/outlet/edit",
+                                              arguments: state.outlet,
+                                            );
+                                          }
+                                        },
+                                      );
+                                    } else {
+                                      return Shimmer.fromColors(
+                                        baseColor: const Color(0xFFE8E9F1),
+                                        highlightColor: const Color(0xFFF8F9FE),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: TColors.highlightLightest,
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                          ),
+                                          height: 80,
+                                        ),
+                                      );
+                                    }
+                                  }),
                                 )
                                 .toList(),
                             childrenSectionOther: otherSectionItems
@@ -404,7 +439,7 @@ class ProfileCard extends StatelessWidget {
                   : profile.packageName == "PRO"
                       ? Color(0xFFF4DEF8)
                       : TColors.highlightLightest,
-              borderRadius: BorderRadius.circular(16.0),
+              borderRadius: BorderRadius.circular(12.0),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -415,12 +450,12 @@ class ProfileCard extends StatelessWidget {
                   onTap: () => Navigator.pushNamed(context, "/account/edit"),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.0),
+                      borderRadius: BorderRadius.circular(12.0),
                       color: TColors.neutralLightLightest,
                     ),
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       vertical: 16.0,
-                      horizontal: 20.0,
+                      horizontal: 16.0,
                     ),
                     child: Row(
                       children: [
@@ -463,7 +498,7 @@ class ProfileCard extends StatelessWidget {
                             },
                           ),
                         ),
-                        const SizedBox(width: 16.0),
+                        const SizedBox(width: 12.0),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -508,8 +543,8 @@ class ProfileCard extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(16),
-                        bottomRight: Radius.circular(16),
+                        bottomLeft: Radius.circular(12),
+                        bottomRight: Radius.circular(12),
                       ),
                       color: profile.packageName == "GROW"
                           ? TColors.successLight
@@ -556,7 +591,7 @@ class BalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(12.0),
         gradient: const LinearGradient(
           begin: Alignment(1.00, 0.00),
           end: Alignment(-1, 0),
@@ -626,20 +661,20 @@ class OutletCard extends StatelessWidget {
             colorBrand = 0xFFFD6E00;
           }
 
-          String outletName = state.outlet.name;
+          // String outletName = state.outlet.name;
+          String outletName = "Outlet Utama";
           String? outletAddress = state.outlet.address;
           String? outletLogo = state.outlet.logo;
 
-          return InkWell(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () => Navigator.pushNamed(
-              context,
-              "/outlet/edit",
-              arguments: state.outlet,
-            ),
+          return GestureDetector(
+            onTap: () {
+              ListOutletBottomsheet.show(
+                context,
+                outlet: state.outlet,
+              );
+            },
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               clipBehavior: Clip.antiAlias,
               decoration: ShapeDecoration(
                 color: TColors.neutralLightLightest,
@@ -648,7 +683,7 @@ class OutletCard extends StatelessWidget {
                     width: 1,
                     color: TColors.neutralLightMedium,
                   ),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
               child: Row(
@@ -657,13 +692,7 @@ class OutletCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      // border: Border.all(
-                      //   color: TColors.neutralLightMedium,
-                      //   width: 1.0,
-                      // ),
-                    ),
+                    decoration: BoxDecoration(shape: BoxShape.circle),
                     child: CircleAvatar(
                       radius: 20,
                       backgroundColor: Color(colorBrand),
@@ -689,14 +718,14 @@ class OutletCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextHeading3(
+                        TextHeading4(
                           outletName,
                           color: TColors.neutralDarkDark,
                         ),
@@ -704,8 +733,34 @@ class OutletCard extends StatelessWidget {
                         TextBodyS(
                           outletAddress!,
                           color: TColors.neutralDarkLightest,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: TColors.neutralLightMedium,
+                    ),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: TColors.neutralDarkDark,
+                        size: 28,
+                      ),
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
+                      onPressed: () {
+                        ListOutletBottomsheet.show(
+                          context,
+                          outlet: state.outlet,
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -719,7 +774,7 @@ class OutletCard extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: TColors.highlightLightest,
-                borderRadius: BorderRadius.circular(16.0),
+                borderRadius: BorderRadius.circular(12.0),
               ),
               height: 80,
             ),
@@ -731,7 +786,7 @@ class OutletCard extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: TColors.highlightLightest,
-                borderRadius: BorderRadius.circular(16.0),
+                borderRadius: BorderRadius.circular(12.0),
               ),
               height: 80,
             ),

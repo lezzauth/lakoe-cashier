@@ -81,8 +81,9 @@ class GoogleFormHelper {
       );
       if (alreadyVoted) {
         CustomToast.show(
-          "Kamu sudah pernah kirim vote!",
+          "Kamu sudah voting untuk fitur ini!",
           position: "bottom",
+          duration: 5,
         );
         return false;
       }

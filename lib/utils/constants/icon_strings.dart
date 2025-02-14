@@ -116,4 +116,5 @@ class TIcons {
   static const String gofood = "assets/icons/ic-gofood.svg";
   static const String grabfood = "assets/icons/ic-grabfood.svg";
   static const String coinLakoe = "assets/icons/coin-lakoe.svg";
+  static const String store = "assets/icons/store.svg";
 }

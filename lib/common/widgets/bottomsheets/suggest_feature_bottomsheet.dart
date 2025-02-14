@@ -50,13 +50,13 @@ class SuggestFeatureBottomsheet {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        TextHeading2("Kamu butuhnya fitur apa?"),
+                        TextHeading2("Terus, kamu butuhnya fitur apa?"),
                         SizedBox(height: 20),
                         FormBuilderTextField(
                           name: "messageFeedback",
                           decoration: const InputDecoration(
                             hintText:
-                                "Sampaikan fitur apa yang paling kamu butuhkan saat ini…",
+                                "Sampaikan fitur apa yang paling kamu butuhkan untuk bisa membantu bisnis kamu lebih baik.",
                           ),
                           maxLines: 8,
                           validator: FormBuilderValidators.required(

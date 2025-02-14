@@ -12,10 +12,10 @@ class OutletCubit extends Cubit<OutletState> {
   OutletCubit() : super(OutletInitial());
 
   Future<void> init() async {
-    await findAll();
+    await detailOutlet();
   }
 
-  Future<void> findAll() async {
+  Future<void> detailOutlet() async {
     try {
       emit(OutletLoadInProgress());
       final res = await outletRepository.getDetailOutlet();
@@ -54,7 +54,7 @@ class OutletCubit extends Cubit<OutletState> {
     }
 
     if (currentState is OutletLoadSuccess) {
-      await findAll();
+      await detailOutlet();
     }
   }
 }

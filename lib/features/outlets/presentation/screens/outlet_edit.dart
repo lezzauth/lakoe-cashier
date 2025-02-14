@@ -263,7 +263,7 @@ class _OutletEditScreenState extends State<OutletEditScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             FormLabel(
-                              "Logo Usaha/Bisnis",
+                              "Logo Brand",
                               description:
                                   "Logo ini akan digunakan untuk keperluan branding.",
                             ),
