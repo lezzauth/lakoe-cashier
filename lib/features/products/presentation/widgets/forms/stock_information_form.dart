@@ -5,7 +5,6 @@ import 'package:lakoe_pos/common/data/models.dart';
 import 'package:lakoe_pos/common/widgets/bottomsheets/vote_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/form/custom_checkbox.dart';
 import 'package:lakoe_pos/common/widgets/form/form_label.dart';
-import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
@@ -42,18 +41,10 @@ class _StockInformationFormState extends State<StockInformationForm>
   bool get wantKeepAlive => true;
 
   void openBottomsheetVote(BuildContext context) {
-    VoteBottomSheetHelper.showVoteBottomSheet(
+    VoteBottomSheetHelper.show(
       context: context,
       featureName: "RecipeBasedInventory",
       featureDesc: "stok berdasarkan bahan baku",
-      onVoteSuccess: () {
-        CustomToast.show(
-          "Vote berhasil dikirimkan.",
-          position: "bottom",
-          backgroundColor: TColors.success,
-        );
-        setState(() {});
-      },
     );
   }
 

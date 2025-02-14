@@ -46,17 +46,17 @@ class _UserFeedbackState extends State<UserFeedback> {
   String? appVersion;
 
   final Map<String, String> categoryFeedback =
-      FeedbackConstants.categoryFeedback;
+      GoogleFormConstans.categoryFeedback;
   final Map<String, String> hasReviewedOption =
-      FeedbackConstants.hasReviewedOption;
+      GoogleFormConstans.hasReviewedOption;
 
-  final String googleFormUrl = FeedbackConstants.googleFormUrl;
-  final String entryUserName = FeedbackConstants.entryUserName;
-  final String entryUserPhone = FeedbackConstants.entryUserPhone;
-  final String entryAppVersion = FeedbackConstants.entryAppVersion;
-  final String entryMessage = FeedbackConstants.entryMessage;
-  final String entryCategories = FeedbackConstants.entryCategories;
-  final String entryReviewed = FeedbackConstants.entryReviewed;
+  final String googleFormUrl = GoogleFormConstans.formUrlFeedback;
+  final String entryUserName = GoogleFormConstans.entryUserNameFeedback;
+  final String entryUserPhone = GoogleFormConstans.entryUserPhoneFeedback;
+  final String entryAppVersion = GoogleFormConstans.entryAppVersion;
+  final String entryMessage = GoogleFormConstans.entryMessage;
+  final String entryCategories = GoogleFormConstans.entryCategories;
+  final String entryReviewed = GoogleFormConstans.entryReviewed;
 
   @override
   void initState() {
@@ -92,7 +92,7 @@ class _UserFeedbackState extends State<UserFeedback> {
         "hasReviewed": formData["hasReviewed"],
       };
 
-      bool success = await GoogleFormHelper.sendFeedbackToGoogleForm(
+      bool success = await GoogleFormHelper.submitFeedback(
         feedbackData: feedbackData,
         selectedCategories: selectedCategories,
       );

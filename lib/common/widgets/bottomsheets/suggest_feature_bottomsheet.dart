@@ -8,7 +8,6 @@ import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_2.dart';
 import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
 import 'package:lakoe_pos/utils/helpers/app_info_helper.dart';
 import 'package:lakoe_pos/utils/helpers/google_form_helper.dart';
-import 'package:logman/logman.dart';
 import 'package:owner_repository/owner_repository.dart';
 
 class SuggestFeatureBottomsheet {
@@ -42,84 +41,90 @@ class SuggestFeatureBottomsheet {
                         formKey.currentState?.saveAndValidate() ?? false;
                   });
                 },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextHeading2("Kamu butuhnya fitur apa?"),
-                    SizedBox(height: 20),
-                    FormBuilderTextField(
-                      name: "messageFeedback",
-                      decoration: const InputDecoration(
-                        hintText:
-                            "Sampaikan fitur apa yang paling kamu butuhkan saat ini…",
-                      ),
-                      maxLines: 8,
-                      validator: FormBuilderValidators.required(
-                          errorText: ErrorTextStrings.required(name: "Pesan")),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom,
                     ),
-                    SizedBox(height: 24),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: isFormValid && !isSubmitting
-                            ? () async {
-                                // Disable tombol saat submit
-                                setState(() {
-                                  isSubmitting = true;
-                                });
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextHeading2("Kamu butuhnya fitur apa?"),
+                        SizedBox(height: 20),
+                        FormBuilderTextField(
+                          name: "messageFeedback",
+                          decoration: const InputDecoration(
+                            hintText:
+                                "Sampaikan fitur apa yang paling kamu butuhkan saat ini…",
+                          ),
+                          maxLines: 8,
+                          validator: FormBuilderValidators.required(
+                              errorText:
+                                  ErrorTextStrings.required(name: "Pesan")),
+                        ),
+                        SizedBox(height: 24),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: isFormValid && !isSubmitting
+                                ? () async {
+                                    // Disable tombol saat submit
+                                    setState(() {
+                                      isSubmitting = true;
+                                    });
 
-                                // Ambil nilai input dari form
-                                final formData = formKey.currentState!.value;
+                                    // Ambil nilai input dari form
+                                    final formData =
+                                        formKey.currentState!.value;
 
-                                // Siapkan data feedback
-                                final feedbackData = {
-                                  "userName": profile.name,
-                                  "phoneNumber": profile.phoneNumber,
-                                  "appVersion": appVersion ?? "N/A",
-                                  "categoryFeedback": ["Feature Request"],
-                                  "messageFeedback":
-                                      formData["messageFeedback"],
-                                  "hasReviewed": null, // Dibypass
-                                };
+                                    // Siapkan data feedback
+                                    final feedbackData = {
+                                      "userName": profile.name,
+                                      "phoneNumber": profile.phoneNumber,
+                                      "appVersion": appVersion ?? "N/A",
+                                      "categoryFeedback": ["Feature Request"],
+                                      "messageFeedback":
+                                          formData["messageFeedback"],
+                                      "hasReviewed": null,
+                                    };
 
-                                Logman.instance
-                                    .info("XXX feedbackData $feedbackData");
+                                    // Kirim ke Google Form
+                                    bool success =
+                                        await GoogleFormHelper.submitFeedback(
+                                      feedbackData: feedbackData,
+                                      selectedCategories: ["Feature Request"],
+                                    );
 
-                                // Kirim ke Google Form
-                                bool success = await GoogleFormHelper
-                                    .sendFeedbackToGoogleForm(
-                                  feedbackData: feedbackData,
-                                  selectedCategories: ["Feature Request"],
-                                );
+                                    if (success) {
+                                      if (!context.mounted) return;
+                                      Navigator.pop(context);
+                                      SuccessFeedbackBottomsheet.show(
+                                        context,
+                                        openInFeedbackScreen: false,
+                                      );
+                                    }
 
-                                if (success) {
-                                  if (!context.mounted) return;
-                                  Navigator.pop(context);
-                                  SuccessFeedbackBottomsheet.show(
-                                    context,
-                                    openInFeedbackScreen: false,
-                                  );
-                                }
-
-                                setState(() {
-                                  isSubmitting = false;
-                                });
-                              }
-                            : null,
-                        child: isSubmitting
-                            ? SizedBox(
-                                height: 16,
-                                width: 16,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : TextActionL("Kirimkan"),
-                      ),
+                                    setState(() {
+                                      isSubmitting = false;
+                                    });
+                                  }
+                                : null,
+                            child: isSubmitting
+                                ? SizedBox(
+                                    height: 16,
+                                    width: 16,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : TextActionL("Kirimkan"),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               );
             }),

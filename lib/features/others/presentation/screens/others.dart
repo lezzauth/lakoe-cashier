@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakoe_pos/common/widgets/appbar/custom_appbar.dart';
 import 'package:lakoe_pos/common/widgets/bottomsheets/vote_bottomsheet.dart';
-import 'package:lakoe_pos/common/widgets/ui/custom_toast.dart';
 import 'package:lakoe_pos/common/widgets/ui/list_item_card.dart';
 import 'package:lakoe_pos/common/widgets/ui/section_card.dart';
 import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
@@ -159,14 +158,6 @@ class _OthersScreenState extends State<OthersScreen> {
       context: context,
       featureName: "CustomerLoyalty",
       featureDesc: "loyalitas pelanggan untuk meningkatkan repeat order",
-      onVoteSuccess: () {
-        CustomToast.show(
-          "Vote berhasil dikirimkan.",
-          position: "bottom",
-          backgroundColor: TColors.success,
-        );
-        setState(() {});
-      },
     );
   }
 
