@@ -27,7 +27,9 @@ class VoteBottomSheetHelper {
     required BuildContext context,
     String title = "Seberapa kamu butuh fitur ini?",
     required String featureName,
-    required String featureDesc,
+    String? featureDesc,
+    required String highlightMessage,
+    Function()? onVoteSuccess,
   }) {
     if (featureName != "MultiOutlet") {
       context.read<OwnerCubit>().getOwner();
@@ -40,6 +42,8 @@ class VoteBottomSheetHelper {
         title: title,
         featureName: featureName,
         featureDesc: featureDesc,
+        highlightMessage: highlightMessage,
+        onVoteSuccess: onVoteSuccess,
       ),
     );
   }
@@ -48,12 +52,16 @@ class VoteBottomSheetHelper {
 class _VoteBottomSheetContent extends StatefulWidget {
   final String title;
   final String featureName;
-  final String featureDesc;
+  final String? featureDesc;
+  final String highlightMessage;
+  final Function()? onVoteSuccess;
 
   const _VoteBottomSheetContent({
     required this.title,
     required this.featureName,
-    required this.featureDesc,
+    this.featureDesc,
+    required this.highlightMessage,
+    this.onVoteSuccess,
   });
 
   @override
@@ -95,6 +103,7 @@ class _VoteBottomSheetContentState extends State<_VoteBottomSheetContent> {
 
     if (success) {
       setState(_initializeData);
+
       CustomToast.show(
         "Vote berhasil dikirim.",
         position: "bottom",
@@ -102,6 +111,7 @@ class _VoteBottomSheetContentState extends State<_VoteBottomSheetContent> {
       );
       if (!mounted) return;
       Navigator.pop(context);
+      widget.onVoteSuccess!();
     } else {
       if (!mounted) return;
       Navigator.pop(context);
@@ -155,7 +165,7 @@ class _VoteBottomSheetContentState extends State<_VoteBottomSheetContent> {
           text: "Kami ingin menambahkan fitur ",
           children: [
             TextSpan(
-              text: widget.featureDesc,
+              text: widget.highlightMessage,
               style: GoogleFonts.inter(
                 fontWeight: FontWeight.bold,
                 color: TColors.neutralDarkDark,
@@ -163,7 +173,7 @@ class _VoteBottomSheetContentState extends State<_VoteBottomSheetContent> {
             ),
             TextSpan(
               text:
-                  ". Kalau menurutmu ini penting, kasih vote supaya kami tahu!",
+                  " ${widget.featureDesc}.\n\nKalau menurutmu ini dibutuhkan dalam bisnis kamu, kasih vote supaya kami tahu!",
             ),
           ],
         ),

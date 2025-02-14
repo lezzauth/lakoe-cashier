@@ -4,15 +4,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:lakoe_pos/common/data/models.dart';
+import 'package:lakoe_pos/common/widgets/bottomsheets/vote_bottomsheet.dart';
 import 'package:lakoe_pos/common/widgets/form/form_label.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_action_l.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_body_m.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_body_s.dart';
+import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_3.dart';
 import 'package:lakoe_pos/common/widgets/ui/typography/text_heading_4.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_cubit.dart';
+import 'package:lakoe_pos/features/account/application/cubit/owner_state.dart';
 import 'package:lakoe_pos/features/products/application/cubit/product_master/form/product_form_cubit.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/category_field.dart';
 import 'package:lakoe_pos/features/products/presentation/widgets/forms/field/image_picker_field.dart';
 import 'package:lakoe_pos/utils/constants/colors.dart';
 import 'package:lakoe_pos/utils/constants/error_text_strings.dart';
 import 'package:lakoe_pos/utils/formatters/formatter.dart';
+import 'package:lakoe_pos/utils/helpers/vote_helper.dart';
 
 class ProductInformationForm extends StatefulWidget {
   final GlobalKey<FormBuilderState> formKey;
@@ -63,9 +70,13 @@ class _ProductInformationFormState extends State<ProductInformationForm>
   //   {"id": "scoop", "name": "Ball/Scoop"},
   // ];
 
+  bool _hasVoted = false;
+  bool _stopCheckVoted = false;
+
   @override
   void initState() {
     super.initState();
+    context.read<OwnerCubit>().getOwner();
     if (widget.initialValue["price"] != null) {
       _priceController.text =
           _priceFormatter.formatString(widget.initialValue["price"]);
@@ -243,6 +254,89 @@ class _ProductInformationFormState extends State<ProductInformationForm>
                     ],
                   ),
                 ),
+                BlocBuilder<OwnerCubit, OwnerState>(builder: (context, state) {
+                  final owner = state is OwnerLoadSuccess ? state.owner : null;
+                  final isOwnerLoaded = owner != null;
+
+                  if (isOwnerLoaded && !_hasVoted && !_stopCheckVoted) {
+                    VoteHelper.hasUserVoted(
+                      owner.phoneNumber,
+                      "Add-Ons Product",
+                    ).then((alreadyVoted) {
+                      if (mounted) {
+                        setState(() {
+                          _hasVoted = alreadyVoted;
+                          _stopCheckVoted = true;
+                        });
+                      }
+                      return false;
+                    });
+                  }
+
+                  return Visibility(
+                    visible: !_hasVoted,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 16.0,
+                        horizontal: 20.0,
+                      ),
+                      margin: const EdgeInsets.only(bottom: 16.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 1,
+                          color: TColors.neutralLightMedium,
+                        ),
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      child: Row(children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextHeading3(
+                                "Opsi Tambahan",
+                                color: TColors.neutralDarkDarkest,
+                              ),
+                              TextBodyS(
+                                "Topping, ekstra bahan, atau pilihan khusus untuk produk ini.",
+                                color: TColors.neutralDarkLight,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                        Container(
+                          height: 36,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: TColors.primary,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: TextButton(
+                            onPressed: () {
+                              VoteBottomSheetHelper.show(
+                                context: context,
+                                featureName: "Add-Ons Product",
+                                highlightMessage: "opsi tambahan untuk produk",
+                                featureDesc:
+                                    "seperti topping, ekstra bahan, atau level pedas. Dengan fitur ini, kamu bisa lebih fleksibel dalam mengatur variasi menu",
+                                onVoteSuccess: () {
+                                  setState(() {
+                                    _hasVoted = true;
+                                    _stopCheckVoted = true;
+                                  });
+                                },
+                              );
+                            },
+                            child: TextActionL("Atur"),
+                          ),
+                        ),
+                      ]),
+                    ),
+                  );
+                }),
               ],
             ),
           ),

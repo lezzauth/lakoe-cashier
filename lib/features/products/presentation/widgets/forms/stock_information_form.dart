@@ -42,10 +42,9 @@ class _StockInformationFormState extends State<StockInformationForm>
 
   void openBottomsheetVote(BuildContext context) {
     VoteBottomSheetHelper.show(
-      context: context,
-      featureName: "RecipeBasedInventory",
-      featureDesc: "stok berdasarkan bahan baku",
-    );
+        context: context,
+        featureName: "Recipe Based Inventory",
+        highlightMessage: "stok berdasarkan bahan baku");
   }
 
   @override

@@ -156,8 +156,9 @@ class _OthersScreenState extends State<OthersScreen> {
   void openBottomsheetVote(BuildContext context) {
     VoteBottomSheetHelper.show(
       context: context,
-      featureName: "CustomerLoyalty",
-      featureDesc: "loyalitas pelanggan untuk meningkatkan repeat order",
+      featureName: "Customer Loyalty",
+      featureDesc: "untuk meningkatkan repeat order",
+      highlightMessage: "loyalitas pelanggan",
     );
   }
 

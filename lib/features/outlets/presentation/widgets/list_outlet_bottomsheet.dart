@@ -90,9 +90,10 @@ class ListOutletBottomsheet {
                         VoteBottomSheetHelper.show(
                           context: context,
                           title: "Butuh fitur multi-outlet?",
-                          featureName: "MultiOutlet",
+                          featureName: "Multi Outlet",
                           featureDesc:
-                              "multi-outlet agar kamu bisa mengelola beberapa cabang lebih mudah",
+                              "agar kamu bisa mengelola beberapa cabang lebih mudah dan efisien",
+                          highlightMessage: "multi-outlet",
                         );
                       },
                       child: Padding(

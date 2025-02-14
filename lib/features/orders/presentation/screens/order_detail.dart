@@ -668,6 +668,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                               ],
                                             ),
                                           ),
+                                          SizedBox(width: 12),
                                           Container(
                                             height: 36,
                                             decoration: BoxDecoration(
